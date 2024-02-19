@@ -1,6 +1,6 @@
 <!-- docs/_sidebar.md -->
 
 * [Home](/)
-* [onboarding](/onboarding/)
+* [Onboarding](/onboarding/)
 
 <!-- * [Onboarding](onboarding "How to use segmantion") -->
