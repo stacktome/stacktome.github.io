@@ -1,0 +1,99 @@
+# Campaign
+
+To be able to send invitations an email campaign has to be configured which would provide required parameters for processing invitation job. Campaign consists of:
+
+1. Name - campaign name
+
+2. Status - active / inactive
+
+3. Contacts - All or specific segment
+
+4. Targets - Trustpilot, Google, Feefo
+
+5. Schedule
+* Weekdays
+* From, To (time of day) - when sending should take place, adjusted by timezone
+* Send limit (email sends per day) - how many emails should be sent in 1 day - for controlling email send volume to avoid getting blacklisted as spam
+* New invite cooldown (per customer, in days) - time period after which same customer can receive another invite
+
+6. Invite
+* Delay (in hours, min 0) - how many hours after order confirmation review should be sent out
+* Email template(s)
+* Subject line(s)
+
+7. Reminder(s)
+* Delay (in hours, min 0) - how many hours from last send
+* Email template(s)
+* Subject line(s)
+
+# Campaign list page 
+
+For setting up review invite sending campaign configurations
+
+Menu: Invitations > Campaigns
+
+Actions: ADD NEW CAMPAIGN - opens campaign configuration page, see details below.
+
+Data table: following columns (in order of appearance):
+* Name - template name.
+* Status - Active/Inactive
+* Targets - icons of target review platforms (Trustpilot, Google, Feefo).
+* Country - country selector which is used to set different locality necessary to send to correct review website.
+* Delay - number of hours to wait before invite is sent.
+* Send Limit - max number of emails sent per day.
+* Reminders - number of reminders.
+* Copy icon button - opens new template form with clicked template details.
+* Delete icon button - deletes template. Show confirmation modal: “Are you sure you want to delete the campaign?”
+* Pause OR Start button (depending on status) - changes the campaign to inactive/active.
+
+# Campaign Form Page
+
+Upon accessing the Campaign Form, you will encounter a comprehensive set of options to configure your campaign. Here's a breakdown of the various components:
+
+# Name:
+* Enter the name of the campaign. For new campaigns, it defaults to "NEW - Campaign". For updates, it displays "Campaign - {template name}".
+
+# Actions:
+* ADD/SAVE Button: Saves the changes made to the campaign.
+* SEND Button: Triggers the campaign send job.
+
+# Status:
+* Toggle button to activate or deactivate the campaign. Default is unset.
+
+# Contacts (contactsType):
+* Select either "All Orders" or "Segment". If "Segment" is selected, choose a segment from the dropdown menu.
+
+# Targets:
+* Multi-select dropdown to choose target review platforms (e.g., Trustpilot, Google, Feefo).
+
+# Country: 
+* Country selector which is used to set different locality necessary to send to correct review website.
+
+# Campaign Logic:
+
+* Minimum of one card (Review Invite) must be present, additional reminders can be added.
+* Each card should have all fields set. If a new card has missing fields, it will be marked with a red border.
+* The layout allows up to three cards in one row. The time icon is integrated into each card.
+* Delay time is displayed preceding each card. If the delay time is not set, it will show "missing delay" in red font.
+
+# Reminder Button:
+
+* Adds a new empty reminder card at the end of the list. Disabled if the maximum limit of 10 reminders is reached.
+
+# Schedule Configuration:
+
+Fields:
+
+* Start Time: Specifies the start time for sending invites. Required field.
+* End Time: Specifies the end time for sending invites. Required field.
+* Max Emails per Day: Sets the maximum number of emails sent per day. Required field.
+* Order Window in Days: Specifies the order window in days. Required field.
+* Days Till Next Invite: Specifies the number of days till the next invite. Required field.
+* Timezone: Dropdown selector for choosing the timezone. Required field.
+* Weekdays: Checkbox group for selecting weekdays. At least one must be checked. Required field.
+
+# Conclusion
+
+This user guide provides detailed instructions for configuring campaign settings using the Campaign Form. By following these steps, you can create and customize campaigns tailored to your review invite sending requirements.
+
+For further assistance or inquiries, please refer to the user manual or contact our support team. Thank you for using our platform for your campaign management needs!
