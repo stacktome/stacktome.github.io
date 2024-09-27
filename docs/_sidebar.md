@@ -5,6 +5,6 @@
 * [Shopify](/shopify/)
 * [Segment Template](/segment_template/)
 * [Generate Support Tickets](/support_tickets/)
-* [Review Invites](/setup_review_invitation/)
+* [Review Invites](/invites/)
 * [Support](/Support/)
 <!-- * [Onboarding](onboarding "How to use segmantion") -->
