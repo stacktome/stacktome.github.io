@@ -1,3 +1,3 @@
-# Shopify related docs
+# Order data import docs
 
-Instructions related to Shopify app install and customization
+Instructions how to load your orders data

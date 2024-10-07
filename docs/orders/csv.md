@@ -1,6 +1,6 @@
 Following schema is supported for importing CSV files, bolded columns are required.
 
-For an example file see here [CSV integration](/orders/partial_sales_sample_2023-07-18.csv)
+For an example file see <a href="/orders/partial_sales_sample_2023-07-18.csv" target="_blank">here</a>.
 
 | Column Name                      | Data Type | Description                                                                                   |
 |----------------------------------|-----------|-----------------------------------------------------------------------------------------------|
