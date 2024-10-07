@@ -1,0 +1,1 @@
+For full spec of API endpoint look into here - https://services.stacktome.com/swagger/#/events/post_Sales
