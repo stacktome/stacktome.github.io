@@ -2,6 +2,7 @@
 
 * [Home](/)
 * [Onboarding](/onboarding/)
+* [Orders](/orders/)
 * [Shopify](/shopify/)
 * [Segment Template](/segment_template/)
 * [Generate Support Tickets](/support_tickets/)
