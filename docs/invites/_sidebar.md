@@ -2,6 +2,8 @@
 * [Home](/)
 * [Settings](/invites/settings.md)
 * [Email templates](/invites/templates.md)
+* [Email invite template](/invites/template-invite.md)
+* [Email response template](/invites/template-response.md)
 * [Subject lines](/invites/subject_lines.md)
 * [Campaign](/invites/campaign.md)
 * [Campaign Type](/invites/campaign_type.md)
