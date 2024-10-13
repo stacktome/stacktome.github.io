@@ -13,7 +13,6 @@ Email template that is used only in response campaigns for  response, recovery &
 * **R** **{{unsub unsubscribe_link}}** - Unsubscribe link, generated automatically, unless setting a custom unsubscribe link in the campaign. In which case adding as query param {{email_hash}} is required to identify the email, required
 * **{{email_hash}}** - Customers Email address hashed as SHA256, useful when need to identify customer in a safe way without exposing actual email address
 
-**R** marked fields are required. 
-
+**R** marked fields are required.
     
 For more information on more capabilities for placeholder values see: https://mailchimp.com/developer/transactional/docs/templates-dynamic-content/
