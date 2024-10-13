@@ -15,4 +15,5 @@ Email template that is used only in response campaigns for  response, recovery &
 
 **R** marked fields are required.
     
-For more information on more capabilities for placeholder values see: https://mailchimp.com/developer/transactional/docs/templates-dynamic-content/
+For more information on more capabilities for placeholder values see 
+<a href="https://mailchimp.com/developer/transactional/docs/templates-dynamic-content/" target="_blank">reference</a>
