@@ -5,7 +5,7 @@ Configure your sender details and authorize to use your domain for sending email
 To do this DNS records need to be added that allows our ESP (Email Service Provider) to use your domain.
 
 * **Sender Name** - The name that will appear on customers' inbox. Usually you want to have your brands name same as you would be sending your own emails like newsletters or promotions.
-* **Sender Address** - the email address (must be set without domain) that customers' see in their inbox. For example noreply.invitations will result in email address as noreply.invitations@yourdomain.com. 
+* **Sender Address** - the email address (must be set without domain) that customers' see in their inbox. For example ***noreply.invitations*** will result in email address as noreply.invitations@yourdomain.com. 
     * You Can use both a valid inbox address or an invalid one.
     * Note sender address is used match and fetch email send statistics, therefore if it is change the email address here, the statistics of previous sends won't be visible in the invite report.
 * **Reply to** (currently not supported) - The address customer can used to reply. Can be helpful when you don't want to change the sending address, but want to use different reply address to give customers ability to respond to emails.
