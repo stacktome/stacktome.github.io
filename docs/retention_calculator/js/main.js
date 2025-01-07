@@ -65,13 +65,13 @@ function getCookie() {
 }
 
 $(function() {
-    if (window.snowplow) {
-        window.snowplow(function() {
-            var cf = this.cf;
-            spCookie = cf.getCookieName('id');
-        });
-    }
-    if (!spCookie) spCookie = getCookie();
+    // if (window.snowplow) {
+    //     window.snowplow(function() {
+    //         var cf = this.cf;
+    //         spCookie = cf.getCookieName('id');
+    //     });
+    // }
+    // if (!spCookie) spCookie = getCookie();
     Chart.defaults.global.maintainAspectRatio = false;
     // Get query data
     location.queryString = {};
@@ -153,12 +153,12 @@ $(function() {
 
     $('#fullReport').on('shown.bs.modal', function() {
         $('#sendname').trigger('focus');
-        window.snowplow('trackStructEvent', 'calculator', 'get-full-report', '', '', 20);
+        // window.snowplow('trackStructEvent', 'calculator', 'get-full-report', '', '', 20);
     });
 
     $('#send-report-form').submit(function(event) {
         event.preventDefault();
-        window.snowplow('trackStructEvent', 'calculator', 'send-full-report', '', '', 20);
+        // window.snowplow('trackStructEvent', 'calculator', 'send-full-report', '', '', 20);
         $('#fullReport button').prop('disabled', true);
         let info = $(this).serializeArray();
         let user_info = {};
@@ -297,7 +297,7 @@ $(function() {
             ],
             on: {
                 click: function(e) {
-                    window.snowplow('trackStructEvent', 'calculator', 'share-' + this.share, '', '', 20);
+                    // window.snowplow('trackStructEvent', 'calculator', 'share-' + this.share, '', '', 20);
                 }
             }
         });
@@ -318,7 +318,7 @@ $(function() {
                 buyersArr.push({ pf: parseInt(name.split('-')[0]), buyers: parseInt(resultArr[i].value) });
             }
         }
-        window.snowplow('trackStructEvent', 'calculator', 'calculate', '', '', 20);
+        // window.snowplow('trackStructEvent', 'calculator', 'calculate', '', '', 20);
         calculate();
     });
 
