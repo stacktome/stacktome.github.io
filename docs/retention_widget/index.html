@@ -1,0 +1,309 @@
+<div class="product-recommendation">
+  <div class="product-image-carousel">
+    <div class="carousel-container">
+      <div class="carousel-track">
+        <div class="carousel-slide">
+          <img src="https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto/t_Product550s/v1/Raw/110128_standing.jpg" alt="Burst of Joy - Standing">
+        </div>
+        <div class="carousel-slide">
+          <img src="https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto/t_Product550s/v1/Raw/110128_overview.jpg" alt="Burst of Joy - Overview">
+        </div>
+        <div class="carousel-slide">
+          <img src="https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto/t_Product550s/v1/Raw/110128_closeup.jpg" alt="Burst of Joy - Closeup">
+        </div>
+      </div>
+      <button class="carousel-button prev" aria-label="Previous image">❮</button>
+      <button class="carousel-button next" aria-label="Next image">❯</button>b
+    </div>
+    <div class="carousel-dots">
+      <span class="dot active" data-index="0"></span>
+      <span class="dot" data-index="1"></span>
+      <span class="dot" data-index="2"></span>
+    </div>
+    <span class="discount-badge">-20%</span>
+  </div>
+  <div class="product-info">
+    <h3 class="product-name">Burst of Joy</h3>
+    
+    <div class="product-rating">
+      <div class="star-rating">
+        <span class="stars">
+          <span class="filled-stars" style="width: 90%;">★★★★★</span>
+          <span class="empty-stars">★★★★★</span>
+        </span>
+        <span class="rating-count">22 reviews</span>
+      </div>
+    </div>
+    
+    <p class="product-description">This burst of floral joy captures the essence of all celebrations.</p>
+    <div class="product-price">
+      <span class="current-price">£27.99</span>
+      <span class="original-price">£34.99</span>
+    </div>
+    <button class="add-to-cart-btn">Buy now with 1 click</button>
+    <button class="new-offer-btn">New Offer</button>
+  </div>
+</div>
+
+<style>
+  .product-recommendation {
+    font-family: Arial, sans-serif;
+    max-width: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: white;
+  }
+  
+  .product-image-carousel {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+  }
+  
+  .carousel-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .carousel-track {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+    height: 100%;
+  }
+  
+  .carousel-slide {
+    min-width: 100%;
+    height: 100%;
+  }
+  
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.5);
+    color: #333;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  
+  .carousel-button:hover {
+    opacity: 1;
+  }
+  
+  .carousel-button.prev {
+    left: 10px;
+  }
+  
+  .carousel-button.next {
+    right: 10px;
+  }
+  
+  .carousel-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+  }
+  
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .dot.active {
+    background: white;
+  }
+  
+  .discount-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #e74c3c;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 14px;
+    z-index: 1;
+  }
+  
+  .product-info {
+    padding: 15px;
+  }
+  
+  .product-name {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .product-rating {
+    margin-bottom: 8px;
+  }
+  
+  .star-rating {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+  }
+  
+  .stars {
+    position: relative;
+    display: inline-block;
+    color: #ddd;
+    font-size: 16px;
+    margin-right: 5px;
+  }
+  
+  .filled-stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #f1ce31;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  
+  .rating-count {
+    color: #666;
+    font-size: 12px;
+  }
+  
+  .product-description {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 12px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .product-price {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  
+  .current-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2d67f6;
+    margin-right: 8px;
+  }
+  
+  .original-price {
+    font-size: 14px;
+    color: #999;
+    text-decoration: line-through;
+  }
+  
+  .add-to-cart-btn {
+    width: 100%;
+    padding: 10px;
+    background: #2d67f6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-bottom: 8px;
+  }
+  
+  .add-to-cart-btn:hover {
+    background: #1a56e5;
+  }
+  
+  .new-offer-btn {
+    width: 100%;
+    padding: 10px;
+    background: #fff;
+    color: #2d67f6;
+    border: 1px solid #2d67f6;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .new-offer-btn:hover {
+    background: #f0f5ff;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const track = document.querySelector('.carousel-track');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const nextButton = document.querySelector('.carousel-button.next');
+    const prevButton = document.querySelector('.carousel-button.prev');
+    const dots = document.querySelectorAll('.dot');
+    
+    let currentIndex = 0;
+    
+    // Set initial position
+    updateCarousel();
+    
+    // Event listeners
+    nextButton.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateCarousel();
+    });
+    
+    prevButton.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      updateCarousel();
+    });
+    
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        currentIndex = parseInt(dot.getAttribute('data-index'));
+        updateCarousel();
+      });
+    });
+    
+    // Auto-advance carousel every 5 seconds
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      updateCarousel();
+    }, 5000);
+    
+    function updateCarousel() {
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      
+      // Update active dot
+      dots.forEach((dot, index) => {
+        if (index === currentIndex) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+    }
+  });
+</script>
