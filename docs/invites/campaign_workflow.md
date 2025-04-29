@@ -4,6 +4,12 @@ Determines what steps should campaign be executing when a contact is matched for
 
 ## Invite campaign
 
+* **Step Settings** -
+    * __Delay in hours__ - How long to wait from the event timestamp field value for a given order before sending the invite or response email. If delay is set on reminder the delay is calculated based on previous step (invite, response or reminder sent time). Delay value is set in hours.
+    * __Delay cutoff in hours__ - How many hours from now orders are eligible for the campaign. For example 24 means that campaign will include only orders that were sent 24 hours ago. This value ensures we don't send invites to all order history if its available. Only applicable when "All orders" is selected.
+    * __Template__ - Which email template to use for sending invites. If selected more than one template adjust the ratio which email to use more, for default use 50/50 ratio.
+    * __Subject line__ - Which subject line to use for invites. Add multiple subject lines for multi variate testing.
+
 * **Invite** - Generates a verified invitation link (Trustpilot, Feefo, Google) or use custom one if set and sends email to customer with a given email template and subject line. If several email or subject lines are set, then splits the sends based on given ratio for each template/subject line.
 
 * **Reminder** - Send a reminder email with same link that was generated during invitation step after # of hours set in the delay field. You can set up to 9 reminders. However more reminders might not give any significant improvement on overall review rate.
