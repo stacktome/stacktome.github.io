@@ -38,7 +38,7 @@
   <div class="product-info">
     <div class="product-header">
       <h3 class="product-name">{{offers[0].productName}}</h3>
-      <a href="{{offers[0].productUrl}}" target="_blank" class="more-info-link">More Info ↗</a>
+      <a href="{{offers[0].productUrl}}"  data-offer-id="{{offers[0].offerId}}" onclick="trackOfferAction('buy')" target="_blank" class="more-info-link">More Info ↗</a>
     </div>
     
     <div class="product-rating">
@@ -59,7 +59,7 @@
       <span class="current-price">{{offers[0].productPriceCurrencySymbol}}{{offers[0].productPrice}}</span>
       <span class="original-price">£34.99</span>
     </div>
-    <button class="checkout-btn" data-offer-url="{{offers[0].offerUrl}}" data-offer-id="{{offers[0].offerId}}" onclick="trackOfferAction();redirectToOffer()">Buy now</button>
+    <button class="checkout-btn" data-offer-url="{{offers[0].offerUrl}}" data-offer-id="{{offers[0].offerId}}" onclick="trackOfferAction('buy');redirectToOffer()">Buy now</button>
     <button id="new-offer-btn" class="new-offer-btn">Next Offer</button>
   </div>
 </div>
@@ -372,7 +372,7 @@
 
 <script>
 
-  function trackOfferAction(){
+  function trackOfferAction(type){
     if(window.stSnowplow){
       const offerId = document.querySelector('.checkout-btn').dataset.offerId;
       const offers = JSON.parse(document.getElementById('offers-data').value);
@@ -381,12 +381,13 @@
       // Calculate minutes until expiration
       const now = new Date();
       const expireDate = new Date(currentOffer.expireAt);
-      const minutesUntilExpiration = expireDate ? Math.floor((expireDate - now) / (1000 * 60)) : 0;
+      const minutesUntilExpiration = expireDate && expireDate > now ? Math.floor((expireDate - now) / (1000 * 60)) : 0;
 
       window.stSnowplow('trackSelfDescribingEvent', {
         event: {
           schema: 'iglu:com.stacktome/offer_action/jsonschema/1-0-0',
           data: {
+            type: type,
             productSku: currentOffer.productSku,
             productRating: currentOffer.rating,
             productReviewCount: currentOffer.reviewCount,
@@ -424,8 +425,38 @@
     const offers = JSON.parse(document.getElementById('offers-data').value);
     
 
+    function trackOfferImpression(currentOffer){
+      if(window.stSnowplow){
+        
+        // Calculate minutes until expiration
+        const now = new Date();
+        const expireDate = new Date(currentOffer.expireAt);
+        const minutesUntilExpiration = expireDate && expireDate > now ? Math.floor((expireDate - now) / (1000 * 60)) : 0;
+
+        window.stSnowplow('trackSelfDescribingEvent', {
+          event: {
+            schema: 'iglu:com.stacktome/offer_impression/jsonschema/1-0-0',
+            data: {
+              productSku: currentOffer.productSku,
+              productRating: currentOffer.rating,
+              productReviewCount: currentOffer.reviewCount,
+              productPrice: currentOffer.productPrice,
+              customerKey: currentOffer.customerKey,
+              offerId: currentOffer.offerId,
+              offerName: currentOffer.offerName,
+              offerType: currentOffer.offerType,
+              offerValue: currentOffer.offerValue,
+              offerExpiration: minutesUntilExpiration
+            }
+          }
+        });
+      }
+    }
+    
     function updateProduct() {
       const currentOffer = offers[productIndex];
+
+      trackOfferImpression(currentOffer);
 
       // Update carousel images
       slides.forEach((slide, i) => {
