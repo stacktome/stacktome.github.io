@@ -38,7 +38,7 @@
   <div class="product-info">
     <div class="product-header">
       <h3 class="product-name">{{offers[0].productName}}</h3>
-      <a href="{{offers[0].productUrl}}"  data-offer-id="{{offers[0].offerId}}" onclick="trackOfferAction('buy')" target="_blank" class="more-info-link">More Info ↗</a>
+      <a href="{{offers[0].productUrl}}"  data-offer-id="{{offers[0].offerId}}" onclick="trackOfferAction('view')" target="_blank" class="more-info-link">More Info ↗</a>
     </div>
     
     <div class="product-rating">
@@ -393,6 +393,7 @@
             productReviewCount: currentOffer.reviewCount,
             productPrice: currentOffer.productPrice,
             customerKey: currentOffer.customerKey,
+            couponCode: currentOffer.couponCode,
             offerId: offerId,
             offerName: currentOffer.offerName,
             offerType: currentOffer.offerType,
@@ -467,6 +468,9 @@
       // Update product details
       document.querySelector('.product-name').textContent = currentOffer.productName;
       document.querySelector('.more-info-link').href = currentOffer.productUrl || '#';
+      document.querySelector('.more-info-link').dataset.offerId = currentOffer.offerId;
+      document.querySelector('.checkout-btn').dataset.offerId = currentOffer.offerId;
+      document.querySelector('.checkout-btn').dataset.offerUrl = currentOffer.offerUrl;
       
       // Update price and discount badge based on offer type
       const originalPrice = parseFloat(currentOffer.productPrice);
