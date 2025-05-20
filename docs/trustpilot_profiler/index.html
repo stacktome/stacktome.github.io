@@ -159,8 +159,59 @@
     <script>
         let orderVolume = 0;
 
+        // Function to clean domain value
+        function cleanDomain(domain) {
+            if (!domain) return '';
+            
+            // Remove protocol
+            domain = domain.replace(/^https?:\/\//, '');
+            
+            // If it's a Trustpilot URL, extract the domain
+            if (domain.includes('trustpilot.com/review/')) {
+                domain = domain.split('trustpilot.com/review/')[1];
+            }
+            
+            // Remove www. if present
+            domain = domain.replace(/^www\./, '');
+            
+            // Remove any trailing slashes
+            domain = domain.replace(/\/$/, '');
+            
+            return domain;
+        }
+
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Function to initialize page with URL parameters
+        function initializeFromUrl() {
+            const domainParam = cleanDomain(getUrlParameter('domain'));
+            const volumeParam = getUrlParameter('volume');
+
+            if (domainParam) {
+                document.getElementById('domain').value = domainParam;
+            }
+
+            if (volumeParam) {
+                orderVolume = parseInt(volumeParam) || 0;
+            }
+
+            // Auto-execute analysis if domain is provided
+            if (domainParam) {
+                analyzeProfile();
+            }
+        }
+
+        // Call initialization when page loads
+        window.onload = initializeFromUrl;
+
         async function analyzeProfile() {
-            const domain = document.getElementById('domain').value.trim();
+            const domain = cleanDomain(document.getElementById('domain').value.trim());
             if (!domain) {
                 showError('Please enter a domain name');
                 return;
