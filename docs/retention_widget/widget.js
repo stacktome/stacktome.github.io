@@ -1,0 +1,447 @@
+!function() {
+	'use strict'
+	
+	// Main initialization function
+	!async function() {
+		const script = document.currentScript;
+		
+		if (script) {
+			// Parse filter parameters from script attributes
+			const params = function(script) {
+				const params = script.getAttribute('filter-params');
+				try {
+					return JSON.parse(params);
+				} catch (error) {
+					console.error('Error parsing filter params:', error);
+					return null;
+				}
+			}(script);
+
+			if (params) {
+				try {
+					// Prepare request body with payload
+					const requestBody = {
+						...params.widgetPayload,
+						widgetId: params.widgetId
+					};
+
+					// Fetch pre-rendered HTML
+					const response = await fetch(
+						`https://services${params.staging ? '-staging' : ''}.stacktome.com/api/recommendations/v1/templates/${params.widgetId}/recommendations?apikey=${params.apiKey}`,
+						{
+							body: JSON.stringify(requestBody),
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' }
+						}
+					);
+
+					// Check if the response is ok
+					if (!response.ok) {
+						const errorText = await response.text();
+						throw new Error(`API Error (${response.status}): ${errorText}`);
+					}
+
+					// Get the response data
+					const data = await response.json();
+					
+					// Find the placeholder element
+					const placeholder = document.getElementById('stacktome-widget-' + params.widgetId);
+					
+					if (placeholder) {
+						if (data && data.data) {
+							// Create a temporary div to decode HTML entities
+							const temp = document.createElement('div');
+							// Unescape the HTML content
+							const unescapedHtml = data.data
+								.replace(/\\r\\n/g, '\n')
+								.replace(/\\n/g, '\n')
+								.replace(/\\"/g, '"')
+								.replace(/\\t/g, '\t')
+								.replace(/\\\\/g, '\\');
+							temp.innerHTML = unescapedHtml;
+							
+							// Insert the HTML content
+							placeholder.innerHTML = temp.innerHTML;
+							
+							// Execute any scripts in the inserted content
+							const scripts = placeholder.getElementsByTagName('script');
+							const scriptPromises = Array.from(scripts).map(oldScript => {
+								return new Promise((resolve, reject) => {
+									const newScript = document.createElement('script');
+									Array.from(oldScript.attributes).forEach(attr => {
+										newScript.setAttribute(attr.name, attr.value);
+									});
+									
+									if (oldScript.src) {
+										// Handle external scripts
+										newScript.onload = resolve;
+										newScript.onerror = reject;
+									} else {
+										// Handle inline scripts
+										newScript.textContent = oldScript.textContent;
+										resolve();
+									}
+									
+									oldScript.parentNode.replaceChild(newScript, oldScript);
+								});
+							});
+
+							// Wait for all scripts to load before initializing widget
+							Promise.all(scriptPromises)
+								.then(() => {
+									// Initialize widget functionality after scripts are loaded
+									initializeWidget(placeholder, data.data);
+								})
+								.catch(error => {
+									console.error('Error loading scripts:', error);
+									// Still try to initialize widget even if some scripts fail
+									initializeWidget(placeholder, data.data);
+								});
+						} else {
+							placeholder.innerHTML = '<div style="color: red;">No content received from the service</div>';
+							console.error('No content received from the service');
+						}
+					} else {
+						console.error('No placeholder element found with id: stacktome-widget-' + params.widgetId);
+					}
+				} catch (error) {
+					console.error('Error fetching widget data:', error);
+					// Display error in the placeholder if it exists
+					const placeholder = document.getElementById('stacktome-widget-' + params.widgetId);
+					if (placeholder) {
+						placeholder.innerHTML = `<div style="color: red;">Error loading widget: ${error.message}</div>`;
+					}
+				}
+			}
+		}
+	}();
+
+	// Initialize Snowplow if not already initialized
+	if(!window.stSnowplow && params.trackingApiKey && params.domain && params.appId){
+		var o = XMLHttpRequest.prototype.open;
+		XMLHttpRequest.prototype.open = function(){
+			var res = o.apply(this, arguments);
+			var err = new Error();  
+			if((arguments[1] || '').indexOf('stacktome') > 0)
+				this.setRequestHeader('apikey', params.trackingApiKey);
+			return res;
+		}
+			
+		;(function () {
+			;(function(p,l,o,w,i,n,g){if(!p[i]){p.GlobalSnowplowNamespace=p.GlobalSnowplowNamespace||[];
+			p.GlobalSnowplowNamespace.push(i);p[i]=function(){(p[i].q=p[i].q||[]).push(arguments)
+			};p[i].q=p[i].q||[];n=l.createElement(o);g=l.getElementsByTagName(o)[0];n.async=1;
+			n.src=w;g.parentNode.insertBefore(n,g)}}(window,document,"script","https://cdn.jsdelivr.net/npm/@snowplow/javascript-tracker@3.17.0/dist/sp.js","stSnowplow")); 
+		
+			window.stSnowplow('newTracker', 'cf3','https://services.stacktome.com/clickstream/collector',
+			{ // Initialise a tracker
+				appId: params.appId ,
+				platform: 'web',
+				cookieDomain: params.domain,
+				sessionCookieTimeout: 3600, // one hour
+				post: true,
+				contexts: {
+					performanceTiming: true,
+					webPage: true
+				},
+				crossDomain: true,
+				withCredentials: true
+			});
+		}());
+	}
+
+	// Widget functionality
+	function initializeWidget(container, data) {
+		const track = container.querySelector('.carousel-track');
+		const slides = container.querySelectorAll('.carousel-slide img');
+		const nextButton = container.querySelector('.carousel-button.next');
+		const prevButton = container.querySelector('.carousel-button.prev');
+		const dots = container.querySelectorAll('.dot');
+		const nextOfferButton = container.querySelector('#new-offer-btn');
+
+		let currentIndex = 0;
+		let productIndex = 0;
+
+		// Parse offers data
+		const offersData = container.querySelector('#offers-data');
+		const offers = offersData ? JSON.parse(offersData.value) : [];
+
+		// Define widget-scoped functions
+		const trackOfferAction = function(type) {
+			if(window.stSnowplow){
+				const offerId = container.querySelector('.checkout-btn').dataset.offerId;
+				const currentOffer = offers.find(offer => offer.offerId === offerId);
+				if (!currentOffer) return;
+				
+				// Calculate minutes until expiration
+				const now = new Date();
+				const expireDate = new Date(currentOffer.expireAt);
+				const minutesUntilExpiration = expireDate && expireDate > now ? Math.floor((expireDate - now) / (1000 * 60)) : 0;
+
+				window.stSnowplow('trackSelfDescribingEvent', {
+					event: {
+						schema: 'iglu:com.stacktome/offer_action/jsonschema/1-0-0',
+						data: {
+							type: type,
+							productSku: currentOffer.productSku,
+							productRating: currentOffer.rating,
+							productReviewCount: currentOffer.reviewCount,
+							productPrice: currentOffer.productPrice,
+							customerKey: currentOffer.customerKey,
+							couponCode: currentOffer.couponCode,
+							offerId: offerId,
+							offerName: currentOffer.offerName,
+							offerType: currentOffer.offerType,
+							offerValue: currentOffer.offerValue,
+							offerUrl: currentOffer.offerUrl,
+							offerExpiration: minutesUntilExpiration
+						}
+					}
+				});
+			}
+		};
+
+		const redirectToOffer = function() {
+			const url = container.querySelector('.checkout-btn').dataset.offerUrl;
+			if (url) {
+				window.location.href = url;
+			}
+		};
+
+		// Update onclick handlers to use scoped functions
+		const checkoutBtn = container.querySelector('.checkout-btn');
+		if (checkoutBtn) {
+			checkoutBtn.onclick = function(e) {
+				e.preventDefault();
+				trackOfferAction('checkout');
+				redirectToOffer();
+			};
+		}
+
+		const moreInfoLink = container.querySelector('.more-info-link');
+		if (moreInfoLink) {
+			moreInfoLink.onclick = function(e) {
+				trackOfferAction('more_info');
+			};
+		}
+
+		function trackOfferImpression(currentOffer){
+			if(window.stSnowplow){
+				// Calculate minutes until expiration
+				const now = new Date();
+				const expireDate = new Date(currentOffer.expireAt);
+				const minutesUntilExpiration = expireDate && expireDate > now ? Math.floor((expireDate - now) / (1000 * 60)) : 0;
+
+				window.stSnowplow('trackSelfDescribingEvent', {
+					event: {
+						schema: 'iglu:com.stacktome/offer_impression/jsonschema/1-0-0',
+						data: {
+							productSku: currentOffer.productSku,
+							productRating: currentOffer.rating,
+							productReviewCount: currentOffer.reviewCount,
+							productPrice: currentOffer.productPrice,
+							customerKey: currentOffer.customerKey,
+							offerId: currentOffer.offerId,
+							offerName: currentOffer.offerName,
+							offerType: currentOffer.offerType,
+							offerValue: currentOffer.offerValue,
+							offerExpiration: minutesUntilExpiration
+						}
+					}
+				});
+			}
+		}
+		
+		function updateProduct() {
+			const currentOffer = offers[productIndex];
+
+			trackOfferImpression(currentOffer);
+
+			// Update carousel images
+			slides.forEach((slide, i) => {
+				slide.src = currentOffer.productImages[i] || currentOffer.productImages[0];
+				slide.alt = `Product Image ${i + 1}`;
+			});
+
+			// Update product details
+			container.querySelector('.product-name').textContent = currentOffer.productName;
+			container.querySelector('.more-info-link').href = currentOffer.productUrl || '#';
+			container.querySelector('.more-info-link').dataset.offerId = currentOffer.offerId;
+			container.querySelector('.checkout-btn').dataset.offerId = currentOffer.offerId;
+			container.querySelector('.checkout-btn').dataset.offerUrl = currentOffer.offerUrl;
+			
+			// Update price and discount badge based on offer type
+			const originalPrice = parseFloat(currentOffer.productPrice);
+			const currencySymbol = currentOffer.productPriceCurrencySymbol;
+			let finalPrice = originalPrice;
+			let discountBadge = '';
+
+			switch(currentOffer.offerType) {
+				case 'discountPercent':
+					finalPrice = originalPrice * (1 - currentOffer.offerValue / 100);
+					discountBadge = `-${currentOffer.offerValue}%`;
+					break;
+				case 'discountFixed':
+					finalPrice = originalPrice - currentOffer.offerValue;
+					discountBadge = `-${currencySymbol}${currentOffer.offerValue}`;
+					break;
+				case 'discountCredit':
+					finalPrice = originalPrice;
+					discountBadge = `+${currencySymbol}${currentOffer.offerValue}`;
+					break;
+				case 'freeProduct':
+					finalPrice = 0;
+					discountBadge = 'FREE';
+					break;
+			}
+
+			// Update price display
+			container.querySelector('.current-price').textContent = `${currencySymbol}${finalPrice.toFixed(2)}`;
+			container.querySelector('.original-price').textContent = `${currencySymbol}${originalPrice.toFixed(2)}`;
+			
+			// Only show strikethrough price for percent, fixed discounts, and free products
+			const shouldShowOriginalPrice = currentOffer.offerType === 'discountPercent' || 
+										currentOffer.offerType === 'discountFixed' || 
+										currentOffer.offerType === 'freeProduct';
+			container.querySelector('.original-price').style.display = shouldShowOriginalPrice ? 'inline' : 'none';
+
+			// Update discount badge
+			const discountElem = container.querySelector('.discount-badge');
+			if (discountElem) {
+				discountElem.textContent = discountBadge;
+				discountElem.className = `discount-badge ${currentOffer.offerType}`;
+			}
+
+			// Add credit info if applicable
+			const priceContainer = container.querySelector('.product-price');
+			const existingCreditInfo = priceContainer.querySelector('.credit-info');
+			if (existingCreditInfo) {
+				existingCreditInfo.remove();
+			}
+			
+			if (currentOffer.offerType === 'discountCredit') {
+				const creditInfo = document.createElement('span');
+				creditInfo.className = 'credit-info';
+				creditInfo.textContent = `Earn ${currencySymbol}${currentOffer.offerValue} in credits`;
+				priceContainer.appendChild(creditInfo);
+			}
+
+			// Update description with truncation
+			const description = currentOffer.productDescription;
+			const descriptionElem = container.querySelector('.product-description');
+			const showMoreBtn = container.querySelector('.show-more-btn');
+			
+			descriptionElem.textContent = description;
+			descriptionElem.classList.add('truncated');
+			
+			if (description.length > 66) {
+				showMoreBtn.style.display = 'block';
+				showMoreBtn.textContent = 'Show More';
+				showMoreBtn.onclick = function() {
+					if (descriptionElem.classList.contains('truncated')) {
+						descriptionElem.classList.remove('truncated');
+						showMoreBtn.textContent = 'Show Less';
+					} else {
+						descriptionElem.classList.add('truncated');
+						showMoreBtn.textContent = 'Show More';
+					}
+				};
+			} else {
+				showMoreBtn.style.display = 'none';
+			}
+
+			// Update rating and reviews
+			const filledStars = container.querySelector('.filled-stars');
+			filledStars.style.width = `${currentOffer.rating * 20}%`;
+			container.querySelector('.rating-count').textContent = `${currentOffer.reviewCount} reviews`;
+
+			// Update expiration date if exists
+			const expirationElem = container.querySelector('.expiration-badge');
+			if (currentOffer.expireAt && expirationElem) {
+				const now = new Date();
+				const expireDate = new Date(currentOffer.expireAt);
+				
+				// Don't show if already expired
+				if (expireDate <= now) {
+					expirationElem.style.display = 'none';
+					return;
+				}
+
+				// Calculate time differences
+				const diffMs = expireDate - now;
+				const diffMinutes = Math.floor(diffMs / (1000 * 60));
+				const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+				const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+				const remainingHours = diffHours % 24;
+				const remainingMinutes = diffMinutes % 60;
+
+				let formattedText;
+				if (diffMinutes < 60) {
+					formattedText = `Ends in ${diffMinutes} minute${diffMinutes !== 1 ? 's' : ''}`;
+				} else if (diffHours < 24) {
+					formattedText = `Ends in ${diffHours} hour${diffHours !== 1 ? 's' : ''}`;
+					if (remainingMinutes > 0) {
+						formattedText += ` and ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
+					}
+				} else {
+					formattedText = `Ends in ${diffDays} day${diffDays !== 1 ? 's' : ''}`
+					if (remainingHours > 0) {
+						formattedText += ` and ${remainingHours} hour${remainingHours !== 1 ? 's' : ''}`;
+					}
+				}
+
+				expirationElem.textContent = formattedText;
+				expirationElem.style.display = 'block';
+			} else if (expirationElem) {
+				expirationElem.style.display = 'none';
+			}
+
+			updateCarousel();
+		}
+
+		function updateCarousel() {
+			track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+			// Update active dot
+			dots.forEach((dot, index) => {
+				if (index === currentIndex) {
+					dot.classList.add('active');
+				} else {
+					dot.classList.remove('active');
+				}
+			});
+		}
+
+		// Initial setup
+		updateProduct();
+
+		// Event listeners
+		nextButton.addEventListener('click', () => {
+			currentIndex = (currentIndex + 1) % slides.length;
+			updateCarousel();
+		});
+		
+		prevButton.addEventListener('click', () => {
+			currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+			updateCarousel();
+		});
+
+		dots.forEach(dot => {
+			dot.addEventListener('click', () => {
+				currentIndex = parseInt(dot.getAttribute('data-index'));
+				updateCarousel();
+			});
+		});
+
+		nextOfferButton.addEventListener('click', () => {
+			productIndex = (productIndex + 1) % offers.length;
+			updateProduct();
+		});
+
+		// Auto-advance carousel every 5 seconds
+		setInterval(() => {
+			currentIndex = (currentIndex + 1) % slides.length;
+			updateCarousel();
+		}, 5000);
+	}
+}();
