@@ -19,6 +19,50 @@
 
 			if (params) {
 				try {
+					// Find the placeholder element
+					const placeholder = document.getElementById('stacktome-widget-' + params.widgetId);
+					if (!placeholder) return;
+
+					// Show loading indicator
+					const loadingIndicator = placeholder.querySelector('.loading-indicator');
+					if (loadingIndicator) {
+						loadingIndicator.style.display = 'flex';
+					}
+
+					// Initialize Snowplow if not already initialized
+					if(!window.stSnowplow && params.trackingApiKey && params.domain && params.appId){
+						var o = XMLHttpRequest.prototype.open;
+						XMLHttpRequest.prototype.open = function(){
+							var res = o.apply(this, arguments);
+							var err = new Error();  
+							if((arguments[1] || '').indexOf('stacktome') > 0)
+								this.setRequestHeader('apikey', params.trackingApiKey);
+							return res;
+						}
+							
+						;(function () {
+							;(function(p,l,o,w,i,n,g){if(!p[i]){p.GlobalSnowplowNamespace=p.GlobalSnowplowNamespace||[];
+							p.GlobalSnowplowNamespace.push(i);p[i]=function(){(p[i].q=p[i].q||[]).push(arguments)
+							};p[i].q=p[i].q||[];n=l.createElement(o);g=l.getElementsByTagName(o)[0];n.async=1;
+							n.src=w;g.parentNode.insertBefore(n,g)}}(window,document,"script","https://cdn.jsdelivr.net/npm/@snowplow/javascript-tracker@3.17.0/dist/sp.js","stSnowplow")); 
+						
+							window.stSnowplow('newTracker', 'cf3','https://services.stacktome.com/clickstream/collector',
+							{ // Initialise a tracker
+								appId: params.appId ,
+								platform: 'web',
+								cookieDomain: params.domain,
+								sessionCookieTimeout: 3600, // one hour
+								post: true,
+								contexts: {
+									performanceTiming: true,
+									webPage: true
+								},
+								crossDomain: true,
+								withCredentials: true
+							});
+						}());
+					}
+
 					// Prepare request body with payload
 					const requestBody = {
 						...params.widgetPayload,
@@ -43,10 +87,12 @@
 
 					// Get the response data
 					const data = await response.json();
-					
-					// Find the placeholder element
-					const placeholder = document.getElementById('stacktome-widget-' + params.widgetId);
-					
+
+					// Hide loading indicator after data is loaded
+					if (loadingIndicator) {
+						loadingIndicator.style.display = 'none';
+					}
+
 					if (placeholder) {
 						if (data && data.data) {
 							// Create a temporary div to decode HTML entities
@@ -115,40 +161,6 @@
 			}
 		}
 	}();
-
-	// Initialize Snowplow if not already initialized
-	if(!window.stSnowplow && params.trackingApiKey && params.domain && params.appId){
-		var o = XMLHttpRequest.prototype.open;
-		XMLHttpRequest.prototype.open = function(){
-			var res = o.apply(this, arguments);
-			var err = new Error();  
-			if((arguments[1] || '').indexOf('stacktome') > 0)
-				this.setRequestHeader('apikey', params.trackingApiKey);
-			return res;
-		}
-			
-		;(function () {
-			;(function(p,l,o,w,i,n,g){if(!p[i]){p.GlobalSnowplowNamespace=p.GlobalSnowplowNamespace||[];
-			p.GlobalSnowplowNamespace.push(i);p[i]=function(){(p[i].q=p[i].q||[]).push(arguments)
-			};p[i].q=p[i].q||[];n=l.createElement(o);g=l.getElementsByTagName(o)[0];n.async=1;
-			n.src=w;g.parentNode.insertBefore(n,g)}}(window,document,"script","https://cdn.jsdelivr.net/npm/@snowplow/javascript-tracker@3.17.0/dist/sp.js","stSnowplow")); 
-		
-			window.stSnowplow('newTracker', 'cf3','https://services.stacktome.com/clickstream/collector',
-			{ // Initialise a tracker
-				appId: params.appId ,
-				platform: 'web',
-				cookieDomain: params.domain,
-				sessionCookieTimeout: 3600, // one hour
-				post: true,
-				contexts: {
-					performanceTiming: true,
-					webPage: true
-				},
-				crossDomain: true,
-				withCredentials: true
-			});
-		}());
-	}
 
 	// Widget functionality
 	function initializeWidget(container, data) {
@@ -257,10 +269,42 @@
 
 			trackOfferImpression(currentOffer);
 
-			// Update carousel images
+			// Show loading indicator for images
+			const imageLoadingIndicator = container.querySelector('.loading-indicator');
+			if (imageLoadingIndicator) {
+				imageLoadingIndicator.style.display = 'flex';
+			}
+
+			// Update carousel images with loading handling
+			let imagesLoaded = 0;
+			const totalImages = slides.length;
+			
 			slides.forEach((slide, i) => {
-				slide.src = currentOffer.productImages[i] || currentOffer.productImages[0];
-				slide.alt = `Product Image ${i + 1}`;
+				const newSrc = currentOffer.productImages[i] || currentOffer.productImages[0];
+				
+				// Create a new image to preload
+				const img = new Image();
+				img.onload = function() {
+					slide.src = newSrc;
+					slide.alt = `Product Image ${i + 1}`;
+					imagesLoaded++;
+					
+					// Hide loading indicator when all images are loaded
+					if (imagesLoaded === totalImages && imageLoadingIndicator) {
+						imageLoadingIndicator.style.display = 'none';
+					}
+				};
+				img.onerror = function() {
+					// Still update the slide even if image fails to load
+					slide.src = newSrc;
+					slide.alt = `Product Image ${i + 1}`;
+					imagesLoaded++;
+					
+					if (imagesLoaded === totalImages && imageLoadingIndicator) {
+						imageLoadingIndicator.style.display = 'none';
+					}
+				};
+				img.src = newSrc;
 			});
 
 			// Update product details
@@ -352,8 +396,13 @@
 
 			// Update rating and reviews
 			const filledStars = container.querySelector('.filled-stars');
-			filledStars.style.width = `${currentOffer.rating * 20}%`;
-			container.querySelector('.rating-count').textContent = `${currentOffer.reviewCount} reviews`;
+			if (filledStars) {
+				filledStars.style.width = `${currentOffer.rating * 20}%`;
+			}
+			const ratingCount = container.querySelector('.rating-count');
+			if (ratingCount) {
+				ratingCount.textContent = `${currentOffer.reviewCount} reviews`;
+			}
 
 			// Update expiration date if exists
 			const expirationElem = container.querySelector('.expiration-badge');
