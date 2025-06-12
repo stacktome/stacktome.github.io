@@ -1,0 +1,478 @@
+<div id="stacktome-offer-widget" class="product-recommendation">
+    <div class="product-image-carousel">
+      <div class="carousel-container">
+        <div class="carousel-track">
+          <!-- Ensure there are multiple images for each slide -->
+          <div class="carousel-slide">
+            <img src="https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto/t_Product550s/v1/Raw/110128_standing.jpg" alt="Product Image 1" style="opacity: 0; transition: opacity 0.3s;" onload="this.style.opacity='1'">
+          </div>
+          <div class="carousel-slide">
+            <img src="https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto/t_Product550s/v1/Raw/110128_overview.jpg" alt="Product Image 2" style="opacity: 0; transition: opacity 0.3s;" onload="this.style.opacity='1'">
+          </div>
+          <div class="carousel-slide">
+            <img src="https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto/t_Product550s/v1/Raw/110128_closeup.jpg" alt="Product Image 3" style="opacity: 0; transition: opacity 0.3s;" onload="this.style.opacity='1'">
+          </div>
+        </div>
+        <div class="loading-indicator" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); display: none; justify-content: center; align-items: center; z-index: 2;">
+          <div class="loading-spinner" style="width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top: 3px solid #ec6f34; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+        </div>
+        <button class="carousel-button prev" aria-label="Previous image">❮</button>
+        <button class="carousel-button next" aria-label="Next image">❯</button>
+      </div>
+      <div class="carousel-dots">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+      </div>
+      
+          <span class="discount-badge percent">-10%</span>
+        
+      
+      <span class="expiration-badge">Ends 2025-04-11T15:00:00Z</span>
+      
+    </div>
+    <div class="product-info">
+      <div class="product-header">                
+        <h3 class="product-name">Burst of Joy</h3>
+        <a href="https://www.serenataflowers.com/flowers/product/110128/"  data-offer-id="1" target="_blank" class="more-info-link">More Info ↗</a>
+      </div>
+      
+      <div class="product-rating">
+        <div class="star-rating">
+          <span class="stars">
+            <span class="filled-stars" style="width: 0%;">★★★★★</span>
+            <span class="empty-stars">★★★★★</span>
+          </span>                                                                                                     
+          <span class="rating-count">50 reviews</span>
+        </div>
+      </div>
+      
+      <div class="product-description-container">
+        <p class="product-description">This burst of floral joy captures the essence of all celebrations. A vibrant waltz of orange, red and yellow roses with orange Alstroemeria will take their breath away.</p>
+        <button class="show-more-btn">Show More</button>
+      </div>
+      
+      <!-- Product Variants Section -->
+      <div class="product-variants-container" style="display: none;">
+        <label class="variant-label">Select Option:</label>
+        <select class="variant-dropdown">
+          <!-- Options will be populated by JavaScript -->
+        </select>
+      </div>
+      
+      <div class="product-price">
+        <span class="current-price">£32.22</span>
+        <span class="original-price">£34.99</span>
+      </div>
+      <button class="checkout-btn" data-offer-url="https://www.serenataflowers.com/flowers/product/110128/" data-offer-id="1">Buy now</button>
+      <button id="new-offer-btn" class="new-offer-btn">Next Offer</button>
+    </div>
+  </div>
+  
+  <input type="hidden" id="offers-data" value='[{"productName":"Burst of Joy","productUrl":"https://www.serenataflowers.com/flowers/product/110128/","productDescription":"This burst of floral joy captures the essence of all celebrations. A vibrant waltz of orange, red and yellow roses with orange Alstroemeria will take their breath away.","productPrice":32.22,"productPriceCurrencySymbol":"£","productVariations":[{"sku":"110128-1","name":"Basic","price":32.22},{"sku":"110128-2","name":"Deluxe","price":35},{"sku":"110128-3","name":"Grand","price":38}],"productSku":"110128","offerId":"1","offerName":"discount-10","offerValue":10,"offerUrl":"https://www.serenataflowers.com/flowers/product/110128/","customerKey":"123456789","couponCode":"ST-01","offerType":"discountPercent","rating":4,"reviewCount":50,"productImages":["https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto/t_Product550s/v1/Raw/110128_standing.jpg","https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto/t_Product550s/v1/Raw/110128_overview.jpg","https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto/t_Product550s/v1/Raw/110128_closeup.jpg"],"expireAt":"2025-04-11T15:00:00Z"},{"productName":"Floral Ratatouille","productUrl":"https://www.serenataflowers.com/flowers/product/110120/","productDescription":"Spot a rainbow on a cloudy day. Give a hug when they expect a handshake. Send flowers when they only expect a thank you note. This joyful cocktail of Lilies, Stocks, Asters, Solidago and Roses will arrive effortlessly in their home through the letterbox. Our Letterbox blooms may look a little tired after their journey, please give them up to 48 hours to perk up in a vase to look their best.","productPrice":45,"productPriceCurrencySymbol":"£","productSku":"110120","offerId":"2","offerName":"discount-30","offerValue":30,"offerUrl":"https://www.google.com ","customerKey":"123456789","couponCode":"ST-02","offerType":"discountFixed","rating":5,"reviewCount":100,"productImages":["https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110120_standing.jpg","https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110120_overview.jpg","https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110120_closeup.jpg"],"expireAt":"2025-05-15T12:00:00Z"},{"productName":"Joyful Wishes","productUrl":"https://www.serenataflowers.com/flowers/product/110716/","productDescription":"A traditional mix of cream-coloured lilies, santini, alstro and germini, finished with a spritz of purple limonium; this bouquet is a timeless classic of beauty and grace. Delivered artistically arranged for added wow-factor, your product will arrive in an eco-friendly gel-bag to ensure freshness. Wash off the gel and cut 3cm off the stem before arranging in your chosen vase.","productPrice":77,"productPriceCurrencySymbol":"£","productSku":"110716","offerId":"3","offerName":"credit-10","offerValue":33,"offerUrl":"https://www.google.com ","customerKey":"123456789","couponCode":"ST-03","offerType":"discountCredit","rating":3.5,"reviewCount":10,"productImages":["https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110716_standing.jpg","https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110716_overview.jpg","https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110716_closeup.jpg"],"expireAt":"2025-05-17T12:00:00Z"},{"productName":"Ivory Dreams","productUrl":"https://www.serenataflowers.com/flowers/product/110713/","productDescription":"An elegant bunch of ivory coloured blooms","productPrice":68,"productPriceCurrencySymbol":"£","productSku":"110713","offerId":"4","offerName":"free-prod","offerValue":0,"offerUrl":"https://www.google.com ","customerKey":"123456789","couponCode":"ST-04","offerType":"freeProduct","rating":4.5,"reviewCount":65,"productImages":["https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110713_standing.jpg","https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110713_overview.jpg","https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110713_closeup.jpg"],"expireAt":"2025-05-10T12:00:00Z"},{"productName":"Loving Embrace","productUrl":"https://www.serenataflowers.com/flowers/product/110606/","productDescription":"As sweet and reassuring as a loving embrace","productPrice":100,"productPriceCurrencySymbol":"£","productSku":"110606","offerId":"5","offerName":"discount-50","offerValue":50,"offerUrl":"https://www.google.com ","customerKey":"123456789","couponCode":"ST-05","offerType":"discountPercent","rating":2.5,"reviewCount":165,"productImages":["https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110606_standing.jpg","https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110606_overview.jpg","https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110606_closeup.jpg"],"expireAt":"2025-05-17T12:00:00Z"}]'>
+  
+  
+  <style>
+    .product-recommendation {
+      font-family: Arial, sans-serif;
+      max-width: 300px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      background: white;
+    }
+    
+    .product-image-carousel {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+    
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    
+    .carousel-track {
+      display: flex;
+      transition: transform 0.3s ease-in-out;
+      height: 100%;
+    }
+    
+    .carousel-slide {
+      min-width: 100%;
+      height: 100%;
+    }
+    
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .carousel-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      border: none;
+      outline: none;
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      min-height: 36px;
+      max-width: 36px;
+      max-height: 36px;
+      border-radius: 50%;
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.8;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    
+    .carousel-button:hover {
+      opacity: 1;
+      border: 2px solid #333;
+      background: rgba(255, 255, 255, 0.95);
+    }
+    
+    .carousel-button.prev {
+      left: 10px;
+    }
+    
+    .carousel-button.next {
+      right: 10px;
+    }
+    
+    .carousel-dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+    
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .dot.active {
+      background: white;
+    }
+    
+    .discount-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 14px;
+      z-index: 1;
+      background: #e74c3c;
+      color: white;
+    }
+    
+    .discount-badge.percent {
+      background-color: #ff4757 !important;
+      color: white !important;
+    }
+    
+    .discount-badge.fixed {
+      background: #3498db;
+    }
+    
+    .discount-badge.credit {
+      background: #2ecc71;
+    }
+    
+    .discount-badge.free {
+      background: #9b59b6;
+    }
+    
+    .credit-info {
+      display: flex;
+      align-items: center;
+      margin-top: 4px;
+      padding: 4px 8px;
+      background: rgba(46, 204, 113, 0.1);
+      border-radius: 4px;
+      color: #2ecc71;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .credit-info::before {
+      content: '💰';
+      margin-right: 4px;
+    }
+    
+    .expiration-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      z-index: 1;
+    }
+    
+    .product-info {
+      padding: 15px;
+    }
+    
+    .product-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    
+    .product-name {
+      margin: 0;
+      font-size: 18px;
+      color: #333;
+      flex: 1;
+    }
+    
+    .more-info-link {
+      display: inline-block;
+      font-size: 12px;
+      color: #666;
+      text-decoration: none;
+      transition: color 0.2s;
+      margin-left: 8px;
+      white-space: nowrap;
+    }
+    
+    .more-info-link:hover {
+      color: #ec6f34;
+    }
+    
+    .product-rating {
+      margin-bottom: 8px;
+    }
+    
+    .star-rating {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+    }
+    
+    .stars {
+      position: relative;
+      display: inline-block;
+      color: #ddd;
+      font-size: 16px;
+      margin-right: 5px;
+    }
+    
+    .filled-stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: #f1ce31;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    
+    .rating-count {
+      color: #666;
+      font-size: 12px;
+    }
+    
+    .product-description-container {
+      position: relative;
+      margin-bottom: 12px;
+    }
+  
+    .product-description {
+      font-size: 14px;
+      color: #666;
+      margin: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+  
+    .product-description.truncated {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+  
+    .show-more-btn {
+      font-size: 12px;
+      color: #ec6f34;
+      background: none !important;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      margin-top: 4px;
+      display: none;
+      outline: none;
+      text-decoration: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+  
+    .show-more-btn:hover {
+      color: #d85a28 !important;
+      background: none !important;
+      text-decoration: none !important;
+    }
+    
+    .show-more-btn:focus {
+      color: #d85a28 !important;
+      background: none !important;
+      outline: none !important;
+      text-decoration: none !important;
+    }
+    
+    .product-price {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    
+    .current-price {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin-right: 8px;
+    }
+    
+    .original-price {
+      font-size: 14px;
+      color: #999;
+      text-decoration: line-through;
+    }
+    
+    .checkout-btn {
+      width: 100%;
+      padding: 10px;
+      background: #ec6f34;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 8px;
+    }
+    
+    .checkout-btn:hover:not([disabled]) {
+      background: #d85a28;
+    }
+    
+    .checkout-btn:disabled,
+    .checkout-btn[style*="cursor: not-allowed"] {
+      background: #bbb !important;
+      cursor: not-allowed !important;
+      opacity: 0.6 !important;
+    }
+    
+    .new-offer-btn {
+      width: 100%;
+      padding: 10px;
+      background: #fff;
+      color: #ec6f34;
+      border: 1px solid #ec6f34;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .new-offer-btn:hover {
+      background: #fdf2ee;
+    }
+  
+    .loading-indicator {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2;
+    }
+  
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #ec6f34;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  
+    .product-variants-container {
+      margin-bottom: 12px;
+    }
+    
+    .variant-label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 6px;
+    }
+    
+    .variant-dropdown {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      background: white;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    
+    .variant-dropdown:hover,
+    .variant-dropdown:focus {
+      border-color: #ec6f34;
+    }
+    
+    .variant-dropdown option {
+      padding: 8px;
+    }
+  </style>
+  
+    <!-- Snowplow init finish -->
+  <script id='stacktome-reviews-recommendations-script-1' 
+  class='stacktome-reviews-widget-script' 
+  src="widget_sample.js" 
+  filter-params='{ "widgetId": "1", "apiKey": "kNFRb0Q9OX2cYrkkhZQEE6U7fMRkH5JJ", "staging": false, "trackingApiKey": "koRrISt4zxBSfTbPFsD4raGbeptHbpKh", "domain": "wildearth.com.au", "appId": "wild_earth", "widgetPayload": { "products": [ { "sku": "AWWC", "quantity": 1, "price": 512.07 } ], "orderId": "14222", "email": "test@test.com" } }'>
+  </script>
+  
