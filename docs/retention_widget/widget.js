@@ -48,7 +48,7 @@
 							p.GlobalSnowplowNamespace.push(i);p[i]=function(){(p[i].q=p[i].q||[]).push(arguments)
 							};p[i].q=p[i].q||[];n=l.createElement(o);g=l.getElementsByTagName(o)[0];n.async=1;
 							n.src=w;g.parentNode.insertBefore(n,g)}}(window,document,"script","https://cdn.jsdelivr.net/npm/@snowplow/javascript-tracker@3.17.0/dist/sp.js","stSnowplow")); 
-						
+						//TODO change to staging check
 							window.stSnowplow('newTracker', 'cf3','https://services.stacktome.com/clickstream/collector',
 							{ // Initialise a tracker
 								appId: params.appId ,
@@ -157,12 +157,11 @@
 					console.error('Error fetching widget data:', error);
 					// Display error in the placeholder if it exists
 					const placeholder = document.getElementById('stacktome-widget-' + params.widgetId);
-					
-					// if (placeholder) {
-					// 	placeholder.innerHTML = `<div style="color: red;">Error loading widget: ${error.message}</div>`;
-					// }
+					if (placeholder && params.staging) {
+						placeholder.innerHTML = `<div style="color: red;">Error loading widget: ${error.message}</div>`;
+					}
 
-					if(window.stSnowplow){
+					if(!params.staging && window.stSnowplow){
 						window.stSnowplow('trackSelfDescribingEvent', {
 							event: {
 								schema: 'iglu:com.stacktome/app_error/jsonschema/1-0-0',
