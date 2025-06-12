@@ -18,6 +18,9 @@
 			}(script);
 
 			if (params) {
+				let requestBody = null;
+				let response = null;
+				
 				try {
 					// Find the placeholder element
 					const placeholder = document.getElementById('stacktome-widget-' + params.widgetId);
@@ -64,13 +67,13 @@
 					}
 
 					// Prepare request body with payload
-					const requestBody = {
+					requestBody = {
 						...params.widgetPayload,
 						widgetId: params.widgetId
 					};
 
 					// Fetch pre-rendered HTML
-					const response = await fetch(
+					response = await fetch(
 						`https://services${params.staging ? '-staging' : ''}.stacktome.com/api/recommendations/v1/templates/${params.widgetId}/recommendations?apikey=${params.apiKey}`,
 						{
 							body: JSON.stringify(requestBody),
@@ -154,9 +157,31 @@
 					console.error('Error fetching widget data:', error);
 					// Display error in the placeholder if it exists
 					const placeholder = document.getElementById('stacktome-widget-' + params.widgetId);
-					if (placeholder) {
-						placeholder.innerHTML = `<div style="color: red;">Error loading widget: ${error.message}</div>`;
+					
+					// if (placeholder) {
+					// 	placeholder.innerHTML = `<div style="color: red;">Error loading widget: ${error.message}</div>`;
+					// }
+
+					if(window.stSnowplow){
+						window.stSnowplow('trackSelfDescribingEvent', {
+							event: {
+								schema: 'iglu:com.stacktome/app_error/jsonschema/1-0-0',
+								data: {
+									"type": "widget_load_error",
+									"url": window.location.href,
+									"apiUrl": `https://services${params.staging ? '-staging' : ''}.stacktome.com/api/recommendations/v1/templates/${params.widgetId}/recommendations?apikey=${params.apiKey}`,
+									"element": "offer-widget-div",
+									"elementId": params.widgetId,
+									"message": error.message,
+									"stacktrace": error.stack,
+									"request": requestBody ? JSON.stringify(requestBody) : 'undefined',
+									"response": response ? JSON.stringify(response) : 'undefined',
+								}
+							}
+						});
 					}
+
+					
 				}
 			}
 		}
