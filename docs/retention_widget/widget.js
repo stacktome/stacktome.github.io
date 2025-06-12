@@ -197,6 +197,7 @@
 
 		let currentIndex = 0;
 		let productIndex = 0;
+		let selectedVariantIndex = -1; // Track selected variant, -1 means no selection
 
 		// Parse offers data
 		const offersData = container.querySelector('#offers-data');
@@ -238,9 +239,39 @@
 		};
 
 		const redirectToOffer = function() {
-			const url = container.querySelector('.checkout-btn').dataset.offerUrl;
-			if (url) {
-				window.location.href = url;
+			const currentOffer = offers[productIndex];
+			
+			// Check if variants exist and none is selected
+			if (currentOffer.productVariations && currentOffer.productVariations.length > 0 && selectedVariantIndex === -1) {
+				// Highlight the dropdown to indicate selection is required
+				const variantDropdown = container.querySelector('.variant-dropdown');
+				if (variantDropdown) {
+					variantDropdown.style.borderColor = '#e74c3c';
+					variantDropdown.style.boxShadow = '0 0 5px rgba(231, 76, 60, 0.5)';
+					variantDropdown.focus();
+					
+					// Remove highlight after 3 seconds
+					setTimeout(() => {
+						variantDropdown.style.borderColor = '#ddd';
+						variantDropdown.style.boxShadow = 'none';
+					}, 3000);
+				}
+				return; // Don't proceed with redirect
+			}
+			
+			let offerUrl = currentOffer.offerUrl;
+			
+			// Replace SKU in URL if variants exist and a variant is selected
+			if (currentOffer.productVariations && currentOffer.productVariations.length > 0 && selectedVariantIndex >= 0) {
+				const selectedVariant = currentOffer.productVariations[selectedVariantIndex];
+				if (selectedVariant && selectedVariant.sku) {
+					// Replace the base SKU with variant SKU in the URL
+					offerUrl = offerUrl.replace(currentOffer.productSku, selectedVariant.sku);
+				}
+			}
+			
+			if (offerUrl) {
+				window.location.href = offerUrl;
 			}
 		};
 
@@ -338,61 +369,141 @@
 			container.querySelector('.checkout-btn').dataset.offerId = currentOffer.offerId;
 			container.querySelector('.checkout-btn').dataset.offerUrl = currentOffer.offerUrl;
 			
-			// Update price and discount badge based on offer type
-			const originalPrice = parseFloat(currentOffer.productPrice);
-			const currencySymbol = currentOffer.productPriceCurrencySymbol;
-			let finalPrice = originalPrice;
-			let discountBadge = '';
-
-			switch(currentOffer.offerType) {
-				case 'discountPercent':
-					finalPrice = originalPrice * (1 - currentOffer.offerValue / 100);
-					discountBadge = `-${currentOffer.offerValue}%`;
-					break;
-				case 'discountFixed':
-					finalPrice = originalPrice - currentOffer.offerValue;
-					discountBadge = `-${currencySymbol}${currentOffer.offerValue}`;
-					break;
-				case 'discountCredit':
-					finalPrice = originalPrice;
-					discountBadge = `+${currencySymbol}${currentOffer.offerValue}`;
-					break;
-				case 'freeProduct':
-					finalPrice = 0;
-					discountBadge = 'FREE';
-					break;
-			}
-
-			// Update price display
-			container.querySelector('.current-price').textContent = `${currencySymbol}${finalPrice.toFixed(2)}`;
-			container.querySelector('.original-price').textContent = `${currencySymbol}${originalPrice.toFixed(2)}`;
+			// Handle product variants
+			const variantsContainer = container.querySelector('.product-variants-container');
+			const variantDropdown = container.querySelector('.variant-dropdown');
 			
-			// Only show strikethrough price for percent, fixed discounts, and free products
-			const shouldShowOriginalPrice = currentOffer.offerType === 'discountPercent' || 
-										currentOffer.offerType === 'discountFixed' || 
-										currentOffer.offerType === 'freeProduct';
-			container.querySelector('.original-price').style.display = shouldShowOriginalPrice ? 'inline' : 'none';
-
-			// Update discount badge
-			const discountElem = container.querySelector('.discount-badge');
-			if (discountElem) {
-				discountElem.textContent = discountBadge;
-				discountElem.className = `discount-badge ${currentOffer.offerType}`;
-			}
-
-			// Add credit info if applicable
-			const priceContainer = container.querySelector('.product-price');
-			const existingCreditInfo = priceContainer.querySelector('.credit-info');
-			if (existingCreditInfo) {
-				existingCreditInfo.remove();
+			if (currentOffer.productVariations && currentOffer.productVariations.length > 0) {
+				// Show variants container
+				variantsContainer.style.display = 'block';
+				
+				// Clear existing options
+				variantDropdown.innerHTML = '';
+				
+				// Add placeholder option
+				const placeholderOption = document.createElement('option');
+				placeholderOption.value = '';
+				placeholderOption.textContent = 'Please select an option';
+				placeholderOption.disabled = true;
+				placeholderOption.selected = true;
+				variantDropdown.appendChild(placeholderOption);
+				
+				// Populate dropdown with variants
+				currentOffer.productVariations.forEach((variant, index) => {
+					const option = document.createElement('option');
+					option.value = index;
+					option.textContent = `${variant.name} - ${currentOffer.productPriceCurrencySymbol}${variant.price.toFixed(2)}`;
+					variantDropdown.appendChild(option);
+				});
+				
+				// Reset selected variant index for new product
+				if (selectedVariantIndex >= currentOffer.productVariations.length) {
+					selectedVariantIndex = -1;
+				}
+				
+				// Set dropdown value based on selectedVariantIndex
+				variantDropdown.value = selectedVariantIndex >= 0 ? selectedVariantIndex : '';
+				
+				// Add event listener for variant selection
+				variantDropdown.onchange = function() {
+					selectedVariantIndex = this.value === '' ? -1 : parseInt(this.value);
+					updatePriceDisplay();
+					updateBuyButtonState();
+				};
+			} else {
+				// Hide variants container if no variations
+				variantsContainer.style.display = 'none';
+				selectedVariantIndex = -1; // Reset to no selection for products without variants
 			}
 			
-			if (currentOffer.offerType === 'discountCredit') {
-				const creditInfo = document.createElement('span');
-				creditInfo.className = 'credit-info';
-				creditInfo.textContent = `Earn ${currencySymbol}${currentOffer.offerValue} in credits`;
-				priceContainer.appendChild(creditInfo);
+			// Function to update buy button state
+			function updateBuyButtonState() {
+				const checkoutBtn = container.querySelector('.checkout-btn');
+				const currentOffer = offers[productIndex];
+				
+				// If product has variants but none selected, disable button
+				if (currentOffer.productVariations && currentOffer.productVariations.length > 0 && selectedVariantIndex === -1) {
+					checkoutBtn.style.opacity = '0.6';
+					checkoutBtn.style.cursor = 'not-allowed';
+					checkoutBtn.textContent = 'Select option to buy';
+				} else {
+					checkoutBtn.style.opacity = '1';
+					checkoutBtn.style.cursor = 'pointer';
+					checkoutBtn.textContent = 'Buy now';
+				}
 			}
+			
+			// Function to update price display based on selected variant
+			function updatePriceDisplay() {
+				const currentOffer = offers[productIndex];
+				let basePrice = parseFloat(currentOffer.productPrice);
+				
+				// Use variant price if variants exist and one is selected
+				if (currentOffer.productVariations && currentOffer.productVariations.length > 0 && selectedVariantIndex >= 0) {
+					const selectedVariant = currentOffer.productVariations[selectedVariantIndex];
+					if (selectedVariant) {
+						basePrice = parseFloat(selectedVariant.price);
+					}
+				}
+				
+				const currencySymbol = currentOffer.productPriceCurrencySymbol;
+				let finalPrice = basePrice;
+				let discountBadge = '';
+
+				switch(currentOffer.offerType) {
+					case 'discountPercent':
+						finalPrice = basePrice * (1 - currentOffer.offerValue / 100);
+						discountBadge = `-${currentOffer.offerValue}%`;
+						break;
+					case 'discountFixed':
+						finalPrice = basePrice - currentOffer.offerValue;
+						discountBadge = `-${currencySymbol}${currentOffer.offerValue}`;
+						break;
+					case 'discountCredit':
+						finalPrice = basePrice;
+						discountBadge = `+${currencySymbol}${currentOffer.offerValue}`;
+						break;
+					case 'freeProduct':
+						finalPrice = 0;
+						discountBadge = 'FREE';
+						break;
+				}
+
+				// Update price display
+				container.querySelector('.current-price').textContent = `${currencySymbol}${finalPrice.toFixed(2)}`;
+				container.querySelector('.original-price').textContent = `${currencySymbol}${basePrice.toFixed(2)}`;
+				
+				// Only show strikethrough price for percent, fixed discounts, and free products
+				const shouldShowOriginalPrice = currentOffer.offerType === 'discountPercent' || 
+											currentOffer.offerType === 'discountFixed' || 
+											currentOffer.offerType === 'freeProduct';
+				container.querySelector('.original-price').style.display = shouldShowOriginalPrice ? 'inline' : 'none';
+
+				// Update discount badge
+				const discountElem = container.querySelector('.discount-badge');
+				if (discountElem) {
+					discountElem.textContent = discountBadge;
+					discountElem.className = `discount-badge ${currentOffer.offerType}`;
+				}
+
+				// Add credit info if applicable
+				const priceContainer = container.querySelector('.product-price');
+				const existingCreditInfo = priceContainer.querySelector('.credit-info');
+				if (existingCreditInfo) {
+					existingCreditInfo.remove();
+				}
+				
+				if (currentOffer.offerType === 'discountCredit') {
+					const creditInfo = document.createElement('span');
+					creditInfo.className = 'credit-info';
+					creditInfo.textContent = `Earn ${currencySymbol}${currentOffer.offerValue} in credits`;
+					priceContainer.appendChild(creditInfo);
+				}
+			}
+			
+			// Initial price update and button state
+			updatePriceDisplay();
+			updateBuyButtonState();
 
 			// Update description with truncation
 			const description = currentOffer.productDescription;
@@ -517,6 +628,7 @@
 
 		nextOfferButton.addEventListener('click', () => {
 			productIndex = (productIndex + 1) % offers.length;
+			selectedVariantIndex = -1; // Reset variant selection for new offer
 			updateProduct();
 		});
 

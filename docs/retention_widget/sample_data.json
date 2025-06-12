@@ -6,11 +6,28 @@
         "productDescription": "This burst of floral joy captures the essence of all celebrations. A vibrant waltz of orange, red and yellow roses with orange Alstroemeria will take their breath away.",
        "productPrice": 32.22, 
         "productPriceCurrencySymbol": "£",
+        "productVariations": [
+          {
+            "sku": "110128-1",
+            "name": "Basic",
+            "price": 32.22
+          },
+          {
+            "sku": "110128-2",
+            "name": "Deluxe",
+            "price": 35.00
+          },
+          {
+            "sku": "110128-3",
+            "name": "Grand",
+            "price": 38.00
+          }
+        ],
         "productSku": "110128",
         "offerId": "1",
         "offerName": "discount-10",
         "offerValue": 10,
-        "offerUrl": "https://www.google.com ",
+        "offerUrl": "https://www.serenataflowers.com/flowers/product/110128/",
         "customerKey":"123456789",
         "couponCode":"ST-01",
         "offerType": "discountPercent",

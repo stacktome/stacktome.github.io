@@ -58,6 +58,15 @@
       <p class="product-description">{{offers[0].productDescription}}</p>
       <button class="show-more-btn">Show More</button>
     </div>
+    
+    <!-- Product Variants Section -->
+    <div class="product-variants-container" style="display: none;">
+      <label class="variant-label">Select Option:</label>
+      <select class="variant-dropdown">
+        <!-- Options will be populated by JavaScript -->
+      </select>
+    </div>
+    
     <div class="product-price">
       <span class="current-price">{{offers[0].productPriceCurrencySymbol}}{{offers[0].productPrice}}</span>
       <span class="original-price">£34.99</span>
@@ -375,12 +384,19 @@
     border-radius: 4px;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.2s;
     margin-bottom: 8px;
   }
   
-  .checkout-btn:hover {
+  .checkout-btn:hover:not([disabled]) {
     background: #d85a28;
+  }
+  
+  .checkout-btn:disabled,
+  .checkout-btn[style*="cursor: not-allowed"] {
+    background: #bbb !important;
+    cursor: not-allowed !important;
+    opacity: 0.6 !important;
   }
   
   .new-offer-btn {
@@ -424,6 +440,39 @@
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+  }
+
+  .product-variants-container {
+    margin-bottom: 12px;
+  }
+  
+  .variant-label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 6px;
+  }
+  
+  .variant-dropdown {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    background: white;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  
+  .variant-dropdown:hover,
+  .variant-dropdown:focus {
+    border-color: #ec6f34;
+  }
+  
+  .variant-dropdown option {
+    padding: 8px;
   }
 </style>
 
