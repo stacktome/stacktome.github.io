@@ -419,13 +419,22 @@
 			}
 
 			// Update rating and reviews
+			const ratingContainer = container.querySelector('.product-rating');
 			const filledStars = container.querySelector('.filled-stars');
-			if (filledStars) {
-				filledStars.style.width = `${currentOffer.rating * 20}%`;
-			}
 			const ratingCount = container.querySelector('.rating-count');
-			if (ratingCount) {
+			
+			if (currentOffer.rating && currentOffer.reviewCount && filledStars && ratingCount) {
+				// Show rating container and update values
+				if (ratingContainer) {
+					ratingContainer.style.display = 'block';
+				}
+				filledStars.style.width = `${currentOffer.rating * 20}%`;
 				ratingCount.textContent = `${currentOffer.reviewCount} reviews`;
+			} else {
+				// Hide rating container when rating or reviewCount is missing
+				if (ratingContainer) {
+					ratingContainer.style.display = 'none';
+				}
 			}
 
 			// Update expiration date if exists

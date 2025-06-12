@@ -44,17 +44,15 @@
       <a href="{{offers[0].productUrl}}"  data-offer-id="{{offers[0].offerId}}" target="_blank" class="more-info-link">More Info ↗</a>
     </div>
     
-    {% if offers[0].rating and offers[0].reviewCount %}
     <div class="product-rating">
       <div class="star-rating">
         <span class="stars">
-          <span class="filled-stars" style="width: {{ offers[0].rating | times: 20 }}%;">★★★★★</span>
+          <span class="filled-stars" style="width: 0%;">★★★★★</span>
           <span class="empty-stars">★★★★★</span>
         </span>                                                                                                     
         <span class="rating-count">{{offers[0].reviewCount}} reviews</span>
       </div>
     </div>
-    {% endif %}
     
     <div class="product-description-container">
       <p class="product-description">{{offers[0].productDescription}}</p>
