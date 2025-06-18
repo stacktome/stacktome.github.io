@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StackTome Widget Demo</title>
+    
+</head>
+<body>
+    <h1>StackTome Widget Demo</h1>
+    
+    
+
+    <!-- Widget placeholder -->
+    <div id="stacktome-widget-1" class="widget-container">
+    </div>
+    <!-- src="https://cdn.stacktome.com/frontend/offer-widget/production/widget.js"  -->
+
+
+    <!-- Snowplow track page view -->
+<script type="text/javascript">
+  var data = { currency: "AUD", transaction_id: "1234567890", items: [ { item_id: "318061", item_parent_id: "", item_name: "Hilleberg Y-Peg Extra Large Light Weight Tent Pegs " + "- 10 pack", discount: NaN, affiliation: "www.wildearth.com.au", item_brand: "Hilleberg", item_category: "Tent Accessories", price: 165.95, currency: "AUD", quantity: 2 }, { item_id: "RAQAP-81-ORA-LXL", item_parent_id: "RAQAP-81-ORA", item_name: "Rab Hyperon 65L Hiking Backpack - Orion Blue/Anthra" + "cite - L/XL", discount: NaN, affiliation: "www.wildearth.com.au", item_brand: "Rab", item_category: "Hiking Packs", price: 499.95, currency: "AUD", quantity: 1 } ], value: 831.85, page_location: "https://www.wildearth.com.au/purchase/shopping_cart" + ".html", page_referrer: "https://www.wildearth.com.au/?gtm_debug=1750280664373" }
+  var email = "test11@test.com"
+  
+  if(data.items && data.items.length > 0){
+    var order = {
+      "products": [],
+      "orderId": data.transaction_id,
+      "email": email
+    }
+    for(let i = 0; i < data.items.length; i++){
+      order.products.push({
+        "sku": data.items[i].item_parent_id || data.items[i].item_id,
+        "quantity": data.items[i].quantity,
+        "price": data.items[i].price
+      });
+    }
+    
+    // Remove existing script if any
+    var existingScript = document.querySelector('#stacktome-reviews-recommendations-script-1');
+    if (existingScript) {
+      existingScript.remove();
+    }
+    
+    // Create new script element with dynamic payload
+    var script = document.createElement('script');
+    script.id = 'stacktome-reviews-recommendations-script-1';
+    script.className = 'stacktome-reviews-widget-script';
+    script.src = 'https://cdn.stacktome.com/frontend/offer-widget/production/widget.js';
+    
+    // Set filter-params with the dynamic order data
+    var filterParams = {
+      "widgetId": "1",
+      "apiKey": "kNFRb0Q9OX2cYrkkhZQEE6U7fMRkH5JJ",
+      "staging": false,
+      "trackingApiKey": "koRrISt4zxBSfTbPFsD4raGbeptHbpKh",
+      "domain": "wildearth.com.au",
+      "appId": "wild_earth",
+      "widgetPayload": order  // Use the dynamic order object
+    };
+    
+    script.setAttribute('filter-params', JSON.stringify(filterParams));
+    
+    // Add script to document
+    document.body.appendChild(script);
+  }
+</script>
+
+</body>
+</html>
