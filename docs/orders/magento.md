@@ -5,8 +5,7 @@ To connect to Magento follow these steps:
   <li>Select from menu - System -> Integrations -> Add new integration</li>
   <li>Enter a descriptive name e.g.: "StackTome orders integration"</li>
   <li>Set Callback URL as https://services.stacktome.com/auth/v1/magento</li>
-  <li> Set Identity URL as https://app.stacktome.com/settings/sales-
-connections/magento</li>
+  <li> Set Identity URL as https://app.stacktome.com/settings/sales-connections/magento</li>
   <li>Open API tab and select the orders checkbox</li>
   <li>After saving click Activate link for newly created integration to connect
 Magento to StackTome</li>
