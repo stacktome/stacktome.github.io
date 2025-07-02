@@ -222,9 +222,12 @@
             hideResults();
 
             try {
-                const corsProxy = 'https://corsproxy.io/?key=f11822ce&url=';
                 const targetUrl = `https://www.trustpilot.com/review/${domain}?languages=all`;
-                const response = await fetch(corsProxy + encodeURIComponent(targetUrl));
+                const response = await fetch('https://proxy.cors.sh/' + targetUrl, {
+                    headers: {
+                        'x-cors-api-key': 'temp_c671053bc4e5629ce3322f8e5423dffd'
+                    }
+                });
                 const html = await response.text();
 
                 // Extract data from __NEXT_DATA__ script
