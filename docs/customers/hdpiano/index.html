@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Upload</title>
+  <style>
+    body {
+      background: #f6f7fb;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 32px 32px 24px 32px;
+      margin-top: 40px;
+      width: 100%;
+      max-width: 400px;
+    }
+    h2 {
+      margin-top: 0;
+      font-weight: 500;
+      color: #354052;
+      letter-spacing: 0.02em;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    form label {
+      display: flex;
+      flex-direction: column;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #495057;
+      margin-bottom: 18px;
+      letter-spacing: 0.01em;
+    }
+    form input[type="text"],
+    form input[type="email"] {
+      margin-top: 6px;
+      padding: 10px 12px;
+      font-size: 1rem;
+      border: 1.3px solid #ccd0d5;
+      border-radius: 6px;
+      transition: border-color 0.2s;
+      outline: none;
+      background: #fafbfc;
+      color: #2b2e32;
+    }
+    form input:focus {
+      border-color: #368ade;
+      background: #fff;
+      box-shadow: 0 0 2px #368ade25;
+    }
+    button[type="submit"] {
+      width: 100%;
+      background: linear-gradient(90deg, #3f8efc 60%, #2762c8 100%);
+      color: #fff;
+      font-size: 1.09rem;
+      font-weight: bold;
+      margin-top: 4px;
+      padding: 12px 0 10px 0;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #368ade22;
+      letter-spacing: 0.03em;
+      transition: background 0.16s, box-shadow 0.16s, transform 0.13s;
+    }
+    button[type="submit"]:hover {
+      background: linear-gradient(90deg, #2762c8 20%, #3f8efc 100%);
+      box-shadow: 0 4px 14px #368ade44;
+      transform: translateY(-1px) scale(1.01);
+    }
+    .msg-success {
+      border: 1.5px solid #27ae60;
+      background: #e9fbe8;
+      color: #1d8244;
+      border-radius: 5px;
+      padding: 15px 10px;
+      margin-top: 28px;
+      font-weight: 600;
+      word-break: break-all;
+      text-align: center;
+    }
+    .msg-error {
+      border: 1.5px solid #e74c3c;
+      background: #fff0ef;
+      color: #d20d16;
+      border-radius: 5px;
+      padding: 15px 10px;
+      margin-top: 28px;
+      font-weight: 600;
+      word-break: break-all;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Create Order</h2>
+    <form id="orderForm" autocomplete="off">
+      <label>
+        Email:
+        <input type="email" name="email" required>
+      </label>
+      <label>
+        First name:
+        <input type="text" name="firstName">
+      </label>
+      <label>
+        Last name:
+        <input type="text" name="lastName">
+      </label>
+      <label>
+        Order ID:
+        <input type="text" name="orderId" required>
+      </label>
+      <button type="submit">Add</button>
+    </form>
+    <div id="result"></div>
+  </div>
+  <script>
+    function makeRandomId() {
+      return 'id-' + Math.random().toString(36).substr(2, 9) + '-' + Date.now();
+    }
+
+    document.getElementById('orderForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const iso = new Date().toISOString();
+      const customerId = makeRandomId();
+      const orderLineId = makeRandomId();
+
+      const data = {
+        orderId: e.target.orderId.value,
+        type: "sale",
+        orderLines: [
+          {
+            id: orderLineId,
+            name: "hdpiano",
+            netPrice: 0,
+            grossPrice: 0,
+            quantity: 1,
+            productSku: "hdpiano",
+            productSkuBase: "hdpiano",
+            productType: "hdpiano",
+            isAddOn: false,
+            tax: 0,
+            cost: 0,
+            discount: 0,
+            category: "hdpiano",
+            brand: "hdpiano",
+            currency: "USD"
+          }
+        ],
+        createdAt: iso,
+        confirmedAt: iso,
+        scheduledDeliveryAt: iso,
+        scheduledDispatchAt: iso,
+        customer: {
+          id: customerId,
+          email: e.target.email.value,
+          firstName: e.target.firstName.value,
+          lastName: e.target.lastName.value
+        }
+      };
+      const apiurl = 'https://services.stacktome.com/api/events/v1/sales?apikey=ofshMGbN2qBRivo9lKjQjOjD0EUoFaCp';
+      let msg, cls;
+      try {
+        const response = await fetch(apiurl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify([data])
+        });
+        let txt = await response.text();
+        try {
+          const parsed = JSON.parse(txt);
+          if (parsed.success) {
+            msg = "✅ Success!";
+            cls = "msg-success";
+          } else {
+            msg = "❌ Error: " + (parsed.failure || response.statusText);
+            if (parsed.errors) msg += "<br>" + parsed.errors;
+            cls = "msg-error";
+          }
+        } catch {
+          if (response.ok) {
+            msg = "✅ Success!";
+            cls = "msg-success";
+          } else {
+            msg = "❌ Error: " + response.statusText + "<br>" + txt;
+            cls = "msg-error";
+          }
+        }
+      } catch (err) {
+        msg = "❌ Error: " + err;
+        cls = "msg-error";
+      }
+      const res = document.getElementById('result');
+      res.innerHTML = msg;
+      res.className = cls;
+    };
+  </script>
+</body>
+</html>
