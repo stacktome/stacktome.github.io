@@ -292,7 +292,7 @@
 			};
 		}
 
-		function trackOfferImpression(currentOffer){
+		function trackOfferImpression(currentOffer, index){
 			if(window.stSnowplow){
 				// Calculate minutes until expiration
 				const now = new Date();
@@ -312,7 +312,8 @@
 							offerName: currentOffer.offerName,
 							offerType: currentOffer.offerType,
 							offerValue: currentOffer.offerValue,
-							offerExpiration: minutesUntilExpiration
+							offerExpiration: minutesUntilExpiration,
+							impressionIndex: index
 						}
 					}
 				});
@@ -322,7 +323,7 @@
 		function updateProduct() {
 			const currentOffer = offers[productIndex];
 
-			trackOfferImpression(currentOffer);
+			trackOfferImpression(currentOffer, productIndex);
 
 			// Show loading indicator for images
 			const imageLoadingIndicator = container.querySelector('.loading-indicator');
