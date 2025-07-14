@@ -313,7 +313,7 @@
 							offerType: currentOffer.offerType,
 							offerValue: currentOffer.offerValue,
 							offerExpiration: minutesUntilExpiration,
-							impressionIndex: index
+							productIndex: index
 						}
 					}
 				});
