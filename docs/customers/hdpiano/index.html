@@ -113,14 +113,6 @@
         First name:
         <input type="text" name="firstName">
       </label>
-      <label>
-        Last name:
-        <input type="text" name="lastName">
-      </label>
-      <label>
-        Order ID:
-        <input type="text" name="orderId" required>
-      </label>
       <button type="submit">Add</button>
     </form>
     <div id="result"></div>
@@ -137,7 +129,7 @@
       const orderLineId = makeRandomId();
 
       const data = {
-        orderId: e.target.orderId.value,
+        orderId: orderLineId,
         type: "sale",
         orderLines: [
           {
@@ -166,7 +158,7 @@
           id: customerId,
           email: e.target.email.value,
           firstName: e.target.firstName.value,
-          lastName: e.target.lastName.value
+          lastName: "hdpiano"
         }
       };
       const apiurl = 'https://services.stacktome.com/api/events/v1/sales?apikey=ofshMGbN2qBRivo9lKjQjOjD0EUoFaCp';
