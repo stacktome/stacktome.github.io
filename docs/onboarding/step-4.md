@@ -5,6 +5,7 @@ To send review invitations we will need access to your orders data. We support f
 * Shopify
 * Magento
 * Bigcommerce
+* WooCommerce
 
 Just connect to the platform that you use. See below tutorial for each platform:
 
