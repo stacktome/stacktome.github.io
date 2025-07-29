@@ -33,5 +33,5 @@ Just connect to the platform that you use. See below tutorial for each platform:
 <details>
   <summary><u style="cursor: pointer; color: blue">WooCommerce</u></summary>
 
-<iframe width="640" height="366" src="https://www.loom.com/embed/7131dfa422ac4a718ebb997f21f047bb" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<iframe width="640" height="366" src="https://www.loom.com/embed/3cc6069ba96248d18cd87f35557cde03" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 </details>
