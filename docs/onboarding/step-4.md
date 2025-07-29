@@ -5,6 +5,7 @@ To send review invitations we will need access to your orders data. We support f
 * Shopify
 * Magento
 * Bigcommerce
+* WooCommerce
 
 Just connect to the platform that you use. See below tutorial for each platform:
 
@@ -28,3 +29,9 @@ Just connect to the platform that you use. See below tutorial for each platform:
 <iframe width="640" height="366" src="https://www.loom.com/embed/379ce03d24414391902be4cc8d9cecaf?sid=1b17b910-757a-43c7-a726-7f485775befa" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 </details>
 
+
+<details>
+  <summary><u style="cursor: pointer; color: blue">WooCommerce</u></summary>
+
+<iframe width="640" height="366" src="https://www.loom.com/embed/7131dfa422ac4a718ebb997f21f047bb" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</details>
