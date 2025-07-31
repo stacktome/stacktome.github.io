@@ -6,7 +6,7 @@ To connect to Magento follow these steps:
   <li>Enter a descriptive name e.g.: "StackTome orders integration"</li>
   <li>Set Callback URL as https://services.stacktome.com/auth/v1/magento</li>
   <li> Set Identity URL as https://app.stacktome.com/settings/sales-connections/magento</li>
-  <li>Open API tab and select the orders checkbox</li>
+  <li>Open API tab and select the "Orders" checkbox, "Shipments" checkbox and "Transactions" checkbox</li>
   <li>After saving click Activate link for newly created integration to connect
 Magento to StackTome</li>
   <li>Click Allow when prompted Orders permission access</li>
@@ -19,4 +19,4 @@ connection is working.</li>
 </ol> </p>
 
 See these steps in action:
-<iframe width="640" height="364" src="https://www.loom.com/embed/0c1939bdcfe2480cade85b5db3a318cb?t=2" frameborder="0" allowfullscreen></iframe>
+<iframe width="640" height="364" src="https://www.loom.com/embed/087c4ef04f14414f9f676a0b47304d4c?t=2" frameborder="0" allowfullscreen></iframe>
