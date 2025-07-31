@@ -19,4 +19,4 @@ connection is working.</li>
 </ol> </p>
 
 See these steps in action:
-<iframe width="640" height="364" src="https://www.loom.com/embed/087c4ef04f14414f9f676a0b47304d4c?t=2" frameborder="0" allowfullscreen></iframe>
+<iframe width="640" height="364" src="https://www.loom.com/embed/c478aac03a7d4a5882d2474b9ca2ddc8" frameborder="0" allowfullscreen></iframe>
