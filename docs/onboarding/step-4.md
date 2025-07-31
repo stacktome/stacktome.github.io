@@ -19,7 +19,7 @@ Just connect to the platform that you use. See below tutorial for each platform:
 <details>
   <summary><u style="cursor: pointer; color: blue">Magento</u></summary>
 
-<iframe width="640" height="366" src="https://www.loom.com/embed/0c1939bdcfe2480cade85b5db3a318cb?sid=8c45bbd9-1503-403b-931b-70e4a7da901f" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<iframe width="640" height="366" src="https://www.loom.com/embed/087c4ef04f14414f9f676a0b47304d4c" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 </details>
 
 
