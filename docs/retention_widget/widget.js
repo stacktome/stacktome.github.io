@@ -507,7 +507,7 @@
 			updateBuyButtonState();
 
 			// Update description with truncation
-			const description = currentOffer.productDescription;
+			const description = currentOffer.productDescription || '';
 			const descriptionElem = container.querySelector('.product-description');
 			const showMoreBtn = container.querySelector('.show-more-btn');
 			
