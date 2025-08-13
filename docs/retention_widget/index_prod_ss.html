@@ -58,7 +58,7 @@
     </div>
 
     <!-- Widget placeholder -->
-    <div id="stacktome-widget-1" class="widget-container">
+    <div id="stacktome-widget-2" class="widget-container">
         Loading widget...
     </div>
 
@@ -67,7 +67,7 @@
         <textarea id="widgetPayload">{
   "products": [
     {
-      "sku": "RB0360S-140551",
+      "sku": "ss1500.09",
       "quantity": 1,
       "price": 512.07
     }
@@ -217,7 +217,7 @@
             
             // Set filter params with payload
             script.setAttribute('filter-params', JSON.stringify({
-                widgetId: "1",
+                widgetId: "2",
                 apiKey: "pFle3ZbZGfFBw4I4aImkyIxCy9tnA2uR",
                 staging: false,
                 trackingApiKey: "4L5WOo6BOJZm1MvlJIUhZ00Wc47Fj5Qb",
@@ -225,6 +225,16 @@
                 appId: "selectspecs",
                 widgetPayload: JSON.parse(payload)                
             }));
+
+            //             script.setAttribute('filter-params', JSON.stringify({
+            //     widgetId: "1",
+            //     apiKey: "kNFRb0Q9OX2cYrkkhZQEE6U7fMRkH5JJ",
+            //     staging: false,
+            //     trackingApiKey: "koRrISt4zxBSfTbPFsD4raGbeptHbpKh",
+            //     domain: "wildearth.com.au",
+            //     appId: "wild_earth",
+            //     widgetPayload: JSON.parse(payload)                
+            // }));
 
             // Add script to document
             document.body.appendChild(script);

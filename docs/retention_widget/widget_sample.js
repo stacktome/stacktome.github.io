@@ -6,8 +6,183 @@
 		const script = document.currentScript;
 		
 		if (script) {
-			initializeWidget(document.querySelector("#stacktome-offer-widget"), null);
+			// Parse filter parameters from script attributes
+			const params = function(script) {
+				const params = script.getAttribute('filter-params');
+				try {
+					return JSON.parse(params);
+				} catch (error) {
+					console.error('Error parsing filter params:', error);
+					return null;
+				}
+			}(script);
 
+			if (params) {
+				let requestBody = null;
+				let response = null;
+				
+				try {
+					// Find the placeholder element
+					const placeholder = document.getElementById('stacktome-widget-' + params.widgetId);
+					if (!placeholder) return;
+
+					// Show loading indicator
+					const loadingIndicator = placeholder.querySelector('.loading-indicator');
+					if (loadingIndicator) {
+						loadingIndicator.style.display = 'flex';
+					}
+
+					// Initialize Snowplow if not already initialized
+					if(!window.stSnowplow && params.trackingApiKey && params.domain && params.appId){
+						var o = XMLHttpRequest.prototype.open;
+						XMLHttpRequest.prototype.open = function(){
+							var res = o.apply(this, arguments);
+							var err = new Error();  
+							if((arguments[1] || '').indexOf('stacktome') > 0)
+								this.setRequestHeader('apikey', params.trackingApiKey);
+							return res;
+						}
+							
+						;(function () {
+							;(function(p,l,o,w,i,n,g){if(!p[i]){p.GlobalSnowplowNamespace=p.GlobalSnowplowNamespace||[];
+							p.GlobalSnowplowNamespace.push(i);p[i]=function(){(p[i].q=p[i].q||[]).push(arguments)
+							};p[i].q=p[i].q||[];n=l.createElement(o);g=l.getElementsByTagName(o)[0];n.async=1;
+							n.src=w;g.parentNode.insertBefore(n,g)}}(window,document,"script","https://cdn.jsdelivr.net/npm/@snowplow/javascript-tracker@3.17.0/dist/sp.js","stSnowplow")); 
+						//TODO change to staging check
+							window.stSnowplow('newTracker', 'cf3','https://services.stacktome.com/clickstream/collector',
+							{ // Initialise a tracker
+								appId: params.appId ,
+								platform: 'web',
+								cookieDomain: params.domain,
+								sessionCookieTimeout: 3600, // one hour
+								post: true,
+								contexts: {
+									performanceTiming: true,
+									webPage: true
+								},
+								crossDomain: true,
+								withCredentials: true
+							});
+						}());
+					}
+
+					// Prepare request body with payload
+					requestBody = {
+						...params.widgetPayload,
+						widgetId: params.widgetId
+					};
+
+					// Fetch pre-rendered HTML
+					response = await fetch(
+						`https://services${params.staging ? '-staging' : ''}.stacktome.com/api/recommendations/v1/templates/${params.widgetId}/recommendations?apikey=${params.apiKey}`,
+						{
+							body: JSON.stringify(requestBody),
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' }
+						}
+					);
+
+					// Check if the response is ok
+					if (!response.ok) {
+						const errorText = await response.text();
+						throw new Error(`API Error (${response.status}): ${errorText}`);
+					}
+
+					// Get the response data
+					const data = await response.json();
+
+					// Hide loading indicator after data is loaded
+					if (loadingIndicator) {
+						loadingIndicator.style.display = 'none';
+					}
+
+					if (placeholder) {
+						if (data && data.data) {
+							// Create a temporary div to decode HTML entities
+							const temp = document.createElement('div');
+							// Unescape the HTML content
+							const unescapedHtml = data.data
+								.replace(/\\r\\n/g, '\n')
+								.replace(/\\n/g, '\n')
+								.replace(/\\"/g, '"')
+								.replace(/\\t/g, '\t')
+								.replace(/\\\\/g, '\\');
+							temp.innerHTML = unescapedHtml;
+							
+							// Insert the HTML content
+							placeholder.innerHTML = temp.innerHTML;
+							
+							// Execute any scripts in the inserted content
+							const scripts = placeholder.getElementsByTagName('script');
+							const scriptPromises = Array.from(scripts).map(oldScript => {
+								return new Promise((resolve, reject) => {
+									const newScript = document.createElement('script');
+									Array.from(oldScript.attributes).forEach(attr => {
+										newScript.setAttribute(attr.name, attr.value);
+									});
+									
+									if (oldScript.src) {
+										// Handle external scripts
+										newScript.onload = resolve;
+										newScript.onerror = reject;
+									} else {
+										// Handle inline scripts
+										newScript.textContent = oldScript.textContent;
+										resolve();
+									}
+									
+									oldScript.parentNode.replaceChild(newScript, oldScript);
+								});
+							});
+
+							// Wait for all scripts to load before initializing widget
+							Promise.all(scriptPromises)
+								.then(() => {
+									// Initialize widget functionality after scripts are loaded
+									initializeWidget(placeholder, data.data);
+								})
+								.catch(error => {
+									console.error('Error loading scripts:', error);
+									// Still try to initialize widget even if some scripts fail
+									initializeWidget(placeholder, data.data);
+								});
+						} else {
+							placeholder.innerHTML = '<div style="color: red;">No content received from the service</div>';
+							console.error('No content received from the service');
+						}
+					} else {
+						console.error('No placeholder element found with id: stacktome-widget-' + params.widgetId);
+					}
+				} catch (error) {
+					console.error('Error fetching widget data:', error);
+					// Display error in the placeholder if it exists
+					const placeholder = document.getElementById('stacktome-widget-' + params.widgetId);
+					if (placeholder && params.staging) {
+						placeholder.innerHTML = `<div style="color: red;">Error loading widget: ${error.message}</div>`;
+					}
+
+					if(!params.staging && window.stSnowplow){
+						window.stSnowplow('trackSelfDescribingEvent', {
+							event: {
+								schema: 'iglu:com.stacktome/app_error/jsonschema/1-0-0',
+								data: {
+									"type": "widget_load_error",
+									"url": window.location.href,
+									"apiUrl": `https://services${params.staging ? '-staging' : ''}.stacktome.com/api/recommendations/v1/templates/${params.widgetId}/recommendations?apikey=${params.apiKey}`,
+									"element": "offer-widget-div",
+									"elementId": params.widgetId,
+									"message": error.message,
+									"stacktrace": error.stack,
+									"request": requestBody ? JSON.stringify(requestBody) : 'undefined',
+									"response": response ? JSON.stringify(response) : 'undefined',
+								}
+							}
+						});
+					}
+
+					
+				}
+			}
 		}
 	}();
 
@@ -25,7 +200,7 @@
 		let selectedVariantIndex = -1; // Track selected variant, -1 means no selection
 
 		// Parse offers data
-		const offersData = document.querySelector('#offers-data');
+		const offersData = container.querySelector('#offers-data');
 		const offers = offersData ? JSON.parse(offersData.value) : [];
 
 		// Define widget-scoped functions
@@ -117,7 +292,7 @@
 			};
 		}
 
-		function trackOfferImpression(currentOffer){
+		function trackOfferImpression(currentOffer, index){
 			if(window.stSnowplow){
 				// Calculate minutes until expiration
 				const now = new Date();
@@ -137,7 +312,8 @@
 							offerName: currentOffer.offerName,
 							offerType: currentOffer.offerType,
 							offerValue: currentOffer.offerValue,
-							offerExpiration: minutesUntilExpiration
+							offerExpiration: minutesUntilExpiration,
+							productIndex: index
 						}
 					}
 				});
@@ -147,7 +323,7 @@
 		function updateProduct() {
 			const currentOffer = offers[productIndex];
 
-			trackOfferImpression(currentOffer);
+			trackOfferImpression(currentOffer, productIndex);
 
 			// Show loading indicator for images
 			const imageLoadingIndicator = container.querySelector('.loading-indicator');
@@ -331,7 +507,7 @@
 			updateBuyButtonState();
 
 			// Update description with truncation
-			const description = currentOffer.productDescription;
+			const description = currentOffer.productDescription || '';
 			const descriptionElem = container.querySelector('.product-description');
 			const showMoreBtn = container.querySelector('.show-more-btn');
 			
@@ -415,6 +591,133 @@
 			}
 
 			updateCarousel();
+
+			// Handle coupon display
+			updateCouponDisplay();
+		}
+
+		function updateCouponDisplay() {
+			const currentOffer = offers[productIndex];
+			const couponContainer = container.querySelector('.coupon-code');
+			
+			// Only show coupon if the container exists and coupon code is available
+			if (couponContainer && currentOffer.couponCode) {
+				// Clear existing content
+				couponContainer.innerHTML = '';
+				
+				// Create coupon display
+				const couponWrapper = document.createElement('div');
+				couponWrapper.style.cssText = `
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					background: #f8f9fa;
+					border: 1px dashed #007bff;
+					border-radius: 6px;
+					padding: 8px 12px;
+					margin-top: 10px;
+					font-size: 14px;
+				`;
+				
+				const couponText = document.createElement('span');
+				couponText.textContent = `Use Coupon: ${currentOffer.couponCode}`;
+				couponText.style.cssText = `
+					color: #007bff;
+					font-weight: 500;
+				`;
+				
+				const copyButton = document.createElement('button');
+				copyButton.textContent = 'Copy';
+				copyButton.style.cssText = `
+					background: #007bff;
+					color: white;
+					border: none;
+					border-radius: 4px;
+					padding: 4px 8px;
+					font-size: 12px;
+					cursor: pointer;
+					margin-left: 8px;
+				`;
+				
+				// Add hover effect
+				copyButton.addEventListener('mouseenter', () => {
+					copyButton.style.background = '#0056b3';
+				});
+				copyButton.addEventListener('mouseleave', () => {
+					copyButton.style.background = '#007bff';
+				});
+				
+				// Copy functionality
+				copyButton.addEventListener('click', () => {
+					navigator.clipboard.writeText(currentOffer.couponCode).then(() => {
+						showCopyToast();
+					}).catch(() => {
+						// Fallback for older browsers
+						const textArea = document.createElement('textarea');
+						textArea.value = currentOffer.couponCode;
+						document.body.appendChild(textArea);
+						textArea.select();
+						document.execCommand('copy');
+						document.body.removeChild(textArea);
+						showCopyToast();
+					});
+				});
+				
+				couponWrapper.appendChild(couponText);
+				couponWrapper.appendChild(copyButton);
+				couponContainer.appendChild(couponWrapper);
+			} else if (couponContainer) {
+				// Hide coupon container if no coupon code
+				couponContainer.innerHTML = '';
+			}
+		}
+
+		function showCopyToast() {
+			// Remove existing toast if any
+			const existingToast = document.querySelector('.coupon-copy-toast');
+			if (existingToast) {
+				existingToast.remove();
+			}
+			
+			// Create toast notification
+			const toast = document.createElement('div');
+			toast.className = 'coupon-copy-toast';
+			toast.textContent = 'Coupon code copied!';
+			toast.style.cssText = `
+				position: fixed;
+				top: 20px;
+				right: 20px;
+				background: #28a745;
+				color: white;
+				padding: 12px 16px;
+				border-radius: 6px;
+				font-size: 14px;
+				font-weight: 500;
+				box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+				z-index: 10000;
+				opacity: 0;
+				transform: translateY(-10px);
+				transition: all 0.3s ease;
+			`;
+			
+			document.body.appendChild(toast);
+			
+			// Animate in
+			setTimeout(() => {
+				toast.style.opacity = '1';
+				toast.style.transform = 'translateY(0)';
+			}, 10);
+			
+			// Remove after 3 seconds
+			setTimeout(() => {
+				toast.style.opacity = '0';
+				toast.style.transform = 'translateY(-10px)';
+				setTimeout(() => {
+					if (toast.parentNode) {
+						toast.remove();
+					}
+				}, 300);
+			}, 3000);
 		}
 
 		function updateCarousel() {

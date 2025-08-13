@@ -271,7 +271,7 @@
 			}
 			
 			if (offerUrl) {
-				window.location.href = offerUrl;
+				window.open(offerUrl, '_blank');
 			}
 		};
 
@@ -591,6 +591,133 @@
 			}
 
 			updateCarousel();
+
+			// Handle coupon display
+			updateCouponDisplay();
+		}
+
+		function updateCouponDisplay() {
+			const currentOffer = offers[productIndex];
+			const couponContainer = container.querySelector('.coupon-code');
+			
+			// Only show coupon if the container exists and coupon code is available
+			if (couponContainer && currentOffer.couponCode) {
+				// Clear existing content
+				couponContainer.innerHTML = '';
+				
+				// Create coupon display
+				const couponWrapper = document.createElement('div');
+				couponWrapper.style.cssText = `
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					background: #f8f9fa;
+					border: 1px dashed #007bff;
+					border-radius: 6px;
+					padding: 8px 12px;
+					margin-top: 10px;
+					font-size: 14px;
+				`;
+				
+				const couponText = document.createElement('span');
+				couponText.textContent = `Use Coupon: ${currentOffer.couponCode}`;
+				couponText.style.cssText = `
+					color: #007bff;
+					font-weight: 500;
+				`;
+				
+				const copyButton = document.createElement('button');
+				copyButton.textContent = 'Copy';
+				copyButton.style.cssText = `
+					background: #007bff;
+					color: white;
+					border: none;
+					border-radius: 4px;
+					padding: 4px 8px;
+					font-size: 12px;
+					cursor: pointer;
+					margin-left: 8px;
+				`;
+				
+				// Add hover effect
+				copyButton.addEventListener('mouseenter', () => {
+					copyButton.style.background = '#0056b3';
+				});
+				copyButton.addEventListener('mouseleave', () => {
+					copyButton.style.background = '#007bff';
+				});
+				
+				// Copy functionality
+				copyButton.addEventListener('click', () => {
+					navigator.clipboard.writeText(currentOffer.couponCode).then(() => {
+						showCopyToast();
+					}).catch(() => {
+						// Fallback for older browsers
+						const textArea = document.createElement('textarea');
+						textArea.value = currentOffer.couponCode;
+						document.body.appendChild(textArea);
+						textArea.select();
+						document.execCommand('copy');
+						document.body.removeChild(textArea);
+						showCopyToast();
+					});
+				});
+				
+				couponWrapper.appendChild(couponText);
+				couponWrapper.appendChild(copyButton);
+				couponContainer.appendChild(couponWrapper);
+			} else if (couponContainer) {
+				// Hide coupon container if no coupon code
+				couponContainer.innerHTML = '';
+			}
+		}
+
+		function showCopyToast() {
+			// Remove existing toast if any
+			const existingToast = document.querySelector('.coupon-copy-toast');
+			if (existingToast) {
+				existingToast.remove();
+			}
+			
+			// Create toast notification
+			const toast = document.createElement('div');
+			toast.className = 'coupon-copy-toast';
+			toast.textContent = 'Coupon code copied!';
+			toast.style.cssText = `
+				position: fixed;
+				top: 20px;
+				right: 20px;
+				background: #28a745;
+				color: white;
+				padding: 12px 16px;
+				border-radius: 6px;
+				font-size: 14px;
+				font-weight: 500;
+				box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+				z-index: 10000;
+				opacity: 0;
+				transform: translateY(-10px);
+				transition: all 0.3s ease;
+			`;
+			
+			document.body.appendChild(toast);
+			
+			// Animate in
+			setTimeout(() => {
+				toast.style.opacity = '1';
+				toast.style.transform = 'translateY(0)';
+			}, 10);
+			
+			// Remove after 3 seconds
+			setTimeout(() => {
+				toast.style.opacity = '0';
+				toast.style.transform = 'translateY(-10px)';
+				setTimeout(() => {
+					if (toast.parentNode) {
+						toast.remove();
+					}
+				}, 300);
+			}, 3000);
 		}
 
 		function updateCarousel() {
