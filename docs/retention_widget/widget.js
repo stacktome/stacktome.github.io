@@ -751,5 +751,38 @@
 				updateAllOfferCards();
 			});
 		}
+
+		// Global function for template's onclick handler
+		window.copyCoupon = function(couponCode, buttonElement) {
+			if (!buttonElement) {
+				console.error('Button element not provided to copyCoupon function');
+				return;
+			}
+			
+			const originalText = buttonElement.textContent;
+			buttonElement.textContent = 'Copied!';
+			buttonElement.style.background = '#28a745';
+			buttonElement.style.color = 'white';
+			
+			navigator.clipboard.writeText(couponCode).then(() => {
+				showCopyToast();
+			}).catch(() => {
+				// Fallback for older browsers
+				const textArea = document.createElement('textarea');
+				textArea.value = couponCode;
+				document.body.appendChild(textArea);
+				textArea.select();
+				document.execCommand('copy');
+				document.body.removeChild(textArea);
+				showCopyToast();
+			});
+			
+			// Reset button after 1.5 seconds
+			setTimeout(() => {
+				buttonElement.textContent = originalText;
+				buttonElement.style.background = '';
+				buttonElement.style.color = '';
+			}, 1500);
+		};
 	}
 }();

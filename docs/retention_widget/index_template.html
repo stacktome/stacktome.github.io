@@ -44,7 +44,7 @@
       <div class="coupon-code">
         <div>
           <span>Use Coupon: {{offers[0].couponCode}}</span>
-          <button onclick="copyCoupon('{{offers[0].couponCode}}')">Copy</button>
+          <button onclick="copyCoupon('{{offers[0].couponCode}}', this)">Copy</button>
         </div>
       </div>
       {% endif %}
@@ -131,7 +131,7 @@
       <div class="coupon-code">
         <div>
           <span>Use Coupon: {{offers[1].couponCode}}</span>
-          <button onclick="copyCoupon('{{offers[1].couponCode}}')">Copy</button>
+          <button onclick="copyCoupon('{{offers[1].couponCode}}', this)">Copy</button>
         </div>
       </div>
       {% endif %}
@@ -218,7 +218,7 @@
       <div class="coupon-code">
         <div>
           <span>Use Coupon: {{offers[2].couponCode}}</span>
-          <button onclick="copyCoupon('{{offers[2].couponCode}}')">Copy</button>
+          <button onclick="copyCoupon('{{offers[2].couponCode}}', this)">Copy</button>
         </div>
       </div>
       {% endif %}
