@@ -188,113 +188,187 @@
 
 	// Widget functionality
 	function initializeWidget(container, data) {
-		const track = container.querySelector('.carousel-track');
-		const slides = container.querySelectorAll('.carousel-slide img');
-		const nextButton = container.querySelector('.carousel-button.next');
-		const prevButton = container.querySelector('.carousel-button.prev');
-		const dots = container.querySelectorAll('.dot');
-		const nextOfferButton = container.querySelector('#new-offer-btn');
-
-		let currentIndex = 0;
-		let productIndex = 0;
-		let selectedVariantIndex = -1; // Track selected variant, -1 means no selection
-
 		// Parse offers data
 		const offersData = container.querySelector('#offers-data');
 		const offers = offersData ? JSON.parse(offersData.value) : [];
+		
+		// Get all offer cards
+		const offerCards = container.querySelectorAll('.offer-card');
+		const nextOfferBtn = container.querySelector('#new-offer-btn');
+		const prevOfferBtn = container.querySelector('#prev-offers-btn');
+		
+		// Check if we're on mobile (single card) or desktop (multiple cards)
+		const isMobile = () => window.innerWidth < 768;
+		const getVisibleCardCount = () => isMobile() ? 1 : Math.min(3, offerCards.length);
+		
+		// Track current offer set (starting index for visible offers)
+		let currentOfferSet = 0;
+		const maxOfferSets = Math.max(0, offers.length - getVisibleCardCount());
+		
+		// Track state for each card
+		const cardStates = {};
+		
+		// Initialize each offer card
+		offerCards.forEach((card, cardIndex) => {
+			cardStates[cardIndex] = {
+				currentImageIndex: 0,
+				selectedVariantIndex: -1,
+				offerIndex: cardIndex
+			};
+			
+			initializeOfferCard(card, cardIndex);
+		});
 
-		// Define widget-scoped functions
-		const trackOfferAction = function(type) {
-			if(window.stSnowplow){
-				const offerId = container.querySelector('.checkout-btn').dataset.offerId;
-				const currentOffer = offers.find(offer => offer.offerId === offerId);
+		// Single auto-advance carousel for all cards every 5 seconds
+		setInterval(() => {
+			offerCards.forEach((card, cardIndex) => {
+				const slides = card.querySelectorAll('.carousel-slide img');
+				if (slides.length > 0) {
+					cardStates[cardIndex].currentImageIndex = (cardStates[cardIndex].currentImageIndex + 1) % slides.length;
+					const track = card.querySelector('.carousel-track');
+					if (track) {
+						track.style.transform = `translateX(-${cardStates[cardIndex].currentImageIndex * 100}%)`;
+					}
+					
+					// Update dots
+					const dots = card.querySelectorAll('.dot');
+					dots.forEach((dot, index) => {
+						if (index === cardStates[cardIndex].currentImageIndex) {
+							dot.classList.add('active');
+						} else {
+							dot.classList.remove('active');
+						}
+					});
+				}
+			});
+		}, 5000);
+		
+		function initializeOfferCard(card, cardIndex) {
+			const track = card.querySelector('.carousel-track');
+			const slides = card.querySelectorAll('.carousel-slide img');
+			const nextButton = card.querySelector('.carousel-button.next');
+			const prevButton = card.querySelector('.carousel-button.prev');
+			const dots = card.querySelectorAll('.dot');
+			
+			// Image carousel controls
+			if (nextButton) {
+				nextButton.addEventListener('click', () => {
+					cardStates[cardIndex].currentImageIndex = (cardStates[cardIndex].currentImageIndex + 1) % slides.length;
+					updateCarousel();
+				});
+			}
+			
+			if (prevButton) {
+				prevButton.addEventListener('click', () => {
+					cardStates[cardIndex].currentImageIndex = (cardStates[cardIndex].currentImageIndex - 1 + slides.length) % slides.length;
+					updateCarousel();
+				});
+			}
+			
+			dots.forEach(dot => {
+				dot.addEventListener('click', () => {
+					cardStates[cardIndex].currentImageIndex = parseInt(dot.getAttribute('data-index'));
+					updateCarousel();
+				});
+			});
+			
+			// Update offer content for this card
+			updateOfferCard();
+			
+			function updateOfferCard() {
+				const offerIndex = cardStates[cardIndex].offerIndex;
+				const currentOffer = offers[offerIndex % offers.length]; // Wrap around if needed
+				
 				if (!currentOffer) return;
 				
-				// Calculate minutes until expiration
-				const now = new Date();
-				const expireDate = new Date(currentOffer.expireAt);
-				const minutesUntilExpiration = expireDate && expireDate > now ? Math.floor((expireDate - now) / (1000 * 60)) : 0;
-
-				window.stSnowplow('trackSelfDescribingEvent', {
-					event: {
-						schema: 'iglu:com.stacktome/offer_action/jsonschema/1-0-0',
-						data: {
-							type: type,
-							productSku: currentOffer.productSku,
-							productRating: currentOffer.rating,
-							productReviewCount: currentOffer.reviewCount,
-							productPrice: currentOffer.productPrice,
-							customerKey: currentOffer.customerKey,
-							couponCode: currentOffer.couponCode,
-							offerId: offerId,
-							offerName: currentOffer.offerName,
-							offerType: currentOffer.offerType,
-							offerValue: currentOffer.offerValue,
-							offerUrl: currentOffer.offerUrl,
-							offerExpiration: minutesUntilExpiration
+				// Track offer impression
+				trackOfferImpression(currentOffer, offerIndex);
+				
+				// Show loading indicator
+				const imageLoadingIndicator = card.querySelector('.loading-indicator');
+				if (imageLoadingIndicator) {
+					imageLoadingIndicator.style.display = 'flex';
+				}
+				
+				// Update carousel images
+				let imagesLoaded = 0;
+				const totalImages = slides.length;
+				
+				slides.forEach((slide, i) => {
+					const newSrc = currentOffer.productImages[i] || currentOffer.productImages[0];
+					
+					const img = new Image();
+					img.onload = function() {
+						slide.src = newSrc;
+						slide.alt = `Product Image ${i + 1}`;
+						imagesLoaded++;
+						
+						if (imagesLoaded === totalImages && imageLoadingIndicator) {
+							imageLoadingIndicator.style.display = 'none';
 						}
+					};
+					img.onerror = function() {
+						slide.src = newSrc;
+						slide.alt = `Product Image ${i + 1}`;
+						imagesLoaded++;
+						
+						if (imagesLoaded === totalImages && imageLoadingIndicator) {
+							imageLoadingIndicator.style.display = 'none';
+						}
+					};
+					img.src = newSrc;
+				});
+				
+				// Update product details
+				card.querySelector('.product-name').textContent = currentOffer.productName;
+				card.querySelector('.more-info-link').href = currentOffer.productUrl || '#';
+				card.querySelector('.more-info-link').dataset.offerId = currentOffer.offerId;
+				card.querySelector('.checkout-btn').dataset.offerId = currentOffer.offerId;
+				card.querySelector('.checkout-btn').dataset.offerUrl = currentOffer.offerUrl;
+				
+				// Update discount badge
+				updateDiscountBadge(card, currentOffer);
+				
+				// Update expiration badge
+				updateExpirationBadge(card, currentOffer);
+				
+				// Handle product variants
+				handleProductVariants(card, currentOffer, cardIndex);
+				
+				// Update price display and button state
+				updatePriceDisplay(card, currentOffer, cardIndex);
+				updateBuyButtonState(card, currentOffer, cardIndex);
+				
+				// Update description
+				updateProductDescription(card, currentOffer);
+				
+				// Update rating and reviews
+				updateRatingAndReviews(card, currentOffer);
+				
+				// Setup checkout button
+				setupCheckoutButton(card, currentOffer, cardIndex);
+				
+				updateCarousel();
+			}
+			
+			function updateCarousel() {
+				track.style.transform = `translateX(-${cardStates[cardIndex].currentImageIndex * 100}%)`;
+				
+				dots.forEach((dot, index) => {
+					if (index === cardStates[cardIndex].currentImageIndex) {
+						dot.classList.add('active');
+					} else {
+						dot.classList.remove('active');
 					}
 				});
 			}
-		};
-
-		const redirectToOffer = function() {
-			const currentOffer = offers[productIndex];
 			
-			// Check if variants exist and none is selected
-			if (currentOffer.productVariations && currentOffer.productVariations.length > 0 && selectedVariantIndex === -1) {
-				// Highlight the dropdown to indicate selection is required
-				const variantDropdown = container.querySelector('.variant-dropdown');
-				if (variantDropdown) {
-					variantDropdown.style.borderColor = '#e74c3c';
-					variantDropdown.style.boxShadow = '0 0 5px rgba(231, 76, 60, 0.5)';
-					variantDropdown.focus();
-					
-					// Remove highlight after 3 seconds
-					setTimeout(() => {
-						variantDropdown.style.borderColor = '#ddd';
-						variantDropdown.style.boxShadow = 'none';
-					}, 3000);
-				}
-				return; // Don't proceed with redirect
-			}
-			
-			let offerUrl = currentOffer.offerUrl;
-			
-			// Replace SKU in URL if variants exist and a variant is selected
-			if (currentOffer.productVariations && currentOffer.productVariations.length > 0 && selectedVariantIndex >= 0) {
-				const selectedVariant = currentOffer.productVariations[selectedVariantIndex];
-				if (selectedVariant && selectedVariant.sku) {
-					// Replace the base SKU with variant SKU in the URL
-					offerUrl = offerUrl.replace(currentOffer.productSku, selectedVariant.sku);
-				}
-			}
-			
-			if (offerUrl) {
-				window.open(offerUrl, '_blank');
-			}
-		};
-
-		// Update onclick handlers to use scoped functions
-		const checkoutBtn = container.querySelector('.checkout-btn');
-		if (checkoutBtn) {
-			checkoutBtn.onclick = function(e) {
-				e.preventDefault();
-				trackOfferAction('checkout');
-				redirectToOffer();
-			};
+			// Note: Auto-advance carousel moved outside to prevent multiple intervals
 		}
-
-		const moreInfoLink = container.querySelector('.more-info-link');
-		if (moreInfoLink) {
-			moreInfoLink.onclick = function(e) {
-				trackOfferAction('more_info');
-			};
-		}
-
-		function trackOfferImpression(currentOffer, index){
+		
+		// Helper functions for updating card content
+		function trackOfferImpression(currentOffer, index) {
 			if(window.stSnowplow){
-				// Calculate minutes until expiration
 				const now = new Date();
 				const expireDate = new Date(currentOffer.expireAt);
 				const minutesUntilExpiration = expireDate && expireDate > now ? Math.floor((expireDate - now) / (1000 * 60)) : 0;
@@ -320,68 +394,82 @@
 			}
 		}
 		
-		function updateProduct() {
-			const currentOffer = offers[productIndex];
-
-			trackOfferImpression(currentOffer, productIndex);
-
-			// Show loading indicator for images
-			const imageLoadingIndicator = container.querySelector('.loading-indicator');
-			if (imageLoadingIndicator) {
-				imageLoadingIndicator.style.display = 'flex';
+		function updateDiscountBadge(card, currentOffer) {
+			const discountBadge = card.querySelector('.discount-badge');
+			if (!discountBadge) return;
+			
+			let discountText = '';
+			let badgeClass = 'discount-badge';
+			
+			switch(currentOffer.offerType) {
+				case 'discountPercent':
+					discountText = `-${currentOffer.offerValue}%`;
+					badgeClass += ' percent';
+					break;
+				case 'discountFixed':
+					discountText = `-${currentOffer.productPriceCurrencySymbol}${currentOffer.offerValue}`;
+					badgeClass += ' fixed';
+					break;
+				case 'discountCredit':
+					discountText = `+${currentOffer.productPriceCurrencySymbol}${currentOffer.offerValue}`;
+					badgeClass += ' credit';
+					break;
+				case 'freeProduct':
+					discountText = 'FREE';
+					badgeClass += ' free';
+					break;
 			}
-
-			// Update carousel images with loading handling
-			let imagesLoaded = 0;
-			const totalImages = slides.length;
 			
-			slides.forEach((slide, i) => {
-				const newSrc = currentOffer.productImages[i] || currentOffer.productImages[0];
-				
-				// Create a new image to preload
-				const img = new Image();
-				img.onload = function() {
-					slide.src = newSrc;
-					slide.alt = `Product Image ${i + 1}`;
-					imagesLoaded++;
-					
-					// Hide loading indicator when all images are loaded
-					if (imagesLoaded === totalImages && imageLoadingIndicator) {
-						imageLoadingIndicator.style.display = 'none';
-					}
-				};
-				img.onerror = function() {
-					// Still update the slide even if image fails to load
-					slide.src = newSrc;
-					slide.alt = `Product Image ${i + 1}`;
-					imagesLoaded++;
-					
-					if (imagesLoaded === totalImages && imageLoadingIndicator) {
-						imageLoadingIndicator.style.display = 'none';
-					}
-				};
-				img.src = newSrc;
-			});
-
-			// Update product details
-			container.querySelector('.product-name').textContent = currentOffer.productName;
-			container.querySelector('.more-info-link').href = currentOffer.productUrl || '#';
-			container.querySelector('.more-info-link').dataset.offerId = currentOffer.offerId;
-			container.querySelector('.checkout-btn').dataset.offerId = currentOffer.offerId;
-			container.querySelector('.checkout-btn').dataset.offerUrl = currentOffer.offerUrl;
+			discountBadge.textContent = discountText;
+			discountBadge.className = badgeClass;
+		}
+		
+		function updateExpirationBadge(card, currentOffer) {
+			const expirationBadge = card.querySelector('.expiration-badge');
+			if (!expirationBadge || !currentOffer.expireAt) return;
 			
-			// Handle product variants
-			const variantsContainer = container.querySelector('.product-variants-container');
-			const variantDropdown = container.querySelector('.variant-dropdown');
+			const now = new Date();
+			const expireDate = new Date(currentOffer.expireAt);
+			
+			if (expireDate <= now) {
+				expirationBadge.style.display = 'none';
+				return;
+			}
+			
+			const diffMs = expireDate - now;
+			const diffMinutes = Math.floor(diffMs / (1000 * 60));
+			const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+			const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+			const remainingHours = diffHours % 24;
+			const remainingMinutes = diffMinutes % 60;
+			
+			let formattedText;
+			if (diffMinutes < 60) {
+				formattedText = `Ends in ${diffMinutes} minute${diffMinutes !== 1 ? 's' : ''}`;
+			} else if (diffHours < 24) {
+				formattedText = `Ends in ${diffHours} hour${diffHours !== 1 ? 's' : ''}`;
+				if (remainingMinutes > 0) {
+					formattedText += ` and ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
+				}
+			} else {
+				formattedText = `Ends in ${diffDays} day${diffDays !== 1 ? 's' : ''}`;
+				if (remainingHours > 0) {
+					formattedText += ` and ${remainingHours} hour${remainingHours !== 1 ? 's' : ''}`;
+				}
+			}
+			
+			expirationBadge.textContent = formattedText;
+			expirationBadge.style.display = 'block';
+		}
+		
+		function handleProductVariants(card, currentOffer, cardIndex) {
+			const variantsContainer = card.querySelector('.product-variants-container');
+			const variantDropdown = card.querySelector('.variant-dropdown');
 			
 			if (currentOffer.productVariations && currentOffer.productVariations.length > 0) {
-				// Show variants container
 				variantsContainer.style.display = 'block';
-				
-				// Clear existing options
 				variantDropdown.innerHTML = '';
 				
-				// Add placeholder option
 				const placeholderOption = document.createElement('option');
 				placeholderOption.value = '';
 				placeholderOption.textContent = 'Please select an option';
@@ -389,7 +477,6 @@
 				placeholderOption.selected = true;
 				variantDropdown.appendChild(placeholderOption);
 				
-				// Populate dropdown with variants
 				currentOffer.productVariations.forEach((variant, index) => {
 					const option = document.createElement('option');
 					option.value = index;
@@ -397,119 +484,91 @@
 					variantDropdown.appendChild(option);
 				});
 				
-				// Reset selected variant index for new product
-				if (selectedVariantIndex >= currentOffer.productVariations.length) {
-					selectedVariantIndex = -1;
+				if (cardStates[cardIndex].selectedVariantIndex >= currentOffer.productVariations.length) {
+					cardStates[cardIndex].selectedVariantIndex = -1;
 				}
 				
-				// Set dropdown value based on selectedVariantIndex
-				variantDropdown.value = selectedVariantIndex >= 0 ? selectedVariantIndex : '';
+				variantDropdown.value = cardStates[cardIndex].selectedVariantIndex >= 0 ? cardStates[cardIndex].selectedVariantIndex : '';
 				
-				// Add event listener for variant selection
 				variantDropdown.onchange = function() {
-					selectedVariantIndex = this.value === '' ? -1 : parseInt(this.value);
-					updatePriceDisplay();
-					updateBuyButtonState();
+					cardStates[cardIndex].selectedVariantIndex = this.value === '' ? -1 : parseInt(this.value);
+					updatePriceDisplay(card, currentOffer, cardIndex);
+					updateBuyButtonState(card, currentOffer, cardIndex);
 				};
 			} else {
-				// Hide variants container if no variations
 				variantsContainer.style.display = 'none';
-				selectedVariantIndex = -1; // Reset to no selection for products without variants
+				cardStates[cardIndex].selectedVariantIndex = -1;
 			}
+		}
+		
+		function updatePriceDisplay(card, currentOffer, cardIndex) {
+			let basePrice = parseFloat(currentOffer.productPrice);
 			
-			// Function to update buy button state
-			function updateBuyButtonState() {
-				const checkoutBtn = container.querySelector('.checkout-btn');
-				const currentOffer = offers[productIndex];
-				
-				// If product has variants but none selected, disable button
-				if (currentOffer.productVariations && currentOffer.productVariations.length > 0 && selectedVariantIndex === -1) {
-					checkoutBtn.style.opacity = '0.6';
-					checkoutBtn.style.cursor = 'not-allowed';
-					checkoutBtn.textContent = 'Select option to buy';
-				} else {
-					checkoutBtn.style.opacity = '1';
-					checkoutBtn.style.cursor = 'pointer';
-					checkoutBtn.textContent = 'Buy now';
+			if (currentOffer.productVariations && currentOffer.productVariations.length > 0 && cardStates[cardIndex].selectedVariantIndex >= 0) {
+				const selectedVariant = currentOffer.productVariations[cardStates[cardIndex].selectedVariantIndex];
+				if (selectedVariant) {
+					basePrice = parseFloat(selectedVariant.price);
 				}
 			}
 			
-			// Function to update price display based on selected variant
-			function updatePriceDisplay() {
-				const currentOffer = offers[productIndex];
-				let basePrice = parseFloat(currentOffer.productPrice);
-				
-				// Use variant price if variants exist and one is selected
-				if (currentOffer.productVariations && currentOffer.productVariations.length > 0 && selectedVariantIndex >= 0) {
-					const selectedVariant = currentOffer.productVariations[selectedVariantIndex];
-					if (selectedVariant) {
-						basePrice = parseFloat(selectedVariant.price);
-					}
-				}
-				
-				const currencySymbol = currentOffer.productPriceCurrencySymbol;
-				let finalPrice = basePrice;
-				let discountBadge = '';
-
-				switch(currentOffer.offerType) {
-					case 'discountPercent':
-						finalPrice = basePrice * (1 - currentOffer.offerValue / 100);
-						discountBadge = `-${currentOffer.offerValue}%`;
-						break;
-					case 'discountFixed':
-						finalPrice = basePrice - currentOffer.offerValue;
-						discountBadge = `-${currencySymbol}${currentOffer.offerValue}`;
-						break;
-					case 'discountCredit':
-						finalPrice = basePrice;
-						discountBadge = `+${currencySymbol}${currentOffer.offerValue}`;
-						break;
-					case 'freeProduct':
-						finalPrice = 0;
-						discountBadge = 'FREE';
-						break;
-				}
-
-				// Update price display
-				container.querySelector('.current-price').textContent = `${currencySymbol}${finalPrice.toFixed(2)}`;
-				container.querySelector('.original-price').textContent = `${currencySymbol}${basePrice.toFixed(2)}`;
-				
-				// Only show strikethrough price for percent, fixed discounts, and free products
-				const shouldShowOriginalPrice = currentOffer.offerType === 'discountPercent' || 
-											currentOffer.offerType === 'discountFixed' || 
-											currentOffer.offerType === 'freeProduct';
-				container.querySelector('.original-price').style.display = shouldShowOriginalPrice ? 'inline' : 'none';
-
-				// Update discount badge
-				const discountElem = container.querySelector('.discount-badge');
-				if (discountElem) {
-					discountElem.textContent = discountBadge;
-					discountElem.className = `discount-badge ${currentOffer.offerType}`;
-				}
-
-				// Add credit info if applicable
-				const priceContainer = container.querySelector('.product-price');
-				const existingCreditInfo = priceContainer.querySelector('.credit-info');
-				if (existingCreditInfo) {
-					existingCreditInfo.remove();
-				}
-				
-				if (currentOffer.offerType === 'discountCredit') {
-					const creditInfo = document.createElement('span');
-					creditInfo.className = 'credit-info';
-					creditInfo.textContent = `Earn ${currencySymbol}${currentOffer.offerValue} in credits`;
-					priceContainer.appendChild(creditInfo);
-				}
+			const currencySymbol = currentOffer.productPriceCurrencySymbol;
+			let finalPrice = basePrice;
+			
+			switch(currentOffer.offerType) {
+				case 'discountPercent':
+					finalPrice = basePrice * (1 - currentOffer.offerValue / 100);
+					break;
+				case 'discountFixed':
+					finalPrice = basePrice - currentOffer.offerValue;
+					break;
+				case 'discountCredit':
+					finalPrice = basePrice;
+					break;
+				case 'freeProduct':
+					finalPrice = 0;
+					break;
 			}
 			
-			// Initial price update and button state
-			updatePriceDisplay();
-			updateBuyButtonState();
-
-			// Update description with truncation
+			card.querySelector('.current-price').textContent = `${currencySymbol}${finalPrice.toFixed(2)}`;
+			card.querySelector('.original-price').textContent = `${currencySymbol}${basePrice.toFixed(2)}`;
+			
+			const shouldShowOriginalPrice = currentOffer.offerType === 'discountPercent' || 
+										currentOffer.offerType === 'discountFixed' || 
+										currentOffer.offerType === 'freeProduct';
+			card.querySelector('.original-price').style.display = shouldShowOriginalPrice ? 'inline' : 'none';
+			
+			const priceContainer = card.querySelector('.product-price');
+			const existingCreditInfo = priceContainer.querySelector('.credit-info');
+			if (existingCreditInfo) {
+				existingCreditInfo.remove();
+			}
+			
+			if (currentOffer.offerType === 'discountCredit') {
+				const creditInfo = document.createElement('span');
+				creditInfo.className = 'credit-info';
+				creditInfo.textContent = `Earn ${currencySymbol}${currentOffer.offerValue} in credits`;
+				priceContainer.appendChild(creditInfo);
+			}
+		}
+		
+		function updateBuyButtonState(card, currentOffer, cardIndex) {
+			const checkoutBtn = card.querySelector('.checkout-btn');
+			
+			if (currentOffer.productVariations && currentOffer.productVariations.length > 0 && cardStates[cardIndex].selectedVariantIndex === -1) {
+				checkoutBtn.style.opacity = '0.6';
+				checkoutBtn.style.cursor = 'not-allowed';
+				checkoutBtn.textContent = 'Select option to buy';
+			} else {
+				checkoutBtn.style.opacity = '1';
+				checkoutBtn.style.cursor = 'pointer';
+				checkoutBtn.textContent = 'Buy now';
+			}
+		}
+		
+		function updateProductDescription(card, currentOffer) {
 			const description = currentOffer.productDescription || '';
-			const descriptionElem = container.querySelector('.product-description');
-			const showMoreBtn = container.querySelector('.show-more-btn');
+			const descriptionElem = card.querySelector('.product-description');
+			const showMoreBtn = card.querySelector('.show-more-btn');
 			
 			descriptionElem.textContent = description;
 			descriptionElem.classList.add('truncated');
@@ -529,241 +588,168 @@
 			} else {
 				showMoreBtn.style.display = 'none';
 			}
-
-			// Update rating and reviews
-			const ratingContainer = container.querySelector('.product-rating');
-			const filledStars = container.querySelector('.filled-stars');
-			const ratingCount = container.querySelector('.rating-count');
+		}
+		
+		function updateRatingAndReviews(card, currentOffer) {
+			const ratingContainer = card.querySelector('.product-rating');
+			const filledStars = card.querySelector('.filled-stars');
+			const ratingCount = card.querySelector('.rating-count');
 			
 			if (currentOffer.rating && currentOffer.reviewCount && filledStars && ratingCount) {
-				// Show rating container and update values
 				if (ratingContainer) {
 					ratingContainer.style.display = 'block';
 				}
 				filledStars.style.width = `${currentOffer.rating * 20}%`;
 				ratingCount.textContent = `${currentOffer.reviewCount} reviews`;
 			} else {
-				// Hide rating container when rating or reviewCount is missing
 				if (ratingContainer) {
 					ratingContainer.style.display = 'none';
 				}
 			}
-
-			// Update expiration date if exists
-			const expirationElem = container.querySelector('.expiration-badge');
-			if (currentOffer.expireAt && expirationElem) {
-				const now = new Date();
-				const expireDate = new Date(currentOffer.expireAt);
-				
-				// Don't show if already expired
-				if (expireDate <= now) {
-					expirationElem.style.display = 'none';
-					return;
-				}
-
-				// Calculate time differences
-				const diffMs = expireDate - now;
-				const diffMinutes = Math.floor(diffMs / (1000 * 60));
-				const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-				const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-				const remainingHours = diffHours % 24;
-				const remainingMinutes = diffMinutes % 60;
-
-				let formattedText;
-				if (diffMinutes < 60) {
-					formattedText = `Ends in ${diffMinutes} minute${diffMinutes !== 1 ? 's' : ''}`;
-				} else if (diffHours < 24) {
-					formattedText = `Ends in ${diffHours} hour${diffHours !== 1 ? 's' : ''}`;
-					if (remainingMinutes > 0) {
-						formattedText += ` and ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
-					}
-				} else {
-					formattedText = `Ends in ${diffDays} day${diffDays !== 1 ? 's' : ''}`
-					if (remainingHours > 0) {
-						formattedText += ` and ${remainingHours} hour${remainingHours !== 1 ? 's' : ''}`;
-					}
-				}
-
-				expirationElem.textContent = formattedText;
-				expirationElem.style.display = 'block';
-			} else if (expirationElem) {
-				expirationElem.style.display = 'none';
-			}
-
-			updateCarousel();
-
-			// Handle coupon display
-			updateCouponDisplay();
 		}
-
-		function updateCouponDisplay() {
-			const currentOffer = offers[productIndex];
-			const couponContainer = container.querySelector('.coupon-code');
-			
-			// Only show coupon if the container exists and coupon code is available
-			if (couponContainer && currentOffer.couponCode) {
-				// Clear existing content
-				couponContainer.innerHTML = '';
-				
-				// Create coupon display
-				const couponWrapper = document.createElement('div');
-				couponWrapper.style.cssText = `
-					display: flex;
-					align-items: center;
-					justify-content: space-between;
-					background: #f8f9fa;
-					border: 1px dashed #007bff;
-					border-radius: 6px;
-					padding: 8px 12px;
-					margin-top: 10px;
-					font-size: 14px;
-				`;
-				
-				const couponText = document.createElement('span');
-				couponText.textContent = `Use Coupon: ${currentOffer.couponCode}`;
-				couponText.style.cssText = `
-					color: #007bff;
-					font-weight: 500;
-				`;
-				
-				const copyButton = document.createElement('button');
-				copyButton.textContent = 'Copy';
-				copyButton.style.cssText = `
-					background: #007bff;
-					color: white;
-					border: none;
-					border-radius: 4px;
-					padding: 4px 8px;
-					font-size: 12px;
-					cursor: pointer;
-					margin-left: 8px;
-				`;
-				
-				// Add hover effect
-				copyButton.addEventListener('mouseenter', () => {
-					copyButton.style.background = '#0056b3';
-				});
-				copyButton.addEventListener('mouseleave', () => {
-					copyButton.style.background = '#007bff';
-				});
-				
-				// Copy functionality
-				copyButton.addEventListener('click', () => {
-					navigator.clipboard.writeText(currentOffer.couponCode).then(() => {
-						showCopyToast();
-					}).catch(() => {
-						// Fallback for older browsers
-						const textArea = document.createElement('textarea');
-						textArea.value = currentOffer.couponCode;
-						document.body.appendChild(textArea);
-						textArea.select();
-						document.execCommand('copy');
-						document.body.removeChild(textArea);
-						showCopyToast();
-					});
-				});
-				
-				couponWrapper.appendChild(couponText);
-				couponWrapper.appendChild(copyButton);
-				couponContainer.appendChild(couponWrapper);
-			} else if (couponContainer) {
-				// Hide coupon container if no coupon code
-				couponContainer.innerHTML = '';
-			}
-		}
-
-		function showCopyToast() {
-			// Remove existing toast if any
-			const existingToast = document.querySelector('.coupon-copy-toast');
-			if (existingToast) {
-				existingToast.remove();
-			}
-			
-			// Create toast notification
-			const toast = document.createElement('div');
-			toast.className = 'coupon-copy-toast';
-			toast.textContent = 'Coupon code copied!';
-			toast.style.cssText = `
-				position: fixed;
-				top: 20px;
-				right: 20px;
-				background: #28a745;
-				color: white;
-				padding: 12px 16px;
-				border-radius: 6px;
-				font-size: 14px;
-				font-weight: 500;
-				box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-				z-index: 10000;
-				opacity: 0;
-				transform: translateY(-10px);
-				transition: all 0.3s ease;
-			`;
-			
-			document.body.appendChild(toast);
-			
-			// Animate in
-			setTimeout(() => {
-				toast.style.opacity = '1';
-				toast.style.transform = 'translateY(0)';
-			}, 10);
-			
-			// Remove after 3 seconds
-			setTimeout(() => {
-				toast.style.opacity = '0';
-				toast.style.transform = 'translateY(-10px)';
-				setTimeout(() => {
-					if (toast.parentNode) {
-						toast.remove();
-					}
-				}, 300);
-			}, 3000);
-		}
-
-		function updateCarousel() {
-			track.style.transform = `translateX(-${currentIndex * 100}%)`;
-
-			// Update active dot
-			dots.forEach((dot, index) => {
-				if (index === currentIndex) {
-					dot.classList.add('active');
-				} else {
-					dot.classList.remove('active');
-				}
-			});
-		}
-
-		// Initial setup
-		updateProduct();
-
-		// Event listeners
-		nextButton.addEventListener('click', () => {
-			currentIndex = (currentIndex + 1) % slides.length;
-			updateCarousel();
-		});
 		
-		prevButton.addEventListener('click', () => {
-			currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-			updateCarousel();
-		});
-
-		dots.forEach(dot => {
-			dot.addEventListener('click', () => {
-				currentIndex = parseInt(dot.getAttribute('data-index'));
-				updateCarousel();
+		function setupCheckoutButton(card, currentOffer, cardIndex) {
+			const checkoutBtn = card.querySelector('.checkout-btn');
+			const moreInfoLink = card.querySelector('.more-info-link');
+			
+			if (checkoutBtn) {
+				checkoutBtn.onclick = function(e) {
+					e.preventDefault();
+					
+					// Track checkout action
+					if(window.stSnowplow){
+						const now = new Date();
+						const expireDate = new Date(currentOffer.expireAt);
+						const minutesUntilExpiration = expireDate && expireDate > now ? Math.floor((expireDate - now) / (1000 * 60)) : 0;
+						
+						window.stSnowplow('trackSelfDescribingEvent', {
+							event: {
+								schema: 'iglu:com.stacktome/offer_action/jsonschema/1-0-0',
+								data: {
+									type: 'checkout',
+									productSku: currentOffer.productSku,
+									productRating: currentOffer.rating,
+									productReviewCount: currentOffer.reviewCount,
+									productPrice: currentOffer.productPrice,
+									customerKey: currentOffer.customerKey,
+									couponCode: currentOffer.couponCode,
+									offerId: currentOffer.offerId,
+									offerName: currentOffer.offerName,
+									offerType: currentOffer.offerType,
+									offerValue: currentOffer.offerValue,
+									offerUrl: currentOffer.offerUrl,
+									offerExpiration: minutesUntilExpiration
+								}
+							}
+						});
+					}
+					
+					// Check if variants exist and none is selected
+					if (currentOffer.productVariations && currentOffer.productVariations.length > 0 && cardStates[cardIndex].selectedVariantIndex === -1) {
+						const variantDropdown = card.querySelector('.variant-dropdown');
+						if (variantDropdown) {
+							variantDropdown.style.borderColor = '#e74c3c';
+							variantDropdown.style.boxShadow = '0 0 5px rgba(231, 76, 60, 0.5)';
+							variantDropdown.focus();
+							
+							setTimeout(() => {
+								variantDropdown.style.borderColor = '#ddd';
+								variantDropdown.style.boxShadow = 'none';
+							}, 3000);
+						}
+						return;
+					}
+					
+					let offerUrl = currentOffer.offerUrl;
+					
+					if (currentOffer.productVariations && currentOffer.productVariations.length > 0 && cardStates[cardIndex].selectedVariantIndex >= 0) {
+						const selectedVariant = currentOffer.productVariations[cardStates[cardIndex].selectedVariantIndex];
+						if (selectedVariant && selectedVariant.sku) {
+							offerUrl = offerUrl.replace(currentOffer.productSku, selectedVariant.sku);
+						}
+					}
+					
+					if (offerUrl) {
+						window.open(offerUrl, '_blank');
+					}
+				};
+			}
+			
+			if (moreInfoLink) {
+				moreInfoLink.onclick = function(e) {
+					if(window.stSnowplow){
+						const now = new Date();
+						const expireDate = new Date(currentOffer.expireAt);
+						const minutesUntilExpiration = expireDate && expireDate > now ? Math.floor((expireDate - now) / (1000 * 60)) : 0;
+						
+						window.stSnowplow('trackSelfDescribingEvent', {
+							event: {
+								schema: 'iglu:com.stacktome/offer_action/jsonschema/1-0-0',
+								data: {
+									type: 'more_info',
+									productSku: currentOffer.productSku,
+									productRating: currentOffer.rating,
+									productReviewCount: currentOffer.reviewCount,
+									productPrice: currentOffer.productPrice,
+									customerKey: currentOffer.customerKey,
+									couponCode: currentOffer.couponCode,
+									offerId: currentOffer.offerId,
+									offerName: currentOffer.offerName,
+									offerType: currentOffer.offerType,
+									offerValue: currentOffer.offerValue,
+									offerUrl: currentOffer.offerUrl,
+									offerExpiration: minutesUntilExpiration
+								}
+							}
+						});
+					}
+				};
+			}
+		}
+		
+		// Update all offer cards when navigation happens
+		function updateAllOfferCards() {
+			offerCards.forEach((card, cardIndex) => {
+				cardStates[cardIndex].offerIndex = currentOfferSet + cardIndex;
+				cardStates[cardIndex].selectedVariantIndex = -1;
+				cardStates[cardIndex].currentImageIndex = 0;
+				
+				const track = card.querySelector('.carousel-track');
+				const slides = card.querySelectorAll('.carousel-slide img');
+				const dots = card.querySelectorAll('.dot');
+				
+				// Re-initialize the card with new offer data
+				initializeOfferCard(card, cardIndex);
 			});
-		});
-
-		nextOfferButton.addEventListener('click', () => {
-			productIndex = (productIndex + 1) % offers.length;
-			selectedVariantIndex = -1; // Reset variant selection for new offer
-			updateProduct();
-		});
-
-		// Auto-advance carousel every 5 seconds
-		setInterval(() => {
-			currentIndex = (currentIndex + 1) % slides.length;
-			updateCarousel();
-		}, 5000);
+		}
+		
+		// Navigation button handlers
+		if (nextOfferBtn) {
+			nextOfferBtn.addEventListener('click', () => {
+				const visibleCount = getVisibleCardCount();
+				if (isMobile()) {
+					// Mobile: increment by 1
+					currentOfferSet = (currentOfferSet + 1) % offers.length;
+				} else {
+					// Desktop: increment by 3, wrap around
+					currentOfferSet = (currentOfferSet + visibleCount) % offers.length;
+				}
+				updateAllOfferCards();
+			});
+		}
+		
+		if (prevOfferBtn) {
+			prevOfferBtn.addEventListener('click', () => {
+				const visibleCount = getVisibleCardCount();
+				if (isMobile()) {
+					// Mobile: decrement by 1
+					currentOfferSet = (currentOfferSet - 1 + offers.length) % offers.length;
+				} else {
+					// Desktop: decrement by 3, wrap around
+					currentOfferSet = (currentOfferSet - visibleCount + offers.length) % offers.length;
+				}
+				updateAllOfferCards();
+			});
+		}
 	}
 }();

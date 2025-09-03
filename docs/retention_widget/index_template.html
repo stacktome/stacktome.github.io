@@ -1,79 +1,271 @@
-<div id="stacktome-offer-widget" class="product-recommendation">
-  <div class="product-image-carousel">
-    <div class="carousel-container">
-      <div class="carousel-track">
-        <!-- Ensure there are multiple images for each slide -->
-        <div class="carousel-slide">
-          <img src="{{offers[0].productImages[0]}}" alt="Product Image 1" style="opacity: 0; transition: opacity 0.3s;" onload="this.style.opacity='1'">
+<div id="stacktome-offer-widget" class="product-recommendation-container">
+  <div class="offer-cards-grid">
+    <!-- First offer card -->
+    <div class="product-recommendation offer-card" data-card-index="0">
+      <div class="product-image-carousel">
+        <div class="carousel-container">
+          <div class="carousel-track">
+            <div class="carousel-slide">
+              <img src="{{offers[0].productImages[0]}}" alt="Product Image 1" style="opacity: 0; transition: opacity 0.3s;" onload="this.style.opacity='1'">
+            </div>
+            <div class="carousel-slide">
+              <img src="{{offers[0].productImages[1]}}" alt="Product Image 2" style="opacity: 0; transition: opacity 0.3s;" onload="this.style.opacity='1'">
+            </div>
+            <div class="carousel-slide">
+              <img src="{{offers[0].productImages[2]}}" alt="Product Image 3" style="opacity: 0; transition: opacity 0.3s;" onload="this.style.opacity='1'">
+            </div>
+          </div>
+          <div class="loading-indicator" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); display: none; justify-content: center; align-items: center; z-index: 2;">
+            <div class="loading-spinner" style="width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top: 3px solid #ec6f34; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+          </div>
+          <button class="carousel-button prev" aria-label="Previous image">❮</button>
+          <button class="carousel-button next" aria-label="Next image">❯</button>
         </div>
-        <div class="carousel-slide">
-          <img src="{{offers[0].productImages[1]}}" alt="Product Image 2" style="opacity: 0; transition: opacity 0.3s;" onload="this.style.opacity='1'">
+        <div class="carousel-dots">
+          <span class="dot active" data-index="0"></span>
+          <span class="dot" data-index="1"></span>
+          <span class="dot" data-index="2"></span>
         </div>
-        <div class="carousel-slide">
-          <img src="{{offers[0].productImages[2]}}" alt="Product Image 3" style="opacity: 0; transition: opacity 0.3s;" onload="this.style.opacity='1'">
+        {% case offers[0].offerType %}
+          {% when 'discountPercent' %}
+            <span class="discount-badge percent">-{{offers[0].offerValue}}%</span>
+          {% when 'discountFixed' %}
+            <span class="discount-badge fixed">-{{offers[0].productPriceCurrencySymbol}}{{offers[0].offerValue}}</span>
+          {% when 'discountCredit' %}
+            <span class="discount-badge credit">+{{offers[0].productPriceCurrencySymbol}}{{offers[0].offerValue}}</span>
+          {% when 'freeProduct' %}
+            <span class="discount-badge free">FREE</span>
+        {% endcase %}
+        {% if offers[0].expireAt %}
+        <span class="expiration-badge">Ends {{offers[0].expireAt}}</span>
+        {% endif %}
+      </div>
+      {% if offers[0].couponCode %}
+      <div class="coupon-code">
+        <div>
+          <span>Use Coupon: {{offers[0].couponCode}}</span>
+          <button onclick="copyCoupon('{{offers[0].couponCode}}')">Copy</button>
         </div>
       </div>
-      <div class="loading-indicator" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); display: none; justify-content: center; align-items: center; z-index: 2;">
-        <div class="loading-spinner" style="width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top: 3px solid #ec6f34; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+      {% endif %}
+      <div class="product-info">
+        <div class="product-header">                
+          <h3 class="product-name">{{offers[0].productName}}</h3>
+          <a href="{{offers[0].productUrl}}"  data-offer-id="{{offers[0].offerId}}" target="_blank" class="more-info-link">More Info ↗</a>
+        </div>
+        
+        <div class="product-rating">
+          <div class="star-rating">
+            <span class="stars">
+              <span class="filled-stars" style="width: 0%;">★★★★★</span>
+              <span class="empty-stars">★★★★★</span>
+            </span>                                                                                                     
+            <span class="rating-count">{{offers[0].reviewCount}} reviews</span>
+          </div>
+        </div>
+        
+        <div class="product-description-container">
+          <p class="product-description">{{offers[0].productDescription}}</p>
+          <button class="show-more-btn">Show More</button>
+        </div>
+        
+        <!-- Product Variants Section -->
+        <div class="product-variants-container" style="display: none;">
+          <label class="variant-label">Select Option:</label>
+          <select class="variant-dropdown">
+            <!-- Options will be populated by JavaScript -->
+          </select>
+        </div>
+        
+        <div class="product-actions">
+          <div class="product-price">
+            <span class="current-price">{{offers[0].productPriceCurrencySymbol}}{{offers[0].productPrice}}</span>
+            <span class="original-price">£34.99</span>
+          </div>
+          <button class="checkout-btn" data-offer-url="{{offers[0].offerUrl}}" data-offer-id="{{offers[0].offerId}}">Buy now</button>
+        </div>
       </div>
-      <button class="carousel-button prev" aria-label="Previous image">❮</button>
-      <button class="carousel-button next" aria-label="Next image">❯</button>
     </div>
-    <div class="carousel-dots">
-      <span class="dot active" data-index="0"></span>
-      <span class="dot" data-index="1"></span>
-      <span class="dot" data-index="2"></span>
+
+    <!-- Second offer card (desktop only) -->
+    <div class="product-recommendation offer-card desktop-only" data-card-index="1">
+      <div class="product-image-carousel">
+        <div class="carousel-container">
+          <div class="carousel-track">
+            <div class="carousel-slide">
+              <img src="{{offers[1].productImages[0]}}" alt="Product Image 1" style="opacity: 0; transition: opacity 0.3s;" onload="this.style.opacity='1'">
+            </div>
+            <div class="carousel-slide">
+              <img src="{{offers[1].productImages[1]}}" alt="Product Image 2" style="opacity: 0; transition: opacity 0.3s;" onload="this.style.opacity='1'">
+            </div>
+            <div class="carousel-slide">
+              <img src="{{offers[1].productImages[2]}}" alt="Product Image 3" style="opacity: 0; transition: opacity 0.3s;" onload="this.style.opacity='1'">
+            </div>
+          </div>
+          <div class="loading-indicator" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); display: none; justify-content: center; align-items: center; z-index: 2;">
+            <div class="loading-spinner" style="width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top: 3px solid #ec6f34; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+          </div>
+          <button class="carousel-button prev" aria-label="Previous image">❮</button>
+          <button class="carousel-button next" aria-label="Next image">❯</button>
+        </div>
+        <div class="carousel-dots">
+          <span class="dot active" data-index="0"></span>
+          <span class="dot" data-index="1"></span>
+          <span class="dot" data-index="2"></span>
+        </div>
+        {% case offers[1].offerType %}
+          {% when 'discountPercent' %}
+            <span class="discount-badge percent">-{{offers[1].offerValue}}%</span>
+          {% when 'discountFixed' %}
+            <span class="discount-badge fixed">-{{offers[1].productPriceCurrencySymbol}}{{offers[1].offerValue}}</span>
+          {% when 'discountCredit' %}
+            <span class="discount-badge credit">+{{offers[1].productPriceCurrencySymbol}}{{offers[1].offerValue}}</span>
+          {% when 'freeProduct' %}
+            <span class="discount-badge free">FREE</span>
+        {% endcase %}
+        {% if offers[1].expireAt %}
+        <span class="expiration-badge">Ends {{offers[1].expireAt}}</span>
+        {% endif %}
+      </div>
+      {% if offers[1].couponCode %}
+      <div class="coupon-code">
+        <div>
+          <span>Use Coupon: {{offers[1].couponCode}}</span>
+          <button onclick="copyCoupon('{{offers[1].couponCode}}')">Copy</button>
+        </div>
+      </div>
+      {% endif %}
+      <div class="product-info">
+        <div class="product-header">                
+          <h3 class="product-name">{{offers[1].productName}}</h3>
+          <a href="{{offers[1].productUrl}}"  data-offer-id="{{offers[1].offerId}}" target="_blank" class="more-info-link">More Info ↗</a>
+        </div>
+        
+        <div class="product-rating">
+          <div class="star-rating">
+            <span class="stars">
+              <span class="filled-stars" style="width: 0%;">★★★★★</span>
+              <span class="empty-stars">★★★★★</span>
+            </span>                                                                                                     
+            <span class="rating-count">{{offers[1].reviewCount}} reviews</span>
+          </div>
+        </div>
+        
+        <div class="product-description-container">
+          <p class="product-description">{{offers[1].productDescription}}</p>
+          <button class="show-more-btn">Show More</button>
+        </div>
+        
+        <!-- Product Variants Section -->
+        <div class="product-variants-container" style="display: none;">
+          <label class="variant-label">Select Option:</label>
+          <select class="variant-dropdown">
+            <!-- Options will be populated by JavaScript -->
+          </select>
+        </div>
+        
+        <div class="product-actions">
+          <div class="product-price">
+            <span class="current-price">{{offers[1].productPriceCurrencySymbol}}{{offers[1].productPrice}}</span>
+            <span class="original-price">£34.99</span>
+          </div>
+          <button class="checkout-btn" data-offer-url="{{offers[1].offerUrl}}" data-offer-id="{{offers[1].offerId}}">Buy now</button>
+        </div>
+      </div>
     </div>
-    {% case offers[0].offerType %}
-      {% when 'discountPercent' %}
-        <span class="discount-badge percent">-{{offers[0].offerValue}}%</span>
-      {% when 'discountFixed' %}
-        <span class="discount-badge fixed">-{{offers[0].productPriceCurrencySymbol}}{{offers[0].offerValue}}</span>
-      {% when 'discountCredit' %}
-        <span class="discount-badge credit">+{{offers[0].productPriceCurrencySymbol}}{{offers[0].offerValue}}</span>
-      {% when 'freeProduct' %}
-        <span class="discount-badge free">FREE</span>
-    {% endcase %}
-    {% if offers[0].expireAt %}
-    <span class="expiration-badge">Ends {{offers[0].expireAt}}</span>
-    {% endif %}
+
+    <!-- Third offer card (desktop only) -->
+    <div class="product-recommendation offer-card desktop-only" data-card-index="2">
+      <div class="product-image-carousel">
+        <div class="carousel-container">
+          <div class="carousel-track">
+            <div class="carousel-slide">
+              <img src="{{offers[2].productImages[0]}}" alt="Product Image 1" style="opacity: 0; transition: opacity 0.3s;" onload="this.style.opacity='1'">
+            </div>
+            <div class="carousel-slide">
+              <img src="{{offers[2].productImages[1]}}" alt="Product Image 2" style="opacity: 0; transition: opacity 0.3s;" onload="this.style.opacity='1'">
+            </div>
+            <div class="carousel-slide">
+              <img src="{{offers[2].productImages[2]}}" alt="Product Image 3" style="opacity: 0; transition: opacity 0.3s;" onload="this.style.opacity='1'">
+            </div>
+          </div>
+          <div class="loading-indicator" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); display: none; justify-content: center; align-items: center; z-index: 2;">
+            <div class="loading-spinner" style="width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top: 3px solid #ec6f34; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+          </div>
+          <button class="carousel-button prev" aria-label="Previous image">❮</button>
+          <button class="carousel-button next" aria-label="Next image">❯</button>
+        </div>
+        <div class="carousel-dots">
+          <span class="dot active" data-index="0"></span>
+          <span class="dot" data-index="1"></span>
+          <span class="dot" data-index="2"></span>
+        </div>
+        {% case offers[2].offerType %}
+          {% when 'discountPercent' %}
+            <span class="discount-badge percent">-{{offers[2].offerValue}}%</span>
+          {% when 'discountFixed' %}
+            <span class="discount-badge fixed">-{{offers[2].productPriceCurrencySymbol}}{{offers[2].offerValue}}</span>
+          {% when 'discountCredit' %}
+            <span class="discount-badge credit">+{{offers[2].productPriceCurrencySymbol}}{{offers[2].offerValue}}</span>
+          {% when 'freeProduct' %}
+            <span class="discount-badge free">FREE</span>
+        {% endcase %}
+        {% if offers[2].expireAt %}
+        <span class="expiration-badge">Ends {{offers[2].expireAt}}</span>
+        {% endif %}
+      </div>
+      {% if offers[2].couponCode %}
+      <div class="coupon-code">
+        <div>
+          <span>Use Coupon: {{offers[2].couponCode}}</span>
+          <button onclick="copyCoupon('{{offers[2].couponCode}}')">Copy</button>
+        </div>
+      </div>
+      {% endif %}
+      <div class="product-info">
+        <div class="product-header">                
+          <h3 class="product-name">{{offers[2].productName}}</h3>
+          <a href="{{offers[2].productUrl}}"  data-offer-id="{{offers[2].offerId}}" target="_blank" class="more-info-link">More Info ↗</a>
+        </div>
+        
+        <div class="product-rating">
+          <div class="star-rating">
+            <span class="stars">
+              <span class="filled-stars" style="width: 0%;">★★★★★</span>
+              <span class="empty-stars">★★★★★</span>
+            </span>                                                                                                     
+            <span class="rating-count">{{offers[2].reviewCount}} reviews</span>
+          </div>
+        </div>
+        
+        <div class="product-description-container">
+          <p class="product-description">{{offers[2].productDescription}}</p>
+          <button class="show-more-btn">Show More</button>
+        </div>
+        
+        <!-- Product Variants Section -->
+        <div class="product-variants-container" style="display: none;">
+          <label class="variant-label">Select Option:</label>
+          <select class="variant-dropdown">
+            <!-- Options will be populated by JavaScript -->
+          </select>
+        </div>
+        
+        <div class="product-actions">
+          <div class="product-price">
+            <span class="current-price">{{offers[2].productPriceCurrencySymbol}}{{offers[2].productPrice}}</span>
+            <span class="original-price">£34.99</span>
+          </div>
+          <button class="checkout-btn" data-offer-url="{{offers[2].offerUrl}}" data-offer-id="{{offers[2].offerId}}">Buy now</button>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="coupon-code"></div>
-  <div class="product-info">
-    <div class="product-header">                
-      <h3 class="product-name">{{offers[0].productName}}</h3>
-      <a href="{{offers[0].productUrl}}"  data-offer-id="{{offers[0].offerId}}" target="_blank" class="more-info-link">More Info ↗</a>
-    </div>
-    
-    <div class="product-rating">
-      <div class="star-rating">
-        <span class="stars">
-          <span class="filled-stars" style="width: 0%;">★★★★★</span>
-          <span class="empty-stars">★★★★★</span>
-        </span>                                                                                                     
-        <span class="rating-count">{{offers[0].reviewCount}} reviews</span>
-      </div>
-    </div>
-    
-    <div class="product-description-container">
-      <p class="product-description">{{offers[0].productDescription}}</p>
-      <button class="show-more-btn">Show More</button>
-    </div>
-    
-    <!-- Product Variants Section -->
-    <div class="product-variants-container" style="display: none;">
-      <label class="variant-label">Select Option:</label>
-      <select class="variant-dropdown">
-        <!-- Options will be populated by JavaScript -->
-      </select>
-    </div>
-    
-    <div class="product-price">
-      <span class="current-price">{{offers[0].productPriceCurrencySymbol}}{{offers[0].productPrice}}</span>
-      <span class="original-price">£34.99</span>
-    </div>
-    <button class="checkout-btn" data-offer-url="{{offers[0].offerUrl}}" data-offer-id="{{offers[0].offerId}}">Buy now</button>
-    <button id="new-offer-btn" class="new-offer-btn">Next Offer</button>
+  
+  <!-- Navigation buttons -->
+  <div class="navigation-controls">
+    <button id="prev-offers-btn" class="nav-btn">Previous Offers</button>
+    <button id="new-offer-btn" class="nav-btn">Next Offers</button>
   </div>
 </div>
 
@@ -81,13 +273,74 @@
 
 
 <style>
-  .product-recommendation {
+  .product-recommendation-container {
     font-family: Arial, sans-serif;
-    max-width: 300px;
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  .offer-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .product-recommendation {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     background: white;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  /* Desktop layout: 3 columns */
+  @media (min-width: 768px) {
+    .offer-cards-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+    
+    .product-recommendation {
+      max-width: none;
+    }
+  }
+
+  /* Hide desktop-only cards on mobile */
+  @media (max-width: 767px) {
+    .desktop-only {
+      display: none !important;
+    }
+  }
+
+  .navigation-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .nav-btn {
+    padding: 8px 16px;
+    background: #fff;
+    color: #ec6f34;
+    border: 1px solid #ec6f34;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+  }
+
+  .nav-btn:hover {
+    background: #fdf2ee;
+  }
+
+  .nav-btn:disabled {
+    background: #bbb;
+    cursor: not-allowed;
   }
   
   .product-image-carousel {
@@ -416,6 +669,22 @@
     background: #fdf2ee;
   }
 
+  /* Mobile navigation styling */
+  @media (max-width: 767px) {
+    .navigation-controls {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      margin-top: 15px;
+    }
+    
+    .nav-btn {
+      flex: 1;
+      padding: 8px;
+      font-size: 14px;
+    }
+  }
+
   .loading-indicator {
     position: absolute;
     top: 0;
@@ -513,6 +782,34 @@
 
   .coupon-code button:hover {
     background: #0056b3 !important;
+  }
+
+  /* Desktop-only: Align price and buttons at bottom */
+  @media (min-width: 768px) {
+    .product-recommendation {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    .product-info {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    
+    .product-actions {
+      margin-top: auto;
+      padding-top: 8px;
+    }
+    
+    .product-price {
+      margin-bottom: 12px !important;
+    }
+    
+    .checkout-btn {
+      margin-bottom: 0 !important;
+    }
   }
 </style>
 
