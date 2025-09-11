@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StackTome Widget Demo</title>
+    
+</head>
+<body>
+    <h1>StackTome Widget Demo</h1>
+    
+    
+
+    <!-- Widget placeholder -->
+    <div id="stacktome-widget-2" class="widget-container">
+    </div>
+    <!-- src="https://cdn.stacktome.com/frontend/offer-widget/production/widget.js"  -->
+
+
+    <!-- Snowplow track page view -->
+<script type="text/javascript">
+  var data = { currency: "GBP", transaction_id: "1234567890", items: [ { item_id: "ss1500.09", item_parent_id: "ss1500.09", item_name: "Infinity CF919 Glasses", discount: null, price: 27.0, currency: "GBP", quantity: 1 }, { item_id: "ss1652.63", item_parent_id: "ss1652.63", item_name: "Infinity F53033", price: 32.0, currency: "GBP", quantity: 1 } ], value: 59.0 }
+  var email = "test11@test.com"
+  
+  if(data.items && data.items.length > 0){
+    var order = {
+      "products": [],
+      "orderId": data.transaction_id,
+      "email": email
+    }
+    for(let i = 0; i < data.items.length; i++){
+      order.products.push({
+        "sku": data.items[i].item_parent_id || data.items[i].item_id,
+        "quantity": data.items[i].quantity,
+        "price": data.items[i].price
+      });
+    }
+    
+    // Remove existing script if any
+    var existingScript = document.querySelector('#stacktome-recommendations-script-2');
+    if (existingScript) {
+      existingScript.remove();
+    }
+    
+    // Create new script element with dynamic payload
+    var script = document.createElement('script');
+    script.id = 'stacktome-recommendations-script-2';
+    script.className = 'stacktome-recommendations-widget-script';
+    script.src = 'https://cdn.stacktome.com/frontend/offer-widget/production/widget-v2.js';
+    
+    // Set filter-params with the dynamic order data
+    var filterParams = {
+      "widgetId": "2",
+      "apiKey": "pFle3ZbZGfFBw4I4aImkyIxCy9tnA2uR",
+      "staging": false,
+      "trackingApiKey": "4L5WOo6BOJZm1MvlJIUhZ00Wc47Fj5Qb",
+      "domain": "selectspecs.com",
+      "appId": "selectspecs",
+      "widgetPayload": order  // Use the dynamic order object
+    };
+    
+    script.setAttribute('filter-params', JSON.stringify(filterParams));
+    
+    // Add script to document
+    document.body.appendChild(script);
+  }
+</script>
+
+</body>
+</html>
