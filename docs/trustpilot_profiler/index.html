@@ -328,7 +328,7 @@
 
             // Calculate projected new reviews (3 months worth)
             const projectedNewReviews = projectedReviewsPerMonth * 3;
-            const projectedNewScore = (profileData.rating > 4.5 ? profileData.rating + 0.1 : 4.5).toFixed(1);
+            const projectedNewScore = (profileData.rating >= 4.5 ? profileData.rating + 0.2 : 4.5).toFixed(1);
             const projectedNewTotalScore = projectedNewScore * projectedNewReviews;
 
             // Calculate final weighted score
