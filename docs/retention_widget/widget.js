@@ -191,11 +191,14 @@
 		// Parse offers data
 		const offersData = container.querySelector('#offers-data');
 		const offers = offersData ? JSON.parse(offersData.value) : [];
-		
+
 		// Get all offer cards
 		const offerCards = container.querySelectorAll('.offer-card');
 		const nextOfferBtn = container.querySelector('#new-offer-btn');
 		const prevOfferBtn = container.querySelector('#prev-offers-btn');
+
+		// Track widget view when 50% visible for 3+ seconds
+		trackWidgetView(container);
 		
 		// Check if we're on mobile (single card) or desktop (multiple cards)
 		const isMobile = () => window.innerWidth < 768;
@@ -366,6 +369,50 @@
 			// Note: Auto-advance carousel moved outside to prevent multiple intervals
 		}
 		
+		// Track widget view when 50% visible for at least 3 seconds
+		function trackWidgetView(container) {
+			if (!window.stSnowplow) return;
+
+			let visibilityTimer = null;
+			let hasTracked = false;
+
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					// Check if 50% or more of the widget is visible
+					if (entry.intersectionRatio >= 0.5 && !hasTracked) {
+						// Start the 3-second timer
+						if (!visibilityTimer) {
+							visibilityTimer = setTimeout(() => {
+								// Fire tracking event after 3 seconds of visibility
+								window.stSnowplow('trackSelfDescribingEvent', {
+									event: {
+										schema: 'iglu:com.stacktome/content_view/jsonschema/1-0-0',
+										data: {
+											contentType: 'recommendation-offers'
+										}
+									}
+								});
+								hasTracked = true;
+								// Cleanup observer after tracking
+								observer.disconnect();
+							}, 3000);
+						}
+					} else {
+						// Widget is less than 50% visible, clear the timer
+						if (visibilityTimer) {
+							clearTimeout(visibilityTimer);
+							visibilityTimer = null;
+						}
+					}
+				});
+			}, {
+				threshold: 0.5 // Trigger when 50% is visible
+			});
+
+			// Start observing the widget container
+			observer.observe(container);
+		}
+
 		// Helper functions for updating card content
 		function trackOfferImpression(currentOffer, index) {
 			if(window.stSnowplow){
