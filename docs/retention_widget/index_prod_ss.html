@@ -73,7 +73,8 @@
     }
   ],
   "orderId": "14222",
-  "email": "test@test.com"
+  "email": "test@test.com",
+  "viewedProducts": []
 }</textarea>
         <button onclick="reloadWidget()">Reload Widget</button>
     </div>
@@ -142,9 +143,25 @@
         function selectProduct(skuBase, productName, price) {
             // Update the payload with the selected product
             const currentPayload = JSON.parse(document.getElementById('widgetPayload').value);
+
+            // Save the current product SKU to viewedProducts before changing
+            const currentSku = currentPayload.products[0].sku;
+            if (!currentPayload.viewedProducts) {
+                currentPayload.viewedProducts = [];
+            }
+            if (currentSku && !currentPayload.viewedProducts.includes(currentSku)) {
+                currentPayload.viewedProducts.push(currentSku);
+            }
+
+            // Update the product to the newly selected one
             currentPayload.products[0].sku = skuBase;
             currentPayload.products[0].skuBase = skuBase;
             currentPayload.products[0].price = price;
+
+            // Add new SKU to viewedProducts if not already present
+            if (!currentPayload.viewedProducts.includes(skuBase)) {
+                currentPayload.viewedProducts.push(skuBase);
+            }
 
             // Update the textarea
             document.getElementById('widgetPayload').value = JSON.stringify(currentPayload, null, 2);

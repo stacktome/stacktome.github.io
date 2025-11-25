@@ -21,7 +21,8 @@
     var order = {
       "products": [],
       "orderId": data.transaction_id,
-      "email": email
+      "email": email,
+      "viewedProducts": []
     }
     for(let i = 0; i < data.items.length; i++){
       order.products.push({
@@ -29,6 +30,8 @@
         "quantity": data.items[i].quantity,
         "price": data.items[i].price
       });
+      // Add SKU to viewedProducts list
+      order.viewedProducts.push(data.items[i].item_parent_id || data.items[i].item_id);
     }
     
     // Remove existing script if any
