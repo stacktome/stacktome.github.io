@@ -9,6 +9,7 @@ To connect with customer API credentials follow these steps:
 - set name as StackTome for example
 - set redirect urls exactly as:
 - - https://app.stacktome.com
+- - https://services.stacktome.com
 - - https://services.stacktome.com/auth/v1/trustpilot
 - Save the app
 2. Open StackTome conections page and click connect on Trustpilot. 
