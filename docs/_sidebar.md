@@ -2,6 +2,7 @@
 
 * [Home](/)
 * [Onboarding](/onboarding/)
+* [Connections](/connections/)
 * [Orders](/orders/)
 * [Shopify](/shopify/)
 * [Segment Template](/segment_template/)
