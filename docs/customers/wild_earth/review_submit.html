@@ -636,27 +636,57 @@
             });
         }
 
+        // Color mapping based on rating value (Trustpilot-style)
+        function getRatingColor(rating) {
+            const colorMap = {
+                1: '#D64545',  // red
+                2: '#FF9800',  // orange
+                3: '#FFC107',  // yellow
+                4: '#A4C639',  // light green
+                5: '#00B67A'    // dark green (Trustpilot green)
+            };
+            return colorMap[rating] || '#6cb530';
+        }
+
+        function updateStarColor(svg, color) {
+            const paths = svg.querySelectorAll('path');
+            paths.forEach(path => {
+                const d = path.getAttribute('d');
+                if (!d) return;
+                
+                // Update background rectangle paths (first two paths)
+                if (d.includes('M0 4') || d.includes('M20 4')) {
+                    path.setAttribute('fill', color);
+                }
+                // Update star shape path (third path) to white
+                else if (d.includes('M10 13.3736')) {
+                    path.setAttribute('fill', 'white');
+                }
+            });
+        }
+
         function setRating(container, value, ratingType, productIndex) {
             const stars = container.querySelectorAll('.star');
+            const ratingColor = getRatingColor(value);
+            
             stars.forEach((star, index) => {
                 const svg = star.querySelector('svg');
                 if (index < value) {
                     star.classList.add('active');
-                    // Update SVG colors for active state
-                    svg.querySelectorAll('path[fill="#ddd"]').forEach(path => {
-                        path.setAttribute('fill', '#6cb530');
-                    });
-                    svg.querySelectorAll('path[fill="#f0f0f0"]').forEach(path => {
-                        path.setAttribute('fill', 'white');
-                    });
+                    // Update SVG colors for active state with rating-based color
+                    updateStarColor(svg, ratingColor);
                 } else {
                     star.classList.remove('active');
-                    // Update SVG colors for inactive state
-                    svg.querySelectorAll('path[fill="#6cb530"]').forEach(path => {
-                        path.setAttribute('fill', '#ddd');
-                    });
-                    svg.querySelectorAll('path[fill="white"]').forEach(path => {
-                        path.setAttribute('fill', '#f0f0f0');
+                    // Update SVG colors for inactive state (gray)
+                    const paths = svg.querySelectorAll('path');
+                    paths.forEach(path => {
+                        const d = path.getAttribute('d');
+                        if (!d) return;
+                        if (d.includes('M0 4') || d.includes('M20 4')) {
+                            path.setAttribute('fill', '#ddd');
+                        } else if (d.includes('M10 13.3736')) {
+                            path.setAttribute('fill', '#f0f0f0');
+                        }
                     });
                 }
             });
@@ -674,26 +704,32 @@
 
         function highlightStars(container, value) {
             const stars = container.querySelectorAll('.star');
+            const hoverColor = getRatingColor(value);
+            
             stars.forEach((star, index) => {
                 const svg = star.querySelector('svg');
                 if (index < value) {
                     star.classList.add('hover');
-                    // Update SVG colors for hover state
-                    svg.querySelectorAll('path[fill="#ddd"]').forEach(path => {
-                        path.setAttribute('fill', '#6cb530');
-                    });
-                    svg.querySelectorAll('path[fill="#f0f0f0"]').forEach(path => {
-                        path.setAttribute('fill', 'white');
-                    });
+                    // Update SVG colors for hover state with rating-based color
+                    updateStarColor(svg, hoverColor);
                 } else {
                     star.classList.remove('hover');
-                    // Revert to inactive if not active
-                    if (!star.classList.contains('active')) {
-                        svg.querySelectorAll('path[fill="#6cb530"]').forEach(path => {
-                            path.setAttribute('fill', '#ddd');
-                        });
-                        svg.querySelectorAll('path[fill="white"]').forEach(path => {
-                            path.setAttribute('fill', '#f0f0f0');
+                    // Revert to current state (active color or inactive gray)
+                    if (star.classList.contains('active')) {
+                        const currentRating = parseInt(container.dataset.rating) || 0;
+                        const activeColor = getRatingColor(currentRating);
+                        updateStarColor(svg, activeColor);
+                    } else {
+                        // Revert to inactive gray
+                        const paths = svg.querySelectorAll('path');
+                        paths.forEach(path => {
+                            const d = path.getAttribute('d');
+                            if (!d) return;
+                            if (d.includes('M0 4') || d.includes('M20 4')) {
+                                path.setAttribute('fill', '#ddd');
+                            } else if (d.includes('M10 13.3736')) {
+                                path.setAttribute('fill', '#f0f0f0');
+                            }
                         });
                     }
                 }
@@ -702,16 +738,26 @@
 
         function clearStarHighlights(container) {
             const stars = container.querySelectorAll('.star');
-            stars.forEach(star => {
+            const currentRating = parseInt(container.dataset.rating) || 0;
+            
+            stars.forEach((star, index) => {
                 star.classList.remove('hover');
                 const svg = star.querySelector('svg');
-                // Revert to current state (active or inactive)
-                if (!star.classList.contains('active')) {
-                    svg.querySelectorAll('path[fill="#6cb530"]').forEach(path => {
-                        path.setAttribute('fill', '#ddd');
-                    });
-                    svg.querySelectorAll('path[fill="white"]').forEach(path => {
-                        path.setAttribute('fill', '#f0f0f0');
+                // Revert to current state (active color or inactive gray)
+                if (star.classList.contains('active') && currentRating > 0) {
+                    const activeColor = getRatingColor(currentRating);
+                    updateStarColor(svg, activeColor);
+                } else {
+                    // Revert to inactive gray
+                    const paths = svg.querySelectorAll('path');
+                    paths.forEach(path => {
+                        const d = path.getAttribute('d');
+                        if (!d) return;
+                        if (d.includes('M0 4') || d.includes('M20 4')) {
+                            path.setAttribute('fill', '#ddd');
+                        } else if (d.includes('M10 13.3736')) {
+                            path.setAttribute('fill', '#f0f0f0');
+                        }
                     });
                 }
             });
