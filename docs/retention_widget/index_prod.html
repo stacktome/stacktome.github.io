@@ -140,11 +140,26 @@
         }
 
         function selectProduct(skuBase, productName, price) {
-            // Update the payload with the selected product
             const currentPayload = JSON.parse(document.getElementById('widgetPayload').value);
+
+            // Save the current product SKU to viewedProducts before changing
+            const currentSku = currentPayload.products[0].sku;
+            if (!currentPayload.viewedProducts) {
+                currentPayload.viewedProducts = [];
+            }
+            if (currentSku && !currentPayload.viewedProducts.includes(currentSku)) {
+                currentPayload.viewedProducts.push(currentSku);
+            }
+
+            // Update the payload with the selected product
             currentPayload.products[0].sku = skuBase;
             currentPayload.products[0].skuBase = skuBase;
             currentPayload.products[0].price = price;
+
+            // Add new SKU to viewedProducts if not already present
+            if (!currentPayload.viewedProducts.includes(skuBase)) {
+                currentPayload.viewedProducts.push(skuBase);
+            }
 
             // Update the textarea
             document.getElementById('widgetPayload').value = JSON.stringify(currentPayload, null, 2);
@@ -210,7 +225,7 @@
             const script = document.createElement('script');
             script.setAttribute('data-widget-script', 'true');
             // script.src = 'https://cdn.stacktome.com/frontend/offer-widget/production/widget.js';
-            script.src = 'widget.js';
+            script.src = 'widget-v1.js';
             
             // Get payload from textarea
             const payload = document.getElementById('widgetPayload').value;
