@@ -317,7 +317,7 @@
                 resultsDiv.innerHTML = inStock.map(p => `
                     <div class="search-result-item" onclick='addProduct(${JSON.stringify(p).replace(/'/g, "&#39;")})'>
                         <strong>${escHtml(p.name)}</strong>
-                        <small>SKU: ${escHtml(p.skuBase)} | $${p.price}</small>
+                        <small>SKU: ${escHtml(p.sku)} | Base: ${escHtml(p.skuBase)} | $${p.price} | Brand: ${escHtml(p.brand || 'N/A')}</small>
                     </div>
                 `).join('');
             } catch (err) {
@@ -330,13 +330,14 @@
             if (selectedProducts.find(sp => sp.sku === p.sku)) return;
 
             selectedProducts.push({
-                productUrl: p.link || `https://www.wildearth.com.au/buy/${p.skuBase}`,
-                imageUrl: p.imageLink || p.image_link || '',
-                name: p.name || p.title,
+                productUrl: p.url || `https://www.wildearth.com.au/buy/${p.skuBase}`,
+                imageUrl: p.urlImage1 || '',
+                name: p.name,
                 sku: p.sku,
                 skuBase: p.skuBase || p.sku,
                 id: p.skuBase || p.sku,
                 variationId: p.sku,
+                gtin: p.itemTin || '',
                 brand: p.brand || ''
             });
 
@@ -429,7 +430,7 @@
 
                 resultBox.className = 'result-box success';
                 document.getElementById('resultTitle').textContent = 'Invitation Created!';
-                document.getElementById('invitationLink').textContent = link;
+                document.getElementById('invitationLink').innerHTML = `<a href="${escAttr(link)}" target="_blank">${escHtml(link)}</a>`;
                 document.getElementById('resultMeta').textContent = `Token: ${token} | Order: ${orderId} | Email: ${reviewerEmail}`;
 
             } catch (err) {
@@ -445,7 +446,8 @@
         }
 
         function copyLink() {
-            const link = document.getElementById('invitationLink').textContent;
+            const linkEl = document.getElementById('invitationLink').querySelector('a');
+            const link = linkEl ? linkEl.href : document.getElementById('invitationLink').textContent;
             navigator.clipboard.writeText(link).then(() => {
                 const btn = document.querySelector('.copy-btn');
                 btn.textContent = 'Copied!';
