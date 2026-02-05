@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Review Invitation Link - Wild Earth</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        h1 { font-size: 22px; margin-bottom: 5px; }
+        .subtitle { color: #666; margin-bottom: 25px; font-size: 14px; }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 14px; }
+        input[type="text"], input[type="email"], input[type="number"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        input:focus { outline: none; border-color: #0066cc; }
+        .search-results {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-top: 4px;
+            display: none;
+        }
+        .search-result-item {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .search-result-item:hover { background: #f5f5f5; }
+        .search-result-item strong { display: block; font-size: 14px; }
+        .search-result-item small { color: #666; }
+        .selected-products { margin-top: 10px; }
+        .selected-product {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: #f0f5ff;
+            border: 1px solid #c5d9f7;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+        .selected-product img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .selected-product .info { flex: 1; }
+        .selected-product .info .name { font-weight: 600; }
+        .selected-product .info .sku { color: #666; font-size: 12px; }
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0 4px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+        .btn:hover:not(:disabled) { background: #0052a3; }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .btn-secondary {
+            background: #6c757d;
+            padding: 8px 16px;
+            font-size: 13px;
+            width: auto;
+        }
+        .btn-secondary:hover:not(:disabled) { background: #5a6268; }
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+        }
+        .result-box.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        .result-box.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            display: block;
+        }
+        .result-box h3 { margin-bottom: 8px; font-size: 15px; }
+        .invitation-link {
+            word-break: break-all;
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #b8daff;
+            margin: 8px 0;
+            font-family: monospace;
+            font-size: 13px;
+        }
+        .copy-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .copy-btn:hover { background: #218838; }
+        .hint { font-size: 12px; color: #888; margin-top: 4px; }
+        .row { display: flex; gap: 12px; }
+        .row .form-group { flex: 1; }
+        .env-toggle {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .env-toggle button {
+            padding: 6px 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .env-toggle button.active {
+            background: #0066cc;
+            color: white;
+            border-color: #0066cc;
+        }
+        .log-box {
+            margin-top: 12px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generate Review Invitation Link</h1>
+        <p class="subtitle">Wild Earth - Create a test invitation for review collection</p>
+
+        <div class="env-toggle">
+            <button class="active" onclick="setEnv('prod', this)">Production</button>
+            <button onclick="setEnv('staging', this)">Staging</button>
+            <button onclick="setEnv('local', this)">Local</button>
+        </div>
+
+        <div class="form-group">
+            <label>Search & Add Products</label>
+            <input type="text" id="productSearch" placeholder="Type at least 3 characters to search products...">
+            <div class="search-results" id="searchResults"></div>
+            <div class="selected-products" id="selectedProducts"></div>
+            <p class="hint">Search for products to include in the invitation. At least 1 required.</p>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label>Reviewer Name</label>
+                <input type="text" id="reviewerName" value="">
+            </div>
+            <div class="form-group">
+                <label>Reviewer Email</label>
+                <input type="email" id="reviewerEmail" value="">
+            </div>
+        </div>
+        <button type="button" class="btn-secondary" onclick="randomizePerson()" style="margin-bottom: 18px;">Randomize Person</button>
+
+        <div class="row">
+            <div class="form-group">
+                <label>Order ID</label>
+                <input type="text" id="orderId" value="">
+            </div>
+            <div class="form-group">
+                <label>Expires In (days)</label>
+                <input type="number" id="expiresInDays" value="30" min="1" max="365">
+            </div>
+        </div>
+
+        <button class="btn" id="generateBtn" onclick="generateInvitation()">Generate Invitation Link</button>
+
+        <div class="result-box" id="resultBox">
+            <h3 id="resultTitle"></h3>
+            <div class="invitation-link" id="invitationLink"></div>
+            <button class="copy-btn" onclick="copyLink()">Copy Link</button>
+            <p class="hint" id="resultMeta" style="margin-top: 8px;"></p>
+        </div>
+
+        <div class="log-box" id="logBox"></div>
+    </div>
+
+    <script>
+        // --- Config ---
+        const CONFIG = {
+            prod: {
+                invitationApi: 'https://review-invites.stacktome.com/v1/private/invitations',
+                productSearchApi: 'https://services.stacktome.com/api/recommendations/v1/products/search',
+                reviewFormHostUri: 'https://support.stacktome.com/customers/wild_earth/review_submit.html',
+                apiKey: 'kNFRb0Q9OX2cYrkkhZQEE6U7fMRkH5JJ',
+                consumerUsername: 'user_@_wild_earth'
+            },
+            staging: {
+                invitationApi: 'https://services-staging.stacktome.com/api/reviews/v1/private/invitations',
+                productSearchApi: 'https://services.stacktome.com/api/recommendations/v1/products/search',
+                reviewFormHostUri: 'https://support.stacktome.com/customers/wild_earth/review_submit.html',
+                apiKey: 'kNFRb0Q9OX2cYrkkhZQEE6U7fMRkH5JJ',
+                consumerUsername: 'user_@_wild_earth'
+            },
+            local: {
+                invitationApi: 'http://localhost:8080/v1/private/invitations',
+                productSearchApi: 'https://services.stacktome.com/api/recommendations/v1/products/search',
+                reviewFormHostUri: 'http://localhost:8080/review_submit.html',
+                apiKey: 'kNFRb0Q9OX2cYrkkhZQEE6U7fMRkH5JJ',
+                consumerUsername: 'user_@_wild_earth'
+            }
+        };
+
+        let currentEnv = 'prod';
+        let selectedProducts = [];
+        let searchTimeout;
+
+        // --- Random data ---
+        const FIRST_NAMES = ['James','Emma','Liam','Olivia','Noah','Ava','William','Sophia','Oliver','Isabella','Lucas','Mia','Ethan','Charlotte','Mason','Amelia','Logan','Harper','Jack','Evelyn'];
+        const LAST_NAMES = ['Smith','Johnson','Williams','Brown','Jones','Garcia','Miller','Davis','Rodriguez','Martinez','Wilson','Anderson','Taylor','Thomas','Moore','Jackson','White','Harris','Clark','Lewis'];
+
+        function randomizePerson() {
+            const first = FIRST_NAMES[Math.floor(Math.random() * FIRST_NAMES.length)];
+            const last = LAST_NAMES[Math.floor(Math.random() * LAST_NAMES.length)];
+            const num = Math.floor(Math.random() * 9000) + 1000;
+            document.getElementById('reviewerName').value = `${first} ${last}`;
+            document.getElementById('reviewerEmail').value = `${first.toLowerCase()}.${last.toLowerCase()}+${num}@example.com`;
+            document.getElementById('orderId').value = `ORD-TEST-${Date.now().toString(36).toUpperCase()}`;
+        }
+
+        // --- Environment ---
+        function setEnv(env, btn) {
+            currentEnv = env;
+            document.querySelectorAll('.env-toggle button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function cfg() { return CONFIG[currentEnv]; }
+
+        // --- Product Search ---
+        document.getElementById('productSearch').addEventListener('input', function(e) {
+            clearTimeout(searchTimeout);
+            const q = e.target.value.trim();
+            if (q.length < 3) {
+                document.getElementById('searchResults').style.display = 'none';
+                return;
+            }
+            searchTimeout = setTimeout(() => searchProducts(q), 300);
+        });
+
+        async function searchProducts(q) {
+            const resultsDiv = document.getElementById('searchResults');
+            resultsDiv.innerHTML = '<div class="search-result-item">Searching...</div>';
+            resultsDiv.style.display = 'block';
+
+            try {
+                const url = `${cfg().productSearchApi}?q=${encodeURIComponent(q)}&availability=${encodeURIComponent('in stock')}`;
+                const resp = await fetch(url, {
+                    headers: {
+                        'accept': 'application/json',
+                        'apikey': cfg().apiKey,
+                        'origin': 'https://app.stacktome.com',
+                        'referer': 'https://app.stacktome.com/'
+                    }
+                });
+                if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                const data = await resp.json();
+                const inStock = data.filter(p => p.availability === 'in stock');
+
+                if (inStock.length === 0) {
+                    resultsDiv.innerHTML = '<div class="search-result-item" style="color:#666;">No in-stock products found</div>';
+                    return;
+                }
+
+                resultsDiv.innerHTML = inStock.map(p => `
+                    <div class="search-result-item" onclick='addProduct(${JSON.stringify(p).replace(/'/g, "&#39;")})'>
+                        <strong>${escHtml(p.name)}</strong>
+                        <small>SKU: ${escHtml(p.skuBase)} | $${p.price}</small>
+                    </div>
+                `).join('');
+            } catch (err) {
+                resultsDiv.innerHTML = `<div class="search-result-item" style="color:red;">Search error: ${escHtml(err.message)}</div>`;
+            }
+        }
+
+        function addProduct(p) {
+            // Skip if already added
+            if (selectedProducts.find(sp => sp.sku === p.sku)) return;
+
+            selectedProducts.push({
+                productUrl: p.link || `https://www.wildearth.com.au/buy/${p.skuBase}`,
+                imageUrl: p.imageLink || p.image_link || '',
+                name: p.name || p.title,
+                sku: p.sku,
+                skuBase: p.skuBase || p.sku,
+                id: p.skuBase || p.sku,
+                variationId: p.sku,
+                brand: p.brand || ''
+            });
+
+            document.getElementById('searchResults').style.display = 'none';
+            document.getElementById('productSearch').value = '';
+            renderSelectedProducts();
+        }
+
+        function removeProduct(index) {
+            selectedProducts.splice(index, 1);
+            renderSelectedProducts();
+        }
+
+        function renderSelectedProducts() {
+            const container = document.getElementById('selectedProducts');
+            if (selectedProducts.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+            container.innerHTML = selectedProducts.map((p, i) => `
+                <div class="selected-product">
+                    ${p.imageUrl ? `<img src="${escAttr(p.imageUrl)}" onerror="this.style.display='none'">` : ''}
+                    <div class="info">
+                        <div class="name">${escHtml(p.name)}</div>
+                        <div class="sku">SKU: ${escHtml(p.sku)} | Base: ${escHtml(p.skuBase)}</div>
+                    </div>
+                    <button class="remove-btn" onclick="removeProduct(${i})" title="Remove">&times;</button>
+                </div>
+            `).join('');
+        }
+
+        // --- Generate Invitation ---
+        async function generateInvitation() {
+            const btn = document.getElementById('generateBtn');
+            const resultBox = document.getElementById('resultBox');
+            const logBox = document.getElementById('logBox');
+
+            if (selectedProducts.length === 0) {
+                alert('Please add at least one product.');
+                return;
+            }
+
+            const reviewerName = document.getElementById('reviewerName').value.trim();
+            const reviewerEmail = document.getElementById('reviewerEmail').value.trim();
+            const orderId = document.getElementById('orderId').value.trim();
+            const expiresInDays = parseInt(document.getElementById('expiresInDays').value) || 30;
+
+            if (!reviewerEmail) { alert('Reviewer email is required.'); return; }
+            if (!orderId) { alert('Order ID is required.'); return; }
+
+            btn.disabled = true;
+            btn.textContent = 'Generating...';
+            resultBox.className = 'result-box';
+            resultBox.style.display = 'none';
+
+            const payload = {
+                orderId,
+                products: selectedProducts,
+                locale: 'en',
+                reviewFormHostUri: cfg().reviewFormHostUri,
+                reviewerName: reviewerName || 'Test User',
+                reviewerEmail,
+                expiresInDays
+            };
+
+            // Show log
+            logBox.style.display = 'block';
+            logBox.textContent = `POST ${cfg().invitationApi}\n\n${JSON.stringify(payload, null, 2)}`;
+
+            try {
+                const resp = await fetch(cfg().invitationApi, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Consumer-Username': cfg().consumerUsername
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await resp.json().catch(() => null);
+                logBox.textContent += `\n\n--- Response ${resp.status} ---\n${JSON.stringify(data, null, 2)}`;
+
+                if (!resp.ok) {
+                    throw new Error(data?.message || data?.error || `HTTP ${resp.status}`);
+                }
+
+                // Build the invitation link
+                const token = data.invitationToken || data.token;
+                const link = `${cfg().reviewFormHostUri}?token=${token}`;
+
+                resultBox.className = 'result-box success';
+                document.getElementById('resultTitle').textContent = 'Invitation Created!';
+                document.getElementById('invitationLink').textContent = link;
+                document.getElementById('resultMeta').textContent = `Token: ${token} | Order: ${orderId} | Email: ${reviewerEmail}`;
+
+            } catch (err) {
+                resultBox.className = 'result-box error';
+                document.getElementById('resultTitle').textContent = 'Error';
+                document.getElementById('invitationLink').textContent = err.message;
+                document.getElementById('resultMeta').textContent = '';
+                logBox.textContent += `\n\nERROR: ${err.message}`;
+            }
+
+            btn.disabled = false;
+            btn.textContent = 'Generate Invitation Link';
+        }
+
+        function copyLink() {
+            const link = document.getElementById('invitationLink').textContent;
+            navigator.clipboard.writeText(link).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = 'Copied!';
+                setTimeout(() => { btn.textContent = 'Copy Link'; }, 2000);
+            });
+        }
+
+        // --- Helpers ---
+        function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+        function escAttr(s) { return s.replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+
+        // Hide search when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('#productSearch') && !e.target.closest('#searchResults')) {
+                document.getElementById('searchResults').style.display = 'none';
+            }
+        });
+
+        // Initialize with random data
+        randomizePerson();
+    </script>
+</body>
+</html>
