@@ -1748,11 +1748,18 @@
                     } else {
                         // Build links to view reviews for each reviewed product
                         const baseUrl = window.location.href.replace(/\/[^/]*$/, '/view_reviews.html');
-                        const reviewedSkus = reviews.map(r => r.product.baseSku || r.product.sku).filter(Boolean);
-                        const uniqueSkus = [...new Set(reviewedSkus)];
-                        const viewLinks = uniqueSkus.map(sku =>
-                            `<a href="${baseUrl}?baseSku=${encodeURIComponent(sku)}" target="_blank" style="display:inline-block; margin:6px 4px; padding:8px 16px; background:#0066cc; color:white; text-decoration:none; border-radius:6px; font-size:14px;">View reviews for ${sku}</a>`
-                        ).join('');
+                        const truncate = (s, n) => s.length > n ? s.substring(0, n) + '...' : s;
+                        const seen = new Set();
+                        const viewLinks = reviews.filter(r => {
+                            const key = r.product.baseSku || r.product.sku;
+                            if (seen.has(key)) return false;
+                            seen.add(key);
+                            return true;
+                        }).map(r => {
+                            const sku = r.product.baseSku || r.product.sku;
+                            const name = truncate(r.product.name || sku, 30);
+                            return `<a href="${baseUrl}?baseSku=${encodeURIComponent(sku)}" target="_blank" style="display:block; margin:8px auto; padding:10px 16px; max-width:320px; background:#0066cc; color:white; text-decoration:none; border-radius:6px; font-size:14px;">See your review for ${name}</a>`;
+                        }).join('');
 
                         const container = document.querySelector('.container');
                         container.innerHTML = `
