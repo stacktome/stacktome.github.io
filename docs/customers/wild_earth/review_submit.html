@@ -1757,7 +1757,7 @@
                             return true;
                         }).map(r => {
                             const sku = r.product.baseSku || r.product.sku;
-                            const name = truncate(r.product.name || sku, 30);
+                            const name = truncate(r.product.name || sku, 20);
                             return `<a href="${baseUrl}?baseSku=${encodeURIComponent(sku)}" target="_blank" style="display:block; margin:8px auto; padding:10px 16px; max-width:320px; background:#0066cc; color:white; text-decoration:none; border-radius:6px; font-size:14px;">Review for <b>${name}</b></a>`;
                         }).join('');
 
