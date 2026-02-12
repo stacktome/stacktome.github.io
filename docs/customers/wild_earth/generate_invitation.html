@@ -231,7 +231,7 @@
         // --- Config ---
         const CONFIG = {
             prod: {
-                invitationApi: 'https://review-invites.stacktome.com/v1/private/invitations',
+                invitationApi: 'https://services.stacktome.com/api/invite/v1/private/invitations',
                 productSearchApi: 'https://services.stacktome.com/api/recommendations/v1/products/search',
                 reviewFormHostUri: 'https://support.stacktome.com/customers/wild_earth/review_submit.html',
                 apiKey: 'kNFRb0Q9OX2cYrkkhZQEE6U7fMRkH5JJ',
@@ -407,7 +407,7 @@
             logBox.textContent = `POST ${cfg().invitationApi}\n\n${JSON.stringify(payload, null, 2)}`;
 
             try {
-                const resp = await fetch(cfg().invitationApi, {
+                const resp = await fetch(cfg().invitationApi + '?apikey=' + encodeURIComponent(cfg().apiKey), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
