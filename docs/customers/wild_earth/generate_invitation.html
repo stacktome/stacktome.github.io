@@ -234,21 +234,24 @@
                 invitationApi: 'https://services.stacktome.com/api/invite/v1/private/invitations',
                 productSearchApi: 'https://services.stacktome.com/api/recommendations/v1/products/search',
                 reviewFormHostUri: 'https://support.stacktome.com/customers/wild_earth/review_submit.html',
-                apiKey: 'kNFRb0Q9OX2cYrkkhZQEE6U7fMRkH5JJ',
+                productSearchApiKey: 'kNFRb0Q9OX2cYrkkhZQEE6U7fMRkH5JJ',
+                inviteApiKey: 'XqQS3Ex1hhzYtwlJHlByO0IiTnY8XG7n',
                 consumerUsername: 'user_@_optima_sport'
             },
             staging: {
                 invitationApi: 'https://services-staging.stacktome.com/api/reviews/v1/private/invitations',
                 productSearchApi: 'https://services.stacktome.com/api/recommendations/v1/products/search',
                 reviewFormHostUri: 'https://support.stacktome.com/customers/wild_earth/review_submit.html',
-                apiKey: 'kNFRb0Q9OX2cYrkkhZQEE6U7fMRkH5JJ',
+                productSearchApiKey: 'kNFRb0Q9OX2cYrkkhZQEE6U7fMRkH5JJ',
+                inviteApiKey: 'XqQS3Ex1hhzYtwlJHlByO0IiTnY8XG7n',
                 consumerUsername: 'user_@_demo_staging'
             },
             local: {
                 invitationApi: 'http://localhost:8080/v1/private/invitations',
                 productSearchApi: 'https://services.stacktome.com/api/recommendations/v1/products/search',
                 reviewFormHostUri: 'http://localhost:8080/review_submit.html',
-                apiKey: 'kNFRb0Q9OX2cYrkkhZQEE6U7fMRkH5JJ',
+                productSearchApiKey: 'kNFRb0Q9OX2cYrkkhZQEE6U7fMRkH5JJ',
+                inviteApiKey: 'XqQS3Ex1hhzYtwlJHlByO0IiTnY8XG7n',
                 consumerUsername: 'user_@_demo_staging'
             }
         };
@@ -300,7 +303,7 @@
                 const resp = await fetch(url, {
                     headers: {
                         'accept': 'application/json',
-                        'apikey': cfg().apiKey,
+                        'apikey': cfg().productSearchApiKey,
                         'origin': 'https://app.stacktome.com',
                         'referer': 'https://app.stacktome.com/'
                     }
@@ -407,7 +410,7 @@
             logBox.textContent = `POST ${cfg().invitationApi}\n\n${JSON.stringify(payload, null, 2)}`;
 
             try {
-                const resp = await fetch(cfg().invitationApi + '?apikey=' + encodeURIComponent(cfg().apiKey), {
+                const resp = await fetch(cfg().invitationApi + '?apikey=' + encodeURIComponent(cfg().inviteApiKey), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
