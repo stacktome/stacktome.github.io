@@ -3,6 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trustpilot Profile Analyzer: analyze any company's Trustpilot rating, review velocity, and projected 90-day improvements with StackTome. URL params: ?domain=example.com&volume=500&format=json">
+    <!-- LLM agents: this page requires JavaScript to render results.
+         For machine-readable output use the API endpoint directly:
+         https://trustpilot-calculator-412045756898.europe-west1.run.app?domain=example.com&volume=500
+         Returns HTML with structured data embedded in <script type="application/json" id="json-data">. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Trustpilot Profile Analyzer",
+      "description": "Analyzes a company's Trustpilot profile and projects rating and review count improvements achievable in 90 days using StackTome. NOTE: This page requires JavaScript. Automated agents should fetch results from the API endpoint instead: https://trustpilot-calculator-412045756898.europe-west1.run.app?domain={domain}&volume={volume}",
+      "url": "https://www.stacktome.com/trustpilot-calculator",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://trustpilot-calculator-412045756898.europe-west1.run.app?domain={domain}&volume={volume}",
+        "query-input": "required name=domain"
+      }
+    }
+    </script>
     <title>Trustpilot Profile Analyzer</title>
     <style>
         body {
@@ -158,6 +180,7 @@
 
     <script>
         let orderVolume = 0;
+        let outputFormat = '';
 
         // Function to clean domain value
         function cleanDomain(domain) {
@@ -192,6 +215,7 @@
         function initializeFromUrl() {
             const domainParam = cleanDomain(getUrlParameter('domain'));
             const volumeParam = getUrlParameter('volume');
+            outputFormat = getUrlParameter('format');
 
             if (domainParam) {
                 document.getElementById('domain').value = domainParam;
@@ -278,7 +302,7 @@
                     reviewVelocity
                 );
 
-                displayResults(profileData, reviewVelocity, offer);
+                displayResults(profileData, reviewVelocity, offer, domain);
             } catch (error) {
                 showError('Error analyzing profile: ' + error.message);
             } finally {
@@ -301,7 +325,7 @@
         }
         
 
-        function displayResults(profileData, reviewVelocity, offer) {
+        function displayResults(profileData, reviewVelocity, offer, domain) {
             const profileDataElement = document.getElementById('profileData');
             const offerElement = document.getElementById('offer');
 
@@ -336,6 +360,31 @@
             const trustpilotFees = profileData.hasSubscription ? calculateTrustpilotFees(profileData.reviewCount) : 0;
             const potentialSalesLift = Math.round((projectedRating - profileData.rating) / 0.1 * 5);
             const isLocalhost = window.location.hostname === '' ||  window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+            if (outputFormat === 'json') {
+                const jsonResult = {
+                    domain: domain,
+                    current: {
+                        rating: profileData.rating,
+                        reviewCount: profileData.reviewCount,
+                        hasActiveSubscription: profileData.hasSubscription,
+                        reviewsPerMonth: reviewVelocity.reviewsPerMonth
+                    },
+                    projected_90days: {
+                        rating: parseFloat(projectedRating),
+                        totalReviews: profileData.reviewCount + projectedNewReviews,
+                        newReviews: projectedNewReviews,
+                        reviewsPerMonth: projectedReviewsPerMonth,
+                        avgNewReviewScore: parseFloat(projectedNewScore),
+                        potentialSalesLiftPercent: potentialSalesLift
+                    },
+                    trustpilotAnnualFees: trustpilotFees
+                };
+                document.getElementById('offer').innerHTML =
+                    `<pre id="json-output" style="background:#f5f5f5;padding:20px;border-radius:4px;overflow-x:auto;font-size:14px;">${JSON.stringify(jsonResult, null, 2)}</pre>`;
+                showResults();
+                return;
+            }
 
             if(isLocalhost)
                 profileDataElement.innerHTML = `
