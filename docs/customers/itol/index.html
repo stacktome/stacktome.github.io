@@ -165,9 +165,11 @@
       e.preventDefault();
       
       const createdAtISO = new Date(e.target.createdAt.value).toISOString();
+      const deskId = e.target.requesterId.value;
+      const generatedOrderId = Date.now() + "-" + deskId;
 
       const data = {
-        orderId: e.target.orderId.value,
+        orderId: generatedOrderId,
         channel: "form",
         event: "manual-review-request",
         orderLines: [
@@ -184,7 +186,7 @@
           mobile: ""
         },
         requester: {
-          id: e.target.requesterId.value,
+          id: deskId,
           name: "",
           campaign: e.target.campaignId.value
         },
