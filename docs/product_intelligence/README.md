@@ -36,21 +36,3 @@ Bounded tool library (20–30 pre-built graph traversals) routed by intent. Pre-
 - *"Which new launches are tracking below cohort benchmark?"*
 
 Agent returns synthesis with recommended action, not raw queries.
-
----
-
-## Why This Wins
-
-- **Faster than SQL:** Multi-hop queries (review → product → order → customer → churn signal) execute instantly, not via scheduled jobs.
-- **Non-analyst access:** Natural language surfaces insights to buyers/merchandisers who've never written a query.
-- **Retention lock:** Any merchant seeing the LTV correlation once won't leave — it's the answer to *"Why pay for reviews?"*
-
----
-
-## Build Sequence
-
-**Phase 1 (4–6 weeks):** Static demo on one real dataset. Product Health Matrix + 5–6 agent prompts with real answers. **Stop here until LOI.**
-
-**Phase 2 (8–12 weeks):** Live dashboard with NLP enrichment pipeline.
-
-**Phase 3:** Expand agent, integrations (Klaviyo/Shopify alerts).
