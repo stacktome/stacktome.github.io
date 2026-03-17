@@ -13,16 +13,16 @@ Stacktome uniquely fuses review text with transaction data via a graph structure
 
 ## Dashboard Modules
 
-### 1. **Product Health Matrix** (The At-a-Glance)
+1. **Product Health Matrix** (The At-a-Glance)
 Four-quadrant bubble chart: review score trajectory (X) × repeat purchase rate (Y), bubble size = revenue, colour = return rate. Single view identifies quality risks before they hit returns P&L.
 
-### 2. **Review-LTV Attribution** (The ROI Anchor)
+2. **Review-LTV Attribution** (The ROI Anchor)
 Scatter plot: average review score (X) × 180-day customer LTV (Y). Quantifies the direct revenue impact of product quality — e.g., *"1-star improvement correlates with +£340 LTV."*
 
-### 3. **Voice of Customer Tracker** (The Risk Early Warning)
+3. **Voice of Customer Tracker** (The Risk Early Warning)
 Rising complaint topics by category, ranked by frequency and trend. Flags topics up >20% WoW with example quotes. Surfaces unmet demand from review text.
 
-### 4. **Churn Risk Register** (The Action List)
+4. **Churn Risk Register** (The Action List)
 Customers with 2+ orders + negative review + purchase gap. Ranked by LTV at risk. Exportable to Klaviyo.
 
 ---
