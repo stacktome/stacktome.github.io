@@ -38,7 +38,7 @@
           "https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto/t_Product550s/v1/Raw/110128_overview.jpg",
           "https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto/t_Product550s/v1/Raw/110128_closeup.jpg"
         ],
-        "expireAt": "2025-04-11T15:00:00Z"
+        "expireAt": "2026-03-21T15:00:00Z"
       },
       {
         "productName": "Floral Ratatouille",
@@ -61,7 +61,7 @@
           "https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110120_overview.jpg",
           "https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110120_closeup.jpg"
         ],
-        "expireAt": "2025-05-15T12:00:00Z"
+        "expireAt": "2026-03-19T12:00:00Z"
       },
       {
         "productName": "Joyful Wishes",
@@ -84,7 +84,7 @@
           "https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110716_overview.jpg",
           "https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110716_closeup.jpg"
         ],
-        "expireAt": "2025-05-17T12:00:00Z"
+        "expireAt": "2026-03-17T12:00:00Z"
       },
       {
         "productName": "Ivory Dreams",
@@ -107,7 +107,7 @@
           "https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110713_overview.jpg",
           "https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110713_closeup.jpg"
         ],
-        "expireAt": "2025-05-10T12:00:00Z"
+        "expireAt": "2026-03-20T12:00:00Z"
       },
       {
         "productName": "Loving Embrace",
@@ -130,7 +130,7 @@
           "https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110606_overview.jpg",
           "https://res.cloudinary.com/serenata-commerce-limited/image/upload/f_auto,q_auto/t_Product600s/v1/Raw/110606_closeup.jpg"
         ],
-        "expireAt": "2025-05-17T12:00:00Z"
+        "expireAt": "2026-03-17T12:00:00Z"
       }
     ]
   }

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Intelligence — Flowers — Stacktome</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f9f8f5;
+    color: #1a1a18;
+    padding: 2rem;
+    min-height: 100vh;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body { background: #1a1a18; color: #f0ede8; }
+    .section-card { background: #242422; border-color: rgba(255,255,255,0.08); }
+    .priority-card { background: #242422; border-color: rgba(255,255,255,0.08); }
+    .insight { background: #2c2c2a; border-color: rgba(255,255,255,0.1); color: #bbb; }
+    .insight strong { color: #f0ede8; }
+    table { border-color: rgba(255,255,255,0.06); }
+    thead th { background: #2c2c2a; color: #aaa; border-color: rgba(255,255,255,0.08); }
+    tbody tr:nth-child(even) { background: rgba(255,255,255,0.025); }
+    tbody td { border-color: rgba(255,255,255,0.06); color: #d0cdc8; }
+    .section-label { color: #666; }
+    .nav-pill { background: #2c2c2a; color: #aaa; border-color: rgba(255,255,255,0.1); }
+    .nav-pill:hover { background: #383836; color: #f0ede8; }
+    .q-number { color: #555; }
+    hr { border-color: rgba(255,255,255,0.07); }
+    .pri-high td:first-child { color: #f09080; }
+    .pri-med td:first-child  { color: #f0c060; }
+    .pri-low td:first-child  { color: #70d090; }
+  }
+
+  .wrapper { max-width: 1000px; margin: 0 auto; }
+
+  /* ── Header ── */
+  .report-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .report-meta { font-size: 12px; color: #888; margin-top: 4px; }
+  .subtitle    { font-size: 13px; color: #888; margin-bottom: 4px; }
+  h1           { font-size: 22px; font-weight: 600; letter-spacing: -0.3px; }
+
+  /* ── Nav pills ── */
+  .nav-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+
+  .nav-pill {
+    font-size: 11px;
+    padding: 4px 10px;
+    border: 0.5px solid rgba(0,0,0,0.15);
+    border-radius: 20px;
+    background: white;
+    color: #555;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .nav-pill:hover { background: #1a1a18; color: white; }
+
+  /* ── Priority table ── */
+  .priority-card {
+    background: white;
+    border: 0.5px solid rgba(0,0,0,0.1);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .priority-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    letter-spacing: -0.1px;
+  }
+
+  /* ── Section cards ── */
+  .section-card {
+    background: white;
+    border: 0.5px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 0.25rem;
+  }
+
+  .q-number {
+    font-size: 11px;
+    color: #bbb;
+    font-weight: 400;
+    margin-right: 4px;
+  }
+
+  .q-title {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    letter-spacing: -0.1px;
+    line-height: 1.4;
+  }
+
+  hr {
+    border: none;
+    border-top: 0.5px solid rgba(0,0,0,0.08);
+    margin: 1.25rem 0;
+  }
+
+  /* ── Tables ── */
+  .table-wrap { overflow-x: auto; margin-bottom: 1rem; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  thead th {
+    text-align: left;
+    padding: 7px 10px;
+    font-weight: 500;
+    font-size: 11px;
+    color: #888;
+    background: #f9f8f5;
+    border-top: 0.5px solid rgba(0,0,0,0.08);
+    border-bottom: 0.5px solid rgba(0,0,0,0.08);
+    white-space: nowrap;
+  }
+
+  thead th.r { text-align: right; }
+
+  tbody td {
+    padding: 7px 10px;
+    border-bottom: 0.5px solid rgba(0,0,0,0.06);
+    color: #1a1a18;
+    line-height: 1.4;
+  }
+
+  tbody td.r { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody td.mono { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; color: #888; }
+
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(0,0,0,0.018); }
+
+  /* ── Insight callouts ── */
+  .insight {
+    font-size: 12px;
+    line-height: 1.65;
+    color: #555;
+    background: #f4f2ed;
+    border-left: 2px solid rgba(0,0,0,0.15);
+    border-radius: 0 6px 6px 0;
+    padding: 8px 12px;
+    margin-top: 0;
+  }
+
+  /* ── Badges ── */
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .badge-red    { background: #fcebeb; color: #a32d2d; }
+  .badge-amber  { background: #faeeda; color: #854f0b; }
+  .badge-green  { background: #e4f5ec; color: #1a7a40; }
+  .badge-blue   { background: #e6f1fb; color: #185fa5; }
+  .badge-grey   { background: #f1efe8; color: #666; }
+
+  @media (prefers-color-scheme: dark) {
+    .badge-red   { background: rgba(208,74,58,0.2);  color: #f09080; }
+    .badge-amber { background: rgba(226,161,26,0.2); color: #f0c060; }
+    .badge-green { background: rgba(34,160,107,0.2); color: #70d090; }
+    .badge-blue  { background: rgba(50,102,173,0.2); color: #7ab3f0; }
+    .badge-grey  { background: rgba(100,100,100,0.15); color: #aaa; }
+  }
+
+  /* ── Score delta colouring ── */
+  .neg-high { color: #a32d2d; font-weight: 500; }
+  .neg-med  { color: #854f0b; }
+  .neg-low  { color: #888; }
+  .pos      { color: #1a7a40; }
+
+  /* ── Sentiment net bar ── */
+  .net-bar-wrap { display: flex; align-items: center; gap: 6px; }
+  .net-bar { height: 5px; border-radius: 2px; min-width: 2px; display: inline-block; }
+
+  /* ── Priority rows ── */
+  .pri-high td:first-child { color: #a32d2d; font-weight: 600; }
+  .pri-med  td:first-child { color: #854f0b; font-weight: 600; }
+  .pri-low  td:first-child { color: #1a7a40; font-weight: 600; }
+
+  /* ── Section group heading ── */
+  .group-heading {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #bbb;
+    margin: 2rem 0 0.75rem;
+    padding-left: 2px;
+  }
+
+  @media (max-width: 640px) {
+    body { padding: 1rem; }
+    .q-title { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- Header -->
+  <div class="report-header">
+    <div>
+      <div class="subtitle">Stacktome — Merchandising Intelligence</div>
+      <h1>Product Intelligence — Flowers</h1>
+      <div class="report-meta">Product graph · sf-hipper · Generated 2026-03-17</div>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <div class="nav-row">
+    <a class="nav-pill" href="#priority">Priority actions</a>
+    <a class="nav-pill" href="#q1">Q1 Declining revenue SKUs</a>
+    <a class="nav-pill" href="#q2">Q2 Rising complaints</a>
+    <a class="nav-pill" href="#q3">Q3 Dropping & selling</a>
+    <a class="nav-pill" href="#q4">Q4 Repeat rate</a>
+    <a class="nav-pill" href="#q5">Q5 LTV by first SKU</a>
+    <a class="nav-pill" href="#q6">Q6 Reviewer LTV</a>
+    <a class="nav-pill" href="#q7">Q7 VoC top spenders</a>
+    <a class="nav-pill" href="#q8">Q8 Complaint trends</a>
+    <a class="nav-pill" href="#q9">Q9 Co-purchases</a>
+    <a class="nav-pill" href="#q10">Q10 Post-neg recovery</a>
+  </div>
+
+  <!-- Priority actions -->
+  <div class="priority-card" id="priority">
+    <div class="priority-title">Priority actions</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:7%">Priority</th>
+            <th style="width:18%">Product / Area</th>
+            <th>Signal</th>
+            <th style="width:22%">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="pri-high">
+            <td>🔴 P1</td>
+            <td><strong>loving embrace</strong></td>
+            <td>Quality complaints +7 in 30 days · score declining · #1 SKU customers switch to after bad experience</td>
+            <td>Immediate QA review — supplier / batch check</td>
+          </tr>
+          <tr class="pri-high">
+            <td>🔴 P2</td>
+            <td><strong>rich decadence</strong></td>
+            <td>-0.63★ score drop · 1,626 orders in 2025 · seeds £195 avg LTV customers</td>
+            <td>Supplier review — protect LTV pipeline</td>
+          </tr>
+          <tr class="pri-high">
+            <td>🔴 P3</td>
+            <td><strong>a dozen red roses</strong></td>
+            <td>-0.51★ drop at 3,461 orders — highest volume quality risk</td>
+            <td>Urgent sourcing review</td>
+          </tr>
+          <tr class="pri-med">
+            <td>🟡 P4</td>
+            <td><strong>Packaging (all)</strong></td>
+            <td>+14 complaints H2 vs H1 · net-negative even among top-25% LTV customers</td>
+            <td>Packaging redesign / carrier review</td>
+          </tr>
+          <tr class="pri-med">
+            <td>🟡 P5</td>
+            <td><strong>changing seasons</strong></td>
+            <td>-1.2★ worst drop in catalogue · 135 orders still active</td>
+            <td>Investigate quality change or delist</td>
+          </tr>
+          <tr class="pri-low">
+            <td>🟢 P6</td>
+            <td><strong>pure elegance</strong></td>
+            <td>602 first-order buyers → £201 avg LTV — best volume × value acquisition SKU</td>
+            <td>Prioritise in paid acquisition creative</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── PRODUCT HEALTH ── -->
+  <div class="group-heading">Product health</div>
+
+  <!-- Q1 -->
+  <div class="section-card" id="q1">
+    <div class="section-label">Q1 · Product health</div>
+    <div class="q-title">Top 10 highest-revenue flowers SKUs with declining review scores</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>SKU</th>
+            <th>Product</th>
+            <th class="r">Revenue</th>
+            <th class="r">Pre-2025 ★</th>
+            <th class="r">2025+ ★</th>
+            <th class="r">Drop</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono">110120</td><td>floral ratatouille</td><td class="r">£1.04B</td><td class="r">4.27</td><td class="r">4.08</td><td class="r neg-low">-0.19</td></tr>
+          <tr><td class="mono">86304</td> <td>twilight</td>          <td class="r">£233M</td> <td class="r">4.30</td><td class="r">4.04</td><td class="r neg-med">-0.26</td></tr>
+          <tr><td class="mono">110713</td><td>ivory dreams</td>      <td class="r">£221M</td> <td class="r">4.35</td><td class="r">4.24</td><td class="r neg-low">-0.11</td></tr>
+          <tr><td class="mono">110606</td><td>loving embrace</td>    <td class="r">£119M</td> <td class="r">3.98</td><td class="r">3.95</td><td class="r neg-low">-0.02</td></tr>
+          <tr><td class="mono">110716</td><td>joyful wishes</td>     <td class="r">£85M</td>  <td class="r">3.95</td><td class="r">3.68</td><td class="r neg-med">-0.27</td></tr>
+          <tr><td class="mono">105371</td><td>a dozen red roses</td> <td class="r">£52M</td>  <td class="r">3.99</td><td class="r">3.59</td><td class="r neg-high">-0.39</td></tr>
+          <tr><td class="mono">110676</td><td>velvet cloud</td>      <td class="r">£50M</td>  <td class="r">4.20</td><td class="r">4.12</td><td class="r neg-low">-0.08</td></tr>
+          <tr><td class="mono">110305</td><td>little star</td>       <td class="r">£44M</td>  <td class="r">4.35</td><td class="r">4.33</td><td class="r neg-low">-0.01</td></tr>
+          <tr><td class="mono">110726</td><td>rich decadence</td>    <td class="r">£33M</td>  <td class="r">4.33</td><td class="r">3.79</td><td class="r neg-high">-0.53</td></tr>
+          <tr><td class="mono">110722</td><td>floral confetti</td>   <td class="r">£26M</td>  <td class="r">3.98</td><td class="r">3.76</td><td class="r neg-med">-0.23</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight">All top-revenue SKUs are flowers — the filter didn't change the list, confirming flowers dominate the catalogue. <strong>rich decadence, a dozen red roses</strong>, and <strong>joyful wishes</strong> are the priority concerns given both revenue scale and score magnitude.</div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="section-card" id="q2">
+    <div class="section-label">Q2 · Product health</div>
+    <div class="q-title">Flowers with rising complaint topics — last 30 days vs prior 30 days</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Complaint topic</th>
+            <th class="r">Prior 30d</th>
+            <th class="r">Last 30d</th>
+            <th class="r">Spike</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>loving embrace</strong></td>
+            <td>quality</td>
+            <td class="r">6</td>
+            <td class="r">13</td>
+            <td class="r"><span class="badge badge-red">+7</span></td>
+          </tr>
+          <tr>
+            <td>loving embrace</td>
+            <td>affordability</td>
+            <td class="r">0</td>
+            <td class="r">3</td>
+            <td class="r"><span class="badge badge-amber">+3</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight">Only <strong>loving embrace</strong> triggered spikes across all flowers. Quality complaints nearly doubled in 30 days on a product already showing score decline at £119M revenue. Needs urgent attention before it compounds.</div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="section-card" id="q3">
+    <div class="section-label">Q3 · Product health</div>
+    <div class="q-title">Score dropped significantly but still selling strongly in 2025</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th class="r">2025 orders</th>
+            <th class="r">Rating pre-2024</th>
+            <th class="r">Rating 2025</th>
+            <th class="r">Drop</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>changing seasons</td>       <td class="r">135</td>   <td class="r">4.45★</td><td class="r">3.25★</td><td class="r neg-high">-1.20</td></tr>
+          <tr><td>rich decadence</td>         <td class="r">1,626</td> <td class="r">4.43★</td><td class="r">3.79★</td><td class="r neg-high">-0.63</td></tr>
+          <tr><td>a dozen red roses</td>      <td class="r">3,461</td> <td class="r">4.10★</td><td class="r">3.59★</td><td class="r neg-high">-0.51</td></tr>
+          <tr><td>twilight</td>               <td class="r">3,293</td> <td class="r">4.35★</td><td class="r">4.04★</td><td class="r neg-med">-0.31</td></tr>
+          <tr><td>cranberry sorbet</td>       <td class="r">456</td>   <td class="r">4.01★</td><td class="r">3.71★</td><td class="r neg-med">-0.30</td></tr>
+          <tr><td>joyful wishes</td>          <td class="r">4,943</td> <td class="r">3.96★</td><td class="r">3.68★</td><td class="r neg-med">-0.28</td></tr>
+          <tr><td>happiness subscription</td> <td class="r">356</td>   <td class="r">3.26★</td><td class="r">3.00★</td><td class="r neg-med">-0.26</td></tr>
+          <tr><td>floral confetti</td>        <td class="r">1,598</td> <td class="r">4.02★</td><td class="r">3.76★</td><td class="r neg-med">-0.26</td></tr>
+          <tr><td>perpetual bliss</td>        <td class="r">709</td>   <td class="r">4.44★</td><td class="r">4.22★</td><td class="r neg-med">-0.22</td></tr>
+          <tr><td>floral ratatouille</td>     <td class="r">6,582</td> <td class="r">4.28★</td><td class="r">4.08★</td><td class="r neg-low">-0.20</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight"><strong>changing seasons</strong> has the steepest drop (-1.2★) but relatively low volume — likely a product quality change. <strong>a dozen red roses</strong> (3,461 orders) and <strong>joyful wishes</strong> (4,943 orders) are the highest-risk given they're still selling at scale while declining. floral ratatouille has the most orders (6,582) but a smaller -0.20 drop — monitor but not urgent.</div>
+  </div>
+
+  <!-- ── LTV ATTRIBUTION ── -->
+  <div class="group-heading">LTV attribution</div>
+
+  <!-- Q4 -->
+  <div class="section-card" id="q4">
+    <div class="section-label">Q4 · LTV attribution</div>
+    <div class="q-title">Flowers SKUs with highest repeat purchase rate (≥50 buyers)</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>SKU</th>
+            <th>Product</th>
+            <th class="r">Buyers</th>
+            <th class="r">Repeat buyers</th>
+            <th class="r">Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono">110179</td>  <td>happiness subscription <span class="badge badge-blue">subscription</span></td><td class="r">102</td><td class="r">100</td><td class="r"><strong>98%</strong></td></tr>
+          <tr><td class="mono">111466s</td> <td>white christmas <span class="badge badge-grey">seasonal</span></td>          <td class="r">844</td><td class="r">422</td><td class="r">50%</td></tr>
+          <tr><td class="mono">111116s</td> <td>frosted christmas <span class="badge badge-grey">seasonal</span></td>        <td class="r">279</td><td class="r">140</td><td class="r">50%</td></tr>
+          <tr><td class="mono">110741s</td> <td>crimson gift <span class="badge badge-grey">seasonal</span></td>             <td class="r">657</td><td class="r">324</td><td class="r">49%</td></tr>
+          <tr><td class="mono">111464s</td> <td>festive joy <span class="badge badge-grey">seasonal</span></td>             <td class="r">608</td><td class="r">293</td><td class="r">48%</td></tr>
+          <tr><td class="mono">111151s</td> <td>christmas star <span class="badge badge-grey">seasonal</span></td>          <td class="r">315</td><td class="r">147</td><td class="r">47%</td></tr>
+          <tr><td class="mono">111113s</td> <td>jingle blooms <span class="badge badge-grey">seasonal</span></td>           <td class="r">480</td><td class="r">226</td><td class="r">47%</td></tr>
+          <tr><td class="mono">111465s</td> <td>mulberry wish <span class="badge badge-grey">seasonal</span></td>           <td class="r">795</td><td class="r">369</td><td class="r">46%</td></tr>
+          <tr><td class="mono">111117s</td> <td>ruby yuletide <span class="badge badge-grey">seasonal</span></td>           <td class="r">320</td><td class="r">143</td><td class="r">45%</td></tr>
+          <tr><td class="mono">110662s</td> <td>reindeer kiss <span class="badge badge-grey">seasonal</span></td>           <td class="r">472</td><td class="r">205</td><td class="r">43%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight">Christmas/seasonal SKUs (s suffix) dominate repeat rates after the subscription. Customers buying a Christmas bouquet have a ~47% chance of returning — high gifting cadence. Worth targeting with anniversary/birthday reminder campaigns at 30/60/365-day intervals.</div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="section-card" id="q5">
+    <div class="section-label">Q5 · LTV attribution</div>
+    <div class="q-title">LTV of customers whose first flowers order included each SKU</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th class="r">First-order customers</th>
+            <th class="r">Avg LTV</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>serenata splendour</td><td class="r">62</td> <td class="r"><strong style="color:#22a06b;">£364</strong></td></tr>
+          <tr><td>grand adore</td>       <td class="r">205</td><td class="r"><strong style="color:#22a06b;">£267</strong></td></tr>
+          <tr><td>pure elegance</td>     <td class="r">602</td><td class="r"><strong>£201</strong></td></tr>
+          <tr><td>rich decadence</td>    <td class="r">505</td><td class="r">£195 <span class="badge badge-red">at risk</span></td></tr>
+          <tr><td>hearts desire</td>     <td class="r">307</td><td class="r">£194</td></tr>
+          <tr><td>perpetual bliss</td>   <td class="r">252</td><td class="r">£192</td></tr>
+          <tr><td>joyful abundance</td>  <td class="r">175</td><td class="r">£185</td></tr>
+          <tr><td>blushing beauty</td>   <td class="r">178</td><td class="r">£181</td></tr>
+          <tr><td>cranberry sorbet</td>  <td class="r">167</td><td class="r">£180</td></tr>
+          <tr><td>forever love</td>      <td class="r">127</td><td class="r">£180</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight">Premium bouquets as a first purchase predict the highest-LTV customers. <strong>pure elegance</strong> is the acquisition sweet spot — 602 first-order buyers at £201 avg LTV (volume + value). <strong>rich decadence</strong> (£195 LTV seed, 505 customers) is flagged at risk given its score decline — fixing it protects a significant LTV pipeline.</div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="section-card" id="q6">
+    <div class="section-label">Q6 · LTV attribution</div>
+    <div class="q-title">LTV by review score cohort — flowers reviewers</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Reviewer cohort</th>
+            <th class="r">Customers</th>
+            <th class="r">Avg LTV</th>
+            <th class="r">vs top cohort</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-green">top (4.5★+)</span></td>
+            <td class="r">3,432</td>
+            <td class="r"><strong>£127</strong></td>
+            <td class="r">—</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-amber">mid (3.5–4.5★)</span></td>
+            <td class="r">485</td>
+            <td class="r">£121</td>
+            <td class="r neg-low">-5%</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-red">low (&lt;3.5★)</span></td>
+            <td class="r">927</td>
+            <td class="r">£113</td>
+            <td class="r neg-med">-11%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight">Satisfied flowers customers spend <strong>12% more over their lifetime</strong> than dissatisfied ones (£127 vs £113). The 927 low-reviewer customers represent a recoverable churn pool — targeted win-back with a replacement offer or apology voucher is worth testing.</div>
+  </div>
+
+  <!-- ── VOICE OF CUSTOMER ── -->
+  <div class="group-heading">Voice of customer</div>
+
+  <!-- Q7 -->
+  <div class="section-card" id="q7">
+    <div class="section-label">Q7 · Voice of customer</div>
+    <div class="q-title">What top-LTV customers (top 25%) say about flowers — by category</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th class="r">Positive mentions</th>
+            <th class="r">Negative mentions</th>
+            <th class="r">Net sentiment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>attractiveness</td><td class="r">1,011</td><td class="r">19</td>  <td class="r pos"><strong>+992</strong></td></tr>
+          <tr><td>color</td>         <td class="r">156</td>  <td class="r">3</td>   <td class="r pos">+153</td></tr>
+          <tr><td>freshness</td>     <td class="r">197</td>  <td class="r">52</td>  <td class="r pos">+145</td></tr>
+          <tr><td>affordability</td> <td class="r">92</td>   <td class="r">24</td>  <td class="r pos">+68</td></tr>
+          <tr><td>longevity</td>     <td class="r">77</td>   <td class="r">11</td>  <td class="r pos">+66</td></tr>
+          <tr><td>scent</td>         <td class="r">42</td>   <td class="r">0</td>   <td class="r pos">+42</td></tr>
+          <tr><td>packaging</td>     <td class="r">41</td>   <td class="r">43</td>  <td class="r neg-med"><strong>-2 ⚠️</strong></td></tr>
+          <tr><td>quality</td>       <td class="r">173</td>  <td class="r">176</td> <td class="r neg-med"><strong>-3 ⚠️</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight">Even your <strong>best customers are split 50/50 on packaging and quality</strong>. Attractiveness is the clear strength — flowers look great. Freshness and colour are positives too. But packaging and quality being net-negative among top spenders points to a real product/fulfilment issue, not a low-end customer problem.</div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="section-card" id="q8">
+    <div class="section-label">Q8 · Voice of customer</div>
+    <div class="q-title">Complaint trend by category — H1 2025 vs H2 2025</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th class="r">All-time</th>
+            <th class="r">H1 2025</th>
+            <th class="r">H2 2025</th>
+            <th class="r">Trend</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>packaging</td>     <td class="r">763</td>  <td class="r">58</td> <td class="r">72</td><td class="r"><span class="badge badge-red">+14 ↑</span></td></tr>
+          <tr><td>attractiveness</td><td class="r">340</td>  <td class="r">20</td> <td class="r">25</td><td class="r"><span class="badge badge-amber">+5 ↑</span></td></tr>
+          <tr><td>color</td>         <td class="r">111</td>  <td class="r">9</td>  <td class="r">7</td> <td class="r"><span class="badge badge-grey">-2</span></td></tr>
+          <tr><td>scent</td>         <td class="r">11</td>   <td class="r">2</td>  <td class="r">0</td> <td class="r"><span class="badge badge-grey">-2</span></td></tr>
+          <tr><td>longevity</td>     <td class="r">253</td>  <td class="r">19</td> <td class="r">8</td> <td class="r"><span class="badge badge-green">-11 ↓</span></td></tr>
+          <tr><td>freshness</td>     <td class="r">1,004</td><td class="r">76</td> <td class="r">58</td><td class="r"><span class="badge badge-green">-18 ↓</span></td></tr>
+          <tr><td>affordability</td> <td class="r">807</td>  <td class="r">45</td> <td class="r">24</td><td class="r"><span class="badge badge-green">-21 ↓</span></td></tr>
+          <tr><td>quality</td>       <td class="r">3,406</td><td class="r">250</td><td class="r">216</td><td class="r"><span class="badge badge-green">-34 ↓</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight">Mixed picture. <strong>Packaging complaints are accelerating</strong> (+14 H2 vs H1) — the one open problem. Quality, freshness, affordability, and longevity complaints are all improving — likely reflecting sourcing/fulfilment work already done. Focus remaining effort on packaging.</div>
+  </div>
+
+  <!-- ── CROSS-PRODUCT ── -->
+  <div class="group-heading">Cross-product</div>
+
+  <!-- Q9 -->
+  <div class="section-card" id="q9">
+    <div class="section-label">Q9 · Cross-product</div>
+    <div class="q-title">Most frequently co-purchased flowers pairs (same order)</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Product A</th>
+            <th>Product B</th>
+            <th class="r">Co-purchases</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>floral ratatouille</td><td>loving embrace</td>  <td class="r"><strong>16</strong></td></tr>
+          <tr><td>loving embrace</td>    <td>joyful wishes</td>   <td class="r">13</td></tr>
+          <tr><td>floral ratatouille</td><td>joyful wishes</td>   <td class="r">12</td></tr>
+          <tr><td>honey bunny</td>       <td>spring poetry</td>   <td class="r">12</td></tr>
+          <tr><td>loving embrace</td>    <td>floral confetti</td> <td class="r">11</td></tr>
+          <tr><td>rich decadence</td>    <td>hearts desire</td>   <td class="r">10</td></tr>
+          <tr><td>floral ratatouille</td><td>spring poetry</td>   <td class="r">10</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight"><strong>loving embrace, floral ratatouille</strong>, and <strong>joyful wishes</strong> form a co-purchase cluster — customers buying multiple bouquets in the same order (likely corporate or event gifting). <strong>rich decadence + hearts desire</strong> is a premium pairing worth a bundle prompt.</div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="section-card" id="q10">
+    <div class="section-label">Q10 · Cross-product</div>
+    <div class="q-title">What flowers do customers buy next after leaving a negative flowers review?</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Next flowers purchase</th>
+            <th class="r">Customers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>loving embrace</strong></td>   <td class="r">38</td></tr>
+          <tr><td><strong>floral ratatouille</strong></td><td class="r">25</td></tr>
+          <tr><td>ivory dreams</td>                      <td class="r">16</td></tr>
+          <tr><td>joyful wishes</td>                     <td class="r">16</td></tr>
+          <tr><td>twilight</td>                          <td class="r">14</td></tr>
+          <tr><td>floral love</td>                       <td class="r">14</td></tr>
+          <tr><td>spring poetry</td>                     <td class="r">10</td></tr>
+          <tr><td>floral confetti</td>                   <td class="r">10</td></tr>
+          <tr><td>rich decadence</td>                    <td class="r">9</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight">After a bad flowers experience, customers overwhelmingly switch to <strong>loving embrace</strong> (38) and <strong>floral ratatouille</strong> (25) — the two highest-revenue SKUs. This confirms customers want to stay loyal. Worth testing a post-negative-review recovery flow explicitly suggesting these two as a replacement.</div>
+  </div>
+
+  <div style="height: 2rem;"></div>
+
+</div>
+</body>
+</html>
