@@ -10,9 +10,9 @@ attributed to products via the `Review → FOR_ORDER → Order → CONTAINS → 
 
 | Report | Description |
 |--------|-------------|
-| [VoC + Churn Risk](voc_churn_risk.html) | Category complaint breakdown (quality, delivery, returns, service, packaging) · 712 churn-risk customers · £136k LTV at stake |
-| [Review LTV Attribution](review_ltv_attribution.html) | Post-review LTV by score band, 2024 vs 2025 · 5★ reviews → £82 avg LTV, up 13% YoY |
-| [Product Quality Risk](product_health_matrix.html) | Products ranked by quality complaint rate via service review signal · 15 SKUs tracked |
+| [VoC + Churn Risk](/product_intelligence/selectspecs/voc_churn_risk.md) | Category complaint breakdown (quality, delivery, returns, service, packaging) · 712 churn-risk customers · £136k LTV at stake |
+| [Review LTV Attribution](/product_intelligence/selectspecs/review_ltv_attribution.md) | Post-review LTV by score band, 2024 vs 2025 · 5★ reviews → £82 avg LTV, up 13% YoY |
+| [Product Quality Risk](/product_intelligence/selectspecs/product_health_matrix.md) | Products ranked by quality complaint rate via service review signal · 15 SKUs tracked |
 
 ## Key findings
 
