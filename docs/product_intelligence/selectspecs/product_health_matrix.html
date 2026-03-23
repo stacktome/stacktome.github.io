@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Quality Risk — Selectspecs — Stacktome</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f9f8f5;
+    color: #1a1a18;
+    padding: 2rem;
+    min-height: 100vh;
+  }
+  @media (prefers-color-scheme: dark) {
+    body { background: #1a1a18; color: #f0ede8; }
+    .metric-card { background: #2c2c2a; }
+    .subtitle { color: #888; }
+    select { background: #2c2c2a; color: #f0ede8; border-color: rgba(255,255,255,0.15); }
+    .card { background: #242422; border-color: rgba(255,255,255,0.1); }
+    .table-header th { color: #888; border-color: rgba(255,255,255,0.1); }
+    .table-row td { border-color: rgba(255,255,255,0.07); }
+    .note-box { background: #242422; border-color: rgba(255,255,255,0.08); color: #888; }
+    #tooltip { background: #2c2c2a; border-color: rgba(255,255,255,0.15); }
+    .ql-info { background: rgba(49,120,210,0.15); color: #7ab3f0; }
+    .ql-danger { background: rgba(208,74,58,0.15); color: #f09080; }
+    .ql-warning { background: rgba(226,161,26,0.15); color: #f0c060; }
+    .ql-neutral { background: rgba(100,100,100,0.15); color: #aaa; }
+  }
+
+  .wrapper { max-width: 960px; margin: 0 auto; }
+
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .subtitle { font-size: 13px; color: #666; margin-bottom: 3px; }
+  h1 { font-size: 20px; font-weight: 500; letter-spacing: -0.2px; }
+
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .metric-card {
+    background: #f0ede8;
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+  }
+
+  .metric-label { font-size: 11px; color: #888; margin-bottom: 5px; line-height: 1.3; }
+  .metric-value { font-size: 22px; font-weight: 500; }
+
+  .card {
+    background: white;
+    border: 0.5px solid rgba(0,0,0,0.1);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: #1a1a18;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .table-header th {
+    text-align: left;
+    padding: 6px 8px;
+    font-weight: 500;
+    color: #888;
+    font-size: 11px;
+    border-bottom: 0.5px solid rgba(0,0,0,0.12);
+  }
+
+  .table-header th:not(:first-child) { text-align: right; }
+
+  .table-row td {
+    padding: 8px 8px;
+    border-bottom: 0.5px solid rgba(0,0,0,0.06);
+    font-size: 12px;
+  }
+
+  .table-row td:not(:first-child) { text-align: right; }
+
+  .sku-cell {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 10px;
+    color: #aaa;
+    display: block;
+  }
+
+  .bar-inline {
+    display: inline-block;
+    height: 5px;
+    border-radius: 2px;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+
+  .trend-badge {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-weight: 500;
+  }
+
+  .trend-up    { background: #fcebeb; color: #a32d2d; }
+  .trend-flat  { background: #f1efe8; color: #888; }
+  .trend-down  { background: #eaf5ee; color: #1a7a40; }
+
+  .quadrant-legend {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 1.25rem;
+  }
+
+  .ql-item {
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  .ql-info    { background: #e6f1fb; color: #185fa5; }
+  .ql-danger  { background: #fcebeb; color: #a32d2d; }
+  .ql-warning { background: #faeeda; color: #854f0b; }
+  .ql-neutral { background: #f1efe8; color: #5f5e5a; }
+  .ql-title { font-weight: 500; display: block; margin-bottom: 2px; }
+
+  .note-box {
+    font-size: 11px;
+    color: #888;
+    background: #f9f8f5;
+    border: 0.5px solid rgba(0,0,0,0.08);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .trend-up   { background: rgba(208,74,58,0.2);   color: #f09080; }
+    .trend-flat { background: rgba(100,100,100,0.15); color: #aaa; }
+    .trend-down { background: rgba(34,160,107,0.2);  color: #60d09a; }
+    .section-title { color: #f0ede8; }
+  }
+
+  @media (max-width: 600px) {
+    .metrics { grid-template-columns: 1fr 1fr; }
+    body { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <div>
+      <div class="subtitle">Stacktome — Merchandising Intelligence · Selectspecs</div>
+      <h1>Product quality risk — service review signal</h1>
+    </div>
+  </div>
+
+  <div class="note-box">
+    Quality complaints attributed via: <code>Review → FOR_ORDER → Order → CONTAINS → Product</code>.
+    Only service reviews available — product-level reviews not enriched for this account.
+    Negative rate = neg quality mentions / (neg + pos), products with ≥10 total mentions shown.
+  </div>
+
+  <div class="metrics">
+    <div class="metric-card">
+      <div class="metric-label">Products with quality signal</div>
+      <div class="metric-value">15</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Highest neg rate</div>
+      <div class="metric-value" style="color:#d04a3a;">50%</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Rising 2024→2025</div>
+      <div class="metric-value" style="color:#d04a3a;">4</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Total quality complaints</div>
+      <div class="metric-value">1,126</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Products ranked by quality complaint rate (2024–2025 combined)</div>
+    <table>
+      <thead class="table-header">
+        <tr>
+          <th style="width:32%;">Product</th>
+          <th style="width:10%;">Neg rate</th>
+          <th style="width:13%;">Neg 2024</th>
+          <th style="width:13%;">Neg 2025</th>
+          <th style="width:13%;">Total neg</th>
+          <th style="width:13%;">Total pos</th>
+          <th style="width:10%;">Trend</th>
+        </tr>
+      </thead>
+      <tbody id="productTable"></tbody>
+    </table>
+  </div>
+
+  <div class="quadrant-legend">
+    <div class="ql-item ql-danger">
+      <span class="ql-title">Investigate — rising complaints</span>
+      Neg rate ≥30% AND complaints increasing 2024→2025. Likely fit, quality or description issue.
+    </div>
+    <div class="ql-item ql-warning">
+      <span class="ql-title">Monitor — elevated but stable</span>
+      Neg rate 20–30%. Watch for trend change — may reflect niche product fit issues.
+    </div>
+    <div class="ql-item ql-info">
+      <span class="ql-title">Improving — declining complaints</span>
+      Complaints falling year-on-year. Continue current product/description improvements.
+    </div>
+    <div class="ql-item ql-neutral">
+      <span class="ql-title">Low signal — small sample</span>
+      Fewer than 15 total mentions. Signal not yet reliable — monitor as volume grows.
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Real data from product_graph_selectspecs
+// Query: Review HAS_CATEGORY quality → FOR_ORDER → Order CONTAINS Product
+// Products with ≥10 total quality mentions (pos + neg), 2024–2025
+const products = [
+  {name:'6058 - black',              sku:'',          neg_2024:3,  neg_2025:3,  total_neg:6,  total_pos:6,  neg_rate:50},
+  {name:'20316 - blue',              sku:'15032501',  neg_2024:2,  neg_2025:3,  total_neg:5,  total_pos:5,  neg_rate:50},
+  {name:'8121 - purple on transparent',sku:'15020401',neg_2024:2,  neg_2025:3,  total_neg:5,  total_pos:10, neg_rate:33},
+  {name:'t88012 - grey tortoise',    sku:'15029401',  neg_2024:5,  neg_2025:1,  total_neg:6,  total_pos:13, neg_rate:32},
+  {name:'3020 - blue',               sku:'15035801',  neg_2024:13, neg_2025:16, total_neg:29, total_pos:64, neg_rate:31},
+  {name:'p2329 - black and clear',   sku:'16001501',  neg_2024:4,  neg_2025:1,  total_neg:5,  total_pos:11, neg_rate:31},
+  {name:'4 in 1 screwdriver',        sku:'1232801',   neg_2024:4,  neg_2025:0,  total_neg:4,  total_pos:9,  neg_rate:31},
+  {name:'m094',                      sku:'601101',    neg_2024:3,  neg_2025:1,  total_neg:4,  total_pos:9,  neg_rate:31},
+  {name:'3028 - red wine',           sku:'15036201',  neg_2024:2,  neg_2025:1,  total_neg:3,  total_pos:7,  neg_rate:30},
+  {name:'2426 - black and blue',     sku:'',          neg_2024:1,  neg_2025:2,  total_neg:3,  total_pos:7,  neg_rate:30},
+  {name:'reglaze ultrasonic cleaning',sku:'22001',    neg_2024:2,  neg_2025:1,  total_neg:3,  total_pos:8,  neg_rate:27},
+  {name:'f003 - black',              sku:'15038601',  neg_2024:0,  neg_2025:3,  total_neg:3,  total_pos:8,  neg_rate:27},
+  {name:'8052 - blue',               sku:'15005601',  neg_2024:1,  neg_2025:3,  total_neg:4,  total_pos:12, neg_rate:25},
+  {name:'caravelli 227',             sku:'48043401',  neg_2024:2,  neg_2025:3,  total_neg:5,  total_pos:16, neg_rate:24},
+  {name:'2396 - black tortoise',     sku:'15031401',  neg_2024:2,  neg_2025:12, total_neg:14, total_pos:48, neg_rate:23},
+];
+
+function trend(p) {
+  if (p.neg_2025 > p.neg_2024 + 1) return {label:'↑ rising', cls:'trend-up'};
+  if (p.neg_2025 < p.neg_2024 - 1) return {label:'↓ declining', cls:'trend-down'};
+  return {label:'→ stable', cls:'trend-flat'};
+}
+
+const maxNeg = products[0].total_neg + products[0].total_pos;
+
+document.getElementById('productTable').innerHTML = products.map(p => {
+  const t = trend(p);
+  const barW = Math.round(p.neg_rate / 50 * 80);
+  const barColor = p.neg_rate >= 40 ? '#d04a3a' : p.neg_rate >= 25 ? '#e2a11a' : '#888';
+  return `<tr class="table-row">
+    <td>
+      <span>${p.name}</span>
+      ${p.sku ? `<span class="sku-cell">${p.sku}</span>` : ''}
+    </td>
+    <td style="font-weight:500; color:${barColor}; text-align:right;">
+      ${p.neg_rate}%
+      <span class="bar-inline" style="width:${barW}px; background:${barColor}44;"></span>
+    </td>
+    <td style="color:#888;">${p.neg_2024}</td>
+    <td style="color:${p.neg_2025 > p.neg_2024 ? '#d04a3a' : '#888'}; font-weight:${p.neg_2025 > p.neg_2024 ? 500 : 400};">${p.neg_2025}</td>
+    <td style="font-weight:500;">${p.total_neg}</td>
+    <td style="color:#22a06b;">${p.total_pos}</td>
+    <td><span class="trend-badge ${t.cls}">${t.label}</span></td>
+  </tr>`;
+}).join('');
+</script>
+</body>
+</html>
