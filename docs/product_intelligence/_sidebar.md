@@ -5,8 +5,3 @@
 * [**Product intelligence report**](/product_intelligence/product_intelligence_report_flowers.md)
 * [**Review score × LTV attribution**](/product_intelligence/review_ltv_attribution_flowers.md)
 * [**Voice of customer + churn risk**](/product_intelligence/voc_churn_risk_flowers.md)
-
-* **Selectspecs**
-* [Product quality risk](/product_intelligence/selectspecs/product_health_matrix.md)
-* [Review score × LTV](/product_intelligence/selectspecs/review_ltv_attribution.md)
-* [VoC + churn risk](/product_intelligence/selectspecs/voc_churn_risk.md)
