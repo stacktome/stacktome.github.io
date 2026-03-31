@@ -121,30 +121,38 @@
         Last name:
         <input type="text" name="lastName">
       </label>
+      
       <label>
-        Requester Desk:
-        <select name="requesterId" required>
-          <option value="" disabled selected>-- Select Desk --</option>
-          <option value="desk-1">Desk 1</option>
-          <option value="desk-2">Desk 2</option>
-          <option value="desk-3">Desk 3</option>
-          <option value="desk-4">Desk 4</option>
-          <option value="desk-5">Desk 5</option>
-          <option value="desk-6">Desk 6</option>
-          <option value="desk-7">Desk 7</option>
-          <option value="desk-8">Desk 8</option>
-          <option value="desk-9">Desk 9</option>
-          <option value="desk-10">Desk 10</option>
-        </select>
-      </label>
+  Requester Desk:
+  <select name="requesterId" required>
+    <option value="" disabled selected>-- Select Desk --</option>
+    <option value="1-Exam Administrator" data-name="Barbara">1-Exam Administrator</option>
+    <option value="2-CIPD/CMI" data-name="Courtney">2-CIPD/CMI</option>
+    <option value="3-PM Tutor" data-name="Debbie">3-PM Tutor</option>
+    <option value="4-Coding/AI Tutor" data-name="Emmanuel">4-Coding/AI Tutor</option>
+    <option value="5-IT Tutor" data-name="Jerry">5-IT Tutor</option>
+    <option value="6-Coding Tutor" data-name="Jordan">6-Coding Tutor</option>
+    <option value="7-IT Tutor" data-name="Kosi">7-IT Tutor</option>
+    <option value="8-Welcome Calls" data-name="Lisa">8-Welcome Calls</option>
+    <option value="9-Set ups" data-name="Maggie">9-Set ups</option>
+    <option value="10-Data Tutor" data-name="Neville">10-Data Tutor</option>
+    <option value="11-CMI/CIPD" data-name="Oni">11-CMI/CIPD</option>
+    <option value="12-CIPD/CMI" data-name="Pearl">12-CIPD/CMI</option>
+    <option value="13-Data Tutor" data-name="Roma">13-Data Tutor</option>
+    <option value="14-PM Tutor" data-name="Ryan">14-PM Tutor</option>
+    <option value="15-PM Tutor" data-name="Steven">15-PM Tutor</option>
+    <option value="16-Exam Administrator" data-name="Yvonne">16-Exam Administrator</option>
+    <option value="17-BA Tutor" data-name="Zimasa">17-BA Tutor</option>
+  </select>
+</label>
+
       <label>
         Campaign:
-        <select name="campaignId" required>
-          <option value="" disabled selected>-- Select Campaign --</option>
-          <option value="campaign-1">Campaign 1</option>
-          <option value="campaign-2">Campaign 2</option>
+        <select name="campaignId" id="campaignId" required>
+          <option value="" disabled selected>-- Loading Campaigns... --</option>
         </select>
       </label>
+
       <label>
         Request Time:
         <input type="datetime-local" name="createdAt" id="createdAtInput" required>
@@ -159,13 +167,37 @@
       const now = new Date();
       now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
       document.getElementById('createdAtInput').value = now.toISOString().slice(0, 16);
+
+      fetch('https://services.stacktome.com/api/invites/v1/campaigns?apikey=PUcX52Si6rjuReuOfFMKrPue0FXcFfHB', {
+        headers: {
+          'accept': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        const campaignSelect = document.getElementById('campaignId');
+        campaignSelect.innerHTML = '<option value="" disabled selected>-- Select Campaign --</option>';
+        
+        data.forEach(campaign => {
+          const option = document.createElement('option');
+          option.value = campaign.id;
+          option.textContent = campaign.name;
+          campaignSelect.appendChild(option);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching campaigns:', error);
+        document.getElementById('campaignId').innerHTML = '<option value="" disabled selected>-- Error loading campaigns --</option>';
+      });
     });
 
     document.getElementById('orderForm').onsubmit = async function(e) {
       e.preventDefault();
       
       const createdAtISO = new Date(e.target.createdAt.value).toISOString();
-      const deskId = e.target.requesterId.value;
+      const requesterSelect = e.target.requesterId;
+      const deskId = requesterSelect.value; 
+      const requesterName = requesterSelect.options[requesterSelect.selectedIndex].getAttribute('data-name');
       const generatedOrderId = Date.now() + "-" + deskId;
 
       const data = {
@@ -187,15 +219,15 @@
         },
         requester: {
           id: deskId,
-          name: "",
-          campaign: e.target.campaignId.value
+          name: requesterName,
+          campaign: "" // По схеме должна быть строка
         },
         websiteDomain: "itolrecruit.com",
         promotion: [
           {
             code: "",
             name: "",
-            campaign: "",
+            campaign: e.target.campaignId.value, // Убрал parseInt, теперь передается строка, как того требует схема
             campaignType: "",
             discountType: "",
             customerType: "",
