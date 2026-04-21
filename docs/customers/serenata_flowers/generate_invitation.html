@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generate Review Invitation Link - Wild Earth</title>
+    <title>Generate Review Invitation Link - Serenata Flowers</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -176,7 +176,7 @@
 <body>
     <div class="container">
         <h1>Generate Review Invitation Link</h1>
-        <p class="subtitle">Wild Earth - Create a test invitation for review collection</p>
+        <p class="subtitle">Serenata Flowers - Create a test invitation for review collection</p>
 
         <div class="env-toggle">
             <button class="active" onclick="setEnv('prod', this)">Production</button>
@@ -233,26 +233,26 @@
             prod: {
                 invitationApi: 'https://services.stacktome.com/api/invite/v1/private/invitations',
                 productSearchApi: 'https://services.stacktome.com/api/recommendations/v1/products/search',
-                reviewFormHostUri: 'https://wildearth.stacktome.com',
-                productSearchApiKey: 'kNFRb0Q9OX2cYrkkhZQEE6U7fMRkH5JJ',
-                inviteApiKey: 'XqQS3Ex1hhzYtwlJHlByO0IiTnY8XG7n',
-                consumerUsername: 'user_@_optima_sport'
+                reviewFormHostUri: 'https://serenataflowers.stacktome.com',
+                productSearchApiKey: 'R6EBuuv4y76fVpY69zKFvuXKvqJVEKkw',
+                inviteApiKey: 'xeNlHlQAlM6bDSUDYU01NpjgkVOn0o9f',
+                consumerUsername: 'user_@_serenata_flowers'
             },
             staging: {
                 invitationApi: 'https://services-staging.stacktome.com/api/reviews/v1/private/invitations',
                 productSearchApi: 'https://services.stacktome.com/api/recommendations/v1/products/search',
-                reviewFormHostUri: 'https://support.stacktome.com/customers/wild_earth/review_submit.html',
-                productSearchApiKey: 'kNFRb0Q9OX2cYrkkhZQEE6U7fMRkH5JJ',
-                inviteApiKey: 'XqQS3Ex1hhzYtwlJHlByO0IiTnY8XG7n',
-                consumerUsername: 'user_@_demo_staging'
+                reviewFormHostUri: 'https://support.stacktome.com/customers/serenata_flowers/review_submit.html',
+                productSearchApiKey: 'R6EBuuv4y76fVpY69zKFvuXKvqJVEKkw',
+                inviteApiKey: 'xeNlHlQAlM6bDSUDYU01NpjgkVOn0o9f',
+                consumerUsername: 'user_@_serenata_flowers'
             },
             local: {
                 invitationApi: 'http://localhost:8080/v1/private/invitations',
                 productSearchApi: 'https://services.stacktome.com/api/recommendations/v1/products/search',
                 reviewFormHostUri: 'http://localhost:8080/review_submit.html',
-                productSearchApiKey: 'kNFRb0Q9OX2cYrkkhZQEE6U7fMRkH5JJ',
-                inviteApiKey: 'XqQS3Ex1hhzYtwlJHlByO0IiTnY8XG7n',
-                consumerUsername: 'user_@_demo_staging'
+                productSearchApiKey: 'R6EBuuv4y76fVpY69zKFvuXKvqJVEKkw',
+                inviteApiKey: 'xeNlHlQAlM6bDSUDYU01NpjgkVOn0o9f',
+                consumerUsername: 'user_@_serenata_flowers'
             }
         };
 
@@ -333,7 +333,7 @@
             if (selectedProducts.find(sp => sp.sku === p.sku)) return;
 
             selectedProducts.push({
-                productUrl: p.url || `https://www.wildearth.com.au/buy/${p.skuBase}`,
+                productUrl: p.url || `https://www.serenataflowers.com.au/buy/${p.skuBase}`,
                 imageUrl: p.urlImage1 || '',
                 name: p.name,
                 sku: p.sku,
