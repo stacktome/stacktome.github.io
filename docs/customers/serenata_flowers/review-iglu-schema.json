@@ -1,0 +1,272 @@
+{
+    "$schema": "http://iglucentral.com/schemas/com.snowplowanalytics.self-desc/schema/jsonschema/1-0-0#",
+    "description": "Generic schema for review events from eCommerce businesses",
+    "self": {
+      "vendor": "com.stacktome",
+      "name": "reviews",
+      "format": "jsonschema",
+      "version": "1-0-0"
+    },
+    "type": "object",
+    "properties": {
+      "createdAt": {
+        "type": ["string", "null"],
+        "format": "date-time",  
+        "description": "Timestamp when the review was created"
+      },
+      "status": {
+        "type": ["string", "null"],
+        "enum": ["pending", "published", "rejected", "archived", "disputed"],
+        "description": "Current lifecycle state of the review. 'disputed' is for the arbitration phase."
+      },
+      "moderationLog": {
+        "type": ["array", "null"],
+        "items": {
+          "type": "object",
+          "properties": {
+            "action": { "enum": ["approve", "reject", "flag"] },
+            "actor": { "type": "string", "description": "Admin ID or AI System Name" },
+            "reason": { "type": "string" },
+            "timestamp": { "format": "date-time" }
+          }
+        },
+        "description": "Audit trail of who approved/rejected this review and why."
+      },
+      "isIncentivized": {
+      "type": "boolean",
+      "description": "TRUE if user received a coupon, points, or free product. Required for FTC/Google."
+      },
+      "consentStored": {
+      "type": "boolean",
+      "description": "GDPR/CCPA: Did user agree to Terms & Conditions?"
+      },
+      "updatedAt": {
+        "type": ["string", "null"],
+        "format": "date-time",
+        "description": "Timestamp when the review was last updated"
+      },
+      "domain": {
+        "type": ["string", "null"],
+        "description": "Domain where the review was submitted"
+      },
+      "language": {
+        "type": ["string", "null"],
+        "description": "Language of the review"
+      },
+      "isVerified": {
+        "type": ["boolean", "null"],
+        "description": "Whether the review is verified (e.g., verified purchase)"
+      },
+      "invitationToken": {
+        "type": ["string", "null"],
+        "description": "Token to identify reviews related to invitation"
+      },
+      "orderId": {
+        "type": ["string", "null"],
+        "description": "Order identifier associated with the review"
+      },
+      "reviewId": {
+        "type": ["string", "null"],
+        "description": "Review identifier"
+      },
+      "reviewType": {
+        "type": ["string", "null"],
+        "enum": ["service", "product"],
+        "description": "Type of review: 'service' or 'product'"
+      },
+      "rating": {
+        "type": ["integer", "null"],
+        "description": "Rating score (typically 1-5)"
+      },
+      "heading": {
+        "type": ["string", "null"],
+        "description": "Review title/heading"
+      },
+      "text": {
+        "type": ["string", "null"],
+        "description": "Review text content"
+      },
+      "sentimentScore": {
+        "type": ["number", "null"],
+        "description": "Sentiment analysis score"
+      },
+      "link": {
+        "type": ["string", "null"],
+        "description": "Link to the review"
+      },
+      "images": {
+        "type": ["array", "null"],
+        "items": {
+          "type": "string"
+        },
+        "description": "Array of image URLs"
+      },
+      "videos": {
+        "type": ["array", "null"],
+        "items": {
+          "type": "string"
+        },
+        "description": "Array of video URLs"
+      },
+      "attributes": {
+        "type": ["array", "null"],
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": ["string", "null"],
+              "description": "Attribute title/name"
+            },
+            "type": {
+              "type": ["string", "null"],
+              "description": "Attribute type (e.g., 'range', 'single-value', 'multi-value', 'location')"
+            },
+            "value": {
+              "description": "Attribute value (can be number, string, array, or object depending on type)"
+            },
+            "minLabel": {
+              "type": ["string", "null"],
+              "description": "Minimum label for range-type attributes"
+            },
+            "midLabel": {
+              "type": ["string", "null"],
+              "description": "Medium label for range-type attributes"
+            },
+            "maxLabel": {
+              "type": ["string", "null"],
+              "description": "Maximum label for range-type attributes"
+            }
+          }
+        },
+        "description": "Array of review attributes with ratings (e.g., Quality, Results, Ease of Use)"
+      },
+      "conversation": {
+        "type": ["array", "null"],
+        "items": {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": ["string", "null"],
+              "description": "Reply text content"
+            },
+            "userId": {
+              "type": ["string", "null"],
+              "description": "User identifier who wrote the reply"
+            },
+            "userName": {
+              "type": ["string", "null"],
+              "description": "Name of the user who wrote the reply"
+            },
+            "userType": {
+              "type": ["string", "null"],
+              "enum": ["reviewer", "company"],
+              "description": "Type of user: 'reviewer' or 'company'"
+            },
+            "createdAt": {
+              "type": ["string", "null"],
+              "format": "date-time",
+              "description": "Timestamp when the reply was created"
+            },
+            "updatedAt": {
+              "type": ["string", "null"],
+              "format": "date-time",
+              "description": "Timestamp when the reply was last updated"
+            }
+          }
+        },
+        "description": "Array of conversation messages/replies"
+      },
+      "product": {
+        "type": ["object", "null"],
+        "properties": {
+          "sku": {
+            "type": ["string", "null"],
+            "description": "Product SKU"
+          },
+          "baseSku": {
+            "type": ["string", "null"],
+            "description": "Base SKU without variant suffix"
+          },
+          "id": {
+            "type": ["string", "null"],
+            "description": "For support external platform id like Shopify, Magento, etc."
+          },
+          "variationId": {
+            "type": ["string", "null"],
+            "description": "For support external platform variation id like Shopify, Magento, etc."
+          },
+          "type": {
+            "type": ["string", "null"],
+            "description": "Type/category of the product"
+          },
+          "name": {
+            "type": ["string", "null"],
+            "description": "Product name"
+          },
+          "url": {
+            "type": ["string", "null"],
+            "description": "URL to the product page"
+          },
+          "imageUrl": {
+            "type": ["string", "null"],
+            "description": "URL to the product image"
+          },
+          "gtin": {
+            "type": ["string", "null"],
+            "description": "Global Trade Item Number"
+          },
+          "mpn": {
+            "type": ["string", "null"],
+            "description": "Manufacturer Part Number"
+          },
+          "brand": {
+            "type": ["string", "null"],
+            "description": "Product brand name"
+          }
+        }
+      },
+      "metrics": {
+        "type": "object",
+        "properties": {
+          "helpfulVotes": { "type": "integer", "default": 0 },
+          "unhelpfulVotes": { "type": "integer", "default": 0 },
+          "viewCount": { "type": "integer", "default": 0 }
+        }
+      },
+      "customer": {
+        "type": ["object", "null"],
+        "properties": {
+          "email": {
+            "type": ["string", "null"],
+            "description": "Customer email address (from reviewer)"
+          },
+          "displayName": { 
+            "type": "string",
+            "description": "Public facing name (e.g., 'John D.') vs 'name' which is PII."
+          },
+          "name": {
+            "type": ["string", "null"],
+            "description": "Full customer name (from reviewer displayName)"
+          },
+          "firstName": {
+            "type": ["string", "null"],
+            "description": "Customer first name (from reviewer displayName)"
+          },
+          "lastName": {
+            "type": ["string", "null"],
+            "description": "Customer last name (from reviewer displayName)"
+          },
+          "country": {
+            "type": ["string", "null"],
+            "description": "Customer country (from reviewer location)"
+          },
+          "walletAddress": {
+            "type": ["string", "null"],
+            "description": "Web3 wallet address (optional for now, crucial later)."
+          }
+        }
+      }
+    },
+    "required": ["createdAt", "orderId"],
+    "additionalProperties": false
+  }

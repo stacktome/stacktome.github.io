@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Reviews - Serenata Flowers</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            padding: 20px;
+        }
+        .brand-banner {
+            background: white;
+            padding: 14px 20px;
+            margin: -20px -20px 20px -20px;
+        }
+        .brand-banner img {
+            max-height: 36px;
+            width: auto;
+            display: block;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .error {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .error h1 { color: #dc3545; margin-bottom: 10px; }
+        .error p { color: #666; }
+    </style>
+</head>
+<body>
+    <div class="brand-banner">
+        <img src="serenata_website_logo.png" alt="Wild Earth">
+    </div>
+
+    <div class="container" id="main"></div>
+
+    <script>
+        var sku = new URLSearchParams(window.location.search).get('baseSku')
+                || new URLSearchParams(window.location.search).get('sku');
+        if (!sku) {
+            document.getElementById('main').innerHTML =
+                '<div class="error"><h1>Missing Product</h1><p>No product SKU provided. Add <code>?baseSku=XXXXX</code> to the URL.</p></div>';
+        } else {
+            var p = JSON.stringify({widgetId:27,apiKey:"xeNlHlQAlM6bDSUDYU01NpjgkVOn0o9f",searchInParentLocation:true,productSku:sku,timeout:{timeoutMillis:1000},reviewType:"product"});
+            // Write the exact same structure as the working static example:
+            // 1. Widget div with widget.js inside it (creates shadow root)
+            // 2. script.js after (reads shadow root and adds interactivity)
+            document.write(
+                '<div id="stacktome-widget-27">\n' +
+                '<scr'+'ipt id="stacktome-reviews-widget-script-27" class="stacktome-reviews-widget-script" src="https://cdn.stacktome.com/frontend/widget/production/widget.js" filter-params=\x27' + p + '\x27><\/scr'+'ipt>\n' +
+                '</div>\n' +
+                '<scr'+'ipt id="stacktome-script" src="https://cdn.stacktome.com/frontend/widget/production/script.js" params=\x27' + p + '\x27><\/scr'+'ipt>'
+            );
+        }
+    </script>
+</body>
+</html>
