@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Review</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .product-review-section {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            background: #fafafa;
+        }
+
+        .product-review-section.collapsed .review-form-content {
+            display: none;
+        }
+
+        .product-review-section.expanded .review-form-content {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 2000px;
+            }
+        }
+
+        .product-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .product-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .product-info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #1a1a1a;
+        }
+
+        .product-info a {
+            color: #0066cc;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .product-info a:hover {
+            text-decoration: underline;
+        }
+
+        .rating-section {
+            margin-bottom: 25px;
+        }
+
+        .overall-rating-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .overall-rating-section .rating-label {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .attribute-ratings-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .rating-label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        .star {
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+            display: inline-block;
+            width: 42px;
+            height: 42px;
+            position: relative;
+            margin-right: 4px;
+        }
+
+        .star svg {
+            width: 100%;
+            height: 100%;
+            transition: all 0.2s;
+        }
+
+        .star:hover {
+            transform: scale(1.15);
+        }
+
+        .review-text-section {
+            margin-bottom: 25px;
+        }
+
+        .review-text-label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 15px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 15px;
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #0066cc;
+        }
+
+        .review-text-hint {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .voice-input-section {
+            margin-bottom: 15px;
+        }
+
+        .voice-input-btn {
+            display: inline-flex;
+            padding: 12px 20px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .voice-input-btn:hover:not(:disabled) {
+            background: #0052a3;
+        }
+
+        .voice-input-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .voice-input-btn.recording {
+            background: #dc3545;
+            animation: pulse 1.5s infinite;
+        }
+
+        .voice-input-btn.processing {
+            background: #6c757d;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .voice-status {
+            margin-top: 10px;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .voice-status.show {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .voice-status.pending,
+        .voice-status.processing {
+            background: #e7f3ff;
+            color: #0066cc;
+            border: 1px solid #b3d7ff;
+        }
+
+        .voice-status.completed {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .voice-status.failed {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .voice-status .spinner-small {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(0, 102, 204, 0.3);
+            border-top-color: #0066cc;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .voice-or-text {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+            color: #666;
+            font-size: 13px;
+        }
+
+        .voice-or-text::before,
+        .voice-or-text::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .media-upload-section {
+            margin-bottom: 25px;
+        }
+
+        .media-upload-label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .media-upload-hint {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .media-upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 6px;
+            padding: 20px;
+            text-align: center;
+            background: #fafafa;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .media-upload-area:hover {
+            border-color: #0066cc;
+            background: #f0f7ff;
+        }
+
+        .media-upload-area.dragover {
+            border-color: #0066cc;
+            background: #e6f2ff;
+        }
+
+        .upload-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .upload-text {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .upload-hint {
+            color: #999;
+            font-size: 12px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .media-preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .media-preview {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+
+        .media-preview img,
+        .media-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .media-preview .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        .media-preview .remove-btn:hover {
+            background: rgba(220, 53, 69, 0.9);
+        }
+
+        .media-preview .file-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 8px;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .media-preview.uploading {
+            pointer-events: none;
+        }
+
+        .upload-loader .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: #0066cc;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .submit-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background: #0052a3;
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+            z-index: 1000;
+        }
+
+        .toast.error {
+            background: #dc3545;
+        }
+
+        .toast.show {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .product-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .product-image {
+                width: 100px;
+                height: 100px;
+            }
+
+            .star {
+                width: 48px;
+                height: 48px;
+            }
+
+            .voice-input-btn {
+                display: inline-flex;
+            }
+
+            .attribute-ratings-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .media-preview-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .brand-banner {
+            background: white;
+            padding: 14px 20px;
+            margin: -20px -20px 20px -20px;
+        }
+
+        .brand-banner img {
+            max-height: 36px;
+            width: auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="brand-banner">
+        <img src="serenata_website_logo.png" alt="Serenata Flowers">
+    </div>
+
+    <div class="container">
+        <h1>Share your experience</h1>
+        <p class="subtitle">Help others by sharing your honest feedback about your purchase</p>
+
+        <form id="reviewForm">
+            <!-- Product Review Sections will be dynamically generated -->
+            <!-- Dummy data structure matching API response -->
+        </form>
+
+        <div class="submit-section">
+            <button type="submit" form="reviewForm" class="submit-btn" id="submitBtn">
+                Submit Reviews
+            </button>
+            <p style="font-size: 12px; color: #666; margin-top: 20px; text-align: center;">
+                By submitting this review, you are accepting our Terms and Conditions
+            </p>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Global invitation data
+        let invitationData = null;
+
+        // Get API base URL based on environment
+        function getApiBaseUrl() {
+            const hostname = window.location.hostname;
+            const isLocalhost = hostname === 'localhost' ||
+                                hostname === '127.0.0.1' ||
+                                window.location.protocol === 'file:';
+            if (isLocalhost) {
+                return 'http://localhost:8080/v1/public';
+            }
+            // Check for staging environment
+            const isStaging = hostname.includes('staging');
+            if (isStaging) {
+                return 'https://services-staging.stacktome.com/api/reviews/v1/public';
+            }
+            return 'https://services.stacktome.com/reviews/v1/public';
+        }
+
+        // Extract token from URL query parameter
+        function getTokenFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('token');
+        }
+
+        // Show loading state
+        function showLoading(message = 'Loading...') {
+            const container = document.querySelector('.container');
+            container.innerHTML = `
+                <div style="text-align: center; padding: 60px 20px;">
+                    <div style="font-size: 48px; margin-bottom: 20px;">⏳</div>
+                    <h2>${message}</h2>
+                </div>
+            `;
+        }
+
+        // Show error state
+        function showError(title, message) {
+            const container = document.querySelector('.container');
+            container.innerHTML = `
+                <div style="text-align: center; padding: 60px 20px;">
+                    <div style="font-size: 48px; margin-bottom: 20px;">❌</div>
+                    <h1 style="color: #dc3545; margin-bottom: 15px;">${title}</h1>
+                    <p style="color: #666; font-size: 16px;">${message}</p>
+                </div>
+            `;
+        }
+
+        // Fetch invitation data from API
+        async function fetchInvitationData(token) {
+            const apiBaseUrl = getApiBaseUrl();
+            const url = `${apiBaseUrl}/invitations/${token}`;
+
+            console.log('Fetching invitation data from:', url);
+
+            try {
+                const response = await fetch(url);
+
+                if (response.status === 404) {
+                    showError('Invalid Link', 'This invitation link is not valid. Please check your email for the correct link.');
+                    return null;
+                }
+
+                if (response.status === 401) {
+                    const data = await response.json();
+                    if (data.isExpired) {
+                        showError('Link Expired', 'This invitation link has expired. Please contact support for a new invitation.');
+                    } else {
+                        showError('Unauthorized', 'This invitation link is not valid or has expired.');
+                    }
+                    return null;
+                }
+
+                if (response.status === 410) {
+                    showError('Review Already Submitted', 'You have already submitted your review using this link. Thank you for your feedback!');
+                    return null;
+                }
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Invitation data received:', data);
+                return data;
+
+            } catch (error) {
+                console.error('Error fetching invitation data:', error);
+                showError('Connection Error', 'Unable to load the review form. Please check your internet connection and try again.');
+                return null;
+            }
+        }
+
+        // Initialize form with invitation data
+        function initializeForm(data) {
+            invitationData = data;
+            const form = document.getElementById('reviewForm');
+            form.innerHTML = ''; // Clear existing content
+
+            data.products.forEach((product, index) => {
+                const productSection = createProductReviewSection(product, index);
+                form.appendChild(productSection);
+            });
+
+            // Initialize drag and drop handlers after form elements are created
+            initializeDragAndDrop();
+        }
+
+        // Main initialization
+        async function init() {
+            const token = getTokenFromUrl();
+
+            if (!token) {
+                showError('Missing Token', 'No invitation token found in the URL. Please use the link from your invitation email.');
+                return;
+            }
+
+            showLoading('Loading your review form...');
+
+            const data = await fetchInvitationData(token);
+            if (data) {
+                // Restore the original container HTML
+                const container = document.querySelector('.container');
+                container.innerHTML = `
+                    <h1>Share your experience</h1>
+                    <p class="subtitle">Help others by sharing your honest feedback about your purchase</p>
+                    <form id="reviewForm"></form>
+                    <div class="submit-section">
+                        <button type="submit" form="reviewForm" class="submit-btn" id="submitBtn">
+                            Submit Reviews
+                        </button>
+                        <p style="font-size: 12px; color: #666; margin-top: 20px; text-align: center;">
+                            By submitting this review, you are accepting our Terms and Conditions
+                        </p>
+                    </div>
+                `;
+
+                initializeForm(data);
+
+                // Re-attach form submit handler
+                document.getElementById('reviewForm').addEventListener('submit', handleFormSubmit);
+
+                // Load any previously uploaded media
+                await loadExistingMedia();
+            }
+        }
+
+        function createProductReviewSection(product, index) {
+            const section = document.createElement('div');
+            section.className = 'product-review-section collapsed';
+            section.dataset.productIndex = index;
+            section.dataset.productSku = product.sku;
+
+            section.innerHTML = `
+                <div class="product-header">
+                    <img src="${product.imageUrl}" alt="${product.name}" class="product-image" onerror="this.src='https://via.placeholder.com/200?text=No+Image'">
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <a href="${product.productUrl}" target="_blank">View Product →</a>
+                    </div>
+                </div>
+
+                <div class="overall-rating-section">
+                    <div class="rating-label">Overall Rating *</div>
+                    <div class="star-rating" data-rating-type="overall" data-product-index="${index}" id="overallRating_${index}">
+                        ${createStars(5, 'overall-' + index)}
+                    </div>
+                </div>
+
+                <div class="review-form-content">
+                    <div class="rating-section">
+                        <div class="attribute-ratings-container">
+                            <div>
+                                <div class="rating-label">Quality</div>
+                                <div class="star-rating" data-rating-type="quality" data-product-index="${index}">
+                                    ${createStars(5, 'quality-' + index)}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="rating-label">Value</div>
+                                <div class="star-rating" data-rating-type="value" data-product-index="${index}">
+                                    ${createStars(5, 'value-' + index)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-text-section">
+                        <div class="review-text-label">Your Review *</div>
+
+                        <div class="voice-input-section">
+                            <button type="button" class="voice-input-btn" id="voiceBtn_${index}" onclick="toggleVoiceRecording(${index})">
+                                <span id="voiceIcon_${index}">🎤</span>
+                                <span id="voiceLabel_${index}">Speak your review</span>
+                            </button>
+                            <div class="voice-status" id="voiceStatus_${index}">
+                                <div class="spinner-small"></div>
+                                <span id="voiceStatusText_${index}">Processing...</span>
+                            </div>
+                        </div>
+
+                        <div class="voice-or-text">or type below</div>
+
+                        <textarea
+                            name="reviewText_${index}"
+                            id="reviewText_${index}"
+                            placeholder="Tell us what you think about this product. Use at least 10 characters."
+                            rows="5"
+                            minlength="10"
+                        ></textarea>
+                        <div class="review-text-hint">Tell us what you think about this product. Use at least 10 characters.</div>
+                        <div class="error-message" id="textError_${index}"></div>
+                    </div>
+
+                    <div class="media-upload-section">
+                        <div class="media-upload-label">Add Photos or Videos</div>
+                        <div class="media-upload-hint">Upload up to 3 files (images or videos). Max 20MB per file.</div>
+                        <div class="media-upload-area" onclick="document.getElementById('fileInput_${index}').click()">
+                            <div class="upload-icon">📷</div>
+                            <div class="upload-text">Click to upload or drag and drop</div>
+                            <div class="upload-hint">Supports: JPG, PNG, MP4, MOV</div>
+                        </div>
+                        <input 
+                            type="file" 
+                            id="fileInput_${index}" 
+                            multiple 
+                            accept="image/*,video/*"
+                            onchange="handleFileSelect(${index}, this.files)"
+                        >
+                        <div class="media-preview-container" id="mediaPreview_${index}"></div>
+                        <div class="error-message" id="fileError_${index}"></div>
+                    </div>
+                </div>
+            `;
+
+            // Attach star rating handlers
+            attachStarHandlers(section, index);
+
+            // Add click handler to overall rating to expand/collapse
+            const overallRating = section.querySelector('#overallRating_' + index);
+            if (overallRating) {
+                overallRating.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('star')) {
+                        const ratingValue = parseInt(e.target.dataset.rating);
+                        if (ratingValue > 0 && section.classList.contains('collapsed')) {
+                            section.classList.remove('collapsed');
+                            section.classList.add('expanded');
+                        }
+                    }
+                });
+            }
+
+            return section;
+        }
+
+        function createStars(count, prefix) {
+            let stars = '';
+            for (let i = 1; i <= count; i++) {
+                stars += `<span class="star" data-rating="${i}" data-prefix="${prefix}">
+                    <svg width="42" height="42" viewBox="0 0 20 20">
+                        <path fill="#ddd" opacity="1" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"></path>
+                        <path fill="#ddd" opacity="1" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"></path>
+                        <path fill="#f0f0f0" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"></path>
+                    </svg>
+                </span>`;
+            }
+            return stars;
+        }
+
+        function attachStarHandlers(section, productIndex) {
+            const starRatings = section.querySelectorAll('.star-rating');
+            
+            starRatings.forEach(ratingContainer => {
+                const stars = ratingContainer.querySelectorAll('.star');
+                const ratingType = ratingContainer.dataset.ratingType;
+                
+                stars.forEach((star, index) => {
+                    const ratingValue = index + 1;
+                    
+                    star.addEventListener('click', () => {
+                        setRating(ratingContainer, ratingValue, ratingType, productIndex);
+                    });
+                    
+                    star.addEventListener('mouseenter', () => {
+                        highlightStars(ratingContainer, ratingValue);
+                    });
+                    
+                    star.addEventListener('mouseleave', () => {
+                        const currentRating = getCurrentRating(ratingContainer);
+                        if (currentRating > 0) {
+                            highlightStars(ratingContainer, currentRating);
+                        } else {
+                            clearStarHighlights(ratingContainer);
+                        }
+                    });
+                });
+            });
+        }
+
+        // Color mapping based on rating value (Trustpilot-style)
+        function getRatingColor(rating) {
+            const colorMap = {
+                1: '#D64545',  // red
+                2: '#FF9800',  // orange
+                3: '#FFC107',  // yellow
+                4: '#A4C639',  // light green
+                5: '#00B67A'    // dark green (Trustpilot green)
+            };
+            return colorMap[rating] || '#6cb530';
+        }
+
+        function updateStarColor(svg, color) {
+            const paths = svg.querySelectorAll('path');
+            paths.forEach(path => {
+                const d = path.getAttribute('d');
+                if (!d) return;
+                
+                // Update background rectangle paths (first two paths)
+                if (d.includes('M0 4') || d.includes('M20 4')) {
+                    path.setAttribute('fill', color);
+                }
+                // Update star shape path (third path) to white
+                else if (d.includes('M10 13.3736')) {
+                    path.setAttribute('fill', 'white');
+                }
+            });
+        }
+
+        function setRating(container, value, ratingType, productIndex) {
+            const stars = container.querySelectorAll('.star');
+            const ratingColor = getRatingColor(value);
+            
+            stars.forEach((star, index) => {
+                const svg = star.querySelector('svg');
+                if (index < value) {
+                    star.classList.add('active');
+                    // Update SVG colors for active state with rating-based color
+                    updateStarColor(svg, ratingColor);
+                } else {
+                    star.classList.remove('active');
+                    // Update SVG colors for inactive state (gray)
+                    const paths = svg.querySelectorAll('path');
+                    paths.forEach(path => {
+                        const d = path.getAttribute('d');
+                        if (!d) return;
+                        if (d.includes('M0 4') || d.includes('M20 4')) {
+                            path.setAttribute('fill', '#ddd');
+                        } else if (d.includes('M10 13.3736')) {
+                            path.setAttribute('fill', '#f0f0f0');
+                        }
+                    });
+                }
+            });
+            container.dataset.rating = value;
+
+            // If overall rating is set, expand the form
+            if (ratingType === 'overall' && value > 0) {
+                const section = container.closest('.product-review-section');
+                if (section && section.classList.contains('collapsed')) {
+                    section.classList.remove('collapsed');
+                    section.classList.add('expanded');
+                }
+            }
+        }
+
+        function highlightStars(container, value) {
+            const stars = container.querySelectorAll('.star');
+            const hoverColor = getRatingColor(value);
+            
+            stars.forEach((star, index) => {
+                const svg = star.querySelector('svg');
+                if (index < value) {
+                    star.classList.add('hover');
+                    // Update SVG colors for hover state with rating-based color
+                    updateStarColor(svg, hoverColor);
+                } else {
+                    star.classList.remove('hover');
+                    // Revert to current state (active color or inactive gray)
+                    if (star.classList.contains('active')) {
+                        const currentRating = parseInt(container.dataset.rating) || 0;
+                        const activeColor = getRatingColor(currentRating);
+                        updateStarColor(svg, activeColor);
+                    } else {
+                        // Revert to inactive gray
+                        const paths = svg.querySelectorAll('path');
+                        paths.forEach(path => {
+                            const d = path.getAttribute('d');
+                            if (!d) return;
+                            if (d.includes('M0 4') || d.includes('M20 4')) {
+                                path.setAttribute('fill', '#ddd');
+                            } else if (d.includes('M10 13.3736')) {
+                                path.setAttribute('fill', '#f0f0f0');
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        function clearStarHighlights(container) {
+            const stars = container.querySelectorAll('.star');
+            const currentRating = parseInt(container.dataset.rating) || 0;
+            
+            stars.forEach((star, index) => {
+                star.classList.remove('hover');
+                const svg = star.querySelector('svg');
+                // Revert to current state (active color or inactive gray)
+                if (star.classList.contains('active') && currentRating > 0) {
+                    const activeColor = getRatingColor(currentRating);
+                    updateStarColor(svg, activeColor);
+                } else {
+                    // Revert to inactive gray
+                    const paths = svg.querySelectorAll('path');
+                    paths.forEach(path => {
+                        const d = path.getAttribute('d');
+                        if (!d) return;
+                        if (d.includes('M0 4') || d.includes('M20 4')) {
+                            path.setAttribute('fill', '#ddd');
+                        } else if (d.includes('M10 13.3736')) {
+                            path.setAttribute('fill', '#f0f0f0');
+                        }
+                    });
+                }
+            });
+        }
+
+        function getCurrentRating(container) {
+            return parseInt(container.dataset.rating) || 0;
+        }
+
+        // File upload handling - now uploads to server immediately
+        const mediaFiles = {};  // Tracks local files pending upload
+        const uploadedMedia = {}; // Tracks server-uploaded media { productIndex: [{mediaId, sku, type, originalUrl, thumbnailUrl}] }
+
+        // Load existing uploaded media when form loads
+        async function loadExistingMedia() {
+            if (!invitationData || !invitationData.invitationToken) return;
+
+            const apiBaseUrl = getApiBaseUrl();
+            const url = `${apiBaseUrl}/reviews/media/${invitationData.invitationToken}`;
+
+            try {
+                const response = await fetch(url);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.media && data.media.length > 0) {
+                        // Group by SKU and display
+                        data.media.forEach(mediaItem => {
+                            const productIndex = invitationData.products.findIndex(p => p.sku === mediaItem.sku);
+                            if (productIndex >= 0) {
+                                if (!uploadedMedia[productIndex]) {
+                                    uploadedMedia[productIndex] = [];
+                                }
+                                uploadedMedia[productIndex].push(mediaItem);
+                                displayUploadedMedia(productIndex, mediaItem);
+                            }
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading existing media:', error);
+            }
+        }
+
+        async function handleFileSelect(productIndex, files) {
+            if (!uploadedMedia[productIndex]) {
+                uploadedMedia[productIndex] = [];
+            }
+
+            const existingCount = uploadedMedia[productIndex].length;
+            const remainingSlots = 3 - existingCount;
+
+            if (files.length > remainingSlots) {
+                showFileError(productIndex, `You can only upload ${remainingSlots} more file(s). Maximum 3 files per product.`);
+                return;
+            }
+
+            const product = invitationData.products[productIndex];
+            const apiBaseUrl = getApiBaseUrl();
+
+            for (const file of Array.from(files)) {
+                if (uploadedMedia[productIndex].length >= 3) {
+                    showFileError(productIndex, 'Maximum 3 files per product review.');
+                    return;
+                }
+
+                // Check file size (20MB = 20 * 1024 * 1024 bytes)
+                if (file.size > 20 * 1024 * 1024) {
+                    showFileError(productIndex, `File "${file.name}" exceeds 20MB limit.`);
+                    continue;
+                }
+
+                // Check file type
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/webm'];
+                if (!allowedTypes.includes(file.type)) {
+                    showFileError(productIndex, `File type "${file.type}" is not supported.`);
+                    continue;
+                }
+
+                // Show uploading indicator
+                const previewId = `uploading_${Date.now()}`;
+                displayUploadingPreview(productIndex, file, previewId);
+
+                try {
+                    const formData = new FormData();
+                    formData.append('invitationToken', invitationData.invitationToken);
+                    formData.append('sku', product.sku);
+                    formData.append('file', file);
+
+                    const response = await fetch(`${apiBaseUrl}/reviews/media`, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    // Remove uploading preview
+                    const uploadingEl = document.getElementById(previewId);
+                    if (uploadingEl) uploadingEl.remove();
+
+                    if (response.ok) {
+                        const mediaItem = await response.json();
+                        uploadedMedia[productIndex].push(mediaItem);
+                        displayUploadedMedia(productIndex, mediaItem);
+                        clearError(productIndex);
+                    } else if (response.status === 413) {
+                        showFileError(productIndex, `File "${file.name}" exceeds size limit.`);
+                    } else if (response.status === 415) {
+                        showFileError(productIndex, `File type not supported.`);
+                    } else if (response.status === 422) {
+                        const errorData = await response.json();
+                        showFileError(productIndex, errorData.error?.message || 'Upload failed.');
+                    } else {
+                        showFileError(productIndex, `Failed to upload "${file.name}".`);
+                    }
+                } catch (error) {
+                    console.error('Upload error:', error);
+                    const uploadingEl = document.getElementById(previewId);
+                    if (uploadingEl) uploadingEl.remove();
+                    showFileError(productIndex, `Failed to upload "${file.name}". Check your connection.`);
+                }
+            }
+        }
+
+        function displayUploadingPreview(productIndex, file, previewId) {
+            const container = document.getElementById(`mediaPreview_${productIndex}`);
+            const preview = document.createElement('div');
+            preview.className = 'media-preview uploading';
+            preview.id = previewId;
+
+            // Show local preview while uploading
+            if (file.type.startsWith('image/')) {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.style.opacity = '0.5';
+                preview.appendChild(img);
+            } else if (file.type.startsWith('video/')) {
+                const video = document.createElement('video');
+                video.src = URL.createObjectURL(file);
+                video.style.opacity = '0.5';
+                preview.appendChild(video);
+            }
+
+            const loader = document.createElement('div');
+            loader.className = 'upload-loader';
+            loader.innerHTML = '<div class="spinner"></div>';
+            loader.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);';
+            preview.appendChild(loader);
+
+            const fileInfo = document.createElement('div');
+            fileInfo.className = 'file-info';
+            fileInfo.textContent = 'Uploading...';
+            preview.appendChild(fileInfo);
+
+            container.appendChild(preview);
+        }
+
+        function displayUploadedMedia(productIndex, mediaItem) {
+            const container = document.getElementById(`mediaPreview_${productIndex}`);
+            const preview = document.createElement('div');
+            preview.className = 'media-preview';
+            preview.dataset.mediaId = mediaItem.mediaId;
+
+            // Use thumbnail if available, otherwise original
+            const displayUrl = mediaItem.thumbnailUrl || mediaItem.originalUrl;
+
+            if (mediaItem.type === 'image') {
+                const img = document.createElement('img');
+                img.src = displayUrl;
+                img.onclick = () => window.open(mediaItem.originalUrl, '_blank');
+                img.style.cursor = 'pointer';
+                img.title = 'Click to view full size';
+                preview.appendChild(img);
+            } else if (mediaItem.type === 'video') {
+                const video = document.createElement('video');
+                video.src = mediaItem.originalUrl;
+                video.controls = true;
+                video.preload = 'metadata';
+                preview.appendChild(video);
+            }
+
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-btn';
+            removeBtn.innerHTML = '×';
+            removeBtn.type = 'button';
+            removeBtn.onclick = (e) => {
+                e.stopPropagation();
+                removeUploadedMedia(productIndex, mediaItem.mediaId, preview);
+            };
+            preview.appendChild(removeBtn);
+
+            const fileInfo = document.createElement('div');
+            fileInfo.className = 'file-info';
+            fileInfo.textContent = mediaItem.type === 'video' ? 'Video' : 'Image';
+            preview.appendChild(fileInfo);
+
+            container.appendChild(preview);
+        }
+
+        async function removeUploadedMedia(productIndex, mediaId, previewElement) {
+            const apiBaseUrl = getApiBaseUrl();
+            const url = `${apiBaseUrl}/reviews/media/${invitationData.invitationToken}/${mediaId}`;
+
+            // Immediately update UI (optimistic)
+            previewElement.style.opacity = '0.5';
+            const removeBtn = previewElement.querySelector('.remove-btn');
+            if (removeBtn) removeBtn.disabled = true;
+
+            try {
+                const response = await fetch(url, { method: 'DELETE' });
+
+                if (response.ok || response.status === 204) {
+                    // Remove from local state
+                    if (uploadedMedia[productIndex]) {
+                        uploadedMedia[productIndex] = uploadedMedia[productIndex].filter(m => m.mediaId !== mediaId);
+                    }
+                    previewElement.remove();
+                } else {
+                    // Restore UI on failure
+                    previewElement.style.opacity = '1';
+                    if (removeBtn) removeBtn.disabled = false;
+                    showFileError(productIndex, 'Failed to delete file. Please try again.');
+                }
+            } catch (error) {
+                console.error('Delete error:', error);
+                previewElement.style.opacity = '1';
+                if (removeBtn) removeBtn.disabled = false;
+                showFileError(productIndex, 'Failed to delete file. Check your connection.');
+            }
+        }
+
+        function showFileError(productIndex, message) {
+            const errorEl = document.getElementById(`fileError_${productIndex}`);
+            errorEl.textContent = message;
+            // Auto-clear after 5 seconds
+            setTimeout(() => {
+                if (errorEl.textContent === message) {
+                    errorEl.textContent = '';
+                }
+            }, 5000);
+        }
+
+        function clearError(productIndex) {
+            const errorEl = document.getElementById(`fileError_${productIndex}`);
+            errorEl.textContent = '';
+        }
+
+        // Voice recording using MediaRecorder API
+        const voiceRecorders = {}; // { productIndex: { mediaRecorder, audioChunks, stream } }
+        const voiceTranscriptions = {}; // { productIndex: { transcriptionId, status, pollingInterval } }
+
+        // Check if MediaRecorder is supported
+        const isMediaRecorderSupported = () => {
+            return navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder;
+        };
+
+        async function toggleVoiceRecording(productIndex) {
+            if (!isMediaRecorderSupported()) {
+                showToast('Voice recording is not supported in this browser', 'error');
+                return;
+            }
+
+            const recorder = voiceRecorders[productIndex];
+            if (recorder && recorder.mediaRecorder && recorder.mediaRecorder.state === 'recording') {
+                stopVoiceRecording(productIndex);
+            } else {
+                await startVoiceRecording(productIndex);
+            }
+        }
+
+        async function startVoiceRecording(productIndex) {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+                // Determine best supported MIME type
+                let mimeType = 'audio/webm';
+                if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+                    mimeType = 'audio/webm;codecs=opus';
+                } else if (MediaRecorder.isTypeSupported('audio/webm')) {
+                    mimeType = 'audio/webm';
+                } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+                    mimeType = 'audio/mp4';
+                }
+
+                const mediaRecorder = new MediaRecorder(stream, { mimeType });
+                const audioChunks = [];
+
+                mediaRecorder.ondataavailable = (e) => {
+                    if (e.data.size > 0) {
+                        audioChunks.push(e.data);
+                    }
+                };
+
+                mediaRecorder.onstop = async () => {
+                    // Stop all tracks
+                    stream.getTracks().forEach(track => track.stop());
+
+                    // Create audio blob
+                    const audioBlob = new Blob(audioChunks, { type: mimeType.split(';')[0] });
+                    console.log('Recording stopped, blob size:', audioBlob.size);
+
+                    // Upload for transcription
+                    await uploadVoiceRecording(productIndex, audioBlob, mimeType.split(';')[0]);
+                };
+
+                voiceRecorders[productIndex] = { mediaRecorder, audioChunks, stream };
+
+                mediaRecorder.start();
+                console.log('Recording started for product', productIndex);
+
+                // Update UI
+                updateVoiceButtonState(productIndex, 'recording');
+
+            } catch (error) {
+                console.error('Error starting recording:', error);
+                if (error.name === 'NotAllowedError') {
+                    showToast('Microphone access denied. Please allow microphone access and try again.', 'error');
+                } else {
+                    showToast('Could not start recording. Please check your microphone.', 'error');
+                }
+            }
+        }
+
+        function stopVoiceRecording(productIndex) {
+            const recorder = voiceRecorders[productIndex];
+            if (recorder && recorder.mediaRecorder && recorder.mediaRecorder.state === 'recording') {
+                recorder.mediaRecorder.stop();
+                updateVoiceButtonState(productIndex, 'processing');
+            }
+        }
+
+        async function uploadVoiceRecording(productIndex, audioBlob, mimeType) {
+            const product = invitationData.products[productIndex];
+            const apiBaseUrl = getApiBaseUrl();
+
+            updateVoiceStatus(productIndex, 'pending', 'Uploading recording...');
+
+            try {
+                const formData = new FormData();
+                formData.append('invitationToken', invitationData.invitationToken);
+                formData.append('sku', product.sku);
+                formData.append('file', audioBlob, `recording.${mimeType === 'audio/mp4' ? 'm4a' : 'webm'}`);
+
+                const response = await fetch(`${apiBaseUrl}/reviews/voice`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok || response.status === 202) {
+                    const result = await response.json();
+                    console.log('Voice upload successful:', result);
+
+                    voiceTranscriptions[productIndex] = {
+                        transcriptionId: result.transcriptionId,
+                        status: 'pending'
+                    };
+
+                    updateVoiceStatus(productIndex, 'processing', 'Transcribing your review...');
+                    startPollingTranscription(productIndex);
+
+                } else {
+                    const errorData = await response.json().catch(() => ({}));
+                    const errorMsg = errorData.error?.message || 'Failed to upload recording';
+                    console.error('Upload failed:', errorMsg);
+                    updateVoiceStatus(productIndex, 'failed', errorMsg);
+                    updateVoiceButtonState(productIndex, 'idle');
+                }
+
+            } catch (error) {
+                console.error('Upload error:', error);
+                updateVoiceStatus(productIndex, 'failed', 'Network error. Please try again.');
+                updateVoiceButtonState(productIndex, 'idle');
+            }
+        }
+
+        function startPollingTranscription(productIndex) {
+            const pollInterval = setInterval(async () => {
+                await checkTranscriptionStatus(productIndex, pollInterval);
+            }, 2000); // Poll every 2 seconds
+
+            voiceTranscriptions[productIndex].pollingInterval = pollInterval;
+
+            // Timeout after 2 minutes
+            setTimeout(() => {
+                if (voiceTranscriptions[productIndex]?.pollingInterval) {
+                    clearInterval(voiceTranscriptions[productIndex].pollingInterval);
+                    if (voiceTranscriptions[productIndex].status !== 'completed') {
+                        updateVoiceStatus(productIndex, 'failed', 'Transcription timed out. Please try again.');
+                        updateVoiceButtonState(productIndex, 'idle');
+                    }
+                }
+            }, 120000);
+        }
+
+        async function checkTranscriptionStatus(productIndex, pollInterval) {
+            const product = invitationData.products[productIndex];
+            const apiBaseUrl = getApiBaseUrl();
+
+            try {
+                const response = await fetch(
+                    `${apiBaseUrl}/reviews/voice/${invitationData.invitationToken}?sku=${product.sku}`
+                );
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const transcription = data.transcriptions?.find(
+                        t => t.transcriptionId === voiceTranscriptions[productIndex]?.transcriptionId
+                    );
+
+                    if (transcription) {
+                        if (transcription.status === 'completed' && transcription.text) {
+                            clearInterval(pollInterval);
+                            voiceTranscriptions[productIndex].status = 'completed';
+
+                            // Insert transcribed text into textarea
+                            const textarea = document.getElementById(`reviewText_${productIndex}`);
+                            if (textarea) {
+                                textarea.value = transcription.text;
+                                // Trigger input event for any listeners
+                                textarea.dispatchEvent(new Event('input', { bubbles: true }));
+                            }
+
+                            updateVoiceStatus(productIndex, 'completed', 'Transcription complete!');
+                            updateVoiceButtonState(productIndex, 'idle');
+
+                            // Hide status after 3 seconds
+                            setTimeout(() => {
+                                hideVoiceStatus(productIndex);
+                            }, 3000);
+
+                        } else if (transcription.status === 'failed') {
+                            clearInterval(pollInterval);
+                            voiceTranscriptions[productIndex].status = 'failed';
+                            const errorMsg = transcription.errorMessage || 'Transcription failed';
+                            updateVoiceStatus(productIndex, 'failed', errorMsg);
+                            updateVoiceButtonState(productIndex, 'idle');
+
+                        } else if (transcription.status === 'processing') {
+                            updateVoiceStatus(productIndex, 'processing', 'Transcribing your review...');
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking transcription status:', error);
+            }
+        }
+
+        function updateVoiceButtonState(productIndex, state) {
+            const btn = document.getElementById(`voiceBtn_${productIndex}`);
+            const icon = document.getElementById(`voiceIcon_${productIndex}`);
+            const label = document.getElementById(`voiceLabel_${productIndex}`);
+
+            if (!btn) return;
+
+            btn.classList.remove('recording', 'processing');
+            btn.disabled = false;
+
+            switch (state) {
+                case 'recording':
+                    btn.classList.add('recording');
+                    icon.textContent = '⏹️';
+                    label.textContent = 'Stop recording';
+                    break;
+                case 'processing':
+                    btn.classList.add('processing');
+                    btn.disabled = true;
+                    icon.textContent = '⏳';
+                    label.textContent = 'Processing...';
+                    break;
+                case 'idle':
+                default:
+                    icon.textContent = '🎤';
+                    label.textContent = 'Record your review';
+                    break;
+            }
+        }
+
+        function updateVoiceStatus(productIndex, status, message) {
+            const statusEl = document.getElementById(`voiceStatus_${productIndex}`);
+            const statusText = document.getElementById(`voiceStatusText_${productIndex}`);
+
+            if (!statusEl) return;
+
+            statusEl.classList.remove('pending', 'processing', 'completed', 'failed');
+            statusEl.classList.add('show', status);
+
+            if (statusText) {
+                statusText.textContent = message;
+            }
+
+            // Show/hide spinner based on status
+            const spinner = statusEl.querySelector('.spinner-small');
+            if (spinner) {
+                spinner.style.display = (status === 'pending' || status === 'processing') ? 'block' : 'none';
+            }
+        }
+
+        function hideVoiceStatus(productIndex) {
+            const statusEl = document.getElementById(`voiceStatus_${productIndex}`);
+            if (statusEl) {
+                statusEl.classList.remove('show');
+            }
+        }
+
+        // Helper function to generate display name (e.g., "John Smith" -> "John S.")
+        function generateDisplayName(fullName) {
+            if (!fullName || typeof fullName !== 'string') {
+                return '';
+            }
+            const parts = fullName.trim().split(/\s+/);
+            if (parts.length === 0) {
+                return '';
+            }
+            if (parts.length === 1) {
+                return parts[0];
+            }
+            const firstName = parts[0];
+            const lastInitial = parts[parts.length - 1].charAt(0).toUpperCase();
+            return `${firstName} ${lastInitial}.`;
+        }
+
+        // Helper function to validate review data against schema requirements
+        function validateReviewData(review) {
+            const errors = [];
+
+            if (!review.createdAt) {
+                errors.push('Missing required field: createdAt');
+            }
+            if (!review.orderId) {
+                errors.push('Missing required field: orderId');
+            }
+            if (!review.rating || review.rating < 1 || review.rating > 5) {
+                errors.push('Rating must be between 1 and 5');
+            }
+            if (!review.product || !review.product.sku) {
+                errors.push('Product SKU is required');
+            }
+
+            return errors;
+        }
+
+        // Form submission handler
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            // Collect form data - only for products with ratings
+            const reviews = [];
+            const productSections = document.querySelectorAll('.product-review-section');
+            let ratedProductCount = 0;
+            let validationFailed = false;
+
+            productSections.forEach((section, index) => {
+                if (validationFailed) return;
+
+                const product = invitationData.products[index];
+                const overallRatingStr = section.querySelector('[data-rating-type="overall"]').dataset.rating;
+                const overallRating = overallRatingStr ? parseInt(overallRatingStr) : 0;
+
+                // Skip products without ratings
+                if (!overallRating || overallRating === 0) {
+                    return;
+                }
+
+                ratedProductCount++;
+
+                const qualityRatingStr = section.querySelector('[data-rating-type="quality"]').dataset.rating;
+                const valueRatingStr = section.querySelector('[data-rating-type="value"]').dataset.rating;
+                const qualityRating = qualityRatingStr ? parseInt(qualityRatingStr) : null;
+                const valueRating = valueRatingStr ? parseInt(valueRatingStr) : null;
+                const reviewText = document.getElementById(`reviewText_${index}`).value.trim();
+
+                // Validate review text - must be at least 10 characters
+                if (reviewText.length < 10) {
+                    const errorEl = document.getElementById(`textError_${index}`);
+                    errorEl.textContent = 'Review text must be at least 10 characters.';
+                    showToast('Please write at least 10 characters in your review', 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit Reviews';
+                    validationFailed = true;
+                    return;
+                } else {
+                    const errorEl = document.getElementById(`textError_${index}`);
+                    errorEl.textContent = '';
+                }
+
+                // Build attributes array (only include attributes with ratings)
+                const attributes = [];
+                if (qualityRating !== null) {
+                    attributes.push({
+                        title: 'Quality',
+                        type: 'range',
+                        value: qualityRating
+                    });
+                }
+                if (valueRating !== null) {
+                    attributes.push({
+                        title: 'Value',
+                        type: 'range',
+                        value: valueRating
+                    });
+                }
+
+                // Collect uploaded media URLs for this product
+                const productMedia = uploadedMedia[index] || [];
+                const imageUrls = productMedia.filter(m => m.type === 'image').map(m => m.originalUrl);
+                const videoUrls = productMedia.filter(m => m.type === 'video').map(m => m.originalUrl);
+
+                // Build schema-compliant review object
+                const reviewData = {
+                    invitationToken: invitationData.invitationToken,
+                    createdAt: new Date().toISOString(),
+                    orderId: invitationData.orderId,
+                    reviewType: 'product',
+                    rating: overallRating,
+                    text: reviewText || null,
+                    heading: null,
+                    language: invitationData.locale || navigator.language || 'en-US',
+                    domain: null,
+                    isVerified: true,
+                    isIncentivized: false,
+                    consentStored: true,
+                    status: 'published',
+                    images: imageUrls,
+                    videos: videoUrls,
+                    attributes: attributes,
+                    product: {
+                        sku: product.sku,
+                        baseSku: product.skuBase || null,
+                        id: product.id || null,
+                        variationId: product.variationId || null,
+                        type: product.type || null,
+                        name: product.name,
+                        url: product.productUrl || null,
+                        imageUrl: product.imageUrl || null,
+                        gtin: product.gtin || null,
+                        mpn: product.mpn || null,
+                        brand: product.brand || null
+                    },
+                    customer: {
+                        email: invitationData.reviewerEmail || null,
+                        name: invitationData.reviewerName || null,
+                        displayName: generateDisplayName(invitationData.reviewerName) || invitationData.reviewerEmail || null
+                    },
+                    metrics: {
+                        helpfulVotes: 0,
+                        unhelpfulVotes: 0,
+                        viewCount: 0
+                    }
+                };
+
+                // Validate review data
+                const validationErrors = validateReviewData(reviewData);
+                if (validationErrors.length > 0) {
+                    console.warn('Review validation warnings:', validationErrors);
+                }
+
+                console.log('Constructed review data for product', index, ':', reviewData);
+                reviews.push(reviewData);
+            });
+
+            // Return early if validation failed
+            if (validationFailed) {
+                return;
+            }
+
+            // Check if at least one product was rated
+            if (ratedProductCount === 0) {
+                showToast('Please rate at least one product', 'error');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Reviews';
+                return;
+            }
+
+            // Submit to API
+            try {
+                const apiBaseUrl = getApiBaseUrl();
+                const url = `${apiBaseUrl}/reviews`;
+
+                console.log('Submitting reviews to:', url);
+                console.log('Review data:', reviews);
+
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(reviews)
+                });
+
+                // Handle specific error status codes
+                if (response.status === 401) {
+                    showToast('Your invitation has expired or is invalid', 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit Reviews';
+                    return;
+                }
+
+                if (response.status === 409) {
+                    showToast('Reviews have already been submitted for this order', 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit Reviews';
+                    return;
+                }
+
+                if (response.status === 410) {
+                    showToast('This invitation link has already been used', 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit Reviews';
+                    return;
+                }
+
+                if (response.status === 422) {
+                    // Validation error - SKU or orderId mismatch
+                    try {
+                        const errorData = await response.json();
+                        const errorMessage = errorData.message || 'Product validation failed. Please check your review data.';
+                        showToast(errorMessage, 'error');
+                    } catch {
+                        showToast('Product validation failed. SKU or order ID mismatch.', 'error');
+                    }
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit Reviews';
+                    return;
+                }
+
+                if (response.status === 400) {
+                    // Bad request - schema validation failed
+                    showToast('Invalid review data. Please check all fields and try again.', 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit Reviews';
+                    return;
+                }
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                console.log('Submission result:', result);
+
+                // Show success message with count of submitted reviews
+                const reviewCount = Array.isArray(result) ? result.length : reviews.length;
+                const successMessage = reviewCount === 1
+                    ? 'Review submitted successfully!'
+                    : `Successfully submitted ${reviewCount} product reviews!`;
+                showToast(successMessage, 'success');
+
+                // Redirect after 2 seconds
+                setTimeout(() => {
+                    if (invitationData.redirectUri) {
+                        window.location.href = invitationData.redirectUri;
+                    } else {
+                        // Build links to view reviews for each reviewed product
+                        const baseUrl = window.location.href.replace(/\/[^/]*$/, '/view_reviews.html');
+                        const truncate = (s, n) => s.length > n ? s.substring(0, n) + '...' : s;
+                        const seen = new Set();
+                        const viewLinks = reviews.filter(r => {
+                            const key = r.product.baseSku || r.product.sku;
+                            if (seen.has(key)) return false;
+                            seen.add(key);
+                            return true;
+                        }).map(r => {
+                            const sku = r.product.baseSku || r.product.sku;
+                            const name = truncate(r.product.name || sku, 20);
+                            return `<a href="${baseUrl}?baseSku=${encodeURIComponent(sku)}" target="_blank" style="display:block; margin:8px auto; padding:10px 16px; max-width:320px; background:#0066cc; color:white; text-decoration:none; border-radius:6px; font-size:14px;">Review for <b>${name}</b></a>`;
+                        }).join('');
+
+                        const container = document.querySelector('.container');
+                        container.innerHTML = `
+                            <div style="text-align: center; padding: 60px 20px;">
+                                <div style="font-size: 48px; margin-bottom: 20px;">&#10004;&#65039;</div>
+                                <h1 style="color: #28a745; margin-bottom: 15px;">Thank You!</h1>
+                                <p style="color: #666; font-size: 16px; margin-bottom: 20px;">${successMessage}</p>
+                                ${viewLinks ? `<p style="color:#666; font-size:14px; margin-bottom:10px;">See your review:</p><div>${viewLinks}</div>` : ''}
+                            </div>
+                        `;
+                    }
+                }, 2000);
+
+            } catch (error) {
+                console.error('Error submitting reviews:', error);
+                // Check if it's a network error
+                if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                    showToast('Network error. Please check your connection and try again.', 'error');
+                } else {
+                    showToast('Failed to submit reviews. Please try again.', 'error');
+                }
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Reviews';
+            }
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize drag and drop handlers after form is loaded
+        function initializeDragAndDrop() {
+            document.querySelectorAll('.media-upload-area').forEach(area => {
+                area.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    area.classList.add('dragover');
+                });
+
+                area.addEventListener('dragleave', () => {
+                    area.classList.remove('dragover');
+                });
+
+                area.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    area.classList.remove('dragover');
+
+                    const productIndex = parseInt(area.closest('.product-review-section').dataset.productIndex);
+                    const files = Array.from(e.dataTransfer.files);
+                    handleFileSelect(productIndex, files);
+                });
+            });
+        }
+
+        // Start initialization when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            init();
+        });
+    </script>
+</body>
+</html>
