@@ -52,14 +52,19 @@ def analyze_trustpilot(request):
 
     try:
         url = f'https://www.trustpilot.com/review/{domain}?languages=all'
-        resp = requests.get(url, headers={
-            'User-Agent': 'Mozilla/5.0 (compatible; StackTome/1.0; +https://www.stacktome.com)'
-        }, timeout=10)
+        resp = requests.get('https://api.scrapfly.io/scrape', params={
+            'key': 'scp-live-5cfaeaf71469489ca7fc0af6e6902cf0',
+            'url': url,
+            'asp': 'true',
+            'render_js': 'false',
+            'tags': 'player,project:default',
+        }, timeout=30)
         resp.raise_for_status()
+        html_content = resp.json()['result']['content']
 
         match = re.search(
             r'<script id="__NEXT_DATA__" type="application/json">([\s\S]*?)</script>',
-            resp.text
+            html_content
         )
         if not match:
             return (json.dumps({'error': 'Could not find Trustpilot profile data'}), 502, cors_headers)
@@ -174,6 +179,10 @@ def analyze_trustpilot(request):
   </script>
 </body>
 </html>"""
+
+        if request.args.get('format') == 'json':
+            cors_headers['Content-Type'] = 'application/json'
+            return (json.dumps(result, indent=2), 200, cors_headers)
 
         cors_headers['Content-Type'] = 'text/html'
         return (html, 200, cors_headers)
