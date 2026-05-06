@@ -333,7 +333,7 @@
             if (selectedProducts.find(sp => sp.sku === p.sku)) return;
 
             selectedProducts.push({
-                productUrl: p.url || `https://www.serenataflowers.com.au/buy/${p.skuBase}`,
+                productUrl: p.url || `https://www.serenataflowers.com/product/${p.name.toLowerCase().trim().replace(/\s+/g, '-')}`,
                 imageUrl: p.urlImage1 || '',
                 name: p.name,
                 sku: p.sku,
