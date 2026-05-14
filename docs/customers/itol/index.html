@@ -147,6 +147,13 @@
 </label>
 
       <label>
+        Campaign:
+        <select name="campaignId" id="campaignId" required>
+          <option value="" disabled selected>-- Loading Campaigns... --</option>
+        </select>
+      </label>
+
+      <label>
         Request Time:
         <input type="datetime-local" name="createdAt" id="createdAtInput" required>
       </label>
@@ -160,6 +167,34 @@
       const now = new Date();
       now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
       document.getElementById('createdAtInput').value = now.toISOString().slice(0, 16);
+
+      fetch('https://services.stacktome.com/api/invites/v1/campaigns?apikey=PUcX52Si6rjuReuOfFMKrPue0FXcFfHB', {
+        headers: {
+          'accept': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        const campaignSelect = document.getElementById('campaignId');
+        campaignSelect.innerHTML = '<option value="" disabled selected>-- Select Campaign --</option>';
+        
+        const excludedCampaigns = [
+          "Hubspot (Main) Invite TP Campaign",
+          "4-5 Start TP Review - Google Review Response"
+        ];
+
+        data.forEach(campaign => {
+          if (!excludedCampaigns.includes(campaign.name)) {
+            const option = document.createElement('option');
+            option.value = campaign.id;
+            option.textContent = campaign.name;
+            campaignSelect.appendChild(option);
+          }
+        });
+      })
+      .catch(error => {
+        document.getElementById('campaignId').innerHTML = '<option value="" disabled selected>-- Error loading campaigns --</option>';
+      });
     });
 
     document.getElementById('orderForm').onsubmit = async function(e) {
@@ -198,7 +233,7 @@
           {
             code: "",
             name: "",
-            campaign: "",
+            campaign: e.target.campaignId.value,
             campaignType: "",
             discountType: "",
             customerType: "",
