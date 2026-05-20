@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bornecyklerne Campaign Performance Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .stars { color: #fdcb6e; }
+
+  .campaign-block { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 16px; overflow: hidden; }
+  .camp-header { background: #1a1a2e; color: #fff; padding: 10px 16px; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 10px; }
+  .camp-header .badge { background: #6c5ce7; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
+  .camp-header .badge-warn { background: #d63031; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
+  .review-card { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; }
+  .review-card:last-child { border-bottom: none; }
+  .review-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+  .rating-badge { font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 8px; }
+  .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff3e0; color: #e17055; }
+  .r3 { background: #fef9e7; color: #f39c12; }
+  .review-text { font-style: italic; color: #555; line-height: 1.6; font-size: 13px; }
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-ok { display: inline-block; background: #e8f8f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #00b894; }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .theme-card { background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .theme-card .icon { font-size: 24px; margin-bottom: 8px; }
+  .theme-card .theme-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .theme-card .count { font-size: 11px; color: #888; margin-bottom: 8px; }
+  .theme-card p { font-size: 12px; color: #555; margin: 0; line-height: 1.5; }
+
+  .urgent { background: #fff5f5; border: 1.5px solid #d63031; border-radius: 10px; padding: 20px 22px; }
+  .urgent .urg-title { color: #d63031; font-weight: 700; font-size: 15px; margin-bottom: 14px; }
+  .urgent table { box-shadow: none; border: 1px solid #f5c6c6; margin-bottom: 12px; }
+  .urgent th { background: #d63031; }
+  .urgent td { background: #fff !important; }
+  .note { font-size: 12px; color: #888; margin-top: 4px; }
+  .persist { font-size: 11px; font-weight: 700; background: #ffeaea; color: #d63031; border-radius: 4px; padding: 1px 6px; }
+
+  .all-clear { background: #e8f8f5; border: 1.5px solid #00b894; border-radius: 10px; padding: 20px 22px; color: #00b894; font-weight: 600; font-size: 14px; }
+  .warn-box { background: #fff5f5; border: 1.5px solid #e17055; border-radius: 10px; padding: 16px 20px; margin-bottom: 8px; color: #e17055; font-size: 13px; font-weight: 600; }
+
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Bornecyklerne &mdash; Campaign Performance Report</h1>
+  <div class="subtitle">Review invite analysis &nbsp;&bull;&nbsp; All-time since campaign launch: Apr 8&ndash;May 20, 2026 &nbsp;&bull;&nbsp; Generated 2026-05-20</div>
+
+  <!-- 1. Executive Summary -->
+  <h2>1. Executive Summary</h2>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Total Invites Sent</div>
+      <div class="value">2,373</div>
+      <div class="sub">across 3 active campaigns</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Reviews Attributed</div>
+      <div class="value">38</div>
+      <div class="sub">campaign-attributed reviews</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Overall Review Rate</div>
+      <div class="value">1.60%</div>
+      <div class="sub">reviews / invites sent all-time</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Avg Order Rating</div>
+      <div class="value">4.11</div>
+      <div class="sub">out of 5.00</div>
+    </div>
+  </div>
+  <div class="warn-box" style="margin-top:12px;">&#9888;&nbsp; invite-old campaign avg rating is 2.92 &mdash; below 3 stars across 12 reviews. Requires immediate attention.</div>
+
+  <!-- 2. Campaign Performance Table -->
+  <h2>2. Campaign Performance</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th>Active Period</th>
+        <th>Invites Sent</th>
+        <th>Reviews</th>
+        <th>Review Rate</th>
+        <th>Avg Rating</th>
+        <th>Range</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>invite-old</td><td class="neutral">Apr 15 &ndash; May 20</td><td>1,770</td><td>12</td><td class="worst">0.68%</td><td><span class="stars">&#9733;&#9733;</span> <span class="worst">2.92</span></td><td class="worst">1&ndash;5</td></tr>
+      <tr><td>invite-tp</td><td class="neutral">Apr 9 &ndash; May 20</td><td>599</td><td>25</td><td class="best">4.17%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.64</td><td class="neutral">1&ndash;5</td></tr>
+      <tr><td>invite-positive-tickets</td><td class="neutral">May 12 &ndash; May 19</td><td>4</td><td>1</td><td>25.00%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> <span class="best">5.00</span></td><td class="neutral">5&ndash;5</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Campaign "invite-tp (612_test_mode)" excluded (test run, Apr 8 only, 30 invites, 0 reviews). Unattributed organic reviews excluded from campaign counts. Reviews attributed using full invite history regardless of invite date.</p>
+
+  <!-- 3. Campaign Breakdown -->
+  <h2>3. Campaign Breakdown</h2>
+  <table>
+    <thead>
+      <tr><th>Campaign</th><th>Review Rate</th><th>Avg Rating</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>invite-positive-tickets</td><td class="best">25.00%</td><td class="best">5.00</td><td>Very small sample (4 invites); 1 perfect review. Targets customers who previously raised tickets — promising signal. Monitor as volume grows.</td></tr>
+      <tr><td>invite-tp</td><td class="best">4.17%</td><td>4.64</td><td>Main volume campaign with strong ratings. 25 reviews; majority 4&ndash;5 stars. 2 negative reviews (1-star) with tickets raised — both being handled.</td></tr>
+      <tr><td>invite-old</td><td class="worst">0.68%</td><td class="worst">2.92</td><td>Largest send volume (1,770 invites) but lowest engagement and critically low avg rating of 2.92. 7 attributed negatives (rating &le; 3), 5 without any support ticket. Targets older orders — customers may be frustrated before they even receive an invite.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 4. Negative Reviews by Campaign -->
+  <h2>4. Negative Reviews by Campaign</h2>
+
+  <!-- invite-old -->
+  <div class="campaign-block">
+    <div class="camp-header">
+      invite-old <span class="badge-warn">7 negative reviews</span>
+    </div>
+
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">Rating 1</span>
+        <strong>rickard@rpea.se</strong>
+        <span class="neutral">&middot; Order 16670932205898 &middot; 2026-05-17</span>
+        <span class="tag">No ticket</span>
+      </div>
+      <div class="review-text">"Ena däcket var trasigt när jag fick cykeln."</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">Rating 1</span>
+        <strong>brunnher@gmail.com</strong>
+        <span class="neutral">&middot; Order 16671489753418 &middot; 2026-05-16</span>
+        <span class="tag-ok">Ticket #243239</span>
+      </div>
+      <div class="review-text">"Desværre ikke. Vi fik den fineste lad-cykel til vores datter. Hun er blevet så glad for den. Den er desværre bare blevet så rustet på kort tid, trods skur. Det skuffer os, at 'børnecyklerne' ikke ønsker at gøre noget. Den er max brugt 1/2 år."</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">Rating 1</span>
+        <strong>zhirohasan88@gmail.com</strong>
+        <span class="neutral">&middot; Order 16671116067146 &middot; 2026-05-04</span>
+        <span class="tag">No ticket</span>
+      </div>
+      <div class="review-text">"Das Fahrrad wurde mit deutlichen Kratzern geliefert. Bei der ersten Kontaktaufnahme bekamen wir noch Antwort und uns wurde ein Rabatt angeboten. Wir nahmen das Angebot an, doch erhielten wir den Preisnachlass nie. Wiederholte Kontaktaufnahme blieb unbeantwortet."</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">Rating 1</span>
+        <strong>annitahenriksen@lightmail.dk</strong>
+        <span class="neutral">&middot; Order 16671191793994 &middot; 2026-04-22</span>
+        <span class="tag">No ticket</span>
+      </div>
+      <div class="review-text">"efter 20 henvendelser om couer der manglede til mine 2 cykler blev i ved med at sige de kommer. nu er det snart et år siden, har ikke set dem endda.... dårlig service at man betaler for noget og ikke får det."</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">Rating 1</span>
+        <strong>azosm83@gmail.com</strong>
+        <span class="neutral">&middot; Order 16671364415818 &middot; 2026-04-20</span>
+        <span class="tag">No ticket</span>
+      </div>
+      <div class="review-text">"Jeg modtog en punkteret cykel. Valgte dog at lappe den, og brugte den under et par måneder. Bremsen knækkede (metalhåndtaget) kontaktede dem, og efter lang tid og flere forsøg på kontakt, fik jeg at vide at det er forventeligt slid. Cyklen står ubrugt, og efter yderligere et par måneder er der masser af rust. Dårligt produkt og dårligt service."</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r2">Rating 2</span>
+        <strong>ditte.thogersen@gmail.com</strong>
+        <span class="neutral">&middot; Order 16671542804810 &middot; 2026-04-15</span>
+        <span class="tag">No ticket</span>
+      </div>
+      <div class="review-text">"Jeg købte en billig cykel, som så sej ud og mit barn var glad for. Desværre gik pedalerne i stykker efter ca et år, og det var umuligt at få nye, fordi str. ikke er dansk/europæisk — kontaktede leverandøren, men de kunne heller ikke skaffe nye pedaler. Kort tid efter ville jeg sætte sadlen op, men gevindet under sadlen var slidt af, så sadlen også skulle skiftes."</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r3">Rating 3</span>
+        <strong>soegaard2110@gmail.com</strong>
+        <span class="neutral">&middot; Order 16665823281482 &middot; 2026-05-14</span>
+        <span class="tag-ok">Ticket #242744</span>
+      </div>
+      <div class="review-text">"EDIT: Jeg har nu talt med Børnecyklerne og fået refunderet 300 kr., hvilket er god service, så jeg ændrer fra 1 til 3 stjerner. Intet svar på henvendelse, da jeg undrede mig over at cyklen til mit barnebarn blev sat yderligere 300 kr ned før jeg nåede at give ham den."</div>
+    </div>
+  </div>
+
+  <!-- invite-tp -->
+  <div class="campaign-block">
+    <div class="camp-header">
+      invite-tp <span class="badge-warn">2 negative reviews</span>
+    </div>
+
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">Rating 1</span>
+        <strong>nielsen-carsten@mail.dk</strong>
+        <span class="neutral">&middot; Order 16993328726346 &middot; 2026-05-05</span>
+        <span class="tag-ok">Ticket #231005</span>
+      </div>
+      <div class="review-text">"De trækker penge flere måneder før de for cyklen hjem."</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">Rating 1</span>
+        <strong>soni@mail.dk</strong>
+        <span class="neutral">&middot; Order 16785093656906 &middot; 2026-04-12</span>
+        <span class="tag-ok">Ticket #219076 &mdash; Returnering af vare</span>
+      </div>
+      <div class="review-text">"Svindel firma som sælger brugte cykler som nye og vil ikke tage dem retur. Har fået en cykel som dæk og fælgstørrelse ikke passer sammen, ydermere er det ene dæk eksploderet i slangen. Bærer tydelig præg af cyklen har været samlet før, da reflekserne er ridsede."</div>
+    </div>
+  </div>
+
+  <!-- invite-positive-tickets -->
+  <div class="campaign-block">
+    <div class="camp-header">
+      invite-positive-tickets <span class="badge">0 negative reviews</span>
+    </div>
+    <div class="review-card">
+      <div class="review-text" style="color:#00b894; font-style:normal; font-weight:600;">&#10003;&nbsp; No negative reviews from this campaign.</div>
+    </div>
+  </div>
+
+  <!-- 5. Common Complaint Themes -->
+  <h2>5. Common Complaint Themes</h2>
+  <div class="theme-grid">
+    <div class="theme-card">
+      <div class="icon">&#128295;</div>
+      <div class="theme-title">Product Quality &amp; Damage on Delivery</div>
+      <div class="count">5 reviews &mdash; invite-old (4), invite-tp (1)</div>
+      <p>Damaged parts on arrival (scratches, bent guards), exploding tyres, incorrect tyre/rim combinations, rust after short use. Customers feel the product quality does not match the price or marketing.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#128222;</div>
+      <div class="theme-title">Customer Service Unresponsiveness</div>
+      <div class="count">3 reviews &mdash; invite-old (2), invite-tp (1)</div>
+      <p>Repeated contact attempts with no reply, promised discounts/refunds never delivered, and payment taken before dispatch. Long-running cases (up to 1 year) still unresolved.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#9881;</div>
+      <div class="theme-title">Durability &amp; Spare Parts</div>
+      <div class="count">1 review &mdash; invite-old</div>
+      <p>Pedals and saddle mechanism failing within a year, with no compatible spare parts available in Danish/European sizes. Products effectively become unusable with no recourse.</p>
+    </div>
+  </div>
+
+  <!-- 6. Urgent Action Items -->
+  <h2>6. Urgent Action Items</h2>
+  <div class="urgent">
+    <div class="urg-title">&#9888; 5 negative reviewers with no support ticket — immediate outreach required</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Campaign</th>
+          <th>Email</th>
+          <th>Order</th>
+          <th>Rating</th>
+          <th>Review Date</th>
+          <th>Ticket</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>invite-old</td>
+          <td>rickard@rpea.se</td>
+          <td>16670932205898</td>
+          <td class="worst">1 &#9733;</td>
+          <td>2026-05-17</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>invite-old</td>
+          <td>zhirohasan88@gmail.com</td>
+          <td>16671116067146</td>
+          <td class="worst">1 &#9733;</td>
+          <td>2026-05-04</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>invite-old</td>
+          <td>annitahenriksen@lightmail.dk</td>
+          <td>16671191793994</td>
+          <td class="worst">1 &#9733;</td>
+          <td>2026-04-22</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>invite-old</td>
+          <td>azosm83@gmail.com</td>
+          <td>16671364415818</td>
+          <td class="worst">1 &#9733;</td>
+          <td>2026-04-20</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>invite-old</td>
+          <td>ditte.thogersen@gmail.com</td>
+          <td>16671542804810</td>
+          <td class="worst">2 &#9733;</td>
+          <td>2026-04-15</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="note">All 5 urgent cases are from the invite-old campaign. brunnher@gmail.com (ticket #243239) and soegaard2110@gmail.com (ticket #242744) are being handled. invite-tp negatives both have tickets (nielsen-carsten: #231005 closed, soni: #219076 closed).</p>
+  </div>
+
+  <p class="note" style="margin-top:12px;">Note: A large volume of unattributed organic reviews (no email/order match) are present in the review table, the majority rating 1 star, covering themes of cancelled orders, refund delays, and product quality. These predate the campaigns and indicate broader operational issues. They are excluded from campaign metrics but warrant separate attention.</p>
+
+  <div class="footer">Bornecyklerne &mdash; Campaign Performance Report &mdash; Generated 2026-05-20 &mdash; Data window: All-time since launch (Apr 8&ndash;May 20, 2026)</div>
+</div>
+</body>
+</html>
