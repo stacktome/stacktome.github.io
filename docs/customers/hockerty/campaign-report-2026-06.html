@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hockerty Campaign Performance Report — May 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .stars { color: #fdcb6e; }
+
+  .group-start td { border-top: 2px solid #d8d8d8 !important; }
+  .type-pill { font-size: 10px; font-weight: 600; border-radius: 4px; padding: 1px 7px; letter-spacing: .3px; }
+  .tp-invite   { background: #e8f4fd; color: #2980b9; }
+  .tp-reminder { background: #f0f0f0; color: #636e72; }
+
+  .urgent { background: #fff5f5; border: 1.5px solid #d63031; border-radius: 10px; padding: 20px 22px; }
+  .urgent .urg-title { color: #d63031; font-weight: 700; font-size: 15px; margin-bottom: 14px; }
+  .urgent table { box-shadow: none; border: 1px solid #f5c6c6; margin-bottom: 12px; }
+  .urgent th { background: #d63031; }
+  .urgent td { background: #fff !important; }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .theme-card { background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .theme-card .icon { font-size: 24px; margin-bottom: 8px; }
+  .theme-card .theme-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .theme-card .count { font-size: 11px; color: #888; margin-bottom: 8px; }
+  .theme-card p { font-size: 12px; color: #555; margin: 0; line-height: 1.5; }
+
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-ok { display: inline-block; background: #e8f8f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #00b894; }
+  .note { font-size: 12px; color: #888; margin-top: 4px; }
+  .info-box { background: #f0f4ff; border: 1.5px solid #a0b4e8; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #2c3e6e; line-height: 1.6; }
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Hockerty &mdash; Monthly Campaign Performance Report</h1>
+  <div class="subtitle">Review invite analysis &nbsp;&bull;&nbsp; May 2026 (May 1&ndash;31) &nbsp;&bull;&nbsp; Generated 2026-06-01</div>
+
+  <!-- 1. Executive Summary -->
+  <h2>1. Executive Summary</h2>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Total Sends</div>
+      <div class="value">12,183</div>
+      <div class="sub">6,012 invites &middot; 6,171 reminders</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Attributed Reviews</div>
+      <div class="value">269</div>
+      <div class="sub">order_id matched to invite</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Overall Review Rate</div>
+      <div class="value">4.47%</div>
+      <div class="sub">reviews / invite sends (6,012)</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Avg Order Rating</div>
+      <div class="value">4.34</div>
+      <div class="sub">out of 5.00</div>
+    </div>
+  </div>
+  <div class="info-box">
+    <strong>Attribution note:</strong> 269 reviews are confirmed by order_id match to <code>ho_invites</code>. An additional 27 reviews with order_id are not suppressed but lack a matching invite record &mdash; these belong to the May 5&ndash;11 cohort whose invite files were deleted to prevent reminders reaching potentially unhappy customers. Including them gives <strong>296 attributed reviews</strong>, consistent with the Trustpilot dashboard figure of 302 (6-review gap likely from reviews with no order_id in our system). The 137 unmatched suppressed reviews (in <code>ho_preferences</code>) are correctly excluded. All per-campaign figures below use the 269 confirmed matches only.
+  </div>
+
+  <!-- 2. Campaign Performance Table -->
+  <h2>2. Campaign Performance</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th>Type</th>
+        <th>Sends</th>
+        <th>Reviews</th>
+        <th>Review Rate</th>
+        <th>Avg Rating</th>
+        <th>Range</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- invite-tp-EN-historical -->
+      <tr class="group-start"><td>invite-tp-EN-historical</td><td><span class="type-pill tp-invite">invite</span></td><td>1,271</td><td>59</td><td class="best">4.64%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.64</td><td class="neutral">2&ndash;5</td></tr>
+      <tr><td></td><td><span class="type-pill tp-reminder">reminder</span></td><td>2,025</td><td>28</td><td>1.38%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.75</td><td class="neutral">3&ndash;5</td></tr>
+      <!-- invite-tp-EN -->
+      <tr class="group-start"><td>invite-tp-EN</td><td><span class="type-pill tp-invite">invite</span></td><td>1,801</td><td>52</td><td>2.89%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.21</td><td class="worst">1&ndash;5</td></tr>
+      <tr><td></td><td><span class="type-pill tp-reminder">reminder</span></td><td>1,170</td><td>24</td><td>2.05%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> <span class="worst">3.83 &#9660;</span></td><td class="worst">1&ndash;5</td></tr>
+      <!-- invite-tp-FR-historical -->
+      <tr class="group-start"><td>invite-tp-FR-historical</td><td><span class="type-pill tp-invite">invite</span></td><td>737</td><td>42</td><td class="best">5.70%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.14</td><td class="worst">1&ndash;5</td></tr>
+      <tr><td></td><td><span class="type-pill tp-reminder">reminder</span></td><td>638</td><td>24</td><td>3.76%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.08</td><td class="worst">1&ndash;5</td></tr>
+      <!-- invite-tp-DE -->
+      <tr class="group-start"><td>invite-tp-DE</td><td><span class="type-pill tp-invite">invite</span></td><td>511</td><td>26</td><td>5.09%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.54</td><td class="worst">1&ndash;5</td></tr>
+      <tr><td></td><td><span class="type-pill tp-reminder">reminder</span></td><td>472</td><td>14</td><td>2.97%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.43</td><td class="worst">1&ndash;5</td></tr>
+      <!-- invite-tp-ES-historical -->
+      <tr class="group-start"><td>invite-tp-ES-historical</td><td><span class="type-pill tp-invite">invite</span></td><td>450</td><td>24</td><td>5.33%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.13</td><td class="worst">1&ndash;5</td></tr>
+      <tr><td></td><td><span class="type-pill tp-reminder">reminder</span></td><td>414</td><td>17</td><td>4.11%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.00</td><td class="worst">1&ndash;5</td></tr>
+      <!-- invite-tp-DE-historical -->
+      <tr class="group-start"><td>invite-tp-DE-historical</td><td><span class="type-pill tp-invite">invite</span></td><td>322</td><td>26</td><td class="best">8.07%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.46</td><td class="neutral">2&ndash;5</td></tr>
+      <tr><td></td><td><span class="type-pill tp-reminder">reminder</span></td><td>479</td><td>20</td><td>4.18%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.60</td><td class="neutral">3&ndash;5</td></tr>
+      <!-- invite-tp-FR -->
+      <tr class="group-start"><td>invite-tp-FR</td><td><span class="type-pill tp-invite">invite</span></td><td>418</td><td>11</td><td>2.63%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> <span class="worst">3.64 &#9660;</span></td><td class="worst">1&ndash;5</td></tr>
+      <tr><td></td><td><span class="type-pill tp-reminder">reminder</span></td><td>348</td><td>7</td><td>2.01%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.29</td><td class="neutral">2&ndash;5</td></tr>
+      <!-- invite-tp-IT -->
+      <tr class="group-start"><td>invite-tp-IT</td><td><span class="type-pill tp-invite">invite</span></td><td>243</td><td>16</td><td>6.58%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.44</td><td class="neutral">2&ndash;5</td></tr>
+      <tr><td></td><td><span class="type-pill tp-reminder">reminder</span></td><td>216</td><td>4</td><td>1.85%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.50</td><td class="neutral">3&ndash;5</td></tr>
+      <!-- invite-tp-IT-historical -->
+      <tr class="group-start"><td>invite-tp-IT-historical</td><td><span class="type-pill tp-invite">invite</span></td><td>168</td><td>8</td><td>4.76%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.00</td><td class="neutral">2&ndash;5</td></tr>
+      <tr><td></td><td><span class="type-pill tp-reminder">reminder</span></td><td>345</td><td>3</td><td>0.87%</td><td><span class="stars">&#9733;&#9733;&#9733;</span> <span class="worst">3.33 &#9660;</span></td><td class="worst">2&ndash;5</td></tr>
+      <!-- invite-tp-ES -->
+      <tr class="group-start"><td>invite-tp-ES</td><td><span class="type-pill tp-invite">invite</span></td><td>91</td><td>3</td><td>3.30%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.00</td><td class="neutral">2&ndash;5</td></tr>
+      <tr><td></td><td><span class="type-pill tp-reminder">reminder</span></td><td>64</td><td>2</td><td>3.13%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9734;</span> 3.50</td><td class="neutral">2&ndash;5</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Review rate per row = reviews / sends for that type. Overall review rate (KPI) = total attributed reviews / total invite sends. Reviews attributed via order_id match to full invite history.</p>
+
+  <!-- 3. Campaign Breakdown -->
+  <h2>3. Campaign Breakdown</h2>
+  <table>
+    <thead>
+      <tr><th>Campaign</th><th>Total Reviews</th><th>Negatives (&le;3)</th><th>Avg Rating</th><th>Best Invite Rate</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>invite-tp-EN-historical</td><td>87</td><td>7</td><td>4.64 / 4.75</td><td class="best">4.64%</td><td>Highest review volume; strong avg rating on both types. 7 negatives — fit/length and fabric shrinkage recurring. Reminder rate low (1.38%) vs invite (4.64%) — reminder cohort less engaged.</td></tr>
+      <tr><td>invite-tp-EN</td><td>76</td><td class="worst">10</td><td class="worst">4.21 / 3.83</td><td>2.89%</td><td>Most negatives in the month (10 rated ≤3, 6 rated 1). Fit failures dominant — multiple orders arriving oversized or undersized. Reminder avg 3.83 is the lowest across all campaigns. Requires investigation.</td></tr>
+      <tr><td>invite-tp-FR-historical</td><td>66</td><td class="worst">10</td><td>4.14 / 4.08</td><td class="best">5.70%</td><td>Highest invite rate (5.70%) but also 10 negatives — delivery failures, trouser fit issues, transparent fabric. Strong engagement but quality signal needs attention in FR-historical cohort.</td></tr>
+      <tr><td>invite-tp-DE-historical</td><td>46</td><td>4</td><td>4.46 / 4.60</td><td class="best">8.07%</td><td>Best invite review rate in the month (8.07%); strong ratings on both types. 4 negatives — fit and packaging. Most reliable campaign this month.</td></tr>
+      <tr><td>invite-tp-DE</td><td>40</td><td>2</td><td>4.54 / 4.43</td><td>5.09%</td><td>Solid across invite and reminder. 2 negatives — jacket too tight, trousers too wide. Clean month overall.</td></tr>
+      <tr><td>invite-tp-ES-historical</td><td>41</td><td>6</td><td>4.13 / 4.00</td><td>5.33%</td><td>6 negatives — 3 at rating 1 (wrong measurements, wrong fabric, collar defect). ES-historical cohort has the most severe individual complaints this month.</td></tr>
+      <tr><td>invite-tp-IT</td><td>20</td><td>4</td><td>4.44 / 4.50</td><td>6.58%</td><td>Good invite rate; 4 negatives but mostly rating 2&ndash;3 (fabric coarseness, collar fit). No rating-1 from IT invite this month.</td></tr>
+      <tr><td>invite-tp-FR</td><td>18</td><td>5</td><td class="worst">3.64 / 4.29</td><td>2.63%</td><td>Worst invite avg rating (3.64) — 2 rating-1 reviews (linen quality disaster, button falling off on first wear). Low engagement combined with high negative rate makes FR the weakest market this month.</td></tr>
+      <tr><td>invite-tp-IT-historical</td><td>11</td><td>3</td><td>4.00 / 3.33</td><td>4.76%</td><td>Reminder avg 3.33 is concerning (small sample: 3 reviews). Fabric quality complaints in IT-historical match IT invite pattern — recurring cross-campaign issue in IT market.</td></tr>
+      <tr><td>invite-tp-ES</td><td>5</td><td>1</td><td>4.00 / 3.50</td><td>3.30%</td><td>Low volume; 1 negative (fabric quality). Too small to draw strong conclusions.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 4. Negative Review Summary -->
+  <h2>4. Negative Review Summary</h2>
+  <table>
+    <thead>
+      <tr><th>Campaign</th><th>Total Neg (&le;3)</th><th>Rating 1</th><th>Rating 2</th><th>Rating 3</th><th>Key Issues</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>invite-tp-EN</td><td class="worst">10</td><td class="worst">6</td><td>1</td><td>3</td><td>Fit (too small / too large), cut/colour mismatch, manufacturing defect (pocket unsewn), plastic bag packaging, hidden delivery charge</td></tr>
+      <tr><td>invite-tp-FR-historical</td><td class="worst">10</td><td>3</td><td>3</td><td>4</td><td>Delivery failure (package returned to Barcelona), transparent fabric (no warning at order), cut changes causing 3/4 shirts unwearable, wedding suit trouser defect, trouser waist oversized</td></tr>
+      <tr><td>invite-tp-EN-historical</td><td>7</td><td>0</td><td>1</td><td>6</td><td>Shirt inconsistency across same measurements, lapel construction, fabric shrinkage (batch suspect), polo length short, tuxedo rear vent opening</td></tr>
+      <tr><td>invite-tp-ES-historical</td><td>6</td><td>3</td><td>1</td><td>2</td><td>Wrong measurements (full remake needed), wrong fabric delivered (elastic substituted), collar defect (4 shirts unusable), garment too small + shoulder/sleeve misaligned, jeans waist too large</td></tr>
+      <tr><td>invite-tp-FR</td><td>5</td><td>2</td><td>1</td><td>2</td><td>Linen quality catastrophic (thrown away on receipt), button fell off on first wear, 3 shirts measurements wrong, fabric quality disappointment, jacket cut lacking waist suppression</td></tr>
+      <tr><td>invite-tp-IT</td><td>4</td><td>0</td><td>1</td><td>3</td><td>Shirt collar too narrow + wrong colour contrast, fabric too coarse (2 reviews same complaint), hip fit too wide, collar support weak / slim fit cut too straight</td></tr>
+      <tr><td>invite-tp-DE-historical</td><td>4</td><td>0</td><td>1</td><td>3</td><td>Jacket fit/return confusion (customer walking away), jacket crumpled packaging (recurring for this customer), delivery longer than expected, sleeve length/fit inaccuracy</td></tr>
+      <tr><td>invite-tp-DE</td><td>2</td><td>1</td><td>1</td><td>0</td><td>Jacket too tight (measurements entered carefully), trousers too wide despite measuring narrower than actual circumference</td></tr>
+      <tr><td>invite-tp-IT-historical</td><td>3</td><td>0</td><td>1</td><td>2</td><td>Fabric too coarse, customs delay (item still not received), shoe tongue defect</td></tr>
+      <tr><td>invite-tp-ES</td><td>1</td><td>0</td><td>1</td><td>0</td><td>Fabric quality below expectation</td></tr>
+      <tr style="background:#f8f8f8;font-weight:600;"><td>Total</td><td>52</td><td>12</td><td>10</td><td>30</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <!-- 5. Common Complaint Themes -->
+  <h2>5. Common Complaint Themes</h2>
+  <div class="theme-grid">
+    <div class="theme-card">
+      <div class="icon">&#9986;</div>
+      <div class="theme-title">Fit &amp; Sizing — Systematic</div>
+      <div class="count">~22 of 52 negatives across all markets</div>
+      <p>Garments arriving significantly larger or smaller than entered measurements. Affects EN, FR-hist, DE, ES-hist, IT campaigns. No single market exempt — suggests measurement-to-pattern conversion issues at the production level rather than customer input errors.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#129531;</div>
+      <div class="theme-title">Fabric Quality Decline</div>
+      <div class="count">~10 negatives — FR, IT, IT-hist, ES-hist, EN-hist</div>
+      <p>Two independent IT reviewers use identical language ("tessuto grezzo" — fabric too coarse). FR market has two linen-quality disasters. EN-historical reports shirt shrinkage across a full batch. ES-historical reports elastic fabric substituted. Possible multi-supplier quality regression in May.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#128230;</div>
+      <div class="theme-title">Delivery &amp; Packaging</div>
+      <div class="count">~8 negatives — FR-hist, EN, DE-hist</div>
+      <p>Package returned to Barcelona after courier left no notification (FR-hist). Nearly 2-month delay with no proactive communication (FR-hist). Jackets arriving in plastic bags severely crumpled — recurring complaint from same DE-historical customer. Plastic bag packaging cited by EN customer as unprofessional at the price point.</p>
+    </div>
+  </div>
+
+  <!-- 6. Urgent Action Items -->
+  <h2>6. Urgent Action Items</h2>
+  <div class="urgent">
+    <div class="urg-title">&#9888;&nbsp; Untracked Rating-1 &amp; Rating-2 Cases Requiring Outreach</div>
+    <table>
+      <thead>
+        <tr><th>Customer</th><th>Campaign</th><th>Rating</th><th>Issue</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>mariusr.p.mueller@t-online.de</td>
+          <td>invite-tp-DE (order 45145126)</td>
+          <td class="worst">1</td>
+          <td>Jacket far too tight despite careful measurements</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>norval300@gmail.com</td>
+          <td>invite-tp-EN (order 47578126)</td>
+          <td class="worst">1</td>
+          <td>Suit way too big</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>joel.daniel.williams@proton.me</td>
+          <td>invite-tp-EN (order 49112826)</td>
+          <td class="worst">1</td>
+          <td>Fit, cut, colour and fabric all wrong vs. online — will not wear</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>davidsemerjian@msn.com</td>
+          <td>invite-tp-EN (order 52584926)</td>
+          <td class="worst">1</td>
+          <td>Jacket body 2&Prime; overlarge; arrived in plastic bag, severely wrinkled</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>deryksacco@gmail.com</td>
+          <td>invite-tp-EN (order 46581024)</td>
+          <td class="worst">1</td>
+          <td>Fabric misrepresented as summer-weight; front pocket manufacturing defect (not sewn shut)</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>keith.abood@xpo.com</td>
+          <td>invite-tp-EN (order 51979926)</td>
+          <td class="worst">1</td>
+          <td>Jacket 2 sizes too small — untailored; expects refund</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>josemariakaballero@gmail.com</td>
+          <td>invite-tp-ES-historical (order 12099826)</td>
+          <td class="worst">1</td>
+          <td>4 shirts with soft collars — unwearable with tie; offered only 15% discount to reorder</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>cornelioiribarren@gmail.com</td>
+          <td>invite-tp-ES-historical (order 42030726)</td>
+          <td class="worst">1</td>
+          <td>Wrong size delivered</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>arthur.delcher@gmail.com</td>
+          <td>invite-tp-FR (order 19646626)</td>
+          <td class="worst">1</td>
+          <td>Linen quality "catastrophic" — &euro;300 suit thrown away immediately on receipt</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>leboulanger.pro@gmail.com</td>
+          <td>invite-tp-FR (order 32937826)</td>
+          <td class="worst">1</td>
+          <td>Button fell off on first wear</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>mathieu.lemarie@hotmail.com</td>
+          <td>invite-tp-FR-historical (order 38829526)</td>
+          <td class="worst">1</td>
+          <td>Transparent fabric — unwearable; 2 emails sent, no reply; ready to return item</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>pfphx7vdsw@privaterelay.appleid.com</td>
+          <td>invite-tp-FR-historical (order 45595426)</td>
+          <td class="worst">1</td>
+          <td>Package returned to Barcelona; courier left no notification; 6+ weeks since order</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>murksmaus@pm.me</td>
+          <td>invite-tp-DE (order 46554826)</td>
+          <td>2</td>
+          <td>Trousers too wide + waistband too high despite measuring narrower</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>johnfbarry1961@gmail.com</td>
+          <td>invite-tp-EN (order 47381626)</td>
+          <td>2</td>
+          <td>Waist too big; material not as shown in photos; will not wear</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>mike.fresneau@outlook.fr</td>
+          <td>invite-tp-FR-historical (order 44413826)</td>
+          <td>2</td>
+          <td>Cut changed vs. prior order — 3 of 4 shirts unwearable on same measurements</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>arias_jlam@yahoo.es</td>
+          <td>invite-tp-FR-historical (order 40640226)</td>
+          <td>2</td>
+          <td>Cut quality + cheap-looking buttons</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>mademorato@yahoo.es</td>
+          <td>invite-tp-ES-historical (order 0492526)</td>
+          <td>2</td>
+          <td>Garment too small; shoulder pads protruding into sleeves; sleeves misaligned</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>sergio.drag@libero.it</td>
+          <td>invite-tp-IT-historical (order 130180225)</td>
+          <td>2</td>
+          <td>Fabric too coarse ("tessuto grezzo") — same complaint as IT invite campaign customer same week</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>avv.marcobenedetto@gmail.com</td>
+          <td>invite-tp-IT (order 46393626)</td>
+          <td>2</td>
+          <td>Collar too narrow vs. measurement; wrong contrast colour on cuffs (through-fabric bleed)</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="note">Note: the above lists all rating-1 and rating-2 attributed reviews with no support ticket. Several rating-3 cases also lack tickets; those are lower priority but worth a proactive template response. Total untracked negatives (≤3, no ticket): ~28 across the month.</p>
+    <p class="note">Note: mathieu.lemarie@hotmail.com sent 2 emails with no response before leaving the review. This is the highest-priority case — a customer actively seeking resolution who was ignored.</p>
+    <p class="note">Note: the IT-market fabric coarseness complaint appeared in both invite-tp-IT and invite-tp-IT-historical independently in the same week (May 25&ndash;31). Recommend flagging to production as a possible batch issue.</p>
+  </div>
+
+  <div class="footer">Hockerty &mdash; Monthly Campaign Performance Report &mdash; Generated 2026-06-01 &mdash; Data window: May 2026</div>
+</div>
+</body>
+</html>
