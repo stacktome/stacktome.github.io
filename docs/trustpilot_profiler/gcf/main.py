@@ -1,9 +1,69 @@
 import json
 import math
 import re
+import time
 import functions_framework
 import requests
 from datetime import datetime, timezone
+
+BB_API_KEY = 'bb_live__WuKHU7giOozwLIqvvcBROM3izw'
+BB_PROJECT = 'a1db89f2-5c97-4037-96d1-bd11cb81d026'
+BB_SESSIONS_URL = 'https://api.browserbase.com/v1/sessions'
+
+
+def _fetch_via_browserbase(url):
+    session_id = None
+    wd_id = None
+    selenium_url = None
+    try:
+        # Create BB session
+        s = requests.post(BB_SESSIONS_URL,
+            headers={'X-BB-API-Key': BB_API_KEY, 'Content-Type': 'application/json'},
+            json={'projectId': BB_PROJECT}, timeout=15)
+        s.raise_for_status()
+        session_id = s.json()['id']
+        selenium_url = s.json()['seleniumRemoteUrl']
+
+        bb_headers = {
+            'x-bb-api-key': BB_API_KEY,
+            'session-id': session_id,
+            'Content-Type': 'application/json',
+        }
+
+        # Create WebDriver session
+        wd = requests.post(f'{selenium_url}/session',
+            headers=bb_headers,
+            json={'capabilities': {'alwaysMatch': {'browserName': 'chrome'}}},
+            timeout=30)
+        wd.raise_for_status()
+        wd_id = wd.json()['value']['sessionId']
+
+        # Navigate
+        requests.post(f'{selenium_url}/session/{wd_id}/url',
+            headers=bb_headers,
+            json={'url': url}, timeout=30)
+        time.sleep(5)
+
+        # Get page source
+        src = requests.get(f'{selenium_url}/session/{wd_id}/source',
+            headers=bb_headers, timeout=30)
+        src.raise_for_status()
+        return src.json()['value']
+
+    finally:
+        if wd_id and selenium_url:
+            try:
+                requests.delete(f'{selenium_url}/session/{wd_id}',
+                    headers={'x-bb-api-key': BB_API_KEY, 'session-id': session_id},
+                    timeout=10)
+            except Exception:
+                pass
+        if session_id:
+            try:
+                requests.delete(f'{BB_SESSIONS_URL}/{session_id}',
+                    headers={'X-BB-API-Key': BB_API_KEY}, timeout=10)
+            except Exception:
+                pass
 
 
 def round_to_ten(value):
@@ -52,15 +112,18 @@ def analyze_trustpilot(request):
 
     try:
         url = f'https://www.trustpilot.com/review/{domain}?languages=all'
-        resp = requests.get('https://api.scrapfly.io/scrape', params={
-            'key': 'scp-live-5cfaeaf71469489ca7fc0af6e6902cf0',
-            'url': url,
-            'asp': 'true',
-            'render_js': 'false',
-            'tags': 'player,project:default',
-        }, timeout=30)
-        resp.raise_for_status()
-        html_content = resp.json()['result']['content']
+        html_content = _fetch_via_browserbase(url)
+
+        # # ScrapFly (commented out — out of credits)
+        # resp = requests.get('https://api.scrapfly.io/scrape', params={
+        #     'key': 'scp-live-5cfaeaf71469489ca7fc0af6e6902cf0',
+        #     'url': url,
+        #     'asp': 'true',
+        #     'render_js': 'false',
+        #     'tags': 'player,project:default',
+        # }, timeout=30)
+        # resp.raise_for_status()
+        # html_content = resp.json()['result']['content']
 
         match = re.search(
             r'<script id="__NEXT_DATA__" type="application/json">([\s\S]*?)</script>',
