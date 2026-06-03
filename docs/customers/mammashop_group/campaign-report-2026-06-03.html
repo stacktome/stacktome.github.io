@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mammashop Group Campaign Performance Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  /* Group summary */
+  .group-kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  /* Account summary grid */
+  .acct-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 8px; }
+  .acct-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow: hidden; }
+  .acct-card-header { padding: 10px 16px; font-weight: 700; font-size: 13px; color: #fff; display: flex; align-items: center; gap: 10px; }
+  .acct-mammashop { background: #6c5ce7; }
+  .acct-naturebaby { background: #00b894; }
+  .acct-loukrudt { background: #0984e3; }
+  .acct-hoppekids { background: #e17055; }
+  .acct-card-body { display: grid; grid-template-columns: repeat(4, 1fr); padding: 12px 14px; gap: 8px; }
+  .acct-kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #888; }
+  .acct-kpi .value { font-size: 20px; font-weight: 700; color: #1a1a2e; }
+  .acct-kpi .sub { font-size: 10px; color: #aaa; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 10px 12px; text-align: left; }
+  td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .stars { color: #fdcb6e; }
+  .num { text-align: right; }
+
+  /* Account section divider */
+  .acct-section { margin: 40px 0 0; }
+  .acct-section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding: 12px 16px; border-radius: 10px; color: #fff; font-size: 17px; font-weight: 700; }
+  .acct-section-header .sends-badge { font-size: 12px; font-weight: 400; background: rgba(255,255,255,0.25); border-radius: 20px; padding: 3px 12px; }
+  .bg-mammashop { background: #6c5ce7; }
+  .bg-naturebaby { background: #00b894; }
+  .bg-loukrudt { background: #0984e3; }
+  .bg-hoppekids { background: #e17055; }
+
+  /* KPI row inside an account section */
+  .acct-kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+
+  /* Review cards */
+  .campaign-block { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 12px; overflow: hidden; }
+  .camp-header { background: #1a1a2e; color: #fff; padding: 9px 14px; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 10px; }
+  .camp-header .badge { background: #6c5ce7; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
+  .camp-header .badge-warn { background: #d63031; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
+  .review-card { padding: 12px 14px; border-bottom: 1px solid #f0f0f0; }
+  .review-card:last-child { border-bottom: none; }
+  .review-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+  .rating-badge { font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 8px; }
+  .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff3e0; color: #e17055; }
+  .r3 { background: #fef9e7; color: #f39c12; }
+  .review-text { font-style: italic; color: #555; line-height: 1.6; font-size: 13px; margin-top: 4px; }
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-ok { display: inline-block; background: #e8f8f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #00b894; }
+  .tag-warn { display: inline-block; background: #ffeaea; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #d63031; }
+
+  /* Urgent */
+  .urgent { background: #fff5f5; border: 1.5px solid #d63031; border-radius: 10px; padding: 18px 20px; }
+  .urgent .urg-title { color: #d63031; font-weight: 700; font-size: 14px; margin-bottom: 12px; }
+  .urgent table { box-shadow: none; border: 1px solid #f5c6c6; margin-bottom: 0; }
+  .urgent th { background: #d63031; }
+  .urgent td { background: #fff !important; }
+  .all-clear { background: #e8f8f5; border: 1.5px solid #00b894; border-radius: 10px; padding: 16px 20px; color: #00b894; font-weight: 600; font-size: 13px; margin-bottom: 8px; }
+
+  .note { font-size: 12px; color: #888; margin-top: 4px; }
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Mammashop Group &mdash; Campaign Performance Report</h1>
+  <div class="subtitle">Review invite analysis &nbsp;&bull;&nbsp; May 11&ndash;Jun 3, 2026 &nbsp;&bull;&nbsp; Generated 2026-06-03 &nbsp;&bull;&nbsp; Accounts: mammashop &middot; naturebaby &middot; loukrudt &middot; hoppekids</div>
+
+  <!-- 1. Group Executive Summary -->
+  <h2>1. Group Executive Summary</h2>
+  <div class="group-kpi-grid">
+    <div class="kpi">
+      <div class="label">Total Sends</div>
+      <div class="value">12,345</div>
+      <div class="sub">8,358 invites &middot; 3,987 reminders</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Reviews Attributed</div>
+      <div class="value">47</div>
+      <div class="sub">across all 4 accounts</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Overall Review Rate</div>
+      <div class="value">0.56%</div>
+      <div class="sub">reviews / invite sends</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Avg Order Rating</div>
+      <div class="value">4.61</div>
+      <div class="sub">weighted across all accounts</div>
+    </div>
+  </div>
+
+  <!-- Per-account summary cards -->
+  <div class="acct-grid">
+    <div class="acct-card">
+      <div class="acct-card-header acct-mammashop">mammashop</div>
+      <div class="acct-card-body">
+        <div class="acct-kpi"><div class="label">Sends</div><div class="value">6,912</div><div class="sub">4,378 inv &middot; 2,534 rem</div></div>
+        <div class="acct-kpi"><div class="label">Reviews</div><div class="value">29</div></div>
+        <div class="acct-kpi"><div class="label">Rate</div><div class="value">0.66%</div></div>
+        <div class="acct-kpi"><div class="label">Avg</div><div class="value">4.72</div></div>
+      </div>
+    </div>
+    <div class="acct-card">
+      <div class="acct-card-header acct-naturebaby">naturebaby</div>
+      <div class="acct-card-body">
+        <div class="acct-kpi"><div class="label">Sends</div><div class="value">2,428</div><div class="sub">1,784 inv &middot; 644 rem</div></div>
+        <div class="acct-kpi"><div class="label">Reviews</div><div class="value">3</div></div>
+        <div class="acct-kpi"><div class="label">Rate</div><div class="value">0.17%</div></div>
+        <div class="acct-kpi"><div class="label">Avg</div><div class="value">3.67</div></div>
+      </div>
+    </div>
+    <div class="acct-card">
+      <div class="acct-card-header acct-loukrudt">loukrudt</div>
+      <div class="acct-card-body">
+        <div class="acct-kpi"><div class="label">Sends</div><div class="value">1,809</div><div class="sub">1,467 inv &middot; 342 rem</div></div>
+        <div class="acct-kpi"><div class="label">Reviews</div><div class="value">6</div></div>
+        <div class="acct-kpi"><div class="label">Rate</div><div class="value">0.41%</div></div>
+        <div class="acct-kpi"><div class="label">Avg</div><div class="value">5.0</div></div>
+      </div>
+    </div>
+    <div class="acct-card">
+      <div class="acct-card-header acct-hoppekids">hoppekids</div>
+      <div class="acct-card-body">
+        <div class="acct-kpi"><div class="label">Sends</div><div class="value">1,196</div><div class="sub">729 inv &middot; 467 rem</div></div>
+        <div class="acct-kpi"><div class="label">Reviews</div><div class="value">9</div></div>
+        <div class="acct-kpi"><div class="label">Rate</div><div class="value">1.23%</div></div>
+        <div class="acct-kpi"><div class="label">Avg</div><div class="value">4.33</div></div>
+      </div>
+    </div>
+  </div>
+  <p class="note">Review rate = reviews attributed / invite sends only (reminders excluded from denominator). Attribution via full invite history; a review submitted this period is attributed to the campaign that invited that order, regardless of send date. Test-mode campaigns and unattributed organic reviews excluded from counts.</p>
+
+  <!-- ============================================================ -->
+  <!-- MAMMASHOP -->
+  <!-- ============================================================ -->
+  <div class="acct-section">
+    <div class="acct-section-header bg-mammashop">
+      mammashop
+      <span class="sends-badge">6,912 sends &middot; 29 reviews &middot; 0.66% rate &middot; 4.72 avg</span>
+    </div>
+
+    <h3>Campaign Performance</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Campaign</th>
+          <th class="num">Invites</th>
+          <th class="num">Reminders</th>
+          <th class="num">Total Sends</th>
+          <th class="num">Reviews</th>
+          <th class="num">Review Rate</th>
+          <th>Avg Rating</th>
+          <th>Range</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>invite-recent-dk</td><td class="num">2,667</td><td class="num">1,262</td><td class="num">3,929</td><td class="num">10</td><td class="num">0.37%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.90</td><td class="neutral">4&ndash;5</td></tr>
+        <tr><td>invite-recent-se</td><td class="num">603</td><td class="num">442</td><td class="num">1,045</td><td class="num">3</td><td class="num">0.50%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.33</td><td class="neutral">4&ndash;5</td></tr>
+        <tr><td>invite-recent-fr</td><td class="num">535</td><td class="num">374</td><td class="num">909</td><td class="num">2</td><td class="num">0.37%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.50</td><td class="neutral">4&ndash;5</td></tr>
+        <tr><td>invite-recent-de</td><td class="num">385</td><td class="num">302</td><td class="num">687</td><td class="num best">14</td><td class="num best">3.64%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.93</td><td class="neutral">4&ndash;5</td></tr>
+        <tr><td>invite-recent-nl</td><td class="num">180</td><td class="num">150</td><td class="num">330</td><td class="num">2</td><td class="num">1.11%</td><td><span class="stars">&#9733;&#9733;&#9733;</span> 3.00</td><td class="worst">1&ndash;5</td></tr>
+        <tr><td>positive-tickets</td><td class="num">8</td><td class="num">4</td><td class="num">12</td><td class="num neutral">0</td><td class="num neutral">0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
+      </tbody>
+    </table>
+    <p class="note">invite-recent-de is the standout performer at 3.64% rate (highest in the group). invite-recent-nl has the widest rating range (1&ndash;5) — one broken-product complaint drags the avg to 3.00. invite-recent-dk dominates by volume (3,929 sends) with all reviews 4&ndash;5 stars.</p>
+
+    <h3>Negative Reviews (rating &le; 3)</h3>
+
+    <div class="campaign-block">
+      <div class="camp-header">unattributed <span class="badge-warn">6 negatives</span></div>
+
+      <div class="review-card">
+        <div class="review-meta">
+          <span class="rating-badge r1">Rating 1</span>
+          <span class="tag">Order: 334413</span>
+          <span class="tag-warn">No ticket data</span>
+          <span style="font-size:11px;color:#888;">2026-06-01</span>
+        </div>
+        <strong style="font-size:12px;">Jeg bestilte et dukke cykelsæde som gave &mdash; return policy dispute</strong>
+        <div class="review-text">Jeg bestilte et dukke cykelsæde som gave, men da modtageren allerede havde modtaget et sådan, måtte jeg sende varen retur. Jeg skrev til Mammashop, at jeg ønskede at anvende deres udvidede returret (som de beskriver i deres returpolitik) og sende varen retur. Jeg fik et svar fra en medarbejder om, at sådan en returret fandtes ikke. Jeg sendte en mail tilbage med uddrag fra deres egen returpolitik der beskriver den udvidede returret, som jeg refererede til. Jeg fik et svar fra en chatbot der bekræftede, at jeg ville få returneret både beløbet for den bestilte vare samt leveringsomkostningerne. [...] Der mangler dog fortsat 48 kr. i og med, at jeg gav 152,96 kr. for den samlede levering [...] Jeg skriver dette tilbage, men har ikke modtaget et svar. Det er ikke til at træffe dem på telefon og de leverer en dårlig og mangelfuld kundeservice.</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-meta">
+          <span class="rating-badge r1">Rating 1</span>
+          <span class="tag-warn">No ticket data</span>
+          <span style="font-size:11px;color:#888;">2026-05-20</span>
+        </div>
+        <strong style="font-size:12px;">Elendig kundeservice og ingen løsning på forkert levering</strong>
+        <div class="review-text">Jeg bestilte en leander højstol med pude, bøjle og bord til 3500kr. Bordet blev leveret i forkert farve så jeg kontaktede dem. [...] De havde ikke den rigtige farve på lager [...] tilbød en refusion der ikke engang tillod mig at købe bordet et andet sted [...] Da jeg skrev at stolen naturligvis var samlet inden jeg opdagede fejlen [...] så stoppede de blot med at svare og ikke engang den tilbudte kompensation er modtaget. Mærkeligt at blive mødt med så ubehjælpelig kundeservice i 2026. [Update: ville godtage løsning men processen gjort unødigt besværlig.]</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-meta">
+          <span class="rating-badge r1">Rating 1</span>
+          <span class="tag-warn">No ticket data</span>
+          <span style="font-size:11px;color:#888;">2026-06-01</span>
+        </div>
+        <strong style="font-size:12px;">Virkelig dårlig kundeservice &mdash; defective food container, multiple ignored mails</strong>
+        <div class="review-text">Jeg bestilte nogle madkasser, hvor den ene lukkemekanisme ikke virker [...] Dette skriver jeg til dem i en mail [...] Den 1. Juni får jeg en mail hvor de henviser til mailen fra den 25. Om at de skal bruge en video. Jeg skriver tilbage at jeg har sendt den i en mail den 27. Men vedhæfter den endnu engang. Herefter får jeg en mail om at de ikke lægger vare til side [...] Et svar som intet har med min reklamation at gøre [...] Virkelig elendig kundeservice, og ærgeligt når det nu skulle have været en fødselsdagsgave til min søn.</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-meta">
+          <span class="rating-badge r1">Rating 1</span>
+          <span class="tag">Order: 8428349718862</span>
+          <span class="tag">j.a.samarrai@gmail.com</span>
+          <span class="tag-warn">No ticket data</span>
+          <span style="font-size:11px;color:#888;">2026-05-14</span>
+        </div>
+        <strong style="font-size:12px;">Mega lange levertijd &mdash; no order tracking</strong>
+        <div class="review-text">Mega lange levertijd? Ik zie nergens ook hoever het is en waarom het zo lang duurt.</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-meta">
+          <span class="rating-badge r1">Rating 1</span>
+          <span class="tag-warn">No ticket data</span>
+          <span style="font-size:11px;color:#888;">2026-05-13</span>
+        </div>
+        <strong style="font-size:12px;">Mistænkelig prisadfærd &mdash; price changed during checkout</strong>
+        <div class="review-text">Jeg oplevede noget, der virkede decideret mærkeligt under mit besøg på hjemmesiden. To gange ændrede prisen sig på et produkt, jeg havde lagt i kurven. Anden gang skete det, mens jeg var i gang med at indtaste mine betalingsoplysninger for at gennemføre købet. Det efterlod mig med en meget dårlig fornemmelse af butikkens troværdighed. Jeg valgte derfor at forlade siden og i stedet købe produkterne et andet sted.</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-meta">
+          <span class="rating-badge r3">Rating 3</span>
+          <span class="tag-warn">No ticket data</span>
+          <span style="font-size:11px;color:#888;">2026-06-03</span>
+        </div>
+        <strong style="font-size:12px;">Product smaller than expected</strong>
+        <div class="review-text">Tyckte burkarna såg väldigt stora ut på bilderna men dom var väldigt små vissa. Men annars var frakttiden helt ok.</div>
+      </div>
+    </div>
+
+    <div class="campaign-block">
+      <div class="camp-header">invite-recent-nl <span class="badge-warn">1 negative</span></div>
+      <div class="review-card">
+        <div class="review-meta">
+          <span class="rating-badge r1">Rating 1</span>
+          <span class="tag">Order: 8409284673870</span>
+          <span class="tag">eefjehoeks@gmail.com</span>
+          <span class="tag-warn">No ticket data</span>
+          <span style="font-size:11px;color:#888;">2026-05-20</span>
+        </div>
+        <strong style="font-size:12px;">Broken product delivered, no response</strong>
+        <div class="review-text">Ik heb nog steeds geen reactie ontvangen over het product wat stuk geleverd is!!!</div>
+      </div>
+    </div>
+
+    <h3>Urgent Action Items</h3>
+    <div class="urgent">
+      <div class="urg-title">&#9888; 6 rating-1 reviews &mdash; no ticket data available for mammashop_group</div>
+      <table>
+        <thead>
+          <tr><th>Order ID</th><th>Email</th><th>Rating</th><th>Campaign</th><th>Issue</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>8409284673870</td><td>eefjehoeks@gmail.com</td><td class="worst">1</td><td>invite-recent-nl</td><td>Broken product, no response</td><td>2026-05-20</td></tr>
+          <tr><td>334413</td><td>&mdash;</td><td class="worst">1</td><td>unattributed</td><td>Return policy dispute, 48 DKK missing</td><td>2026-06-01</td></tr>
+          <tr><td>&mdash;</td><td>&mdash;</td><td class="worst">1</td><td>unattributed</td><td>Wrong color high chair, no resolution</td><td>2026-05-20</td></tr>
+          <tr><td>&mdash;</td><td>&mdash;</td><td class="worst">1</td><td>unattributed</td><td>Defective food container, multiple ignored mails</td><td>2026-06-01</td></tr>
+          <tr><td>8428349718862</td><td>j.a.samarrai@gmail.com</td><td class="worst">1</td><td>unattributed</td><td>No delivery tracking, long wait</td><td>2026-05-14</td></tr>
+          <tr><td>&mdash;</td><td>&mdash;</td><td class="worst">1</td><td>unattributed</td><td>Price changed twice during checkout</td><td>2026-05-13</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- NATUREBABY -->
+  <!-- ============================================================ -->
+  <div class="acct-section">
+    <div class="acct-section-header bg-naturebaby">
+      naturebaby
+      <span class="sends-badge">2,428 sends &middot; 3 reviews &middot; 0.17% rate &middot; 3.67 avg</span>
+    </div>
+
+    <h3>Campaign Performance</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Campaign</th>
+          <th class="num">Invites</th>
+          <th class="num">Reminders</th>
+          <th class="num">Total Sends</th>
+          <th class="num">Reviews</th>
+          <th class="num">Review Rate</th>
+          <th>Avg Rating</th>
+          <th>Range</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>invite-recent-dk</td><td class="num">1,459</td><td class="num">422</td><td class="num">1,881</td><td class="num neutral">0</td><td class="num neutral">0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
+        <tr><td>invite-recent-se</td><td class="num">130</td><td class="num">95</td><td class="num">225</td><td class="num best">2</td><td class="num best">1.54%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td><td class="neutral">5&ndash;5</td></tr>
+        <tr><td>invite-recent-de</td><td class="num">105</td><td class="num">80</td><td class="num">185</td><td class="num">1</td><td class="num">0.95%</td><td><span class="stars">&#9733;</span> 1.00</td><td class="worst">1&ndash;1</td></tr>
+        <tr><td>invite-recent-fr</td><td class="num">85</td><td class="num">45</td><td class="num">130</td><td class="num neutral">0</td><td class="num neutral">0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
+        <tr><td>positive-tickets</td><td class="num">5</td><td class="num">2</td><td class="num">7</td><td class="num neutral">0</td><td class="num neutral">0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
+      </tbody>
+    </table>
+    <p class="note">invite-recent-dk is the largest campaign (1,881 sends) with zero reviews this period &mdash; low conversion warrants review. The one DE review is a rating-1 (order not received). invite-recent-se performed best at 1.54% / 5.0 avg with tiny sample.</p>
+
+    <h3>Negative Reviews (rating &le; 3)</h3>
+    <div class="campaign-block">
+      <div class="camp-header">invite-recent-de <span class="badge-warn">1 negative</span></div>
+      <div class="review-card">
+        <div class="review-meta">
+          <span class="rating-badge r1">Rating 1</span>
+          <span class="tag">Order: 13020867035519</span>
+          <span class="tag">moni.ritti@gmx.de</span>
+          <span class="tag-warn">No ticket data</span>
+          <span style="font-size:11px;color:#888;">2026-05-27</span>
+        </div>
+        <strong style="font-size:12px;">Order not received</strong>
+        <div class="review-text">Ich habe meine Bestellung nicht erhalten.</div>
+      </div>
+    </div>
+
+    <h3>Urgent Action Items</h3>
+    <div class="urgent">
+      <div class="urg-title">&#9888; 1 rating-1 review &mdash; no ticket data available for mammashop_group</div>
+      <table>
+        <thead>
+          <tr><th>Order ID</th><th>Email</th><th>Rating</th><th>Campaign</th><th>Issue</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>13020867035519</td><td>moni.ritti@gmx.de</td><td class="worst">1</td><td>invite-recent-de</td><td>Order not received</td><td>2026-05-27</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- LOUKRUDT -->
+  <!-- ============================================================ -->
+  <div class="acct-section">
+    <div class="acct-section-header bg-loukrudt">
+      loukrudt
+      <span class="sends-badge">1,809 sends &middot; 6 reviews &middot; 0.41% rate &middot; 5.00 avg</span>
+    </div>
+
+    <h3>Campaign Performance</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Campaign</th>
+          <th class="num">Invites</th>
+          <th class="num">Reminders</th>
+          <th class="num">Total Sends</th>
+          <th class="num">Reviews</th>
+          <th class="num">Review Rate</th>
+          <th>Avg Rating</th>
+          <th>Range</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>invite-recent</td><td class="num">1,466</td><td class="num">342</td><td class="num">1,808</td><td class="num">6</td><td class="num">0.41%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td><td class="neutral">5&ndash;5</td></tr>
+        <tr><td>positive-tickets</td><td class="num">1</td><td class="num">0</td><td class="num">1</td><td class="num neutral">0</td><td class="num neutral">0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
+      </tbody>
+    </table>
+    <p class="note">All 6 attributed reviews scored 5 stars &mdash; strong signal for a single-campaign account. All 3 negative reviews in this period are unattributed organics (no order_id matched to an invite), which indicates customers who found TrustPilot independently rather than via an invite.</p>
+
+    <h3>Negative Reviews (rating &le; 3)</h3>
+    <div class="campaign-block">
+      <div class="camp-header">unattributed (organic) <span class="badge-warn">3 negatives</span></div>
+
+      <div class="review-card">
+        <div class="review-meta">
+          <span class="rating-badge r1">Rating 1</span>
+          <span class="tag-warn">No ticket data</span>
+          <span style="font-size:11px;color:#888;">2026-05-11</span>
+        </div>
+        <strong style="font-size:12px;">Rigtig dårlig kundeservice &mdash; wrong item, no resolution</strong>
+        <div class="review-text">Rigtig dårlig kundeservice. Jeg modtog en forkert vare, men de vil ikke rette op på deres fejl, og sende mig det jeg har betalt for.</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-meta">
+          <span class="rating-badge r1">Rating 1</span>
+          <span class="tag-warn">No ticket data</span>
+          <span style="font-size:11px;color:#888;">2026-05-11</span>
+        </div>
+        <strong style="font-size:12px;">Ualmindelig dårlig kundeservice &mdash; sharp edges on steel product</strong>
+        <div class="review-text">Ualmindelig dårlig kundeservice, hvor tonen ikke er neutral eller positiv. Jeg reklamerer over en isterningbakke i rustfri stål. Som jeg nævner i min mail til dem er idéen god, men produktet virker ikke i praksis og er decideret farlig grundet meget skarpe kanter. Deres modsvar var blandt andet "Bemærk venligst også, at det er helt normalt, at dette produkt har skarpe kanter." I min optik bør "helt normalt" og "skarpe kanter" absolut ikke indgå i samme sætning når det vedrører et produkt som dette.</div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-meta">
+          <span class="rating-badge r2">Rating 2</span>
+          <span class="tag-warn">No ticket data</span>
+          <span style="font-size:11px;color:#888;">2026-05-28</span>
+        </div>
+        <strong style="font-size:12px;">Ubeskrivelig dårlig service &mdash; AI email responses, broken drinkware</strong>
+        <div class="review-text">Ubeskrivelig dårlig service… bruger AI til at besvare deres mails, hvilket betyder at den mail man sender ikke bliver læst ordentligt igennem og kommer helt ud af kontekst med AI… hold jer væk fra firmaerne der bruger AI til deres mails. Havde købt 2 drikkedunke og den ene var super fin, kontra den anden hvor håndtaget bare drejer rundt og rundt [...] Vil bare have den ombyttet, så vores datter har fuld funktion af den… Så dårlig service at de ikke møder kunden.</div>
+      </div>
+    </div>
+
+    <h3>Urgent Action Items</h3>
+    <div class="urgent">
+      <div class="urg-title">&#9888; 3 unattributed negative reviews (2&times; rating 1, 1&times; rating 2) &mdash; no ticket data available</div>
+      <table>
+        <thead>
+          <tr><th>Order ID</th><th>Rating</th><th>Issue</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>&mdash;</td><td class="worst">1</td><td>Wrong item delivered, refused to exchange</td><td>2026-05-11</td></tr>
+          <tr><td>&mdash;</td><td class="worst">1</td><td>Sharp edges on steel ice tray — potential safety issue</td><td>2026-05-11</td></tr>
+          <tr><td>&mdash;</td><td class="worst">2</td><td>AI email responses, broken drinkware, no exchange offered</td><td>2026-05-28</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- HOPPEKIDS -->
+  <!-- ============================================================ -->
+  <div class="acct-section">
+    <div class="acct-section-header bg-hoppekids">
+      hoppekids
+      <span class="sends-badge">1,196 sends &middot; 9 reviews &middot; 1.23% rate &middot; 4.33 avg</span>
+    </div>
+
+    <h3>Campaign Performance</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Campaign</th>
+          <th class="num">Invites</th>
+          <th class="num">Reminders</th>
+          <th class="num">Total Sends</th>
+          <th class="num">Reviews</th>
+          <th class="num">Review Rate</th>
+          <th>Avg Rating</th>
+          <th>Range</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>invite-recent-dk</td><td class="num">257</td><td class="num">166</td><td class="num">423</td><td class="num">2</td><td class="num">0.78%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td><td class="neutral">5&ndash;5</td></tr>
+        <tr><td>invite-recent-en</td><td class="num">246</td><td class="num">130</td><td class="num">376</td><td class="num">1</td><td class="num">0.41%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td><td class="neutral">5&ndash;5</td></tr>
+        <tr><td>invite-recent-de</td><td class="num">108</td><td class="num">83</td><td class="num">191</td><td class="num">2</td><td class="num">1.85%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.50</td><td class="neutral">4&ndash;5</td></tr>
+        <tr><td>invite-recent-no</td><td class="num">57</td><td class="num">52</td><td class="num">109</td><td class="num">2</td><td class="num">3.51%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.50</td><td class="neutral">4&ndash;5</td></tr>
+        <tr><td>invite-recent-se</td><td class="num">57</td><td class="num">33</td><td class="num">90</td><td class="num">3</td><td class="num best">5.26%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 3.67</td><td class="worst">1&ndash;5</td></tr>
+        <tr><td>positive-tickets</td><td class="num">4</td><td class="num">3</td><td class="num">7</td><td class="num neutral">0</td><td class="num neutral">0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
+      </tbody>
+    </table>
+    <p class="note">hoppekids has the highest group review rate at 1.23%. invite-recent-se leads on rate (5.26%) but drags avg to 3.67 due to a rating-1 complaint about product quality and returns. invite-recent-no shows solid 3.51% with clean 4.5 avg.</p>
+
+    <h3>Negative Reviews (rating &le; 3)</h3>
+    <div class="campaign-block">
+      <div class="camp-header">unattributed <span class="badge-warn">1 negative</span></div>
+      <div class="review-card">
+        <div class="review-meta">
+          <span class="rating-badge r1">Rating 1</span>
+          <span class="tag-warn">No ticket data</span>
+          <span style="font-size:11px;color:#888;">2026-05-22</span>
+        </div>
+        <strong style="font-size:12px;">Vi ventede 1 måned på en seng fyldt med ridser &mdash; damaged product, delivery delay</strong>
+        <div class="review-text">Åhh, jeg ville ønske jeg ikke kun skulle give 1 stjerne, men dette firma fortjener virkelig ikke flere stjerner, desværre. Jeg bestilte en højseng, og endte med at vente 1 måned før alle pakkerne kom. Først er fragtfirmaet skyld i, at pakken ikke kunne komme frem. [...] Da vi endelig modtager alle pakkerne, er sengen virkelig ridset. Det er en dyr seng, og det er bare ikke i orden! Dertil skal det nævnes, at 3 af pakkerne stod der et andet navn og adresse på, og det er tydeligt, at vi har fået en pakke som har været ude hos en tidligere kunde, som har fortrudt købet. [...] Jeg vil aldrig handle her igen.</div>
+      </div>
+    </div>
+
+    <div class="campaign-block">
+      <div class="camp-header">invite-recent-se <span class="badge-warn">1 negative</span></div>
+      <div class="review-card">
+        <div class="review-meta">
+          <span class="rating-badge r1">Rating 1</span>
+          <span class="tag">Order: 12956405072246</span>
+          <span class="tag">susannetisell@gmail.com</span>
+          <span class="tag-warn">No ticket data</span>
+          <span style="font-size:11px;color:#888;">2026-05-28</span>
+        </div>
+        <strong style="font-size:12px;">Dålig kvalitet på produkten &mdash; poor quality, difficult return</strong>
+        <div class="review-text">Dålig kvalitet på produkten. Svårt att returnera och gick inte att göra återköp utan att betala en viss del trots att det bara gått en vecka. Sämre kvalitet med sämre servis än vad man kan förvänta sig av en dyr produkt.</div>
+      </div>
+    </div>
+
+    <h3>Urgent Action Items</h3>
+    <div class="urgent">
+      <div class="urg-title">&#9888; 2 rating-1 reviews &mdash; no ticket data available for mammashop_group</div>
+      <table>
+        <thead>
+          <tr><th>Order ID</th><th>Email</th><th>Rating</th><th>Campaign</th><th>Issue</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>12956405072246</td><td>susannetisell@gmail.com</td><td class="worst">1</td><td>invite-recent-se</td><td>Poor product quality, difficult returns process</td><td>2026-05-28</td></tr>
+          <tr><td>&mdash;</td><td>&mdash;</td><td class="worst">1</td><td>unattributed</td><td>Damaged high-bed after 1-month wait, 3 packages with wrong recipient address</td><td>2026-05-22</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">Mammashop Group &mdash; Campaign Performance Report &mdash; Generated 2026-06-03 &mdash; Data window: May 11&ndash;Jun 3, 2026 &mdash; Notebook: mammashop_group_data_clone (2MT796UKS)</div>
+</div>
+</body>
+</html>
