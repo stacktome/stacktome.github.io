@@ -267,6 +267,7 @@
       reference,
       email,
       name,
+      staging:   true,
       ...(locale  && { locale }),
       ...(altHtml && { altHtml }),
     }));
@@ -274,13 +275,19 @@
     document.body.appendChild(s);
 
     const start = Date.now();
+    const placeholder = document.getElementById('stacktome-widget-tp-review');
     const poll = setInterval(() => {
-      const widget = document.querySelector('trustbox-verified-review-collector');
+      const widget = placeholder.querySelector('trustbox-verified-review-collector');
+      const errorEl = placeholder.querySelector('[style*="color:red"]');
       const elapsed = Date.now() - start;
       if (widget) {
         clearInterval(poll);
         completeProgress(true);
         setStatus('');
+      } else if (errorEl) {
+        clearInterval(poll);
+        completeProgress(false);
+        setStatus(errorEl.textContent.replace('[ST TP Widget] Error: API error ', 'Error ').trim());
       } else if (elapsed > 8000) {
         clearInterval(poll);
         completeProgress(false);
