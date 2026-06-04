@@ -80,6 +80,10 @@
     Prefilter gate
     <span id="prefilter-status"></span>
   </label>
+  <label class="toggle-row">
+    <input type="checkbox" id="staging-toggle" checked>
+    Staging
+  </label>
   <button class="btn-clear" id="btn-clear-gate">Clear gate choice</button>
 </div>
 
@@ -126,6 +130,7 @@
     const locale    = document.getElementById('locale').value.trim();
     const altHtml   = document.getElementById('altHtml').value.trim();
     const prefilter = document.getElementById('prefilter-toggle').checked;
+    const staging   = document.getElementById('staging-toggle').checked;
     const widgetId  = 'tp-review';
 
     const params = {
@@ -135,6 +140,7 @@
       reference: '{{ORDER_ID}}',
       email:     '{{CUSTOMER_EMAIL}}',
       name:      '{{CUSTOMER_NAME}}',
+      staging,
     };
     if (locale)   params.locale   = locale;
     if (prefilter) params.prefilter = true;
@@ -154,6 +160,7 @@
   document.getElementById('locale').addEventListener('input', updateSnippet);
   document.getElementById('altHtml').addEventListener('input', updateSnippet);
   document.getElementById('prefilter-toggle').addEventListener('change', updateSnippet);
+  document.getElementById('staging-toggle').addEventListener('change', updateSnippet);
 
   document.getElementById('btn-copy').addEventListener('click', () => {
     navigator.clipboard.writeText(document.getElementById('snippet').textContent);
@@ -267,7 +274,7 @@
       reference,
       email,
       name,
-      staging:   true,
+      staging: document.getElementById('staging-toggle').checked,
       ...(locale  && { locale }),
       ...(altHtml && { altHtml }),
     }));
