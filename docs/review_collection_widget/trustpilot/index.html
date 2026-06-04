@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TP Embed Widget — Test</title>
+  <style>
+    body { font-family: sans-serif; max-width: 720px; margin: 40px auto; padding: 0 20px; color: #222; }
+    h2 { margin-bottom: 4px; }
+    .subtitle { color: #666; font-size: 13px; margin-bottom: 24px; }
+    .subtitle code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; font-size: 12px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .full { grid-column: 1 / -1; }
+    label { display: block; font-size: 12px; color: #555; margin-bottom: 4px; font-weight: 600; letter-spacing: .3px; }
+    input { width: 100%; padding: 8px 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+    input:focus { outline: none; border-color: #00b67a; }
+    .actions { margin: 18px 0 24px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    button { padding: 10px 20px; font-size: 14px; cursor: pointer; border: none; border-radius: 5px; }
+    .btn-rand  { background: #f0f0f0; color: #333; }
+    .btn-rand:hover { background: #e2e2e2; }
+    .btn-render { background: #00b67a; color: #fff; font-weight: 600; }
+    .btn-render:hover { background: #009c69; }
+    .btn-clear { background: none; border: 1px solid #ccc; color: #666; font-size: 12px; padding: 6px 12px; }
+    .btn-clear:hover { background: #f5f5f5; }
+    .toggle-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #444; cursor: pointer; user-select: none; }
+    .toggle-row input[type=checkbox] { width: auto; accent-color: #00b67a; cursor: pointer; }
+    #prefilter-status { font-size: 11px; color: #999; margin-left: 4px; }
+    hr { margin: 0 0 24px; border: none; border-top: 1px solid #eee; }
+    #progress-wrap { height: 3px; background: #eee; border-radius: 2px; margin-bottom: 16px; display: none; }
+    #progress-bar  { height: 100%; width: 0; background: #00b67a; border-radius: 2px; transition: width .4s ease; }
+    #widget-status { font-size: 12px; color: #888; margin-bottom: 8px; min-height: 18px; }
+    .snippet-wrap { margin-bottom: 28px; }
+    .snippet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .snippet-header span { font-size: 12px; font-weight: 600; color: #555; letter-spacing: .3px; }
+    .btn-copy { background: none; border: 1px solid #ccc; color: #555; font-size: 12px; padding: 4px 10px; border-radius: 4px; }
+    .btn-copy:hover { background: #f5f5f5; }
+    pre#snippet { margin: 0; padding: 14px; background: #f8f8f8; border: 1px solid #e4e4e4; border-radius: 5px;
+      font-size: 12px; line-height: 1.6; white-space: pre; overflow-x: auto; color: #333; }
+  </style>
+</head>
+<body>
+
+<h2>Trustpilot In-App Review Collector — Embed Test</h2>
+<p class="subtitle">
+  Mode A (embed) — customer data passed directly, encrypted server-side.<br>
+  Calls <code>https://services.stacktome.com/api/publish/v1/collect/widget/trustpilot/render</code>
+</p>
+
+<div class="form-grid">
+  <div class="full">
+    <label>Auth Token</label>
+    <input id="authToken" type="text" placeholder="Bearer token">
+  </div>
+  <div>
+    <label>Name</label>
+    <input id="name" type="text">
+  </div>
+  <div>
+    <label>Email</label>
+    <input id="email" type="email">
+  </div>
+  <div class="full">
+    <label>Reference (order ID — must be unique per BUID)</label>
+    <input id="reference" type="text">
+  </div>
+  <div>
+    <label>Locale <span style="font-weight:400;color:#999">(optional — overrides config.locale)</span></label>
+    <input id="locale" type="text" placeholder="e.g. en-US, de-DE, fr-FR">
+  </div>
+  <div class="full">
+    <label>Alt HTML <span style="font-weight:400;color:#999">(shown on thumbs-down)</span></label>
+    <textarea id="altHtml" rows="3" style="width:100%;padding:8px 10px;font-size:13px;font-family:monospace;border:1px solid #ccc;border-radius:4px;box-sizing:border-box;resize:vertical"><p>Thanks for your feedback. <a href="/support">Contact us</a></p></textarea>
+  </div>
+</div>
+
+<div class="actions">
+  <button class="btn-rand" id="btn-rand">Randomise</button>
+  <button class="btn-render" id="btn-render">Render Widget</button>
+  <label class="toggle-row">
+    <input type="checkbox" id="prefilter-toggle">
+    Prefilter gate
+    <span id="prefilter-status"></span>
+  </label>
+  <button class="btn-clear" id="btn-clear-gate">Clear gate choice</button>
+</div>
+
+<div class="snippet-wrap">
+  <div class="snippet-header">
+    <span>Embed snippet</span>
+    <button class="btn-copy" id="btn-copy">Copy</button>
+  </div>
+  <pre id="snippet"></pre>
+</div>
+
+<hr>
+
+<div id="progress-wrap"><div id="progress-bar"></div></div>
+<div id="widget-status"></div>
+<div id="stacktome-widget-tp-review"></div>
+
+<script>
+  const NAMES   = ['James Brown', 'Sofia Patel', 'Lucas Meyer', 'Emma Johansson', 'Carlos Rivera', 'Yuki Tanaka', 'Amara Osei', 'Lena Müller'];
+  const HANDLES = ['james.brown', 'sofia.patel', 'lucas.meyer', 'emma.j', 'carlos.r', 'yuki.t', 'amara.osei', 'lena.m'];
+  const DOMAINS = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com'];
+
+  const BASE_URL   = 'https://services.stacktome.com';
+  const CONFIG_URL = `${BASE_URL}/api/publish/v1/collect/widget/trustpilot/config`;
+  const PREFILTER_KEY = 'st-tp-prefilter-tp-review';
+
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  function randRef() { return 'ORD-' + Math.floor(10000 + Math.random() * 90000); }
+
+  function randomise() {
+    const i = Math.floor(Math.random() * NAMES.length);
+    document.getElementById('name').value      = NAMES[i];
+    document.getElementById('email').value     = HANDLES[i] + '+' + Date.now().toString(36) + '@' + pick(DOMAINS);
+    document.getElementById('reference').value = randRef();
+  }
+
+  randomise();
+  updateSnippet();
+
+  function updateSnippet() {
+    const locale    = document.getElementById('locale').value.trim();
+    const altHtml   = document.getElementById('altHtml').value.trim();
+    const prefilter = document.getElementById('prefilter-toggle').checked;
+    const widgetId  = 'tp-review';
+
+    const params = {
+      apiKey:    '{{ORG_API_KEY}}',
+      widgetId,
+      mode:      'embed',
+      reference: '{{ORDER_ID}}',
+      email:     '{{CUSTOMER_EMAIL}}',
+      name:      '{{CUSTOMER_NAME}}',
+    };
+    if (locale)   params.locale   = locale;
+    if (prefilter) params.prefilter = true;
+    if (altHtml)  params.altHtml  = altHtml;
+
+    const paramsJson = JSON.stringify(params, null, 4).replace(/^/gm, '    ');
+    document.getElementById('snippet').textContent =
+`<!-- placeholder -->
+<div id="stacktome-widget-${widgetId}"></div>
+
+<!-- embed script -->
+<script src="https://cdn.stacktome.com/frontend/collect/trustpilot/production/widget.js"
+  filter-params='${paramsJson}'>
+<\/script>`;
+  }
+
+  document.getElementById('locale').addEventListener('input', updateSnippet);
+  document.getElementById('altHtml').addEventListener('input', updateSnippet);
+  document.getElementById('prefilter-toggle').addEventListener('change', updateSnippet);
+
+  document.getElementById('btn-copy').addEventListener('click', () => {
+    navigator.clipboard.writeText(document.getElementById('snippet').textContent);
+    const btn = document.getElementById('btn-copy');
+    btn.textContent = 'Copied ✓';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  });
+
+  async function syncConfig() {
+    const authToken = document.getElementById('authToken').value.trim();
+    if (!authToken) return;
+    try {
+      const res = await fetch(CONFIG_URL, { headers: { 'Authorization': `Bearer ${authToken}` } });
+      if (!res.ok) return;
+      const data = await res.json();
+      document.getElementById('prefilter-toggle').checked = !!data.config?.prefilter;
+      if (data.config?.alt_html != null) document.getElementById('altHtml').value = data.config.alt_html;
+      updateSnippet();
+      setPrefilterStatus('synced');
+    } catch (_) {}
+  }
+
+  document.getElementById('authToken').addEventListener('blur', syncConfig);
+  if (document.getElementById('authToken').value.trim()) syncConfig();
+
+  document.getElementById('altHtml').addEventListener('blur', async () => {
+    const authToken = document.getElementById('authToken').value.trim();
+    if (!authToken) return;
+    try {
+      await fetch(CONFIG_URL, {
+        method: 'PATCH',
+        headers: { 'Authorization': `Bearer ${authToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ config: { alt_html: document.getElementById('altHtml').value } }),
+      });
+    } catch (err) { console.error(err); }
+  });
+
+  document.getElementById('prefilter-toggle').addEventListener('change', async (e) => {
+    const authToken = document.getElementById('authToken').value.trim();
+    if (!authToken) { e.target.checked = !e.target.checked; alert('Enter Auth Token first'); return; }
+    setPrefilterStatus('saving…');
+    try {
+      const res = await fetch(CONFIG_URL, {
+        method: 'PATCH',
+        headers: { 'Authorization': `Bearer ${authToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ config: { prefilter: e.target.checked, alt_html: document.getElementById('altHtml').value } }),
+      });
+      if (!res.ok) throw new Error(await res.text());
+      setPrefilterStatus(e.target.checked ? 'on' : 'off');
+    } catch (err) { setPrefilterStatus('error'); console.error(err); }
+  });
+
+  document.getElementById('btn-clear-gate').addEventListener('click', () => {
+    localStorage.removeItem(PREFILTER_KEY);
+    setStatus('Gate choice cleared.');
+  });
+
+  document.getElementById('btn-rand').addEventListener('click', randomise);
+
+  function setPrefilterStatus(msg) {
+    document.getElementById('prefilter-status').textContent = `(${msg})`;
+  }
+
+  let progressTimer = null;
+
+  function startProgress() {
+    const wrap = document.getElementById('progress-wrap');
+    const bar  = document.getElementById('progress-bar');
+    wrap.style.display = 'block';
+    bar.style.transition = 'none';
+    bar.style.width = '0%';
+    bar.offsetWidth;
+    bar.style.transition = 'width 3s cubic-bezier(.1, .6, .4, 1)';
+    bar.style.width = '80%';
+    progressTimer = setTimeout(() => { bar.style.transition = 'width 4s ease'; bar.style.width = '90%'; }, 3000);
+  }
+
+  function completeProgress(success) {
+    clearTimeout(progressTimer);
+    const bar = document.getElementById('progress-bar');
+    bar.style.transition = 'width .3s ease';
+    bar.style.width = '100%';
+    bar.style.background = success ? '#00b67a' : '#e55';
+    setTimeout(() => { document.getElementById('progress-wrap').style.display = 'none'; }, 600);
+  }
+
+  document.getElementById('btn-render').addEventListener('click', () => {
+    const authToken = document.getElementById('authToken').value.trim();
+    const name      = document.getElementById('name').value.trim();
+    const email     = document.getElementById('email').value.trim();
+    const reference = document.getElementById('reference').value.trim();
+    const locale    = document.getElementById('locale').value.trim();
+    const altHtml   = document.getElementById('altHtml').value.trim();
+
+    if (!authToken) { alert('Enter an Auth Token'); return; }
+    if (!name || !email || !reference) { alert('Fill in all fields'); return; }
+
+    document.getElementById('stacktome-widget-tp-review').innerHTML = '';
+    document.querySelectorAll('script[data-st-embed-test]').forEach(s => s.remove());
+
+    startProgress();
+    setStatus('Fetching…');
+
+    const s = document.createElement('script');
+    s.setAttribute('data-st-embed-test', '1');
+    s.src = 'https://cdn.stacktome.com/frontend/collect/trustpilot/production/widget.js?' + Date.now();
+    s.setAttribute('filter-params', JSON.stringify({
+      widgetId:  'tp-review',
+      mode:      'embed',
+      reference,
+      email,
+      name,
+      authToken,
+      ...(locale  && { locale }),
+      ...(altHtml && { altHtml }),
+    }));
+    s.onerror = () => { completeProgress(false); setStatus('Failed to load script.'); };
+    document.body.appendChild(s);
+
+    const start = Date.now();
+    const poll = setInterval(() => {
+      const widget = document.querySelector('trustbox-verified-review-collector');
+      const elapsed = Date.now() - start;
+      if (widget) {
+        clearInterval(poll);
+        completeProgress(true);
+        setStatus('');
+      } else if (elapsed > 8000) {
+        clearInterval(poll);
+        completeProgress(false);
+        setStatus('Widget not found — check console and verify BUID domain matches window.location.hostname.');
+      }
+    }, 200);
+  });
+
+  function setStatus(msg) {
+    document.getElementById('widget-status').textContent = msg;
+  }
+</script>
+
+</body>
+</html>
