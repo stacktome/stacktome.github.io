@@ -47,8 +47,8 @@
 
 <div class="form-grid">
   <div class="full">
-    <label>Auth Token</label>
-    <input id="authToken" type="text" placeholder="Bearer token">
+    <label>API Key</label>
+    <input id="apiKey" type="text" placeholder="org api key">
   </div>
   <div>
     <label>Name</label>
@@ -103,7 +103,10 @@
   const DOMAINS = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com'];
 
   const BASE_URL   = 'https://services.stacktome.com';
-  const CONFIG_URL = `${BASE_URL}/api/publish/v1/collect/widget/trustpilot/config`;
+  function configUrl() {
+    const apiKey = document.getElementById('apiKey').value.trim();
+    return `${BASE_URL}/api/publish/v1/collect/widget/trustpilot/config${apiKey ? '?apikey=' + apiKey : ''}`;
+  }
   const PREFILTER_KEY = 'st-tp-prefilter-tp-review';
 
   function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
@@ -160,10 +163,10 @@
   });
 
   async function syncConfig() {
-    const authToken = document.getElementById('authToken').value.trim();
-    if (!authToken) return;
+    const apiKey = document.getElementById('apiKey').value.trim();
+    if (!apiKey) return;
     try {
-      const res = await fetch(CONFIG_URL, { headers: { 'Authorization': `Bearer ${authToken}` } });
+      const res = await fetch(configUrl(), {});
       if (!res.ok) return;
       const data = await res.json();
       document.getElementById('prefilter-toggle').checked = !!data.config?.prefilter;
@@ -173,29 +176,29 @@
     } catch (_) {}
   }
 
-  document.getElementById('authToken').addEventListener('blur', syncConfig);
-  if (document.getElementById('authToken').value.trim()) syncConfig();
+  document.getElementById('apiKey').addEventListener('blur', syncConfig);
+  if (document.getElementById('apiKey').value.trim()) syncConfig();
 
   document.getElementById('altHtml').addEventListener('blur', async () => {
-    const authToken = document.getElementById('authToken').value.trim();
-    if (!authToken) return;
+    const apiKey = document.getElementById('apiKey').value.trim();
+    if (!apiKey) return;
     try {
-      await fetch(CONFIG_URL, {
+      await fetch(configUrl(), {
         method: 'PATCH',
-        headers: { 'Authorization': `Bearer ${authToken}`, 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ config: { alt_html: document.getElementById('altHtml').value } }),
       });
     } catch (err) { console.error(err); }
   });
 
   document.getElementById('prefilter-toggle').addEventListener('change', async (e) => {
-    const authToken = document.getElementById('authToken').value.trim();
-    if (!authToken) { e.target.checked = !e.target.checked; alert('Enter Auth Token first'); return; }
+    const apiKey = document.getElementById('apiKey').value.trim();
+    if (!apiKey) { e.target.checked = !e.target.checked; alert('Enter API Key first'); return; }
     setPrefilterStatus('saving…');
     try {
-      const res = await fetch(CONFIG_URL, {
+      const res = await fetch(configUrl(), {
         method: 'PATCH',
-        headers: { 'Authorization': `Bearer ${authToken}`, 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ config: { prefilter: e.target.checked, alt_html: document.getElementById('altHtml').value } }),
       });
       if (!res.ok) throw new Error(await res.text());
@@ -238,14 +241,14 @@
   }
 
   document.getElementById('btn-render').addEventListener('click', () => {
-    const authToken = document.getElementById('authToken').value.trim();
+    const apiKey    = document.getElementById('apiKey').value.trim();
     const name      = document.getElementById('name').value.trim();
     const email     = document.getElementById('email').value.trim();
     const reference = document.getElementById('reference').value.trim();
     const locale    = document.getElementById('locale').value.trim();
     const altHtml   = document.getElementById('altHtml').value.trim();
 
-    if (!authToken) { alert('Enter an Auth Token'); return; }
+    if (!apiKey) { alert('Enter an API Key'); return; }
     if (!name || !email || !reference) { alert('Fill in all fields'); return; }
 
     document.getElementById('stacktome-widget-tp-review').innerHTML = '';
@@ -258,12 +261,12 @@
     s.setAttribute('data-st-embed-test', '1');
     s.src = 'https://cdn.stacktome.com/frontend/collect/trustpilot/production/widget.js?' + Date.now();
     s.setAttribute('filter-params', JSON.stringify({
+      apiKey,
       widgetId:  'tp-review',
       mode:      'embed',
       reference,
       email,
       name,
-      authToken,
       ...(locale  && { locale }),
       ...(altHtml && { altHtml }),
     }));
