@@ -63,6 +63,10 @@
     <input id="reference" type="text">
   </div>
   <div>
+    <label>Widget ID</label>
+    <input id="widgetId" type="text" value="tp-review">
+  </div>
+  <div>
     <label>Locale <span style="font-weight:400;color:#999">(optional — overrides config.locale)</span></label>
     <input id="locale" type="text" placeholder="e.g. en-US, de-DE, fr-FR">
   </div>
@@ -131,7 +135,7 @@
     const altHtml   = document.getElementById('altHtml').value.trim();
     const prefilter = document.getElementById('prefilter-toggle').checked;
     const staging   = document.getElementById('staging-toggle').checked;
-    const widgetId  = 'tp-review';
+    const widgetId  = document.getElementById('widgetId').value.trim() || 'tp-review';
 
     const params = {
       apiKey:    '{{ORG_API_KEY}}',
@@ -157,6 +161,7 @@
 <\/script>`;
   }
 
+  document.getElementById('widgetId').addEventListener('input', updateSnippet);
   document.getElementById('locale').addEventListener('input', updateSnippet);
   document.getElementById('altHtml').addEventListener('input', updateSnippet);
   document.getElementById('prefilter-toggle').addEventListener('change', updateSnippet);
@@ -269,8 +274,8 @@
     s.src = 'https://cdn.stacktome.com/frontend/collect/trustpilot/production/widget.js?' + Date.now();
     s.setAttribute('filter-params', JSON.stringify({
       apiKey,
-      widgetId:  'tp-review',
-      mode:      'embed',
+      widgetId: document.getElementById('widgetId').value.trim() || 'tp-review',
+      mode:     'embed',
       reference,
       email,
       name,
