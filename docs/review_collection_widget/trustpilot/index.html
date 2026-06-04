@@ -103,7 +103,7 @@
 
 <div id="progress-wrap"><div id="progress-bar"></div></div>
 <div id="widget-status"></div>
-<div id="stacktome-widget-tp-review"></div>
+<div id="stacktome-widget-placeholder"></div>
 
 <script>
   const NAMES   = ['James Brown', 'Sofia Patel', 'Lucas Meyer', 'Emma Johansson', 'Carlos Rivera', 'Yuki Tanaka', 'Amara Osei', 'Lena Müller'];
@@ -219,7 +219,8 @@
   });
 
   document.getElementById('btn-clear-gate').addEventListener('click', () => {
-    localStorage.removeItem(PREFILTER_KEY);
+    const wid = document.getElementById('widgetId').value.trim() || 'tp-review';
+    localStorage.removeItem(`st-tp-prefilter-${wid}`);
     setStatus('Gate choice cleared.');
   });
 
@@ -260,10 +261,14 @@
     const locale    = document.getElementById('locale').value.trim();
     const altHtml   = document.getElementById('altHtml').value.trim();
 
-    if (!apiKey) { alert('Enter an API Key'); return; }
+    const widgetId = document.getElementById('widgetId').value.trim();
+    if (!apiKey)   { alert('Enter an API Key'); return; }
+    if (!widgetId) { alert('Enter a Widget ID'); return; }
     if (!name || !email || !reference) { alert('Fill in all fields'); return; }
 
-    document.getElementById('stacktome-widget-tp-review').innerHTML = '';
+    const placeholderEl = document.getElementById('stacktome-widget-placeholder');
+    placeholderEl.id = `stacktome-widget-${widgetId}`;
+    placeholderEl.innerHTML = '';
     document.querySelectorAll('script[data-st-embed-test]').forEach(s => s.remove());
 
     startProgress();
@@ -274,7 +279,7 @@
     s.src = 'https://cdn.stacktome.com/frontend/collect/trustpilot/production/widget.js?' + Date.now();
     s.setAttribute('filter-params', JSON.stringify({
       apiKey,
-      widgetId: document.getElementById('widgetId').value.trim() || 'tp-review',
+      widgetId,
       mode:     'embed',
       reference,
       email,
@@ -287,7 +292,7 @@
     document.body.appendChild(s);
 
     const start = Date.now();
-    const placeholder = document.getElementById('stacktome-widget-tp-review');
+    const placeholder = document.getElementById(`stacktome-widget-${widgetId}`);
     const poll = setInterval(() => {
       const widget = placeholder.querySelector('trustbox-verified-review-collector');
       const errorEl = placeholder.querySelector('[style*="color:red"]');
