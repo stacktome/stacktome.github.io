@@ -88,6 +88,10 @@
     <input type="checkbox" id="staging-toggle">
     Staging
   </label>
+  <label class="toggle-row">
+    <input type="checkbox" id="testmode-toggle">
+    Test credentials
+  </label>
   <button class="btn-clear" id="btn-clear-gate">Clear gate choice</button>
 </div>
 
@@ -285,6 +289,7 @@
       email,
       name,
       staging: document.getElementById('staging-toggle').checked,
+      ...(document.getElementById('testmode-toggle').checked && { testMode: true }),
       ...(locale  && { locale }),
       ...(altHtml && { altHtml }),
     }));
