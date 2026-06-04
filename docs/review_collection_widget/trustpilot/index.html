@@ -273,7 +273,8 @@
     if (!widgetId) { alert('Enter a Widget ID'); return; }
     if (!name || !email || !reference) { alert('Fill in all fields'); return; }
 
-    const placeholderEl = document.getElementById('stacktome-widget-placeholder');
+    const placeholderEl = document.getElementById(`stacktome-widget-${widgetId}`)
+                       || document.getElementById('stacktome-widget-placeholder');
     placeholderEl.id = `stacktome-widget-${widgetId}`;
     placeholderEl.innerHTML = '';
     document.querySelectorAll('script[data-st-embed-test]').forEach(s => s.remove());
