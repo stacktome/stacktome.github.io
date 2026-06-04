@@ -139,6 +139,7 @@
     const altHtml   = document.getElementById('altHtml').value.trim();
     const prefilter = document.getElementById('prefilter-toggle').checked;
     const staging   = document.getElementById('staging-toggle').checked;
+    const testMode  = document.getElementById('testmode-toggle').checked;
     const widgetId  = document.getElementById('widgetId').value.trim() || 'tp-review';
 
     const params = {
@@ -150,6 +151,7 @@
       name:      '{{CUSTOMER_NAME}}',
       staging,
     };
+    if (testMode) params.testMode = true;
     if (locale)   params.locale   = locale;
     if (prefilter) params.prefilter = true;
     if (altHtml)  params.altHtml  = altHtml;
@@ -170,6 +172,7 @@
   document.getElementById('altHtml').addEventListener('input', updateSnippet);
   document.getElementById('prefilter-toggle').addEventListener('change', updateSnippet);
   document.getElementById('staging-toggle').addEventListener('change', updateSnippet);
+  document.getElementById('testmode-toggle').addEventListener('change', updateSnippet);
 
   document.getElementById('btn-copy').addEventListener('click', () => {
     navigator.clipboard.writeText(document.getElementById('snippet').textContent);
