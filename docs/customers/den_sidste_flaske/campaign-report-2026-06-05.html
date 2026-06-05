@@ -86,6 +86,17 @@
   .divider { border: none; border-top: 2px solid #f0f0f0; margin: 32px 0; }
 
   .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+
+  /* Table of contents */
+  .toc { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); padding: 20px 24px; margin-bottom: 36px; }
+  .toc-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 12px; }
+  .toc ol { padding-left: 18px; margin: 0; }
+  .toc li { margin-bottom: 4px; line-height: 1.5; }
+  .toc a { color: #6c5ce7; text-decoration: none; font-size: 13px; font-weight: 500; }
+  .toc a:hover { text-decoration: underline; }
+  .toc ul { padding-left: 16px; margin: 4px 0 6px; list-style: none; }
+  .toc ul li { margin-bottom: 2px; }
+  .toc ul a { color: #636e72; font-weight: 400; font-size: 12px; }
 </style>
 </head>
 <body>
@@ -94,8 +105,43 @@
   <h1>Den Sidste Flaske &mdash; Campaign Performance Report</h1>
   <div class="subtitle">Review invite analysis &nbsp;&bull;&nbsp; May 1&ndash;Jun 5, 2026 &nbsp;&bull;&nbsp; Generated 2026-06-05 &nbsp;&bull;&nbsp; Accounts: DK &bull; DE &bull; SE</div>
 
+  <nav class="toc">
+    <div class="toc-title">Contents</div>
+    <ol>
+      <li><a href="#summary">Group Executive Summary</a></li>
+      <li><a href="#account-summary">Account Summary</a></li>
+      <li><a href="#themes">Complaint Themes (All Markets)</a></li>
+      <li>
+        <a href="#dk">Denmark &mdash; den_sidste_flaske</a>
+        <ul>
+          <li><a href="#dk-campaigns">Campaign Performance</a></li>
+          <li><a href="#dk-negatives">Negative Reviews</a></li>
+          <li><a href="#dk-urgent">Urgent Items</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#de">Germany &mdash; den_sidste_flaske_de</a>
+        <ul>
+          <li><a href="#de-campaigns">Campaign Performance</a></li>
+          <li><a href="#de-negatives">Negative Reviews</a></li>
+          <li><a href="#de-urgent">Urgent Items</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#se">Sweden &mdash; den_sidste_flaske_se</a>
+        <ul>
+          <li><a href="#se-campaigns">Campaign Performance</a></li>
+          <li><a href="#se-negatives">Negative Reviews</a></li>
+          <li><a href="#se-urgent">Urgent Items</a></li>
+        </ul>
+      </li>
+      <li><a href="#suppression">Ticket Suppression Analysis</a></li>
+      <li><a href="#recommendations">Recommendations</a></li>
+    </ol>
+  </nav>
+
   <!-- 1. Group Executive Summary -->
-  <h2>1. Group Executive Summary</h2>
+  <h2 id="summary">1. Group Executive Summary</h2>
   <div class="kpi-grid">
     <div class="kpi">
       <div class="label">Total Sends (Group)</div>
@@ -120,7 +166,7 @@
   </div>
 
   <!-- 2. Account Summary -->
-  <h2>2. Account Summary</h2>
+  <h2 id="account-summary">2. Account Summary</h2>
   <table>
     <thead>
       <tr>
@@ -170,7 +216,7 @@
   <p class="note">Review rate = reviews / invite sends (reminders excluded from denominator). Review attribution uses full invite history — a review is attributed to the campaign that invited that order, regardless of when the invite was sent. SE average rating of 3.87 is the lowest across all 3 markets and warrants attention.</p>
 
   <!-- 3. Common Complaint Themes -->
-  <h2>3. Complaint Themes (All Markets)</h2>
+  <h2 id="themes">3. Complaint Themes (All Markets)</h2>
   <div class="alert-warn">
     <div class="aw-title">&#9888; Systemic Delivery Crisis — All 3 Markets Affected</div>
     <p style="color:#4a4a4a;margin:0;">Delivery failures are the overwhelming theme across <strong>all accounts</strong> in this period. The majority of negative reviews (rating 1–2) cite: false same-day / "dag-til-dag" promises, actual delivery taking 5–14+ days, missing orders (paid but never received), and inadequate customer service response. This is not an isolated issue &mdash; it spans DK, DE, and SE across the full May 1–Jun 5 window.</p>
@@ -217,7 +263,7 @@
   <hr class="divider">
 
   <!-- === DK SECTION === -->
-  <div class="account-section">
+  <div class="account-section" id="dk">
     <div class="account-header">
       <span class="flag">&#127465;&#127472;</span>
       <h2>den_sidste_flaske &mdash; Denmark (Main)</h2>
@@ -248,7 +294,7 @@
         </div>
       </div>
 
-      <h3>Campaign Performance</h3>
+      <h3 id="dk-campaigns">Campaign Performance</h3>
       <table>
         <thead>
           <tr><th>Campaign</th><th>Invite Sends</th><th>Reminder Sends</th><th>Total Sends</th><th>Reviews</th><th>Review Rate</th><th>Avg Rating</th></tr>
@@ -266,7 +312,7 @@
         </tbody>
       </table>
 
-      <h3>Negative Reviews (Rating &le;3)</h3>
+      <h3 id="dk-negatives">Negative Reviews (Rating &le;3)</h3>
 
       <div class="campaign-block">
         <div class="camp-header">
@@ -412,7 +458,7 @@
         </div>
       </div>
 
-      <h3>Urgent Items &mdash; DK</h3>
+      <h3 id="dk-urgent">Urgent Items &mdash; DK</h3>
       <div class="urgent">
         <div class="urg-title">&#9888; Urgent Action Required</div>
         <table>
@@ -464,7 +510,7 @@
   <hr class="divider">
 
   <!-- === DE SECTION === -->
-  <div class="account-section">
+  <div class="account-section" id="de">
     <div class="account-header">
       <span class="flag">&#127465;&#127466;</span>
       <h2>den_sidste_flaske_de &mdash; Germany</h2>
@@ -495,7 +541,7 @@
         </div>
       </div>
 
-      <h3>Campaign Performance</h3>
+      <h3 id="de-campaigns">Campaign Performance</h3>
       <table>
         <thead>
           <tr><th>Campaign</th><th>Invite Sends</th><th>Reminder Sends</th><th>Total Sends</th><th>Reviews</th><th>Review Rate</th><th>Avg Rating</th></tr>
@@ -513,7 +559,7 @@
         </tbody>
       </table>
 
-      <h3>Negative Reviews (Rating &le;3)</h3>
+      <h3 id="de-negatives">Negative Reviews (Rating &le;3)</h3>
 
       <div class="campaign-block">
         <div class="camp-header">
@@ -551,7 +597,7 @@
         </div>
       </div>
 
-      <h3>Urgent Items &mdash; DE</h3>
+      <h3 id="de-urgent">Urgent Items &mdash; DE</h3>
       <div class="urgent">
         <div class="urg-title">&#9888; Urgent: Non-Delivery + Fraud Accusation</div>
         <table>
@@ -580,7 +626,7 @@
   <hr class="divider">
 
   <!-- === SE SECTION === -->
-  <div class="account-section">
+  <div class="account-section" id="se">
     <div class="account-header">
       <span class="flag">&#127480;&#127466;</span>
       <h2>den_sidste_flaske_se &mdash; Sweden</h2>
@@ -611,7 +657,7 @@
         </div>
       </div>
 
-      <h3>Campaign Performance</h3>
+      <h3 id="se-campaigns">Campaign Performance</h3>
       <table>
         <thead>
           <tr><th>Campaign</th><th>Invite Sends</th><th>Reminder Sends</th><th>Total Sends</th><th>Reviews</th><th>Review Rate</th><th>Avg Rating</th></tr>
@@ -629,7 +675,7 @@
         </tbody>
       </table>
 
-      <h3>Negative Reviews (Rating &le;3)</h3>
+      <h3 id="se-negatives">Negative Reviews (Rating &le;3)</h3>
 
       <div class="campaign-block">
         <div class="camp-header">
@@ -700,7 +746,7 @@
         </div>
       </div>
 
-      <h3>Urgent Items &mdash; SE</h3>
+      <h3 id="se-urgent">Urgent Items &mdash; SE</h3>
       <div class="urgent">
         <div class="urg-title">&#9888; Urgent: Non-Delivery</div>
         <table>
@@ -729,7 +775,7 @@
   <hr class="divider">
 
   <!-- 4. Ticket Suppression Analysis -->
-  <h2>4. Ticket Suppression Analysis</h2>
+  <h2 id="suppression">4. Ticket Suppression Analysis</h2>
   <p>Stacktome suppresses review invites for customers who have an open Zendesk support ticket at the time of sending (21 days post-dispatch). The table below counts unique customer emails with any ticket activity in the dispatch window (Apr 10&ndash;May 15) that would have generated an invite in May 1&ndash;Jun 5.</p>
   <table>
     <thead>
@@ -828,7 +874,7 @@
   <hr class="divider">
 
   <!-- 5. Recommendations -->
-  <h2>5. Recommendations</h2>
+  <h2 id="recommendations">5. Recommendations</h2>
   <table>
     <thead>
       <tr><th>Priority</th><th>Issue</th><th>Action</th></tr>
