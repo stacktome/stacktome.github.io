@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Den Sidste Flaske — Campaign Performance Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #2d3436; margin: 20px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  /* KPI grid */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .kpi.warn .value { color: #e17055; }
+  .kpi.danger .value { color: #d63031; }
+
+  /* Account section headers */
+  .account-section { margin: 40px 0 0; }
+  .account-header { background: #1a1a2e; color: #fff; border-radius: 10px 10px 0 0; padding: 14px 20px; display: flex; align-items: center; gap: 14px; }
+  .account-header h2 { margin: 0; border: none; padding: 0; color: #fff; font-size: 16px; }
+  .account-header .flag { font-size: 22px; }
+  .account-header .acc-badge { background: rgba(255,255,255,0.15); border-radius: 6px; padding: 2px 10px; font-size: 12px; }
+  .account-body { background: #fff; border-radius: 0 0 10px 10px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .stars { color: #fdcb6e; }
+
+  /* Review cards */
+  .campaign-block { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 12px; overflow: hidden; }
+  .camp-header { background: #2d3436; color: #fff; padding: 10px 16px; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .camp-header .badge { background: #6c5ce7; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
+  .camp-header .badge-red { background: #d63031; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
+  .camp-header .badge-orange { background: #e17055; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
+  .camp-header .badge-yellow { background: #f39c12; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
+  .review-card { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; }
+  .review-card:last-child { border-bottom: none; }
+  .review-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+  .rating-badge { font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 8px; }
+  .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff3e0; color: #e17055; }
+  .r3 { background: #fef9e7; color: #f39c12; }
+  .review-text { font-style: italic; color: #555; line-height: 1.6; font-size: 13px; }
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-ok { display: inline-block; background: #e8f8f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #00b894; }
+  .tag-warn { display: inline-block; background: #ffeaea; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #d63031; font-weight: 600; }
+
+  /* Theme cards */
+  .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 16px; }
+  .theme-card { background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .theme-card .icon { font-size: 22px; margin-bottom: 8px; }
+  .theme-card .theme-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .theme-card .count { font-size: 11px; color: #888; margin-bottom: 8px; }
+  .theme-card p { font-size: 12px; color: #555; margin: 0; line-height: 1.5; }
+
+  /* Urgent box */
+  .urgent { background: #fff5f5; border: 1.5px solid #d63031; border-radius: 10px; padding: 20px 22px; margin-bottom: 16px; }
+  .urgent .urg-title { color: #d63031; font-weight: 700; font-size: 15px; margin-bottom: 14px; }
+  .urgent table { box-shadow: none; border: 1px solid #f5c6c6; margin-bottom: 12px; }
+  .urgent th { background: #d63031; }
+  .urgent td { background: #fff !important; }
+
+  /* Alert / all-clear */
+  .all-clear { background: #e8f8f5; border: 1.5px solid #00b894; border-radius: 10px; padding: 16px 20px; color: #00b894; font-weight: 600; font-size: 14px; margin-bottom: 12px; }
+  .alert-warn { background: #fff3e0; border: 1.5px solid #e17055; border-radius: 10px; padding: 16px 20px; margin-bottom: 12px; }
+  .alert-warn .aw-title { color: #e17055; font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+  .note { font-size: 12px; color: #888; margin-top: 6px; }
+  .persist { font-size: 11px; font-weight: 700; background: #ffeaea; color: #d63031; border-radius: 4px; padding: 1px 6px; }
+  .divider { border: none; border-top: 2px solid #f0f0f0; margin: 32px 0; }
+
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Den Sidste Flaske &mdash; Campaign Performance Report</h1>
+  <div class="subtitle">Review invite analysis &nbsp;&bull;&nbsp; May 1&ndash;Jun 5, 2026 &nbsp;&bull;&nbsp; Generated 2026-06-05 &nbsp;&bull;&nbsp; Accounts: DK &bull; DE &bull; SE</div>
+
+  <!-- 1. Group Executive Summary -->
+  <h2>1. Group Executive Summary</h2>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Total Sends (Group)</div>
+      <div class="value">18,138</div>
+      <div class="sub">across 3 markets</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Invite Sends</div>
+      <div class="value">7,766</div>
+      <div class="sub">excl. reminders</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Total Reviews</div>
+      <div class="value">418</div>
+      <div class="sub">5.38% review rate</div>
+    </div>
+    <div class="kpi warn">
+      <div class="label">Weighted Avg Rating</div>
+      <div class="value">4.62</div>
+      <div class="sub">out of 5.00</div>
+    </div>
+  </div>
+
+  <!-- 2. Account Summary -->
+  <h2>2. Account Summary</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Account</th>
+        <th>Market</th>
+        <th>Campaign</th>
+        <th>Total Sends</th>
+        <th>Invite Sends</th>
+        <th>Reviews</th>
+        <th>Review Rate</th>
+        <th>Avg Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>den_sidste_flaske</strong></td>
+        <td>DK</td>
+        <td>invite-tp (391)</td>
+        <td>13,429</td>
+        <td>5,920</td>
+        <td>308</td>
+        <td>5.20%</td>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.69</td>
+      </tr>
+      <tr>
+        <td><strong>den_sidste_flaske_de</strong></td>
+        <td>DE</td>
+        <td>invite-recent (585)</td>
+        <td>2,950</td>
+        <td>1,156</td>
+        <td>80</td>
+        <td class="best">6.92%</td>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.65</td>
+      </tr>
+      <tr>
+        <td><strong>den_sidste_flaske_se</strong></td>
+        <td>SE</td>
+        <td>invite-recent (576)</td>
+        <td>1,759</td>
+        <td>690</td>
+        <td>30</td>
+        <td class="worst">4.35%</td>
+        <td class="worst"><span class="stars">&#9733;&#9733;&#9733;&#9734;&#9734;</span> 3.87</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">Review rate = reviews / invite sends (reminders excluded from denominator). Review attribution uses full invite history — a review is attributed to the campaign that invited that order, regardless of when the invite was sent. SE average rating of 3.87 is the lowest across all 3 markets and warrants attention.</p>
+
+  <!-- 3. Common Complaint Themes -->
+  <h2>3. Complaint Themes (All Markets)</h2>
+  <div class="alert-warn">
+    <div class="aw-title">&#9888; Systemic Delivery Crisis — All 3 Markets Affected</div>
+    <p style="color:#4a4a4a;margin:0;">Delivery failures are the overwhelming theme across <strong>all accounts</strong> in this period. The majority of negative reviews (rating 1–2) cite: false same-day / "dag-til-dag" promises, actual delivery taking 5–14+ days, missing orders (paid but never received), and inadequate customer service response. This is not an isolated issue &mdash; it spans DK, DE, and SE across the full May 1–Jun 5 window.</p>
+  </div>
+  <div class="theme-grid">
+    <div class="theme-card">
+      <div class="icon">&#128666;</div>
+      <div class="theme-title">Delivery Speed / False Promises</div>
+      <div class="count">~25+ reviews</div>
+      <p>Customers ordered expecting same-day or next-day delivery ("dag-til-dag"). Actual delivery took 5–14 days. Events (parties, confirmations) ruined.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#10060;</div>
+      <div class="theme-title">Order Never Arrived</div>
+      <div class="count">~8 reviews (all markets)</div>
+      <p>Customers paid but received nothing. Airmee / carrier failures in SE; non-response from support in DE. Highest urgency.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#128584;</div>
+      <div class="theme-title">Poor Customer Service</div>
+      <div class="count">~10 reviews</div>
+      <p>No response to queries about missing orders. Despite follow-up, customers left without resolution. Spam marketing emails received while complaint was open.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#127863;</div>
+      <div class="theme-title">Wine / Product Quality</div>
+      <div class="count">~5 reviews</div>
+      <p>Expired / badly stored wine (DK, lisjakob44). Poor quality vs description (DE, SE). Damaged box on delivery (DK, mads).</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#128230;</div>
+      <div class="theme-title">Wrong Items / Order Errors</div>
+      <div class="count">~4 reviews</div>
+      <p>Wrong wine type delivered. Products not matching order. Compounded by slow resolution.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#128179;</div>
+      <div class="theme-title">Value / Price vs Expectations</div>
+      <div class="count">~4 reviews</div>
+      <p>Overpriced relative to quality received (DE rating-3). Poor value given service failures (SE, alf@advokatlindqvist.se).</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- === DK SECTION === -->
+  <div class="account-section">
+    <div class="account-header">
+      <span class="flag">&#127465;&#127472;</span>
+      <h2>den_sidste_flaske &mdash; Denmark (Main)</h2>
+      <span class="acc-badge">Campaign 391 &bull; invite-tp</span>
+    </div>
+    <div class="account-body">
+
+      <div class="kpi-grid" style="margin-top:4px;">
+        <div class="kpi">
+          <div class="label">Total Sends</div>
+          <div class="value">13,429</div>
+          <div class="sub">5,920 invites + 7,509 reminders</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Reviews Attributed</div>
+          <div class="value">308</div>
+          <div class="sub">304 campaign-attributed</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Review Rate</div>
+          <div class="value">5.20%</div>
+          <div class="sub">reviews / invite sends</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Avg Rating</div>
+          <div class="value">4.69</div>
+          <div class="sub">range 1&ndash;5</div>
+        </div>
+      </div>
+
+      <h3>Campaign Performance</h3>
+      <table>
+        <thead>
+          <tr><th>Campaign</th><th>Invite Sends</th><th>Reminder Sends</th><th>Total Sends</th><th>Reviews</th><th>Review Rate</th><th>Avg Rating</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>invite-tp (391)</td>
+            <td>5,920</td>
+            <td>7,509</td>
+            <td>13,429</td>
+            <td>304</td>
+            <td>5.14%</td>
+            <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.68</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Negative Reviews (Rating &le;3)</h3>
+
+      <div class="campaign-block">
+        <div class="camp-header">
+          invite-tp &mdash; Rating 1
+          <span class="badge-red">6 attributed</span>
+          <span class="badge-orange">~20+ unattributed</span>
+        </div>
+        <div class="review-card">
+          <div class="review-meta">
+            <span class="rating-badge r1">Rating 1</span>
+            <span class="tag">mads@lolland-falster.dk</span>
+            <span class="tag">Order: 12867015770490</span>
+            <span class="tag-ok">Ticket 242987 &mdash; solved</span>
+          </div>
+          <div class="review-text">Received bottle with damaged/wet box. Product quality concern on delivery packaging.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-meta">
+            <span class="rating-badge r1">Rating 1</span>
+            <span class="tag">lisjakob44@gmail.com</span>
+            <span class="tag">Order: 12950477144442</span>
+            <span class="tag-ok">Ticket 244746 &mdash; solved</span>
+          </div>
+          <div class="review-text">Expired / badly stored wine — product quality issue.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-meta">
+            <span class="rating-badge r1">Rating 1</span>
+            <span class="tag">tkk1974@hotmail.com</span>
+            <span class="tag">Order: 12954662109562</span>
+            <span class="tag-ok">Ticket 244761 &mdash; solved</span>
+          </div>
+          <div class="review-text">Negative experience — 1-star review actioned by support.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-meta">
+            <span class="rating-badge r1">Rating 1</span>
+            <span class="tag-warn">GDPR</span>
+            <span class="tag">boehm34@hotmail.com</span>
+            <span class="tag">Order: 12957398434170</span>
+            <span class="tag-ok">Ticket 244573 &ldquo;Slet af data&rdquo; + Ticket 244088</span>
+          </div>
+          <div class="review-text">Data deletion request filed (ticket 244573 &ldquo;Slet af data&rdquo;). Also logged a call ticket (244088 &ldquo;Opkald med Torben B&ouml;hm&rdquo;). <strong>GDPR: data deletion must be actioned within 30 days of request (filed ~May 20, 2026).</strong></div>
+        </div>
+        <div class="review-card">
+          <div class="review-meta">
+            <span class="rating-badge r1">Rating 1</span>
+            <span class="tag">jesperdahl@hotmail.com</span>
+            <span class="tag">Order: 12669828956538</span>
+            <span class="neutral" style="font-size:11px;">No ticket found</span>
+          </div>
+          <div class="review-text">Delivery failure complaint. No support ticket in system.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-meta">
+            <span class="rating-badge r1">Rating 1</span>
+            <span class="tag">martinvad1985@gmail.com</span>
+            <span class="tag">Order: 12669961470330</span>
+            <span class="neutral" style="font-size:11px;">No ticket found</span>
+          </div>
+          <div class="review-text">Delivery failure complaint. No support ticket in system.</div>
+        </div>
+        <div class="review-card" style="background:#fff8f8;">
+          <div class="review-meta">
+            <span class="rating-badge r1">Rating 1 (unattributed)</span>
+            <span class="tag">~20+ reviews</span>
+          </div>
+          <div class="review-text">All relate to delivery: &ldquo;dag-til-dag&rdquo; promise not kept, 7&ndash;10 day waits, orders needed for specific events (parties, confirmations) not arriving, aggressive marketing emails during complaint, no tracking updates, wrong deliveries.</div>
+        </div>
+      </div>
+
+      <div class="campaign-block">
+        <div class="camp-header">
+          invite-tp &mdash; Rating 2
+          <span class="badge-orange">4 attributed</span>
+        </div>
+        <div class="review-card">
+          <div class="review-meta">
+            <span class="rating-badge r2">Rating 2</span>
+            <span class="tag">tb@justsen.dk</span>
+            <span class="tag">Order: 12959794594170</span>
+            <span class="tag-ok">Ticket 245754 &ldquo;Leveringstider&rdquo; &mdash; solved</span>
+          </div>
+          <div class="review-text">Delivery time complaint &mdash; subject literally &ldquo;Delivery times&rdquo;. Support resolved.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-meta">
+            <span class="rating-badge r2">Rating 2</span>
+            <span class="tag">thollitsch@gmail.com</span>
+            <span class="tag">Order: 12975945449850</span>
+            <span class="tag-ok">Tickets 245517 + 245516 &mdash; solved</span>
+          </div>
+          <div class="review-text">Multiple contacts (call + ticket &ldquo;Ang&aring;ende tilbud og trustpilot&rdquo;). Resolved via support.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-meta">
+            <span class="rating-badge r2">Rating 2</span>
+            <span class="tag">a.nina95@hotmail.com</span>
+            <span class="tag">Order: 12987297595770</span>
+            <span class="neutral" style="font-size:11px;">No ticket found</span>
+          </div>
+          <div class="review-text">Delivery / order issue. No support ticket in system.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-meta">
+            <span class="rating-badge r2">Rating 2</span>
+            <span class="tag">casaberde@magayon.dk</span>
+            <span class="tag">Order: 12957031989626</span>
+            <span class="neutral" style="font-size:11px;">No ticket found</span>
+          </div>
+          <div class="review-text">Delivery / order issue. No support ticket in system.</div>
+        </div>
+      </div>
+
+      <div class="campaign-block">
+        <div class="camp-header">
+          invite-tp &mdash; Rating 3
+          <span class="badge-yellow">~12 attributed + unattributed</span>
+        </div>
+        <div class="review-card">
+          <div class="review-meta"><span class="rating-badge r3">Rating 3</span><span class="tag">klausmustang69@gmail.com</span><span class="tag">Order: 12957641933178</span><span class="tag-ok">Ticket 243745 &mdash; solved</span></div>
+          <div class="review-text">Order delay &mdash; ticket subject &ldquo;En ordre fra #417637DSF er p&aring; vej!&rdquo; suggests order was in transit. Resolved.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-meta"><span class="rating-badge r3">Rating 3</span><span class="tag">lauritzen@nordkystens4x4.dk</span><span class="tag">Order: 12665590514042</span><span class="tag-ok">Ticket 240478 &ldquo;3 Stjernet Trustpilot&rdquo; &mdash; solved</span></div>
+          <div class="review-text">Support followed up on 3-star review. Resolved.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-meta"><span class="rating-badge r3">Rating 3</span><span class="tag">sallyann@funder.nu</span><span class="tag">Order: 12933937889658</span><span class="tag-ok">Ticket 240460 &ldquo;Vedr. oplevelse af levering&rdquo; &mdash; solved</span></div>
+          <div class="review-text">Delivery experience complaint. Ticket subject explicitly references delivery. Resolved.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-meta"><span class="rating-badge r3">Rating 3</span><span class="tag">sanne.ravn@gmail.com</span><span class="tag">Order: 12954100072826</span><span class="tag-ok">Tickets 244755 + 244805 &mdash; solved</span></div>
+          <div class="review-text">Multiple contacts including missed call. Resolved via support.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-meta"><span class="rating-badge r3">Rating 3</span><span class="tag">ellenogknud@kabelmail.dk</span><span class="tag">Order: 12973366739322</span><span class="tag-ok">Ticket 244736 &ldquo;Trustpilot anmeldelse&rdquo; &mdash; solved</span></div>
+          <div class="review-text">Delivery related. Support followed up on Trustpilot review. Resolved.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-meta"><span class="rating-badge r3">Rating 3 (multiple unattributed)</span></div>
+          <div class="review-text">Several further rating-3 reviews (finderland.kristensen, gitteslott, jan.hardings, liljeberg169, mikaellundrasmussen, aevar.karlsson, ekp) without support tickets. Themes: slow delivery, wine quality below expectations, price vs value.</div>
+        </div>
+      </div>
+
+      <h3>Urgent Items &mdash; DK</h3>
+      <div class="urgent">
+        <div class="urg-title">&#9888; Urgent Action Required</div>
+        <table>
+          <thead><tr><th>Issue</th><th>Customer</th><th>Order</th><th>Ticket</th><th>Action Required</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="persist">GDPR</span> Data Deletion Request</td>
+              <td>boehm34@hotmail.com</td>
+              <td>12957398434170</td>
+              <td>244573 &ldquo;Slet af data&rdquo;</td>
+              <td>Verify deletion was completed within 30 days of May 20, 2026 (deadline: Jun 19, 2026)</td>
+            </tr>
+            <tr>
+              <td>Rating 1 &mdash; No ticket</td>
+              <td>jesperdahl@hotmail.com</td>
+              <td>12669828956538</td>
+              <td>&mdash;</td>
+              <td>No support contact found. Consider proactive outreach.</td>
+            </tr>
+            <tr>
+              <td>Rating 1 &mdash; No ticket</td>
+              <td>martinvad1985@gmail.com</td>
+              <td>12669961470330</td>
+              <td>&mdash;</td>
+              <td>No support contact found. Consider proactive outreach.</td>
+            </tr>
+            <tr>
+              <td>Rating 2 &mdash; No ticket</td>
+              <td>a.nina95@hotmail.com</td>
+              <td>12987297595770</td>
+              <td>&mdash;</td>
+              <td>No support contact found. Order may still be unresolved.</td>
+            </tr>
+            <tr>
+              <td>Rating 2 &mdash; No ticket</td>
+              <td>casaberde@magayon.dk</td>
+              <td>12957031989626</td>
+              <td>&mdash;</td>
+              <td>No support contact found. Order may still be unresolved.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="note">Other rating-1/2 reviews (mads, lisjakob44, tkk1974, tb, thollitsch) all have tickets marked &ldquo;solved&rdquo; &mdash; verify Trustpilot response was posted if relevant.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- === DE SECTION === -->
+  <div class="account-section">
+    <div class="account-header">
+      <span class="flag">&#127465;&#127466;</span>
+      <h2>den_sidste_flaske_de &mdash; Germany</h2>
+      <span class="acc-badge">Campaign 585 &bull; invite-recent</span>
+    </div>
+    <div class="account-body">
+
+      <div class="kpi-grid" style="margin-top:4px;">
+        <div class="kpi">
+          <div class="label">Total Sends</div>
+          <div class="value">2,950</div>
+          <div class="sub">1,156 invites + 1,794 reminders</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Reviews Attributed</div>
+          <div class="value">80</div>
+          <div class="sub">77 campaign-attributed</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Review Rate</div>
+          <div class="value best">6.92%</div>
+          <div class="sub">best rate across 3 markets</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Avg Rating</div>
+          <div class="value">4.65</div>
+          <div class="sub">range 1&ndash;5</div>
+        </div>
+      </div>
+
+      <h3>Campaign Performance</h3>
+      <table>
+        <thead>
+          <tr><th>Campaign</th><th>Invite Sends</th><th>Reminder Sends</th><th>Total Sends</th><th>Reviews</th><th>Review Rate</th><th>Avg Rating</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>invite-recent (585)</td>
+            <td>1,156</td>
+            <td>1,794</td>
+            <td>2,950</td>
+            <td>77</td>
+            <td class="best">6.66%</td>
+            <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.69</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Negative Reviews (Rating &le;3)</h3>
+
+      <div class="campaign-block">
+        <div class="camp-header">
+          invite-recent &mdash; Rating 1
+          <span class="badge-red">2 attributed</span>
+        </div>
+        <div class="review-card">
+          <div class="review-meta">
+            <span class="rating-badge r1">Rating 1</span>
+            <span class="tag">wpruth@gmx.de</span>
+            <span class="tag">Order: 6039550722094</span>
+            <span class="neutral" style="font-size:11px;">No ticket in system</span>
+          </div>
+          <div class="review-text">&ldquo;Fake&rdquo; &mdash; customer explicitly accuses company of being fraudulent. High-visibility 1-star on German Trustpilot. No support ticket found.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-meta">
+            <span class="rating-badge r1">Rating 1</span>
+            <span class="tag">gunnar.schaab1968@gmx.de</span>
+            <span class="tag">Order: 6018982608942</span>
+            <span class="neutral" style="font-size:11px;">No ticket in system</span>
+          </div>
+          <div class="review-text">No delivery received and no response from customer service. Customer left without resolution. No support ticket found.</div>
+        </div>
+      </div>
+
+      <div class="campaign-block">
+        <div class="camp-header">
+          invite-recent &mdash; Rating 3
+          <span class="badge-yellow">~2 attributed</span>
+        </div>
+        <div class="review-card">
+          <div class="review-meta"><span class="rating-badge r3">Rating 3</span><span class="tag">DE market</span></div>
+          <div class="review-text">Product overpriced relative to description &mdash; quality below expectations given price point. No support contact found.</div>
+        </div>
+      </div>
+
+      <h3>Urgent Items &mdash; DE</h3>
+      <div class="urgent">
+        <div class="urg-title">&#9888; Urgent: Non-Delivery + Fraud Accusation</div>
+        <table>
+          <thead><tr><th>Issue</th><th>Customer</th><th>Order</th><th>Action Required</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="persist">CRITICAL</span> Fraud accusation</td>
+              <td>wpruth@gmx.de</td>
+              <td>6039550722094</td>
+              <td>Verify order status. If delivered: respond on Trustpilot with proof. If not delivered: urgent refund + Trustpilot response. Leaving &ldquo;Fake&rdquo; accusation unanswered damages DE brand.</td>
+            </tr>
+            <tr>
+              <td>Non-delivery, no response</td>
+              <td>gunnar.schaab1968@gmx.de</td>
+              <td>6018982608942</td>
+              <td>Check order status and delivery carrier. Customer reports no response from support &mdash; ensure refund or reship if not delivered.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="note">No support tickets found for DE negatives in system &mdash; these may need to be created manually or checked in a separate DE support tool.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- === SE SECTION === -->
+  <div class="account-section">
+    <div class="account-header">
+      <span class="flag">&#127480;&#127466;</span>
+      <h2>den_sidste_flaske_se &mdash; Sweden</h2>
+      <span class="acc-badge">Campaign 576 &bull; invite-recent</span>
+    </div>
+    <div class="account-body">
+
+      <div class="kpi-grid" style="margin-top:4px;">
+        <div class="kpi danger">
+          <div class="label">Total Sends</div>
+          <div class="value">1,759</div>
+          <div class="sub">690 invites + 1,069 reminders</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Reviews Attributed</div>
+          <div class="value">30</div>
+          <div class="sub">all campaign-attributed</div>
+        </div>
+        <div class="kpi danger">
+          <div class="label">Review Rate</div>
+          <div class="value">4.35%</div>
+          <div class="sub">lowest across 3 markets</div>
+        </div>
+        <div class="kpi danger">
+          <div class="label">Avg Rating</div>
+          <div class="value">3.87</div>
+          <div class="sub">range 1&ndash;5 &mdash; lowest of group</div>
+        </div>
+      </div>
+
+      <h3>Campaign Performance</h3>
+      <table>
+        <thead>
+          <tr><th>Campaign</th><th>Invite Sends</th><th>Reminder Sends</th><th>Total Sends</th><th>Reviews</th><th>Review Rate</th><th>Avg Rating</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>invite-recent (576)</td>
+            <td>690</td>
+            <td>1,069</td>
+            <td>1,759</td>
+            <td>30</td>
+            <td class="worst">4.35%</td>
+            <td class="worst"><span class="stars">&#9733;&#9733;&#9733;&#9734;&#9734;</span> 3.87</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Negative Reviews (Rating &le;3)</h3>
+
+      <div class="campaign-block">
+        <div class="camp-header">
+          invite-recent &mdash; Rating 1
+          <span class="badge-red">4 attributed</span>
+        </div>
+        <div class="review-card">
+          <div class="review-meta">
+            <span class="rating-badge r1">Rating 1</span>
+            <span class="tag">o@kbbg.se</span>
+            <span class="tag">Order: 6212780687515</span>
+            <span class="neutral" style="font-size:11px;">No ticket in system</span>
+          </div>
+          <div class="review-text">Customer paid but order never arrived. Non-delivery despite payment &mdash; highest severity in SE market. No support ticket found.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-meta">
+            <span class="rating-badge r1">Rating 1</span>
+            <span class="tag">birjan82@gmail.com</span>
+            <span class="tag">Order: 6195796607131</span>
+            <span class="neutral" style="font-size:11px;">No ticket in system</span>
+          </div>
+          <div class="review-text">Bad / disappointing wine quality. Product did not meet expectations.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-meta">
+            <span class="rating-badge r1">Rating 1</span>
+            <span class="tag">sawsan.abd@gmail.com</span>
+            <span class="tag">Order: 6210997846171</span>
+            <span class="neutral" style="font-size:11px;">No ticket in system</span>
+          </div>
+          <div class="review-text">Only 2-hour delivery notification window &mdash; insufficient time to be home for delivery. Customer missed delivery due to short notice.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-meta">
+            <span class="rating-badge r1">Rating 1</span>
+            <span class="tag">alf@advokatlindqvist.se</span>
+            <span class="tag">Order: 6161164533915</span>
+            <span class="neutral" style="font-size:11px;">No ticket in system</span>
+          </div>
+          <div class="review-text">Poor value for money &mdash; product quality below price point expectations.</div>
+        </div>
+      </div>
+
+      <div class="campaign-block">
+        <div class="camp-header">
+          invite-recent &mdash; Rating 2
+          <span class="badge-orange">~3 reviews</span>
+        </div>
+        <div class="review-card">
+          <div class="review-meta"><span class="rating-badge r2">Rating 2</span><span class="tag">Unattributed</span></div>
+          <div class="review-text">Customer had 4 orders, all delayed. Specifically mentions Airmee logistics failures — carrier not meeting delivery windows. 14-day delivery wait.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-meta"><span class="rating-badge r2">Rating 2</span><span class="tag">Attributed</span></div>
+          <div class="review-text">Long delivery time, wrong wine type delivered. Order not matching what was ordered.</div>
+        </div>
+      </div>
+
+      <div class="campaign-block">
+        <div class="camp-header">
+          invite-recent &mdash; Rating 3
+          <span class="badge-yellow">~2 reviews</span>
+        </div>
+        <div class="review-card">
+          <div class="review-meta"><span class="rating-badge r3">Rating 3</span><span class="tag">SE market</span></div>
+          <div class="review-text">Delivery timing complaints. Wine selection feedback. Below expectations vs price paid.</div>
+        </div>
+      </div>
+
+      <h3>Urgent Items &mdash; SE</h3>
+      <div class="urgent">
+        <div class="urg-title">&#9888; Urgent: Non-Delivery</div>
+        <table>
+          <thead><tr><th>Issue</th><th>Customer</th><th>Order</th><th>Action Required</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="persist">CRITICAL</span> Non-delivery despite payment</td>
+              <td>o@kbbg.se</td>
+              <td>6212780687515</td>
+              <td>Verify delivery status. If undelivered: immediate refund or reship. Customer has rated 1 star &mdash; Trustpilot response needed.</td>
+            </tr>
+            <tr>
+              <td>Carrier notification window too short</td>
+              <td>sawsan.abd@gmail.com</td>
+              <td>6210997846171</td>
+              <td>2-hour delivery notification insufficient. Review Airmee delivery notification settings for SE market — consider minimum 24h window.</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="note">Airmee appears across multiple SE negative reviews &mdash; carrier performance in Sweden is a recurring operational risk. No support tickets found for SE market in the system.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 4. Recommendations -->
+  <h2>4. Recommendations</h2>
+  <table>
+    <thead>
+      <tr><th>Priority</th><th>Issue</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="worst">P0</td>
+        <td>GDPR data deletion request (DK)</td>
+        <td>Confirm ticket 244573 &ldquo;Slet af data&rdquo; was actioned. Deadline Jun 19, 2026 (30 days from May 20).</td>
+      </tr>
+      <tr>
+        <td class="worst">P0</td>
+        <td>DE fraud accusation (wpruth@gmx.de)</td>
+        <td>Verify order 6039550722094. Post Trustpilot response regardless of outcome. Critical for DE brand.</td>
+      </tr>
+      <tr>
+        <td class="worst">P0</td>
+        <td>SE non-delivery (o@kbbg.se)</td>
+        <td>Check order 6212780687515 delivery status. Refund or reship immediately if undelivered.</td>
+      </tr>
+      <tr>
+        <td style="color:#e17055;font-weight:600;">P1</td>
+        <td>DE non-delivery / no response (gunnar.schaab1968@gmx.de)</td>
+        <td>Contact customer, verify order 6018982608942, resolve and post Trustpilot response.</td>
+      </tr>
+      <tr>
+        <td style="color:#e17055;font-weight:600;">P1</td>
+        <td>DK uncontacted rating-1 / rating-2 customers</td>
+        <td>Reach out to jesperdahl, martinvad1985, a.nina95, casaberde &mdash; no support tickets found, status unknown.</td>
+      </tr>
+      <tr>
+        <td style="color:#f39c12;font-weight:600;">P2</td>
+        <td>Delivery promise mismatch (all markets)</td>
+        <td>Review marketing copy around delivery speed. &ldquo;Dag-til-dag&rdquo; promise is causing 20+ rating-1 reviews in DK alone. Consider removing or qualifying the promise.</td>
+      </tr>
+      <tr>
+        <td style="color:#f39c12;font-weight:600;">P2</td>
+        <td>Airmee carrier performance (SE)</td>
+        <td>Airmee cited in multiple SE negatives. Escalate carrier SLA with Airmee. Consider minimum 24h delivery notification window.</td>
+      </tr>
+      <tr>
+        <td class="neutral">P3</td>
+        <td>SE avg rating 3.87</td>
+        <td>Lowest across group. Monitor closely &mdash; if SE rating drops below 4.0 publicly, consider pausing SE invite campaign while delivery issues are resolved.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer">Den Sidste Flaske &mdash; Campaign Performance Report &mdash; Generated 2026-06-05 &mdash; Data window: May 1&ndash;Jun 5, 2026 &mdash; Accounts: den_sidste_flaske &bull; den_sidste_flaske_de &bull; den_sidste_flaske_se</div>
+</div>
+</body>
+</html>
