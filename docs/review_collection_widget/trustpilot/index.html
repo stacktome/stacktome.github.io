@@ -35,6 +35,13 @@
     .btn-copy:hover { background: #f5f5f5; }
     pre#snippet { margin: 0; padding: 14px; background: #f8f8f8; border: 1px solid #e4e4e4; border-radius: 5px;
       font-size: 12px; line-height: 1.6; white-space: pre; overflow-x: auto; color: #333; }
+    #base-url-row { display: none; }
+    #link-result { display: none; margin-bottom: 16px; padding: 12px 16px; background: #f4faf7; border: 1px solid #00b67a; border-radius: 5px; }
+    #link-result strong { font-size: 12px; color: #555; }
+    #link-out { display: block; word-break: break-all; font-family: monospace; font-size: 12px; margin-top: 6px; color: #00b67a; text-decoration: none; }
+    #link-out:hover { text-decoration: underline; }
+    .link-btns { margin-top: 10px; display: flex; gap: 8px; }
+    .link-btns button { padding: 5px 12px; font-size: 12px; border: none; border-radius: 4px; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -42,7 +49,7 @@
 <h2>Trustpilot In-App Review Collector — Embed Test</h2>
 <p class="subtitle">
   Mode A (embed) — customer data passed directly, encrypted server-side.<br>
-  Calls <code>https://services.stacktome.com/api/publish/v1/collect/widget/trustpilot/render</code>
+  Calls <code>https://services.stacktome.com/api/publish/v1/collect/widget/trustpilot/{widgetId}/render</code>
 </p>
 
 <div class="form-grid">
@@ -64,7 +71,7 @@
   </div>
   <div>
     <label>Widget ID</label>
-    <input id="widgetId" type="text" placeholder="e.g. tp-review">
+    <input id="widgetId" type="text" placeholder="e.g. 1">
   </div>
   <div>
     <label>Locale <span style="font-weight:400;color:#999">(optional — overrides config.locale)</span></label>
@@ -74,11 +81,16 @@
     <label>Alt HTML <span style="font-weight:400;color:#999">(shown on thumbs-down)</span></label>
     <textarea id="altHtml" rows="3" style="width:100%;padding:8px 10px;font-size:13px;font-family:monospace;border:1px solid #ccc;border-radius:4px;box-sizing:border-box;resize:vertical"><p>Thanks for your feedback. <a href="/support">Contact us</a></p></textarea>
   </div>
+  <div class="full" id="base-url-row">
+    <label>Review Landing Page URL <span style="font-weight:400;color:#999">(Mode B)</span></label>
+    <input id="base-url" type="text">
+  </div>
 </div>
 
 <div class="actions">
   <button class="btn-rand" id="btn-rand">Randomise</button>
   <button class="btn-render" id="btn-render">Render Widget</button>
+  <button class="btn-render" id="btn-get-link" style="display:none;background:#0066cc">Get Link</button>
   <label class="toggle-row">
     <input type="checkbox" id="prefilter-toggle">
     Prefilter gate
@@ -91,6 +103,10 @@
   <label class="toggle-row">
     <input type="checkbox" id="testmode-toggle">
     Test credentials
+  </label>
+  <label class="toggle-row">
+    <input type="checkbox" id="mode-b-toggle">
+    Mode B (link)
   </label>
   <button class="btn-clear" id="btn-clear-gate">Clear gate choice</button>
 </div>
@@ -107,6 +123,16 @@
 
 <div id="progress-wrap"><div id="progress-bar"></div></div>
 <div id="widget-status"></div>
+
+<div id="link-result">
+  <strong>Invite link</strong>
+  <a id="link-out" href="#" target="_blank"></a>
+  <div class="link-btns">
+    <button style="background:#333;color:#fff" id="link-copy-btn">Copy</button>
+    <button style="background:#00b67a;color:#fff" id="link-open-btn">Open</button>
+  </div>
+</div>
+
 <div id="stacktome-widget-placeholder"></div>
 
 <script>
@@ -114,22 +140,31 @@
   const HANDLES = ['james.brown', 'sofia.patel', 'lucas.meyer', 'emma.j', 'carlos.r', 'yuki.t', 'amara.osei', 'lena.m'];
   const DOMAINS = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com'];
 
-  const BASE_URL   = 'https://services.stacktome.com';
+  const BASE_URL = 'https://services.stacktome.com';
+  const widgetUrl = (id) => `${BASE_URL}/api/publish/v1/collect/widget/trustpilot/${id}`;
   function configUrl() {
-    const apiKey = document.getElementById('apiKey').value.trim();
-    return `${BASE_URL}/api/publish/v1/collect/widget/trustpilot/config${apiKey ? '?apikey=' + apiKey : ''}`;
+    const apiKey   = document.getElementById('apiKey').value.trim();
+    const widgetId = document.getElementById('widgetId').value.trim();
+    return `${widgetUrl(widgetId)}/config${apiKey ? '?apikey=' + encodeURIComponent(apiKey) : ''}`;
   }
-  const PREFILTER_KEY = 'st-tp-prefilter-tp-review';
 
   function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-  function randRef() { return 'ORD-' + Math.floor(10000 + Math.random() * 90000); }
 
   function randomise() {
     const i = Math.floor(Math.random() * NAMES.length);
     document.getElementById('name').value      = NAMES[i];
     document.getElementById('email').value     = HANDLES[i] + '+' + Date.now().toString(36) + '@' + pick(DOMAINS);
-    document.getElementById('reference').value = randRef();
+    document.getElementById('reference').value = 'ORD-' + Math.floor(10000 + Math.random() * 90000);
   }
+
+  // Restore apiKey from sessionStorage
+  const savedKey = sessionStorage.getItem('st-embed-test-apikey');
+  if (savedKey) document.getElementById('apiKey').value = savedKey;
+  document.getElementById('apiKey').addEventListener('input', () => {
+    sessionStorage.setItem('st-embed-test-apikey', document.getElementById('apiKey').value);
+  });
+
+  document.getElementById('base-url').value = 'https://reviews.hockerty.com/';
 
   randomise();
   updateSnippet();
@@ -151,10 +186,10 @@
       name:      '{{CUSTOMER_NAME}}',
       staging,
     };
-    if (testMode) params.testMode = true;
-    if (locale)   params.locale   = locale;
+    if (testMode)  params.testMode  = true;
+    if (locale)    params.locale    = locale;
     if (prefilter) params.prefilter = true;
-    if (altHtml)  params.altHtml  = altHtml;
+    if (altHtml)   params.altHtml   = altHtml;
 
     const paramsJson = JSON.stringify(params, null, 4).replace(/^/gm, '    ');
     document.getElementById('snippet').textContent =
@@ -182,10 +217,11 @@
   });
 
   async function syncConfig() {
-    const apiKey = document.getElementById('apiKey').value.trim();
-    if (!apiKey) return;
+    const apiKey   = document.getElementById('apiKey').value.trim();
+    const widgetId = document.getElementById('widgetId').value.trim();
+    if (!apiKey || !widgetId) return;
     try {
-      const res = await fetch(configUrl(), {});
+      const res = await fetch(configUrl());
       if (!res.ok) return;
       const data = await res.json();
       document.getElementById('prefilter-toggle').checked = !!data.config?.prefilter;
@@ -196,6 +232,7 @@
   }
 
   document.getElementById('apiKey').addEventListener('blur', syncConfig);
+  document.getElementById('widgetId').addEventListener('blur', syncConfig);
   if (document.getElementById('apiKey').value.trim()) syncConfig();
 
   document.getElementById('altHtml').addEventListener('blur', async () => {
@@ -233,6 +270,63 @@
 
   document.getElementById('btn-rand').addEventListener('click', randomise);
 
+  document.getElementById('mode-b-toggle').addEventListener('change', (e) => {
+    document.getElementById('base-url-row').style.display  = e.target.checked ? '' : 'none';
+    document.getElementById('btn-get-link').style.display  = e.target.checked ? '' : 'none';
+    document.getElementById('link-result').style.display   = 'none';
+  });
+
+  document.getElementById('link-copy-btn').addEventListener('click', () => {
+    navigator.clipboard.writeText(document.getElementById('link-out').href);
+    document.getElementById('link-copy-btn').textContent = 'Copied ✓';
+    setTimeout(() => document.getElementById('link-copy-btn').textContent = 'Copy', 1500);
+  });
+
+  document.getElementById('btn-get-link').addEventListener('click', async () => {
+    const apiKey    = document.getElementById('apiKey').value.trim();
+    const widgetId  = document.getElementById('widgetId').value.trim();
+    const name      = document.getElementById('name').value.trim();
+    const email     = document.getElementById('email').value.trim();
+    const reference = document.getElementById('reference').value.trim();
+    const baseUrl   = document.getElementById('base-url').value.trim().replace(/\?.*$/, '');
+
+    if (!apiKey)    { alert('Enter an API Key'); return; }
+    if (!widgetId)  { alert('Enter a Widget ID'); return; }
+    if (!email || !reference) { alert('Fill in email and reference'); return; }
+    if (!baseUrl)   { alert('Enter a Review Landing Page URL'); return; }
+
+    const btn = document.getElementById('btn-get-link');
+    btn.textContent = 'Fetching…';
+    btn.disabled = true;
+    document.getElementById('link-result').style.display = 'none';
+
+    try {
+      const resp = await fetch(`${widgetUrl(widgetId)}/render?apikey=${encodeURIComponent(apiKey)}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name || '', email, reference }),
+      });
+      const data = await resp.json();
+      if (!resp.ok || !data.payload) { setStatus(`Error: ${data.error || 'No payload returned'}`); return; }
+      const { data: d, iv, tag, sig } = data.payload;
+      const url = baseUrl
+        + '?widget_id=' + encodeURIComponent(widgetId)
+        + '&data=' + encodeURIComponent(d)
+        + '&iv='   + encodeURIComponent(iv)
+        + '&tag='  + encodeURIComponent(tag)
+        + '&sig='  + encodeURIComponent(sig);
+      const a = document.getElementById('link-out');
+      a.href = url; a.textContent = url;
+      document.getElementById('link-open-btn').onclick = () => window.open(url, '_blank');
+      document.getElementById('link-result').style.display = 'block';
+    } catch (e) {
+      setStatus('Request failed: ' + e.message);
+    } finally {
+      btn.textContent = 'Get Link';
+      btn.disabled = false;
+    }
+  });
+
   function setPrefilterStatus(msg) {
     document.getElementById('prefilter-status').textContent = `(${msg})`;
   }
@@ -260,15 +354,18 @@
     setTimeout(() => { document.getElementById('progress-wrap').style.display = 'none'; }, 600);
   }
 
-  document.getElementById('btn-render').addEventListener('click', () => {
+  document.getElementById('btn-render').addEventListener('click', async () => {
+    const modeB     = document.getElementById('mode-b-toggle').checked;
     const apiKey    = document.getElementById('apiKey').value.trim();
     const name      = document.getElementById('name').value.trim();
     const email     = document.getElementById('email').value.trim();
     const reference = document.getElementById('reference').value.trim();
+    const widgetId  = document.getElementById('widgetId').value.trim();
     const locale    = document.getElementById('locale').value.trim();
     const altHtml   = document.getElementById('altHtml').value.trim();
+    const staging   = document.getElementById('staging-toggle').checked;
+    const testMode  = document.getElementById('testmode-toggle').checked;
 
-    const widgetId = document.getElementById('widgetId').value.trim();
     if (!apiKey)   { alert('Enter an API Key'); return; }
     if (!widgetId) { alert('Enter a Widget ID'); return; }
     if (!name || !email || !reference) { alert('Fill in all fields'); return; }
@@ -282,20 +379,46 @@
     startProgress();
     setStatus('Fetching…');
 
+    // Mode B: generate payload, inject into page URL, load widget in link mode
+    if (modeB) {
+      try {
+        const resp = await fetch(`${widgetUrl(widgetId)}/render?apikey=${encodeURIComponent(apiKey)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, reference }),
+        });
+        const data = await resp.json();
+        if (!resp.ok || !data.payload) {
+          completeProgress(false);
+          setStatus(`Error: ${data.error || 'No payload returned'}`);
+          return;
+        }
+        const { data: d, iv, tag, sig } = data.payload;
+        const params = new URLSearchParams();
+        params.set('widget_id', widgetId);
+        params.set('data', d); params.set('iv', iv); params.set('tag', tag); params.set('sig', sig);
+        history.replaceState(null, '', '?' + params.toString());
+      } catch (e) {
+        completeProgress(false);
+        setStatus('Request failed: ' + e.message);
+        return;
+      }
+    }
+
     const s = document.createElement('script');
     s.setAttribute('data-st-embed-test', '1');
     s.src = 'https://cdn.stacktome.com/frontend/collect/trustpilot/production/widget.js?' + Date.now();
     s.setAttribute('filter-params', JSON.stringify({
       apiKey,
       widgetId,
-      mode:     'embed',
+      mode:    modeB ? 'link' : 'embed',
       reference,
       email,
       name,
-      staging: document.getElementById('staging-toggle').checked,
-      ...(document.getElementById('testmode-toggle').checked && { testMode: true }),
-      ...(locale  && { locale }),
-      ...(altHtml && { altHtml }),
+      staging,
+      ...(testMode && { testMode: true }),
+      ...(locale   && { locale }),
+      ...(altHtml  && { altHtml }),
     }));
     s.onerror = () => { completeProgress(false); setStatus('Failed to load script.'); };
     document.body.appendChild(s);
@@ -303,24 +426,39 @@
     const start = Date.now();
     const placeholder = document.getElementById(`stacktome-widget-${widgetId}`);
     const poll = setInterval(() => {
-      const widget = placeholder.querySelector('trustbox-verified-review-collector');
+      const widget  = placeholder.querySelector('trustbox-verified-review-collector');
       const errorEl = placeholder.querySelector('[style*="color:red"]');
       const elapsed = Date.now() - start;
       if (widget) {
-        clearInterval(poll);
-        completeProgress(true);
-        setStatus('');
+        clearInterval(poll); completeProgress(true); setStatus('');
       } else if (errorEl) {
-        clearInterval(poll);
-        completeProgress(false);
+        clearInterval(poll); completeProgress(false);
         setStatus(errorEl.textContent.replace('[ST TP Widget] Error: API error ', 'Error ').trim());
       } else if (elapsed > 8000) {
-        clearInterval(poll);
-        completeProgress(false);
+        clearInterval(poll); completeProgress(false);
         setStatus('Widget not found — check console and verify BUID domain matches window.location.hostname.');
       }
     }, 200);
   });
+
+  // Auto-render when page is opened with link params
+  (function autoRenderFromLink() {
+    const p = new URLSearchParams(window.location.search);
+    if (!p.has('data')) return;
+    const widgetId = p.get('widget_id');
+    const apiKey   = document.getElementById('apiKey').value.trim();
+    if (!widgetId || !apiKey) return;
+    document.getElementById('widgetId').value = widgetId;
+    document.getElementById('mode-b-toggle').checked = true;
+    document.getElementById('base-url-row').style.display = '';
+    document.getElementById('btn-get-link').style.display = '';
+    const placeholder = document.getElementById('stacktome-widget-placeholder');
+    placeholder.id = `stacktome-widget-${widgetId}`;
+    const s = document.createElement('script');
+    s.src = 'https://cdn.stacktome.com/frontend/collect/trustpilot/production/widget.js?' + Date.now();
+    s.setAttribute('filter-params', JSON.stringify({ apiKey, widgetId, mode: 'link' }));
+    document.body.appendChild(s);
+  })();
 
   function setStatus(msg) {
     document.getElementById('widget-status').textContent = msg;
