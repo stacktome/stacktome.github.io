@@ -141,6 +141,7 @@
   const DOMAINS = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com'];
 
   const BASE_URL = 'https://services.stacktome.com';
+  const widgetPlaceholder = document.getElementById('stacktome-widget-placeholder');
   const widgetUrl = (id) => `${BASE_URL}/api/publish/v1/collect/widget/trustpilot/${id}`;
   function configUrl() {
     const apiKey   = document.getElementById('apiKey').value.trim();
@@ -368,10 +369,8 @@
     if (!widgetId) { alert('Enter a Widget ID'); return; }
     if (!name || !email || !reference) { alert('Fill in all fields'); return; }
 
-    const placeholderEl = document.getElementById(`stacktome-widget-${widgetId}`)
-                       || document.getElementById('stacktome-widget-placeholder');
-    placeholderEl.id = `stacktome-widget-${widgetId}`;
-    placeholderEl.innerHTML = '';
+    widgetPlaceholder.id = `stacktome-widget-${widgetId}`;
+    widgetPlaceholder.innerHTML = '';
     document.querySelectorAll('script[data-st-embed-test]').forEach(s => s.remove());
 
     startProgress();
@@ -450,8 +449,7 @@
     document.getElementById('mode-b-toggle').checked = true;
     document.getElementById('base-url-row').style.display = '';
     document.getElementById('btn-get-link').style.display = '';
-    const placeholder = document.getElementById('stacktome-widget-placeholder');
-    placeholder.id = `stacktome-widget-${widgetId}`;
+    widgetPlaceholder.id = `stacktome-widget-${widgetId}`;
     const s = document.createElement('script');
     s.src = 'https://cdn.stacktome.com/frontend/collect/trustpilot/production/widget.js?' + Date.now();
     s.setAttribute('filter-params', JSON.stringify({ apiKey, widgetId, mode: 'link' }));
