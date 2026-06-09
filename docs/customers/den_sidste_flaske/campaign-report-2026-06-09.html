@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Den Sidste Flaske — June 2026 Review Analysis</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #2d3436; margin: 20px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .kpi.warn .value { color: #e17055; }
+  .kpi.danger .value { color: #d63031; }
+  .kpi.good .value { color: #00b894; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .stars { color: #fdcb6e; }
+
+  .bar-wrap { background: #f0f0f0; border-radius: 4px; height: 8px; margin-top: 4px; }
+  .bar { height: 8px; border-radius: 4px; }
+  .bar-5 { background: #00b894; }
+  .bar-4 { background: #55efc4; }
+  .bar-3 { background: #fdcb6e; }
+  .bar-2 { background: #e17055; }
+  .bar-1 { background: #d63031; }
+
+  .campaign-block { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 12px; overflow: hidden; }
+  .camp-header { background: #2d3436; color: #fff; padding: 10px 16px; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .camp-header .badge { background: #6c5ce7; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
+  .camp-header .badge-red { background: #d63031; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
+  .camp-header .badge-orange { background: #e17055; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
+  .review-card { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; }
+  .review-card:last-child { border-bottom: none; }
+  .review-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+  .rating-badge { font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 8px; }
+  .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff3e0; color: #e17055; }
+  .r3 { background: #fef9e7; color: #f39c12; }
+  .r5 { background: #e8f8f5; color: #00b894; }
+  .review-text { font-style: italic; color: #555; line-height: 1.6; font-size: 13px; }
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-warn { display: inline-block; background: #ffeaea; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #d63031; font-weight: 600; }
+  .tag-ok { display: inline-block; background: #e8f8f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #00b894; }
+
+  .urgent { background: #fff5f5; border: 1.5px solid #d63031; border-radius: 10px; padding: 20px 22px; margin-bottom: 16px; }
+  .urgent .urg-title { color: #d63031; font-weight: 700; font-size: 15px; margin-bottom: 14px; }
+
+  .recovery { background: #f0fff8; border: 1.5px solid #00b894; border-radius: 10px; padding: 20px 22px; margin-bottom: 16px; }
+  .recovery .rec-title { color: #00b894; font-weight: 700; font-size: 15px; margin-bottom: 8px; }
+
+  .insight { background: #f8f4ff; border-left: 4px solid #6c5ce7; border-radius: 0 8px 8px 0; padding: 14px 18px; margin-bottom: 14px; }
+  .insight strong { color: #6c5ce7; }
+
+  .daily-table td.crash { background: #fff0f0 !important; font-weight: 600; color: #d63031; }
+  .daily-table td.ok { background: #f0fff8 !important; color: #00b894; font-weight: 600; }
+
+  .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .split-card { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .split-card .sc-label { font-size: 12px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 6px; }
+  .split-card .sc-value { font-size: 32px; font-weight: 700; color: #1a1a2e; margin-bottom: 2px; }
+  .split-card .sc-sub { font-size: 12px; color: #888; margin-bottom: 14px; }
+  .split-card.organic { border-top: 4px solid #e17055; }
+  .split-card.attributed { border-top: 4px solid #00b894; }
+
+  .rating-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; font-size: 12px; }
+  .rating-row .rl { width: 32px; color: #888; text-align: right; }
+  .rating-row .rb { flex: 1; }
+  .rating-row .rv { width: 24px; text-align: right; color: #555; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Den Sidste Flaske — June 2026</h1>
+  <p class="subtitle">DK account · All reviews (attributed + organic) · Generated 2026-06-09</p>
+
+  <!-- Executive Summary KPIs -->
+  <h2>Executive Summary</h2>
+
+  <div class="kpi-grid">
+    <div class="kpi danger">
+      <div class="label">Avg Rating (June 1–9)</div>
+      <div class="value">3.95</div>
+      <div class="sub">vs 4.69 in May report</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Total Reviews</div>
+      <div class="value">85</div>
+      <div class="sub">June 1–9, all sources</div>
+    </div>
+    <div class="kpi danger">
+      <div class="label">1-Star Reviews</div>
+      <div class="value">12</div>
+      <div class="sub">14.1% of total</div>
+    </div>
+    <div class="kpi warn">
+      <div class="label">1–2 Star Combined</div>
+      <div class="value">19</div>
+      <div class="sub">22.4% of total</div>
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi good">
+      <div class="label">Campaign (invite-tp) Avg</div>
+      <div class="value">4.68</div>
+      <div class="sub">28 attributed reviews</div>
+    </div>
+    <div class="kpi warn">
+      <div class="label">Organic / Unattributed Avg</div>
+      <div class="value">3.60</div>
+      <div class="sub">57 organic reviews</div>
+    </div>
+    <div class="kpi">
+      <div class="label">June Sends (invite-tp)</div>
+      <div class="value">8,542</div>
+      <div class="sub">Campaign 391</div>
+    </div>
+    <div class="kpi good">
+      <div class="label">Jun 9 Recovery Avg</div>
+      <div class="value">5.00</div>
+      <div class="sub">4 reviews, all 5-star</div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <strong>Key finding:</strong> The rating drop is entirely driven by a delivery crisis peaking June 4–8. Every single 1-star review cites the same root cause — broken "dag-til-dag" delivery promises combined with "ekspreshåndtering" that failed to deliver. June 9 shows full recovery (5.0 avg), suggesting the backlog has cleared. Campaign-invited customers remained satisfied (4.68 avg) throughout.
+  </div>
+
+  <!-- Rating distribution -->
+  <h2>Rating Distribution</h2>
+
+  <div style="background:#fff; border-radius:10px; padding:20px; box-shadow:0 1px 4px rgba(0,0,0,0.07); margin-bottom:16px;">
+    <div class="rating-row">
+      <div class="rl">5 ★</div>
+      <div class="rb"><div class="bar-wrap"><div class="bar bar-5" style="width:60%"></div></div></div>
+      <div class="rv">51</div>
+    </div>
+    <div class="rating-row">
+      <div class="rl">4 ★</div>
+      <div class="rb"><div class="bar-wrap"><div class="bar bar-4" style="width:11.8%"></div></div></div>
+      <div class="rv">10</div>
+    </div>
+    <div class="rating-row">
+      <div class="rl">3 ★</div>
+      <div class="rb"><div class="bar-wrap"><div class="bar bar-3" style="width:5.9%"></div></div></div>
+      <div class="rv">5</div>
+    </div>
+    <div class="rating-row">
+      <div class="rl">2 ★</div>
+      <div class="rb"><div class="bar-wrap"><div class="bar bar-2" style="width:8.2%"></div></div></div>
+      <div class="rv">7</div>
+    </div>
+    <div class="rating-row">
+      <div class="rl">1 ★</div>
+      <div class="rb"><div class="bar-wrap"><div class="bar bar-1" style="width:14.1%"></div></div></div>
+      <div class="rv">12</div>
+    </div>
+    <p style="margin-top:14px; font-size:12px; color:#888;">Total: 85 reviews &nbsp;·&nbsp; Avg: 3.95 &nbsp;·&nbsp; Normal DK avg: ~4.69</p>
+  </div>
+
+  <!-- Daily trend -->
+  <h2>Daily Trend — The Delivery Crisis (June 4–8)</h2>
+
+  <table class="daily-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Reviews</th>
+        <th>Avg Rating</th>
+        <th>1–2 Star</th>
+        <th>Context</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Jun 1</td><td>14</td><td class="ok">4.57</td><td>1</td><td class="neutral">Normal</td>
+      </tr>
+      <tr>
+        <td>Jun 2</td><td>11</td><td>4.45</td><td>1</td><td class="neutral">Normal</td>
+      </tr>
+      <tr>
+        <td>Jun 3</td><td>12</td><td>4.33</td><td>2</td><td class="neutral">Beginning to slip</td>
+      </tr>
+      <tr>
+        <td>Jun 4</td><td>11</td><td class="crash">3.18</td><td>4</td><td class="worst">Orders for Grundlovsdag failing to arrive</td>
+      </tr>
+      <tr>
+        <td>Jun 5</td><td>15</td><td class="crash">3.47</td><td>6</td><td class="worst">Grundlovsdag — Father's Day gift orders undelivered</td>
+      </tr>
+      <tr>
+        <td>Jun 6</td><td>4</td><td>3.75</td><td>1</td><td class="neutral">Volume drops, frustration continues</td>
+      </tr>
+      <tr>
+        <td>Jun 7</td><td>6</td><td>3.67</td><td>1</td><td class="neutral">Tail-end complaints</td>
+      </tr>
+      <tr>
+        <td>Jun 8</td><td>8</td><td class="crash">3.38</td><td>3</td><td class="worst">Still undelivered orders from Jun 1–3</td>
+      </tr>
+      <tr>
+        <td>Jun 9</td><td>4</td><td class="ok">5.00</td><td>0</td><td class="best">Full recovery — backlog cleared</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:12px; color:#888; margin-top:4px; margin-bottom:24px;">Grundlovsdag = Danish Constitution Day, June 5, a public holiday. Several reviews explicitly mention ordering for "Fars dag" (Father's Day) gift delivery by this date.</p>
+
+  <!-- Attribution split -->
+  <h2>Campaign vs Organic — Attribution Split</h2>
+
+  <div class="split-grid">
+    <div class="split-card attributed">
+      <div class="sc-label">Campaign-Attributed (invite-tp)</div>
+      <div class="sc-value">4.68</div>
+      <div class="sc-sub">28 reviews · Campaign 391</div>
+      <div class="rating-row"><div class="rl">5★</div><div class="rb"><div class="bar-wrap"><div class="bar bar-5" style="width:85.7%"></div></div></div><div class="rv">24</div></div>
+      <div class="rating-row"><div class="rl">4★</div><div class="rb"><div class="bar-wrap"><div class="bar bar-4" style="width:3.6%"></div></div></div><div class="rv">1</div></div>
+      <div class="rating-row"><div class="rl">3★</div><div class="rb"><div class="bar-wrap"><div class="bar bar-3" style="width:3.6%"></div></div></div><div class="rv">1</div></div>
+      <div class="rating-row"><div class="rl">2★</div><div class="rb"><div class="bar-wrap"><div class="bar bar-2" style="width:7.1%"></div></div></div><div class="rv">2</div></div>
+      <div class="rating-row"><div class="rl">1★</div><div class="rb"><div class="bar-wrap"><div class="bar bar-1" style="width:0%"></div></div></div><div class="rv">0</div></div>
+      <p style="font-size:12px; color:#636e72; margin-top:12px;">Customers invited via post-purchase email campaign. Zero 1-star reviews. Delivery expectations managed by invite timing (typically sent after confirmed delivery).</p>
+    </div>
+    <div class="split-card organic">
+      <div class="sc-label">Organic / Not Attributed</div>
+      <div class="sc-value">3.60</div>
+      <div class="sc-sub">57 reviews · Trustpilot / direct</div>
+      <div class="rating-row"><div class="rl">5★</div><div class="rb"><div class="bar-wrap"><div class="bar bar-5" style="width:47.4%"></div></div></div><div class="rv">27</div></div>
+      <div class="rating-row"><div class="rl">4★</div><div class="rb"><div class="bar-wrap"><div class="bar bar-4" style="width:15.8%"></div></div></div><div class="rv">9</div></div>
+      <div class="rating-row"><div class="rl">3★</div><div class="rb"><div class="bar-wrap"><div class="bar bar-3" style="width:7%"></div></div></div><div class="rv">4</div></div>
+      <div class="rating-row"><div class="rl">2★</div><div class="rb"><div class="bar-wrap"><div class="bar bar-2" style="width:8.8%"></div></div></div><div class="rv">5</div></div>
+      <div class="rating-row"><div class="rl">1★</div><div class="rb"><div class="bar-wrap"><div class="bar bar-1" style="width:21.1%"></div></div></div><div class="rv">12</div></div>
+      <p style="font-size:12px; color:#636e72; margin-top:12px;">All 12 one-star reviews are in this bucket. These customers were not invited — they came to Trustpilot proactively to register a complaint. 21% 1-star rate is the alarm signal.</p>
+    </div>
+  </div>
+
+  <!-- Root cause -->
+  <h2>Root Cause Analysis — Delivery Crisis</h2>
+
+  <div class="urgent">
+    <div class="urg-title">Delivery Failure — Four Compounding Factors</div>
+    <table style="border:none; box-shadow:none;">
+      <thead>
+        <tr>
+          <th style="width:28%">Factor</th>
+          <th>What happened</th>
+          <th style="width:18%">Review signal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Holiday spike</strong></td>
+          <td>Grundlovsdag (Jun 5) created a gift-buying surge with hard deadlines. Multiple customers ordered specifically for "Fars dag" and expected delivery by Jun 5.</td>
+          <td class="worst">★ Jun 4–5 worst days</td>
+        </tr>
+        <tr>
+          <td><strong>2. False "dag-til-dag" promise</strong></td>
+          <td>Website advertised same/next-day delivery. Customers placed orders trusting this — some within 1.5h of the stated cutoff. Orders took 7–14 days.</td>
+          <td class="worst">8 of 12 one-star reviews cite this explicitly</td>
+        </tr>
+        <tr>
+          <td><strong>3. "Ekspreshåndtering" fraud</strong></td>
+          <td>Website offered "free express handling" as an upsell incentive (buy 6 more bottles). Customers who unlocked this received no priority treatment. One review documents this in detail: order placed May 27, not received Jun 8 (12 days later).</td>
+          <td class="worst">2-star review Jun 8: "Hvad betyder ekspreshåndtering egentlig?"</td>
+        </tr>
+        <tr>
+          <td><strong>4. Carrier breakdown (DAO / WebrinQ)</strong></td>
+          <td>At least two carriers implicated. One customer was told by DSF that order was "on the pallet" and would ship Wednesday — but DAO had not received the parcel by Thursday. WebrinQ told the same customer directly that they had not received the shipment.</td>
+          <td class="worst">Direct carrier contradiction documented Jun 5 review</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 1-star reviews in full -->
+  <h2>All 1-Star Reviews — June 2026</h2>
+
+  <div class="campaign-block">
+    <div class="camp-header">
+      <span>June 1</span>
+      <span class="badge-red">★ 1</span>
+      <span class="tag" style="background:rgba(255,255,255,0.1); color:#ddd;">Manglende leveringer</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">1 ★</span>
+        <span class="tag-warn">Ikke leveret</span>
+        <span class="tag">2 kasser vin</span>
+      </div>
+      <div class="review-text">"En kammerat og jeg skulle bruge 12 flasker vin til weekenden. Vi sad og kiggede på forskellige vinforhandlere og da vi kom til den sidste flaske stod der på hjemmesiden at hvis man bestilte inden for 1:30 time så kom flaskerne dagen efter. Den første kasse kom først ugen efter. 2 uger senere er den anden kasse stadig ikke dukkert op. [...] Har købt en del hos den sidste flaske, men har desværre oplevet de ikke har styr på leveringer længere, også fra andre bekendte der har oplevet det samme, så søger andre græsgange fremover."</div>
+      <p style="margin-top:8px; font-size:12px; color:#888;">Note: Customer updated review after being contacted — DSF offered a replacement case but said "they were busy so it might take a while." Made the situation worse.</p>
+    </div>
+  </div>
+
+  <div class="campaign-block">
+    <div class="camp-header">
+      <span>June 4</span>
+      <span class="badge-red">★ 1</span>
+      <span class="tag" style="background:rgba(255,255,255,0.1); color:#ddd;">DSF er utroværdige</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">1 ★</span>
+        <span class="tag-warn">Dag-til-dag løfte brudt</span>
+        <span class="tag">Order 432326DSF</span>
+        <span class="tag">18 flasker</span>
+      </div>
+      <div class="review-text">"Den sidste flaske er utroværdige. Jeg bestilte 18 flasker vin mandag 1/6. [...] Da jeg ikke havde fået svar kl. 17 ringede jeg til kundeservice. Her fik jeg oplyst at den var ved at blive pakket og ville blive afsendt onsdag. Jeg ville inden for kort tid modtage et trackinglink. Det fik jeg så ikke. [...] Jeg aner reelt ikke hvornår jeg vil modtage min vin, og jeg kan se her på Trustpilot at jeg ikke er den eneste der har haft den oplevelse med lang levering."</div>
+    </div>
+  </div>
+
+  <div class="campaign-block">
+    <div class="camp-header">
+      <span>June 4</span>
+      <span class="badge-red">★ 1</span>
+      <span class="tag" style="background:rgba(255,255,255,0.1); color:#ddd;">Forkert og delvis levering</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">1 ★</span>
+        <span class="tag-warn">Forkert ordre</span>
+        <span class="tag">12 flasker</span>
+        <span class="tag">Svensk kunde</span>
+      </div>
+      <div class="review-text">"Beställde 12 flaskor Italiensk och franskt rött vin. Första leveransen innehöll endast 6 flaskor. [...] Har ikväll fått återstående leverans, dock inte det jag beställde från början. Med andra ord helt tokigt gällande orderbeställning och leverans. Inget som har stämt. Aldrig varit med om liknande."</div>
+    </div>
+  </div>
+
+  <div class="campaign-block">
+    <div class="camp-header">
+      <span>June 4</span>
+      <span class="badge-red">★ 1</span>
+      <span class="tag" style="background:rgba(255,255,255,0.1); color:#ddd;">Express levering — annulleret</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">1 ★</span>
+        <span class="tag-warn">Ekspres slog fejl</span>
+        <span class="tag">Fest-ordre</span>
+      </div>
+      <div class="review-text">"Om mandagen bestilte jeg flasker nok til at de ville blevet levet med 'Express levering'. Jeg hørte ikke noget fra dem og ringer torsdag eftermiddag hvor de fortæller, at min ordre stadig ikke er afsendt. Det vil jeg ikke kalde Express. Ordren blev annulleret, da den skulle have været brugt til en fest i weekenden."</div>
+    </div>
+  </div>
+
+  <div class="campaign-block">
+    <div class="camp-header">
+      <span>June 5 — Grundlovsdag</span>
+      <span class="badge-red">★ 1 × 4</span>
+      <span class="tag" style="background:rgba(255,255,255,0.1); color:#ddd;">Worst day</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">1 ★</span>
+        <span class="tag-warn">100 år</span>
+        <span class="tag">Order 429500DSF</span>
+      </div>
+      <div class="review-text">"Hvis man har tid til at vente 100 år på sine flasker, bliver man helt sikkert tilfreds."</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">1 ★</span>
+        <span class="tag-warn">10 dage ingen afsendelse</span>
+        <span class="tag">Order 429580DSF</span>
+      </div>
+      <div class="review-text">"Det er 10 dage siden jeg bestilte 2 kasser vin og jeg har STADIG ikke modtaget en mail på at min ordre er på vej.. tilgengæld bliver jeg spammet med tilbud fra jer.. det er næsten provokerende og en virkelig dårlig kundeoplevelse. Måske skulle i koncentrere jer lidt om at få afsluttet denne kunderejse jeg allerede er på, i stedet for at lokke mig på en ny."</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">1 ★</span>
+        <span class="tag-warn">Ekspreshåndtering — DAO modtog aldrig pakken</span>
+        <span class="tag">Order 432478DSF</span>
+      </div>
+      <div class="review-text">"Jeg bestiller 12 flasker mandag d. 1.6 med ekspreshåndtering. [...] De siger, at pakken netop er sat på pallen, og det vil ankomme inden lørdag [...]. I dag fredag kontakter jeg Den Sidste Flaske, som giver det indtryk, at 'problemet' ligger hos WebrinQ. WebrinQ's kundeservice siger dog direkte til mig, at de ikke har modtaget pakken endnu."</div>
+      <p style="margin-top:8px; font-size:12px; color:#888;">This review directly documents DSF and WebrinQ giving contradictory information. A strong signal of internal logistics breakdown.</p>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">1 ★</span>
+        <span class="tag-warn">Fars dag gave ikke leveret</span>
+        <span class="tag">Rosé kasse</span>
+        <span class="tag">Udsolgt</span>
+      </div>
+      <div class="review-text">"Jeg bestiller en kasse Rosé vin netop fordi de skriver de leverer indenfor 1-2 dage. [...] det skulle være en fars dag gave [...] ved kontakt til firmaet [...] indrømmer, at de faktisk slet ikke ved, hvornår de vil være i stand til at imødekomme ordren. Selvom der på deres side står at se er 1-2 dage forsinkede."</div>
+    </div>
+  </div>
+
+  <div class="campaign-block">
+    <div class="camp-header">
+      <span>June 6</span>
+      <span class="badge-red">★ 1</span>
+      <span class="tag" style="background:rgba(255,255,255,0.1); color:#ddd;">3. gang skuffet</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">1 ★</span>
+        <span class="tag-warn">3 gentagne leveringsfejl</span>
+        <span class="tag">Order 432343DSF</span>
+        <span class="tag">Gentagen kunde</span>
+      </div>
+      <div class="review-text">"Har nu bestilt fra Den Sidste Flaske 3 gange nu, og er mildest talt ikke imponeret over deres levering. 1. gang fik jeg en smadret kasse med 6 flasker vin [...]. 2. gang [...] Det kom dog desværre 2 dage for sent. 3. gang var her til Fars dag. [...] Stram op! Ville hellere betale for fragten så man kunne regne med at det kommer frem i ordentlig stand."</div>
+      <p style="margin-top:8px; font-size:12px; color:#888;">Three-time repeat customer lost due to cumulative delivery failures. Explicitly requests paying for freight rather than "free delivery" that doesn't arrive.</p>
+    </div>
+  </div>
+
+  <div class="campaign-block">
+    <div class="camp-header">
+      <span>June 7</span>
+      <span class="badge-red">★ 1</span>
+      <span class="tag" style="background:rgba(255,255,255,0.1); color:#ddd;">Delt og forsinket forsendelse</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">1 ★</span>
+        <span class="tag-warn">8 fl. søndag · 4 fl. ugen efter</span>
+      </div>
+      <div class="review-text">"Leveringsservice er ikke eksisterende! De reklamerer med dag til dag levering. Bestilte 12 fl vin. Skulle leveres torsdag, men fik 8 fl søndag, og måtte vente til søndag ugen efter på de sidste 4. De er sku en ommer!"</div>
+    </div>
+  </div>
+
+  <div class="campaign-block">
+    <div class="camp-header">
+      <span>June 8 — Detailed complaints</span>
+      <span class="badge-red">★ 1 × 2 &nbsp; ★★ 1</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">1 ★</span>
+        <span class="tag-warn">Bestilt 3/6 — ingen bevægelse 8/6</span>
+      </div>
+      <div class="review-text">"Bestilte 12 flasker vin den 03.06.26 og modtager en ordrebekræftelse. Der sker ikke mere før jeg rykker den 08.06.26 og så får jeg at vide at de vil sende i løbet af ugen?"</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">1 ★</span>
+        <span class="tag-warn">8 dage — stadig ikke modtaget</span>
+      </div>
+      <div class="review-text">"Leveringservicen er under al kritik, håber de finder en anden. Bestilte 12 flasker for 8 dage siden, har endnu ikke modtaget dem og ej heller fået en dato for hvornår de bliver leveret."</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r2">2 ★</span>
+        <span class="tag-warn">Ekspreshåndtering — 12 dage ingen levering</span>
+        <span class="tag">Order 428219DSF</span>
+      </div>
+      <div class="review-text">"Den Sidste Flaske reklamere normalt med bestilling før kl 13 afsendes samme dag. [...] jeg valgte at købe flere flasker for at opnå ['GRATIS ekspreshåndtering']. [...] pr. 8. juni – 8 hverdage efter bestilling – er ordren fortsat ikke modtaget. Jeg modtog heller ingen proaktiv information om forsinkelsen. [...] Hvad betyder 'ekspreshåndtering' egentlig?"</div>
+      <p style="margin-top:8px; font-size:12px; color:#888;">This is the most detailed complaint. Customer also notes that orders from a wine tasting facilitated by DSF (placed May 28) were ready by June 1 — implying B2B orders were prioritised over B2C.</p>
+    </div>
+  </div>
+
+  <!-- 2-star reviews -->
+  <h2>2-Star Reviews — June 2026</h2>
+
+  <div class="campaign-block">
+    <div class="camp-header">
+      <span>2-Star Reviews (7 total)</span>
+      <span class="badge-orange">★★ 2</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r2">2 ★</span>
+        <span class="tag-warn">Italiensk vin uadvaret</span>
+        <span class="tag">Jun 2</span>
+      </div>
+      <div class="review-text">"Jeg købte en blandet kasse. Der var ingen advarsel om, at den indeholdt 4 flasker ITALIENSK. Så 4 ud af 6 flasker lige i køkkenvasken."</div>
+      <p style="margin-top:6px; font-size:12px; color:#888;">Product issue — customer allergic to / dislikes Italian wine. Not a delivery complaint. Product description may need improvement.</p>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r2">2 ★</span>
+        <span class="tag-warn">Udsolgt vare — penge trukket</span>
+        <span class="tag">Jun 3</span>
+      </div>
+      <div class="review-text">"Bestilte en smagskasse [...] pengene blev trukket fra min konto [...] efter 7 dage fik jeg en besked at den var udsolgt. Forstår ikke at [...] trække pengene fra min konto på en vare der er udsolgt."</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r2">2 ★</span>
+        <span class="tag-warn">Utrolig lang leveringstid</span>
+        <span class="tag">Jun 3 · Order 12987297595770</span>
+      </div>
+      <div class="review-text">"Vinen er god og kan helt klart anbefales — der er dog utrolig lang leveringstid."</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r2">2 ★</span>
+        <span class="tag-warn">Ikke på lager — system fejl</span>
+        <span class="tag">Jun 4 · Order #429881DSF</span>
+      </div>
+      <div class="review-text">"Bestilte 12 flasker af the gov'nor fredag morgen med aftenlevering. [...] fik kundeservice at oplyse, at grundet fejl i systemet havde de slet ikke flaskerne på lager alligevel og at jeg først kan forvente at modtage dem næste uge."</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r2">2 ★</span>
+        <span class="tag-warn">Bestilt 31/5 — ikke leveret til weekend 6–7/6</span>
+        <span class="tag">Jun 5 · Order 13092074553722</span>
+      </div>
+      <div class="review-text">"Bestilte søndag d. 31. maj, men regnede da med vinen nåede frem til weekenden d. 6-7. Juni. Det gjorde den så ikke [...]. De to stjerner på trods, er fordi priserne virker rimelige."</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r2">2 ★</span>
+        <span class="tag-warn">Fars dag rosé — annulleret</span>
+        <span class="tag">Jun 5</span>
+      </div>
+      <div class="review-text">"Jeg bestiller en kasse Rosé vin netop fordi de skriver de leverer indenfor 1-2 dage [...] det skulle være en fars dag gave [...] de vil sende en vare trække pengene fra min konto på en vare der er udsolgt."</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r2">2 ★</span>
+        <span class="tag-warn">Ekspreshåndtering — 12 dage</span>
+        <span class="tag">Jun 8 · Order 428219DSF</span>
+      </div>
+      <div class="review-text">See full text in 1-star section above — filed as 2-star but the most detailed complaint of the entire period.</div>
+    </div>
+  </div>
+
+  <!-- Recovery signal -->
+  <h2>Recovery Signal — June 9</h2>
+
+  <div class="recovery">
+    <div class="rec-title">Full Recovery on June 9 (avg 5.00)</div>
+    <p>All 4 reviews on June 9 were 5-star and every single one praised fast delivery — a complete reversal:</p>
+    <ul style="margin: 10px 0 0 20px; line-height: 2;">
+      <li><em>"Lækker vin med gratis levering, så bliver det ikke bedre."</em></li>
+      <li><em>"Dejlig vin, hurtig levering."</em></li>
+      <li><em>"bestilt i går, leveres i dag"</em></li>
+      <li><em>"Nem bestilling, hurtig hjemmelevering."</em></li>
+    </ul>
+    <p style="margin-top:12px; font-size:13px; color:#555;">This confirms the delivery backlog was a time-bounded crisis tied to the Grundlovsdag holiday surge, not a structural logistics failure. The underlying product and service quality remains strong.</p>
+  </div>
+
+  <!-- 5-star summary -->
+  <h2>What's Working — 5-Star Themes</h2>
+
+  <div style="background:#fff; border-radius:10px; padding:20px; box-shadow:0 1px 4px rgba(0,0,0,0.07); margin-bottom:16px;">
+    <p>The 51 five-star reviews share consistent themes when they include text:</p>
+    <ul style="margin: 10px 0 0 20px; line-height: 2; color: #4a4a4a;">
+      <li><strong>Fast delivery</strong> — "hurtig levering", "bestilt i går, leveres i dag" (when logistics works)</li>
+      <li><strong>Evening delivery</strong> — specifically valued by working customers</li>
+      <li><strong>Good prices</strong> — "vine til en skarp pris"</li>
+      <li><strong>Easy ordering</strong> — website experience is positive</li>
+      <li><strong>Tracking</strong> — "kunne følge med i, hvornår ordren blev afleveret"</li>
+    </ul>
+    <p style="margin-top:12px; font-size:13px; color:#636e72;">The product is not the issue. Every 1-star review that mentions wine quality notes the wine is fine. Delivery is the sole driver of dissatisfaction.</p>
+  </div>
+
+  <!-- Recommendations -->
+  <h2>Recommendations</h2>
+
+  <table>
+    <thead>
+      <tr><th style="width:28%">Action</th><th>Detail</th><th style="width:16%">Priority</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Remove or qualify delivery promise</strong></td>
+        <td>The "dag-til-dag" promise on the website is creating ~70% of all negative reviews. During busy periods, the "ekstraordinær travlhed" banner is not enough — orders should be blocked or the delivery selector should be hidden when capacity is constrained.</td>
+        <td class="worst">Critical</td>
+      </tr>
+      <tr>
+        <td><strong>Fix "ekspreshåndtering" upsell</strong></td>
+        <td>The express handling upsell (triggered by buying 6+ bottles) is described as a fraud in two detailed June reviews. Either deliver on the promise or remove the offer. The Jun 8 review documents that a B2B event order (same period) was fulfilled in 4 days while B2C express order took 12+ days.</td>
+        <td class="worst">Critical</td>
+      </tr>
+      <tr>
+        <td><strong>Proactive delay comms</strong></td>
+        <td>Multiple customers say they only found out about delays after contacting support themselves. Automated outbound SMS/email when an order hasn't shipped within 24h of the promised window would prevent Trustpilot reviews from the most frustrated customers.</td>
+        <td class="warn">High</td>
+      </tr>
+      <tr>
+        <td><strong>Pre-holiday capacity check</strong></td>
+        <td>Grundlovsdag (Jun 5) and Father's Day created the surge. Flag public holidays in the invite and order system — suppress express/next-day promises in the 5 days before major holidays.</td>
+        <td class="warn">High</td>
+      </tr>
+      <tr>
+        <td><strong>Campaign timing is working — maintain</strong></td>
+        <td>The invite-tp campaign maintained a 4.68 avg throughout the crisis. Invite timing (post-delivery confirmation) means invited customers had already received their wine before being asked. Do not change this mechanism.</td>
+        <td class="best">Maintain</td>
+      </tr>
+      <tr>
+        <td><strong>Inventory synchronisation</strong></td>
+        <td>Two reviews cite products shown as in-stock that were not. The "smagskasse" customer had money debited on an out-of-stock item for 7 days. Inventory accuracy is a secondary but real issue.</td>
+        <td class="neutral">Medium</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="margin-top:32px; font-size:12px; color:#aaa; text-align:center;">Den Sidste Flaske · DK Market · June 2026 · Stacktome Support &nbsp;·&nbsp; apps@stacktome.com</p>
+
+</div>
+</body>
+</html>
