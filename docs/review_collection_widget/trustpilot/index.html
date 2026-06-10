@@ -288,6 +288,7 @@
     const name      = document.getElementById('name').value.trim();
     const email     = document.getElementById('email').value.trim();
     const reference = document.getElementById('reference').value.trim();
+    const locale    = document.getElementById('locale').value.trim();
     const baseUrl   = document.getElementById('base-url').value.trim().replace(/\?.*$/, '');
 
     if (!apiKey)    { alert('Enter an API Key'); return; }
@@ -313,7 +314,8 @@
         + '?data=' + encodeURIComponent(d)
         + '&iv='   + encodeURIComponent(iv)
         + '&tag='  + encodeURIComponent(tag)
-        + '&sig='  + encodeURIComponent(sig);
+        + '&sig='  + encodeURIComponent(sig)
+        + (locale ? '&locale=' + encodeURIComponent(locale) : '');
       const a = document.getElementById('link-out');
       a.href = url; a.textContent = url;
       document.getElementById('link-open-btn').onclick = () => window.open(url, '_blank');
