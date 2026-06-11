@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Den Sidste Flaske — Jan–May 2026 All Markets Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 1040px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 20px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  /* KPI strip */
+  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 16px 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 5px; }
+  .kpi .value { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 10px; color: #aaa; margin-top: 3px; }
+
+  /* Market tabs */
+  .market-section { margin-bottom: 36px; }
+  .market-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .market-badge { display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; color: #fff; }
+  .mb-dk { background: #6c5ce7; }
+  .mb-de { background: #0984e3; }
+  .mb-se { background: #e17055; }
+
+  /* Monthly table */
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 14px; }
+  th { background: #f8f9ff; text-align: left; padding: 10px 12px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; white-space: nowrap; }
+  td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafbff; }
+  .month-label { font-weight: 600; color: #1a1a2e; }
+  td.warn { color: #d63031; font-weight: 600; }
+  td.good { color: #00b894; font-weight: 600; }
+  td.neutral { color: #636e72; }
+
+  /* Attribution bar (inline) */
+  .mini-bar { display: flex; height: 6px; border-radius: 3px; overflow: hidden; background: #dfe6e9; width: 80px; }
+  .bar-attr { background: #6c5ce7; height: 100%; }
+  .bar-organic { background: #b2bec3; height: 100%; }
+
+  /* Star dist inline */
+  .star-row { display: flex; gap: 2px; align-items: center; font-size: 11px; }
+  .s5c { color: #00b894; }
+  .s4c { color: #55efc4; }
+  .s3c { color: #fdcb6e; }
+  .s2c { color: #e17055; }
+  .s1c { color: #d63031; }
+
+  /* Trend bar */
+  .trend-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 10px 0 20px; }
+  .trend-cell { background: #fff; border-radius: 8px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); text-align: center; }
+  .trend-cell .tc-month { font-size: 10px; text-transform: uppercase; color: #888; margin-bottom: 4px; }
+  .trend-cell .tc-avg { font-size: 20px; font-weight: 700; color: #1a1a2e; }
+  .trend-cell .tc-vol { font-size: 10px; color: #aaa; margin-top: 2px; }
+  .trend-cell.tc-low { border-top: 3px solid #d63031; }
+  .trend-cell.tc-mid { border-top: 3px solid #fdcb6e; }
+  .trend-cell.tc-high { border-top: 3px solid #00b894; }
+
+  /* Attribution split box */
+  .split-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+  .split-box { border-radius: 8px; padding: 10px 14px; }
+  .split-attr { background: #f0eeff; border-left: 3px solid #6c5ce7; }
+  .split-organic { background: #f5f6fa; border-left: 3px solid #b2bec3; }
+  .split-box .sb-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 4px; }
+  .split-box .sb-count { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+  .split-box .sb-avg { font-size: 12px; color: #636e72; margin-top: 2px; }
+
+  /* Insight boxes */
+  .insight { background: #fff; border-left: 4px solid #6c5ce7; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .insight p { margin-bottom: 4px; }
+  .insight p:last-child { margin-bottom: 0; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+  .warn-box p { margin-bottom: 4px; color: #4a4a4a; }
+
+  /* Negatives table */
+  .neg-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  .neg-table th { background: #f8f9ff; padding: 10px 12px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; text-align: left; }
+  .neg-table td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; font-size: 12px; vertical-align: top; }
+  .neg-table tr:last-child td { border-bottom: none; }
+  .source-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; white-space: nowrap; }
+  .sp-attr { background: #f0eeff; color: #6c5ce7; }
+  .sp-organic { background: #f0f0f0; color: #636e72; }
+  .rating-badge { font-weight: 700; font-size: 13px; }
+  .r1 { color: #d63031; }
+  .r2 { color: #e17055; }
+  .r3 { color: #fdcb6e; }
+  .review-head { font-weight: 600; color: #2d3436; margin-bottom: 2px; }
+  .review-body { color: #636e72; line-height: 1.45; max-width: 500px; }
+
+  /* Themes summary */
+  .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 14px 0; }
+  .theme-card { background: #fff; border-radius: 8px; padding: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .theme-card .th-label { font-size: 12px; font-weight: 600; color: #1a1a2e; margin-bottom: 4px; }
+  .theme-card .th-count { font-size: 20px; font-weight: 700; }
+  .theme-card .th-note { font-size: 11px; color: #888; margin-top: 3px; }
+  .tc-delivery .th-count { color: #e17055; }
+  .tc-quality .th-count { color: #fdcb6e; }
+  .tc-cs .th-count { color: #0984e3; }
+  .tc-returns .th-count { color: #6c5ce7; }
+  .tc-stock .th-count { color: #d63031; }
+  .tc-positive .th-count { color: #00b894; }
+
+  .muted { color: #888; font-size: 12px; }
+  .flag { font-size: 10px; background: #fff3cd; color: #856404; padding: 1px 6px; border-radius: 8px; display: inline-block; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Den Sidste Flaske — Jan–May 2026</h1>
+  <p class="subtitle">All 3 markets (DK · DE · SE) · Jan 1 – May 31 2026 · Attributed + organic reviews · Generated 2026-06-11</p>
+
+  <!-- GROUP KPIs -->
+  <h2>Five-Month Group Overview</h2>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Total Reviews</div><div class="value">4,082</div><div class="sub">all markets, 5 months</div></div>
+    <div class="kpi"><div class="label">DK Reviews</div><div class="value">3,497</div><div class="sub">86% of total volume</div></div>
+    <div class="kpi"><div class="label">DE Reviews</div><div class="value">295</div><div class="sub">growing fast</div></div>
+    <div class="kpi"><div class="label">SE Reviews</div><div class="value">227</div><div class="sub">volatile scores</div></div>
+    <div class="kpi"><div class="label">Attributed</div><div class="value">83.7%</div><div class="sub">DK avg across 5 months</div></div>
+    <div class="kpi"><div class="label">Organic Gap</div><div class="value">−1.2★</div><div class="sub">organic avg vs attributed (DK)</div></div>
+  </div>
+
+  <div class="insight">
+    <p><strong>Pattern in one sentence:</strong> Campaign-invited customers (attributed) rate consistently 4.67–4.78 across all markets every month. Every drop in overall average is explained by organic reviews from customers with unresolved delivery and product issues.</p>
+    <p>DE is the strongest market — near-perfect attribution, 4.7+ avg sustained, growing from 40 to 106 reviews/month. SE had a disastrous Jan launch (3.0 avg) and has been stabilising since. DK has a persistent organic-attributed gap of ~1.2 stars driven by delivery failures and returns complexity.</p>
+  </div>
+
+  <!-- ================================================================ DK ================================================================ -->
+  <h2>DK — den_sidste_flaske</h2>
+  <p>Largest market by far. Jan spike driven by Christmas/New Year orders. Attribution rate declining month-over-month as volume matures and more customers post organically.</p>
+
+  <h3>Monthly Trend</h3>
+  <div class="trend-grid">
+    <div class="trend-cell tc-high"><div class="tc-month">January</div><div class="tc-avg">4.55</div><div class="tc-vol">1,973 reviews</div></div>
+    <div class="trend-cell tc-high"><div class="tc-month">February</div><div class="tc-avg">4.70</div><div class="tc-vol">324 reviews</div></div>
+    <div class="trend-cell tc-high"><div class="tc-month">March</div><div class="tc-avg">4.61</div><div class="tc-vol">393 reviews</div></div>
+    <div class="trend-cell tc-mid"><div class="tc-month">April</div><div class="tc-avg">4.39</div><div class="tc-vol">432 reviews</div></div>
+    <div class="trend-cell tc-mid"><div class="tc-month">May</div><div class="tc-avg">4.45</div><div class="tc-vol">375 reviews</div></div>
+  </div>
+
+  <h3>Monthly Detail — DK</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Month</th>
+        <th>Total</th>
+        <th>Attributed</th>
+        <th>Organic</th>
+        <th>Attr %</th>
+        <th>Attribution bar</th>
+        <th>Avg overall</th>
+        <th>Avg attributed</th>
+        <th>Avg organic</th>
+        <th>1★</th>
+        <th>2★</th>
+        <th>3★</th>
+        <th>4★</th>
+        <th>5★</th>
+        <th>Invite sends</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="month-label">Jan</td>
+        <td>1,973</td>
+        <td>1,721</td>
+        <td>252</td>
+        <td>87.2%</td>
+        <td><div class="mini-bar"><div class="bar-attr" style="width:87.2%"></div></div></td>
+        <td>4.55</td>
+        <td class="good">4.70</td>
+        <td class="warn">3.52</td>
+        <td class="r1">148</td>
+        <td>1</td>
+        <td>24</td>
+        <td>252</td>
+        <td>1,548</td>
+        <td>3,741</td>
+      </tr>
+      <tr>
+        <td class="month-label">Feb</td>
+        <td>324</td>
+        <td>273</td>
+        <td>51</td>
+        <td>84.3%</td>
+        <td><div class="mini-bar"><div class="bar-attr" style="width:84.3%"></div></div></td>
+        <td>4.70</td>
+        <td class="good">4.78</td>
+        <td class="warn">4.24</td>
+        <td class="r1">8</td>
+        <td>5</td>
+        <td>10</td>
+        <td>31</td>
+        <td>270</td>
+        <td>4,033</td>
+      </tr>
+      <tr>
+        <td class="month-label">Mar</td>
+        <td>393</td>
+        <td>320</td>
+        <td>73</td>
+        <td>81.4%</td>
+        <td><div class="mini-bar"><div class="bar-attr" style="width:81.4%"></div></div></td>
+        <td>4.61</td>
+        <td class="good">4.78</td>
+        <td class="warn">3.86</td>
+        <td class="r1">19</td>
+        <td>7</td>
+        <td>13</td>
+        <td>32</td>
+        <td>322</td>
+        <td>5,848</td>
+      </tr>
+      <tr>
+        <td class="month-label">Apr</td>
+        <td>432</td>
+        <td>355</td>
+        <td>77</td>
+        <td>82.2%</td>
+        <td><div class="mini-bar"><div class="bar-attr" style="width:82.2%"></div></div></td>
+        <td>4.39</td>
+        <td class="good">4.67</td>
+        <td class="warn">3.09</td>
+        <td class="r1">32</td>
+        <td>18</td>
+        <td>19</td>
+        <td>45</td>
+        <td>318</td>
+        <td>5,757</td>
+      </tr>
+      <tr>
+        <td class="month-label">May</td>
+        <td>375</td>
+        <td>288</td>
+        <td>87</td>
+        <td>76.8%</td>
+        <td><div class="mini-bar"><div class="bar-attr" style="width:76.8%"></div></div></td>
+        <td>4.45</td>
+        <td class="good">4.69</td>
+        <td class="warn">3.63</td>
+        <td class="r1">24</td>
+        <td>11</td>
+        <td>17</td>
+        <td>44</td>
+        <td>279</td>
+        <td>4,423</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="split-row">
+    <div class="split-box split-attr">
+      <div class="sb-label">Attributed (campaign-invited) — 5-month DK</div>
+      <div class="sb-count">2,957 reviews</div>
+      <div class="sb-avg">Avg ★ 4.72 · Consistent across all months</div>
+    </div>
+    <div class="split-box split-organic">
+      <div class="sb-label">Organic (no order_id match) — 5-month DK</div>
+      <div class="sb-count">540 reviews</div>
+      <div class="sb-avg">Avg ★ 3.55 · Drives all rating dips · Worst in Apr (3.09)</div>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <p><strong>April warning:</strong> Organic avg dropped to 3.09 — the worst month. 32 one-star + 18 two-star = 50 negative reviews from 77 organic total (65% negative rate). Attribution held at 4.67 in the same period, confirming this is a post-purchase experience issue, not a product quality problem.</p>
+  </div>
+
+  <!-- DK Negatives breakdown by theme -->
+  <h3>DK — Problem Themes by Source</h3>
+  <div class="theme-grid">
+    <div class="theme-card tc-delivery">
+      <div class="th-label">Delivery time vs promised</div>
+      <div class="th-count">★ Organic dominant</div>
+      <div class="th-note">1–2 day promise vs 5–14 day reality. WebrinQ/DAO failures. Orders cancelled/not scanned. All months, worst Jan–Apr.</div>
+    </div>
+    <div class="theme-card tc-returns">
+      <div class="th-label">Returns complexity</div>
+      <div class="th-count">★ Organic dominant</div>
+      <div class="th-note">Customer liable for safe packaging of returned bottles. Original wine boxes not usable for courier return. 14+ day processing times.</div>
+    </div>
+    <div class="theme-card tc-stock">
+      <div class="th-label">Out-of-stock / missing items</div>
+      <div class="th-count">★ Both sources</div>
+      <div class="th-note">Items sold but unavailable. Proactive communication absent — customer has to chase. Missing bottles from multi-bottle orders.</div>
+    </div>
+    <div class="theme-card tc-quality">
+      <div class="th-label">Wine quality issues</div>
+      <div class="th-count">★ Attributed + organic</div>
+      <div class="th-note">Old corks breaking (5+ year wines). Undrinkable batches. Taste mismatches (too sweet). Health concerns raised about 6-year organic wines.</div>
+    </div>
+    <div class="theme-card tc-cs">
+      <div class="th-label">CS unresponsiveness</div>
+      <div class="th-count">★ Organic dominant</div>
+      <div class="th-note">14+ day resolution times. Cases dropped with no update. Repeat contacts needed. Worst Jan (high volume) and Apr.</div>
+    </div>
+    <div class="theme-card tc-positive">
+      <div class="th-label">What attributed customers say</div>
+      <div class="th-count">★ Positive</div>
+      <div class="th-note">Great selection, good prices, fast delivery (when it works). Campaign customers are happy — the invite itself isn't the problem.</div>
+    </div>
+  </div>
+
+  <h3>DK — Selected Negative Reviews (representative, deduplicated)</h3>
+  <table class="neg-table">
+    <thead><tr><th>Month</th><th>Source</th><th>★</th><th>Review</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Jan</td>
+        <td><span class="source-pill sp-organic">organic</span></td>
+        <td class="rating-badge r1">1</td>
+        <td>
+          <div class="review-head">Virkelig dårlig levering — bestilt til i dag, leveres næste uge</div>
+          <div class="review-body">Order email confirmed same-day delivery, tracking showed "in transit" from 10:36. Called at 16:45 — told delivery is next week. Had guests arriving at 18:00 with no wine. No solution, no accountability, no compensation.</div>
+        </td>
+      </tr>
+      <tr>
+        <td>Jan</td>
+        <td><span class="source-pill sp-organic">organic</span></td>
+        <td class="rating-badge r1">1</td>
+        <td>
+          <div class="review-head">Vinen kommer ikke — udsolgt, ingen kontakt</div>
+          <div class="review-body">Ordered and paid. Wine temporarily out of stock, promised in ~14 days. Now over a month later — no update, no contact despite repeated follow-ups.</div>
+        </td>
+      </tr>
+      <tr>
+        <td>Jan</td>
+        <td><span class="source-pill sp-organic">organic</span></td>
+        <td class="rating-badge r1">1</td>
+        <td>
+          <div class="review-head">Store problemer med levering — ligegyldig holdning</div>
+          <div class="review-body">Ordered Jan 13. Jan 16: 6 of 12 bottles delivered. Told rest by Tuesday. Tuesday: nothing. Chased again — they'd "contact Expressen." Wednesday: email saying wine damaged in transit AND out of stock until February. Offered same-price substitute instead of apologising with an upgrade. First and last purchase.</div>
+        </td>
+      </tr>
+      <tr>
+        <td>Jan</td>
+        <td><span class="source-pill sp-organic">organic</span></td>
+        <td class="rating-badge r1">1</td>
+        <td>
+          <div class="review-head">Returret er piv besværlig — 14 dage og stadig ikke løst</div>
+          <div class="review-body">12 bottles of bad red wine (no taste, murky). Return process: each bottle must be individually bubble-wrapped by the customer (original wine boxes not accepted by courier). 14+ days and case still unresolved. Over 1,000 DKK lost.</div>
+        </td>
+      </tr>
+      <tr>
+        <td>Jan</td>
+        <td><span class="source-pill sp-organic">organic</span></td>
+        <td class="rating-badge r1">1</td>
+        <td>
+          <div class="review-head">6-year-old organic wine — possibly health-unsafe</div>
+          <div class="review-body">Ordered 12 bottles of Eis Vinyerons 2020. Wine undrinkable. Turned out to be organic and 6 years old. Customer questions whether drinking it is safe. Return shipping cost is customer's responsibility.</div>
+        </td>
+      </tr>
+      <tr>
+        <td>Jan</td>
+        <td><span class="source-pill sp-organic">organic</span></td>
+        <td class="rating-badge r1">1</td>
+        <td>
+          <div class="review-head">Fri fragt — men kun til DAO pakkeshop, ikke fremgår tydeligt</div>
+          <div class="review-body">Free shipping only applies to DAO pickup point, not home delivery. Not clearly stated. Customer had to collect 6 bottles from a beauty shop. Would prefer to pay 40 DKK freight than carry bottles from a shop.</div>
+        </td>
+      </tr>
+      <tr>
+        <td>Jan</td>
+        <td><span class="source-pill sp-attr">invite-tp</span></td>
+        <td class="rating-badge r1">1</td>
+        <td>
+          <div class="review-head">Ingen tilbagemelding — mangler 1 flaske</div>
+          <div class="review-body">Ordered 14 bottles, received 13. Contacted support. Asked to confirm the missing bottle ("yes, that's what I said"). 14+ days later — still no action, no update.</div>
+        </td>
+      </tr>
+      <tr>
+        <td>Jan</td>
+        <td><span class="source-pill sp-attr">invite-tp</span></td>
+        <td class="rating-badge r1">1</td>
+        <td>
+          <div class="review-head">Propperne knækker — alle flasker</div>
+          <div class="review-body">All corks breaking on 5+ year old wines. Every bottle requires filtering before drinking. Raised with DSF — told nothing to be done for wine that old. Understands, but this is the last purchase here.</div>
+        </td>
+      </tr>
+      <tr>
+        <td>Apr</td>
+        <td><span class="source-pill sp-organic">organic</span></td>
+        <td class="rating-badge r1">1</td>
+        <td>
+          <div class="review-head">Dårlig levering info — annulleret ordre, uklar genlevering</div>
+          <div class="review-body">Order received + confirmed. Next morning: order automatically cancelled because WebrinQ didn't scan it. CS: "will probably arrive later today." Evening: still nothing. CS: "maybe tonight or tomorrow." Very poor delivery communication — will consider buying elsewhere. <span class="flag">WebrinQ scanning failure</span></div>
+        </td>
+      </tr>
+      <tr>
+        <td>May</td>
+        <td><span class="source-pill sp-organic">organic</span></td>
+        <td class="rating-badge r1">1</td>
+        <td>
+          <div class="review-head">Lang leveringstid — 1 uge til 14 dage, trods "1-2 dage" løfte</div>
+          <div class="review-body">Ordered twice. Both times 1–14 days delivery despite the "1-2 day" promise on the website.</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <!-- ================================================================ DE ================================================================ -->
+  <h2>DE — den_sidste_flaske_de</h2>
+  <p>Growing market — from 12 invite sends and 40 reviews in Jan to 753 invite sends and 106 reviews in May. Near-perfect attribution throughout (almost no organic reviews). Consistently the best-performing market.</p>
+
+  <div class="trend-grid">
+    <div class="trend-cell tc-high"><div class="tc-month">January</div><div class="tc-avg">5.00</div><div class="tc-vol">40 reviews</div></div>
+    <div class="trend-cell tc-high"><div class="tc-month">February</div><div class="tc-avg">4.82</div><div class="tc-vol">11 reviews</div></div>
+    <div class="trend-cell tc-high"><div class="tc-month">March</div><div class="tc-avg">4.82</div><div class="tc-vol">57 reviews</div></div>
+    <div class="trend-cell tc-high"><div class="tc-month">April</div><div class="tc-avg">4.70</div><div class="tc-vol">81 reviews</div></div>
+    <div class="trend-cell tc-high"><div class="tc-month">May</div><div class="tc-avg">4.73</div><div class="tc-vol">106 reviews</div></div>
+  </div>
+
+  <h3>Monthly Detail — DE</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Month</th><th>Total</th><th>Attributed</th><th>Organic</th><th>Attr %</th>
+        <th>Avg overall</th><th>Avg attributed</th><th>Avg organic</th>
+        <th>1★</th><th>2★</th><th>3★</th><th>4★</th><th>5★</th><th>Invite sends</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="month-label">Jan</td><td>40</td><td>24</td><td>16</td><td>60.0%</td><td class="good">5.00</td><td class="good">5.00</td><td class="good">5.00</td><td>0</td><td>0</td><td>0</td><td>0</td><td>40</td><td>12</td></tr>
+      <tr><td class="month-label">Feb</td><td>11</td><td>11</td><td>0</td><td>100%</td><td class="good">4.82</td><td class="good">4.82</td><td class="neutral">—</td><td>0</td><td>0</td><td>0</td><td>2</td><td>9</td><td>121</td></tr>
+      <tr><td class="month-label">Mar</td><td>57</td><td>57</td><td>0</td><td>100%</td><td class="good">4.82</td><td class="good">4.82</td><td class="neutral">—</td><td>0</td><td>1</td><td>1</td><td>5</td><td>50</td><td>794</td></tr>
+      <tr><td class="month-label">Apr</td><td>81</td><td>81</td><td>0</td><td>100%</td><td class="good">4.70</td><td class="good">4.70</td><td class="neutral">—</td><td>1</td><td>2</td><td>2</td><td>10</td><td>66</td><td>571</td></tr>
+      <tr><td class="month-label">May</td><td>106</td><td>103</td><td>3</td><td>97.2%</td><td class="good">4.73</td><td class="good">4.73</td><td class="good">4.67</td><td>2</td><td>0</td><td>2</td><td>17</td><td>85</td><td>753</td></tr>
+    </tbody>
+  </table>
+
+  <div class="insight">
+    <p><strong>DE is a model market.</strong> Attribution rate is near-100% because the invite campaign is well-matched to the customer base. Almost zero organic negative reviews — the few negatives that exist (2 one-star in May) are attributed, meaning they came from customers who did engage with the invite. Even counting those, avg 4.73 is excellent.</p>
+    <p>Jan DE had 40 reviews from only 12 invite sends — these are early organic reviews from German customers who found DSF independently, all rating 5.0. This is a strong organic word-of-mouth signal for the DE launch.</p>
+  </div>
+
+  <h3>DE — Negatives ≤3★ (full period — only 9 total)</h3>
+  <table class="neg-table">
+    <thead><tr><th>Month</th><th>Source</th><th>★</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td>Mar</td><td><span class="source-pill sp-attr">attributed</span></td><td class="rating-badge r2">2</td><td><div class="review-body">1 rating of 2★ — no text captured in data</div></td></tr>
+      <tr><td>Mar</td><td><span class="source-pill sp-attr">attributed</span></td><td class="rating-badge r3">3</td><td><div class="review-body">1 rating of 3★ — no text captured in data</div></td></tr>
+      <tr><td>Apr</td><td><span class="source-pill sp-attr">attributed</span></td><td class="rating-badge r1">1</td><td><div class="review-body">1 rating of 1★ — no text captured in data</div></td></tr>
+      <tr><td>Apr</td><td><span class="source-pill sp-attr">attributed</span></td><td class="rating-badge r2">2</td><td><div class="review-body">2 ratings of 2★</div></td></tr>
+      <tr><td>Apr</td><td><span class="source-pill sp-attr">attributed</span></td><td class="rating-badge r3">3</td><td><div class="review-body">2 ratings of 3★</div></td></tr>
+      <tr><td>May</td><td><span class="source-pill sp-attr">attributed</span></td><td class="rating-badge r1">1</td><td><div class="review-body">2 ratings of 1★ — no text captured in data (short reviews, no heading)</div></td></tr>
+      <tr><td>May</td><td><span class="source-pill sp-attr">attributed</span></td><td class="rating-badge r3">3</td><td><div class="review-body">2 ratings of 3★</div></td></tr>
+    </tbody>
+  </table>
+
+
+  <!-- ================================================================ SE ================================================================ -->
+  <h2>SE — den_sidste_flaske_se</h2>
+  <p>Smallest market, 100% attributed (no organic reviews match), but most volatile scores. Jan 2026 was a 3.0 avg — a near-equal split of 5★, 3★, and 1★ suggesting a mixed early cohort. Recovered Feb–Mar, then declining again in May.</p>
+
+  <div class="trend-grid">
+    <div class="trend-cell tc-low"><div class="tc-month">January</div><div class="tc-avg">3.00</div><div class="tc-vol">48 reviews</div></div>
+    <div class="trend-cell tc-high"><div class="tc-month">February</div><div class="tc-avg">4.29</div><div class="tc-vol">17 reviews</div></div>
+    <div class="trend-cell tc-high"><div class="tc-month">March</div><div class="tc-avg">4.40</div><div class="tc-vol">75 reviews</div></div>
+    <div class="trend-cell tc-mid"><div class="tc-month">April</div><div class="tc-avg">4.19</div><div class="tc-vol">58 reviews</div></div>
+    <div class="trend-cell tc-mid"><div class="tc-month">May</div><div class="tc-avg">3.83</div><div class="tc-vol">29 reviews</div></div>
+  </div>
+
+  <h3>Monthly Detail — SE</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Month</th><th>Total</th><th>Attributed</th><th>Organic</th><th>Attr %</th>
+        <th>Avg overall</th><th>1★</th><th>2★</th><th>3★</th><th>4★</th><th>5★</th><th>Invite sends</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="month-label">Jan</td><td>48</td><td>48</td><td>0</td><td>100%</td><td class="warn">3.00</td><td class="r1">16</td><td>0</td><td>16</td><td>0</td><td>16</td><td>32</td></tr>
+      <tr><td class="month-label">Feb</td><td>17</td><td>17</td><td>0</td><td>100%</td><td>4.29</td><td class="r1">1</td><td>1</td><td>1</td><td>3</td><td>11</td><td>209</td></tr>
+      <tr><td class="month-label">Mar</td><td>75</td><td>75</td><td>0</td><td>100%</td><td class="good">4.40</td><td class="r1">2</td><td>2</td><td>7</td><td>17</td><td>47</td><td>844</td></tr>
+      <tr><td class="month-label">Apr</td><td>58</td><td>58</td><td>0</td><td>100%</td><td>4.19</td><td class="r1">7</td><td>2</td><td>1</td><td>11</td><td>37</td><td>592</td></tr>
+      <tr><td class="month-label">May</td><td>29</td><td>29</td><td>0</td><td>100%</td><td class="warn">3.83</td><td class="r1">4</td><td>2</td><td>2</td><td>8</td><td>13</td><td>321</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn-box">
+    <p><strong>January SE — 3.0 avg explained:</strong> 48 reviews with exactly 16 each of 5★, 3★, and 1★. This is the SE campaign's first significant cohort. The 16 one-star reviews suggest a specific batch of customers with a shared negative experience — likely early DE customers who also had delivery issues, or a product/wine quality batch problem. All 48 are attributed (campaign-invited), meaning DSF have the email addresses for all raters.</p>
+    <p><strong>May declining again:</strong> 4 one-star + 2 two-star = 6 negatives from 29 total (21%). Volume is low enough that a few unhappy customers shift the avg significantly.</p>
+  </div>
+
+  <h3>SE — Selected Negatives (representative from data)</h3>
+  <table class="neg-table">
+    <thead><tr><th>Month</th><th>Source</th><th>★</th><th>Review</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Jan</td>
+        <td><span class="source-pill sp-attr">attributed</span></td>
+        <td class="rating-badge r1">1★ ×16</td>
+        <td>
+          <div class="review-body">16 one-star attributed reviews in January. All from the initial SE cohort. No review text available in data for Jan SE negatives — these are low-text short reviews. Given all are attributed, DSF have customer emails for direct outreach.</div>
+        </td>
+      </tr>
+      <tr>
+        <td>Apr</td>
+        <td><span class="source-pill sp-attr">attributed</span></td>
+        <td class="rating-badge r1">1★ ×7</td>
+        <td>
+          <div class="review-body">7 one-star reviews in April SE, all attributed. Delivery and logistics complaints likely (consistent with DK pattern but SE-specific carriers).</div>
+        </td>
+      </tr>
+      <tr>
+        <td>May</td>
+        <td><span class="source-pill sp-attr">attributed</span></td>
+        <td class="rating-badge r1">1★ ×4</td>
+        <td>
+          <div class="review-body">4 one-star reviews in May. Volume declining overall (321 invite sends, 29 reviews = 9% review rate, notably high for SE). Negative rate 20%+ suggests ongoing delivery friction for SE orders.</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <!-- ================================================================ SUMMARY ================================================================ -->
+  <h2>Cross-Market Summary — Key Findings</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Finding</th>
+        <th>DK</th>
+        <th>DE</th>
+        <th>SE</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>5-month avg rating (overall)</td>
+        <td>4.54</td>
+        <td class="good">4.76</td>
+        <td class="warn">4.11</td>
+      </tr>
+      <tr>
+        <td>Attributed avg (campaign customers)</td>
+        <td class="good">4.72</td>
+        <td class="good">4.76</td>
+        <td class="good">4.11 (all attributed)</td>
+      </tr>
+      <tr>
+        <td>Organic avg (no order_id match)</td>
+        <td class="warn">3.55</td>
+        <td class="neutral">~4.83 (few organics)</td>
+        <td class="neutral">N/A — 100% attributed</td>
+      </tr>
+      <tr>
+        <td>Attribution rate</td>
+        <td>76–87% declining</td>
+        <td class="good">97–100% stable</td>
+        <td>100% (small market)</td>
+      </tr>
+      <tr>
+        <td>Worst month</td>
+        <td class="warn">Apr 4.39 (organic 3.09)</td>
+        <td class="neutral">Apr 4.70 (still good)</td>
+        <td class="warn">Jan 3.00</td>
+      </tr>
+      <tr>
+        <td>Total 1★ reviews (5 months)</td>
+        <td class="warn">231</td>
+        <td>3</td>
+        <td class="warn">30</td>
+      </tr>
+      <tr>
+        <td>Primary negative driver</td>
+        <td>Delivery failures, returns</td>
+        <td>Minimal (individual cases)</td>
+        <td>Jan batch issue + Apr/May delivery</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="insight">
+    <p><strong>The invitation campaign works.</strong> Attributed customers rate 4.67–4.78 in DK across every month, 4.70–5.0 in DE, and campaign-invited SE customers were at 4.29–4.40 Feb–Mar when the Jan cohort had recovered. The problem is not the campaign — it's the experience for customers who weren't reached by it (organic), or for SE/DK customers facing specific logistics issues.</p>
+    <p><strong>Three priorities for improving the group avg:</strong></p>
+    <p>1. <strong>DK delivery promise vs reality</strong> — the 1–2 day claim vs actual 5–14 day delivery is the single most-mentioned complaint across 5 months and both organic and attributed customers. Fixing or amending the delivery promise would eliminate the most common negative trigger.</p>
+    <p>2. <strong>SE Jan cohort outreach</strong> — 16 attributed 1★ reviews means 16 customer emails DSF has. A proactive outreach to this cohort acknowledging the issues and offering compensation could convert some.</p>
+    <p>3. <strong>DK returns process</strong> — requiring customers to individually bubble-wrap each bottle for courier returns is unique friction. Simplifying this (pre-paid return labels + accepting original wine box) would reduce the "returns nightmare" thread.</p>
+  </div>
+
+</div>
+</body>
+</html>
