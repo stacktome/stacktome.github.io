@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mammashop Group — June 2026 Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .kpi.highlight { border-top: 3px solid #e17055; }
+
+  .acct-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 8px; }
+  .acct-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow: hidden; }
+  .acct-card-header { padding: 10px 16px; font-weight: 700; font-size: 13px; color: #fff; display: flex; align-items: center; gap: 10px; }
+  .acct-mammashop { background: #6c5ce7; }
+  .acct-naturebaby { background: #00b894; }
+  .acct-loukrudt { background: #0984e3; }
+  .acct-hoppekids { background: #e17055; }
+  .acct-card-body { padding: 14px 16px; }
+
+  .mini-kpi-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
+  .mini-kpi { text-align: center; }
+  .mini-kpi .mv { font-size: 20px; font-weight: 700; color: #1a1a2e; }
+  .mini-kpi .ml { font-size: 10px; text-transform: uppercase; color: #888; letter-spacing: .5px; }
+
+  /* Attribution split bar */
+  .attr-bar-wrap { margin: 8px 0 12px; }
+  .attr-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: #636e72; margin-bottom: 4px; }
+  .attr-bar { height: 10px; border-radius: 5px; background: #dfe6e9; overflow: hidden; display: flex; }
+  .attr-fill { height: 100%; background: #6c5ce7; }
+  .organic-fill { height: 100%; background: #b2bec3; }
+
+  /* Attribution breakdown side-by-side */
+  .split-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+  .split-box { border-radius: 8px; padding: 10px 14px; }
+  .split-attr { background: #f0eeff; border-left: 3px solid #6c5ce7; }
+  .split-organic { background: #f5f6fa; border-left: 3px solid #b2bec3; }
+  .split-box .sb-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 4px; }
+  .split-box .sb-count { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+  .split-box .sb-avg { font-size: 12px; color: #636e72; margin-top: 2px; }
+  .split-box .sb-note { font-size: 11px; color: #888; margin-top: 3px; }
+
+  .star-dist { display: flex; gap: 4px; margin: 10px 0; align-items: flex-end; height: 40px; }
+  .star-col { display: flex; flex-direction: column; align-items: center; flex: 1; }
+  .star-bar { width: 100%; border-radius: 3px 3px 0 0; }
+  .s5 { background: #00b894; }
+  .s4 { background: #55efc4; }
+  .s3 { background: #fdcb6e; }
+  .s2 { background: #e17055; }
+  .s1 { background: #d63031; }
+  .star-label { font-size: 9px; color: #999; margin-top: 2px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  th { background: #f8f9ff; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; }
+  td { padding: 9px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafbff; }
+
+  .brand-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; color: #fff; }
+  .bp-mammashop { background: #6c5ce7; }
+  .bp-naturebaby { background: #00b894; }
+  .bp-loukrudt { background: #0984e3; }
+  .bp-hoppekids { background: #e17055; }
+  .source-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+  .sp-attr { background: #e8f4fd; color: #0984e3; }
+  .sp-organic { background: #f0f0f0; color: #636e72; }
+
+  .r1 { color: #d63031; font-weight: 600; }
+  .r5 { color: #00b894; font-weight: 600; }
+  .review-text { font-size: 12px; color: #636e72; line-height: 1.5; max-width: 480px; }
+  .review-heading { font-weight: 600; font-size: 12px; color: #2d3436; margin-bottom: 3px; }
+  .flag { font-size: 11px; background: #fff3cd; color: #856404; padding: 2px 7px; border-radius: 8px; display: inline-block; margin-bottom: 4px; }
+
+  .insight-box { background: #fff; border-left: 4px solid #6c5ce7; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .insight-box p { margin-bottom: 6px; }
+  .insight-box p:last-child { margin-bottom: 0; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .good { color: #00b894; font-weight: 600; }
+  .warn { color: #e17055; font-weight: 600; }
+  .neutral { color: #636e72; }
+
+  /* Attribution explainer */
+  .explainer { background: #f8f9ff; border-radius: 10px; padding: 16px 20px; margin: 16px 0; }
+  .explainer h3 { margin-top: 0; color: #6c5ce7; }
+  .explainer ul { margin: 8px 0 0 18px; }
+  .explainer li { margin-bottom: 5px; font-size: 13px; color: #4a4a4a; line-height: 1.5; }
+
+  .vs-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  .vs-table th { background: #f8f9ff; }
+  .vs-table .col-attr { background: #f0eeff; }
+  .vs-table .col-organic { background: #f5f6fa; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Mammashop Group — June 2026</h1>
+  <p class="subtitle">All 4 brands · June 1–11 2026 (first 11 days) · All reviews including organic · Generated 2026-06-11</p>
+
+  <!-- GROUP KPIs -->
+  <h2>Group Overview</h2>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Total Reviews</div><div class="value">21</div><div class="sub">all brands, 11 days</div></div>
+    <div class="kpi"><div class="label">Group Avg Rating</div><div class="value">4.14</div><div class="sub">weighted across brands</div></div>
+    <div class="kpi highlight"><div class="label">Organic</div><div class="value">19</div><div class="sub">90.5% — no order_id match</div></div>
+    <div class="kpi"><div class="label">Attributed</div><div class="value">2</div><div class="sub">9.5% — mammashop only</div></div>
+    <div class="kpi"><div class="label">Invite Sends (Jun)</div><div class="value">4,221</div><div class="sub">across all brands</div></div>
+  </div>
+
+  <!-- ATTRIBUTION EXPLAINER -->
+  <div class="explainer">
+    <h3>Why attribution matters — and why organic reviews dominate in June</h3>
+    <ul>
+      <li><strong>Attributed</strong> = review matched to a campaign invite via <code>order_id</code>. The customer followed the invite link, or their order ID in the review platform matched the one we sent the invite to.</li>
+      <li><strong>Organic</strong> = review submitted without an order_id match. This includes: customers who found the review platform independently, customers who left an order_id field blank, and customers driven by a strong emotion (positive or negative) who didn't use the invite.</li>
+      <li>June is only 11 days old. Invites sent in early June typically produce reviews 7–14 days later — most attributed reviews from the current send wave haven't come in yet. The 4,221 June sends are in-flight.</li>
+      <li>Organic reviews that arrive proactively skew negative — customers with unresolved issues are more motivated to post without an invite.</li>
+    </ul>
+  </div>
+
+  <div class="insight-box">
+    <p><strong>Early June signal:</strong> 90.5% organic rate vs 28.6% in May reflects the early-month timing more than a structural change. However, the 3 negative organic reviews that have arrived already show the same CS and fulfilment themes from May — these are not one-off incidents.</p>
+  </div>
+
+  <!-- BRAND CARDS -->
+  <h2>Per-Brand Breakdown — June 1–11</h2>
+  <div class="acct-grid">
+
+    <!-- Mammashop -->
+    <div class="acct-card">
+      <div class="acct-card-header acct-mammashop">Mammashop <span style="opacity:.7;font-weight:400;font-size:11px">13 reviews</span></div>
+      <div class="acct-card-body">
+        <div class="mini-kpi-row">
+          <div class="mini-kpi"><div class="mv">4.23</div><div class="ml">Avg Rating</div></div>
+          <div class="mini-kpi"><div class="mv">5.0</div><div class="ml">Attr Avg (2)</div></div>
+          <div class="mini-kpi"><div class="mv">4.09</div><div class="ml">Organic Avg (11)</div></div>
+        </div>
+        <div class="split-compare">
+          <div class="split-box split-attr">
+            <div class="sb-label">Attributed</div>
+            <div class="sb-count">2 reviews</div>
+            <div class="sb-avg">Avg ★ 5.0</div>
+            <div class="sb-note">invite-recent-fr (1), invite-recent-se (1)</div>
+          </div>
+          <div class="split-box split-organic">
+            <div class="sb-label">Organic</div>
+            <div class="sb-count">11 reviews</div>
+            <div class="sb-avg">Avg ★ 4.09</div>
+            <div class="sb-note">incl. 2 one-star complaints</div>
+          </div>
+        </div>
+        <div class="attr-bar-wrap">
+          <div class="attr-bar-label"><span>Attributed 15.4%</span><span>Organic 84.6%</span></div>
+          <div class="attr-bar"><div class="attr-fill" style="width:15.4%"></div><div class="organic-fill" style="width:84.6%"></div></div>
+        </div>
+        <div class="star-dist">
+          <div class="star-col"><div class="star-bar s1" style="height:28px"></div><div class="star-label">1★ 2</div></div>
+          <div class="star-col"><div class="star-bar s2" style="height:0px"></div><div class="star-label">2★ 0</div></div>
+          <div class="star-col"><div class="star-bar s3" style="height:10px"></div><div class="star-label">3★ 1</div></div>
+          <div class="star-col"><div class="star-bar s4" style="height:0px"></div><div class="star-label">4★ 0</div></div>
+          <div class="star-col"><div class="star-bar s5" style="height:40px"></div><div class="star-label">5★ 10</div></div>
+        </div>
+        <p style="font-size:12px;color:#636e72">2,413 invite sends in June so far — attributed reviews will catch up over the next 1–2 weeks. The 2 organic 1★ are both detailed CS complaints (return policy confusion, broken product CS loop).</p>
+      </div>
+    </div>
+
+    <!-- Loukrudt -->
+    <div class="acct-card">
+      <div class="acct-card-header acct-loukrudt">Loukrudt <span style="opacity:.7;font-weight:400;font-size:11px">4 reviews</span></div>
+      <div class="acct-card-body">
+        <div class="mini-kpi-row">
+          <div class="mini-kpi"><div class="mv">4.25</div><div class="ml">Avg Rating</div></div>
+          <div class="mini-kpi"><div class="mv">—</div><div class="ml">Attr Avg (0)</div></div>
+          <div class="mini-kpi"><div class="mv">4.25</div><div class="ml">Organic Avg (4)</div></div>
+        </div>
+        <div class="split-compare">
+          <div class="split-box split-attr">
+            <div class="sb-label">Attributed</div>
+            <div class="sb-count">0 reviews</div>
+            <div class="sb-avg">—</div>
+            <div class="sb-note">703 invite sends in June, 461 reminders</div>
+          </div>
+          <div class="split-box split-organic">
+            <div class="sb-label">Organic</div>
+            <div class="sb-count">4 reviews</div>
+            <div class="sb-avg">Avg ★ 4.25</div>
+            <div class="sb-note">3×5★, 1×2★</div>
+          </div>
+        </div>
+        <div class="attr-bar-wrap">
+          <div class="attr-bar-label"><span>Attributed 0%</span><span>Organic 100%</span></div>
+          <div class="attr-bar"><div class="attr-fill" style="width:0%"></div><div class="organic-fill" style="width:100%"></div></div>
+        </div>
+        <div class="star-dist">
+          <div class="star-col"><div class="star-bar s1" style="height:0px"></div><div class="star-label">1★ 0</div></div>
+          <div class="star-col"><div class="star-bar s2" style="height:13px"></div><div class="star-label">2★ 1</div></div>
+          <div class="star-col"><div class="star-bar s3" style="height:0px"></div><div class="star-label">3★ 0</div></div>
+          <div class="star-col"><div class="star-bar s4" style="height:0px"></div><div class="star-label">4★ 0</div></div>
+          <div class="star-col"><div class="star-bar s5" style="height:40px"></div><div class="star-label">5★ 3</div></div>
+        </div>
+        <p style="font-size:12px;color:#636e72">0 attributed reviews despite 703 invite sends — still early (invites only went out Jun 1–11). 1 open complaint (2★): product return request unanswered for 8+ days.</p>
+      </div>
+    </div>
+
+    <!-- Naturebaby -->
+    <div class="acct-card">
+      <div class="acct-card-header acct-naturebaby">Naturebaby <span style="opacity:.7;font-weight:400;font-size:11px">3 reviews</span></div>
+      <div class="acct-card-body">
+        <div class="mini-kpi-row">
+          <div class="mini-kpi"><div class="mv">3.33</div><div class="ml">Avg Rating</div></div>
+          <div class="mini-kpi"><div class="mv">—</div><div class="ml">Attr Avg (0)</div></div>
+          <div class="mini-kpi"><div class="mv">3.33</div><div class="ml">Organic Avg (3)</div></div>
+        </div>
+        <div class="split-compare">
+          <div class="split-box split-attr">
+            <div class="sb-label">Attributed</div>
+            <div class="sb-count">0 reviews</div>
+            <div class="sb-avg">—</div>
+            <div class="sb-note">918 invite sends in June</div>
+          </div>
+          <div class="split-box split-organic">
+            <div class="sb-label">Organic</div>
+            <div class="sb-count">3 reviews</div>
+            <div class="sb-avg">Avg ★ 3.33</div>
+            <div class="sb-note">1×5★, 1×4★, 1×1★</div>
+          </div>
+        </div>
+        <div class="attr-bar-wrap">
+          <div class="attr-bar-label"><span>Attributed 0%</span><span>Organic 100%</span></div>
+          <div class="attr-bar"><div class="attr-fill" style="width:0%"></div><div class="organic-fill" style="width:100%"></div></div>
+        </div>
+        <div class="star-dist">
+          <div class="star-col"><div class="star-bar s1" style="height:40px"></div><div class="star-label">1★ 1</div></div>
+          <div class="star-col"><div class="star-bar s2" style="height:0px"></div><div class="star-label">2★ 0</div></div>
+          <div class="star-col"><div class="star-bar s3" style="height:0px"></div><div class="star-label">3★ 0</div></div>
+          <div class="star-col"><div class="star-bar s4" style="height:40px"></div><div class="star-label">4★ 1</div></div>
+          <div class="star-col"><div class="star-bar s5" style="height:40px"></div><div class="star-label">5★ 1</div></div>
+        </div>
+        <p style="font-size:12px;color:#636e72">Notable 1★ organic: customer took a day off to receive a Hoppekids bed. Tracking showed wrong name ("Mathilde") — wrong-customer package. CS responded with standardised, empathy-free responses. Customer bought elsewhere and called out chatbot-like service.</p>
+      </div>
+    </div>
+
+    <!-- Hoppekids -->
+    <div class="acct-card">
+      <div class="acct-card-header acct-hoppekids">Hoppekids <span style="opacity:.7;font-weight:400;font-size:11px">1 review</span></div>
+      <div class="acct-card-body">
+        <div class="mini-kpi-row">
+          <div class="mini-kpi"><div class="mv">5.0</div><div class="ml">Avg Rating</div></div>
+          <div class="mini-kpi"><div class="mv">—</div><div class="ml">Attr Avg (0)</div></div>
+          <div class="mini-kpi"><div class="mv">5.0</div><div class="ml">Organic Avg (1)</div></div>
+        </div>
+        <div class="split-compare">
+          <div class="split-box split-attr">
+            <div class="sb-label">Attributed</div>
+            <div class="sb-count">0 reviews</div>
+            <div class="sb-avg">—</div>
+            <div class="sb-note">185 invite sends in June</div>
+          </div>
+          <div class="split-box split-organic">
+            <div class="sb-label">Organic</div>
+            <div class="sb-count">1 review</div>
+            <div class="sb-avg">Avg ★ 5.0</div>
+            <div class="sb-note">positive signal</div>
+          </div>
+        </div>
+        <div class="attr-bar-wrap">
+          <div class="attr-bar-label"><span>Attributed 0%</span><span>Organic 100%</span></div>
+          <div class="attr-bar"><div class="attr-fill" style="width:0%"></div><div class="organic-fill" style="width:100%"></div></div>
+        </div>
+        <p style="font-size:12px;color:#636e72">Very early data — only 1 organic review (5★). Attribution will arrive as the 185 June invites mature. No negatives in June.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MAY vs JUNE comparison -->
+  <h2>May vs June — Attribution Split Comparison</h2>
+  <table class="vs-table">
+    <thead>
+      <tr>
+        <th>Brand</th>
+        <th>May Reviews</th>
+        <th>May Attributed %</th>
+        <th>May Avg (attr / org)</th>
+        <th>June Reviews</th>
+        <th>June Attributed %</th>
+        <th>June Avg (attr / org)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="brand-pill bp-mammashop">mammashop</span></td>
+        <td>42</td><td>73.8%</td><td>4.71 / 3.18</td>
+        <td>13</td><td>15.4%</td><td>5.0 / 4.09</td>
+      </tr>
+      <tr>
+        <td><span class="brand-pill bp-loukrudt">loukrudt</span></td>
+        <td>14</td><td>42.9%</td><td>5.0 / 2.63</td>
+        <td>4</td><td>0%</td><td>— / 4.25</td>
+      </tr>
+      <tr>
+        <td><span class="brand-pill bp-hoppekids">hoppekids</span></td>
+        <td>11</td><td>90.9%</td><td>4.4 / 1.0</td>
+        <td>1</td><td>0%</td><td>— / 5.0</td>
+      </tr>
+      <tr>
+        <td><span class="brand-pill bp-naturebaby">naturebaby</span></td>
+        <td>3</td><td>100%</td><td>3.67 / —</td>
+        <td>3</td><td>0%</td><td>— / 3.33</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;color:#636e72;margin-top:-12px;margin-bottom:20px">June attribution is near-zero because invites sent Jun 1–11 haven't had time to convert. Expect attribution to normalise over the next 2 weeks as the June wave matures.</p>
+
+  <!-- JUNE CAMPAIGN SENDS -->
+  <h2>June Campaign Sends (Jun 1–11)</h2>
+  <p>No attributed reviews yet for most campaigns — reviews are in-flight. Only 2 mammashop reviews have attributed so far (both 5★).</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Brand</th><th>Campaign</th><th>Invite Sends</th><th>Reminder Sends</th><th>Total</th><th>Reviews So Far</th><th>Rate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="brand-pill bp-mammashop">mammashop</span></td><td>invite-recent-dk</td><td>1,699</td><td>747</td><td>2,446</td><td>0</td><td>—</td></tr>
+      <tr><td><span class="brand-pill bp-mammashop">mammashop</span></td><td>invite-recent-fr</td><td>297</td><td>268</td><td>565</td><td>1</td><td>0.34%</td></tr>
+      <tr><td><span class="brand-pill bp-mammashop">mammashop</span></td><td>invite-recent-se</td><td>191</td><td>244</td><td>435</td><td>1</td><td>0.52%</td></tr>
+      <tr><td><span class="brand-pill bp-mammashop">mammashop</span></td><td>invite-recent-de</td><td>133</td><td>125</td><td>258</td><td>0</td><td>—</td></tr>
+      <tr><td><span class="brand-pill bp-mammashop">mammashop</span></td><td>invite-recent-nl</td><td>88</td><td>71</td><td>159</td><td>0</td><td>—</td></tr>
+      <tr><td><span class="brand-pill bp-loukrudt">loukrudt</span></td><td>invite-recent</td><td>703</td><td>461</td><td>1,164</td><td>0</td><td>—</td></tr>
+      <tr><td><span class="brand-pill bp-naturebaby">naturebaby</span></td><td>invite-recent-dk</td><td>774</td><td>529</td><td>1,303</td><td>0</td><td>—</td></tr>
+      <tr><td><span class="brand-pill bp-naturebaby">naturebaby</span></td><td>invite-recent-se</td><td>51</td><td>54</td><td>105</td><td>0</td><td>—</td></tr>
+      <tr><td><span class="brand-pill bp-naturebaby">naturebaby</span></td><td>invite-recent-de</td><td>47</td><td>44</td><td>91</td><td>0</td><td>—</td></tr>
+      <tr><td><span class="brand-pill bp-naturebaby">naturebaby</span></td><td>invite-recent-fr</td><td>41</td><td>30</td><td>71</td><td>0</td><td>—</td></tr>
+      <tr><td><span class="brand-pill bp-hoppekids">hoppekids</span></td><td>invite-recent-dk</td><td>88</td><td>80</td><td>168</td><td>0</td><td>—</td></tr>
+      <tr><td><span class="brand-pill bp-hoppekids">hoppekids</span></td><td>invite-recent-en</td><td>37</td><td>96</td><td>133</td><td>0</td><td>—</td></tr>
+      <tr><td><span class="brand-pill bp-hoppekids">hoppekids</span></td><td>invite-recent-de</td><td>32</td><td>30</td><td>62</td><td>0</td><td>—</td></tr>
+      <tr><td><span class="brand-pill bp-hoppekids">hoppekids</span></td><td>invite-recent-se</td><td>17</td><td>15</td><td>32</td><td>0</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <!-- NEGATIVE REVIEWS -->
+  <h2>Negative Reviews ≤3★ — June 1–11</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Brand</th><th>Source</th><th>Rating</th><th>Review</th><th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="brand-pill bp-mammashop">mammashop</span></td>
+        <td><span class="source-pill sp-organic">organic</span></td>
+        <td class="r1">★ 1</td>
+        <td>
+          <div class="review-heading">Returret — CS gav forkert info, chatbot modsagde medarbejder</div>
+          <div class="review-text">Customer returned gift item invoking extended returns policy. CS agent said policy didn't exist; customer sent back a quote from their own policy. Chatbot confirmed refund incl. delivery. Final refund 48 DKK short. CS stopped replying. Case open 30+ days. <span class="flag">⚠ open — needs resolution</span></div>
+        </td>
+        <td>2026-06-01</td>
+      </tr>
+      <tr>
+        <td><span class="brand-pill bp-mammashop">mammashop</span></td>
+        <td><span class="source-pill sp-organic">organic</span></td>
+        <td class="r1">★ 1</td>
+        <td>
+          <div class="review-heading">CS asked for same video twice, repeatedly</div>
+          <div class="review-text">Broken lunchbox lid. Sent video May 27; CS replied Jun 1 asking for video again (same email thread). Sent again. CS replied with off-topic "stock level" message. Then sent identical "please send video" reply a third time. <span class="flag">⚠ CS process failure</span></div>
+        </td>
+        <td>2026-06-01</td>
+      </tr>
+      <tr>
+        <td><span class="brand-pill bp-mammashop">mammashop</span></td>
+        <td><span class="source-pill sp-organic">organic</span></td>
+        <td>★★★ 3</td>
+        <td>
+          <div class="review-heading">Burkarna mindre än på bilderna (SE)</div>
+          <div class="review-text">Containers looked larger in product photos than received. Delivery time was acceptable.</div>
+        </td>
+        <td>2026-06-03</td>
+      </tr>
+      <tr>
+        <td><span class="brand-pill bp-loukrudt">loukrudt</span></td>
+        <td><span class="source-pill sp-organic">organic</span></td>
+        <td>★★ 2</td>
+        <td>
+          <div class="review-heading">Reklamation ignoreret i 8 dage</div>
+          <div class="review-text">Ordered May 27, received May 30, filed complaint same day. Followed up Jun 5. Got response Jun 8 asking for more photos (photos were in original complaint). Has not heard back since. <span class="flag">⚠ open complaint</span></div>
+        </td>
+        <td>2026-06-09</td>
+      </tr>
+      <tr>
+        <td><span class="brand-pill bp-naturebaby">naturebaby</span></td>
+        <td><span class="source-pill sp-organic">organic</span></td>
+        <td class="r1">★ 1</td>
+        <td>
+          <div class="review-heading">0 stjerner ønsket — forkert pakke, ingen empati</div>
+          <div class="review-text">Customer took day off to receive Hoppekids bed. Tracking showed a different person's name ("Mathilde") on the order. CS offered contradictory explanations (technical error vs. wrong-customer delivery). No empathy for the wasted day. Responses felt like chatbot scripts. Customer went elsewhere. <span class="flag">⚠ wrong-customer package — investigate</span></div>
+        </td>
+        <td>2026-06-08</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- THEMES -->
+  <h2>Emerging June Themes</h2>
+  <div class="warn-box">
+    <p><strong>CS process loops:</strong> Two mammashop complaints (return refund, broken product video) show CS agents not reading prior email context in the same thread. Both customers have been going back and forth for 2+ weeks. These likely indicate a ticketing / handoff issue rather than individual agent failures.</p>
+  </div>
+  <div class="warn-box">
+    <p><strong>Wrong-customer package (Naturebaby):</strong> Second incident in two months. May saw a Hoppekids bed with another customer's name on packaging. June has a Naturebaby/Hoppekids bed with wrong tracking identity ("Mathilde"). May be the same fulfilment issue resurfacing — worth a warehouse check on returns reprocessing.</p>
+  </div>
+  <div class="insight-box">
+    <p><strong>What's working:</strong> The 10 organic 5★ mammashop reviews suggest strong baseline product and delivery satisfaction for the majority. The 2 attributed reviews (both 5★) confirm campaign-invited customers remain highly satisfied when they do respond.</p>
+    <p><strong>Expectation for end of June:</strong> Attribution rate will recover to ~60–70% as the June invite wave converts. Assuming same campaign-customer behaviour as May, avg rating should hold 4.3–4.5 group-wide if the open complaints are resolved.</p>
+  </div>
+
+</div>
+</body>
+</html>
