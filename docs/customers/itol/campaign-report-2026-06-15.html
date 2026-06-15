@@ -84,25 +84,28 @@
     <thead>
       <tr>
         <th>Campaign</th>
-        <th>Invites Sent</th>
+        <th>Sent</th>
+        <th>Open Rate</th>
+        <th>Click Rate</th>
+        <th>Unsubs</th>
         <th>Reviews</th>
         <th>Review Rate</th>
         <th>Avg Rating</th>
-        <th>Range</th>
       </tr>
     </thead>
     <tbody>
-      <tr><td>Welcome Call/Setup Campaign</td><td>57</td><td>3</td><td>5.26%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.67</td><td class="neutral">4&ndash;5</td></tr>
-      <tr><td>Support Campaign</td><td>35</td><td>3</td><td class="best">8.57%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td><td class="neutral">5&ndash;5</td></tr>
-      <tr><td>Hubspot (Main) Invite TP Campaign</td><td>34</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
-      <tr><td>Exam Pass v2 Campaign</td><td>7</td><td>1</td><td class="best">14.29%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td><td class="neutral">5&ndash;5</td></tr>
-      <tr><td>Exam Pass v1 Campaign</td><td>5</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
-      <tr><td>Completion/Closure Campaign</td><td>1</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
-      <tr><td>Assignment Completion Campaign (HR/CIPD)</td><td>1</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
-      <tr><td>From Invite TP Campaign</td><td>1</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
+      <tr><td>Welcome Call/Setup Campaign</td><td>57</td><td>75.4%</td><td>19.3%</td><td>0</td><td>3</td><td>5.26%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.67</td></tr>
+      <tr><td>Support Campaign</td><td>35</td><td>75.8%</td><td class="best">27.3%</td><td>0</td><td>3</td><td class="best">8.57%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td></tr>
+      <tr><td>Hubspot (Main) Invite TP Campaign</td><td>34</td><td>71.9%</td><td class="worst">6.2%</td><td>0</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td></tr>
+      <tr><td>Exam Pass v2 Campaign</td><td>7</td><td class="best">100.0%</td><td>14.3%</td><td>0</td><td>1</td><td class="best">14.29%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td></tr>
+      <tr><td>Exam Pass v1 Campaign</td><td>5</td><td class="worst">40.0%</td><td class="neutral">—</td><td>0</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td></tr>
+      <tr><td>Completion/Closure Campaign</td><td>1</td><td class="best">100.0%</td><td class="neutral">—</td><td>0</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td></tr>
+      <tr><td>Assignment Completion Campaign (HR/CIPD)</td><td>1</td><td class="best">100.0%</td><td class="neutral">—</td><td>0</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td></tr>
+      <tr><td>From Invite TP Campaign</td><td>1</td><td class="best">100.0%</td><td class="neutral">—</td><td>0</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td></tr>
+      <tr style="font-weight:600; background:#f5f6fa;"><td>TOTAL</td><td>141</td><td>75.2%</td><td>16.8%</td><td>0</td><td>7</td><td>4.96%</td><td>4.86</td></tr>
     </tbody>
   </table>
-  <p class="note">Reviews attributed using full invite history: a review submitted this period is attributed to whichever campaign previously invited that order, regardless of when the invite was sent. Campaign &ldquo;4-5 Start TP Review &mdash; Google Review Response&rdquo; (607) excluded from all counts. Slight volume dip vs prior period (141 vs 145), review rate held at 4.96% vs 6.21% prior &mdash; avg rating improved to 4.86.</p>
+  <p class="note">Reviews attributed using full invite history. Open/click rates from email delivery API. Campaign &ldquo;4-5 Start TP Review &mdash; Google Review Response&rdquo; (607) excluded. Hubspot Main's low click rate (6.2%) despite 71.9% opens explains its 0 reviews — recipients open but don't click through. Support Campaign best overall: 27.3% click rate drives 8.57% review conversion.</p>
 
   <!-- 3. Campaign Breakdown -->
   <h2>3. Campaign Breakdown</h2>
@@ -113,49 +116,23 @@
     <tbody>
       <tr><td>Exam Pass v2 Campaign</td><td class="best">14.29%</td><td class="best">5.00</td><td>7 invites, 1 perfect 5-star review. Exam milestone continues to drive highest conversion rate. Small sample but consistent trend.</td></tr>
       <tr><td>Support Campaign</td><td class="best">8.57%</td><td class="best">5.00</td><td>35 invites, 3 reviews all at 5 stars. Best volume performer this week &mdash; perfect scores, no complaints.</td></tr>
-      <tr><td>Welcome Call/Setup Campaign</td><td>5.26%</td><td>4.67</td><td>Largest campaign (57 invites), 3 reviews. One rating-4 review keeps avg below 5. Conversion rate improved vs prior period (1.56%). Early journey timing still a factor.</td></tr>
-      <tr><td>Hubspot (Main) Invite TP Campaign</td><td class="worst">0.00%</td><td class="neutral">&mdash;</td><td>34 invites, 0 reviews this period. Was 6.06% prior period &mdash; notable drop, worth monitoring next week.</td></tr>
-      <tr><td>Exam Pass v1 Campaign</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td><td>5 invites, no reviews. Small sample.</td></tr>
-      <tr><td>Completion/Closure &amp; From Invite TP</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td><td>1 invite each this period &mdash; no conclusions possible.</td></tr>
+      <tr><td>Welcome Call/Setup Campaign</td><td>5.26%</td><td>4.67</td><td>Largest campaign (57 invites), 3 reviews. One rating-4 review keeps avg below 5. Conversion improved vs prior period (1.56%).</td></tr>
+      <tr><td>Hubspot (Main) Invite TP Campaign</td><td class="worst">0.00%</td><td class="neutral">&mdash;</td><td>34 invites, 0 reviews. Was 6.06% prior period. Low click rate (6.2%) is the bottleneck — worth reviewing subject line or email copy.</td></tr>
+      <tr><td>Exam Pass v1 Campaign</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td><td>5 invites, no reviews. Low open rate (40%) may indicate deliverability issue. Small sample.</td></tr>
+      <tr><td>Completion/Closure &amp; From Invite TP</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td><td>1 invite each &mdash; no conclusions possible.</td></tr>
     </tbody>
   </table>
 
-  <!-- 4. Email Performance -->
-  <h2>4. Email Performance</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Campaign</th>
-        <th>Sent</th>
-        <th>Unique Opens</th>
-        <th>Open Rate</th>
-        <th>Unique Clicks</th>
-        <th>Click Rate</th>
-        <th>Unsubs</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>Welcome Call/Setup Campaign</td><td>57</td><td>43</td><td>75.4%</td><td>11</td><td>19.3%</td><td>0</td></tr>
-      <tr><td>Support Campaign</td><td>33</td><td>25</td><td>75.8%</td><td>9</td><td class="best">27.3%</td><td>0</td></tr>
-      <tr><td>Hubspot (Main) Invite TP Campaign</td><td>32</td><td>23</td><td>71.9%</td><td>2</td><td class="worst">6.2%</td><td>0</td></tr>
-      <tr><td>Exam Pass v2 Campaign</td><td>7</td><td>7</td><td class="best">100.0%</td><td>1</td><td>14.3%</td><td>0</td></tr>
-      <tr><td>Exam Pass v1 Campaign</td><td>5</td><td>2</td><td class="worst">40.0%</td><td>0</td><td class="neutral">—</td><td>0</td></tr>
-      <tr><td>From Invite TP / Completion / Assignment</td><td>3</td><td>3</td><td class="best">100.0%</td><td>0</td><td class="neutral">—</td><td>0</td></tr>
-      <tr style="font-weight:600; background:#f5f6fa;"><td>TOTAL</td><td>137</td><td>103</td><td>75.2%</td><td>23</td><td>16.8%</td><td>0</td></tr>
-    </tbody>
-  </table>
-  <p class="note">Strong delivery week — 75.2% overall open rate, 16.8% click rate, zero unsubscribes. Support Campaign leads on click rate (27.3%) which directly explains its review conversion. Hubspot Main's low click rate (6.2%) is the likely cause of its 0 reviews this period despite 71.9% opens — recipients are reading but not clicking through to review.</p>
-
-  <!-- 5. Negative Reviews -->
-  <h2>5. Negative Reviews by Campaign</h2>
+  <!-- 4. Negative Reviews -->
+  <h2>4. Negative Reviews by Campaign</h2>
   <div class="all-clear">&#10003;&nbsp; No negative reviews (rating 1&ndash;3) this period. All 7 attributed reviews rated 4 or 5 stars.</div>
 
-  <!-- 6. Common Complaint Themes -->
-  <h2>6. Common Complaint Themes</h2>
+  <!-- 5. Common Complaint Themes -->
+  <h2>5. Common Complaint Themes</h2>
   <div class="all-clear">&#10003;&nbsp; No complaint themes to report &mdash; clean week across all campaigns.</div>
 
-  <!-- 7. Urgent Action Items -->
-  <h2>7. Urgent Action Items</h2>
+  <!-- 6. Urgent Action Items -->
+  <h2>6. Urgent Action Items</h2>
   <div class="all-clear">&#10003;&nbsp; No urgent action items. No rating 1 or 2 reviews this period.</div>
   <p class="note" style="margin-top:8px;">Watch: Hubspot (Main) Invite TP Campaign dropped from 6.06% review rate to 0% &mdash; may be timing lag or volume effect. Monitor next period before drawing conclusions. Note: ticket data is not available for ITOL Recruit (<code>/customer_ticket/_projectId=itol_recruit</code> path does not exist).</p>
 
