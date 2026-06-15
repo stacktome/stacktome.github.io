@@ -32,22 +32,27 @@
   .campaign-block { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 16px; overflow: hidden; }
   .camp-header { background: #1a1a2e; color: #fff; padding: 10px 16px; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 10px; }
   .camp-header .badge { background: #d63031; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
+  .camp-header .badge-ok { background: #00b894; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
   .review-card { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; }
   .review-card:last-child { border-bottom: none; }
   .review-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
   .rating-badge { font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 8px; }
   .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff3e0; color: #e17055; }
+  .r5 { background: #e8f8f5; color: #00b894; }
   .review-text { font-style: italic; color: #555; line-height: 1.6; font-size: 13px; }
   .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
   .tag-ok { display: inline-block; background: #e8f8f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #00b894; }
+  .tag-warn { display: inline-block; background: #fff5f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #d63031; }
 
-  .urgent { background: #fff5f5; border: 1.5px solid #d63031; border-radius: 10px; padding: 20px 22px; }
+  .urgent { background: #fff5f5; border: 1.5px solid #d63031; border-radius: 10px; padding: 20px 22px; margin-bottom: 16px; }
   .urgent .urg-title { color: #d63031; font-weight: 700; font-size: 15px; margin-bottom: 14px; }
   .urgent table { box-shadow: none; border: 1px solid #f5c6c6; }
   .urgent th { background: #d63031; }
   .urgent td { background: #fff !important; }
 
   .all-clear { background: #e8f8f5; border: 1.5px solid #00b894; border-radius: 10px; padding: 20px 22px; color: #00b894; font-weight: 600; font-size: 14px; }
+  .info-box { background: #f0f4ff; border: 1.5px solid #6c5ce7; border-radius: 10px; padding: 14px 18px; margin-bottom: 12px; font-size: 13px; color: #4a4a4a; }
   .note { font-size: 12px; color: #888; margin-top: 4px; }
   .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
 </style>
@@ -56,30 +61,30 @@
 <div class="wrapper">
 
   <h1>Bornecyklerne &mdash; Campaign Performance Report</h1>
-  <div class="subtitle">Review invite analysis &nbsp;&bull;&nbsp; Jun 8&ndash;Jun 14, 2026 &nbsp;&bull;&nbsp; Generated 2026-06-15</div>
+  <div class="subtitle">Review invite analysis &nbsp;&bull;&nbsp; May 21&ndash;Jun 14, 2026 &nbsp;&bull;&nbsp; Generated 2026-06-15</div>
 
   <!-- 1. Executive Summary -->
   <h2>1. Executive Summary</h2>
   <div class="kpi-grid">
     <div class="kpi">
-      <div class="label">Total Invites Sent</div>
-      <div class="value">168</div>
-      <div class="sub">across 2 campaigns</div>
+      <div class="label">Unique Orders Invited</div>
+      <div class="value">274</div>
+      <div class="sub">271 invite-tp &middot; 3 invite-positive</div>
     </div>
     <div class="kpi">
-      <div class="label">Reviews Attributed</div>
-      <div class="value">2</div>
-      <div class="sub">campaign-attributed reviews</div>
-    </div>
-    <div class="kpi">
-      <div class="label">Overall Review Rate</div>
-      <div class="value">1.20%</div>
-      <div class="sub">reviews / invites sent this period</div>
+      <div class="label">Total Reviews</div>
+      <div class="value">16</div>
+      <div class="sub">10 attributed &middot; 6 organic</div>
     </div>
     <div class="kpi">
       <div class="label">Avg Order Rating</div>
-      <div class="value">3.00</div>
-      <div class="sub">out of 5.00 &mdash; 1 negative drag</div>
+      <div class="value">3.75</div>
+      <div class="sub">all 16 reviews incl. organic</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Negative Reviews</div>
+      <div class="value" style="color:#d63031;">5</div>
+      <div class="sub">4 rating-1 &middot; 1 rating-2 &mdash; 3 no ticket</div>
     </div>
   </div>
 
@@ -93,33 +98,78 @@
         <th>Open Rate</th>
         <th>Click Rate</th>
         <th>Unsubs</th>
-        <th>Reviews</th>
+        <th>Attributed Reviews</th>
         <th>Review Rate</th>
         <th>Avg Rating</th>
       </tr>
     </thead>
     <tbody>
-      <tr><td>invite-tp</td><td>167</td><td>48.5%</td><td class="worst">4.8%</td><td>1</td><td>2</td><td>1.20%</td><td><span class="stars">&#9733;&#9733;&#9733;</span> 3.00</td></tr>
-      <tr><td>invite-positive-tickets</td><td>1</td><td class="best">100.0%</td><td class="neutral">—</td><td>0</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td></tr>
-      <tr style="font-weight:600; background:#f5f6fa;"><td>TOTAL</td><td>168</td><td>48.8%</td><td>4.8%</td><td>1</td><td>2</td><td>1.20%</td><td>3.00</td></tr>
+      <tr>
+        <td>invite-tp</td>
+        <td>432</td>
+        <td>49.8%</td>
+        <td class="worst">6.2%</td>
+        <td>3</td>
+        <td>8</td>
+        <td>2.95%</td>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.50</td>
+      </tr>
+      <tr>
+        <td>invite-positive-tickets</td>
+        <td>3</td>
+        <td class="best">33.3%</td>
+        <td class="neutral">&mdash;</td>
+        <td>0</td>
+        <td>0</td>
+        <td class="neutral">0.00%</td>
+        <td class="neutral">&mdash;</td>
+      </tr>
+      <tr style="font-weight:600; background:#f5f6fa;">
+        <td>TOTAL</td>
+        <td>435</td>
+        <td>49.7%</td>
+        <td>6.2%</td>
+        <td>3</td>
+        <td>8</td>
+        <td>2.95%</td>
+        <td>4.50</td>
+      </tr>
     </tbody>
   </table>
-  <p class="note">Open rate at 48.5% is low &mdash; industry benchmark is typically 60%+. Click rate at 4.8% is the primary bottleneck for review conversion. 1 unsubscribe from invite-tp this period.</p>
+  <div class="info-box">
+    <strong>+6 organic reviews</strong> received in this period (no invite linked): 3 &times; rating-5, 3 &times; rating-1. Organic ratings pull the period average down to <strong>3.75</strong>.
+    Emails sent (435) exceeds unique orders invited (274) because the invite-tp campaign sends a follow-up reminder email.
+  </div>
+  <p class="note">Attributed review rate = attributed reviews &divide; unique orders invited (271). Open/click/unsubs from email delivery API.</p>
 
-  <!-- 3. Campaign Breakdown -->
-  <h2>3. Campaign Breakdown</h2>
+  <!-- 3. All Reviews This Period -->
+  <h2>3. All Reviews (May 21&ndash;Jun 14)</h2>
   <table>
     <thead>
-      <tr><th>Campaign</th><th>Review Rate</th><th>Avg Rating</th><th>Notes</th></tr>
+      <tr><th>Date</th><th>Rating</th><th>Source</th><th>Heading</th><th>Notes</th></tr>
     </thead>
     <tbody>
-      <tr><td>invite-tp</td><td>1.20%</td><td class="worst">3.00</td><td>167 invites, 2 reviews (rating 1 + rating 5). Rating dragged down by one strong negative. Low click rate (4.8%) is the main conversion blocker — recipients aren't clicking through to review.</td></tr>
-      <tr><td>invite-positive-tickets</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td><td>1 invite, 0 reviews. Negligible volume this period.</td></tr>
+      <tr><td>Jun 8</td><td class="worst">&#9733; 1</td><td>invite-tp</td><td>Hævede penge trods udsolgt</td><td>False stock / premature charge. Ticket #233447 solved.</td></tr>
+      <tr><td>Jun 8</td><td class="best">&#9733;&#9733;&#9733;&#9733;&#9733; 5</td><td>invite-tp</td><td>Super hurtig levering</td><td>&nbsp;</td></tr>
+      <tr><td>Jun 8</td><td class="best">&#9733;&#9733;&#9733;&#9733;&#9733; 5</td><td>organic</td><td>Umiddelbart var jeg godt tilfreds</td><td>Tyres burst; CS proactively sent replacement bike.</td></tr>
+      <tr><td>Jun 4</td><td class="best">&#9733;&#9733;&#9733;&#9733;&#9733; 5</td><td>invite-tp</td><td>Godt produkt</td><td>&nbsp;</td></tr>
+      <tr><td>Jun 3</td><td class="best">&#9733;&#9733;&#9733;&#9733;&#9733; 5</td><td>organic</td><td>Great quality fast delivery</td><td>&nbsp;</td></tr>
+      <tr><td>Jun 2</td><td class="best">&#9733;&#9733;&#9733;&#9733;&#9733; 5</td><td>organic</td><td>Alt var godt</td><td>&nbsp;</td></tr>
+      <tr><td>May 30</td><td class="best">&#9733;&#9733;&#9733;&#9733;&#9733; 5</td><td>invite-tp</td><td>Min vare kom desværre beskadiget</td><td>Damaged delivery &mdash; CS sent replacement. Positive resolution.</td></tr>
+      <tr><td>May 30</td><td class="best">&#9733;&#9733;&#9733;&#9733;&#9733; 5</td><td>invite-tp</td><td>Hurtig og fin levering</td><td>&nbsp;</td></tr>
+      <tr><td>May 29</td><td class="worst">&#9733; 1</td><td>organic</td><td>Manglende levering</td><td>Ordered Apr 7, delayed to end-July with no notice, payment already charged. Cancelled. <span class="tag-warn">No ticket found</span></td></tr>
+      <tr><td>May 29</td><td class="worst">&#9733;&#9733; 2</td><td>invite-old</td><td>Der var ingen problemer med servicen</td><td>Not assembled on arrival; poor quality. Ticket #249460 solved.</td></tr>
+      <tr><td>May 27</td><td class="best">&#9733;&#9733;&#9733;&#9733;&#9733; 5</td><td>invite-tp</td><td>Utrolig gode varer og hurtig levering</td><td>&nbsp;</td></tr>
+      <tr><td>May 26</td><td class="worst">&#9733; 1</td><td>organic</td><td>Desværre ikke et sted vi kan anbefale</td><td>Wrong assembly manual, extreme rust after 1.5 months, CS refused return. <span class="tag-warn">No ticket found</span></td></tr>
+      <tr><td>May 26</td><td class="best">&#9733;&#9733;&#9733;&#9733;&#9733; 5</td><td>invite-tp</td><td>Hurtig respons nye varer</td><td>&nbsp;</td></tr>
+      <tr><td>May 25</td><td class="best">&#9733;&#9733;&#9733;&#9733;&#9733; 5</td><td>invite-tp</td><td>Det var nemt at bestille</td><td>&nbsp;</td></tr>
+      <tr><td>May 25</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4</td><td>invite-old</td><td>Cykel lever 100% til hvad jeg forventede</td><td>&nbsp;</td></tr>
+      <tr><td>May 22</td><td class="worst">&#9733; 1</td><td>organic</td><td>Vi købte for 13 måneder siden en cykel&hellip;</td><td>13-month-old bike fully rusted, brakes broken, CS offered 200 DKK &mdash; rejected. <span class="tag-warn">No ticket found</span></td></tr>
     </tbody>
   </table>
 
-  <!-- 4. Negative Reviews by Campaign -->
-  <h2>4. Negative Reviews by Campaign</h2>
+  <!-- 4. Negative Reviews by Source -->
+  <h2>4. Negative Reviews by Source</h2>
   <div class="campaign-block">
     <div class="camp-header">invite-tp <span class="badge">1 rating-1</span></div>
     <div class="review-card">
@@ -134,23 +184,92 @@
       <div class="review-text">Bestilte cykel til mit barn som stod p&aring; lager p&aring; deres hjemmeside. Allerede dagen efter tr&aelig;kkes pengene p&aring; kontoen og jeg forventer derfor de har afsendt cyklen. Da vi ingenting h&oslash;rte om afsendelse og tracking nummer tog vi kontakt, hvorefter det viser sig at den er i restordre og IKKE SENDT. Ifl&oslash;lge dansk lov, m&aring; man ikke h&aelig;ve pengene f&oslash;r varen er afsendt, men det f&oslash;lger de &aring;benbart ikke. Vi fik besked at det f&oslash;rst var muligt at f&aring; leveret i juni, alts&aring; &eacute;n m&aring;ned efter. Fik annuleret ordre og penge tilbagef&oslash;rt. Useri&oslash;st forl&oslash;b.</div>
     </div>
   </div>
-  <p class="note"><strong>Translation:</strong> Customer ordered a bike shown as in-stock. Payment was taken immediately but the item was on backorder and never shipped. Danish law prohibits charging before dispatch &mdash; customer cancelled and received a refund but left a 1-star review for the experience. Ticket #233447 is solved.</p>
+  <p class="note"><strong>Translation:</strong> Customer ordered a bike shown as in-stock. Payment taken immediately but item was on backorder. Danish law prohibits charging before dispatch. Order cancelled, refund received.</p>
+
+  <div class="campaign-block">
+    <div class="camp-header">organic (no invite) <span class="badge">3 rating-1</span></div>
+
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">Rating 1</span>
+        <span class="tag">Anonymous</span>
+        <span style="font-size:11px;color:#888;">2026-05-29</span>
+        <span class="tag-warn">No ticket found</span>
+      </div>
+      <div style="font-weight:600;font-size:13px;margin-bottom:4px;">Manglende levering</div>
+      <div class="review-text">Vi bestilte en cykel til vores datter d. 7.4. Leveringen ville ske i dag d. 29.5 men cyklen kom ikke. Vi opdager pludselig p&aring; deres hjemmeside at cyklen ikke kan leveres f&oslash;r slut juli. Vi kontakter kundeservice som bekr&aelig;fter den nye leveringsdato. Vi har ingen information f&aring;et i perioden til nu, og slet ikke at cyklen ikke ville blive leveret som aftalt. Pengene er blevet trukket for l&aelig;ngst. Vi har annulleret ordren med det samme.</div>
+      <div class="review-text" style="margin-top:6px;"><em>Translation: Ordered Apr 7, bike not delivered on expected date May 29. Found on website it would now ship end-July &mdash; no proactive communication. Payment already charged. Cancelled.</em></div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">Rating 1</span>
+        <span class="tag">Anonymous</span>
+        <span style="font-size:11px;color:#888;">2026-05-26</span>
+        <span class="tag-warn">No ticket found</span>
+      </div>
+      <div style="font-weight:600;font-size:13px;margin-bottom:4px;">Desv&aelig;rre ikke et sted vi kan anbefale&hellip;</div>
+      <div class="review-text">Desv&aelig;rre ikke et sted vi kan anbefale at k&oslash;be cykel. Det startede godt med ret hurtig levering, desv&aelig;rre s&aring; var brugsforvirringen til en helt anden cykel og da jeg skrev en email og bad om en PDF version fik jeg stadigv&aelig;k ikke den rigtige samlemanual. Vores s&oslash;ns cykel var allerede helt ekstremt rusten efter 1.5 m&aring;neds brug &mdash; hans k&aelig;de hopper af p&aring; ugentlig basis. Vi har henvendt os til kundeservice og fik bare svaret at man m&aring; forvente rust specielt i vintervejr og at de ikke anser det som noget problem og at vi desuden ikke kan returnere cyklen da den er taget i brug.</div>
+      <div class="review-text" style="margin-top:6px;"><em>Translation: Wrong assembly manual sent; extreme rust after 1.5 months of minimal use. Customer service said rust is expected in winter and refused return.</em></div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r1">Rating 1</span>
+        <span class="tag">Anonymous</span>
+        <span style="font-size:11px;color:#888;">2026-05-22</span>
+        <span class="tag-warn">No ticket found</span>
+      </div>
+      <div style="font-weight:600;font-size:13px;margin-bottom:4px;">Vi k&oslash;bte for 13 m&aring;neder siden en cykel&hellip;</div>
+      <div class="review-text">Vi k&oslash;bte for 13 m&aring;neder siden en cykel til vores datter. Cyklen er nu 13 m&aring;neder gammel, fuldst&aelig;ndig og aldeles gennem rusten, vores andre cykler der er b&aring;de 4, 6 og 8 &aring;r gamle ser betydelig p&aelig;nere ud. Bremsen virker igen ikke. 1900kr for cyklen, 400kr i v&aelig;rksted og de tilbyder en kompensation p&aring; 200kr. Fuldkommen gennemrustet styr er ikke slid, det er d&aring;rlige materialer. Vi gider ikke smide flere penge efter en rustbunke &mdash; der er d&aelig;lme d&aring;rlig stil!!</div>
+      <div class="review-text" style="margin-top:6px;"><em>Translation: 13-month-old bike fully rusted and brakes broken again. Spent 2,300 DKK (bike + repairs). Offered 200 DKK compensation &mdash; rejected as inadequate. Poor materials.</em></div>
+    </div>
+  </div>
+
+  <div class="campaign-block">
+    <div class="camp-header">invite-old <span class="badge">1 rating-2</span></div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r2">Rating 2</span>
+        <span class="tag">Order: 16671404392778</span>
+        <span class="tag">ulla.thoft.nielsen@gmail.com</span>
+        <span style="font-size:11px;color:#888;">2026-05-29</span>
+        <span class="tag-ok">Ticket #249460 &mdash; solved</span>
+      </div>
+      <div style="font-weight:600;font-size:13px;margin-bottom:4px;">Der var ingen problemer med servicen</div>
+      <div class="review-text">Der var ingen problemer med servicen. Cyklen blev afleveret til tiden. Var ikke samlet ved ankomsten. Silke-kvaliteten af cyklen er under alt kritik.</div>
+      <div class="review-text" style="margin-top:6px;"><em>Translation: Delivery on time but bike not assembled on arrival. Silk-quality of the bike is completely unacceptable.</em></div>
+    </div>
+  </div>
 
   <!-- 5. Common Complaint Themes -->
   <h2>5. Common Complaint Themes</h2>
   <table>
-    <thead><tr><th>Theme</th><th>Reviews</th><th>Summary</th></tr></thead>
+    <thead><tr><th>Theme</th><th>Count</th><th>Summary</th></tr></thead>
     <tbody>
-      <tr><td class="worst">False stock / premature charge</td><td>1</td><td>Item shown in-stock on website, payment taken immediately, then revealed as backorder with 1-month delay. Violates Danish consumer law on pre-dispatch charging.</td></tr>
+      <tr><td class="worst">Product quality &mdash; rust &amp; durability</td><td>2</td><td>Two separate customers report extreme rusting after 1.5 and 13 months of use, plus brakes/chain problems. Customer service response ("expect rust in winter") seen as dismissive. Recurring issue.</td></tr>
+      <tr><td class="worst">False stock &amp; premature payment</td><td>2</td><td>Two customers ordered bikes shown as in-stock; payment was taken immediately but items were on backorder (1 month delay, and end-July delay). Violates Danish consumer law on pre-dispatch charging. Affected customers cancelled and received refunds.</td></tr>
+      <tr><td class="neutral">Not assembled on delivery</td><td>1</td><td>Bike arrived unassembled. Customer rated 2 stars. Ticket resolved.</td></tr>
     </tbody>
   </table>
 
   <!-- 6. Urgent Action Items -->
   <h2>6. Urgent Action Items</h2>
-  <div class="all-clear">&#10003;&nbsp; No untracked urgent cases &mdash; ticket #233447 for the rating-1 review is solved.</div>
-  <p class="note" style="margin-top:8px;">Recommend reviewing website stock accuracy and payment-on-dispatch policy to prevent recurrence of false in-stock listings.</p>
+  <div class="urgent">
+    <div class="urg-title">&#9888; 3 organic 1-star reviews with no support ticket found</div>
+    <table>
+      <thead><tr><th>Date</th><th>Theme</th><th>Anonymous?</th><th>Action needed</th></tr></thead>
+      <tbody>
+        <tr><td>2026-05-29</td><td>False stock / no proactive delay notice</td><td>Yes &mdash; no email/order in data</td><td>Respond publicly on review platform. Check if stock system sends delay alerts.</td></tr>
+        <tr><td>2026-05-26</td><td>Rust after 1.5 months, wrong manual, refused return</td><td>Yes &mdash; no email/order in data</td><td>Respond publicly. Review CS policy on rust complaints and returns for defective goods.</td></tr>
+        <tr><td>2026-05-22</td><td>Rust at 13 months, brakes broken, inadequate compensation</td><td>Yes &mdash; no email/order in data</td><td>Respond publicly. 200 DKK offer for a 1,900 DKK bike with structural rust is legally risky.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note" style="margin-top:8px;">Recurring rust/quality complaints (2 reviews in this period) suggest a systemic product or materials issue worth escalating to the supplier. False-stock/premature-payment pattern also recurring (2 reviews) &mdash; website stock accuracy and payment-on-dispatch policy need review.</p>
+  <div class="all-clear" style="margin-top:16px;">&#10003;&nbsp; Tickets for attributed/identified reviews: #233447 (invite-tp, rating-1) &mdash; solved &middot; #249460 (invite-old, rating-2) &mdash; solved</div>
 
-  <div class="footer">Bornecyklerne &mdash; Campaign Performance Report &mdash; Generated 2026-06-15 &mdash; Data window: Jun 8&ndash;Jun 14, 2026</div>
+  <div class="footer">Bornecyklerne &mdash; Campaign Performance Report &mdash; Generated 2026-06-15 &mdash; Data window: May 21&ndash;Jun 14, 2026</div>
 </div>
 </body>
 </html>
