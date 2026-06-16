@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CurrentBody Group — Review &amp; Campaign Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #1a1a2e; margin: 20px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .account-label { display: inline-block; border-radius: 6px; padding: 3px 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+  .label-au   { background: #dfe6e9; color: #2d3436; }
+  .label-us   { background: #e8f4fd; color: #2980b9; }
+  .label-ziip { background: #ffeaa7; color: #856404; }
+  .label-managed { background: #d5f5e3; color: #1e8449; font-size: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 8px; }
+  .kpi-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .kpi.warn .value { color: #d63031; }
+  .kpi.ok .value { color: #00b894; }
+
+  .account-block { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 28px; overflow: hidden; }
+  .account-header { padding: 14px 20px; font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid #f0f0f0; }
+  .account-header.au   { background: #f7f9fa; }
+  .account-header.us   { background: #eaf4fb; }
+  .account-header.ziip { background: #fffdf0; }
+  .account-body { padding: 18px 20px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 10px 14px; text-align: left; }
+  td { padding: 9px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best  { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .stars { color: #fdcb6e; }
+  .total-row td { background: #f5f6fa !important; font-weight: 600; }
+
+  .tag { display: inline-block; border-radius: 4px; padding: 2px 8px; font-size: 11px; }
+  .tag-red    { background: #ffeaea; color: #c0392b; }
+  .tag-orange { background: #fff3cd; color: #856404; }
+  .tag-green  { background: #d5f5e3; color: #1e8449; }
+  .tag-blue   { background: #d6eaf8; color: #1a5276; }
+  .tag-gray   { background: #f0f0f0; color: #555; }
+
+  .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 8px; }
+  .theme-card { background: #fff; border-radius: 8px; padding: 14px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.07); border-left: 4px solid #e0e0e0; }
+  .theme-card.red    { border-left-color: #d63031; }
+  .theme-card.orange { border-left-color: #e67e22; }
+  .theme-card.gray   { border-left-color: #b2bec3; }
+  .theme-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .theme-count { font-size: 11px; color: #888; }
+  .theme-body  { font-size: 12px; color: #555; margin-top: 6px; line-height: 1.5; }
+
+  .alert-box { border-radius: 10px; padding: 16px 20px; margin-bottom: 12px; }
+  .alert-red    { background: #fdf3f2; border: 1.5px solid #e74c3c; }
+  .alert-orange { background: #fef9e7; border: 1.5px solid #f39c12; }
+  .alert-green  { background: #e8f8f5; border: 1.5px solid #00b894; }
+  .alert-title  { font-weight: 700; font-size: 13px; margin-bottom: 6px; }
+  .alert-body   { font-size: 12px; color: #555; line-height: 1.5; }
+
+  .divider { height: 1px; background: #f0f0f0; margin: 20px 0; }
+  .note { font-size: 12px; color: #888; margin-top: 6px; }
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>CurrentBody Group &mdash; Review &amp; Campaign Report</h1>
+  <div class="subtitle">3 accounts: currentbody_au &middot; currentbody_us &middot; ziipbeauty &nbsp;&bull;&nbsp; Review period: Jan 16&ndash;Jun 15, 2026 &nbsp;&bull;&nbsp; Email performance: May 17&ndash;Jun 15, 2026 &nbsp;&bull;&nbsp; Generated 2026-06-16</div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <h2>1. Group Overview</h2>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Total Reviews</div>
+      <div class="value">1,392</div>
+      <div class="sub">across 3 accounts, 5 months</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Avg Group Rating</div>
+      <div class="value">4.38</div>
+      <div class="sub">weighted across all accounts</div>
+    </div>
+    <div class="kpi warn">
+      <div class="label">Total Negatives</div>
+      <div class="value">177</div>
+      <div class="sub">rating 1–2 (12.7% of total)</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Managed Campaigns</div>
+      <div class="value">2</div>
+      <div class="sub">au + ziip only (not US)</div>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Account</th>
+        <th>Reviews</th>
+        <th>Invite-Attributed</th>
+        <th>Organic</th>
+        <th>Avg Rating</th>
+        <th>Positive (4–5★)</th>
+        <th>Neutral (3★)</th>
+        <th>Negative (1–2★)</th>
+        <th>Neg %</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="account-label label-au">AU</span> currentbody_au <span class="account-label label-managed">Managed</span></td>
+        <td>171</td>
+        <td>82 (48%)</td>
+        <td>89 (52%)</td>
+        <td><span class="stars">&#9733;</span> 4.53</td>
+        <td class="best">152 (88.9%)</td>
+        <td>4</td>
+        <td>15</td>
+        <td>8.8%</td>
+      </tr>
+      <tr>
+        <td><span class="account-label label-us">US</span> currentbody_us <span class="neutral" style="font-size:11px">(not managed)</span></td>
+        <td>958</td>
+        <td class="neutral">&mdash;</td>
+        <td>958</td>
+        <td><span class="stars">&#9733;</span> 4.46</td>
+        <td class="best">822 (85.8%)</td>
+        <td>39</td>
+        <td>97</td>
+        <td>10.1%</td>
+      </tr>
+      <tr>
+        <td><span class="account-label label-ziip">ZIIP</span> ziipbeauty <span class="account-label label-managed">Managed</span></td>
+        <td>263</td>
+        <td>190 (72%)</td>
+        <td>73 (28%)</td>
+        <td class="worst"><span class="stars">&#9733;</span> 3.89</td>
+        <td>185 (70.3%)</td>
+        <td>13</td>
+        <td>65</td>
+        <td class="worst">24.7%</td>
+      </tr>
+      <tr class="total-row">
+        <td>TOTAL</td>
+        <td>1,392</td>
+        <td>272</td>
+        <td>1,120</td>
+        <td>4.38</td>
+        <td>1,159 (83.3%)</td>
+        <td>56</td>
+        <td>177</td>
+        <td>12.7%</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">Review period: Jan 16–Jun 15, 2026. US has no Stacktome-managed invite campaigns; all US reviews are organic platform submissions. AU "organic" = reviews with no matching invite order_id (direct Trustpilot submissions).</p>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <h2>2. Monthly Rating Trend</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Month</th>
+        <th>AU Reviews</th>
+        <th>AU Avg ★</th>
+        <th>AU Neg</th>
+        <th>US Reviews</th>
+        <th>US Avg ★</th>
+        <th>US Neg</th>
+        <th>Ziip Reviews</th>
+        <th>Ziip Avg ★</th>
+        <th>Ziip Neg</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Feb 2026</td><td>23</td><td class="best">4.70</td><td>1</td><td>231</td><td>4.45</td><td>25</td><td>72</td><td>4.00</td><td>16</td></tr>
+      <tr><td>Mar 2026</td><td>35</td><td class="best">4.71</td><td>2</td><td>236</td><td>4.44</td><td>22</td><td>58</td><td>3.90</td><td>14</td></tr>
+      <tr><td>Apr 2026</td><td>28</td><td>4.14</td><td>5</td><td>184</td><td class="best">4.61</td><td>14</td><td>40</td><td>4.00</td><td>9</td></tr>
+      <tr><td>May 2026</td><td>61</td><td class="best">4.66</td><td>3</td><td>217</td><td>4.43</td><td>25</td><td>58</td><td>3.81</td><td>15</td></tr>
+      <tr><td>Jun 2026 (1–15)</td><td>24</td><td>4.21</td><td>4</td><td>90</td><td>4.32</td><td>11</td><td>35</td><td class="worst">3.69</td><td>11</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Jan 16–31 had no reviews across any account. Ziip shows a clear downward trend: 4.00 (Feb) &rarr; 3.69 (Jun partial). AU and US remain broadly stable.</p>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <h2>3. Managed Campaign Performance (5 months)</h2>
+  <p class="note" style="margin-bottom:12px">AU and Ziip only — US has no Stacktome-managed invite campaigns.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Account</th>
+        <th>Campaign</th>
+        <th>Invites Sent</th>
+        <th>Attributed Reviews</th>
+        <th>Invite Review Rate</th>
+        <th>Avg Attributed Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="account-label label-au">AU</span></td>
+        <td>invites-tp-au (ID 125)</td>
+        <td>5,378</td>
+        <td>82</td>
+        <td>1.52%</td>
+        <td><span class="stars">&#9733;</span> 4.29</td>
+      </tr>
+      <tr>
+        <td><span class="account-label label-ziip">ZIIP</span></td>
+        <td>invite-tp (ID 214)</td>
+        <td>11,763</td>
+        <td>190</td>
+        <td>1.62%</td>
+        <td><span class="stars">&#9733;</span> 4.28</td>
+      </tr>
+      <tr class="total-row">
+        <td colspan="2">TOTAL</td>
+        <td>17,141</td>
+        <td>272</td>
+        <td>1.59%</td>
+        <td>4.28</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">Attributed = review order_id matches an invite in the campaign. Includes full 5-month history Jan 16–Jun 15. Overall platform reviews (all 1,392) include organic submissions not tied to an invite.</p>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <h2>4. Email Performance &mdash; Last 30 Days (May 17&ndash;Jun 15)</h2>
+  <p class="note" style="margin-bottom:12px">Percentages shown — 30-day email window does not align with 5-month review history.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Account</th>
+        <th>Campaign</th>
+        <th>Sent</th>
+        <th>Unique Opens</th>
+        <th>Open %</th>
+        <th>Unique Clicks</th>
+        <th>Click %</th>
+        <th>Unsubs</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="account-label label-au">AU</span></td>
+        <td>invites-tp-au</td>
+        <td>2,844</td>
+        <td>1,717</td>
+        <td class="best">60.4%</td>
+        <td>109</td>
+        <td>3.8%</td>
+        <td>58</td>
+      </tr>
+      <tr>
+        <td><span class="account-label label-ziip">ZIIP</span></td>
+        <td>invite-tp</td>
+        <td>3,696</td>
+        <td>2,215</td>
+        <td class="best">59.9%</td>
+        <td>73</td>
+        <td class="worst">2.0%</td>
+        <td>47</td>
+      </tr>
+      <tr class="total-row">
+        <td colspan="2">TOTAL</td>
+        <td>6,540</td>
+        <td>3,932</td>
+        <td>60.1%</td>
+        <td>182</td>
+        <td>2.8%</td>
+        <td>105</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">Open rates are strong (60%+) for both accounts. Ziip's click rate (2.0%) is notably lower than AU (3.8%) — high open engagement but low click-through suggests the email body or CTA may need improvement for Ziip. Unsub rate is low for both.</p>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <h2>5. Negative Review Analysis</h2>
+
+  <!-- — AU — -->
+  <div class="account-block">
+    <div class="account-header au">
+      <span class="account-label label-au">AU</span>
+      currentbody_au
+      <span style="font-weight:400;font-size:12px;color:#636e72;margin-left:auto">15 neg (1–2★) &middot; 4 neutral (3★) &middot; 4.53★ avg</span>
+    </div>
+    <div class="account-body">
+      <div class="theme-grid">
+        <div class="theme-card orange">
+          <div class="theme-title">Return Policy &amp; CS Unresponsive</div>
+          <div class="theme-count">~7 reviews</div>
+          <div class="theme-body">Customers cannot return opened/used items even for fit or efficacy issues. CS responses described as unhelpful, ignoring practical realities of beauty devices. Multiple customers felt trapped after spending $300–600.</div>
+        </div>
+        <div class="theme-card orange">
+          <div class="theme-title">Mask Fit &amp; Comfort</div>
+          <div class="theme-count">~5 reviews</div>
+          <div class="theme-body">Mask too heavy (pulls down), doesn't fit small faces, mouth space misaligned, branding peeling off straps after 2 uses, leaves red marks on skin. Common among LED face mask purchasers.</div>
+        </div>
+        <div class="theme-card gray">
+          <div class="theme-title">Defective / Non-Delivery</div>
+          <div class="theme-count">~4 reviews</div>
+          <div class="theme-body">Mask stopped working after brief use, parts missing on arrival, $600 order stuck with courier and not delivered despite monthly follow-up.</div>
+        </div>
+        <div class="theme-card gray">
+          <div class="theme-title">Product Efficacy</div>
+          <div class="theme-count">~3 reviews</div>
+          <div class="theme-body">Skin looks darker/more spotted after use, no visible improvement. Customers expected clearer results guidance before committing to expensive devices.</div>
+        </div>
+      </div>
+      <p class="note">No ticket_id matched for any AU negative reviews in this period — none have active Zendesk tickets linked via email. Recommend creating tickets for the 4 rating-1 invite-tp reviews where customer email is available.</p>
+    </div>
+  </div>
+
+  <!-- — US — -->
+  <div class="account-block">
+    <div class="account-header us">
+      <span class="account-label label-us">US</span>
+      currentbody_us
+      <span style="font-weight:400;font-size:12px;color:#636e72;margin-left:auto">97 neg (1–2★) &middot; 39 neutral (3★) &middot; 4.46★ avg (no managed campaigns)</span>
+    </div>
+    <div class="account-body">
+      <div class="theme-grid">
+        <div class="theme-card red">
+          <div class="theme-title">Customer Service — No Phone, AI Responses</div>
+          <div class="theme-count">~35 reviews</div>
+          <div class="theme-body">Most cited US complaint. No customer service phone number available. Responses are slow (3–5 days), come from different agents each time with no case continuity. AI bots provide generic answers. Customers spending $500–2,500 expect real human support.</div>
+        </div>
+        <div class="theme-card red">
+          <div class="theme-title">Return Policy — Can't Return Opened Items</div>
+          <div class="theme-count">~25 reviews</div>
+          <div class="theme-body">Policy requires products to be unopened for returns, but customers cannot evaluate fit/efficacy without opening. Especially problematic for $500–$2,500 devices with medical contraindications only listed inside the box (diabetes, migraines, implants).</div>
+        </div>
+        <div class="theme-card orange">
+          <div class="theme-title">Defective Products</div>
+          <div class="theme-count">~20 reviews</div>
+          <div class="theme-body">Devices won't power on or charge out of box, stop working after a few uses. Company requires multiple videos as proof before processing warranty, then stops responding. No refund offered even for clearly defective items.</div>
+        </div>
+        <div class="theme-card orange">
+          <div class="theme-title">Non-Delivery &amp; Shipping Errors</div>
+          <div class="theme-count">~15 reviews</div>
+          <div class="theme-body">Packages delivered to wrong address or marked delivered but not received. High-value orders shipped without signature confirmation. CS demands police reports before processing lost shipments. Multiple cases of wrong items shipped.</div>
+        </div>
+        <div class="theme-card gray">
+          <div class="theme-title">Mask Doesn't Fit (Small Faces)</div>
+          <div class="theme-count">~8 reviews</div>
+          <div class="theme-body">LED mask too large for petite faces — eyeholes misaligned with actual eye placement, chin hangs inches below mask. No exchange/return available once opened.</div>
+        </div>
+        <div class="theme-card gray">
+          <div class="theme-title">FSA/HSA Payment Issues</div>
+          <div class="theme-count">~4 reviews</div>
+          <div class="theme-body">Devices advertised as FSA-eligible via Flex partner, but Flex refuses to issue Letter of Medical Necessity required by FSA companies. Customers stuck paying out-of-pocket after being misled by advertising.</div>
+        </div>
+      </div>
+      <p class="note">US account is not managed by Stacktome — these are all organic Trustpilot reviews. No ticket data available. Included for brand health visibility only. Volume of 1-star reviews (97 in 5 months) is high given 958 total and represents significant brand risk if unaddressed.</p>
+    </div>
+  </div>
+
+  <!-- — ZIIP — -->
+  <div class="account-block">
+    <div class="account-header ziip">
+      <span class="account-label label-ziip">ZIIP</span>
+      ziipbeauty
+      <span style="font-weight:400;font-size:12px;color:#856404;margin-left:auto">65 neg (1–2★) &middot; 13 neutral (3★) &middot; 3.89★ avg &mdash; declining</span>
+    </div>
+    <div class="account-body">
+      <div class="theme-grid">
+        <div class="theme-card red">
+          <div class="theme-title">Device Reliability &amp; Hardware Failures</div>
+          <div class="theme-count">~30 reviews</div>
+          <div class="theme-body">Most critical issue. Devices stop working within 1–10 months: won't charge, won't power on, silver casing deteriorates and allows gel ingress causing permanent failure. Multiple reviewers on 2nd or 3rd replacement device. Pattern consistent across France, UK, US, ES markets.</div>
+        </div>
+        <div class="theme-card red">
+          <div class="theme-title">App Connectivity &amp; Sync Failures</div>
+          <div class="theme-count">~15 reviews</div>
+          <div class="theme-body">Device stops syncing with app after firmware updates or spontaneously. Programs run incorrect durations or fail mid-session. No workaround without app (device app-dependent by design). Newer Halo 2.0 firmware issues still reported in Jun 2026.</div>
+        </div>
+        <div class="theme-card red">
+          <div class="theme-title">Customer Service — Unresponsive &amp; Inconsistent</div>
+          <div class="theme-count">~20 reviews</div>
+          <div class="theme-body">Different agent every email with no case history. Requires video proof for warranty claims that is technically difficult to produce. Cases closed without resolution. Public Trustpilot reviews trigger faster response than email — mentioned by multiple customers explicitly.</div>
+        </div>
+        <div class="theme-card orange">
+          <div class="theme-title">Quality Decline Post-Acquisition</div>
+          <div class="theme-count">~5 reviews</div>
+          <div class="theme-body">"Since CurrentBody acquired ZIIP, support has become non-existent." "Whoever bought this company is not as good as Melanie [original founder]." App doesn't work, devices don't work, and support is non-existent since the acquisition. Brand equity risk tied directly to CurrentBody association.</div>
+        </div>
+        <div class="theme-card orange">
+          <div class="theme-title">Return Policy — Opened Items</div>
+          <div class="theme-count">~8 reviews</div>
+          <div class="theme-body">Cannot return opened device even when medical contraindications are only listed inside the box. Customers with implants, metal hardware, or contraindications discover this only after opening — then denied return.</div>
+        </div>
+        <div class="theme-card gray">
+          <div class="theme-title">Product Efficacy</div>
+          <div class="theme-count">~8 reviews</div>
+          <div class="theme-body">No visible results after 4–8 weeks of consistent use. Cheaper alternatives ($100) showed faster results. High expectations set by celebrity endorsements (Margot Robbie, Jennifer Aniston) not met.</div>
+        </div>
+      </div>
+      <p class="note">Ziip invite-attributed reviews avg 4.28★ while overall avg is 3.89★ — organic reviews skew significantly more negative. Declining monthly trend (4.00 &rarr; 3.69 Jun) is a concern. Many negative reviews explicitly mention device defects as a hardware/reliability issue, not user error.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <h2>6. Urgent Action Items</h2>
+
+  <div class="alert-box alert-red">
+    <div class="alert-title">&#9888;&nbsp; Ziip Rating in Decline — 4.00 &rarr; 3.69 in 5 Months</div>
+    <div class="alert-body">Ziip's monthly average rating has fallen from 4.00 (Feb) to 3.69 (Jun partial). At 24.7% negative rate, nearly 1 in 4 Ziip reviews is 1 or 2 stars. Root cause is clearly hardware reliability — devices failing within months, compounded by slow CS. This will compound over time if hardware issues are not addressed upstream.</div>
+  </div>
+
+  <div class="alert-box alert-red">
+    <div class="alert-title">&#9888;&nbsp; Post-Acquisition Brand Risk for Ziip</div>
+    <div class="alert-body">Multiple Ziip reviewers explicitly connect quality decline to the CurrentBody acquisition. If this narrative spreads, it becomes a reputational issue for the entire group. Recommend flagging to CurrentBody leadership: the Ziip support experience needs dedicated investment, separate from AU CS patterns.</div>
+  </div>
+
+  <div class="alert-box alert-orange">
+    <div class="alert-title">&#9888;&nbsp; AU Click Rate Low for Ziip Emails (2.0% vs AU 3.8%)</div>
+    <div class="alert-body">Both campaigns have similar open rates (~60%) but Ziip invite-tp click rate is nearly half of AU's. The email body or review CTA may not be compelling enough for Ziip customers. Consider A/B testing subject lines or CTA placement for campaign 214. Low click rate is the bottleneck between opens and reviews.</div>
+  </div>
+
+  <div class="alert-box alert-orange">
+    <div class="alert-title">&#9888;&nbsp; US Account: 97 Negative Reviews with No Ticket Coverage</div>
+    <div class="alert-body">US is not managed by Stacktome but generates 10x more reviews than AU. Of 958 US reviews, 97 are 1–2 stars. Recurring themes (no phone CS, return policy, defective devices) suggest systemic issues the brand should be aware of. Recommend sharing US theme analysis with CurrentBody directly.</div>
+  </div>
+
+  <div class="alert-box alert-green">
+    <div class="alert-title">&#10003;&nbsp; AU Performing Solidly — No Urgent Issues</div>
+    <div class="alert-body">AU maintains 4.53★ avg with 88.9% positive rate over 5 months. Campaign delivers 1.52% review rate. Main improvement opportunity is addressing the return policy language and ensuring invited customers who leave negative reviews get ticket follow-up (no tickets currently linked to AU negatives).</div>
+  </div>
+
+  <div class="footer">CurrentBody Group &mdash; Review &amp; Campaign Report &mdash; Generated 2026-06-16 &mdash; Review period: Jan 16&ndash;Jun 15, 2026</div>
+</div>
+</body>
+</html>
