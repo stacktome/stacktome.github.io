@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jewlr — Campaign Performance Report | Jun 2025–Jun 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f9fa; color: #212529; }
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 40px 48px 36px; }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .brand { font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; opacity: 0.6; }
+  .period-badge { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500; }
+  .header h1 { font-size: 32px; font-weight: 700; margin-bottom: 6px; }
+  .header-sub { font-size: 14px; opacity: 0.65; }
+  .container { max-width: 980px; margin: 0 auto; padding: 32px 24px; }
+
+  /* KPI bar */
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-top: 3px solid #0f3460; }
+  .kpi.green { border-top-color: #28a745; }
+  .kpi.amber { border-top-color: #fd7e14; }
+  .kpi.red { border-top-color: #dc3545; }
+  .kpi.blue { border-top-color: #0d6efd; }
+  .kpi-val { font-size: 28px; font-weight: 700; color: #1a1a2e; line-height: 1; margin-bottom: 4px; }
+  .kpi-label { font-size: 11px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: #6c757d; }
+
+  /* Sections */
+  .section { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 24px; overflow: hidden; }
+  .section-header { padding: 18px 24px 16px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
+  .section-title { font-size: 15px; font-weight: 700; color: #1a1a2e; }
+  .section-sub { font-size: 12px; color: #6c757d; }
+  .section-body { padding: 20px 24px; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 9px 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: #6c757d; border-bottom: 2px solid #f0f0f0; background: #fafafa; }
+  td { padding: 10px 12px; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafeff; }
+
+  /* Stars */
+  .stars { color: #ffc107; font-size: 12px; }
+  .rating-num { font-weight: 700; color: #1a1a2e; }
+
+  /* Badges */
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-green { background: #d4edda; color: #155724; }
+  .badge-amber { background: #fff3cd; color: #856404; }
+  .badge-red { background: #f8d7da; color: #721c24; }
+  .badge-blue { background: #d0e8ff; color: #004085; }
+  .badge-gray { background: #e9ecef; color: #495057; }
+
+  /* Month trend */
+  .trend-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+  .trend-cell { text-align: center; padding: 12px 8px; border-radius: 8px; background: #f8f9fa; }
+  .trend-cell.best { background: #d4edda; }
+  .trend-cell.worst { background: #f8d7da; }
+  .trend-month { font-size: 10px; font-weight: 600; color: #6c757d; text-transform: uppercase; margin-bottom: 4px; }
+  .trend-rating { font-size: 20px; font-weight: 800; }
+  .trend-count { font-size: 10px; color: #6c757d; }
+  .trend-bar-wrap { height: 4px; background: #dee2e6; border-radius: 2px; margin-top: 6px; }
+  .trend-bar { height: 4px; border-radius: 2px; background: #0f3460; }
+
+  /* Source split */
+  .source-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .source-card { border-radius: 10px; padding: 20px; text-align: center; }
+  .source-card.invite-only { background: #e8f4fd; border: 1px solid #bee3f8; }
+  .source-card.invite-reminder { background: #e8f0fe; border: 1px solid #c5d5f8; }
+  .source-card.organic { background: #f8f9fa; border: 1px solid #dee2e6; }
+  .source-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #6c757d; margin-bottom: 8px; }
+  .source-rating { font-size: 36px; font-weight: 800; color: #1a1a2e; line-height: 1; }
+  .source-stars { color: #ffc107; font-size: 14px; margin: 4px 0; }
+  .source-count { font-size: 12px; color: #6c757d; }
+  .source-detail { font-size: 11px; color: #868e96; margin-top: 4px; }
+
+  /* Product bars */
+  .product-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f5f5f5; }
+  .product-row:last-child { border-bottom: none; }
+  .product-name { width: 160px; font-size: 13px; font-weight: 600; color: #1a1a2e; flex-shrink: 0; }
+  .product-bar-wrap { flex: 1; height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden; }
+  .product-bar { height: 10px; border-radius: 5px; }
+  .bar-good { background: #28a745; }
+  .bar-mid { background: #fd7e14; }
+  .bar-low { background: #dc3545; }
+  .product-stats { width: 180px; text-align: right; font-size: 12px; color: #6c757d; flex-shrink: 0; }
+
+  /* Complaint themes */
+  .complaint-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .complaint-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: #f8f9fa; border-radius: 8px; border-left: 3px solid #dc3545; }
+  .complaint-item.secondary { border-left-color: #fd7e14; }
+  .complaint-icon { font-size: 20px; }
+  .complaint-label { font-size: 13px; font-weight: 600; color: #1a1a2e; }
+  .complaint-count { font-size: 11px; color: #6c757d; margin-top: 1px; }
+
+  /* Email performance */
+  .email-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .email-stat { text-align: center; padding: 16px; background: #f8f9fa; border-radius: 10px; }
+  .email-val { font-size: 26px; font-weight: 800; color: #1a1a2e; }
+  .email-label { font-size: 11px; color: #6c757d; font-weight: 600; text-transform: uppercase; margin-top: 4px; }
+  .email-note { font-size: 10px; color: #adb5bd; margin-top: 2px; }
+
+  /* Urgent / Actions */
+  .action-list { list-style: none; }
+  .action-list li { padding: 12px 16px; border-left: 4px solid #0f3460; margin-bottom: 10px; background: #f8f9fa; border-radius: 0 8px 8px 0; font-size: 13px; line-height: 1.5; }
+  .action-list li.critical { border-left-color: #dc3545; background: #fff5f5; }
+  .action-list li.warning { border-left-color: #fd7e14; background: #fffaf5; }
+  .action-list li strong { display: block; font-weight: 700; margin-bottom: 2px; }
+
+  /* Footer */
+  .footer { text-align: center; padding: 24px; font-size: 11px; color: #adb5bd; }
+
+  @media (max-width: 720px) {
+    .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+    .trend-grid { grid-template-columns: repeat(4, 1fr); }
+    .source-grid { grid-template-columns: 1fr; }
+    .email-grid { grid-template-columns: repeat(2, 1fr); }
+    .complaint-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="brand">Stacktome &mdash; Campaign Report</div>
+    <div class="period-badge">Jun 17, 2025 – Jun 16, 2026</div>
+  </div>
+  <h1>Jewlr Performance Report</h1>
+  <div class="header-sub">12-month review analysis &bull; Email performance: May 18–Jun 17, 2026 (30 days) &bull; Stacktome-managed account</div>
+</div>
+
+<div class="container">
+
+  <!-- KPIs -->
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-val">1,072</div>
+      <div class="kpi-label">Total Reviews</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-val">4.26★</div>
+      <div class="kpi-label">Avg Rating</div>
+    </div>
+    <div class="kpi blue">
+      <div class="kpi-val">21,309</div>
+      <div class="kpi-label">Invites Sent</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">4.24%</div>
+      <div class="kpi-label">Review Rate</div>
+    </div>
+    <div class="kpi amber">
+      <div class="kpi-val">148</div>
+      <div class="kpi-label">Low Ratings (≤2★)</div>
+    </div>
+  </div>
+
+  <!-- Monthly Trend -->
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Monthly Review Trend</div>
+        <div class="section-sub">Avg rating and volume per month — Jun 2025 through Jun 2026 (partial)</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="trend-grid">
+        <div class="trend-cell">
+          <div class="trend-month">Jul '25</div>
+          <div class="trend-rating" style="color:#28a745">4.33</div>
+          <div class="trend-count">115 reviews</div>
+          <div class="trend-bar-wrap"><div class="trend-bar" style="width:86%"></div></div>
+        </div>
+        <div class="trend-cell">
+          <div class="trend-month">Aug '25</div>
+          <div class="trend-rating" style="color:#28a745">4.23</div>
+          <div class="trend-count">112 reviews</div>
+          <div class="trend-bar-wrap"><div class="trend-bar" style="width:84%"></div></div>
+        </div>
+        <div class="trend-cell worst">
+          <div class="trend-month">Sep '25</div>
+          <div class="trend-rating" style="color:#dc3545">3.81</div>
+          <div class="trend-count">85 reviews</div>
+          <div class="trend-bar-wrap"><div class="trend-bar" style="width:76%; background:#dc3545"></div></div>
+        </div>
+        <div class="trend-cell">
+          <div class="trend-month">Oct '25</div>
+          <div class="trend-rating" style="color:#28a745">4.43</div>
+          <div class="trend-count">51 reviews</div>
+          <div class="trend-bar-wrap"><div class="trend-bar" style="width:88%"></div></div>
+        </div>
+        <div class="trend-cell">
+          <div class="trend-month">Nov '25</div>
+          <div class="trend-rating" style="color:#28a745">4.35</div>
+          <div class="trend-count">109 reviews</div>
+          <div class="trend-bar-wrap"><div class="trend-bar" style="width:87%"></div></div>
+        </div>
+        <div class="trend-cell">
+          <div class="trend-month">Dec '25</div>
+          <div class="trend-rating" style="color:#fd7e14">4.02</div>
+          <div class="trend-count">89 reviews</div>
+          <div class="trend-bar-wrap"><div class="trend-bar" style="width:80%"></div></div>
+        </div>
+        <div class="trend-cell">
+          <div class="trend-month">Jan '26</div>
+          <div class="trend-rating" style="color:#28a745">4.34</div>
+          <div class="trend-count">91 reviews</div>
+          <div class="trend-bar-wrap"><div class="trend-bar" style="width:86%"></div></div>
+        </div>
+        <div class="trend-cell">
+          <div class="trend-month">Feb '26</div>
+          <div class="trend-rating" style="color:#28a745">4.15</div>
+          <div class="trend-count">99 reviews</div>
+          <div class="trend-bar-wrap"><div class="trend-bar" style="width:83%"></div></div>
+        </div>
+        <div class="trend-cell">
+          <div class="trend-month">Mar '26</div>
+          <div class="trend-rating" style="color:#28a745">4.50</div>
+          <div class="trend-count">76 reviews</div>
+          <div class="trend-bar-wrap"><div class="trend-bar" style="width:90%"></div></div>
+        </div>
+        <div class="trend-cell best">
+          <div class="trend-month">Apr '26</div>
+          <div class="trend-rating" style="color:#28a745">4.58</div>
+          <div class="trend-count">89 reviews</div>
+          <div class="trend-bar-wrap"><div class="trend-bar" style="width:91%; background:#28a745"></div></div>
+        </div>
+        <div class="trend-cell">
+          <div class="trend-month">May '26</div>
+          <div class="trend-rating" style="color:#28a745">4.19</div>
+          <div class="trend-count">99 reviews</div>
+          <div class="trend-bar-wrap"><div class="trend-bar" style="width:83%"></div></div>
+        </div>
+        <div class="trend-cell">
+          <div class="trend-month">Jun '26</div>
+          <div class="trend-rating" style="color:#28a745">4.32</div>
+          <div class="trend-count">57 reviews*</div>
+          <div class="trend-bar-wrap"><div class="trend-bar" style="width:86%"></div></div>
+        </div>
+      </div>
+      <p style="font-size:11px;color:#adb5bd;margin-top:14px;">* Jun 2026 partial — data through Jun 16. Sep 2025 was the weakest month (3.81★, 26 negative). Apr 2026 was the strongest (4.58★, only 2 negative).</p>
+    </div>
+  </div>
+
+  <!-- Rating by Source -->
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Rating by Review Source</div>
+        <div class="section-sub">Stacktome-invited vs organic — order reviews matched to invite history by order_id</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="source-grid">
+        <div class="source-card invite-only">
+          <div class="source-label">Invite Only</div>
+          <div class="source-rating">4.31</div>
+          <div class="source-stars">★★★★☆</div>
+          <div class="source-count">586 reviews</div>
+          <div class="source-detail">72% five-star &bull; 13% low (≤2★)</div>
+          <div style="margin-top:8px"><span class="badge badge-blue">No reminder needed</span></div>
+        </div>
+        <div class="source-card invite-reminder">
+          <div class="source-label">Invite + Reminder</div>
+          <div class="source-rating">4.29</div>
+          <div class="source-stars">★★★★☆</div>
+          <div class="source-count">317 reviews</div>
+          <div class="source-detail">69% five-star &bull; 11% low (≤2★)</div>
+          <div style="margin-top:8px"><span class="badge badge-gray">Reminder triggered response</span></div>
+        </div>
+        <div class="source-card organic">
+          <div class="source-label">Organic</div>
+          <div class="source-rating">4.04</div>
+          <div class="source-stars">★★★★☆</div>
+          <div class="source-count">169 reviews</div>
+          <div class="source-detail">69% five-star &bull; 21% low (≤2★)</div>
+          <div style="margin-top:8px"><span class="badge badge-amber">Higher negative rate</span></div>
+        </div>
+      </div>
+      <p style="font-size:12px;color:#6c757d;margin-top:16px;">Invite-triggered reviews are consistent across invite-only (4.31★) and invite+reminder (4.29★) segments — the reminder does not suppress or inflate ratings. Organic reviews skew lower (4.04★) with a notably higher low-rating rate (21% vs ~12% for invited).</p>
+    </div>
+  </div>
+
+  <!-- Campaign Performance -->
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Campaign Performance</div>
+        <div class="section-sub">Invite-only denominator — reminders excluded from rate calculation</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <table>
+        <thead>
+          <tr>
+            <th>Campaign</th>
+            <th>ID</th>
+            <th>Invites Sent</th>
+            <th>Reminders</th>
+            <th>Reviews</th>
+            <th>Review Rate</th>
+            <th>Avg Rating</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Jewlr Review Request</strong></td>
+            <td><span class="badge badge-gray">101</span></td>
+            <td>19,703</td>
+            <td>18,540</td>
+            <td>840</td>
+            <td><strong>4.26%</strong></td>
+            <td><span class="rating-num">4.29★</span></td>
+          </tr>
+          <tr>
+            <td><strong>Jewlr Review Request</strong> <span class="badge badge-blue" style="margin-left:6px">New</span></td>
+            <td><span class="badge badge-gray">185</span></td>
+            <td>1,606</td>
+            <td>1,682</td>
+            <td>63</td>
+            <td><strong>3.92%</strong></td>
+            <td><span class="rating-num">4.63★</span></td>
+          </tr>
+          <tr style="background:#f8f9fa;font-weight:700">
+            <td colspan="2"><strong>Total</strong></td>
+            <td>21,309</td>
+            <td>20,222</td>
+            <td>903</td>
+            <td><strong>4.24%</strong></td>
+            <td>4.31★</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:#6c757d;margin-top:12px;">Campaign 101 ran Jun 2025–May 2026. Campaign 185 (new) launched May 25, 2026. The new campaign shows a higher avg rating (4.63★) but lower volume — likely early signal only. Review rate of 4.24% across 21K+ invites is solid for jewellery.</p>
+    </div>
+  </div>
+
+  <!-- Email Performance -->
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Email Performance</div>
+        <div class="section-sub">30-day window: May 18–Jun 17, 2026 &bull; Percentages shown (totals won't align to 12-month review history)</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="email-grid">
+        <div class="email-stat">
+          <div class="email-val">3,780</div>
+          <div class="email-label">Emails Sent</div>
+          <div class="email-note">Campaign 101</div>
+        </div>
+        <div class="email-stat">
+          <div class="email-val" style="color:#0d6efd">54.0%</div>
+          <div class="email-label">Open Rate</div>
+          <div class="email-note">2,041 unique opens</div>
+        </div>
+        <div class="email-stat">
+          <div class="email-val" style="color:#28a745">4.9%</div>
+          <div class="email-label">Click Rate (CTR)</div>
+          <div class="email-note">186 unique clicks</div>
+        </div>
+        <div class="email-stat">
+          <div class="email-val" style="color:#fd7e14">34</div>
+          <div class="email-label">Unsubscribes</div>
+          <div class="email-note">0.9% unsub rate</div>
+        </div>
+      </div>
+      <p style="font-size:12px;color:#6c757d;margin-top:16px;">Open rate of 54.0% is strong. CTR of 4.9% is excellent for review invite emails — indicates high purchase satisfaction intent. Unsub rate of 0.9% is within acceptable range; worth monitoring as email volume grows.</p>
+    </div>
+  </div>
+
+  <!-- Product Category Analysis -->
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Product Category Analysis</div>
+        <div class="section-sub">Derived from review text keyword matching — categories with 10+ mentions in reviews</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="product-row">
+        <div class="product-name">
+          💍 Ring
+          <div style="font-size:11px;font-weight:400;color:#6c757d;margin-top:2px">400 reviews</div>
+        </div>
+        <div class="product-bar-wrap">
+          <div class="product-bar bar-good" style="width:85%"></div>
+        </div>
+        <div class="product-stats">
+          <span class="rating-num">4.25★</span> &bull; 15% low (61 reviews)
+        </div>
+        <span class="badge badge-green">On track</span>
+      </div>
+      <div class="product-row">
+        <div class="product-name">
+          📿 Necklace/Chain
+          <div style="font-size:11px;font-weight:400;color:#6c757d;margin-top:2px">111 reviews</div>
+        </div>
+        <div class="product-bar-wrap">
+          <div class="product-bar bar-mid" style="width:75%"></div>
+        </div>
+        <div class="product-stats">
+          <span class="rating-num">3.76★</span> &bull; 21% low (23 reviews)
+        </div>
+        <span class="badge badge-amber">Monitor</span>
+      </div>
+      <div class="product-row">
+        <div class="product-name">
+          💎 Bracelet
+          <div style="font-size:11px;font-weight:400;color:#6c757d;margin-top:2px">30 reviews</div>
+        </div>
+        <div class="product-bar-wrap">
+          <div class="product-bar bar-low" style="width:71%"></div>
+        </div>
+        <div class="product-stats">
+          <span class="rating-num">3.57★</span> &bull; 30% low (9 reviews)
+        </div>
+        <span class="badge badge-red">Action needed</span>
+      </div>
+      <p style="font-size:12px;color:#6c757d;margin-top:16px;padding-top:14px;border-top:1px solid #f0f0f0;">Note: product names/SKUs not present in review data. Categories derived from free-text keyword matching — untagged reviews (531) excluded. Bracelet reviews show a 30% low-rating rate, significantly above the account average (13.8%).</p>
+    </div>
+  </div>
+
+  <!-- Negative Review Themes -->
+  <div class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-title">Complaint Theme Analysis</div>
+        <div class="section-sub">Breakdown of 1–2 star reviews by primary issue theme — 152 low-rating reviews with text</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="complaint-grid">
+        <div class="complaint-item">
+          <div class="complaint-icon">💎</div>
+          <div>
+            <div class="complaint-label">Stone Quality / Falling Out</div>
+            <div class="complaint-count">35 reviews &bull; avg 1.43★ &bull; Most critical issue</div>
+          </div>
+        </div>
+        <div class="complaint-item">
+          <div class="complaint-icon">📏</div>
+          <div>
+            <div class="complaint-label">Sizing Issues</div>
+            <div class="complaint-count">31 reviews &bull; avg 1.32★ &bull; Rings too small/large</div>
+          </div>
+        </div>
+        <div class="complaint-item secondary">
+          <div class="complaint-icon">🚚</div>
+          <div>
+            <div class="complaint-label">Delivery Issues</div>
+            <div class="complaint-count">20 reviews &bull; avg 1.25★ &bull; Late, lost, wrong address</div>
+          </div>
+        </div>
+        <div class="complaint-item secondary">
+          <div class="complaint-icon">💔</div>
+          <div>
+            <div class="complaint-label">Broken / Damaged on Arrival</div>
+            <div class="complaint-count">11 reviews &bull; avg 1.45★ &bull; Chains snapped, necklaces broken</div>
+          </div>
+        </div>
+        <div class="complaint-item secondary">
+          <div class="complaint-icon">📸</div>
+          <div>
+            <div class="complaint-label">Misleading Product Photos</div>
+            <div class="complaint-count">10 reviews &bull; avg 1.30★ &bull; Looks different from website</div>
+          </div>
+        </div>
+        <div class="complaint-item secondary">
+          <div class="complaint-icon">🔶</div>
+          <div>
+            <div class="complaint-label">Tarnishing / Discoloration</div>
+            <div class="complaint-count">7 reviews &bull; avg 1.29★ &bull; Metal quality concerns</div>
+          </div>
+        </div>
+        <div class="complaint-item secondary">
+          <div class="complaint-icon">✍️</div>
+          <div>
+            <div class="complaint-label">Engraving Quality</div>
+            <div class="complaint-count">3 reviews &bull; avg 1.00★ &bull; Text invisible or poorly done</div>
+          </div>
+        </div>
+        <div class="complaint-item secondary">
+          <div class="complaint-icon">💰</div>
+          <div>
+            <div class="complaint-label">Price vs Value</div>
+            <div class="complaint-count">3 reviews &bull; avg 1.33★ &bull; Felt overpriced for quality</div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:12px;color:#6c757d;margin-top:16px;">Stone integrity (falling out, loose stones) is the #1 specific complaint theme and represents a product quality / manufacturing control gap. Sizing guides or try-at-home options could address the second largest complaint group.</p>
+    </div>
+  </div>
+
+  <!-- Urgent Actions -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Recommended Actions</div>
+    </div>
+    <div class="section-body">
+      <ul class="action-list">
+        <li class="critical">
+          <strong>🔴 Address stone integrity failures immediately</strong>
+          35 reviews cite stones falling out or loose stones — this is the highest-frequency specific quality complaint (avg 1.43★). Review manufacturing QC for stone-setting processes, especially for rings with accent stones.
+        </li>
+        <li class="critical">
+          <strong>🔴 Bracelet line quality review</strong>
+          30% low-rating rate on bracelet reviews (3.57★ avg) is double the account average. Investigate whether specific bracelet SKUs or materials are responsible. Consider improved size guidance and quality checks before fulfilment.
+        </li>
+        <li class="warning">
+          <strong>🟠 Improve size guidance for rings</strong>
+          31 reviews cite sizing problems. Adding a ring sizer tool, clearer size charts, or an exchange/resize policy would directly reduce this complaint category.
+        </li>
+        <li class="warning">
+          <strong>🟠 Necklace/chain category attention</strong>
+          111 necklace reviews average 3.76★ with 21% low-rating rate. Key sub-themes: broken on arrival (chain quality), tarnishing, and misleading size/appearance. Packaging improvements for chains and accurate size indicators on PDPs would help.
+        </li>
+        <li>
+          <strong>🔵 Sep 2025 dip investigation</strong>
+          September 2025 was the worst month (3.81★, 26 negative reviews vs ~11 average). Investigate whether this aligns with a specific batch, supplier, or seasonal fulfilment pressure. If recurring, proactive action before Sep 2026 is warranted.
+        </li>
+        <li>
+          <strong>🔵 Leverage strong email performance</strong>
+          54% open rate and 4.9% CTR are well above industry benchmarks. The invite programme is healthy — focus on growing invite volume and ensuring product quality supports the collected reviews positively.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Generated by Stacktome &bull; Jewlr Campaign Report &bull; June 17, 2026 &bull; Data: Zeppelin notebook 2MWW4CW45 (/support/jewlr_group_data)
+</div>
+
+</body>
+</html>
