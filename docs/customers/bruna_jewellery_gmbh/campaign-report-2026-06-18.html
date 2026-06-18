@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bruna Jewellery — May 1–17 vs Jun 1–17 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #c8a96e; padding-left: 12px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  /* Period compare grid */
+  .period-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+  .period-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+  .period-header { padding: 12px 20px; font-weight: 700; font-size: 14px; color: #fff; }
+  .ph-may { background: #8e44ad; }
+  .ph-jun { background: #c8a96e; }
+  .period-body { padding: 18px 20px; }
+
+  .kpi-row { display: flex; gap: 20px; margin-bottom: 14px; flex-wrap: wrap; }
+  .kpi { text-align: center; min-width: 70px; }
+  .kpi .val { font-size: 24px; font-weight: 700; color: #1a1a2e; }
+  .kpi .lbl { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-top: 2px; }
+
+  .delta { font-size: 11px; font-weight: 600; margin-left: 4px; }
+  .delta.up { color: #00b894; }
+  .delta.dn { color: #e17055; }
+
+  /* Star distribution */
+  .star-dist { display: flex; gap: 4px; align-items: flex-end; height: 48px; margin: 12px 0 6px; }
+  .star-col { display: flex; flex-direction: column; align-items: center; flex: 1; }
+  .star-bar { width: 100%; border-radius: 3px 3px 0 0; }
+  .s5 { background: #00b894; } .s4 { background: #55efc4; } .s3 { background: #fdcb6e; }
+  .s2 { background: #e17055; } .s1 { background: #d63031; }
+  .star-label { font-size: 9px; color: #999; margin-top: 2px; }
+
+  /* Attribution bars */
+  .attr-bar-wrap { margin: 10px 0; }
+  .attr-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: #636e72; margin-bottom: 3px; }
+  .attr-bar { height: 9px; border-radius: 5px; background: #dfe6e9; overflow: hidden; display: flex; }
+  .attr-fill { height: 100%; background: #c8a96e; }
+  .organic-fill { height: 100%; background: #b2bec3; }
+
+  .split-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+  .split-box { border-radius: 8px; padding: 10px 14px; }
+  .split-attr { background: #fdf8ee; border-left: 3px solid #c8a96e; }
+  .split-organic { background: #f5f6fa; border-left: 3px solid #b2bec3; }
+  .split-box .sb-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 4px; }
+  .split-box .sb-count { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+  .split-box .sb-avg { font-size: 12px; color: #636e72; margin-top: 2px; }
+  .split-box .sb-note { font-size: 11px; color: #888; margin-top: 3px; }
+
+  /* Comparison table */
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  th { background: #f8f9ff; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; }
+  td { padding: 9px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafbff; }
+  .th-may { background: #f5eefa !important; color: #8e44ad !important; }
+  .th-jun { background: #fdf8ee !important; color: #a07840 !important; }
+  .td-may { background: #faf5ff; }
+  .td-jun { background: #fffdf5; }
+
+  .insight-box { background: #fff; border-left: 4px solid #c8a96e; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .insight-box p { margin-bottom: 6px; }
+  .insight-box p:last-child { margin-bottom: 0; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .warn-box p { margin-bottom: 6px; }
+  .warn-box p:last-child { margin-bottom: 0; }
+  .good { color: #00b894; font-weight: 600; }
+  .warn { color: #e17055; font-weight: 600; }
+  .neutral { color: #636e72; }
+
+  .period-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .pp-may { background: #f5eefa; color: #8e44ad; }
+  .pp-jun { background: #fdf8ee; color: #a07840; }
+  .source-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+  .sp-attr { background: #fdf8ee; color: #a07840; }
+  .sp-organic { background: #f0f0f0; color: #636e72; }
+  .r1 { color: #d63031; font-weight: 600; }
+  .r2 { color: #e17055; font-weight: 600; }
+  .r5 { color: #00b894; font-weight: 600; }
+  .review-text { font-size: 12px; color: #636e72; line-height: 1.5; max-width: 460px; }
+
+  .email-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px; }
+  .email-cell { background: #fff; border-radius: 8px; padding: 14px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .email-cell .ec-title { font-size: 12px; font-weight: 700; color: #a07840; margin-bottom: 10px; }
+  .email-cell .ec-stat { display: flex; justify-content: space-between; font-size: 12px; color: #4a4a4a; border-bottom: 1px solid #f0f0f0; padding: 4px 0; }
+  .email-cell .ec-stat:last-child { border-bottom: none; }
+  .email-cell .ec-val { font-weight: 700; color: #1a1a2e; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Bruna Jewellery GmbH</h1>
+  <p class="subtitle">Two-period comparison: May 1–17 vs Jun 1–17, 2026 · Trustpilot reviews · Generated Jun 18, 2026</p>
+
+  <!-- PERIOD COMPARISON CARDS -->
+  <h2>Period Overview</h2>
+  <div class="period-grid">
+
+    <!-- May -->
+    <div class="period-card">
+      <div class="period-header ph-may">May 1–17, 2026</div>
+      <div class="period-body">
+        <div class="kpi-row">
+          <div class="kpi"><div class="val">55</div><div class="lbl">Reviews</div></div>
+          <div class="kpi"><div class="val">4.85★</div><div class="lbl">Avg Rating</div></div>
+          <div class="kpi"><div class="val">773</div><div class="lbl">Invites Sent</div></div>
+          <div class="kpi"><div class="val">7.12%</div><div class="lbl">Review Rate</div></div>
+          <div class="kpi"><div class="val">2</div><div class="lbl">Low (≤2★)</div></div>
+        </div>
+        <div class="star-dist">
+          <div class="star-col"><div class="star-bar s1" style="height:2px"></div><div class="star-label">1★ 2</div></div>
+          <div class="star-col"><div class="star-bar s2" style="height:0"></div><div class="star-label">2★ 0</div></div>
+          <div class="star-col"><div class="star-bar s3" style="height:0"></div><div class="star-label">3★ 0</div></div>
+          <div class="star-col"><div class="star-bar s4" style="height:0"></div><div class="star-label">4★ 0</div></div>
+          <div class="star-col"><div class="star-bar s5" style="height:48px"></div><div class="star-label">5★ 53</div></div>
+        </div>
+        <div class="split-compare">
+          <div class="split-box split-attr">
+            <div class="sb-label">Attributed</div>
+            <div class="sb-count">13 reviews</div>
+            <div class="sb-avg">Avg ★ 4.69 · 23.6%</div>
+            <div class="sb-note">invite wave converting</div>
+          </div>
+          <div class="split-box split-organic">
+            <div class="sb-label">Organic</div>
+            <div class="sb-count">42 reviews</div>
+            <div class="sb-avg">Avg ★ 4.90 · 76.4%</div>
+            <div class="sb-note">incl. 2 quality complaints</div>
+          </div>
+        </div>
+        <div class="attr-bar-wrap">
+          <div class="attr-bar-label"><span>Attributed 23.6%</span><span>Organic 76.4%</span></div>
+          <div class="attr-bar"><div class="attr-fill" style="width:23.6%"></div><div class="organic-fill" style="width:76.4%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- June -->
+    <div class="period-card">
+      <div class="period-header ph-jun">Jun 1–17, 2026</div>
+      <div class="period-body">
+        <div class="kpi-row">
+          <div class="kpi"><div class="val">72</div><div class="lbl">Reviews <span class="delta up">+31%</span></div></div>
+          <div class="kpi"><div class="val">4.74★</div><div class="lbl">Avg Rating <span class="delta dn">−0.11</span></div></div>
+          <div class="kpi"><div class="val">927</div><div class="lbl">Invites <span class="delta up">+20%</span></div></div>
+          <div class="kpi"><div class="val">7.77%</div><div class="lbl">Rev Rate <span class="delta up">+0.65pp</span></div></div>
+          <div class="kpi"><div class="val">4</div><div class="lbl">Low (≤2★) <span class="delta dn">↑</span></div></div>
+        </div>
+        <div class="star-dist">
+          <div class="star-col"><div class="star-bar s1" style="height:2px"></div><div class="star-label">1★ 3</div></div>
+          <div class="star-col"><div class="star-bar s2" style="height:1px"></div><div class="star-label">2★ 1</div></div>
+          <div class="star-col"><div class="star-bar s3" style="height:0"></div><div class="star-label">3★ 0</div></div>
+          <div class="star-col"><div class="star-bar s4" style="height:3px"></div><div class="star-label">4★ 4</div></div>
+          <div class="star-col"><div class="star-bar s5" style="height:48px"></div><div class="star-label">5★ 64</div></div>
+        </div>
+        <div class="split-compare">
+          <div class="split-box split-attr">
+            <div class="sb-label">Attributed</div>
+            <div class="sb-count">1 review</div>
+            <div class="sb-avg">Avg ★ 1.0 · 1.4%</div>
+            <div class="sb-note">timing — see note below</div>
+          </div>
+          <div class="split-box split-organic">
+            <div class="sb-label">Organic</div>
+            <div class="sb-count">71 reviews</div>
+            <div class="sb-avg">Avg ★ 4.79 · 98.6%</div>
+            <div class="sb-note">incl. 3 quality + 1 returns complaint</div>
+          </div>
+        </div>
+        <div class="attr-bar-wrap">
+          <div class="attr-bar-label"><span>Attributed 1.4%</span><span>Organic 98.6%</span></div>
+          <div class="attr-bar"><div class="attr-fill" style="width:1.4%"></div><div class="organic-fill" style="width:98.6%"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="insight-box">
+    <p><strong>Attribution timing note:</strong> The 23.6% → 1.4% attributed drop is expected, not a campaign issue. May 1–17 invites produced reviews from May 7 onward — fully within the observation window. June 1–17 invites produce reviews from June 7 onward, but many invited customers will review 10–14 days after receiving the email, meaning most June attributed reviews fall after Jun 17. The one attributed June review is a 1★ complaint — customers with a strong grievance often follow the invite link immediately.</p>
+    <p><strong>Review volume is healthy</strong>: +31% YoY reviews, +20% invite volume, and review rate improved (7.12% → 7.77%). The underlying organic 5★ volume is strong in both periods.</p>
+  </div>
+
+  <!-- SIDE-BY-SIDE COMPARISON TABLE -->
+  <h2>Key Metrics Comparison</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th class="th-may">May 1–17</th>
+        <th class="th-jun">Jun 1–17</th>
+        <th>Change</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Total reviews</td>
+        <td class="td-may">55</td>
+        <td class="td-jun">72</td>
+        <td><span class="good">+17 (+31%)</span></td>
+      </tr>
+      <tr>
+        <td>Avg rating</td>
+        <td class="td-may">4.85★</td>
+        <td class="td-jun">4.74★</td>
+        <td><span class="warn">−0.11★</span></td>
+      </tr>
+      <tr>
+        <td>5-star reviews</td>
+        <td class="td-may">53 (96.4%)</td>
+        <td class="td-jun">64 (88.9%)</td>
+        <td><span class="warn">−7.5pp</span></td>
+      </tr>
+      <tr>
+        <td>4-star reviews</td>
+        <td class="td-may">0</td>
+        <td class="td-jun">4 (5.6%)</td>
+        <td><span class="neutral">+4</span></td>
+      </tr>
+      <tr>
+        <td>Low ratings (≤2★)</td>
+        <td class="td-may">2 (3.6%)</td>
+        <td class="td-jun">4 (5.6%)</td>
+        <td><span class="warn">+2 (+2pp)</span></td>
+      </tr>
+      <tr>
+        <td>Attributed reviews</td>
+        <td class="td-may">13 (23.6%)</td>
+        <td class="td-jun">1 (1.4%)</td>
+        <td><span class="neutral">Timing — see note</span></td>
+      </tr>
+      <tr>
+        <td>Attributed avg rating</td>
+        <td class="td-may">4.69★</td>
+        <td class="td-jun">1.0★ (1 review)</td>
+        <td><span class="neutral">Not comparable</span></td>
+      </tr>
+      <tr>
+        <td>Organic avg rating</td>
+        <td class="td-may">4.90★</td>
+        <td class="td-jun">4.79★</td>
+        <td><span class="warn">−0.11★</span></td>
+      </tr>
+      <tr>
+        <td>Invite orders sent</td>
+        <td class="td-may">773</td>
+        <td class="td-jun">927</td>
+        <td><span class="good">+154 (+20%)</span></td>
+      </tr>
+      <tr>
+        <td>Review rate</td>
+        <td class="td-may">7.12%</td>
+        <td class="td-jun">7.77%</td>
+        <td><span class="good">+0.65pp</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- EMAIL PERFORMANCE -->
+  <h2>Email Performance — May 19–Jun 17 (30 days)</h2>
+  <p style="font-size:12px;color:#636e72;margin-top:-8px;margin-bottom:16px">Percentage values only — 30-day window doesn't align to review periods. Open rate and CTR are strong signals of deliverability and subject line quality.</p>
+
+  <div class="email-grid">
+    <div class="email-cell">
+      <div class="ec-title">invite-campaign (DE)</div>
+      <div class="ec-stat"><span>Sent</span><span class="ec-val">1,970</span></div>
+      <div class="ec-stat"><span>Open rate</span><span class="ec-val">60.6%</span></div>
+      <div class="ec-stat"><span>CTR</span><span class="ec-val">4.3%</span></div>
+      <div class="ec-stat"><span>Unsubs</span><span class="ec-val">11</span></div>
+    </div>
+    <div class="email-cell">
+      <div class="ec-title">invite-campaign-EN</div>
+      <div class="ec-stat"><span>Sent</span><span class="ec-val">427</span></div>
+      <div class="ec-stat"><span>Open rate</span><span class="ec-val">61.4%</span></div>
+      <div class="ec-stat"><span>CTR</span><span class="ec-val">2.6%</span></div>
+      <div class="ec-stat"><span>Unsubs</span><span class="ec-val">4</span></div>
+    </div>
+    <div class="email-cell">
+      <div class="ec-title">Total</div>
+      <div class="ec-stat"><span>Sent</span><span class="ec-val">2,397</span></div>
+      <div class="ec-stat"><span>Open rate</span><span class="ec-val">60.7%</span></div>
+      <div class="ec-stat"><span>CTR</span><span class="ec-val">4.0%</span></div>
+      <div class="ec-stat"><span>Unsubs</span><span class="ec-val">15</span></div>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <p><strong>Email performance is excellent.</strong> 60.7% open rate and 4.0% CTR are well above industry benchmarks for jewellery (typically 35–45% open, 1–2% CTR). The EN campaign opens marginally higher (61.4% vs 60.6%) but has lower CTR (2.6% vs 4.3%). Unsubscribe rate is minimal (0.6%) — deliverability is healthy.</p>
+  </div>
+
+  <!-- LOW REVIEWS / QUALITY THEMES -->
+  <h2>Quality & Complaint Themes</h2>
+
+  <div class="warn-box">
+    <strong>Recurring theme: Metal durability across both periods</strong>
+    <p style="margin-top:6px">4 of 6 low reviews mention metal failure — tarnishing, blackening, breaking, or rusting within weeks to months of normal wear. Complaints span DE, EN, and FR customers. This is a product-level issue, not isolated incidents.</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Date</th><th>Period</th><th>★</th><th>Source</th><th>Theme</th><th>Summary</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>May 15</td>
+        <td><span class="period-pill pp-may">May</span></td>
+        <td class="r1">1★</td>
+        <td><span class="source-pill sp-organic">organic</span></td>
+        <td>CS / Delivery</td>
+        <td class="review-text">Parcel not moving in tracking — contacted CS via ticket system multiple times. Bruna never responded.</td>
+      </tr>
+      <tr>
+        <td>May 17</td>
+        <td><span class="period-pill pp-may">May</span></td>
+        <td class="r1">1★</td>
+        <td><span class="source-pill sp-organic">organic</span></td>
+        <td>Quality / CS</td>
+        <td class="review-text">Samos ring broke after 16 months of occasional use. Repair offered but costs ~50% of original price. Customer calls out gap between "sustainability and quality" marketing and actual product durability.</td>
+      </tr>
+      <tr>
+        <td>Jun 2</td>
+        <td><span class="period-pill pp-jun">Jun</span></td>
+        <td class="r2">2★</td>
+        <td><span class="source-pill sp-organic">organic</span></td>
+        <td>Quality</td>
+        <td class="review-text">Earrings blackened at connector and clasp after 8 weeks. One earring has rust spots. Customer's ears became inflamed, can no longer wear them. Expected better for the price.</td>
+      </tr>
+      <tr>
+        <td>Jun 4</td>
+        <td><span class="period-pill pp-jun">Jun</span></td>
+        <td class="r1">1★</td>
+        <td><span class="source-pill sp-organic">organic</span></td>
+        <td>Quality</td>
+        <td class="review-text">"Qualität der Ware mangelhaft" — chain broke after wearing it once.</td>
+      </tr>
+      <tr>
+        <td>Jun 8</td>
+        <td><span class="period-pill pp-jun">Jun</span></td>
+        <td class="r1">1★</td>
+        <td><span class="source-pill sp-attr">attributed</span></td>
+        <td>Quality / CS</td>
+        <td class="review-text">Necklace has broken twice. No satisfactory solution provided. "The product quality does not match what is advertised, and the customer service has been disappointing." Cannot recommend.</td>
+      </tr>
+      <tr>
+        <td>Jun 16</td>
+        <td><span class="period-pill pp-jun">Jun</span></td>
+        <td class="r1">1★</td>
+        <td><span class="source-pill sp-organic">organic</span></td>
+        <td>Returns / Quality</td>
+        <td class="review-text">Wedding jewelry didn't suit customer. Return shipping to Austria not covered — cost 36€. Explicitly calls out "grand manque de professionnalisme" for jewelry described as poor quality. (FR customer)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Complaint Theme Summary</h2>
+  <table>
+    <thead>
+      <tr><th>Theme</th><th>May 1–17</th><th>Jun 1–17</th><th>Combined</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Metal quality / durability</strong></td>
+        <td>1 (ring breaking)</td>
+        <td>3 (chain, earrings, necklace)</td>
+        <td class="warn">4 of 6 low reviews</td>
+        <td>Tarnishing, blackening, breaking, rust — across product types and markets</td>
+      </tr>
+      <tr>
+        <td><strong>CS responsiveness</strong></td>
+        <td>2 (ticket system silence, poor repair offer)</td>
+        <td>1 (no solution after 2 breaks)</td>
+        <td>3 of 6 low reviews</td>
+        <td>Customers feel they're not getting fair resolutions</td>
+      </tr>
+      <tr>
+        <td><strong>Returns policy</strong></td>
+        <td>0</td>
+        <td>1 (36€ return shipping to Austria)</td>
+        <td>1 of 6 low reviews</td>
+        <td>Non-covered international return cost explicitly flagged as unprofessional</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- RECOMMENDED ACTIONS -->
+  <h2>Recommended Actions</h2>
+  <table>
+    <thead>
+      <tr><th>Priority</th><th>Area</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="color:#d63031;font-weight:700">High</td>
+        <td>Product quality</td>
+        <td>Investigate metal durability complaints across multiple product types (rings, chains, earrings, necklaces). 4 of 6 low reviews mention breakage or tarnishing — this is a materials or plating issue at scale, not isolated incidents.</td>
+      </tr>
+      <tr>
+        <td style="color:#d63031;font-weight:700">High</td>
+        <td>CS response</td>
+        <td>Review ticket-system SLA. May 15 review cited no response after multiple contacts. Jun 8 review cited two breaks with no satisfactory resolution. Customers explicitly call out CS silence as a reason for the low rating — the CS failure often outweighs the product issue itself.</td>
+      </tr>
+      <tr>
+        <td style="color:#e17055;font-weight:700">Medium</td>
+        <td>Returns policy</td>
+        <td>FR customer paid 36€ to return to Austria. Consider covered return labels or EU return depots for key markets. The return cost was cited as the main driver of the 1★, not the product itself.</td>
+      </tr>
+      <tr>
+        <td style="color:#636e72;font-weight:600">Monitor</td>
+        <td>Attribution</td>
+        <td>June attributed rate (1.4%) will normalise in the next weekly snapshot as June invites mature. If attribution is still below 10% by Jun 25, verify invite link tracking is intact.</td>
+      </tr>
+      <tr>
+        <td style="color:#636e72;font-weight:600">Positive</td>
+        <td>Email performance</td>
+        <td>60.7% open rate and 4.0% CTR are strong — no action needed. Review rate (7.77%) is also improving. Volume momentum is healthy (+31% reviews).</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+</body>
+</html>
