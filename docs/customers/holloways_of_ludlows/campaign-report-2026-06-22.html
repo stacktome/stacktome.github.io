@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Holloways of Ludlow — Campaign Performance Report Jan–May 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #2ecc71; padding-left: 12px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .stars { color: #fdcb6e; }
+  .trend-down { color: #d63031; }
+  .trend-up { color: #00b894; }
+
+  .review-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); padding: 14px 16px; margin-bottom: 12px; }
+  .review-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+  .rating-badge { font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 8px; }
+  .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff0e6; color: #e17055; }
+  .r3 { background: #fff9e6; color: #b8860b; }
+  .r4 { background: #eaf4fb; color: #2980b9; }
+  .r5 { background: #e8f8f5; color: #00b894; }
+  .review-text { font-style: italic; color: #555; line-height: 1.6; font-size: 13px; }
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-tp { background: #e8f4fd; color: #0055a5; }
+  .tag-yotpo { background: #fde8f8; color: #8e0078; }
+
+  .alert { background: #ffeaea; border: 1.5px solid #d63031; border-radius: 10px; padding: 18px 20px; margin-bottom: 12px; }
+  .alert strong { color: #d63031; }
+  .alert p { color: #4a4a4a; margin-top: 6px; margin-bottom: 0; }
+  .warning { background: #fff9e6; border: 1.5px solid #fdcb6e; border-radius: 10px; padding: 18px 20px; margin-bottom: 12px; }
+  .warning strong { color: #b8860b; }
+  .warning p { color: #4a4a4a; margin-top: 6px; margin-bottom: 0; }
+  .all-clear { background: #e8f8f5; border: 1.5px solid #00b894; border-radius: 10px; padding: 18px 20px; color: #00b894; font-weight: 600; font-size: 14px; }
+  .note { font-size: 12px; color: #888; margin-top: 4px; }
+
+  .platform-bar { display: flex; gap: 12px; margin-bottom: 16px; }
+  .platform-pill { flex: 1; background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); text-align: center; }
+  .platform-pill .plabel { font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 6px; }
+  .platform-pill .pval { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+  .platform-pill .psub { font-size: 11px; color: #aaa; margin-top: 3px; }
+
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Holloways of Ludlow &mdash; Campaign Performance Report</h1>
+  <div class="subtitle">Review &amp; invite analysis &nbsp;&bull;&nbsp; January&ndash;May 2026 &nbsp;&bull;&nbsp; Generated 2026-06-22 &nbsp;&bull;&nbsp; Platforms: Trustpilot &amp; Yotpo</div>
+
+  <!-- 1. Executive Summary -->
+  <h2>1. Executive Summary</h2>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Order Reviews</div>
+      <div class="value">280</div>
+      <div class="sub">across Trustpilot &amp; Yotpo</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Avg Order Rating</div>
+      <div class="value">4.72<span style="font-size:16px;">★</span></div>
+      <div class="sub"><span class="trend-down">declining: 4.78 Jan &rarr; 4.48 May</span></div>
+    </div>
+    <div class="kpi">
+      <div class="label">Product Reviews</div>
+      <div class="value">261</div>
+      <div class="sub">avg 4.90★ — stable</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Low-Rated Orders</div>
+      <div class="value">21</div>
+      <div class="sub"><span class="worst">14×1★ &nbsp; 3×2★ &nbsp; 4×3★</span></div>
+    </div>
+  </div>
+  <div class="kpi-grid" style="margin-top:12px;">
+    <div class="kpi">
+      <div class="label">Total Invites Sent</div>
+      <div class="value">5,663</div>
+      <div class="sub">invite-tp + ticket campaign</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Campaign Review Rate</div>
+      <div class="value">3.84%</div>
+      <div class="sub">218 attributed reviews</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Email Open Rate</div>
+      <div class="value">60.1%</div>
+      <div class="sub">318 platform-sent emails</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Unsubscribes</div>
+      <div class="value">4</div>
+      <div class="sub">all from invite-tp</div>
+    </div>
+  </div>
+
+  <!-- 2. Platform Breakdown -->
+  <h2>2. Review Platform Breakdown</h2>
+  <div class="platform-bar">
+    <div class="platform-pill">
+      <div class="plabel">&#9679; Trustpilot — Order Reviews</div>
+      <div class="pval">203</div>
+      <div class="psub">avg 4.71★</div>
+    </div>
+    <div class="platform-pill">
+      <div class="plabel">&#9679; Trustpilot — Product Reviews</div>
+      <div class="pval">133</div>
+      <div class="psub">avg 4.85★</div>
+    </div>
+    <div class="platform-pill">
+      <div class="plabel">&#9679; Yotpo — Order Reviews</div>
+      <div class="pval">60</div>
+      <div class="psub">avg 4.93★</div>
+    </div>
+    <div class="platform-pill">
+      <div class="plabel">&#9679; Yotpo — Product Reviews</div>
+      <div class="pval">128</div>
+      <div class="psub">avg 4.96★</div>
+    </div>
+  </div>
+  <p class="note">Trustpilot carries the bulk of order reviews (203 vs 60 on Yotpo) and has a slightly lower avg rating (4.71 vs 4.93★), consistent with Trustpilot being a more open platform where unsolicited negative reviews appear. Yotpo product reviews are slightly more numerous (128 vs 133 TP) with a higher avg (4.96★).</p>
+
+  <!-- 3. Monthly Trend -->
+  <h2>3. Monthly Review Trend</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Month</th>
+        <th>Order Reviews</th>
+        <th>Avg Order Rating</th>
+        <th>Product Reviews</th>
+        <th>Avg Product Rating</th>
+        <th>Signal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>January 2026</td><td>78</td><td class="best">4.78★</td><td>86</td><td>4.88★</td><td>Highest volume month</td></tr>
+      <tr><td>February 2026</td><td>68</td><td class="best">4.80★</td><td>80</td><td>4.91★</td><td>Stable</td></tr>
+      <tr><td>March 2026</td><td>34</td><td class="best">4.82★</td><td>33</td><td class="best">5.00★</td><td>Volume drop; rating peak</td></tr>
+      <tr><td>April 2026</td><td>47</td><td class="trend-down">4.63★ &#9660;</td><td>32</td><td>4.78★</td><td>Rating decline begins</td></tr>
+      <tr><td>May 2026</td><td>34</td><td class="worst">4.48★ &#9660;</td><td>30</td><td class="best">4.97★</td><td>Lowest order rating of period</td></tr>
+      <tr style="font-weight:600; background:#f5f6fa;"><td>Total / Avg</td><td>261</td><td>4.72★</td><td>261</td><td>4.90★</td><td></td></tr>
+    </tbody>
+  </table>
+  <p class="note">Order rating trend is declining (4.78&rarr;4.48★ over 5 months). Product ratings remain strong and stable. The divergence suggests the product range is well-regarded but fulfilment and service issues are increasingly driving order-level dissatisfaction. March volume drop may reflect seasonal patterns; April–May rating drops correspond to complaint clusters in those months.</p>
+
+  <!-- 4. Campaign Invite Performance -->
+  <h2>4. Campaign Invite Performance</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th>Invites Sent</th>
+        <th>Reviews</th>
+        <th>Review Rate</th>
+        <th>Avg Rating</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>positive-closed-tickets (510)</td>
+        <td>170</td>
+        <td>24</td>
+        <td class="best">14.12%</td>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.88</td>
+        <td>Sends to customers after a positively resolved support ticket. Highest conversion by far &mdash; 4&times; the rate of invite-tp.</td>
+      </tr>
+      <tr>
+        <td>invite-tp (461)</td>
+        <td>5,493</td>
+        <td>194</td>
+        <td>3.53%</td>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.87</td>
+        <td>Main Trustpilot invite campaign. Drives bulk of attributed reviews. CTR from platform emails is low (3.8%), suggesting most reviews come from direct Trustpilot traffic rather than email click-through.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">The <strong>positive-closed-tickets campaign</strong> is a standout performer: 14.12% review rate from customers who had a support ticket successfully resolved. This is Holloways&rsquo; most efficient review generation mechanism and deserves investment in volume growth. Scaling it to more resolved tickets would directly lift the attributed review count and rating.</p>
+
+  <!-- 5. Email Performance -->
+  <h2>5. Email Performance (Stacktome platform)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th>Sent</th>
+        <th>Open Rate</th>
+        <th>Click Rate</th>
+        <th>Unsubs</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>invite-tp</td>
+        <td>312</td>
+        <td>59.9%</td>
+        <td class="worst">3.8%</td>
+        <td>4</td>
+      </tr>
+      <tr>
+        <td>positive-closed-tickets</td>
+        <td>6</td>
+        <td>66.7%</td>
+        <td class="neutral">&mdash;</td>
+        <td>0</td>
+      </tr>
+      <tr style="font-weight:600; background:#f5f6fa;">
+        <td>TOTAL</td>
+        <td>318</td>
+        <td>60.1%</td>
+        <td>3.8%</td>
+        <td>4</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">Note: Email platform stats (Stacktome) show 318 sends vs 5,493 invites in the data warehouse for invite-tp. The difference reflects Trustpilot AFS (Automatic Feedback Service) invites sent directly by Trustpilot on Holloways&rsquo; behalf — these are not routed through Stacktome&rsquo;s email system. Open rate (60.1%) is healthy; CTR (3.8%) is low, meaning most conversions happen via AFS or organic Trustpilot traffic rather than Stacktome-sent emails.</p>
+
+  <!-- 6. Complaint Themes -->
+  <h2>6. Complaint Themes (21 Low-Rated Order Reviews)</h2>
+
+  <div class="alert">
+    <strong>&#9888; Theme 1: Customer Service Unresponsiveness (9 reviews)</strong>
+    <p>The dominant complaint across all months: customers unable to reach CS by phone or email, being ghosted after raising issues, and having to chase repeatedly with no response. Multiple reviews mention 3–7 contact attempts with no reply. Affects returns, order status queries, and fault resolutions. Escalation language (&ldquo;BBC Watchdog&rdquo;, &ldquo;consumer legislation&rdquo;, &ldquo;legal obligations&rdquo;) suggests high customer frustration.</p>
+  </div>
+
+  <div class="alert">
+    <strong>&#9888; Theme 2: Delivery Delays vs Quoted Lead Times (7 reviews)</strong>
+    <p>Orders consistently arriving weeks or months later than the quoted 4–6 week lead time. Examples: pendant ordered October, arrived April (6 months vs 8 weeks quoted); bathroom light promised in 3 weeks, arrived faulty 6+ weeks later; customer awaiting delivery for 4+ months with no proactive update. Post-Christmas period (Jan) was particularly affected. Delivery company Kinetic named specifically for cancelling deliveries 3 times and delivering to wrong addresses repeatedly.</p>
+  </div>
+
+  <div class="warning">
+    <strong>&#9888; Theme 3: Wrong / Incorrect Items Sent (3 reviews)</strong>
+    <p>Orders arriving with wrong items: wrong lamp size, incorrect ceiling plate (wrong colour and design for a premium Nuura pendant), wrong order sent twice on repeated orders. Highlights a picking/packing accuracy issue and a need for quality checks on high-value orders.</p>
+  </div>
+
+  <div class="warning">
+    <strong>&#9888; Theme 4: Return &amp; Refund Friction (3 reviews)</strong>
+    <p>Customers struggling to get returns processed: initial refusal for damaged ex-display item citing &ldquo;no returns&rdquo; policy (overridden only after customer cited consumer legislation); £200+ pendant return ghosted for 4 weeks; store credit offered but rejected after repeated delivery failures. Refund process requires multiple escalations.</p>
+  </div>
+
+  <div class="warning">
+    <strong>&#9888; Theme 5: Misleading Information (2 reviews)</strong>
+    <p>Moray wall lights: product photos showed amber hue that the delivered product lacked entirely (&ldquo;looks terrible on the wall&rdquo;). Bluelight card discount: website advertised 10% off with no minimum spend, CS corrected to £400 minimum without apology. Both cases involve customers making purchase decisions based on inaccurate product/promotional information.</p>
+  </div>
+
+  <!-- 7. Low-Rated Reviews Detail -->
+  <h2>7. Low-Rated Order Reviews — Detail</h2>
+
+  <div class="review-card">
+    <div class="review-meta"><span class="rating-badge r1">1★</span><span class="tag">May 2026</span><span class="tag-tp">Trustpilot</span><span class="tag">CS + Returns</span></div>
+    <div class="review-text">&ldquo;Poor online service. Order placed 5 March. Pendant returned almost 4 weeks ago via 2-day courier (£20+ cost), chased 3× by email, failed to reach CS by phone all week. Ghosted. Over £200 owed. This company are extremely poor with handling customer support &mdash; no support, no communication.&rdquo;</div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-meta"><span class="rating-badge r1">1★</span><span class="tag">May 2026</span><span class="tag-tp">Trustpilot</span><span class="tag">CS + Wrong items + High value</span></div>
+    <div class="review-text">&ldquo;After spending several thousand pounds on lighting (Nuura Miira Pendants, Patricia Lobo wall lights), I experienced delays, misleading communication, and incorrect items. Pendant arrived without ceiling plate (website said included). Replacement sent was wrong colour and design. Patricia Lobo wall lights promised 8-week lead time in November, arrived mid-April. Communication ignored until I referenced legal obligations. Now have mismatched fittings in the same room and must pay electrician to return.&rdquo;</div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-meta"><span class="rating-badge r1">1★</span><span class="tag">April 2026</span><span class="tag-tp">Trustpilot</span><span class="tag">CS + Delivery</span></div>
+    <div class="review-text">&ldquo;Ordered bathroom light, 3-week lead time quoted. After 4 weeks, emailed &mdash; no reply. Emailed again a week later &mdash; no reply. Phoned: &lsquo;only an estimate, another couple of weeks.&rsquo; Two weeks later: &lsquo;another delay, one more week.&rsquo; Light finally arrived faulty (marked). Told to email photos. A week later, no reply. Over £200 spent, can&rsquo;t install, still no response.&rdquo;</div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-meta"><span class="rating-badge r1">1★</span><span class="tag">April 2026</span><span class="tag-tp">Trustpilot</span><span class="tag">In-store experience</span></div>
+    <div class="review-text">&ldquo;Barely looked up from screens. When I asked how much something was, they said &lsquo;very expensive&rsquo; without a specific price until I pushed. Asked for pricing to be emailed for two items &mdash; it never was. I&rsquo;ve purchased a lot from Holloways online but to be treated with such judgement was abhorrent. I can&rsquo;t imagine how much missed business they experience with this team.&rdquo;</div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-meta"><span class="rating-badge r2">2★</span><span class="tag">May 2026</span><span class="tag-tp">Trustpilot</span><span class="tag">Delivery company (Kinetic) + Wrong address</span></div>
+    <div class="review-text">&ldquo;3 pendant kitchen lights delivered to wrong address 3 times. Paid electrician twice to fit them. 2 were broken, 3rd had same unsafe fitting. Holloways sent new flex and fitments — to the wrong address again. Each time we had to collect from wrong address. Offered store credit. No thank you — won&rsquo;t buy from them again.&rdquo;</div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-meta"><span class="rating-badge r2">2★</span><span class="tag">April 2026</span><span class="tag-tp">Trustpilot</span><span class="tag">Delivery company (Kinetic)</span></div>
+    <div class="review-text">&ldquo;Ordered HAY Palissade chairs. Delivery company Kinetic cancelled 3 times — each time I had to change plans to be home. Many other customers in the reviews are having the same issues for a long time. Why don&rsquo;t they use a better delivery service? Customer service doesn&rsquo;t answer calls either.&rdquo;</div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-meta"><span class="rating-badge r3">3★</span><span class="tag">January 2026</span><span class="tag-tp">Trustpilot</span><span class="tag">Returns + CS</span></div>
+    <div class="review-text">&ldquo;Bought ex-display light online (discounted). Arrived damaged (bent, unusable). Told I couldn&rsquo;t return it because it was ex-display — even though it was damaged. Had to cite consumer legislation before return was offered. Then postage wasn&rsquo;t refunded; cited legislation again. 7 emails and 6 weeks to resolve what should have taken days. The collection is great — it&rsquo;s how they handle problems that lets them down.&rdquo;</div>
+  </div>
+
+  <!-- 8. Low-Rated Product Reviews -->
+  <h2>8. Low-Rated Product Reviews</h2>
+  <table>
+    <thead>
+      <tr><th>Product</th><th>Rating</th><th>Month</th><th>Issue</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Davey Bracket Wall Light — Black / Frosted / Round</td>
+        <td class="worst">1★</td>
+        <td>Jan 2026</td>
+        <td>&ldquo;Still waiting&rdquo; — delivery delay</td>
+      </tr>
+      <tr>
+        <td>Lefroy Brooks MH1166 Mackintosh Bath Shower Mixer</td>
+        <td class="worst">1★</td>
+        <td>Feb 2026</td>
+        <td>&ldquo;Nothing takes this long&rdquo; — delivery delay</td>
+      </tr>
+      <tr>
+        <td>NUD Collection lamp holders — Base concrete</td>
+        <td class="worst">1★</td>
+        <td>Apr 2026</td>
+        <td>Terrible packaging, all 4 lights had rubbing damage on arrival; one replaced</td>
+      </tr>
+      <tr>
+        <td>&amp;Tradition Fly Lounge Table — Bianco Carrara marble</td>
+        <td><span style="color:#e17055;">2★</span></td>
+        <td>Apr 2026</td>
+        <td>Product beautiful but delivery experience &ldquo;very stressful and disappointing&rdquo;</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">3 of 4 low-rated product reviews are delivery-related, not product-quality issues. The NUD Collection packaging failure is a supplier packaging concern worth raising. The Lefroy Brooks and Davey wall light reviews are short texts citing only wait time — the product itself may be fine.</p>
+
+  <!-- 9. Top Products by Review Volume -->
+  <h2>9. Top Reviewed Products</h2>
+  <table>
+    <thead>
+      <tr><th>Product</th><th>Reviews</th><th>Avg Rating</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Tala The Muse Rechargeable Portable Lamp (Pleasure garden green)</td><td>3</td><td class="best">5.00★</td></tr>
+      <tr><td>LED filament dimmable golf ball bulb — E27</td><td>3</td><td class="best">5.00★</td></tr>
+      <tr><td>Old School Electric Elongated Prismatic Wall Light — Antique brass</td><td>2</td><td class="best">5.00★</td></tr>
+      <tr><td>HAY Palissade Garden Dining Bench — Olive green</td><td>2</td><td class="best">5.00★</td></tr>
+      <tr><td>Anglepoise Type 90 Mini Mini Desk Lamp — Berry red</td><td>2</td><td class="best">5.00★</td></tr>
+      <tr><td>Plumen 001 LED bulb — E27</td><td>2</td><td class="best">5.00★</td></tr>
+      <tr><td>Anglepoise Original 1227 Desk Lamp — Jet black</td><td>2</td><td class="best">5.00★</td></tr>
+    </tbody>
+  </table>
+  <p class="note">All top-reviewed products have perfect 5★ ratings. Product quality and curation are clearly a strength. The Tala and Anglepoise ranges in particular drive strong satisfaction when delivery goes smoothly.</p>
+
+  <!-- 10. Recommendations -->
+  <h2>10. Recommendations</h2>
+  <table>
+    <thead>
+      <tr><th>Priority</th><th>Recommendation</th><th>Impact</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong class="worst">Critical</strong></td>
+        <td><strong>Improve CS response SLA.</strong> Unresponsive customer service is the single biggest driver of 1★ reviews. A committed 24–48h response time to emails and a staffed phone line during published hours would address the majority of complaint themes. Many customers are explicitly willing to give better reviews once issues are resolved — but they&rsquo;re being left without any response.</td>
+        <td>Would directly reduce 1★ reviews and improve monthly rating trend</td>
+      </tr>
+      <tr>
+        <td><strong class="worst">Critical</strong></td>
+        <td><strong>Review delivery partner (Kinetic).</strong> Multiple reviews name Kinetic specifically for cancelled deliveries and wrong-address drops. Repeated failures with the same carrier suggest a structural problem. Evaluate alternative delivery partners for large/premium items.</td>
+        <td>Would reduce delivery complaint clusters in Apr–May</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#fdcb6e;">High</strong></td>
+        <td><strong>Set realistic lead times and proactively communicate delays.</strong> Every month has reviews about items arriving weeks or months later than quoted. Customers don&rsquo;t mind delays if they are kept informed proactively — they do mind having to chase repeatedly with no response. Trigger automated delay notifications when lead times extend.</td>
+        <td>Converts delay-related 1★ reviews into 3–4★ through good comms</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#fdcb6e;">High</strong></td>
+        <td><strong>Scale positive-closed-tickets campaign.</strong> This campaign generates reviews at 14.12% &mdash; 4&times; the rate of the main invite campaign. Currently only 170 invites sent in 5 months. Every positively resolved support ticket is an opportunity; automate the trigger more broadly.</td>
+        <td>Most efficient review generator — direct volume increase</td>
+      </tr>
+      <tr>
+        <td><strong class="neutral">Medium</strong></td>
+        <td><strong>Audit return &amp; refund policy communication.</strong> Multiple customers were refused returns they were legally entitled to, only relenting after customers cited consumer legislation. Empower CS to accept legitimate return requests without escalation.</td>
+        <td>Removes friction from a known complaint theme</td>
+      </tr>
+      <tr>
+        <td><strong class="neutral">Medium</strong></td>
+        <td><strong>Improve product imagery accuracy.</strong> Moray wall lights received a 1★ review specifically citing that the projected light looked nothing like the photos. Review product images for accuracy, particularly for light colour/temperature rendering.</td>
+        <td>Reduces post-purchase disappointment on visual products</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer">Holloways of Ludlow &mdash; Campaign Performance Report &mdash; Generated 2026-06-22 &mdash; Data window: January&ndash;May 2026</div>
+</div>
+</body>
+</html>
