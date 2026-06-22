@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITOL Recruit Campaign Performance Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .stars { color: #fdcb6e; }
+  .delta-up { color: #00b894; font-size: 11px; }
+  .delta-down { color: #d63031; font-size: 11px; }
+
+  .all-clear { background: #e8f8f5; border: 1.5px solid #00b894; border-radius: 10px; padding: 20px 22px; color: #00b894; font-weight: 600; font-size: 14px; }
+  .warning { background: #fff9e6; border: 1.5px solid #fdcb6e; border-radius: 10px; padding: 20px 22px; color: #b8860b; font-size: 13px; }
+  .note { font-size: 12px; color: #888; margin-top: 4px; }
+
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>ITOL Recruit &mdash; Campaign Performance Report</h1>
+  <div class="subtitle">Review invite analysis &nbsp;&bull;&nbsp; Jun 15&ndash;Jun 21, 2026 &nbsp;&bull;&nbsp; Generated 2026-06-22</div>
+
+  <!-- 1. Executive Summary -->
+  <h2>1. Executive Summary</h2>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Total Invites Sent</div>
+      <div class="value">146</div>
+      <div class="sub">across 7 campaigns <span class="delta-up">+5 vs prior week</span></div>
+    </div>
+    <div class="kpi">
+      <div class="label">Unique Opens</div>
+      <div class="value">74.0%</div>
+      <div class="sub">108 of 146 sent <span class="delta-down">&minus;1.2pp vs prior week</span></div>
+    </div>
+    <div class="kpi">
+      <div class="label">Click Rate</div>
+      <div class="value">14.4%</div>
+      <div class="sub">21 unique clicks <span class="delta-down">&minus;2.4pp vs prior week</span></div>
+    </div>
+    <div class="kpi">
+      <div class="label">Unsubscribes</div>
+      <div class="value">0</div>
+      <div class="sub">clean week, no unsubs</div>
+    </div>
+  </div>
+  <p class="note" style="margin-top:8px;">Review attribution data not available for this period (Trustpilot sync not reflected in data warehouse). Check Trustpilot dashboard directly for review counts. Email performance data from Stacktome API.</p>
+
+  <!-- 2. Campaign Performance Table -->
+  <h2>2. Campaign Performance</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th>Sent</th>
+        <th>Open Rate</th>
+        <th>Click Rate</th>
+        <th>Unsubs</th>
+        <th>vs Prior Week (CTR)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Welcome Call/Setup Campaign</td>
+        <td>61</td>
+        <td>77.0%</td>
+        <td class="worst">8.2%</td>
+        <td>0</td>
+        <td><span class="delta-down">&#9660; &minus;11.1pp (was 19.3%)</span></td>
+      </tr>
+      <tr>
+        <td>Hubspot (Main) Invite TP Campaign</td>
+        <td>40</td>
+        <td>65.0%</td>
+        <td>10.0%</td>
+        <td>0</td>
+        <td><span class="delta-up">&#9650; +3.8pp (was 6.2%)</span></td>
+      </tr>
+      <tr>
+        <td>Support Campaign</td>
+        <td>29</td>
+        <td>72.4%</td>
+        <td class="best">24.1%</td>
+        <td>0</td>
+        <td><span class="delta-down">&#9660; &minus;3.2pp (was 27.3%)</span></td>
+      </tr>
+      <tr>
+        <td>Completion/Closure Campaign</td>
+        <td>6</td>
+        <td class="best">100.0%</td>
+        <td class="best">33.3%</td>
+        <td>0</td>
+        <td><span class="delta-up">&#9650; volume up (was 1 send)</span></td>
+      </tr>
+      <tr>
+        <td>Exam Pass v1 Campaign</td>
+        <td>4</td>
+        <td>75.0%</td>
+        <td class="best">50.0%</td>
+        <td>0</td>
+        <td><span class="delta-up">&#9650; open rate recovered (was 40%)</span></td>
+      </tr>
+      <tr>
+        <td>Exam Pass v2 Campaign</td>
+        <td>4</td>
+        <td>75.0%</td>
+        <td>25.0%</td>
+        <td>0</td>
+        <td><span class="delta-up">&#9650; +10.7pp CTR (was 14.3%)</span></td>
+      </tr>
+      <tr>
+        <td>From Invite TP Campaign</td>
+        <td>2</td>
+        <td class="best">100.0%</td>
+        <td class="neutral">&mdash;</td>
+        <td>0</td>
+        <td class="neutral">&mdash;</td>
+      </tr>
+      <tr style="font-weight:600; background:#f5f6fa;">
+        <td>TOTAL</td>
+        <td>146</td>
+        <td>74.0%</td>
+        <td>14.4%</td>
+        <td>0</td>
+        <td><span class="delta-down">&#9660; &minus;2.4pp CTR overall</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">Open/click rates from email delivery API (Jun 15&ndash;21). Prior week: Jun 8&ndash;14, 141 sends, 75.2% open, 16.8% CTR.</p>
+
+  <!-- 3. Campaign Breakdown -->
+  <h2>3. Campaign Breakdown</h2>
+  <table>
+    <thead>
+      <tr><th>Campaign</th><th>Open Rate</th><th>CTR</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Exam Pass v1 Campaign</td>
+        <td class="best">75.0%</td>
+        <td class="best">50.0%</td>
+        <td>Strong recovery &mdash; prior week open rate was only 40%, suggesting deliverability issue resolved. Small sample (4 sends) but 2 clicks is the best conversion ratio this week.</td>
+      </tr>
+      <tr>
+        <td>Completion/Closure Campaign</td>
+        <td class="best">100.0%</td>
+        <td class="best">33.3%</td>
+        <td>Volume grew from 1 to 6 sends; all opened, 2 clicked. Consistent with a triggered milestone campaign where recipients are highly engaged at point of send.</td>
+      </tr>
+      <tr>
+        <td>Support Campaign</td>
+        <td>72.4%</td>
+        <td class="best">24.1%</td>
+        <td>Still the strongest volume performer at 24.1% CTR (was 27.3%). Minor dip likely due to cohort variation rather than a structural issue. Remains best at driving review clicks.</td>
+      </tr>
+      <tr>
+        <td>Hubspot (Main) Invite TP Campaign</td>
+        <td>65.0%</td>
+        <td>10.0%</td>
+        <td>Improved from 6.2% to 10.0% CTR &mdash; a positive sign after last week&rsquo;s concern. Open rate dipped (71.9%&rarr;65.0%). Still the second-largest campaign at 40 sends; worth monitoring another week before concluding it is recovered.</td>
+      </tr>
+      <tr>
+        <td>Welcome Call/Setup Campaign</td>
+        <td>77.0%</td>
+        <td class="worst">8.2%</td>
+        <td>Largest campaign (61 sends), but CTR crashed from 19.3% to 8.2% &mdash; the biggest week-on-week regression. Open rate is healthy (77%), so recipients are opening but not clicking through. Possible causes: CTA button rendering, link placement, or cohort difference (e.g., more learners at an early stage this week). Investigate email template for this campaign.</td>
+      </tr>
+      <tr>
+        <td>Exam Pass v2 Campaign</td>
+        <td>75.0%</td>
+        <td>25.0%</td>
+        <td>Solid performance; CTR improved from 14.3% to 25.0% on a small 4-send cohort.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 4. Key Signal: Welcome Call CTR Drop -->
+  <h2>4. Key Signal This Week</h2>
+  <div class="warning">
+    <strong>&#9888; Welcome Call/Setup CTR: 19.3% &rarr; 8.2%</strong><br><br>
+    This campaign is the highest-volume send (61 invites) and its click-through rate halved week-on-week while its open rate actually improved (75.4%&rarr;77.0%). The disconnect between strong opens and weak clicks points to a CTA or email body issue rather than a subject line or deliverability problem.<br><br>
+    <strong>Suggested checks:</strong>
+    <ul style="margin-top:8px; padding-left:20px; line-height:1.8;">
+      <li>Verify the review invite link/button is rendering correctly in the current template</li>
+      <li>Check whether a template or subject line change was made between the two periods</li>
+      <li>Compare cohort stage: are this week&rsquo;s learners at a different point in their journey than last week&rsquo;s?</li>
+    </ul>
+  </div>
+
+  <!-- 5. Review Attribution Note -->
+  <h2>5. Review Attribution</h2>
+  <div class="warning">
+    <strong>&#9432; Review data not available for this period</strong><br><br>
+    The Trustpilot review sync is not currently reflected in the Stacktome data warehouse for the <code>itol_recruit</code> project (<code>/customer_review/_projectId=itol_recruit</code> path absent). The <code>customer_purchase</code> table contains 2,050 purchase events through Jun 22 but no review fields are populated.<br><br>
+    Please check the Trustpilot dashboard directly for reviews received Jun 15&ndash;21. Note also that invites sent Jun 15&ndash;21 typically generate reviews 7&ndash;14 days later (Jun 22&ndash;Jul 5), so the attribution window has not yet closed for this cohort.
+  </div>
+
+  <!-- 6. Urgent Action Items -->
+  <h2>6. Action Items</h2>
+  <table>
+    <thead>
+      <tr><th>Priority</th><th>Item</th><th>Owner</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong style="color:#d63031;">High</strong></td>
+        <td>Investigate Welcome Call/Setup Campaign CTR drop (19.3%&rarr;8.2%). Check template rendering and any recent changes to the email body or CTA link.</td>
+        <td>Campaign team</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#fdcb6e;">Medium</strong></td>
+        <td>Restore Trustpilot review sync to data warehouse for itol_recruit. Without it, review attribution and conversion tracking cannot be reported.</td>
+        <td>Data engineering</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#636e72;">Low</strong></td>
+        <td>Monitor Hubspot Main CTR for a third week &mdash; last week 6.2%, this week 10.0%. One more data point needed to confirm recovery trend.</td>
+        <td>Campaign team</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer">ITOL Recruit &mdash; Campaign Performance Report &mdash; Generated 2026-06-22 &mdash; Data window: Jun 15&ndash;Jun 21, 2026</div>
+</div>
+</body>
+</html>
