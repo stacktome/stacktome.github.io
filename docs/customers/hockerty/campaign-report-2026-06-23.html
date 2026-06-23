@@ -106,8 +106,20 @@
   <h1>Hockerty &amp; Sumissura &mdash; Weekly Campaign Performance Report</h1>
   <div class="subtitle">Review invite analysis &nbsp;&bull;&nbsp; Jun 16&ndash;21, 2026 &nbsp;&bull;&nbsp; Generated 2026-06-23 &nbsp;&bull;&nbsp; Hockerty (ID 626&ndash;630) + Sumissura (ID 673&ndash;682)</div>
 
+  <nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #6c5ce7;font-size:14px;line-height:2;">
+    <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+    <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Executive Summary</a>
+    <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Campaign Volume</a>
+    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Review Rate by Campaign</a>
+    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Widget Metrics</a>
+    <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Negative Reviews</a>
+    <a href="#s6" style="color:#444;text-decoration:none;margin-right:20px;">6. Complaint Themes</a>
+    <a href="#s7" style="color:#444;text-decoration:none;margin-right:20px;">7. Positive Highlights</a>
+    <a href="#s8" style="color:#444;text-decoration:none;">8. Urgent Action Items</a>
+  </nav>
+
   <!-- 1. Executive Summary -->
-  <h2>1. Executive Summary</h2>
+  <h2 id="s1">1. Executive Summary</h2>
   <div class="kpi-grid">
     <div class="kpi">
       <div class="label">Total Invites Sent</div>
@@ -155,7 +167,7 @@
   <div class="warn-box">&#9888;&nbsp; <strong>Invite volume dropped sharply:</strong> 952 invites (159/day) vs 4,691 over Jun 1&ndash;11 (426/day) &mdash; 63% fall in daily rate. The invite-tp-EN-historical Sumissura campaign collapsed from ~2,368 invites (Jun 1&ndash;11) to 35 this week as the historical cohort exhausts. Active campaigns (EN/DE/FR/IT/ES) are now carrying the full load. Note: the 4.83% attributed review rate is elevated because historical invitees from prior months continue to review against a much smaller new-invite denominator.</div>
 
   <!-- 2. Campaign Volume — Invite vs Reminder -->
-  <h2>2. Campaign Volume &mdash; Invite vs Reminder Breakdown</h2>
+  <h2 id="s2">2. Campaign Volume &mdash; Invite vs Reminder Breakdown</h2>
 
   <div class="info-box">&#9432;&nbsp; Volume data sourced from Delta Lake invite tables. Email engagement (opens/clicks) sourced from the campaign report API &mdash; counts may differ slightly due to deduplication timing. API requires <code>subjectLineId</code> in the request body alongside <code>templateId</code>.</div>
 
@@ -219,7 +231,7 @@
   </div>
 
   <!-- 3. Review Rate by Campaign -->
-  <h2>3. Review Rate by Campaign</h2>
+  <h2 id="s3">3. Review Rate by Campaign</h2>
 
   <h3><span style="color:#6c5ce7;">&#9679;</span> Hockerty account &mdash; 38 attributed reviews</h3>
   <table>
@@ -252,7 +264,7 @@
   <p class="note">&#8224; Historical campaigns (636&ndash;640, 678) sent 0 new invites this week; previously-invited cohorts continue to review. Review rate denominator uses weekly new invites only. &#9888; Sumissura EN-historical (ID 678): 80% negative rate &mdash; cohort exhausted, pause recommended.</p>
 
   <!-- 4. Shopping Experience Widget Metrics -->
-  <h2>4. Shopping Experience Widget Metrics</h2>
+  <h2 id="s4">4. Shopping Experience Widget Metrics</h2>
 
   <h3>Review Widget (trustpilot-collect)</h3>
   <table>
@@ -326,7 +338,7 @@
   <p class="note">Survey fit data is consistent with review data: 41% of respondents report non-perfect fit, mirroring the high fit-complaint rate in Trustpilot reviews. The 26% late/very late delivery rate from surveys also matches the delivery failure pattern in organic negative reviews.</p>
 
   <!-- 5. Negative Reviews -->
-  <h2>5. Negative Reviews (&le;3&#9733;)</h2>
+  <h2 id="s5">5. Negative Reviews (&le;3&#9733;)</h2>
 
   <p style="font-weight:600;margin-bottom:10px;">Attributed negatives &mdash; 16 reviews</p>
 
@@ -436,7 +448,7 @@
   </div>
 
   <!-- 6. Complaint Themes -->
-  <h2>6. Complaint Themes</h2>
+  <h2 id="s6">6. Complaint Themes</h2>
   <div class="theme-grid">
     <div class="theme-card">
       <div class="icon">&#128230;</div>
@@ -459,7 +471,7 @@
   </div>
 
   <!-- 7. Positive Highlights -->
-  <h2>7. Positive Highlights</h2>
+  <h2 id="s7">7. Positive Highlights</h2>
   <p class="note" style="margin-bottom:12px;">invite-tp-IT leads active campaigns (7.56% rate, 4.44&#9733; avg). DE and ES clean with no 1&#9733; reviews. 86% of survey respondents say they would repeat purchase.</p>
 
   <div class="review-card">
@@ -481,7 +493,7 @@
   </div>
 
   <!-- 8. Urgent Action Items -->
-  <h2>8. Urgent Action Items</h2>
+  <h2 id="s8">8. Urgent Action Items</h2>
   <div class="urgent">
     <div class="urg-title">&#9888;&nbsp; Negative Reviewers Needing Outreach + System Issues</div>
     <table>
