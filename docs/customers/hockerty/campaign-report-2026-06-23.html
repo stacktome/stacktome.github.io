@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hockerty Campaign Performance Report — Jun 16–22, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  .kpi-grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 20px; }
+  .split-box { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .split-box .split-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 12px; }
+  .split-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+  .split-row .slabel { color: #636e72; }
+  .split-row .sval { font-weight: 600; color: #1a1a2e; }
+  .attr-color { color: #00b894; }
+  .org-color { color: #e17055; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .stars { color: #fdcb6e; }
+
+  .review-card { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 10px; }
+  .rc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .rc-source { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; color: #888; }
+  .rc-meta { font-size: 12px; color: #aaa; margin-left: auto; }
+  .rc-text { font-size: 13px; color: #444; line-height: 1.6; }
+  .rc-heading { font-weight: 600; color: #1a1a2e; margin-bottom: 4px; font-size: 13px; }
+
+  .rating-badge { display: inline-block; border-radius: 5px; padding: 2px 9px; font-size: 12px; font-weight: 700; }
+  .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff3e0; color: #e17055; }
+  .r3 { background: #fffde0; color: #b8860b; }
+  .r5 { background: #e8f8f5; color: #00b894; }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .theme-card { background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .theme-card .icon { font-size: 24px; margin-bottom: 8px; }
+  .theme-card .theme-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .theme-card .count { font-size: 11px; color: #888; margin-bottom: 8px; }
+  .theme-card p { font-size: 12px; color: #555; margin: 0; line-height: 1.5; }
+
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-ok { display: inline-block; background: #e8f8f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #00b894; }
+  .note { font-size: 12px; color: #888; margin-top: 4px; }
+  .info-box { background: #f0f4ff; border: 1.5px solid #a0b4e8; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #2c3e6e; line-height: 1.6; }
+  .warn-box { background: #fff8e1; border: 1.5px solid #ffc107; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #5d4037; line-height: 1.6; }
+
+  .urgent { background: #fff5f5; border: 1.5px solid #d63031; border-radius: 10px; padding: 20px 22px; }
+  .urgent .urg-title { color: #d63031; font-weight: 700; font-size: 15px; margin-bottom: 14px; }
+  .urgent table { box-shadow: none; border: 1px solid #f5c6c6; margin-bottom: 12px; }
+  .urgent th { background: #d63031; }
+  .urgent td { background: #fff !important; }
+
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Hockerty &mdash; Weekly Campaign Performance Report</h1>
+  <div class="subtitle">Review invite analysis &nbsp;&bull;&nbsp; Jun 16&ndash;22, 2026 &nbsp;&bull;&nbsp; Generated 2026-06-23</div>
+
+  <!-- 1. Executive Summary -->
+  <h2>1. Executive Summary</h2>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Total Invites Sent</div>
+      <div class="value">1,459</div>
+      <div class="sub">all campaigns, Jun 16&ndash;22</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Total Reviews</div>
+      <div class="value">88</div>
+      <div class="sub">65 attributed &middot; 23 organic</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Attributed Review Rate</div>
+      <div class="value">4.46%</div>
+      <div class="sub">65 reviews / 1,459 invites</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Attributed Avg Rating</div>
+      <div class="value">4.06</div>
+      <div class="sub">organic avg: 2.91 &#9660;</div>
+    </div>
+  </div>
+
+  <div class="kpi-grid2" style="margin-top:16px;">
+    <div class="split-box">
+      <div class="split-title attr-color">&#10003; Attributed Reviews (order_id matched to invite)</div>
+      <div class="split-row"><span class="slabel">Count</span><span class="sval">65</span></div>
+      <div class="split-row"><span class="slabel">Avg Rating</span><span class="sval">4.06</span></div>
+      <div class="split-row"><span class="slabel">Negatives (&le;3&#9733;)</span><span class="sval">16 &nbsp;<span style="color:#888;font-weight:400">(24.6%)</span></span></div>
+    </div>
+    <div class="split-box">
+      <div class="split-title org-color">&#9702; Organic Reviews (no invite match)</div>
+      <div class="split-row"><span class="slabel">Count</span><span class="sval">23</span></div>
+      <div class="split-row"><span class="slabel">Avg Rating</span><span class="sval worst">2.91</span></div>
+      <div class="split-row"><span class="slabel">Negatives (&le;3&#9733;)</span><span class="sval worst">~13 &nbsp;<span style="color:#888;font-weight:400">(56.5%)</span></span></div>
+    </div>
+  </div>
+
+  <div class="warn-box">&#9888;&nbsp; <strong>Invite volume dropped sharply this week:</strong> 1,459 invites (208/day) vs 4,691 over Jun 1&ndash;11 (426/day) &mdash; a 51% fall in daily rate. The driver is the <strong>invite-tp-EN-historical</strong> campaign collapsing from ~2,368 invites over 11 days to just 35 this week. The historical cohort appears largely exhausted. Active campaigns (EN, DE, FR, IT, ES) now carry the full load. Review rate appears higher (4.46% vs 1.07%) because reviews from the large historical invite pool continue to arrive against a much smaller new-invite denominator.</div>
+
+  <div class="info-box">Organic reviews again run heavily negative (avg 2.91, ~57% negative rate), driven by delivery failures and fit complaints from customers who were never successfully invited. This is independent of campaign performance and reflects ongoing operational issues with late shipments, customs delays, and CS responsiveness.</div>
+
+  <!-- 2. Campaign Performance -->
+  <h2>2. Campaign Performance</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th>Invites Sent</th>
+        <th>Reviews</th>
+        <th>Review Rate</th>
+        <th>Avg Rating</th>
+        <th>Min</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>invite-tp-EN</td><td>731</td><td>29</td><td>3.97%</td><td class="neutral">4.00</td><td class="worst">1</td></tr>
+      <tr><td>invite-tp-DE</td><td>270</td><td>7</td><td>2.59%</td><td class="best">4.86</td><td class="neutral">4</td></tr>
+      <tr><td>invite-tp-FR</td><td>231</td><td>8</td><td>3.46%</td><td class="worst">3.75 &#9660;</td><td class="worst">1</td></tr>
+      <tr><td>invite-tp-IT</td><td>119</td><td>9</td><td class="best">7.56%</td><td>4.44</td><td>2</td></tr>
+      <tr><td>invite-tp-ES</td><td>73</td><td>2</td><td>2.74%</td><td class="best">5.00</td><td class="neutral">5</td></tr>
+      <tr><td>invite-tp-EN-historical</td><td>35</td><td>8</td><td class="neutral">22.86%*</td><td class="worst">3.13 &#9660;</td><td class="worst">1</td></tr>
+      <tr><td>organic</td><td>&mdash;</td><td>23</td><td class="neutral">&mdash;</td><td class="worst">2.91</td><td class="worst">1</td></tr>
+      <tr style="background:#f4f4f4;font-weight:600;"><td>Total</td><td>1,459</td><td>88</td><td>4.46%</td><td>3.65</td><td>1</td></tr>
+    </tbody>
+  </table>
+  <p class="note">*invite-tp-EN-historical rate is inflated: only 35 new invites were sent this week but 8 reviews arrived from the large historical invite pool (customers invited in prior months). Not a conversion signal for this week's invites.</p>
+  <p class="note">invite-tp-IT leads active campaigns on review rate (7.56%) and avg rating (4.44&#9733;). invite-tp-FR and invite-tp-EN-historical have the lowest avg ratings and carry the most 1&#9733; reviews this week. invite-tp-DE and invite-tp-ES are solid with no negatives.</p>
+
+  <!-- 3. Negative Reviews — Attributed -->
+  <h2>3. Negative Reviews (&le;3&#9733;)</h2>
+
+  <p style="font-weight:600;margin-bottom:10px;">Attributed negatives &mdash; 16 reviews</p>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">invite-tp-EN</span><span class="rc-meta">tedmarsh617@gmail.com &middot; order 60546726 &middot; 2026-06-22</span></div>
+    <div class="rc-heading">2 to 3 sizes too small</div>
+    <div class="rc-text">2 to 3 sizes too small, material is paper thin and see through, no customer service or way to return. Should be banned from selling online!</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">invite-tp-EN-historical</span><span class="rc-meta">morganpearce3794@gmail.com &middot; order 11945326 &middot; 2026-06-20</span></div>
+    <div class="rc-heading">Don't do it</div>
+    <div class="rc-text">Don't do it. It is 100% a scam company. Even with exact measurements, the suit still didn't fit. Their only form of &ldquo;return&rdquo; is to send the suit back and exchange it for a new suit. They absolutely will not give you your money back. I had to dispute the charge with my credit card.</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">invite-tp-EN-historical</span><span class="rc-meta">puja.gatton@gmail.com &middot; order 191780625 &middot; 2026-06-19</span></div>
+    <div class="rc-heading">The outfit looked nothing like what was in the picture and was way way too big</div>
+    <div class="rc-text">The outfit looked nothing like what was in the picture and was way way too big despite the very specific measurements I gave. I hated it.</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">invite-tp-EN-historical</span><span class="rc-meta">sarahjoylewis@gmail.com &middot; order 6035126 &middot; 2026-06-17</span></div>
+    <div class="rc-heading">&ldquo;Custom&rdquo; clothing didn&rsquo;t fit at all</div>
+    <div class="rc-text">&ldquo;Custom&rdquo; clothing didn&rsquo;t fit at all</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">invite-tp-EN</span><span class="rc-meta">bkiltspcfd718@gmail.com (Brandie Kilts) &middot; order 59478926 &middot; 2026-06-19</span></div>
+    <div class="rc-heading">My custom shirt was never sent</div>
+    <div class="rc-text">My custom shirt was never sent. My suit coat was way too big. I asked for help with where my custom shirt was and never got a response back.</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">invite-tp-EN</span><span class="rc-meta">jutta.wimmer@gmx.at &middot; order 55380026 &middot; 2026-06-17</span></div>
+    <div class="rc-heading">Didn&rsquo;t fit at all</div>
+    <div class="rc-text">Didn&rsquo;t fit at all</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">invite-tp-FR</span><span class="rc-meta">a.andygauthier@gmail.com &middot; order 57419526 &middot; 2026-06-18</span></div>
+    <div class="rc-heading">Commande perdu</div>
+    <div class="rc-text">Commande non re&ccedil;u, colis perdu par le transporteur.</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">invite-tp-FR</span><span class="rc-meta">hamzasijelidri7@gmail.com &middot; order 45751626 &middot; 2026-06-22</span></div>
+    <div class="rc-heading">Retard d&rsquo;une semaine par rapport au d&eacute;lai initialement annonc&eacute;</div>
+    <div class="rc-text">Retard d&rsquo;une semaine par rapport au d&eacute;lai initialement annonc&eacute;. Information du statut/suivi de la commande inexacte.</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r2">2&#9733;</span><span class="rc-source">invite-tp-EN</span><span class="rc-meta">nsdiver@yahoo.com (Neil G Spring) &middot; order 63006026 &middot; 2026-06-17</span></div>
+    <div class="rc-heading">Disappointed</div>
+    <div class="rc-text">First of all, the color was completely wrong, the measurements were off and it did not fit even slightly. Processing a return was not at all intuitive so I just ate the loss. I will donate this garment to goodwill.</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r2">2&#9733;</span><span class="rc-source">invite-tp-EN</span><span class="rc-meta">andyjlewis10@hotmail.com &middot; order 55854426 &middot; 2026-06-19</span></div>
+    <div class="rc-heading">Blazer delayed, with no explanation or contact</div>
+    <div class="rc-text">The blazer was ordered 3 weeks before the party it was intended to be worn at. As the website states 2-week delivery I ordered presuming it would arrive in time. With no contact at all from customer services and no contact number to call, I had to buy another blazer to wear as mine wasn&rsquo;t delivered until 3 weeks after the party. A reasonably priced blazer ended up costing me twice as much. I can&rsquo;t comment on the fit as I have no need to wear it.</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r2">2&#9733;</span><span class="rc-source">invite-tp-IT</span><span class="rc-meta">c.cerrella@outlook.it (Claudio) &middot; order 63699426 &middot; 2026-06-22</span></div>
+    <div class="rc-heading">Il collo della camicia &egrave; largo</div>
+    <div class="rc-text">Il collo della camicia &egrave; largo</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r3">3&#9733;</span><span class="rc-source">invite-tp-EN</span><span class="rc-meta">rakihia.tau@icloud.com (Rakihia Tau) &middot; order 7934726 &middot; 2026-06-21</span></div>
+    <div class="rc-heading">Slow to start manufacturing, lining needs re-stitching</div>
+    <div class="rc-text">I have to get parts of it re-stitched because the lining is coming apart. It was delivered late due to late start of manufacturing. And on another garment I bought all the buttons fell off. Quality control needs to be improved.</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r3">3&#9733;</span><span class="rc-source">invite-tp-EN</span><span class="rc-meta">michael.murillo1@gmail.com &middot; order 48900726 &middot; 2026-06-19</span></div>
+    <div class="rc-heading">Probably will never purchase again</div>
+    <div class="rc-text">Not really a fan of the AI experience and this process relies heavily on it. Garment was too small. Return process was lengthy. Delivery time was long.</div>
+  </div>
+
+  <p style="font-weight:600;margin:20px 0 10px;">Organic negatives &mdash; ~13 reviews (selected)</p>
+  <div class="info-box" style="margin-bottom:14px;">Organic negatives this week continue the pattern from Jun 1&ndash;11: <strong>delivery failures for time-sensitive events and fit failures with no adequate remedy</strong>. A notable new signal is customers explicitly describing credit card chargebacks and Section 75 claims &mdash; indicating they had no resolution path through Hockerty support. One detailed French review (<em>&ldquo;D&eacute;noncez Hockerty!&rdquo;</em>) name-drops the Jonathan Blasco template response pattern and advises readers to contact the European Consumer Centre.</div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">organic</span><span class="rc-meta">order 58494926-1 &middot; FR &middot; 2026-06-17</span></div>
+    <div class="rc-heading">Mensonges sur ma commande, costume inutilisable pour mon &eacute;v&eacute;nement, z&eacute;ro remboursement</div>
+    <div class="rc-text">À fuir. J&rsquo;ai command&eacute; un costume sur mesure chez Hockerty pour servir de t&eacute;moin &agrave; un mariage. Le 11 juin, on m&rsquo;&eacute;crit noir sur blanc que &ldquo;le probl&egrave;me est d&eacute;sormais r&eacute;solu&rdquo; et qu&rsquo;un d&eacute;lai de 5 &agrave; 7 jours suffira. Quelques jours plus tard, surprise&nbsp;: le colis est toujours bloqu&eacute; en douane, sans date de livraison garantie. Le mail du 11 juin &eacute;tait donc tout simplement mensonger. Aucun remboursement propos&eacute; malgr&eacute; une commande totalement inutilisable pour l&rsquo;occasion.</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">organic</span><span class="rc-meta">UK &middot; 2026-06-17</span></div>
+    <div class="rc-heading">Terrible experience. They ignore consumer rights!</div>
+    <div class="rc-text">Bought a custom-made three-piece suit for my wedding. The item delivered was completely misdescribed, the fabric pattern and overall appearance differed significantly from the website images. Worse, the material quality was poor, and the trousers were unacceptably see-through. Customer service completely ignored the issue. They tried to hide behind an internal &ldquo;made-to-measure&rdquo; policy to deny a refund multiple times (ignoring Consumer Rights Act 2015). I refused to accept their store credit or a useless remake and had to formally escalate this. I successfully raised a <strong>Section 75 claim</strong> with my credit card provider for breach of contract and misrepresentation. My bank reviewed the extensive evidence and forced a full refund. Save yourself the stress and the weeks of dispute paperwork.</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">organic</span><span class="rc-meta">UK &middot; 2026-06-20</span></div>
+    <div class="rc-heading">Six months, multiple remakes, and it still doesn&rsquo;t fit</div>
+    <div class="rc-text">I ordered a fully custom, made-to-measure suit at full price. What followed was over six months of problems. The first version came back wrong and had to be remade entirely. The waistcoat then had to be redone separately. After all of that, the final jacket still arrived too short and too tight. I&rsquo;ve ended up wearing it only because I&rsquo;d run out of patience &mdash; not because it fits. The most Hockerty offered was 15% off a future order &mdash; meaning I&rsquo;d have to spend more money with them to see any benefit at all. No partial refund, and despite specifically asking, no one more senior ever contacted me to review the case.</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">organic</span><span class="rc-meta">dawoodm259@gmail.com (Dawood Tareen) &middot; order 20291426 &middot; DE &middot; 2026-06-20</span></div>
+    <div class="rc-heading">Nie wieder!</div>
+    <div class="rc-text">Ich habe hier f&uuml;r meine Hochzeit zwei Leinen-Anz&uuml;ge f&uuml;r 900&euro; bestellt und bin leider mehr als entt&auml;uscht worden. Die Anz&uuml;ge kamen nach etwa einem Monat in einer kleinen Plastikt&uuml;te an und waren dadurch bereits sehr zerknittert &mdash; der erste Eindruck war, als ob ich direkt bei einem Billig-Anbieter aus China bestellt h&auml;tte. Weder die Maße stimmten, noch war die Stoffqualit&auml;t gut. Die immer gleiche Standardl&ouml;sung: 25% f&uuml;r Schneiderk&ouml;sten oder Neuanfertigung. F&uuml;r Kunden, die die Ware aufgrund von Qualit&auml;tsm&auml;ngeln nicht behalten m&ouml;chten, gibt es keine L&ouml;sung.</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">organic</span><span class="rc-meta">FR &middot; 2026-06-21</span></div>
+    <div class="rc-heading">D&eacute;noncez Hockerty !</div>
+    <div class="rc-text">Jonathan Blasco vous contactera suite &agrave; votre avis Trustpilot, laissant penser aux clients m&eacute;contents que quelque chose est fait &mdash; mais de fait, il vous enverra un mail et ne vous r&eacute;pondra plus jamais. HOCKERTY NE REMBOURSE JAMAIS&nbsp;! Pour ceux qui ont eu des soucis avec Hockerty, il faut contacter le Centre Europ&eacute;en des consommateurs France (CEC) qui &eacute;tudieront votre r&eacute;clamation. Ce genre de syst&egrave;me doit &ecirc;tre d&eacute;nonc&eacute;&nbsp;!</div>
+  </div>
+
+  <!-- 4. Complaint Themes -->
+  <h2>4. Complaint Themes</h2>
+  <div class="theme-grid">
+    <div class="theme-card">
+      <div class="icon">&#128230;</div>
+      <div class="theme-title">Delivery Failures &mdash; Events</div>
+      <div class="count">~6 reviews this week</div>
+      <p>Wedding/event-critical orders arriving late or stuck in customs. FR organic: suit for wedding witness, told &ldquo;resolved&rdquo; Jun 11, still blocked. UK organic: three-piece wedding suit misdescribed + late. DE: 900&euro; wedding suits in a plastic bag, wrong fit, no refund. FR: a.andygauthier order lost by carrier. Pattern is unbroken from prior weeks &mdash; no operational change visible in review data.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#9986;</div>
+      <div class="theme-title">Fit &amp; Sizing Failures</div>
+      <div class="count">~9 attributed + organic reviews</div>
+      <p>Systematic across EN, EN-historical, and IT. Suit &ldquo;way too big despite specific measurements&rdquo; (EN-hist), &ldquo;2&ndash;3 sizes too small, paper thin&rdquo; (EN), &ldquo;didn&rsquo;t fit at all&rdquo; (EN), &ldquo;six months of remakes, still wrong&rdquo; (organic UK). The &ldquo;remake&rdquo; resolution path frustrates customers who have time-sensitive needs or have already waited months.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#129302;</div>
+      <div class="theme-title">Credit Card Disputes &amp; No-Refund Escalation</div>
+      <div class="count">3 reviews this week</div>
+      <p>New signal: customers now explicitly describing external escalation. UK: successful Section 75 claim (bank forced full refund). US (morganpearce3794): credit card dispute after no fit + no refund. &ldquo;D&eacute;noncez Hockerty!&rdquo;: advises European Consumer Centre (CEC). These public descriptions of chargeback success encourage future customers to skip CS and go straight to their bank.</p>
+    </div>
+  </div>
+
+  <!-- 5. Positive Highlights -->
+  <h2>5. Positive Highlights</h2>
+  <p class="note" style="margin-bottom:12px;">invite-tp-IT leads active campaigns (7.56% rate, 4.44&#9733; avg). DE and ES are clean with no 1&#9733; reviews. Selected high-quality attributed positives:</p>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r5">5&#9733;</span><span class="rc-source">invite-tp-EN-historical</span><span class="rc-meta">tarowe1@gmail.com (Trevor Rowe) &middot; order 159891825 &middot; 2026-06-17</span></div>
+    <div class="rc-heading">My suit was perfect</div>
+    <div class="rc-text">My suit was perfect! I got it for my wedding day and with the measuring program through their website, it was very easy to add them. Choosing designs, threads and everything was actually a fun process!</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r5">5&#9733;</span><span class="rc-source">invite-tp-EN</span><span class="rc-meta">aba.kim@icloud.com (Kim Abapo) &middot; order 46647026 &middot; AT &middot; 2026-06-20</span></div>
+    <div class="rc-heading">CONSISTENT QUALITY!</div>
+    <div class="rc-text">As always the Hockerty Team never ceases to amaze me. Always consistent with the quality! I think it&rsquo;s my 4th or 5th order and I&rsquo;m still satisfied and a happy customer. No one can compare &mdash; legit, responsible, and definitely perfectionists!</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r5">5&#9733;</span><span class="rc-source">invite-tp-EN</span><span class="rc-meta">o.condenieto@operaballet.nl (Onno Conde Nieto) &middot; order 47289726 &middot; NL &middot; 2026-06-19</span></div>
+    <div class="rc-heading">Excellent company</div>
+    <div class="rc-text">I made a few orders over the years: costume parts and shoes, and it has always been flawless: good quality, on time delivery and great communication. Highly recommended!</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r5">5&#9733;</span><span class="rc-source">invite-tp-IT</span><span class="rc-meta">francescorovini23@gmail.com (Francesco Rovini) &middot; order 58288426 &middot; IT &middot; 2026-06-22</span></div>
+    <div class="rc-heading">Qualit&agrave; ottima come la manifattura</div>
+    <div class="rc-text">Non mi aspettavo una qualit&agrave; cos&igrave; elevata, ed una cura nel dettaglio cos&igrave; alta. Davvero una bella esperienza. Se posso consigliare dovete avere maggiore cura nel confezionamento che non &egrave; all&rsquo;altezza del prodotto.</div>
+  </div>
+
+  <!-- 6. Urgent Action Items -->
+  <h2>6. Urgent Action Items</h2>
+  <div class="urgent">
+    <div class="urg-title">&#9888;&nbsp; Negative Reviewers Needing Outreach</div>
+    <table>
+      <thead>
+        <tr><th>Customer</th><th>Campaign</th><th>Rating</th><th>Issue</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>tedmarsh617@gmail.com</td>
+          <td>invite-tp-EN (order 60546726)</td>
+          <td class="worst">1</td>
+          <td>&ldquo;2&ndash;3 sizes too small, paper thin, no CS, should be banned from selling online&rdquo;</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+        <tr>
+          <td>morganpearce3794@gmail.com</td>
+          <td>invite-tp-EN-historical (order 11945326)</td>
+          <td class="worst">1</td>
+          <td>&ldquo;100% scam, credit card dispute filed&rdquo; &mdash; ticket 3363264673 is ACTIVE but needs resolution before dispute is settled</td>
+          <td><span class="tag" style="background:#fff3e0;color:#e17055;">Active ticket</span></td>
+        </tr>
+        <tr>
+          <td>bkiltspcfd718@gmail.com (Brandie Kilts)</td>
+          <td>invite-tp-EN (order 59478926)</td>
+          <td class="worst">1</td>
+          <td>&ldquo;Custom shirt never sent, suit coat too big, no response&rdquo;</td>
+          <td><span class="tag-ok">Closed ticket</span></td>
+        </tr>
+        <tr>
+          <td>Order 58494926-1 (FR, anonymous)</td>
+          <td>organic</td>
+          <td class="worst">1</td>
+          <td>Wedding witness suit. Told &ldquo;problem resolved&rdquo; Jun 11 &mdash; it wasn&rsquo;t. Still in customs. Feels lied to.</td>
+          <td><span class="tag">No ticket</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="note">Priority: tedmarsh617@gmail.com has NO ticket at all and used very strong public language. morganpearce3794@gmail.com has an active credit card dispute in progress &mdash; if the chargeback succeeds before the ticket is resolved, the review is already published and Hockerty loses both the revenue and the reputation signal.</p>
+    <p class="note">Organic anonyms with no email (UK Section 75 review, UK six-months-remake review, FR &ldquo;D&eacute;noncez Hockerty&rdquo;) cannot be reached directly but represent significant public reputational exposure. No action possible for those without order IDs.</p>
+  </div>
+
+  <div class="footer">Hockerty &mdash; Weekly Campaign Performance Report &mdash; Generated 2026-06-23 &mdash; Data window: Jun 16&ndash;22, 2026</div>
+</div>
+</body>
+</html>
