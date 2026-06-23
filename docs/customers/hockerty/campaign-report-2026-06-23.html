@@ -262,9 +262,15 @@
   <!-- 4. Widget Status -->
   <h2>4. Widget Status &mdash; Review Widget &amp; Post-Purchase Survey</h2>
 
-  <div class="error-box">
-    <strong>&#10007; Review Widget: 0 impressions, 0 actions (Jun 1&ndash;22, 2026)</strong><br>
-    Searched all <code>customer_clickstream</code> events since Jun 1 for <code>event</code>, <code>event_type</code>, or <code>event_subtype</code> containing &ldquo;widget&rdquo;. Zero rows returned. The review widget is <strong>not firing any tracking events</strong> &mdash; either it is not deployed on the site, or its event tracking is not connected to the clickstream pipeline. This widget should be generating reviews independently of the email invite channel. <strong>Action needed: investigate widget deployment and event tracking configuration.</strong>
+  <div class="warn-box">
+    <strong>&#9888; Review Widget (trustpilot-collect): rendering but converting 0 reviews</strong><br>
+    Widget events found in raw Snowplow clickstream (<code>/clickstream/_source=snowplow</code>), not customer_clickstream.
+    <ul style="margin:10px 0 0 18px;line-height:1.8;">
+      <li><strong>Hockerty:</strong> 914 <code>widget_impression</code> events &mdash; 9 <code>widget_action</code> (click) events &mdash; <strong>0 reviews attributed</strong></li>
+      <li><strong>Sumissura:</strong> 96 <code>widget_impression</code> events &mdash; 0 <code>widget_action</code> events &mdash; <strong>0 reviews attributed</strong></li>
+    </ul>
+    <br>
+    All 6 tracked clicks (Jun 18&ndash;22, with order_id + email_hash payload) were matched against the full review table by both <code>order_id</code> and SHA-256 email hash &mdash; <strong>none converted to a review</strong>. Widget type is <code>trustpilot-collect</code>, widget_id=2, firing exclusively on homepage URLs (not post-purchase pages). Likely causes: Trustpilot login friction after redirect, or widget shown to anonymous homepage visitors who lack a valid TP invite link. <strong>Action: verify widget placement (should be post-purchase, not homepage) and test the Trustpilot redirect flow end-to-end.</strong>
   </div>
 
   <div class="success-box">
