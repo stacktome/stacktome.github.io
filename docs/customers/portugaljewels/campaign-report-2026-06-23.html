@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portugal Jewels Campaign Performance Report — June 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #e17055; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #1a1a2e; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  .kpi-grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 20px; }
+  .kpi-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+  .split-box { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .split-box .split-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 12px; }
+  .split-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+  .split-row .slabel { color: #636e72; }
+  .split-row .sval { font-weight: 600; color: #1a1a2e; }
+  .attr-color { color: #00b894; }
+  .org-color { color: #e17055; }
+  .new-color { color: #0984e3; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .new-row td:first-child { border-left: 3px solid #0984e3; }
+  .total-row { background: #f4f4f4 !important; font-weight: 600; }
+  .total-row td { background: #f4f4f4 !important; }
+
+  .review-card { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 10px; }
+  .rc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .rc-meta { font-size: 12px; color: #aaa; margin-left: auto; }
+  .rc-text { font-size: 13px; color: #444; line-height: 1.6; }
+
+  .rating-badge { display: inline-block; border-radius: 5px; padding: 2px 9px; font-size: 12px; font-weight: 700; }
+  .r3 { background: #fffde0; color: #b8860b; }
+  .r5 { background: #e8f8f5; color: #00b894; }
+
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-new { display: inline-block; background: #dff3ff; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #0984e3; font-weight: 600; }
+  .note { font-size: 12px; color: #888; margin-top: 4px; }
+  .info-box { background: #f0f4ff; border: 1.5px solid #a0b4e8; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #2c3e6e; line-height: 1.6; }
+  .success-box { background: #f0fff4; border: 1.5px solid #00b894; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #004d30; line-height: 1.6; }
+  .stars { color: #f39c12; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<h1>Portugal Jewels — Campaign Performance Report</h1>
+<p class="subtitle">Period: June 1 – June 22, 2026 &nbsp;|&nbsp; Generated: June 23, 2026 &nbsp;|&nbsp; Account: portugaljewels</p>
+
+<nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #e17055;font-size:14px;line-height:2;">
+  <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+  <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Executive Summary</a>
+  <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. New Campaigns Launched</a>
+  <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Campaign Volume</a>
+  <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Email Performance</a>
+  <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Review Performance</a>
+  <a href="#s6" style="color:#444;text-decoration:none;">6. Customer Feedback</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ 1. EXECUTIVE SUMMARY -->
+<h2 id="s1">1. Executive Summary</h2>
+
+<div class="success-box">
+  <strong>Strong email engagement with healthy ramp-up.</strong> June saw 1,286 emails sent with a <strong>60.9% open rate</strong> and <strong>10.7% click-through</strong> — the highest click rate of any reporting period. Five new <em>invite-product</em> campaigns launched this month targeting product-level reviews, adding a second review collection channel alongside the order-level campaigns. Review quality remains excellent: 4.94/5 average with 30 of 31 reviews being 5-star.
+</div>
+
+<div class="kpi-grid" style="margin-bottom:20px;">
+  <div class="kpi">
+    <div class="label">Emails Sent</div>
+    <div class="value">1,286</div>
+    <div class="sub">invites + reminders</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Open Rate</div>
+    <div class="value">60.9%</div>
+    <div class="sub">783 unique opens</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Click Rate</div>
+    <div class="value">10.7%</div>
+    <div class="sub">137 unique clicks</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Avg Rating</div>
+    <div class="value">4.94</div>
+    <div class="sub">31 total reviews</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 2. NEW CAMPAIGNS -->
+<h2 id="s2">2. New Campaigns Launched</h2>
+
+<div class="info-box">
+  <strong>5 product-review campaigns launched in June 2026</strong> (campaign IDs 691–695). These complement existing order-level review campaigns by collecting <em>product-specific</em> reviews. All 5 are still in early ramp-up; meaningful attribution data is expected from July onwards.
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Campaign</th>
+      <th>Language</th>
+      <th>Campaign ID</th>
+      <th style="text-align:right;">Invites</th>
+      <th style="text-align:right;">Reminders</th>
+      <th style="text-align:right;">Open %</th>
+      <th style="text-align:right;">Click %</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="new-row">
+      <td>invite-product <span class="tag-new">NEW</span></td>
+      <td>EN</td>
+      <td>691</td>
+      <td style="text-align:right;">25</td>
+      <td style="text-align:right;">34</td>
+      <td style="text-align:right;">70.8%</td>
+      <td style="text-align:right;">2.1%</td>
+    </tr>
+    <tr class="new-row">
+      <td>invite-product-pt <span class="tag-new">NEW</span></td>
+      <td>PT</td>
+      <td>692</td>
+      <td style="text-align:right;">30</td>
+      <td style="text-align:right;">30</td>
+      <td style="text-align:right;">62.1%</td>
+      <td style="text-align:right;">10.3%</td>
+    </tr>
+    <tr class="new-row">
+      <td>invite-product-fr <span class="tag-new">NEW</span></td>
+      <td>FR</td>
+      <td>694</td>
+      <td style="text-align:right;">14</td>
+      <td style="text-align:right;">14</td>
+      <td style="text-align:right;">50.0%</td>
+      <td style="text-align:right;">14.3%</td>
+    </tr>
+    <tr class="new-row">
+      <td>invite-product-de <span class="tag-new">NEW</span></td>
+      <td>DE</td>
+      <td>695</td>
+      <td style="text-align:right;">6</td>
+      <td style="text-align:right;">16</td>
+      <td style="text-align:right;" class="best">83.3%</td>
+      <td style="text-align:right;" class="best">16.7%</td>
+    </tr>
+    <tr class="new-row">
+      <td>invite-product-es <span class="tag-new">NEW</span></td>
+      <td>ES</td>
+      <td>693</td>
+      <td style="text-align:right;">2</td>
+      <td style="text-align:right;">2</td>
+      <td style="text-align:right;">25.0%</td>
+      <td style="text-align:right;">25.0%</td>
+    </tr>
+  </tbody>
+</table>
+<p class="note" style="margin-bottom:16px;">Blue left border = new campaign. Product review campaigns are expected to generate product-level ratings that appear separately from order reviews.</p>
+
+<!-- ═══════════════════════════════════════════════════════ 3. CAMPAIGN VOLUME -->
+<h2 id="s3">3. Campaign Volume</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Campaign</th>
+      <th>Language</th>
+      <th style="text-align:right;">Invites</th>
+      <th style="text-align:right;">Reminders</th>
+      <th style="text-align:right;">Total Sent</th>
+      <th style="text-align:right;">Attributed Reviews</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>invite-recent-pt <span class="tag">354</span></td>
+      <td>PT</td>
+      <td style="text-align:right;">235</td>
+      <td style="text-align:right;">270</td>
+      <td style="text-align:right;">505</td>
+      <td style="text-align:right;">6</td>
+    </tr>
+    <tr>
+      <td>invite-recent-fr <span class="tag">356</span></td>
+      <td>FR</td>
+      <td style="text-align:right;">159</td>
+      <td style="text-align:right;">229</td>
+      <td style="text-align:right;">388</td>
+      <td style="text-align:right;">4</td>
+    </tr>
+    <tr>
+      <td>invite-recent <span class="tag">353</span></td>
+      <td>EN</td>
+      <td style="text-align:right;">130</td>
+      <td style="text-align:right;">268</td>
+      <td style="text-align:right;">398</td>
+      <td style="text-align:right;">3</td>
+    </tr>
+    <tr>
+      <td>invite-recent-es <span class="tag">355</span></td>
+      <td>ES</td>
+      <td style="text-align:right;">15</td>
+      <td style="text-align:right;">17</td>
+      <td style="text-align:right;">32</td>
+      <td style="text-align:right;">0</td>
+    </tr>
+    <tr>
+      <td>invite-b2b-pt <span class="tag">580</span></td>
+      <td>PT (B2B)</td>
+      <td style="text-align:right;">4</td>
+      <td style="text-align:right;">15</td>
+      <td style="text-align:right;">19</td>
+      <td style="text-align:right;">0</td>
+    </tr>
+    <tr class="new-row">
+      <td>invite-product <span class="tag-new">NEW</span> <span class="tag">691</span></td>
+      <td>EN</td>
+      <td style="text-align:right;">25</td>
+      <td style="text-align:right;">34</td>
+      <td style="text-align:right;">59</td>
+      <td style="text-align:right;" class="neutral">—</td>
+    </tr>
+    <tr class="new-row">
+      <td>invite-product-pt <span class="tag-new">NEW</span> <span class="tag">692</span></td>
+      <td>PT</td>
+      <td style="text-align:right;">30</td>
+      <td style="text-align:right;">30</td>
+      <td style="text-align:right;">60</td>
+      <td style="text-align:right;" class="neutral">—</td>
+    </tr>
+    <tr class="new-row">
+      <td>invite-product-fr <span class="tag-new">NEW</span> <span class="tag">694</span></td>
+      <td>FR</td>
+      <td style="text-align:right;">14</td>
+      <td style="text-align:right;">14</td>
+      <td style="text-align:right;">28</td>
+      <td style="text-align:right;" class="neutral">—</td>
+    </tr>
+    <tr class="new-row">
+      <td>invite-product-de <span class="tag-new">NEW</span> <span class="tag">695</span></td>
+      <td>DE</td>
+      <td style="text-align:right;">6</td>
+      <td style="text-align:right;">16</td>
+      <td style="text-align:right;">22</td>
+      <td style="text-align:right;" class="neutral">—</td>
+    </tr>
+    <tr class="new-row">
+      <td>invite-product-es <span class="tag-new">NEW</span> <span class="tag">693</span></td>
+      <td>ES</td>
+      <td style="text-align:right;">2</td>
+      <td style="text-align:right;">2</td>
+      <td style="text-align:right;">4</td>
+      <td style="text-align:right;" class="neutral">—</td>
+    </tr>
+    <tr class="total-row">
+      <td><strong>Total</strong></td>
+      <td></td>
+      <td style="text-align:right;"><strong>620</strong></td>
+      <td style="text-align:right;"><strong>895</strong></td>
+      <td style="text-align:right;"><strong>1,515</strong></td>
+      <td style="text-align:right;"><strong>13</strong></td>
+    </tr>
+  </tbody>
+</table>
+<p class="note">Attributed reviews (13) are low for June as invitees typically review 2–4 weeks after invite. June attribution will grow through July. Review rate based on Jun order-level invites: 13 / 543 = <strong>2.4%</strong> (expected to normalise by next report).</p>
+
+<!-- ═══════════════════════════════════════════════════════ 4. EMAIL PERFORMANCE -->
+<h2 id="s4">4. Email Performance</h2>
+
+<p>June showed the strongest email engagement of any period: <strong>60.9% open rate</strong> and <strong>10.7% click rate</strong> across all campaigns. New product campaigns opened at 50–83%, confirming strong template quality.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Campaign</th>
+      <th style="text-align:right;">Sent</th>
+      <th style="text-align:right;">Unique Opens</th>
+      <th style="text-align:right;">Open %</th>
+      <th style="text-align:right;">Unique Clicks</th>
+      <th style="text-align:right;">Click %</th>
+      <th style="text-align:right;">Unsubs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>invite-recent-pt <span class="tag">354</span></td>
+      <td style="text-align:right;">485</td>
+      <td style="text-align:right;">276</td>
+      <td style="text-align:right;">56.9%</td>
+      <td style="text-align:right;">55</td>
+      <td style="text-align:right;">11.3%</td>
+      <td style="text-align:right;">13</td>
+    </tr>
+    <tr>
+      <td>invite-recent-fr <span class="tag">356</span></td>
+      <td style="text-align:right;">334</td>
+      <td style="text-align:right;">204</td>
+      <td style="text-align:right;">61.1%</td>
+      <td style="text-align:right;">38</td>
+      <td style="text-align:right;">11.4%</td>
+      <td style="text-align:right;">3</td>
+    </tr>
+    <tr>
+      <td>invite-recent <span class="tag">353</span></td>
+      <td style="text-align:right;">270</td>
+      <td style="text-align:right;">178</td>
+      <td style="text-align:right;" class="best">65.9%</td>
+      <td style="text-align:right;">25</td>
+      <td style="text-align:right;">9.3%</td>
+      <td style="text-align:right;">2</td>
+    </tr>
+    <tr class="new-row">
+      <td>invite-product-pt <span class="tag-new">NEW</span></td>
+      <td style="text-align:right;">58</td>
+      <td style="text-align:right;">36</td>
+      <td style="text-align:right;">62.1%</td>
+      <td style="text-align:right;">6</td>
+      <td style="text-align:right;">10.3%</td>
+      <td style="text-align:right;">1</td>
+    </tr>
+    <tr class="new-row">
+      <td>invite-product <span class="tag-new">NEW</span></td>
+      <td style="text-align:right;">48</td>
+      <td style="text-align:right;">34</td>
+      <td style="text-align:right;">70.8%</td>
+      <td style="text-align:right;">1</td>
+      <td style="text-align:right;">2.1%</td>
+      <td style="text-align:right;">0</td>
+    </tr>
+    <tr>
+      <td>invite-recent-es <span class="tag">355</span></td>
+      <td style="text-align:right;">28</td>
+      <td style="text-align:right;">20</td>
+      <td style="text-align:right;">71.4%</td>
+      <td style="text-align:right;">4</td>
+      <td style="text-align:right;">14.3%</td>
+      <td style="text-align:right;">2</td>
+    </tr>
+    <tr class="new-row">
+      <td>invite-product-fr <span class="tag-new">NEW</span></td>
+      <td style="text-align:right;">28</td>
+      <td style="text-align:right;">14</td>
+      <td style="text-align:right;">50.0%</td>
+      <td style="text-align:right;">4</td>
+      <td style="text-align:right;">14.3%</td>
+      <td style="text-align:right;">0</td>
+    </tr>
+    <tr class="new-row">
+      <td>invite-product-de <span class="tag-new">NEW</span></td>
+      <td style="text-align:right;">12</td>
+      <td style="text-align:right;">10</td>
+      <td style="text-align:right;" class="best">83.3%</td>
+      <td style="text-align:right;">2</td>
+      <td style="text-align:right;">16.7%</td>
+      <td style="text-align:right;">0</td>
+    </tr>
+    <tr>
+      <td>invite-b2b-pt <span class="tag">580</span></td>
+      <td style="text-align:right;">18</td>
+      <td style="text-align:right;">9</td>
+      <td style="text-align:right;">50.0%</td>
+      <td style="text-align:right;">1</td>
+      <td style="text-align:right;">5.6%</td>
+      <td style="text-align:right;">1</td>
+    </tr>
+    <tr class="new-row">
+      <td>invite-product-es <span class="tag-new">NEW</span></td>
+      <td style="text-align:right;">4</td>
+      <td style="text-align:right;">1</td>
+      <td style="text-align:right;">25.0%</td>
+      <td style="text-align:right;">1</td>
+      <td style="text-align:right;">25.0%</td>
+      <td style="text-align:right;">0</td>
+    </tr>
+    <tr>
+      <td>invite-recent-de <span class="tag">632</span></td>
+      <td style="text-align:right;">1</td>
+      <td style="text-align:right;">1</td>
+      <td style="text-align:right;">100.0%</td>
+      <td style="text-align:right;">0</td>
+      <td style="text-align:right;">0.0%</td>
+      <td style="text-align:right;">0</td>
+    </tr>
+    <tr class="total-row">
+      <td><strong>Total</strong></td>
+      <td style="text-align:right;"><strong>1,286</strong></td>
+      <td style="text-align:right;"><strong>783</strong></td>
+      <td style="text-align:right;"><strong>60.9%</strong></td>
+      <td style="text-align:right;"><strong>137</strong></td>
+      <td style="text-align:right;"><strong>10.7%</strong></td>
+      <td style="text-align:right;"><strong>22</strong></td>
+    </tr>
+  </tbody>
+</table>
+<p class="note">Blue left border = new product-review campaign. Unsubs for invite-recent-pt (13) are elevated — monitor for next period; may be related to list maturation from Jan–May volume.</p>
+
+<!-- ═══════════════════════════════════════════════════════ 5. REVIEW PERFORMANCE -->
+<h2 id="s5">5. Review Performance</h2>
+
+<div class="kpi-grid3" style="margin-bottom:20px;">
+  <div class="kpi">
+    <div class="label">Total Reviews</div>
+    <div class="value">31</div>
+    <div class="sub">Jun 1–22, 2026</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Avg Rating</div>
+    <div class="value">4.94 <span style="font-size:18px;">★</span></div>
+    <div class="sub">out of 5</div>
+  </div>
+  <div class="kpi">
+    <div class="label">5-Star Share</div>
+    <div class="value">96.8%</div>
+    <div class="sub">30 of 31 reviews</div>
+  </div>
+</div>
+
+<div class="kpi-grid2">
+  <div class="split-box">
+    <div class="split-title">Rating Distribution</div>
+    <div class="split-row"><span class="slabel"><span class="stars">★★★★★</span> 5 stars</span><span class="sval best">30 &nbsp;(96.8%)</span></div>
+    <div class="split-row"><span class="slabel"><span class="stars">★★★</span>☆☆ 3 stars</span><span class="sval">1 &nbsp;(3.2%)</span></div>
+    <div class="split-row"><span class="slabel">4★, 2★, 1★</span><span class="sval neutral">0</span></div>
+  </div>
+  <div class="split-box">
+    <div class="split-title">Review Source Split</div>
+    <div class="split-row"><span class="slabel">Campaign-attributed</span><span class="sval attr-color">13 (42%)</span></div>
+    <div class="split-row"><span class="slabel">Organic (direct)</span><span class="sval org-color">18 (58%)</span></div>
+    <div style="margin-top:10px;font-size:12px;color:#888;">Attribution is lower in June because most June invitees haven't yet reviewed — expect a large uplift in July as the review window closes on June sends.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 6. CUSTOMER FEEDBACK -->
+<h2 id="s6">6. Customer Feedback</h2>
+
+<h3>Positive Reviews</h3>
+
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r5">★★★★★</span>
+    <span class="tag">EN</span>
+    <span class="rc-meta">Jun 22, 2026</span>
+  </div>
+  <div class="rc-text">"I love this jewelry, quality is there and the gold is just beautiful."</div>
+</div>
+
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r5">★★★★★</span>
+    <span class="tag">PT</span>
+    <span class="rc-meta">Jun 13, 2026</span>
+  </div>
+  <div class="rc-text">"Amazing little place with beautiful jewellery. We bought three matching necklaces for my mum, sister and myself and only one was located in the store, so the lovely gentleman arranged to have the additional two elsewhere and looked after my mother while we went and collected the necklaces. Such kindness and thoughtfulness as well as expertise, made the experience really special. Obrigada!!"</div>
+</div>
+
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r5">★★★★★</span>
+    <span class="tag">FR</span>
+    <span class="rc-meta">Jun 12, 2026</span>
+  </div>
+  <div class="rc-text">"Bijoux magnifiques qui représentent très bien mes origines. Livraison ultra rapide bravo à vous. Je recommande."</div>
+</div>
+
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r5">★★★★★</span>
+    <span class="tag">PT</span>
+    <span class="rc-meta">Jun 11, 2026</span>
+  </div>
+  <div class="rc-text">"A facilidade de encomendar os produtos, os prazos de entrega e o cuidado e atenção que têm na embalagem, com o cartão personalizado e a própria apresentação, são pontos chave e levam a tornar a encomendar e recomendar."</div>
+</div>
+
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r5">★★★★★</span>
+    <span class="tag">PT</span>
+    <span class="rc-meta">Jun 11, 2026</span>
+  </div>
+  <div class="rc-text">"Excelente qualidade dos produtos com uma grande variedade à escolha (embora seja difícil escolher porque tudo é lindo)! Serviço de entrega muito rápido. Excelente experiência."</div>
+</div>
+
+<h3>Attention Required</h3>
+
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r3">★★★☆☆</span>
+    <span class="tag">PT</span>
+    <span class="rc-meta">Jun 4, 2026</span>
+  </div>
+  <div class="rc-text">"Desiludido com o tamanho dos brincos que parece menor do que na publicidade."
+  <br><br><em style="color:#888;font-size:12px;">Translation: "Disappointed with the size of the earrings which appears smaller than in the advertising."</em>
+  <br><br><strong style="font-size:12px;color:#b8860b;">→ This echoes the sizing/photography feedback from Jan–May. Product photos may not accurately represent physical dimensions.</strong>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
