@@ -259,23 +259,46 @@
   </table>
   <p class="note">&#8224; Historical campaigns (636&ndash;640, 678) sent 0 new invites this week but their previously-invited cohorts continue to review. Review rate denominator uses weekly new invites only.</p>
 
-  <!-- 4. Widget Status -->
-  <h2>4. Widget Status &mdash; Review Widget &amp; Post-Purchase Survey</h2>
+  <!-- 4. Shopping Experience Widget Metrics -->
+  <h2>4. Shopping Experience Widget Metrics</h2>
 
-  <div class="warn-box">
-    <strong>&#9888; Review Widget (trustpilot-collect): rendering but converting 0 reviews</strong><br>
-    Widget events found in raw Snowplow clickstream (<code>/clickstream/_source=snowplow</code>), not customer_clickstream.
-    <ul style="margin:10px 0 0 18px;line-height:1.8;">
-      <li><strong>Hockerty:</strong> 914 <code>widget_impression</code> events &mdash; 9 <code>widget_action</code> (click) events &mdash; <strong>0 reviews attributed</strong></li>
-      <li><strong>Sumissura:</strong> 96 <code>widget_impression</code> events &mdash; 0 <code>widget_action</code> events &mdash; <strong>0 reviews attributed</strong></li>
-    </ul>
-    <br>
-    All 6 tracked clicks (Jun 18&ndash;22, with order_id + email_hash payload) were matched against the full review table by both <code>order_id</code> and SHA-256 email hash &mdash; <strong>none converted to a review</strong>. Widget type is <code>trustpilot-collect</code>, widget_id=2, firing exclusively on homepage URLs (not post-purchase pages). Likely causes: Trustpilot login friction after redirect, or widget shown to anonymous homepage visitors who lack a valid TP invite link. <strong>Action: verify widget placement (should be post-purchase, not homepage) and test the Trustpilot redirect flow end-to-end.</strong>
+  <h3>Review Widget (trustpilot-collect)</h3>
+  <table>
+    <thead>
+      <tr><th>Account</th><th>Widget Type</th><th>Impressions</th><th>Clicks (actions)</th><th>Click Rate</th><th>Reviews Converted</th><th>Conversion Rate</th></tr>
+    </thead>
+    <tbody>
+      <tr class="ho-row"><td>hockerty</td><td>trustpilot-collect</td><td>914</td><td>9</td><td>0.98%</td><td class="worst">0</td><td class="worst">0%</td></tr>
+      <tr class="su-row"><td>sumissura</td><td>trustpilot-collect</td><td>96</td><td>0</td><td>0%</td><td class="worst">0</td><td class="worst">0%</td></tr>
+      <tr class="total-row"><td colspan="2">Total</td><td>1,010</td><td>9</td><td>0.89%</td><td class="worst">0</td><td class="worst">0%</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:14px;">Review Widget — Impressions by Domain (hockerty, Jun 16&ndash;22)</h3>
+  <table>
+    <thead>
+      <tr><th>Domain</th><th>Impressions</th><th>Clicks</th><th>Click Rate</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>hockerty.com</td><td>290</td><td>3</td><td>1.0%</td></tr>
+      <tr><td>hockerty.de</td><td>170</td><td>1</td><td>0.6%</td></tr>
+      <tr><td>hockerty.fr</td><td>166</td><td>1</td><td>0.6%</td></tr>
+      <tr><td>hockerty.uk</td><td>92</td><td>0</td><td>0%</td></tr>
+      <tr><td>hockerty.it</td><td>55</td><td>0</td><td>0%</td></tr>
+      <tr><td>hockerty.ch</td><td>45</td><td>0</td><td>0%</td></tr>
+      <tr><td>hockerty.es</td><td>44</td><td>0</td><td>0%</td></tr>
+      <tr><td>hockerty.mx</td><td>9</td><td>1</td><td>11.1%</td></tr>
+      <tr><td>other / null</td><td>43</td><td>3</td><td>&mdash;</td></tr>
+    </tbody>
+  </table>
+  <div class="warn-box" style="margin-top:10px;">
+    &#9888; All 6 clicks with payload (Jun 18&ndash;22) were matched against the full review table by both <code>order_id</code> and SHA-256 email hash &mdash; <strong>none converted to a review</strong>. Widget fires on <strong>homepage URLs</strong>, not post-purchase pages. Visitors clicking through land on Trustpilot without a valid invite link and drop off.
+    <br><strong>Action: move widget to post-purchase confirmation page and test the Trustpilot redirect flow end-to-end.</strong>
   </div>
 
+  <h3 style="margin-top:20px;">Post-Purchase Survey Widget</h3>
   <div class="success-box">
-    <strong>&#10003; Post-Purchase Survey Widget: active &mdash; 221 respondents this week</strong><br>
-    The <code>survey_submit</code> event is firing correctly. 224 survey submissions received Jun 16&ndash;22 from 221 unique customers. Note: no <code>survey_id</code> or <code>event_source_url</code> are attached to these events, so individual responses cannot be linked to orders or campaigns. Data below is aggregated only.
+    &#10003; <code>survey_submit</code> firing correctly &mdash; 224 submissions, 221 unique respondents Jun 16&ndash;22.
   </div>
 
   <div class="survey-grid">
