@@ -205,7 +205,7 @@
   <div class="good-box">
     <p><strong>Signal is clear:</strong> Brand templates are outperforming TP templates by +14–15pp open rate for mammashop and naturebaby — both of which use the DK market as their largest campaign. Loukrudt shows a smaller but consistent +4.3pp lift.</p>
     <p><strong>Why DK leads:</strong> The mammashop invite-recent-dk campaign (largest single campaign at 1,200+ sends) shows TP at 37.2% vs Brand at 55.8% — an 18.6pp gap. This is statistically significant at this volume and likely driven by sender name / subject line recognition in the brand template.</p>
-    <p><strong>Hoppekids:</strong> Comparison data incomplete (API timeout at very low volumes — 84 total sends). Will include next week with a dedicated run.</p>
+    <p><strong>Hoppekids:</strong> DK campaign (largest, 33 TP + 22 brand sends) shows flat results at −1.5pp. Smaller locale campaigns (de/no/se) show brand winning but have only 2–9 sends each — not statistically meaningful. Need 2–3 more weeks of volume to read hoppekids clearly.</p>
   </div>
 
   <h3>Campaign-Level Open Rate: TP vs Brand</h3>
@@ -347,10 +347,52 @@
     <!-- Hoppekids -->
     <div class="tmpl-card">
       <div class="tmpl-card-brand" style="color:#e17055;">Hoppekids</div>
-      <div style="font-size:13px;color:#636e72;line-height:1.6;margin-top:8px;">
-        Template comparison data not available this week — API query timed out at very low volumes (84 total sends across 5 campaigns). Combined open rate from email perf: <strong>42.9%</strong>.
+      <div class="tmpl-row">
+        <div class="tmpl-row-label">invite-dk</div>
+        <div class="tmpl-row-bar-wrap">
+          <div class="tmpl-dual-bar">
+            <div class="bar-tp" style="width:42.4%">42.4%</div>
+            <div class="bar-brand" style="width:40.9%">40.9%</div>
+          </div>
+        </div>
+        <div class="tmpl-delta neutral">−1.5pp</div>
       </div>
-      <div style="margin-top:14px;font-size:11px;color:#888;">Will include dedicated hoppekids comparison next week when send volumes are higher. Hoppekids uses the same brand template set (IDs 1065, 1083–1091).</div>
+      <div class="tmpl-row">
+        <div class="tmpl-row-label">invite-de</div>
+        <div class="tmpl-row-bar-wrap">
+          <div class="tmpl-dual-bar">
+            <div class="bar-tp" style="width:33.3%">33.3%</div>
+            <div class="bar-brand" style="width:50.0%">50.0%</div>
+          </div>
+        </div>
+        <div class="tmpl-delta delta-pos">+16.7pp</div>
+      </div>
+      <div class="tmpl-row">
+        <div class="tmpl-row-label">invite-no</div>
+        <div class="tmpl-row-bar-wrap">
+          <div class="tmpl-dual-bar">
+            <div class="bar-tp" style="width:33.3%">33.3%</div>
+            <div class="bar-brand" style="width:60.0%">100%</div>
+          </div>
+        </div>
+        <div class="tmpl-delta delta-pos">+66.7pp</div>
+      </div>
+      <div class="tmpl-row">
+        <div class="tmpl-row-label">invite-se</div>
+        <div class="tmpl-row-bar-wrap">
+          <div class="tmpl-dual-bar">
+            <div class="bar-tp" style="width:5%">0%</div>
+            <div class="bar-brand" style="width:60.0%">60.0%</div>
+          </div>
+        </div>
+        <div class="tmpl-delta delta-pos">+60.0pp</div>
+      </div>
+      <div style="margin-top:8px;font-size:11px;color:#888;">⚠ Very low volumes (n=2–33 per campaign). DK is the only reliable signal: flat at −1.5pp. de/no/se results statistically meaningless at these sample sizes. Monitor next 2–3 weeks as volume builds.</div>
+      <div class="tmpl-legend" style="margin-top:8px;">
+        <span><span class="tmpl-legend-dot" style="background:#a29bfe;"></span>TP template</span>
+        <span><span class="tmpl-legend-dot" style="background:#e17055;"></span>Brand template</span>
+        <span style="margin-left:auto;font-size:10px;color:#888;">47 TP · 36 brand sends</span>
+      </div>
     </div>
   </div>
 
@@ -593,7 +635,7 @@
         <p style="margin-top:10px;font-size:12px;color:#636e72;line-height:1.6;">
           No reviews this week across 4 locale campaigns (dk/de/no/se). Volume is low — expect first attributed reviews once the invite wave (launched ~Jun 18) matures in 7–14 days.
         </p>
-        <div style="font-size:11px;color:#888;margin-top:10px;">Positive-tickets (670): 2 sends (very low as expected). No positive-reviews campaign yet for hoppekids.</div>
+        <div style="font-size:11px;color:#888;margin-top:10px;">Template split: TP 38.3% vs Brand 50.0% weighted (47+36 sends). DK (primary) flat at −1.5pp; de/no/se n too small. Positive-tickets (670): 2 sends.</div>
       </div>
     </div>
 
@@ -918,7 +960,7 @@
     </li>
     <li>
       <div class="al-icon">🔵</div>
-      <div class="al-text"><strong>Hoppekids template comparison pending.</strong> Will run dedicated comparison next week when API timeout issues are resolved. Add to next report's pre-run checklist.</div>
+      <div class="al-text"><strong>Hoppekids template comparison — inconclusive at current volumes.</strong> DK (largest campaign) shows flat −1.5pp; de/no/se have 2–9 sends each. Revisit in 2–3 weeks once volume accumulates. No action needed on templates yet.</div>
     </li>
   </ul>
 
