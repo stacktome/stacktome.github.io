@@ -285,38 +285,55 @@
   <!-- 5. Widget Metrics -->
   <h2 id="s5">5. Shopping Experience Widget Metrics</h2>
 
-  <div class="warn-box">&#9888;&nbsp; Clickstream data (Snowplow S3 partitions) available Jun 22&ndash;24 only as of report generation. Jun 25&ndash;28 data not yet landed. Widget numbers below are partial (3 of 7 days).</div>
-
-  <h3>Review Widget (trustpilot-collect) &mdash; Jun 22&ndash;24 partial</h3>
+  <h3>Review Widget (trustpilot-collect) &mdash; Jun 22&ndash;28 full week</h3>
   <table>
     <thead>
-      <tr><th>Account</th><th>Widget Type</th><th>Impressions</th><th>Clicks (actions)</th><th>Click Rate</th><th>Reviews Converted</th><th>Conversion Rate</th></tr>
+      <tr><th>Account</th><th>Widget Type</th><th>Impressions</th><th>Clicks (actions)</th><th>Unique Orders Clicked</th><th>Click Rate</th><th>Reviews Converted</th><th>Conversion Rate</th></tr>
     </thead>
     <tbody>
-      <tr class="ho-row"><td>hockerty</td><td>trustpilot-collect</td><td>455</td><td>11</td><td>2.42%</td><td class="worst">0</td><td class="worst">0%</td></tr>
-      <tr class="su-row"><td>sumissura</td><td>trustpilot-collect</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr class="ho-row"><td>hockerty</td><td>trustpilot-collect</td><td>1,692</td><td>54</td><td>40</td><td>3.2%</td><td class="worst">0</td><td class="worst">0%</td></tr>
+      <tr class="su-row"><td>sumissura</td><td>trustpilot-collect</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
     </tbody>
   </table>
 
-  <h3 style="margin-top:14px;">Widget Clicks by Country (hockerty, Jun 22&ndash;24)</h3>
+  <h3 style="margin-top:14px;">Widget Impressions &amp; Clicks by Day (hockerty)</h3>
   <table>
     <thead>
-      <tr><th>Country</th><th>Clicks</th><th>Widget Type</th></tr>
+      <tr><th>Date</th><th>Impressions</th><th>Clicks</th><th>Daily CTR</th></tr>
     </thead>
     <tbody>
-      <tr><td>US</td><td>2</td><td>trustpilot-collect</td></tr>
-      <tr><td>ES</td><td>2</td><td>trustpilot-collect</td></tr>
-      <tr><td>DE</td><td>2</td><td>trustpilot-collect</td></tr>
-      <tr><td>MQ (Martinique)</td><td>2</td><td>trustpilot-collect &mdash; same user/order 72699926, double click</td></tr>
-      <tr><td>IT</td><td>1</td><td>trustpilot-collect</td></tr>
-      <tr><td>MX</td><td>1</td><td>trustpilot-collect</td></tr>
-      <tr><td>SA</td><td>1</td><td>trustpilot-collect</td></tr>
-      <tr class="total-row"><td>Total</td><td>11</td><td></td></tr>
+      <tr><td>Jun 22</td><td>187</td><td>1</td><td>0.5%</td></tr>
+      <tr><td>Jun 23</td><td>197</td><td>5</td><td>2.5%</td></tr>
+      <tr><td>Jun 24</td><td>262</td><td>10</td><td>3.8%</td></tr>
+      <tr><td>Jun 25</td><td class="best">523</td><td class="best">17</td><td>3.3%</td></tr>
+      <tr><td>Jun 26</td><td>154</td><td>9</td><td>5.8%</td></tr>
+      <tr><td>Jun 27</td><td>151</td><td>6</td><td>4.0%</td></tr>
+      <tr><td>Jun 28</td><td>218</td><td>6</td><td>2.8%</td></tr>
+      <tr class="total-row"><td>Week total</td><td>1,692</td><td>54</td><td>3.2%</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:14px;">Widget Clicks by Country (hockerty, Jun 22&ndash;28)</h3>
+  <table>
+    <thead>
+      <tr><th>Country</th><th>Clicks</th><th>% of total</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>US</td><td>13</td><td>24%</td></tr>
+      <tr><td>DE</td><td>10</td><td>19%</td></tr>
+      <tr><td>FR</td><td>7</td><td>13%</td></tr>
+      <tr><td>ES</td><td>4</td><td>7%</td></tr>
+      <tr><td>IT</td><td>4</td><td>7%</td></tr>
+      <tr><td>GB</td><td>3</td><td>6%</td></tr>
+      <tr><td>MX</td><td>3</td><td>6%</td></tr>
+      <tr><td>CO, CA</td><td>2 each</td><td>4% each</td></tr>
+      <tr><td>MQ, CH, NO, AT, SA</td><td>1 each</td><td>&lt;2% each</td></tr>
+      <tr class="total-row"><td>Total</td><td>54</td><td>14 countries</td></tr>
     </tbody>
   </table>
 
   <div class="warn-box" style="margin-top:10px;">
-    &#9888; <strong>0 widget clicks converted to reviews</strong> this week (same pattern as Jun 16&ndash;22). Widget fires on <strong>homepage URLs</strong> (hockerty.com/, hockerty.de/, etc.) not post-purchase pages. Visitors click through to Trustpilot without a valid authenticated invite link and drop off.<br>
+    &#9888; <strong>0 of 40 unique orders converted to a review</strong> despite 54 clicks (3.2% CTR). Widget fires on <strong>homepage URLs</strong> (hockerty.com/, hockerty.de/, etc.) not post-purchase pages. Visitors without a valid authenticated invite link click through to Trustpilot and drop off without reviewing.<br>
     <strong>Action required: Move widget to post-purchase confirmation / thank-you page and test the Trustpilot redirect flow end-to-end.</strong>
   </div>
 
@@ -519,7 +536,7 @@
         <tr>
           <td>3</td>
           <td><span style="color:#e17055;font-weight:600;">High</span></td>
-          <td><strong>TP widget placement.</strong> 0 reviews converted from 11 widget clicks (Jun 22&ndash;24). Widget fires on homepage, not post-purchase. Move to order confirmation / thank-you page and verify redirect flow.</td>
+          <td><strong>TP widget placement.</strong> 0 reviews converted from 54 widget clicks across 40 unique orders (Jun 22&ndash;28, 3.2% CTR). Widget fires on homepage, not post-purchase. Move to order confirmation / thank-you page and verify redirect flow.</td>
           <td>Engineering</td>
         </tr>
         <tr>
