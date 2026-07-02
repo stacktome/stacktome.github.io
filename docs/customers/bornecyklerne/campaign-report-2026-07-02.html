@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bornecyklerne — Trustpilot Removed Reviews Investigation (Apr 21, 2026)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 900px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 24px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 32px; }
+  h2 { font-size: 16px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #0984e3; padding-left: 12px; }
+  h3 { font-size: 13px; font-weight: 600; color: #4a4a4a; margin: 16px 0 8px; }
+  p { line-height: 1.65; color: #4a4a4a; margin-bottom: 10px; font-size: 13px; }
+
+  nav { margin: 20px 0 32px; padding: 14px 18px; background: #f8f9fa; border-radius: 8px; border-left: 3px solid #0984e3; font-size: 13px; line-height: 2; }
+  nav strong { display: block; margin-bottom: 4px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: #888; }
+  nav a { color: #0984e3; text-decoration: none; margin-right: 20px; }
+  nav a:hover { text-decoration: underline; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 16px 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 24px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 3px; }
+  .kpi.warn { border-top: 3px solid #e17055; }
+  .kpi.info { border-top: 3px solid #0984e3; }
+  .kpi.amber { border-top: 3px solid #fdcb6e; }
+
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .info-box { background: #f0f8ff; border-left: 4px solid #0984e3; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .amber-box { background: #fffbf0; border-left: 4px solid #fdcb6e; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .box-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; font-weight: 700; color: #888; margin-bottom: 6px; }
+
+  .review-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 16px; overflow: hidden; }
+  .review-card-header { padding: 12px 16px; display: flex; align-items: center; gap: 12px; background: #fafbff; border-bottom: 1px solid #f0f0f0; }
+  .review-card-body { padding: 14px 16px; }
+  .rating-badge { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .r5b { background: #00b894; }
+  .removed-tag { display: inline-block; background: #d63031; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; letter-spacing: .3px; }
+  .organic-tag { display: inline-block; background: #b2bec3; color: #fff; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 10px; }
+  .reviewer-meta { font-size: 11px; color: #888; margin-top: 3px; }
+  .review-text-block { background: #f8f9fa; border-radius: 6px; padding: 10px 14px; font-size: 13px; color: #4a4a4a; line-height: 1.6; margin: 10px 0; font-style: italic; }
+
+  .evidence-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+  .evidence-box { background: #fff; border-radius: 8px; border: 1px solid #e8ecf0; padding: 14px 16px; }
+  .evidence-box .ev-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #888; font-weight: 700; margin-bottom: 8px; }
+  .ev-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #f5f5f5; font-size: 12px; }
+  .ev-row:last-child { border-bottom: none; }
+  .ev-key { color: #888; flex: 0 0 140px; }
+  .ev-val { color: #2d3436; font-weight: 500; text-align: right; word-break: break-all; }
+  .ev-val.missing { color: #e17055; }
+  .ev-val.amber { color: #e67e22; }
+
+  .invite-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin: 14px 0; }
+  .invite-table th { background: #f8f9ff; text-align: left; padding: 9px 12px; font-size: 11px; text-transform: uppercase; letter-spacing: .4px; color: #636e72; border-bottom: 1px solid #eee; }
+  .invite-table td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; font-size: 12px; }
+  .invite-table tr:last-child td { border-bottom: none; }
+  .highlight-row td { background: #fffbf0; font-weight: 600; }
+
+  .signal-list { list-style: none; padding: 0; margin: 10px 0; }
+  .signal-list li { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f5f5f5; font-size: 13px; }
+  .signal-list li:last-child { border-bottom: none; }
+  .sig-icon { flex-shrink: 0; width: 18px; text-align: center; }
+  .sig-bad { color: #e17055; }
+  .sig-good { color: #00b894; }
+
+  .action-list { list-style: none; padding: 0; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 16px; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 10px; font-size: 13px; line-height: 1.6; }
+
+  .verdict { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; letter-spacing: .3px; }
+  .verdict-inconclusive { background: #ffeaa7; color: #636e72; }
+
+  code { font-family: monospace; font-size: 11px; background: #f0f0f0; padding: 1px 5px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Bornecyklerne — Removed Reviews Investigation</h1>
+  <p class="subtitle">Trustpilot reviews removed in April 2026 &bull; Report generated Jul 2, 2026 &bull; Prepared by Stacktome</p>
+
+  <nav>
+    <strong>Contents</strong>
+    <a href="#s1">1. Summary</a>
+    <a href="#s2">2. Removed Reviews</a>
+    <a href="#s3">3. Order Search</a>
+    <a href="#s4">4. Invite Log</a>
+    <a href="#s5">5. Assessment</a>
+    <a href="#s6">6. Actions</a>
+  </nav>
+
+  <!-- SUMMARY -->
+  <h2 id="s1">1. Summary</h2>
+  <div class="kpi-grid">
+    <div class="kpi warn"><div class="label">Reviews Removed</div><div class="value">2</div><div class="sub">April 21, 2026</div></div>
+    <div class="kpi amber"><div class="label">Removal Reason</div><div class="value" style="font-size:15px;">Suspected<br>Fake</div><div class="sub">Trustpilot automated</div></div>
+    <div class="kpi info"><div class="label">Order Match Found</div><div class="value">0 / 2</div><div class="sub">No exact name match</div></div>
+    <div class="kpi info"><div class="label">Invites Sent Apr 21</div><div class="value">2</div><div class="sub">Mads + Kasper customers</div></div>
+  </div>
+
+  <div class="warn-box">
+    <div class="box-label">Situation</div>
+    <p>Trustpilot removed two 5&#9733; reviews posted on April 21, 2026 — one by a reviewer displaying as <strong>"Mads Hansen"</strong> and one as <strong>"Kasper Anders"</strong>. Both are confirmed removed: they appear in the older bornecyklerne TP snapshot but are absent from the current 100-day pull. Neither review was submitted via Stacktome's InvitationLinkApi; both are flagged as Organic source with no referenceId or verified email.</p>
+    <p>On the same date (April 21), Stacktome's invite system sent review invitations to real bornecyklerne customers named <strong>Mads Wentzel</strong> and <strong>Kasper Friang larsen</strong>. The first-name coincidence is worth investigating but does not constitute a confirmed match.</p>
+  </div>
+
+  <!-- REMOVED REVIEWS DETAIL -->
+  <h2 id="s2">2. Removed Reviews — Detail</h2>
+
+  <!-- Review 1: Mads Hansen -->
+  <div class="review-card">
+    <div class="review-card-header">
+      <div class="rating-badge r5b">5&#9733;</div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <strong style="font-size:14px;">Mads Hansen</strong>
+          <span class="removed-tag">REMOVED</span>
+          <span class="organic-tag">Organic</span>
+        </div>
+        <div class="reviewer-meta">TP Review ID: <code>69e76b5c2ccbcba3a6799fc5</code> &bull; Posted: April 21, 2026 &bull; Reviewer's total TP reviews: 1</div>
+      </div>
+      <div style="text-align:right;font-size:12px;color:#888;">isVerified: No<br>New TP account</div>
+    </div>
+    <div class="review-card-body">
+      <h3>Review Text (Danish)</h3>
+      <div class="review-text-block">"Den er ret god, leveringen er ret god."<br><span style="font-size:11px;color:#888;font-style:normal;">Translation: "It is quite good, the delivery is quite good."</span></div>
+
+      <div class="evidence-grid">
+        <div class="evidence-box">
+          <div class="ev-label">Trustpilot Data</div>
+          <div class="ev-row"><span class="ev-key">Reviewer display name</span><span class="ev-val">Mads Hansen</span></div>
+          <div class="ev-row"><span class="ev-key">Total TP reviews</span><span class="ev-val amber">1 (only review ever posted)</span></div>
+          <div class="ev-row"><span class="ev-key">Email verified by TP</span><span class="ev-val missing">No</span></div>
+          <div class="ev-row"><span class="ev-key">Review source</span><span class="ev-val">Organic (no invite link)</span></div>
+          <div class="ev-row"><span class="ev-key">Order reference (TP)</span><span class="ev-val missing">None</span></div>
+          <div class="ev-row"><span class="ev-key">Referral email (TP)</span><span class="ev-val missing">None</span></div>
+        </div>
+        <div class="evidence-box">
+          <div class="ev-label">Stacktome / Shopify Data</div>
+          <div class="ev-row"><span class="ev-key">Order match by full name</span><span class="ev-val missing">Not found</span></div>
+          <div class="ev-row"><span class="ev-key">Invite match by full name</span><span class="ev-val missing">Not found</span></div>
+          <div class="ev-row"><span class="ev-key">Invite sent Apr 21</span><span class="ev-val amber">Mads Wentzel</span></div>
+          <div class="ev-row"><span class="ev-key">Invite order</span><span class="ev-val amber">16671139365194</span></div>
+          <div class="ev-row"><span class="ev-key">Invite email</span><span class="ev-val amber">twentzelmads@gmail.com</span></div>
+          <div class="ev-row"><span class="ev-key">Name match confidence</span><span class="ev-val amber">First name only</span></div>
+        </div>
+      </div>
+
+      <div class="amber-box" style="margin-top:8px;">
+        <p>On April 21, Stacktome sent a review invite to <strong>Mads Wentzel</strong> (order 16671139365194, twentzelmads@gmail.com). The TP reviewer "Mads Hansen" shares only the first name. Trustpilot display names are user-set and do not have to match the Shopify customer name. <strong>Action required:</strong> cross-reference order 16671139365194 in Shopify to determine the customer's full name and contact details.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Review 2: Kasper Anders -->
+  <div class="review-card">
+    <div class="review-card-header">
+      <div class="rating-badge r5b">5&#9733;</div>
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <strong style="font-size:14px;">Kasper Anders</strong>
+          <span class="removed-tag">REMOVED</span>
+          <span class="organic-tag">Organic</span>
+        </div>
+        <div class="reviewer-meta">TP Review ID: <code>69e7b3363a864ef65a4fb7c2</code> &bull; Posted: April 21, 2026 &bull; Reviewer's total TP reviews: 1</div>
+      </div>
+      <div style="text-align:right;font-size:12px;color:#888;">isVerified: No<br>New TP account</div>
+    </div>
+    <div class="review-card-body">
+      <h3>Review Text (Danish)</h3>
+      <div class="review-text-block">"Jeg tog på arbejde med dem, de svarede ikke i starten, men de svarede senere."<br><span style="font-size:11px;color:#888;font-style:normal;">Translation: "I took them to work with me, they didn't respond at first, but they responded later."</span></div>
+
+      <div class="warn-box" style="margin:10px 0 4px;">
+        <p><strong>Content concern:</strong> "Jeg tog på arbejde med dem" ("I took them to work with me") does not clearly describe a children's bicycle. "Dem" (them) is plural, which could refer to company staff rather than a product. The phrasing is atypical for a bike purchase review and may have been a contributing flag for Trustpilot's removal algorithm.</p>
+      </div>
+
+      <div class="evidence-grid">
+        <div class="evidence-box">
+          <div class="ev-label">Trustpilot Data</div>
+          <div class="ev-row"><span class="ev-key">Reviewer display name</span><span class="ev-val">Kasper Anders</span></div>
+          <div class="ev-row"><span class="ev-key">Total TP reviews</span><span class="ev-val amber">1 (only review ever posted)</span></div>
+          <div class="ev-row"><span class="ev-key">Email verified by TP</span><span class="ev-val missing">No</span></div>
+          <div class="ev-row"><span class="ev-key">Review source</span><span class="ev-val">Organic (no invite link)</span></div>
+          <div class="ev-row"><span class="ev-key">Order reference (TP)</span><span class="ev-val missing">None</span></div>
+          <div class="ev-row"><span class="ev-key">Referral email (TP)</span><span class="ev-val missing">None</span></div>
+          <div class="ev-row"><span class="ev-key">Note on surname</span><span class="ev-val amber">"Anders" is a Danish first name</span></div>
+        </div>
+        <div class="evidence-box">
+          <div class="ev-label">Stacktome / Shopify Data</div>
+          <div class="ev-row"><span class="ev-key">Order match by full name</span><span class="ev-val missing">Not found</span></div>
+          <div class="ev-row"><span class="ev-key">Invite match by full name</span><span class="ev-val missing">Not found</span></div>
+          <div class="ev-row"><span class="ev-key">Invite sent Apr 21</span><span class="ev-val amber">Kasper Friang larsen</span></div>
+          <div class="ev-row"><span class="ev-key">Invite order</span><span class="ev-val amber">16671156470090</span></div>
+          <div class="ev-row"><span class="ev-key">Invite email</span><span class="ev-val amber">kasper_f_larsen@hotmail.com</span></div>
+          <div class="ev-row"><span class="ev-key">Name match confidence</span><span class="ev-val amber">First name only</span></div>
+        </div>
+      </div>
+
+      <div class="amber-box" style="margin-top:8px;">
+        <p>On April 21, Stacktome sent a review invite to <strong>Kasper Friang larsen</strong> (order 16671156470090, kasper_f_larsen@hotmail.com). The TP reviewer "Kasper Anders" shares only the first name. Note that "Anders" is commonly a given name in Danish — the display name "Kasper Anders" may be two first names, which is unusual. <strong>Action required:</strong> cross-reference order 16671156470090 in Shopify.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORDER SEARCH -->
+  <h2 id="s3">3. Order Search Results</h2>
+  <p>Searched <code>bc_purchase</code> (5,024 Shopify orders) for exact and partial name matches against the TP display names.</p>
+
+  <table class="invite-table">
+    <thead>
+      <tr>
+        <th>Search</th>
+        <th>Query</th>
+        <th>Result</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Mads Hansen (exact)</td>
+        <td><code>full_name ILIKE '%mads hansen%'</code></td>
+        <td style="color:#e17055;font-weight:600;">0 results</td>
+        <td>No Shopify customer with this exact full name</td>
+      </tr>
+      <tr>
+        <td>Kasper Anders (exact)</td>
+        <td><code>full_name ILIKE '%kasper anders%'</code></td>
+        <td style="color:#e17055;font-weight:600;">0 results</td>
+        <td>No Shopify customer with this exact full name</td>
+      </tr>
+      <tr>
+        <td>First name: Mads</td>
+        <td><code>first_name = 'mads'</code></td>
+        <td style="color:#e67e22;font-weight:600;">Multiple</td>
+        <td>Common Danish name — none with surname Hansen</td>
+      </tr>
+      <tr>
+        <td>First name: Kasper</td>
+        <td><code>first_name = 'kasper'</code></td>
+        <td style="color:#e67e22;font-weight:600;">Multiple</td>
+        <td>Common Danish name — none with surname Anders</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <p><strong>Important:</strong> Trustpilot display names are user-set and do not need to match the Shopify/legal name. A customer named "Mads Wentzel" in Shopify could legitimately display as "Mads Hansen" on Trustpilot. Without a TP <code>referenceId</code> (order ID) or verified email attached to the review, a direct database match is not possible from Stacktome data alone.</p>
+  </div>
+
+  <!-- INVITE LOG MATCH -->
+  <h2 id="s4">4. Invite Log — April 21 Activity</h2>
+  <p>All Stacktome invites sent around April 21, 2026 to customers with first names Mads or Kasper. The two highlighted rows were sent on the exact day the removed reviews were posted.</p>
+
+  <table class="invite-table">
+    <thead>
+      <tr>
+        <th>Invite Date</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Order ID</th>
+        <th>Campaign</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2026-04-10</td>
+        <td>Kasper</td>
+        <td>Larsen</td>
+        <td>kaaresfar@gmail.com</td>
+        <td>16848645882186</td>
+        <td>invite-tp</td>
+      </tr>
+      <tr>
+        <td>2026-04-11</td>
+        <td>Mads</td>
+        <td>&#216;stergaard</td>
+        <td>mads50303232@gmail.com</td>
+        <td>16820887585098</td>
+        <td>invite-tp</td>
+      </tr>
+      <tr>
+        <td>2026-04-15</td>
+        <td>Kasper</td>
+        <td>Fjalland</td>
+        <td>kasperfjalland@live.dk</td>
+        <td>16671522423114</td>
+        <td>invite-old</td>
+      </tr>
+      <tr>
+        <td>2026-04-17</td>
+        <td>Kasper</td>
+        <td>M&#248;rkholt</td>
+        <td>kmorkholt@gmail.com</td>
+        <td>16671409930570</td>
+        <td>invite-old</td>
+      </tr>
+      <tr>
+        <td>2026-04-17</td>
+        <td>Mads</td>
+        <td>S&#248;rensen</td>
+        <td>madsgaya@gmail.com</td>
+        <td>16671428542794</td>
+        <td>invite-old</td>
+      </tr>
+      <tr class="highlight-row">
+        <td>2026-04-21</td>
+        <td>Mads</td>
+        <td>Wentzel</td>
+        <td>twentzelmads@gmail.com</td>
+        <td><strong>16671139365194</strong></td>
+        <td>invite-old</td>
+      </tr>
+      <tr class="highlight-row">
+        <td>2026-04-21</td>
+        <td>Kasper</td>
+        <td>Friang larsen</td>
+        <td>kasper_f_larsen@hotmail.com</td>
+        <td><strong>16671156470090</strong></td>
+        <td>invite-old</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="good-box">
+    <p><strong>Key finding:</strong> On April 21 — the exact date both reviews were posted — Stacktome sent review invitations to a real customer named <strong>Mads</strong> (Mads Wentzel, order 16671139365194) and a real customer named <strong>Kasper</strong> (Kasper Friang larsen, order 16671156470090). These customers purchased from Bornecyklerne and were legitimately invited to review. The surname mismatch vs. TP display names means this is not a confirmed link — but it is a strong lead worth following up in Shopify.</p>
+  </div>
+
+  <!-- ASSESSMENT -->
+  <h2 id="s5">5. Authenticity Assessment</h2>
+
+  <h3>Signals that support Trustpilot's removal decision</h3>
+  <ul class="signal-list">
+    <li><span class="sig-icon sig-bad">&#10007;</span><span>Both reviews posted on the same day (April 21) — raises coordinated-fake suspicion in TP's algorithm.</span></li>
+    <li><span class="sig-icon sig-bad">&#10007;</span><span>Both reviewers have exactly 1 total TP review — brand new accounts with zero review history.</span></li>
+    <li><span class="sig-icon sig-bad">&#10007;</span><span>Neither reviewer has a TP-verified email address (isVerified = false).</span></li>
+    <li><span class="sig-icon sig-bad">&#10007;</span><span>"Kasper Anders" is an atypical name — "Anders" is a Danish given name, not commonly used as a surname.</span></li>
+    <li><span class="sig-icon sig-bad">&#10007;</span><span>Mads Hansen's review text is very short and generic (8 words); does not reference any specific product.</span></li>
+    <li><span class="sig-icon sig-bad">&#10007;</span><span>Kasper Anders' review text does not clearly describe a children's bicycle or any product sold by Bornecyklerne.</span></li>
+    <li><span class="sig-icon sig-bad">&#10007;</span><span>Both reviews are Organic source — no invite link used, so no order reference or email was captured by Trustpilot.</span></li>
+    <li><span class="sig-icon sig-bad">&#10007;</span><span>No matching customer found by name in Shopify order database (5,024 orders searched).</span></li>
+  </ul>
+
+  <h3>Signals that could support authenticity</h3>
+  <ul class="signal-list">
+    <li><span class="sig-icon sig-good">&#10003;</span><span>On April 21, Stacktome sent invitations to real bornecyklerne customers with first names Mads and Kasper — coincidence in timing and first names, two separate customers.</span></li>
+    <li><span class="sig-icon sig-good">&#10003;</span><span>Kasper Anders' review mentions contacting the company and receiving a delayed response — a service detail that implies real interaction.</span></li>
+    <li><span class="sig-icon sig-good">&#10003;</span><span>Bornecyklerne has many real Danish customers named Mads and Kasper; these are among Denmark's most common first names.</span></li>
+  </ul>
+
+  <div class="amber-box">
+    <p><strong>Overall verdict: <span class="verdict verdict-inconclusive">INCONCLUSIVE</span></strong> — The available Stacktome data cannot confirm these reviewers as verified Bornecyklerne customers. The reviews carry multiple red flags consistent with TP's removal. However, a real Mads and a real Kasper both received invites on April 21; if either one left the review under a different display name, the removal would be in error. A Shopify order lookup for the two orders below is the required next step before any appeal decision.</p>
+  </div>
+
+  <!-- ACTIONS -->
+  <h2 id="s6">6. Recommended Actions</h2>
+  <ul class="action-list">
+    <li>
+      <div style="font-size:18px;flex-shrink:0;">1</div>
+      <div><strong>Look up orders in Shopify (required before any appeal).</strong> Check orders <code>16671139365194</code> (Mads Wentzel) and <code>16671156470090</code> (Kasper Friang larsen). Does either customer use any name associated with "Hansen" or "Anders"? Do they have a secondary email that might match a Trustpilot account? This is the only path to a confirmed match from available data.</div>
+    </li>
+    <li>
+      <div style="font-size:18px;flex-shrink:0;">2</div>
+      <div><strong>Contact the customers directly.</strong> Email Mads Wentzel at <code>twentzelmads@gmail.com</code> and Kasper Friang larsen at <code>kasper_f_larsen@hotmail.com</code>. Ask if they left a review on Trustpilot around April 21. If they confirm, ask them to re-submit via the Stacktome invite link — this passes the order reference to TP, making the review verified and appeal-ready.</div>
+    </li>
+    <li>
+      <div style="font-size:18px;flex-shrink:0;">3</div>
+      <div><strong>If a customer confirms the review — submit a TP appeal.</strong> Include: invite log confirming the invitation was sent; Shopify order record confirming purchase; Stacktome invite email timestamp. Submit to Trustpilot's "Author Identification" process with TP Review IDs <code>69e76b5c2ccbcba3a6799fc5</code> and <code>69e7b3363a864ef65a4fb7c2</code>.</div>
+    </li>
+    <li>
+      <div style="font-size:18px;flex-shrink:0;">4</div>
+      <div><strong>If no customer confirms — do not appeal.</strong> Appealing to TP without documented proof of purchase risks a compliance flag on the Bornecyklerne account, which could affect the TrustScore or account status.</div>
+    </li>
+    <li>
+      <div style="font-size:18px;flex-shrink:0;">5</div>
+      <div><strong>Prevent future removals: ensure invite email links use the InvitationLinkApi URL.</strong> Both removed reviews arrived via Organic source — the customers likely visited Trustpilot directly instead of clicking the Stacktome invite link. The invite link passes <code>referenceId</code> (order ID) and email to TP, making the review verified and far more resistant to automated removal. Check the <code>invite-old</code> campaign template to confirm the review CTA routes through the TP invitation flow.</div>
+    </li>
+  </ul>
+
+  <div style="margin-top:48px;padding-top:20px;border-top:1px solid #eee;font-size:11px;color:#aaa;text-align:center;">
+    Generated Jul 2, 2026 &mdash; Stacktome Support &mdash; Bornecyklerne Trustpilot removed review investigation
+  </div>
+
+</div>
+</body>
+</html>
