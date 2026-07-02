@@ -83,8 +83,8 @@
   <div class="kpi-grid">
     <div class="kpi green">
       <div class="label">Review Rate Uplift</div>
-      <div class="value">+25%</div>
-      <div class="delta up">1.90% → 2.37%</div>
+      <div class="value">+33%</div>
+      <div class="delta up">4.00% → 5.33%</div>
     </div>
     <div class="kpi green">
       <div class="label">Avg Rating Uplift</div>
@@ -108,7 +108,7 @@
 
   <div class="info-box">
     <div class="box-label">Methodology</div>
-    <p><span class="pill pill-b">Jun 4–17</span> is the <strong>organic baseline</strong> — review invites were being sent but reviews in this window are mostly organic or attributed to earlier batches, with no full invite-to-review cycle completing within the period. <span class="pill pill-a">Jun 18–Jul 1</span> is the <strong>attributed period</strong> — invites sent and reviews received within the same window, representing the first full attribution cycle. Volumes are closely matched (~7.2k vs 7.9k), making the comparison robust. The review rate for the baseline period is a floor: some of those 137 reviews come from pre-Jun-4 invites, meaning the true organic rate is even lower and the invite uplift likely exceeds +25%.</p>
+    <p><span class="pill pill-b">Jun 4–17</span> is the <strong>organic baseline</strong> — review invites were being sent but reviews in this window are mostly organic or attributed to earlier batches, with no full invite-to-review cycle completing within the period. <span class="pill pill-a">Jun 18–Jul 1</span> is the <strong>attributed period</strong> — invites sent and reviews received within the same window, representing the first full attribution cycle. <strong>Review rate is calculated as reviews ÷ distinct orders that received at least one initial invite</strong> (email_send_type = invite, deduplicated by order_id). Reminder emails and duplicate sends from A/B template testing are excluded from the denominator. The baseline rate is a floor: some of those 137 reviews come from pre-Jun-4 invites, meaning the true organic rate is even lower and the invite uplift likely exceeds +33%.</p>
   </div>
 
   <table class="cmp-table">
@@ -122,10 +122,16 @@
     </thead>
     <tbody>
       <tr>
-        <td class="metric-col">Invites sent</td>
+        <td class="metric-col">Invite emails sent (total events)</td>
         <td>7,214</td>
         <td>7,861</td>
         <td class="delta-col delta-neutral">+647</td>
+      </tr>
+      <tr>
+        <td class="metric-col">Distinct orders invited (invite-only)</td>
+        <td>3,426</td>
+        <td>3,492</td>
+        <td class="delta-col delta-neutral">+66</td>
       </tr>
       <tr>
         <td class="metric-col">Reviews received</td>
@@ -134,10 +140,10 @@
         <td class="delta-col delta-up">+49 (+36%)</td>
       </tr>
       <tr>
-        <td class="metric-col">Review rate</td>
-        <td>1.90%</td>
-        <td>2.37%</td>
-        <td class="delta-col delta-up">+0.47pp (+25%)</td>
+        <td class="metric-col"><strong>Review rate</strong> (invite-only, distinct orders)</td>
+        <td><strong>4.00%</strong></td>
+        <td><strong>5.33%</strong></td>
+        <td class="delta-col delta-up">+1.33pp (+33%)</td>
       </tr>
       <tr>
         <td class="metric-col">Average rating</td>
@@ -235,7 +241,7 @@
 
   <div class="good-box">
     <div class="box-label">Review volume</div>
-    <p>Invites drove a clear uplift in reviews: 186 vs 137 (a <strong>36% increase</strong> in absolute volume) despite only 9% more invites being sent. Adjusted for invite volume, the review rate rose from 1.90% to 2.37% — a <strong>+25% relative improvement</strong>. As the attribution window matures and Jun 18+ reviews continue to come in through July, the rate gap is likely to widen further.</p>
+    <p>Invites drove a clear uplift in reviews: 186 vs 137 (a <strong>36% increase</strong> in absolute volume) with volumes of distinct invited orders closely matched (3,492 vs 3,426). Measured on invite-only distinct orders — excluding reminder emails and A/B template duplicates — the review rate rose from 4.00% to 5.33%, a <strong>+33% relative improvement</strong>. As the attribution window matures and Jun 18+ reviews continue to come in through July, the rate gap is likely to widen further.</p>
   </div>
 
   <div class="good-box">
@@ -245,7 +251,7 @@
 
   <div class="amber-box">
     <div class="box-label">Attribution caveat</div>
-    <p>The baseline period (Jun 4–17) still contains reviews from invites sent <em>before</em> Jun 4 — meaning the true organic rate is lower than 1.90%, and the real uplift from invites is larger than the +25% measured here. A clean pre/post comparison will be possible in the next reporting cycle once the Jun 18+ attribution window fully closes (~2–3 weeks after last send).</p>
+    <p>The baseline period (Jun 4–17) still contains reviews from invites sent <em>before</em> Jun 4 — meaning the true organic rate is lower than 4.00%, and the real uplift from invites is larger than the +33% measured here. A clean pre/post comparison will be possible in the next reporting cycle once the Jun 18+ attribution window fully closes (~2–3 weeks after last send). Note: 533 orders in the attributed period received two initial invite emails (one per template in the A/B test) — the distinct order denominator correctly counts each such order once.</p>
   </div>
 
   <!-- ACTIONS -->
