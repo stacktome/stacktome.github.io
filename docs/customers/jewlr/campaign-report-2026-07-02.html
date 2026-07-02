@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jewlr — Performance Report | Jun 2–Jul 2, 2026</title>
+<title>Jewlr — Deep Analysis Report | Jul 2025–Jul 2026</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f9fa; color: #212529; }
@@ -13,17 +13,18 @@
   .period-badge { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500; }
   .header h1 { font-size: 32px; font-weight: 700; margin-bottom: 6px; }
   .header-sub { font-size: 14px; opacity: 0.65; }
-  .container { max-width: 980px; margin: 0 auto; padding: 32px 24px; }
+  .container { max-width: 1020px; margin: 0 auto; padding: 32px 24px; }
 
-  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 28px; }
-  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-top: 3px solid #0f3460; }
-  .kpi.green { border-top-color: #28a745; }
-  .kpi.amber { border-top-color: #fd7e14; }
-  .kpi.red { border-top-color: #dc3545; }
-  .kpi.blue { border-top-color: #0d6efd; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-top: 3px solid #0f3460; }
+  .kpi.green  { border-top-color: #28a745; }
+  .kpi.amber  { border-top-color: #fd7e14; }
+  .kpi.red    { border-top-color: #dc3545; }
+  .kpi.blue   { border-top-color: #0d6efd; }
   .kpi.purple { border-top-color: #6f42c1; }
-  .kpi-val { font-size: 28px; font-weight: 700; color: #1a1a2e; line-height: 1; margin-bottom: 4px; }
-  .kpi-label { font-size: 11px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: #6c757d; }
+  .kpi.teal   { border-top-color: #20c997; }
+  .kpi-val   { font-size: 24px; font-weight: 700; color: #1a1a2e; line-height: 1; margin-bottom: 4px; }
+  .kpi-label { font-size: 10px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: #6c757d; }
 
   .section { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 24px; overflow: hidden; }
   .section-header { padding: 18px 24px 16px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
@@ -36,79 +37,102 @@
   td { padding: 10px 12px; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
   tr:last-child td { border-bottom: none; }
   tr:hover td { background: #fafeff; }
+  .highlight-row td { background: #fff8e1; }
 
   .stars { color: #ffc107; font-size: 12px; }
-  .rating-num { font-weight: 700; color: #1a1a2e; }
-
   .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
-  .badge-green { background: #d4edda; color: #155724; }
-  .badge-amber { background: #fff3cd; color: #856404; }
-  .badge-red { background: #f8d7da; color: #721c24; }
-  .badge-blue { background: #d0e8ff; color: #004085; }
-  .badge-gray { background: #e9ecef; color: #495057; }
+  .badge-green  { background: #d4edda; color: #155724; }
+  .badge-amber  { background: #fff3cd; color: #856404; }
+  .badge-red    { background: #f8d7da; color: #721c24; }
+  .badge-blue   { background: #d0e8ff; color: #004085; }
+  .badge-gray   { background: #e9ecef; color: #495057; }
   .badge-purple { background: #e9d8fd; color: #44337a; }
 
-  .rating-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
-  .rating-bar-label { width: 24px; text-align: right; font-size: 12px; font-weight: 700; color: #6c757d; }
-  .rating-bar-wrap { flex: 1; height: 8px; background: #f0f0f0; border-radius: 4px; overflow: hidden; }
-  .rating-bar-fill { height: 8px; border-radius: 4px; }
-  .rating-bar-count { width: 28px; text-align: right; font-size: 12px; color: #6c757d; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  .rating-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; }
+  .rbl { width: 22px; text-align: right; font-size: 12px; font-weight: 700; color: #6c757d; }
+  .rbw { flex: 1; height: 8px; background: #f0f0f0; border-radius: 4px; overflow: hidden; }
+  .rbf { height: 8px; border-radius: 4px; }
+  .rbc { width: 32px; text-align: right; font-size: 12px; color: #6c757d; }
   .fill-5 { background: #28a745; }
   .fill-4 { background: #74c69d; }
   .fill-3 { background: #fd7e14; }
   .fill-2 { background: #e85d04; }
   .fill-1 { background: #dc3545; }
 
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .warn-box { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; font-size: 13px; color: #856404; }
+  .info-box { background: #d0e8ff; border: 1px solid #90cdf4; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; font-size: 13px; color: #004085; }
+  .ok-box   { background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; font-size: 13px; color: #155724; }
+  .insight-box { background: #1a1a2e; color: #fff; border-radius: 10px; padding: 16px 20px; margin-bottom: 18px; }
+  .insight-box h4 { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.6; margin-bottom: 6px; }
+  .insight-box p { font-size: 14px; line-height: 1.6; }
 
-  .review-card { border: 1px solid #f0f0f0; border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; }
-  .review-card:last-child { margin-bottom: 0; }
-  .review-card.flag-red { border-left: 3px solid #dc3545; }
-  .review-card.flag-amber { border-left: 3px solid #fd7e14; }
-  .review-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-  .review-heading { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
-  .review-text { font-size: 12px; color: #495057; line-height: 1.5; }
-  .review-date { font-size: 11px; color: #adb5bd; }
-
-  .dq-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
-  .dq-card { background: #f8f9fa; border-radius: 10px; padding: 16px; text-align: center; }
-  .dq-val { font-size: 24px; font-weight: 800; }
-  .dq-label { font-size: 11px; color: #6c757d; font-weight: 600; text-transform: uppercase; margin-top: 3px; }
-  .dq-good { color: #28a745; }
-  .dq-amber { color: #fd7e14; }
-  .dq-bad { color: #dc3545; }
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: #dee2e6; }
+  .tl-item { position: relative; margin-bottom: 14px; }
+  .tl-dot { position: absolute; left: -24px; top: 3px; width: 12px; height: 12px; border-radius: 50%; background: #0f3460; border: 2px solid #fff; box-shadow: 0 0 0 2px #0f3460; }
+  .tl-dot.red { background: #dc3545; box-shadow: 0 0 0 2px #dc3545; }
+  .tl-dot.green { background: #28a745; box-shadow: 0 0 0 2px #28a745; }
+  .tl-dot.amber { background: #fd7e14; box-shadow: 0 0 0 2px #fd7e14; }
+  .tl-label { font-size: 11px; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.6px; }
+  .tl-text { font-size: 13px; color: #212529; margin-top: 2px; }
 
   .progress-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
   .progress-row:last-child { border-bottom: none; }
-  .progress-label { width: 220px; font-size: 13px; color: #495057; flex-shrink: 0; }
-  .progress-wrap { flex: 1; height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden; }
-  .progress-fill { height: 10px; border-radius: 5px; }
-  .progress-pct { width: 44px; text-align: right; font-size: 12px; font-weight: 700; color: #495057; }
+  .pl { width: 180px; font-size: 12px; color: #495057; flex-shrink: 0; }
+  .pw { flex: 1; height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden; }
+  .pf { height: 10px; border-radius: 5px; }
+  .pp { width: 40px; text-align: right; font-size: 12px; font-weight: 700; }
 
-  .warn-box { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: #856404; }
-  .info-box { background: #d0e8ff; border: 1px solid #90cdf4; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: #004085; }
-  .ok-box { background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: #155724; }
+  .metric-row { display: flex; gap: 0; border: 1px solid #f0f0f0; border-radius: 10px; overflow: hidden; margin-bottom: 14px; }
+  .metric-cell { flex: 1; padding: 16px; text-align: center; border-right: 1px solid #f0f0f0; }
+  .metric-cell:last-child { border-right: none; }
+  .metric-val { font-size: 22px; font-weight: 800; color: #1a1a2e; }
+  .metric-label { font-size: 10px; color: #6c757d; font-weight: 600; text-transform: uppercase; margin-top: 3px; }
+
+  .sku-bar { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid #f5f5f5; }
+  .sku-bar:last-child { border-bottom: none; }
+  .sku-name { width: 140px; font-size: 12px; font-weight: 700; color: #1a1a2e; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sku-wrap { flex: 1; height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden; }
+  .sku-fill { height: 10px; border-radius: 5px; background: #dc3545; }
+  .sku-meta { width: 140px; text-align: right; font-size: 11px; color: #6c757d; flex-shrink: 0; }
+
+  .window-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+  .window-cell { text-align: center; border-radius: 8px; padding: 12px 6px; }
+  .window-label { font-size: 10px; font-weight: 700; color: #6c757d; margin-bottom: 4px; }
+  .window-rate { font-size: 20px; font-weight: 800; }
+  .window-n { font-size: 10px; color: #adb5bd; margin-top: 2px; }
+  .cell-hot { background: #f8d7da; }
+  .cell-warm { background: #fff3cd; }
+  .cell-ok { background: #d4edda; }
 
   .action-list { list-style: none; }
-  .action-list li { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f5f5f5; font-size: 13px; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f5f5f5; font-size: 13px; line-height: 1.6; }
   .action-list li:last-child { border-bottom: none; }
-  .action-num { width: 22px; height: 22px; background: #0f3460; color: #fff; border-radius: 50%; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .action-num { width: 26px; height: 26px; background: #0f3460; color: #fff; border-radius: 50%; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .action-num.red { background: #dc3545; }
+  .action-num.amber { background: #fd7e14; }
+  .action-num.green { background: #28a745; }
 
-  .ticket-stat-row { display: flex; gap: 24px; flex-wrap: wrap; padding: 12px 0; border-bottom: 1px solid #f5f5f5; }
-  .ticket-stat { text-align: center; }
-  .ticket-stat-val { font-size: 22px; font-weight: 800; color: #1a1a2e; }
-  .ticket-stat-label { font-size: 10px; color: #6c757d; font-weight: 600; text-transform: uppercase; }
+  .funnel { display: flex; flex-direction: column; gap: 0; }
+  .funnel-step { padding: 10px 16px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
+  .funnel-step:nth-child(odd) { background: #f8f9fa; }
+  .funnel-val { font-weight: 700; font-size: 16px; color: #1a1a2e; }
+  .funnel-label { color: #6c757d; }
+  .funnel-pct { font-size: 11px; color: #adb5bd; margin-left: 8px; }
 </style>
 </head>
 <body>
 
 <div class="header">
   <div class="header-top">
-    <div class="brand">Stacktome · Jewlr</div>
-    <div class="period-badge">Jun 2–Jul 2, 2026 · 30 Days</div>
+    <div class="brand">Stacktome · Jewlr · Deep Analysis</div>
+    <div class="period-badge">Jul 2025–Jul 2026 · 12 Months</div>
   </div>
-  <h1>Performance &amp; Data Quality Report</h1>
-  <div class="header-sub">Campaign 101 · Trustpilot invites · Stamped product reviews · HelpScout tickets</div>
+  <h1>Invite, Review &amp; Ticket Deep Analysis</h1>
+  <div class="header-sub">Trustpilot · Stamped product reviews · HelpScout tickets · Prevention strategy</div>
 </div>
 
 <div class="container">
@@ -116,467 +140,364 @@
   <!-- KPI Bar -->
   <div class="kpi-grid">
     <div class="kpi blue">
-      <div class="kpi-val">3,955</div>
+      <div class="kpi-val">41,717</div>
       <div class="kpi-label">Invites Sent</div>
     </div>
     <div class="kpi green">
-      <div class="kpi-val">91</div>
+      <div class="kpi-val">775</div>
       <div class="kpi-label">TP Reviews</div>
-    </div>
-    <div class="kpi green">
-      <div class="kpi-val">2.3%</div>
-      <div class="kpi-label">Conversion</div>
     </div>
     <div class="kpi amber">
       <div class="kpi-val">4.29★</div>
       <div class="kpi-label">Avg TP Rating</div>
     </div>
     <div class="kpi purple">
-      <div class="kpi-val">68</div>
+      <div class="kpi-val">929</div>
       <div class="kpi-label">Stamped Reviews</div>
     </div>
+    <div class="kpi red">
+      <div class="kpi-val">161</div>
+      <div class="kpi-label">TP Neg Reviews</div>
+    </div>
+    <div class="kpi teal">
+      <div class="kpi-val">323K</div>
+      <div class="kpi-label">Tickets (12m)</div>
+    </div>
+  </div>
+
+  <!-- Key Insight Banner -->
+  <div class="insight-box">
+    <h4>Top Finding</h4>
+    <p>
+      <strong>63% of invite-triggered negative reviews were submitted within 24 hours of the invite</strong> —
+      meaning the customer was already unhappy before opening the email.
+      Shifting the invite window from the current 11–14 days to <strong>22–30 days post-order</strong> would cut the negative review rate
+      from ~19% to <strong>11%</strong> (a 42% reduction). Additionally, <strong>21% of negative reviewers had an open
+      HelpScout ticket before their invite was sent</strong> — a detectable signal that could suppress those invites automatically.
+    </p>
   </div>
 
   <!-- Invite Performance -->
   <div class="section">
     <div class="section-header">
-      <div class="section-title">Invite Campaign Performance</div>
-      <div class="section-sub">Campaign 101 · Jun 2–Jul 2, 2026</div>
+      <div class="section-title">Invite Performance — 12 Months</div>
+      <div class="section-sub">Campaign 101 + 185 · Jul 2025–Jul 2026</div>
     </div>
     <div class="section-body">
-      <table>
-        <thead>
-          <tr>
-            <th>Campaign</th>
-            <th>Invites Sent</th>
-            <th>Reminders Sent</th>
-            <th>Total Emails</th>
-            <th>Reviews Received</th>
-            <th>Conversion</th>
-            <th>Avg Rating</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>101 — Jewlr Review Request</strong></td>
-            <td>1,956</td>
-            <td>1,999</td>
-            <td>3,955</td>
-            <td>91</td>
-            <td>2.3%</td>
-            <td><span class="rating-num">4.29</span> <span class="stars">★★★★</span></td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="metric-row">
+        <div class="metric-cell">
+          <div class="metric-val">41,717</div>
+          <div class="metric-label">Total Sent</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-val">21,398</div>
+          <div class="metric-label">Initial Invites</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-val">20,319</div>
+          <div class="metric-label">Reminders</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-val">775</div>
+          <div class="metric-label">TP Reviews</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-val">1.9%</div>
+          <div class="metric-label">Conversion</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-val">4.29★</div>
+          <div class="metric-label">Avg Rating</div>
+        </div>
+      </div>
+      <div class="info-box">
+        Of 161 negative reviews (≤3★): <strong>89 (55%) were invite-triggered</strong> and <strong>72 (45%) were organic</strong> (customer visited Trustpilot independently).
+        Invite-type breakdown for negatives: <strong>72 via initial invite</strong>, 17 via reminder — reminders are a smaller risk but still drive ~19% of invite-triggered negatives.
+      </div>
     </div>
   </div>
 
-  <!-- Rating Distribution -->
+  <!-- TP Rating Distribution -->
   <div class="section">
     <div class="section-header">
       <div class="section-title">Trustpilot Rating Distribution</div>
-      <div class="section-sub">91 reviews · 4.29★ average</div>
+      <div class="section-sub">775 reviews · 12 months</div>
     </div>
     <div class="section-body two-col">
       <div>
-        <div class="rating-bar-row">
-          <div class="rating-bar-label">5★</div>
-          <div class="rating-bar-wrap"><div class="rating-bar-fill fill-5" style="width:72.5%"></div></div>
-          <div class="rating-bar-count">66</div>
-        </div>
-        <div class="rating-bar-row">
-          <div class="rating-bar-label">4★</div>
-          <div class="rating-bar-wrap"><div class="rating-bar-fill fill-4" style="width:5.5%"></div></div>
-          <div class="rating-bar-count">5</div>
-        </div>
-        <div class="rating-bar-row">
-          <div class="rating-bar-label">3★</div>
-          <div class="rating-bar-wrap"><div class="rating-bar-fill fill-3" style="width:8.8%"></div></div>
-          <div class="rating-bar-count">8</div>
-        </div>
-        <div class="rating-bar-row">
-          <div class="rating-bar-label">2★</div>
-          <div class="rating-bar-wrap"><div class="rating-bar-fill fill-2" style="width:4.4%"></div></div>
-          <div class="rating-bar-count">4</div>
-        </div>
-        <div class="rating-bar-row">
-          <div class="rating-bar-label">1★</div>
-          <div class="rating-bar-wrap"><div class="rating-bar-fill fill-1" style="width:8.8%"></div></div>
-          <div class="rating-bar-count">8</div>
-        </div>
+        <div class="rating-bar-row"><div class="rbl">5★</div><div class="rbw"><div class="rbf fill-5" style="width:62.3%"></div></div><div class="rbc">483</div></div>
+        <div class="rating-bar-row"><div class="rbl">4★</div><div class="rbw"><div class="rbf fill-4" style="width:8.1%"></div></div><div class="rbc">63</div></div>
+        <div class="rating-bar-row"><div class="rbl">3★</div><div class="rbw"><div class="rbf fill-3" style="width:6.8%"></div></div><div class="rbc">53</div></div>
+        <div class="rating-bar-row"><div class="rbl">2★</div><div class="rbw"><div class="rbf fill-2" style="width:5.2%"></div></div><div class="rbc">40</div></div>
+        <div class="rating-bar-row"><div class="rbl">1★</div><div class="rbw"><div class="rbf fill-1" style="width:8.8%"></div></div><div class="rbc">68</div></div>
+        <p style="font-size:12px;color:#6c757d;margin-top:10px;">68 reviews with no rating (NULLs, excluded from sentiment analysis)</p>
       </div>
-      <div style="padding: 8px 0;">
-        <p style="font-size:13px;color:#495057;line-height:1.6;">
-          <strong>72.5%</strong> 5-star reviews reflects good baseline satisfaction. However,
-          <strong>20 reviews (22%) are 3★ or below</strong>, with recurring quality and customer
-          service themes that need attention.
-        </p>
-        <div style="margin-top:14px;">
-          <span class="badge badge-green" style="margin-right:6px;">66 × 5★</span>
-          <span class="badge badge-gray" style="margin-right:6px;">5 × 4★</span>
-          <span class="badge badge-amber" style="margin-right:6px;">8 × 3★</span>
-          <span class="badge badge-red" style="margin-right:6px;">4 × 2★</span>
-          <span class="badge badge-red">8 × 1★</span>
-        </div>
+      <div>
+        <h4 style="font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:12px;">Complaint Themes (161 negative reviews)</h4>
+        <table>
+          <thead><tr><th>Theme</th><th>Reviews</th><th>%</th></tr></thead>
+          <tbody>
+            <tr><td>Size smaller than expected</td><td>21</td><td><span class="badge badge-red">13%</span></td></tr>
+            <tr><td>Customer service / no response</td><td>17</td><td><span class="badge badge-red">11%</span></td></tr>
+            <tr><td>General quality (broke, bent)</td><td>17</td><td><span class="badge badge-red">11%</span></td></tr>
+            <tr><td>Return / refund refused</td><td>17</td><td><span class="badge badge-red">11%</span></td></tr>
+            <tr><td>Metal quality / tarnish / discolor</td><td>16</td><td><span class="badge badge-amber">10%</span></td></tr>
+            <tr><td>Delivery / never arrived</td><td>12</td><td><span class="badge badge-amber">7%</span></td></tr>
+            <tr><td>Stone fell out</td><td>8</td><td><span class="badge badge-amber">5%</span></td></tr>
+          </tbody>
+        </table>
       </div>
-    </div>
-  </div>
-
-  <!-- Low-Rated Reviews -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-title">Critical Reviews — 1★ &amp; 2★</div>
-      <div class="section-sub">12 reviews requiring response · Jun 2–Jul 2, 2026</div>
-    </div>
-    <div class="section-body">
-      <div class="review-card flag-red">
-        <div class="review-meta">
-          <span><span class="stars">★</span> <strong>1★</strong></span>
-          <span class="review-date">Jun 28, 2026</span>
-        </div>
-        <div class="review-heading">Fraudulent rings</div>
-        <div class="review-text">Ordered 2 wedding rings sterling silver. One was silver authentic and stamped. The other is plated. Have emailed with multiple pictures and no response. They are a complete rip off. After their comment, they asked for pictures to show no hallmark. They refuse to replace. Tested by a jewellery store and pawn broker who both confirm not silver.</div>
-      </div>
-      <div class="review-card flag-red">
-        <div class="review-meta">
-          <span><span class="stars">★</span> <strong>1★</strong></span>
-          <span class="review-date">Jul 1, 2026</span>
-        </div>
-        <div class="review-heading">Broken Bracelet not Refunded</div>
-        <div class="review-text">Ordered bracelet for "something blue" for my best friend's wedding. Within 30 minutes the bracelet had fallen off — faulty clasp. Emailed Jewlr requesting replacement and they said "stolen or lost" jewelry can't be refunded. $180 down the drain and a broken/lost bracelet on my friend's wedding day.</div>
-      </div>
-      <div class="review-card flag-red">
-        <div class="review-meta">
-          <span><span class="stars">★</span> <strong>1★</strong></span>
-          <span class="review-date">Jun 12, 2026</span>
-        </div>
-        <div class="review-heading">Ring for less than a week, stone fell out</div>
-        <div class="review-text">I've had my ring for less than a week, and a stone has fallen out, and I've already noticed the ring bending. This is something I saved for and it's not worth paying $1 for. I reached out to customer service and haven't had anyone get back with me.</div>
-      </div>
-      <div class="review-card flag-red">
-        <div class="review-meta">
-          <span><span class="stars">★</span> <strong>1★</strong></span>
-          <span class="review-date">Jun 17, 2026</span>
-        </div>
-        <div class="review-heading">Jewel fell out — not even 2 weeks old</div>
-        <div class="review-text">Jewel fell out of her ring on June 8th and we received the ring May 28th. Not even 2 weeks of having the ring.</div>
-      </div>
-      <div class="review-card flag-red">
-        <div class="review-meta">
-          <span><span class="stars">★</span> <strong>1★</strong></span>
-          <span class="review-date">Jun 5, 2026</span>
-        </div>
-        <div class="review-heading">Horrible after sales service!</div>
-        <div class="review-text">Order arrived later than estimated — a birthday gift given late. Chain not as long as expected. Return shipping cost was astronomical. I could return everything and reorder, so it made no sense to charge half the cost of the piece just to ship. Won't purchase or recommend again.</div>
-      </div>
-      <div class="review-card flag-red">
-        <div class="review-meta">
-          <span><span class="stars">★</span> <strong>1★</strong></span>
-          <span class="review-date">Jun 11, 2026</span>
-        </div>
-        <div class="review-heading">Necklace completely tarnished — Mother's Day gift</div>
-        <div class="review-text">Bought the necklace for mother's day on 5/9/26, it is completely tarnished. Very unhappy with the quality.</div>
-      </div>
-      <div class="review-card flag-red">
-        <div class="review-meta">
-          <span><span class="stars">★</span> <strong>1★</strong></span>
-          <span class="review-date">Jul 1, 2026</span>
-        </div>
-        <div class="review-heading">Package never delivered</div>
-        <div class="review-text">Thought it was delivered as the notification was sent. Waited a couple weeks and it never showed up — even checked the leasing office. It looked beautiful in the picture though.</div>
-      </div>
-      <div class="review-card flag-amber">
-        <div class="review-meta">
-          <span><span class="stars">★★</span> <strong>2★</strong></span>
-          <span class="review-date">Jun 4, 2026</span>
-        </div>
-        <div class="review-heading">Finding what I was looking for was easy, but…</div>
-        <div class="review-text">Finding and customizing was all very easy however the small diamond in the ring fell out a couple days after wearing it.</div>
-      </div>
-      <div class="review-card flag-amber">
-        <div class="review-meta">
-          <span><span class="stars">★★</span> <strong>2★</strong></span>
-          <span class="review-date">Jun 4, 2026</span>
-        </div>
-        <div class="review-heading">Package was almost lost</div>
-        <div class="review-text">Intelcom did a lousy job delivering it to a bad place. I found my order opened and the email arrived to my junk folder.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Complaint Theme Summary -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-title">Recurring Issue Themes</div>
-      <div class="section-sub">From 20 low-rated reviews (1★–3★)</div>
-    </div>
-    <div class="section-body">
-      <table>
-        <thead>
-          <tr><th>Theme</th><th>Count</th><th>Examples</th><th>Severity</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Stone/Jewel falling out</strong></td>
-            <td>3</td>
-            <td>Ring within a week, under 2 weeks, diamond after a couple days</td>
-            <td><span class="badge badge-red">Critical</span></td>
-          </tr>
-          <tr>
-            <td><strong>Material / quality fraud</strong></td>
-            <td>1</td>
-            <td>Sterling silver ring tested as plated, no response to CS</td>
-            <td><span class="badge badge-red">Critical</span></td>
-          </tr>
-          <tr>
-            <td><strong>Customer service non-response</strong></td>
-            <td>3</td>
-            <td>No reply to emails, refused refund on faulty item</td>
-            <td><span class="badge badge-red">Critical</span></td>
-          </tr>
-          <tr>
-            <td><strong>Tarnishing / discoloration</strong></td>
-            <td>2</td>
-            <td>Tarnished within weeks of Mother's Day purchase</td>
-            <td><span class="badge badge-amber">High</span></td>
-          </tr>
-          <tr>
-            <td><strong>Shipping / delivery issues</strong></td>
-            <td>3</td>
-            <td>Late, never arrived, misdelivered</td>
-            <td><span class="badge badge-amber">High</span></td>
-          </tr>
-          <tr>
-            <td><strong>Return / exchange costs</strong></td>
-            <td>2</td>
-            <td>Astronomical return shipping, refused exchange</td>
-            <td><span class="badge badge-amber">High</span></td>
-          </tr>
-          <tr>
-            <td><strong>Size smaller than expected</strong></td>
-            <td>3</td>
-            <td>Stamped reviews: "Very very small", "Pretty but very tiny"</td>
-            <td><span class="badge badge-gray">Medium</span></td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </div>
 
   <!-- Stamped Product Reviews -->
   <div class="section">
     <div class="section-header">
-      <div class="section-title">Stamped Product Reviews — Data Quality Verification</div>
-      <div class="section-sub">68 reviews · Jun 2–Jul 2, 2026 · source=stamped</div>
+      <div class="section-title">Stamped Product Reviews — 12 Months</div>
+      <div class="section-sub">929 reviews · 400-day history loaded</div>
     </div>
     <div class="section-body">
-
-      <div class="ok-box">
-        <strong>Key findings:</strong> Product SKU is 100% populated across all 68 Stamped reviews. 91% have a direct order_id. All records carry email and email_hash, enabling fallback join. Order_id case mismatch with purchase table (lowercase vs uppercase) reduces apparent match rate — fixable at query time.
-      </div>
-
-      <div class="dq-grid">
-        <div class="dq-card">
-          <div class="dq-val dq-good">100%</div>
-          <div class="dq-label">product_sku present</div>
-        </div>
-        <div class="dq-card">
-          <div class="dq-val dq-good">91%</div>
-          <div class="dq-label">order_id present<br><span style="font-size:10px;color:#adb5bd">(62 / 68)</span></div>
-        </div>
-        <div class="dq-card">
-          <div class="dq-val dq-good">100%</div>
-          <div class="dq-label">email + email_hash</div>
-        </div>
-      </div>
-
-      <div style="margin-bottom: 16px;">
-        <div class="progress-row">
-          <div class="progress-label">product_sku</div>
-          <div class="progress-wrap"><div class="progress-fill" style="width:100%;background:#28a745"></div></div>
-          <div class="progress-pct">100%</div>
-        </div>
-        <div class="progress-row">
-          <div class="progress-label">product_sku_base</div>
-          <div class="progress-wrap"><div class="progress-fill" style="width:100%;background:#28a745"></div></div>
-          <div class="progress-pct">100%</div>
-        </div>
-        <div class="progress-row">
-          <div class="progress-label">order_id (direct)</div>
-          <div class="progress-wrap"><div class="progress-fill" style="width:91%;background:#28a745"></div></div>
-          <div class="progress-pct">91%</div>
-        </div>
-        <div class="progress-row">
-          <div class="progress-label">product_name</div>
-          <div class="progress-wrap"><div class="progress-fill" style="width:85%;background:#74c69d"></div></div>
-          <div class="progress-pct">85%</div>
-        </div>
-        <div class="progress-row">
-          <div class="progress-label">order_id matched in purchase table<br><span style="font-size:11px;color:#adb5bd">After case normalization (upper→lower)</span></div>
-          <div class="progress-wrap"><div class="progress-fill" style="width:61%;background:#fd7e14"></div></div>
-          <div class="progress-pct">61%</div>
-        </div>
-        <div class="progress-row">
-          <div class="progress-label">product_type</div>
-          <div class="progress-wrap"><div class="progress-fill" style="width:6%;background:#dc3545"></div></div>
-          <div class="progress-pct">6%</div>
-        </div>
+      <div class="metric-row">
+        <div class="metric-cell"><div class="metric-val">929</div><div class="metric-label">Total Reviews</div></div>
+        <div class="metric-cell"><div class="metric-val" style="color:#28a745">650</div><div class="metric-label">5★ Reviews</div></div>
+        <div class="metric-cell"><div class="metric-val" style="color:#dc3545">217</div><div class="metric-label">≤3★ Negative</div></div>
+        <div class="metric-cell"><div class="metric-val" style="color:#dc3545">23.4%</div><div class="metric-label">Negative Rate</div></div>
+        <div class="metric-cell"><div class="metric-val">112</div><div class="metric-label">1★ Reviews</div></div>
       </div>
 
       <div class="warn-box">
-        <strong>Order ID → Purchase match rate: 61% (38 / 62 with order_id)</strong><br>
-        24 Stamped order_ids are valid Jewlr IDs (format J+10 digits) but not found in the purchase table.
-        Root cause: purchase data starts May 2024 — these are likely pre-integration orders or orders not yet imported.
-        6 reviews have no order_id at all; these can only be matched via email_hash.
+        <strong>JWLN0300 (Personalized Name Necklace) is the single biggest quality risk:</strong> 38 negative reviews out of 171 total (22.2% negative rate), avg negative rating 2.0★.
+        Recurring complaints: chain too thin/fragile, doesn't match pictures, "smaller than expected", chain breaks. This is both a product and a listing expectation problem.
       </div>
 
-      <h4 style="font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:12px;">Stamped Rating Distribution (68 reviews, avg 4.60★)</h4>
-      <div class="two-col">
+      <h4 style="font-size:13px;font-weight:700;color:#1a1a2e;margin:0 0 14px;">Problem SKUs (≥2 negative reviews)</h4>
+
+      <div class="sku-bar"><div class="sku-name">JWLN0300</div><div class="sku-wrap"><div class="sku-fill" style="width:100%"></div></div><div class="sku-meta">38 neg · 22.2% rate · 2.0★ avg</div></div>
+      <div class="sku-bar"><div class="sku-name">JWL0063</div><div class="sku-wrap"><div class="sku-fill" style="width:8%"></div></div><div class="sku-meta">3 neg · 37.5% rate · 1.67★ avg</div></div>
+      <div class="sku-bar"><div class="sku-name">JWL0124</div><div class="sku-wrap"><div class="sku-fill" style="width:8%"></div></div><div class="sku-meta">3 neg · 20.0% rate · 1.67★ avg</div></div>
+      <div class="sku-bar"><div class="sku-name">JWL0018</div><div class="sku-wrap"><div class="sku-fill" style="width:8%"></div></div><div class="sku-meta">3 neg · 7.1% rate · incl. "finger green"</div></div>
+      <div class="sku-bar"><div class="sku-name">JWL0205</div><div class="sku-wrap"><div class="sku-fill" style="width:8%"></div></div><div class="sku-meta">3 neg · 20.0% rate · size complaints</div></div>
+      <div class="sku-bar"><div class="sku-name">JWL0491</div><div class="sku-wrap"><div class="sku-fill" style="width:5%"></div></div><div class="sku-meta">2 neg · 40.0% rate</div></div>
+      <div class="sku-bar"><div class="sku-name">JWL0515</div><div class="sku-wrap"><div class="sku-fill" style="width:5%"></div></div><div class="sku-meta">2 neg · 1.0★ avg · "Poor quality"</div></div>
+      <div class="sku-bar"><div class="sku-name">JWL0770</div><div class="sku-wrap"><div class="sku-fill" style="width:5%"></div></div><div class="sku-meta">2 neg · "didn't hold up 2 weeks"</div></div>
+      <div class="sku-bar"><div class="sku-name">JWLMB0013</div><div class="sku-wrap"><div class="sku-fill" style="width:5%"></div></div><div class="sku-meta">2 neg · 1.0★ · "stone fell off immediately"</div></div>
+      <div class="sku-bar"><div class="sku-name">JWLN0709-2</div><div class="sku-wrap"><div class="sku-fill" style="width:5%"></div></div><div class="sku-meta">2 neg · 1.0★ · "looked nothing like advertised"</div></div>
+      <div class="sku-bar"><div class="sku-name">JWLN0721</div><div class="sku-wrap"><div class="sku-fill" style="width:5%"></div></div><div class="sku-meta">2 neg · 1.0★ · "Cheap Chinese Junk"</div></div>
+
+      <div style="margin-top:20px;" class="two-col">
         <div>
-          <div class="rating-bar-row">
-            <div class="rating-bar-label">5★</div>
-            <div class="rating-bar-wrap"><div class="rating-bar-fill fill-5" style="width:83.8%"></div></div>
-            <div class="rating-bar-count">57</div>
-          </div>
-          <div class="rating-bar-row">
-            <div class="rating-bar-label">4★</div>
-            <div class="rating-bar-wrap"><div class="rating-bar-fill fill-4" style="width:4.4%"></div></div>
-            <div class="rating-bar-count">3</div>
-          </div>
-          <div class="rating-bar-row">
-            <div class="rating-bar-label">3★</div>
-            <div class="rating-bar-wrap"><div class="rating-bar-fill fill-3" style="width:4.4%"></div></div>
-            <div class="rating-bar-count">3</div>
-          </div>
-          <div class="rating-bar-row">
-            <div class="rating-bar-label">2★</div>
-            <div class="rating-bar-wrap"><div class="rating-bar-fill fill-2" style="width:2.9%"></div></div>
-            <div class="rating-bar-count">2</div>
-          </div>
-          <div class="rating-bar-row">
-            <div class="rating-bar-label">1★</div>
-            <div class="rating-bar-wrap"><div class="rating-bar-fill fill-1" style="width:4.4%"></div></div>
-            <div class="rating-bar-count">3</div>
-          </div>
+          <h4 style="font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:10px;">Stamped Rating Distribution</h4>
+          <div class="rating-bar-row"><div class="rbl">5★</div><div class="rbw"><div class="rbf fill-5" style="width:70%"></div></div><div class="rbc">650</div></div>
+          <div class="rating-bar-row"><div class="rbl">4★</div><div class="rbw"><div class="rbf fill-4" style="width:6.7%"></div></div><div class="rbc">62</div></div>
+          <div class="rating-bar-row"><div class="rbl">3★</div><div class="rbw"><div class="rbf fill-3" style="width:6.5%"></div></div><div class="rbc">60</div></div>
+          <div class="rating-bar-row"><div class="rbl">2★</div><div class="rbw"><div class="rbf fill-2" style="width:4.8%"></div></div><div class="rbc">45</div></div>
+          <div class="rating-bar-row"><div class="rbl">1★</div><div class="rbw"><div class="rbf fill-1" style="width:12.1%"></div></div><div class="rbc">112</div></div>
         </div>
         <div>
-          <p style="font-size:13px;color:#495057;line-height:1.6;">Product reviews are strongly positive (83.8% 5-star). Low-rated reviews cluster around <strong>size expectations</strong> — "Very very small", "Too small", "Pretty but very tiny" — and <strong>perceived quality</strong> ("Cheap", "Not Worth It").</p>
-          <div style="margin-top:12px;">
-            <table>
-              <thead><tr><th>SKU</th><th>Product</th><th>Rating</th><th>Heading</th></tr></thead>
-              <tbody>
-                <tr><td>JWL1074-4</td><td>—</td><td><span class="badge badge-red">1★</span></td><td>Do not buy!</td></tr>
-                <tr><td>JWLN0300</td><td>Name Necklace</td><td><span class="badge badge-red">1★</span></td><td>Cheap</td></tr>
-                <tr><td>JWLMB0016-2</td><td>—</td><td><span class="badge badge-red">1★</span></td><td>Not Worth It</td></tr>
-                <tr><td>JWLPC0005</td><td>Little Girl Charm</td><td><span class="badge badge-amber">2★</span></td><td>Very very small</td></tr>
-                <tr><td>JWL0004</td><td>—</td><td><span class="badge badge-amber">2★</span></td><td>Pretty, but very tiny</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <h4 style="font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:10px;">Top Stamped Complaint Themes</h4>
+          <div class="progress-row"><div class="pl">Size smaller than listed</div><div class="pw"><div class="pf" style="width:80%;background:#dc3545"></div></div><div class="pp" style="color:#dc3545">~40%</div></div>
+          <div class="progress-row"><div class="pl">Chain fragile / breaks</div><div class="pw"><div class="pf" style="width:60%;background:#e85d04"></div></div><div class="pp" style="color:#e85d04">~30%</div></div>
+          <div class="progress-row"><div class="pl">Not matching photos</div><div class="pw"><div class="pf" style="width:40%;background:#fd7e14"></div></div><div class="pp" style="color:#fd7e14">~20%</div></div>
+          <div class="progress-row"><div class="pl">Metal discoloration</div><div class="pw"><div class="pf" style="width:20%;background:#74c69d"></div></div><div class="pp" style="color:#495057">~10%</div></div>
+          <p style="font-size:11px;color:#adb5bd;margin-top:8px;">Percentages estimated from heading keyword analysis of JWLN0300 and other neg SKUs</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- HelpScout Tickets -->
+  <!-- Ticket Correlation -->
   <div class="section">
     <div class="section-header">
-      <div class="section-title">HelpScout Tickets — Data Quality Verification</div>
-      <div class="section-sub">16,759 non-spam tickets · 2,458 distinct customers · Jun 2–Jul 2, 2026</div>
+      <div class="section-title">HelpScout Ticket Correlation with Negative Reviews</div>
+      <div class="section-sub">323K tickets · 12 months · matched via email_hash</div>
     </div>
     <div class="section-body">
 
-      <div class="dq-grid">
-        <div class="dq-card">
-          <div class="dq-val dq-good">16,759</div>
-          <div class="dq-label">Non-spam tickets<br><span style="font-size:10px;color:#adb5bd">(73 spam removed)</span></div>
+      <div class="insight-box" style="margin-bottom:20px;">
+        <h4>Prevention Signal</h4>
+        <p><strong>34 of 161 negative reviewers (21%) had at least one HelpScout ticket before their invite was sent.</strong>
+        Of these, 15 left 1★, 9 left 2★, and 10 left 3★ reviews. The ticket pre-dated the invite by 2–30 days in most cases —
+        a long enough window to have suppressed the invite automatically.</p>
+      </div>
+
+      <div class="three-col" style="margin-bottom:20px;">
+        <div style="background:#f8d7da;border-radius:10px;padding:16px;text-align:center;">
+          <div style="font-size:28px;font-weight:800;color:#dc3545;">34</div>
+          <div style="font-size:11px;color:#721c24;font-weight:600;text-transform:uppercase;margin-top:4px;">Neg reviewers with prior ticket</div>
         </div>
-        <div class="dq-card">
-          <div class="dq-val dq-good">2,458</div>
-          <div class="dq-label">Distinct customers</div>
+        <div style="background:#fff3cd;border-radius:10px;padding:16px;text-align:center;">
+          <div style="font-size:28px;font-weight:800;color:#856404;">21%</div>
+          <div style="font-size:11px;color:#856404;font-weight:600;text-transform:uppercase;margin-top:4px;">Of all negative reviews</div>
         </div>
-        <div class="dq-card">
-          <div class="dq-val dq-amber">161</div>
-          <div class="dq-label">CSAT ratings received</div>
+        <div style="background:#d4edda;border-radius:10px;padding:16px;text-align:center;">
+          <div style="font-size:28px;font-weight:800;color:#155724;">8</div>
+          <div style="font-size:11px;color:#155724;font-weight:600;text-transform:uppercase;margin-top:4px;">Had ticket between order &amp; invite<br>(directly preventable)</div>
         </div>
       </div>
 
-      <table style="margin-bottom:20px;">
-        <thead>
-          <tr><th>Status</th><th>Count</th><th>%</th></tr>
-        </thead>
+      <h4 style="font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:12px;">How far before the invite did the ticket arrive?</h4>
+      <table>
+        <thead><tr><th>Ticket arrived</th><th>Count</th><th>Interpretation</th></tr></thead>
         <tbody>
-          <tr><td>Closed</td><td>16,607</td><td>99.1%</td></tr>
-          <tr><td>Active</td><td>149</td><td>0.9%</td></tr>
-          <tr><td>Pending</td><td>3</td><td>&lt;0.1%</td></tr>
-          <tr><td>Spam</td><td>73</td><td>excluded</td></tr>
+          <tr><td>0–1 day before invite</td><td>1</td><td>Very tight — borderline detectable</td></tr>
+          <tr class="highlight-row"><td>2–3 days before invite</td><td>4</td><td>Clear suppression window</td></tr>
+          <tr class="highlight-row"><td>4–7 days before invite</td><td>8</td><td>Clear suppression window</td></tr>
+          <tr class="highlight-row"><td>8–14 days before invite</td><td>8</td><td>Clear suppression window</td></tr>
+          <tr><td>15–30 days before invite</td><td>12</td><td>Ticket may have been resolved — check status</td></tr>
+          <tr><td>30+ days before invite</td><td>1</td><td>Old ticket, likely unrelated</td></tr>
         </tbody>
       </table>
 
-      <h4 style="font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:12px;">Order ID Coverage &amp; Matching</h4>
-
-      <div class="info-box">
-        <strong>Method:</strong> 81% of ticket subjects contain a Jewlr order ID (regex: J + 10 digits), e.g.
-        "Re: Jewlr Order Confirmation #J0176230739". These are extracted when the ticket's own <code>order_id</code>
-        field is not populated. After case normalization (tickets use uppercase J, purchase table uses lowercase j),
-        23% of identified order IDs match a purchase record.
+      <div class="info-box" style="margin-top:16px;">
+        <strong>Note on ticket volume:</strong> The ticket table contains 323K conversations from 32,264 unique customers over 12 months — including automated email replies, order confirmations, and shipping queries.
+        The matching is conservative: we look for a ticket by the same <code>email_hash</code> that arrived before the invite. Restricting to tickets with quality signals (e.g. subject containing "problem", "resiz", "wrong", "broke", "return", "refund", "defect") would tighten the prevention signal significantly.
       </div>
+    </div>
+  </div>
 
-      <div style="margin-bottom: 16px;">
-        <div class="progress-row">
-          <div class="progress-label">email / email_hash present</div>
-          <div class="progress-wrap"><div class="progress-fill" style="width:99.4%;background:#28a745"></div></div>
-          <div class="progress-pct">99.4%</div>
-        </div>
-        <div class="progress-row">
-          <div class="progress-label">order_id extracted from subject (regex)</div>
-          <div class="progress-wrap"><div class="progress-fill" style="width:81%;background:#74c69d"></div></div>
-          <div class="progress-pct">81%</div>
-        </div>
-        <div class="progress-row">
-          <div class="progress-label">order_id directly in field</div>
-          <div class="progress-wrap"><div class="progress-fill" style="width:3%;background:#74c69d"></div></div>
-          <div class="progress-pct">3%</div>
-        </div>
-        <div class="progress-row">
-          <div class="progress-label">Total with effective order_id</div>
-          <div class="progress-wrap"><div class="progress-fill" style="width:83%;background:#74c69d"></div></div>
-          <div class="progress-pct">83%</div>
-        </div>
-        <div class="progress-row">
-          <div class="progress-label">Ticket order_id matched to purchase record<br><span style="font-size:11px;color:#adb5bd">1,618 of 6,887 unique order IDs — after case normalization</span></div>
-          <div class="progress-wrap"><div class="progress-fill" style="width:23%;background:#fd7e14"></div></div>
-          <div class="progress-pct">23%</div>
-        </div>
-        <div class="progress-row">
-          <div class="progress-label">Email-only tickets → purchase match<br><span style="font-size:11px;color:#adb5bd">51 of 1,518 distinct customers</span></div>
-          <div class="progress-wrap"><div class="progress-fill" style="width:3.4%;background:#dc3545"></div></div>
-          <div class="progress-pct">3.4%</div>
-        </div>
-      </div>
+  <!-- Optimal Timing -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Optimal Invite Timing — Order to Invite Window</div>
+      <div class="section-sub">Based on 446 TP reviews with matched order dates</div>
+    </div>
+    <div class="section-body">
 
       <div class="warn-box">
-        <strong>Why only 23% of ticket order IDs match the purchase table:</strong><br>
-        Tickets from the last 30 days frequently reference <em>old orders</em> — ring resizing, repairs, returns, lifetime warranty claims.
-        The purchase table starts May 2024, but matched orders skew heavily recent: 96% of matched tickets (1,546/1,618) have purchase dates in 2026.
-        The remaining 5,269 unmatched ticket order IDs are almost certainly from orders placed before Stacktome's purchase data integration started.
+        <strong>Current behaviour:</strong> Invites are sent at median 13–14 days after order for both positive and negative reviewers — the timing is nearly identical.
+        The difference lies in the customer's experience at that moment: negative reviewers take ~2.5 days longer to write their review (17d avg vs 14.5d), suggesting the product arrived
+        but had issues that needed time to surface.
       </div>
 
-      <h4 style="font-size:13px;font-weight:700;color:#1a1a2e;margin:16px 0 10px;">Matched Purchase Dates Distribution</h4>
-      <table>
-        <thead>
-          <tr><th>Period</th><th>Matched Ticket Orders</th><th>Note</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>2024 (May–Dec)</td><td>9</td><td><span class="badge badge-gray">Small — early data</span></td></tr>
-          <tr><td>Jan–Mar 2025</td><td>5</td><td><span class="badge badge-gray">Low</span></td></tr>
-          <tr><td>Oct–Dec 2025</td><td>20</td><td><span class="badge badge-amber">Growing</span></td></tr>
-          <tr><td>Jan–Mar 2026</td><td>44</td><td><span class="badge badge-blue">Improving</span></td></tr>
-          <tr><td>Apr 2026</td><td>76</td><td><span class="badge badge-blue">Strong</span></td></tr>
-          <tr><td>May 2026</td><td>202</td><td><span class="badge badge-green">Good coverage</span></td></tr>
-          <tr><td>Jun–Jul 2026</td><td>1,259</td><td><span class="badge badge-green">Full coverage (recent orders)</span></td></tr>
-        </tbody>
-      </table>
+      <h4 style="font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:14px;">Negative review rate by order → invite window</h4>
+
+      <div class="window-grid" style="margin-bottom:20px;">
+        <div class="window-cell cell-hot">
+          <div class="window-label">0–3 days</div>
+          <div class="window-rate" style="color:#dc3545;">30.8%</div>
+          <div class="window-n">13 reviews</div>
+        </div>
+        <div class="window-cell cell-warm">
+          <div class="window-label">4–7 days</div>
+          <div class="window-rate" style="color:#fd7e14;">18.6%</div>
+          <div class="window-n">102 reviews</div>
+        </div>
+        <div class="window-cell cell-warm">
+          <div class="window-label">8–10 days</div>
+          <div class="window-rate" style="color:#fd7e14;">20.6%</div>
+          <div class="window-n">68 reviews</div>
+        </div>
+        <div class="window-cell cell-warm">
+          <div class="window-label">11–14 days</div>
+          <div class="window-rate" style="color:#fd7e14;">18.8%</div>
+          <div class="window-n">213 reviews ← now</div>
+        </div>
+        <div class="window-cell cell-warm">
+          <div class="window-label">15–21 days</div>
+          <div class="window-rate" style="color:#e85d04;">25.6%</div>
+          <div class="window-n">39 reviews</div>
+        </div>
+        <div class="window-cell cell-ok">
+          <div class="window-label">22–30 days</div>
+          <div class="window-rate" style="color:#28a745;">11.1%</div>
+          <div class="window-n">9 reviews</div>
+        </div>
+        <div class="window-cell" style="background:#e9ecef;">
+          <div class="window-label">31–60 days</div>
+          <div class="window-rate" style="color:#6c757d;">50%</div>
+          <div class="window-n">2 reviews (too low)</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <h4 style="font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:10px;">Timing stats: positive vs negative reviewers</h4>
+          <table>
+            <thead><tr><th>Segment</th><th>N</th><th>Avg order→review</th><th>Avg order→invite</th><th>P50 invite</th></tr></thead>
+            <tbody>
+              <tr><td><span class="badge badge-green">Positive (≥4★)</span></td><td>358</td><td>14.5d</td><td>11.3d</td><td>13d</td></tr>
+              <tr><td><span class="badge badge-red">Negative (≤3★)</span></td><td>89</td><td>17.0d</td><td>11.4d</td><td>14d</td></tr>
+            </tbody>
+          </table>
+          <p style="font-size:12px;color:#6c757d;margin-top:8px;">Invite timing is nearly identical — the issue is the customer's experience, not when we send. But <em>waiting longer</em> gives problems time to surface and be resolved before the invite goes out.</p>
+        </div>
+        <div>
+          <h4 style="font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:10px;">Time from invite to review (negative reviewers)</h4>
+          <table>
+            <thead><tr><th>Window</th><th>Reviews</th><th>Insight</th></tr></thead>
+            <tbody>
+              <tr class="highlight-row"><td><strong>0–1 day</strong></td><td><strong>56</strong></td><td>Already decided to complain</td></tr>
+              <tr><td>2–3 days</td><td>17</td><td>Reviewed quickly after invite</td></tr>
+              <tr><td>4–7 days</td><td>10</td><td>Prompted but delayed</td></tr>
+              <tr><td>8–14 days</td><td>3</td><td>Slow to respond</td></tr>
+              <tr><td>15–30 days</td><td>3</td><td>Reminder-driven</td></tr>
+            </tbody>
+          </table>
+          <p style="font-size:12px;color:#6c757d;margin-top:8px;"><strong>63% of invite-triggered negatives reviewed within 24h.</strong> These customers needed no prompting — the invite just provided a platform. Earlier delivery resolution would prevent these.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prevention Strategy -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Prevention Strategy: How Many Negatives Could Be Avoided?</div>
+      <div class="section-sub">Combined estimate across all signals</div>
+    </div>
+    <div class="section-body">
+
+      <div class="funnel" style="border:1px solid #f0f0f0;border-radius:10px;overflow:hidden;margin-bottom:20px;">
+        <div class="funnel-step">
+          <div><div class="funnel-label">Baseline: all negative TP reviews (12m)</div></div>
+          <div><span class="funnel-val">161</span></div>
+        </div>
+        <div class="funnel-step">
+          <div><div class="funnel-label">Strategy 1: Suppress invite when active open ticket exists → catch 21%</div></div>
+          <div><span class="funnel-val" style="color:#28a745;">−34</span> <span class="funnel-pct">(21% prevented)</span></div>
+        </div>
+        <div class="funnel-step">
+          <div><div class="funnel-label">Strategy 2: Shift to 22–30d send window → reduce rate 19% → 11% for invite-driven</div></div>
+          <div><span class="funnel-val" style="color:#28a745;">−35</span> <span class="funnel-pct">(est. 22% prevented of invite-driven)</span></div>
+        </div>
+        <div class="funnel-step">
+          <div><div class="funnel-label">Overlap (customers with both ticket and timing benefit)</div></div>
+          <div><span class="funnel-val" style="color:#fd7e14;">+~8</span> <span class="funnel-pct">(double-counted)</span></div>
+        </div>
+        <div class="funnel-step" style="background:#d4edda;">
+          <div><div class="funnel-label" style="color:#155724;font-weight:700;">Combined estimated reduction (conservative, non-overlapping)</div></div>
+          <div><span class="funnel-val" style="color:#155724;">~61 fewer negatives</span> <span class="funnel-pct">(38% reduction)</span></div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <h4 style="font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:10px;">Strategy 1: Ticket-gated invites</h4>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Detection</div><div class="tl-text">Check HelpScout API: does this customer_key / email have an open or pending ticket?</div></div>
+            <div class="tl-item"><div class="tl-dot amber"></div><div class="tl-label">Hold rule</div><div class="tl-text">Suppress invite send if ticket status = active or pending. Reschedule for +7 days after resolution.</div></div>
+            <div class="tl-item"><div class="tl-dot green"></div><div class="tl-label">Impact</div><div class="tl-text">Would have caught 34/161 (21%) of negative reviews. False positive rate: 16/357 (4.5%) of positive reviewers also had tickets — minimal suppression risk.</div></div>
+          </div>
+        </div>
+        <div>
+          <h4 style="font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:10px;">Strategy 2: Delay invite to 22–30 days</h4>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Current state</div><div class="tl-text">Invite sent at ~11–14 days (p50). Negative review rate: 18.8% in this window.</div></div>
+            <div class="tl-item"><div class="tl-dot amber"></div><div class="tl-label">Proposed</div><div class="tl-text">Shift send to 22–30 days post-order. Negative rate in this window: 11.1% — a 42% reduction.</div></div>
+            <div class="tl-item"><div class="tl-dot green"></div><div class="tl-label">Benefit</div><div class="tl-text">Products with durability issues (stones, chain quality) surface within 7–14 days. Waiting 22–30d means problems are either resolved or the customer has accepted them.</div></div>
+            <div class="tl-item"><div class="tl-dot red"></div><div class="tl-label">Tradeoff</div><div class="tl-text">Slightly lower conversion rate expected as time-from-purchase excitement wanes. Recommend A/B test: 14d vs 25d send for 3 months.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <h4 style="font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:10px;">Strategy 3: Product-level invite suppression / custom messaging</h4>
+        <div class="info-box">
+          For JWLN0300 and other high-risk SKUs, the invite itself isn't the root problem — the product experience is.
+          However, <strong>sending a proactive care email before the invite</strong> (at 7 days: "here's how to care for your necklace / size guidance")
+          could shift sentiment before the review invite arrives. This is also an opportunity to pre-empt the return/exchange friction that drives 11% of negatives.
+        </div>
+      </div>
     </div>
   </div>
 
@@ -588,28 +509,45 @@
     <div class="section-body">
       <ul class="action-list">
         <li>
-          <div class="action-num">1</div>
-          <div><strong>Fix order_id case mismatch in purchase table.</strong> Purchase table stores order IDs lowercase (e.g. <code>j0108702286</code>) while Stamped reviews and ticket subjects use uppercase (<code>J0108702286</code>). All joins need <code>lower()</code> normalization or the table should be standardized on import. This was causing a 4× undercount in ticket order matching.</div>
+          <div class="action-num red">1</div>
+          <div><strong>Implement ticket-gated invite suppression.</strong>
+          Before scheduling each invite, query HelpScout for open/active tickets on that customer email. Suppress and reschedule for 7 days after ticket closes.
+          Based on 12-month data, this would have prevented <strong>21% of negative reviews</strong> (34/161) with minimal false-positive suppression of happy customers (4.5% bleed).
+          The signal is strongest for tickets arriving 2–14 days before the invite date.</div>
         </li>
         <li>
-          <div class="action-num">2</div>
-          <div><strong>Extend purchase data history beyond May 2024.</strong> 77% of ticket order IDs (5,269) can't be matched because they reference pre-2024 orders. For tickets about warranty, resizing, or repairs, this means Stacktome has no order context to enrich the ticket. If Jewlr can provide a historical order export, matching coverage for tickets would improve dramatically.</div>
+          <div class="action-num red">2</div>
+          <div><strong>A/B test 22–30 day invite delay vs current 11–14 day window.</strong>
+          The 22–30d window shows 11.1% negative rate vs 18.8% at 11–14d — a <strong>42% reduction in negative review rate</strong>.
+          Run for 90 days across Campaign 101, splitting evenly. Monitor both negative rate AND total review volume to calculate net impact on TrustScore.</div>
         </li>
         <li>
-          <div class="action-num">3</div>
-          <div><strong>Investigate 9% of Stamped reviews missing order_id.</strong> 6 of 68 Stamped reviews have no order_id in the record. Check if these are anonymous (guest checkout) reviews in Stamped or a mapping gap in the Stamped integration. Email_hash is still available for manual matching.</div>
+          <div class="action-num red">3</div>
+          <div><strong>Escalate JWLN0300 (Personalized Name Necklace) product quality review.</strong>
+          38 negative Stamped reviews over 12 months, avg 2.0★ negative rating, 22.2% negative rate. Primary complaints: chain fragility, size smaller than shown, doesn't match photos.
+          Recommend product listing update (add size reference photo, accurate chain gauge spec) and sourcing review of chain quality. Also cross-check with TP data — this SKU likely contributes to the "size wrong" complaint theme (largest TP complaint category at 13%).</div>
         </li>
         <li>
-          <div class="action-num">4</div>
-          <div><strong>Extract order_id from ticket subjects systematically.</strong> 81% of HelpScout ticket subjects contain a parseable Jewlr order ID. This regex extraction (<code>J\d{10}</code>) should be applied at ingestion time so that the <code>order_id</code> field is populated for all tickets (not just the 3% currently populated). This would improve all downstream enrichment.</div>
+          <div class="action-num amber">4</div>
+          <div><strong>Add proactive care touchpoint at day 7 for JWLN0300, JWLMB0013, JWL0515 buyers.</strong>
+          Send a "caring for your jewlr piece" email at 7 days covering: chain care, size adjustment process, metal care to prevent tarnish.
+          This converts a potential complaint trigger into a brand moment, and surfaces issues early enough to resolve before the day 25 invite.</div>
         </li>
         <li>
-          <div class="action-num">5</div>
-          <div><strong>Address recurring quality issues — stones falling out, material concerns.</strong> 3 reviews mention stones falling out within days/2 weeks; 1 flags plating sold as silver. These drive both Trustpilot 1★ reviews and HelpScout tickets. A QC check or product-specific follow-up message for affected SKUs (e.g. JWL0004, JWLN0300) could reduce both complaint channels simultaneously.</div>
+          <div class="action-num amber">5</div>
+          <div><strong>Use support-intent ticket filter for prevention signal.</strong>
+          The 323K ticket volume includes many automated email replies. Refine the ticket-gating rule to only suppress on tickets where the subject contains quality signals: "resiz", "wrong", "broke", "return", "refund", "defect", "problem", "damage", "tarnish", "missing".
+          This reduces false suppression and sharpens the prevention signal.</div>
         </li>
         <li>
-          <div class="action-num">6</div>
-          <div><strong>Improve CS response time for disputed quality claims.</strong> Multiple reviewers mention emailing CS with no response. The 149 currently active tickets and any ticket tagged with keywords like "quality", "stone", "silver" should be prioritized for reply.</div>
+          <div class="action-num amber">6</div>
+          <div><strong>Fix the customer service response gap.</strong>
+          17 negative TP reviews (11%) cite no response from CS. Several Stamped 1★ reviews also mention CS issues. The 149 currently active HelpScout tickets (from 30-day snapshot) should be triaged and resolved within 24h SLA, especially for quality complaints. CS resolution before invite send is the fastest path to prevention.</div>
+        </li>
+        <li>
+          <div class="action-num green">7</div>
+          <div><strong>Extract order_id from ticket subjects systematically at ingestion.</strong>
+          81% of ticket subjects contain a parseable Jewlr order ID (format J + 10 digits). This should be extracted at HelpScout import time and stored in the <code>order_id</code> field. Currently only 3% of tickets have the field populated. This enables order-level ticket→review matching and makes the prevention signal much more precise (matching on order_id rather than just email_hash).</div>
         </li>
       </ul>
     </div>
