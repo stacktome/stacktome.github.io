@@ -1,0 +1,1289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SelectSpecs.com Reviews</title>
+<style>
+  :root{
+    --navy:#16324f;
+    --blue:#2563eb;
+    --star:#f59e0b;
+    --star-empty:#e2e2e2;
+    --ink:#26303a; --muted:#67737f; --line:#e8eaee;
+    --paper:#ffffff; --wash:#f7f8fa; --soft:#eef3f9;
+    --good:#2f8f5b; --bad:#c4453c;
+    --radius:14px;
+    --max:880px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:Georgia,"Times New Roman",serif;color:var(--ink);background:var(--paper);line-height:1.65;font-size:17px}
+  h1,h2,h3,.sans{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+
+  header.site{border-bottom:1px solid var(--line)}
+  header.site .wrap{display:flex;align-items:baseline;justify-content:space-between;padding:18px 20px}
+  .logo{font-family:system-ui,sans-serif;font-weight:700;font-size:21px;color:var(--navy);letter-spacing:-.3px}
+  .logo em{font-style:normal;color:var(--blue)}
+  header .crumb{font-size:13px;color:var(--muted);font-family:system-ui,sans-serif}
+
+  .tstars{display:inline-flex;gap:4px;line-height:0}
+  .tstars svg{width:36px;height:36px}
+  .tstars.sm svg{width:22px;height:22px}
+  .tstars.sm{gap:3px}
+  .tstars.xs svg{width:16px;height:16px}
+  .tstars.xs{gap:2px}
+
+  .hero{padding:48px 0 36px;background:linear-gradient(180deg,var(--soft),var(--paper) 85%)}
+  .hero .wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:center}
+  @media(max-width:760px){.hero .wrap{grid-template-columns:1fr;gap:28px}.hero h1{font-size:27px}.hero .score{font-size:28px}}
+  .hero h1{margin:0 0 14px;font-size:34px;line-height:1.15;color:var(--navy);letter-spacing:-.5px}
+  .hero .scoreline{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+  .hero .score{font-family:system-ui,sans-serif;font-size:34px;font-weight:700;color:var(--navy)}
+  .hero .of{font-size:14px;color:var(--muted);font-family:system-ui,sans-serif}
+  .verified{display:inline-flex;align-items:center;gap:6px;font-family:system-ui,sans-serif;font-size:13px;font-weight:600;color:var(--good);background:#fff;border:1px solid #d6e8de;border-radius:999px;padding:5px 14px}
+  .hero p.tldr{margin:0;font-size:18px;color:#3b4754}
+  .hero .updated{font-family:system-ui,sans-serif;font-size:13px;color:var(--muted);margin-top:14px}
+  .hero p.description{margin:0 0 10px;font-size:15px;color:var(--muted);font-family:system-ui,sans-serif}
+  .hero p.description:empty{display:none}
+
+  .snapshot{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;box-shadow:0 8px 28px rgba(22,50,79,.06)}
+  .snapshot h2{margin:0 0 12px;font-size:14px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:600}
+  .snapshot .row{display:grid;grid-template-columns:38px 1fr 86px;gap:10px;align-items:center;font-family:system-ui,sans-serif;font-size:13px;color:var(--ink);padding:4px 0;cursor:pointer}
+  .snapshot .row:hover{color:var(--blue)}
+  .snapshot .bar{height:9px;background:var(--wash);border-radius:6px;overflow:hidden}
+  .snapshot .bar b{display:block;height:100%;background:var(--star);border-radius:6px}
+  .snapshot .row span:last-child{text-align:right;color:var(--muted)}
+
+  .platforms{border-bottom:1px solid var(--line);background:var(--paper)}
+  .platforms .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-top:16px;padding-bottom:16px;font-family:system-ui,sans-serif}
+  .plabel{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600}
+  .platform{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:999px;padding:7px 16px;color:var(--ink);font-size:14px}
+  .platform b{color:var(--navy)}
+  .platform .pnum{color:var(--muted);font-size:13px}
+
+  section.block{padding:40px 0 8px}
+  section.block .wrap>h2{font-size:26px;color:var(--navy);margin:0 0 6px;letter-spacing:-.3px}
+  .kicker{font-family:system-ui,sans-serif;font-size:13px;color:var(--muted);margin:0 0 20px}
+
+  .topics{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:680px){.topics{grid-template-columns:1fr}}
+  .topic{border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;background:#fff;transition:border-color .15s;cursor:pointer}
+  .topic:hover{border-color:#bcd0e8}
+  .topic h3{margin:0 0 6px;font-size:17px;color:var(--navy)}
+  .topic .verdict{font-family:system-ui,sans-serif;font-size:14px;margin:0 0 10px}
+  .topic .verdict b{color:var(--good)}
+  .topic .verdict.negative b{color:var(--bad)}
+  .topic blockquote{margin:0 0 12px;font-style:italic;color:#4a5560;font-size:15px}
+  .topic blockquote::before{content:"“"}.topic blockquote::after{content:"”"}
+  .topic .more{font-family:system-ui,sans-serif;font-size:13px;color:var(--blue)}
+  .topic p.overview{margin:0 0 12px;font-size:14.5px;color:#3b4754}
+
+  .filterbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 22px;font-family:system-ui,sans-serif}
+  .filterbar select,.filterbar input{padding:8px 12px;border:1px solid var(--line);border-radius:999px;font-size:14px;background:#fff;color:var(--ink)}
+  .filterbar input{min-width:180px}
+  .chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 15px;font-size:14px;cursor:pointer;color:var(--ink);font-family:system-ui,sans-serif}
+  .chip:hover{border-color:#bcd0e8}
+  .chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+  article.review{padding:26px 0;border-top:1px solid var(--line)}
+  article.review .head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-family:system-ui,sans-serif}
+  article.review .who{font-size:14px}
+  article.review .who b{display:block;color:var(--navy)}
+  article.review .who span{color:var(--muted);font-size:13px}
+  article.review .rate{margin-left:auto;display:flex;align-items:center;gap:10px}
+  .source-badge{font-size:12px;color:var(--muted);background:var(--wash);border-radius:999px;padding:3px 11px;font-family:system-ui,sans-serif}
+  .vcheck{font-size:12px;color:var(--good);font-weight:600}
+  .stars-tip{position:relative;display:inline-flex;cursor:default}
+  .stars-tip::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1c2733;color:#fff;font-family:system-ui,sans-serif;font-size:12px;padding:5px 11px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .12s;box-shadow:0 6px 16px rgba(0,0,0,.18);z-index:2}
+  .stars-tip:hover::after,.stars-tip:focus-within::after{opacity:1}
+  article.review h3{margin:14px 0 6px;font-size:18px;color:var(--navy)}
+  article.review .body{margin:0 0 12px;max-width:70ch}
+  .reply{background:var(--wash);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:15px;max-width:70ch}
+  .reply b{font-family:system-ui,sans-serif;font-size:13px;display:block;margin-bottom:4px;color:var(--navy)}
+
+  .pager{display:flex;gap:8px;justify-content:center;padding:30px 0;font-family:system-ui,sans-serif}
+  .pager a{border:1px solid var(--line);border-radius:8px;padding:7px 13px;font-size:14px;color:var(--ink);cursor:pointer}
+  .pager a.cur{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .pager span{align-self:center;color:var(--muted)}
+
+  .method{background:var(--wash);border-radius:var(--radius);padding:26px 28px;margin:30px 0 50px}
+  .method h2{margin:0 0 8px;font-size:19px;color:var(--navy)}
+  .method p{margin:0;max-width:70ch;font-size:15px}
+
+  .note{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-top:20px;font-size:14px}
+
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;font-family:system-ui,sans-serif}
+  .lkey{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font-size:13px;cursor:pointer;color:var(--ink)}
+  .lkey i{width:12px;height:12px;border-radius:50%;display:inline-block}
+  .lkey.off{opacity:.35}
+  .chart-wrap{position:relative;margin-bottom:18px}
+  #trendChart{width:100%;height:auto;display:block}
+  .crosshair{stroke:#9aa7b4;stroke-width:1;stroke-dasharray:3,3;pointer-events:none;opacity:0}
+  .ttip{position:absolute;top:0;left:0;pointer-events:none;background:#1c2733;color:#fff;
+    border-radius:8px;padding:10px 12px;font-family:system-ui,sans-serif;font-size:13px;
+    box-shadow:0 8px 20px rgba(0,0,0,.18);opacity:0;transition:opacity .1s;z-index:5;min-width:150px}
+  .ttip.show{opacity:1}
+  .ttip .ttip-month{font-weight:600;margin-bottom:6px;font-size:12px;color:#cfd8e3}
+  .ttip-row{display:flex;align-items:center;gap:8px;justify-content:space-between;padding:2px 0}
+  .ttip-key{width:14px;height:2px;border-radius:2px;flex:none}
+  .ttip-name{color:#b7c0cc;flex:1;margin-right:10px}
+  .ttip-val{font-weight:700;color:#fff}
+
+  /* FAQ search (Amazon-style "Looking for specific info?") */
+  .faq-search{display:flex;gap:0;margin:0 0 14px;max-width:680px;font-family:system-ui,sans-serif}
+  .faq-search input{flex:1;padding:11px 18px;border:1px solid #b9c4d0;border-right:0;border-radius:999px 0 0 999px;font-size:15px;outline-offset:0}
+  .faq-search input:focus{border-color:var(--blue);outline:none}
+  .faq-search button{border:1px solid var(--blue);background:var(--blue);color:#fff;border-radius:0 999px 999px 0;padding:0 18px;font-size:17px;cursor:pointer}
+  .faq-pills{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 22px;font-family:system-ui,sans-serif}
+  .qpill{border:0;background:#e8f0fb;color:#0f3e75;border-radius:999px;padding:8px 16px;font-size:14px;cursor:pointer}
+  .qpill:hover{background:#d9e7f8}
+  .qpill.on{background:var(--navy);color:#fff}
+  .faq-noresult{display:none;font-family:system-ui,sans-serif;font-size:14px;color:var(--muted);margin:0 0 18px}
+  .faq-noresult.show{display:block}
+
+  /* FAQ accordions */
+  .faq details{border-bottom:1px solid var(--line)}
+  .faq details:first-of-type{border-top:1px solid var(--line)}
+  .faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 2px;font-family:system-ui,sans-serif;font-size:17px;font-weight:600;color:var(--navy)}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";font-size:22px;font-weight:400;color:var(--muted);flex:none;transition:transform .15s}
+  .faq details[open] summary::after{transform:rotate(45deg)}
+  .faq details p{margin:0 0 20px;max-width:66ch;color:#3b4754}
+
+  /* AI agent answer card — result of POST /v1/summaries/page/answer */
+  .ai-answer{display:none;background:var(--soft);border:1px solid #cfe0f2;border-radius:var(--radius);padding:18px 20px;margin:0 0 22px}
+  .ai-answer.show{display:block}
+  .ai-answer .ai-label{font-family:system-ui,sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--blue);margin:0 0 8px}
+  #aiAnswerText{max-width:66ch}
+  #aiAnswerText p{margin:0 0 10px}
+  #aiAnswerText p:last-child{margin-bottom:0}
+  #aiAnswerText ul{margin:0 0 10px;padding-left:1.3em}
+  #aiAnswerText li{margin:0 0 4px}
+  .ai-answer .ai-meta{font-family:system-ui,sans-serif;font-size:12px;color:var(--muted);margin-top:10px}
+  .ai-answer.loading #aiAnswerText{color:var(--muted);font-style:italic}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <span class="logo">Select<em>Specs</em>.com</span>
+    <nav class="crumb" aria-label="Breadcrumb"><a href="https://www.selectspecs.com">Home</a> / Reviews</nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>What our customers really think</h1>
+      <div class="scoreline">
+        <span class="tstars" id="hero-stars"></span>
+        <span class="score" id="hero-rating"></span>
+        <span class="of" id="hero-total"></span>
+        <span class="verified">✓ Every review from a real order</span>
+      </div>
+      <p class="description" id="hero-description"></p>
+      <p class="tldr" id="hero-tldr"></p>
+      <p class="updated" id="hero-updated"></p>
+    </div>
+    <div class="snapshot" id="snapshot">
+      <h2>Rating breakdown</h2>
+    </div>
+  </div>
+</section>
+
+<section class="platforms">
+  <div class="wrap" id="platformsWrap">
+    <span class="plabel">Also rated on</span>
+    <!-- platform tiles rendered live from /statistics per-source counts -->
+  </div>
+</section>
+
+<div class="wrap">
+  <section class="block" id="summary">
+    <div class="wrap">
+      <h2>The short version</h2>
+      <p id="summary-text"></p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>What customers talk about</h2>
+      <p class="kicker">Click a topic to see matching reviews below.</p>
+      <div class="topics" id="topics"></div>
+    </div>
+  </section>
+
+  <section class="block trend" id="trend">
+    <div class="wrap">
+      <h2>Consistent over time</h2>
+      <p class="kicker">Average rating by month, last 12 months.</p>
+      <div class="legend" id="trendLegend" role="group" aria-label="Toggle chart lines"></div>
+      <div class="chart-wrap" id="trendChartWrap">
+        <svg id="trendChart" viewBox="0 0 760 280" role="img" aria-label="Line chart of monthly average rating by topic, last 12 months"></svg>
+        <div class="ttip" id="trendTooltip" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block faq" id="faq">
+    <div class="wrap">
+      <h2>Questions shoppers ask</h2>
+      <p class="kicker">Don't see your question? Ask below and we'll answer it using real customer reviews.</p>
+
+      <div class="faq-search">
+        <input id="faqq" type="search" placeholder="Search reviews and Q&amp;A…" aria-label="Search reviews and Q&A">
+        <button id="faqgo" aria-label="Search">→</button>
+      </div>
+      <div class="faq-pills" id="faqPills" role="group" aria-label="Suggested questions"></div>
+      <p class="faq-noresult" id="faqNoResult">No matching questions — <a href="#review-browser" id="faqToReviews">search all reviews instead →</a></p>
+
+      <div class="ai-answer" id="aiAnswer" role="status" aria-live="polite">
+        <p class="ai-label">Answered by AI</p>
+        <div id="aiAnswerText"></div>
+        <p class="ai-meta" id="aiAnswerMeta"></p>
+      </div>
+
+      <div id="faqList"></div>
+    </div>
+  </section>
+
+  <section class="block" id="review-browser">
+    <div class="wrap">
+      <h2>Read the reviews</h2>
+
+      <div class="filterbar" role="group">
+        <select id="starSel" aria-label="Filter by rating">
+          <option value="">All ratings</option>
+          <option value="5">5 stars</option>
+          <option value="4">4 stars</option>
+          <option value="3">3 stars</option>
+          <option value="2">2 stars</option>
+          <option value="1">1 star</option>
+        </select>
+        <button class="chip" data-topic="quality">Quality</button>
+        <button class="chip" data-topic="delivery">Delivery</button>
+        <button class="chip" data-topic="service">Service</button>
+        <button class="chip" data-topic="returns">Returns</button>
+        <button class="chip" data-topic="other">Price &amp; website</button>
+        <select id="sentSel" aria-label="Filter by sentiment">
+          <option value="">All sentiment</option>
+          <option value="positive">Positive</option>
+          <option value="negative">Negative</option>
+        </select>
+        <select id="sourceSel" aria-label="Filter by review source">
+          <option value="">All sources</option>
+          <option value="trustpilot">Trustpilot</option>
+          <option value="google">Google</option>
+        </select>
+        <input id="q" type="search" placeholder="Search reviews…" aria-label="Search reviews">
+        <select id="sort" aria-label="Sort reviews">
+          <option value="recent">Most recent</option>
+          <option value="high">Highest rated</option>
+          <option value="low">Lowest rated</option>
+        </select>
+        <button id="applyBtn" style="padding:8px 14px;border-radius:999px;background:var(--navy);color:#fff;border:0;cursor:pointer">Apply</button>
+      </div>
+      <p class="count-note">Showing <span id="shown">20</span> reviews on this page</p>
+
+      <div id="reviews"></div>
+
+      <nav class="pager" aria-label="Review pages">
+        <a id="prev" href="#">‹ Prev</a>
+        <span id="pageInfo"></span>
+        <a id="next" href="#">Next ›</a>
+      </nav>
+    </div>
+  </section>
+
+  <div class="method">
+    <h2>How we collect reviews</h2>
+    <p>After every completed order, SelectSpecs automatically invites the customer. Reviews are published unedited, and organized by topic so it's easy to find what matters to you.</p>
+  </div>
+</div>
+
+<script>
+// Star renderer from prototype
+const COLORS = { 1: '#D64545', 2: '#FF9800', 3: '#FFC107', 4: '#A4C639', 5: '#00B67A' };
+const EMPTY = '#dcdce6';
+const LEFT = 'M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z';
+const RIGHT = 'M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z';
+const STAR = 'M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z';
+
+function tile(lc, rc) {
+  return `<svg viewBox="0 0 20 20" aria-hidden="true"><path fill="${lc}" d="${LEFT}"/><path fill="${rc}" d="${RIGHT}"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="${STAR}"/></svg>`;
+}
+
+function renderStars(el, rating) {
+  const r = parseFloat(rating);
+  // 4.3–4.49 would otherwise render as a flat 4 stars (half-star fill only kicks in at
+  // x.5) — bump that band up to display as 4.5 so a genuinely strong rating like 4.39
+  // doesn't read as a plain "4". Doesn't touch 4.5+ (already correct) or the numeric label.
+  const displayR = (r >= 4.3 && r < 4.5) ? 4.5 : r;
+  // color follows the *displayed* rating, not the raw one — so a 4.3-4.49 bumped to a
+  // 4.5 icon also gets the dark-green "5" tier (Math.round(4.5) === 5), not the lighter
+  // "4" green, keeping the icon's color consistent with what it visually shows.
+  const c = COLORS[Math.round(displayR)] || COLORS[5];
+  let html = '';
+  for (let i = 1; i <= 5; i++) {
+    if (displayR >= i) html += tile(c, c);
+    else if (displayR >= i - 0.5) html += tile(c, EMPTY);
+    else html += tile(EMPTY, EMPTY);
+  }
+  el.innerHTML = html;
+}
+
+// Set to 'local' to test against a locally running review-service (localhost:8080),
+// 'prod' for the live StackTome API. Local uses X-Consumer-Username (no apikey needed).
+const ENV = 'prod';
+
+const API_KEY = '7yjXSd44BDTdQ5iQu24rNJX6Rzi6miTW';
+const ENV_CONFIG = {
+  prod: {
+    reviewsApi: 'https://services.stacktome.com/api/reviews/v1/reviews/public',
+    statsApi: 'https://services.stacktome.com/api/reviews/v1/statistics',
+    summariesApi: 'https://services.stacktome.com/api/reviews/v1/summaries',
+    pageSummaryApi: 'https://services.stacktome.com/api/reviews/v1/summaries/page',
+    pageAnswerApi: 'https://services.stacktome.com/api/reviews/v1/summaries/page/answer',
+    headers: { 'apikey': API_KEY, 'Content-Type': 'application/json' }
+  },
+  local: {
+    reviewsApi: 'http://localhost:8080/v1/reviews/public',
+    statsApi: 'http://localhost:8080/v1/statistics',
+    summariesApi: 'http://localhost:8080/v1/summaries',
+    pageSummaryApi: 'http://localhost:8080/v1/summaries/page',
+    pageAnswerApi: 'http://localhost:8080/v1/summaries/page/answer',
+    headers: { 'X-Consumer-Username': 'user_@_selectspecs', 'Content-Type': 'application/json' }
+  }
+};
+// /v1/reviews/public — sanitized response (no order amounts, no customer PII beyond a display
+// name, no delivery/domain/fulfillmentCompany fields). This is a public page: it must never
+// call the full /v1/reviews endpoint, which carries that sensitive data.
+const REVIEWS_API = ENV_CONFIG[ENV].reviewsApi;
+
+const TOPIC_KEYWORDS = {
+  service: ['service', 'support', 'helpful', 'communication', 'staff'],
+  quality: ['quality', 'fit', 'prescription', 'blurry', 'flimsy', 'scratch', 'lens'],
+  delivery: ['delivery', 'shipping', 'arrived', 'courier', 'postage', 'dispatch', 'late'],
+  returns: ['refund', 'return', 'exchange', 'remake', 'money'],
+  packaging: ['package', 'box', 'packaging', 'damaged'],
+  other: ['website', 'price', 'app', 'payment']
+};
+
+let state = { page: 1, ratings: null, keywords: null, sentiment: null, source: null, q: '' };
+let aggregates = null;
+let reviewsTotal = null; // fetched once via includeTotal:true (unfiltered only)
+
+function hasActiveFilters() {
+  return !!(state.ratings || state.keywords || state.sentiment || state.source || document.getElementById('q').value.trim());
+}
+
+// Stats request shape: full history, yearly granularity, service reviews —
+// items[]{source, rating, sentiment, date, count}
+const STATS_API = ENV_CONFIG[ENV].statsApi;
+
+async function fetchStatistics() {
+  const body = {
+    fromDateTime: '2000-01-01T00:00:00.000Z',
+    toDateTime: new Date().toISOString(),
+    timeGranularity: 'yearly',
+    reviewType: 'service'
+  };
+  const res = await fetch(STATS_API, {
+    method: 'POST',
+    headers: API_KEY_HEADER,
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) throw new Error('statistics ' + res.status);
+  return res.json();
+}
+
+// Monthly per-topic series for the trend chart. keywords=null → overall (no filter).
+// Backend now supports OR-across-keywords via GetReviewStatisticsListRequest.keywords
+// (review-service StatisticsRepository.getReviewStats) — one call per topic/legend line.
+async function fetchMonthlyStats(keywords) {
+  const toDateTime = new Date();
+  const fromDateTime = new Date(toDateTime);
+  fromDateTime.setMonth(fromDateTime.getMonth() - 11);
+  fromDateTime.setDate(1);
+  const body = {
+    ...BASE_REVIEW_PARAMS,
+    fromDateTime: fromDateTime.toISOString(),
+    toDateTime: toDateTime.toISOString(),
+    timeGranularity: 'monthly',
+    ...(keywords ? { keywords } : {})
+  };
+  const res = await fetch(STATS_API, {
+    method: 'POST',
+    headers: API_KEY_HEADER,
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) throw new Error('statistics ' + res.status);
+  const data = await res.json();
+
+  // items[]{source, rating, sentiment, date: "yyyy-MM", count} -> weighted avg per month
+  const byMonth = {};
+  (data.items || []).forEach(i => {
+    const m = byMonth[i.date] || (byMonth[i.date] = { count: 0, weighted: 0 });
+    m.count += i.count;
+    m.weighted += i.rating * i.count;
+  });
+  const months = [];
+  const cursor = new Date(fromDateTime);
+  for (let n = 0; n < 12; n++) {
+    const key = cursor.toISOString().slice(0, 7); // "yyyy-MM"
+    const m = byMonth[key];
+    months.push({
+      label: cursor.toLocaleString('en', { month: 'short' }),
+      monthYear: cursor.toLocaleString('en', { month: 'short', year: 'numeric' }),
+      avg: m && m.count ? Math.round(m.weighted / m.count * 100) / 100 : null,
+      count: m ? m.count : 0
+    });
+    cursor.setMonth(cursor.getMonth() + 1);
+  }
+  return months;
+}
+
+async function renderTrendChart() {
+  const svg = document.getElementById('trendChart');
+  const legend = document.getElementById('trendLegend');
+  if (!svg || !legend) return;
+
+  const topicSeries = [
+    { name: 'Overall', color: '#16324f', keywords: null },
+    { name: 'Quality', color: '#00B67A', keywords: TOPIC_KEYWORDS.quality },
+    { name: 'Delivery', color: '#2563eb', keywords: TOPIC_KEYWORDS.delivery },
+    { name: 'Service', color: '#f59e0b', keywords: TOPIC_KEYWORDS.service },
+    { name: 'Returns', color: '#D64545', keywords: TOPIC_KEYWORDS.returns }
+  ];
+
+  const results = await Promise.allSettled(topicSeries.map(s => fetchMonthlyStats(s.keywords)));
+  const SERIES = topicSeries
+    .map((s, i) => ({ ...s, months: results[i].status === 'fulfilled' ? results[i].value : null }))
+    .filter(s => s.months && s.months.some(m => m.avg !== null));
+  if (!SERIES.length) return;
+
+  const MONTHS = SERIES[0].months.map(m => m.label);
+  const W = 760, H = 280, L = 40, R = 14, T = 14, B = 30;
+  const Y0 = 3, Y1 = 5;
+  const x = i => L + i * (W - L - R) / (MONTHS.length - 1);
+  const y = v => T + (Y1 - v) * (H - T - B) / (Y1 - Y0);
+  const parts = [];
+  for (let g = Y0; g <= Y1; g += 0.5) {
+    parts.push(`<line x1="${L}" y1="${y(g)}" x2="${W - R}" y2="${y(g)}" stroke="#edf0f3" stroke-width="1"/>`);
+    parts.push(`<text x="${L - 8}" y="${y(g) + 4}" text-anchor="end" font-size="11" fill="#67737f" font-family="system-ui,sans-serif">${g.toFixed(1)}</text>`);
+  }
+  MONTHS.forEach((m, i) => {
+    if (i % 2 === 0) parts.push(`<text x="${x(i)}" y="${H - 8}" text-anchor="middle" font-size="11" fill="#67737f" font-family="system-ui,sans-serif">${m}</text>`);
+  });
+  SERIES.forEach((s, si) => {
+    // gaps (null months, e.g. no matching reviews that month) break the polyline into segments
+    let seg = [];
+    const segments = [];
+    s.months.forEach((m, i) => {
+      if (m.avg === null) { if (seg.length) segments.push(seg); seg = []; }
+      else seg.push(x(i) + ',' + y(m.avg));
+    });
+    if (seg.length) segments.push(seg);
+    const lastIdx = s.months.map(m => m.avg).lastIndexOf(s.months.map(m => m.avg).filter(v => v !== null).pop());
+    const polylines = segments.map(pts => `<polyline points="${pts.join(' ')}" fill="none" stroke="${s.color}" stroke-width="2.5" stroke-linejoin="round"/>`).join('');
+    const dot = lastIdx > -1 ? `<circle cx="${x(lastIdx)}" cy="${y(s.months[lastIdx].avg)}" r="3.5" fill="${s.color}"/>` : '';
+    parts.push(`<g data-line="${si}">${polylines}${dot}</g>`);
+  });
+  // crosshair line, drawn last so it sits above the series lines
+  parts.push(`<line class="crosshair" id="trendCrosshair" x1="${L}" y1="${T}" x2="${L}" y2="${H - B}"/>`);
+  // one big transparent hit area per month column — snap-to-nearest-X, not pixel-perfect aim
+  const colWidth = MONTHS.length > 1 ? (W - L - R) / (MONTHS.length - 1) : W - L - R;
+  MONTHS.forEach((_, i) => {
+    const cx = x(i);
+    parts.push(`<rect class="hitcol" data-i="${i}" tabindex="0" x="${cx - colWidth / 2}" y="0" width="${colWidth}" height="${H}" fill="transparent"/>`);
+  });
+  svg.innerHTML = parts.join('');
+
+  wireTrendHover(svg, SERIES);
+
+  legend.innerHTML = '';
+  SERIES.forEach((s, si) => {
+    const b = document.createElement('button');
+    b.className = 'lkey';
+    b.innerHTML = `<i style="background:${s.color}"></i>${s.name}`;
+    b.addEventListener('click', () => {
+      b.classList.toggle('off');
+      svg.querySelector(`[data-line="${si}"]`).style.display = b.classList.contains('off') ? 'none' : '';
+    });
+    legend.appendChild(b);
+  });
+}
+
+// Crosshair + one shared tooltip listing every visible series at the hovered month —
+// per dataviz interaction spec: snap-to-nearest-X, values lead, line-color keys, no innerHTML.
+function wireTrendHover(svg, SERIES) {
+  const wrapEl = document.getElementById('trendChartWrap');
+  const tooltip = document.getElementById('trendTooltip');
+  const crosshair = document.getElementById('trendCrosshair');
+  if (!wrapEl || !tooltip || !crosshair) return;
+
+  const W = 760;
+  const hide = () => { tooltip.classList.remove('show'); crosshair.style.opacity = '0'; };
+
+  svg.querySelectorAll('.hitcol').forEach(rect => {
+    const i = parseInt(rect.dataset.i, 10);
+    rect.addEventListener('pointerenter', () => showAt(i));
+    rect.addEventListener('focus', () => showAt(i));
+  });
+  wrapEl.addEventListener('pointerleave', hide);
+
+  function showAt(i) {
+    const rows = SERIES
+      .map((s, si) => ({ s, si, m: s.months[i] }))
+      .filter(({ si, m }) => m && m.avg !== null && svg.querySelector(`[data-line="${si}"]`).style.display !== 'none');
+    if (!rows.length) { hide(); return; }
+
+    tooltip.innerHTML = '';
+    const monthEl = document.createElement('div');
+    monthEl.className = 'ttip-month';
+    monthEl.textContent = rows[0].m.monthYear;
+    tooltip.appendChild(monthEl);
+    rows.forEach(({ s, m }) => {
+      const row = document.createElement('div');
+      row.className = 'ttip-row';
+      const key = document.createElement('span');
+      key.className = 'ttip-key';
+      key.style.background = s.color;
+      const name = document.createElement('span');
+      name.className = 'ttip-name';
+      name.textContent = s.name;
+      const val = document.createElement('span');
+      val.className = 'ttip-val';
+      val.textContent = `${m.avg}★ (${m.count.toLocaleString()})`;
+      row.append(key, name, val);
+      tooltip.appendChild(row);
+    });
+
+    // crosshair position, in viewBox units converted to the wrapper's rendered pixel size
+    const svgRect = svg.getBoundingClientRect();
+    const scale = svgRect.width / W;
+    const colWidth = SERIES[0].months.length > 1 ? (W - 40 - 14) / (SERIES[0].months.length - 1) : W - 40 - 14;
+    const cxViewBox = 40 + i * colWidth;
+    const cxPx = cxViewBox * scale;
+    crosshair.setAttribute('x1', cxViewBox);
+    crosshair.setAttribute('x2', cxViewBox);
+    crosshair.style.opacity = '1';
+
+    tooltip.classList.add('show');
+    const wrapRect = wrapEl.getBoundingClientRect();
+    const tw = tooltip.offsetWidth;
+    let left = cxPx + 12;
+    if (left + tw > wrapRect.width) left = cxPx - tw - 12;
+    tooltip.style.left = Math.max(0, left) + 'px';
+    tooltip.style.top = '8px';
+  }
+}
+
+function computeAggregates(items) {
+  const distribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+  const bySource = {};
+  items.forEach(i => {
+    distribution[i.rating] = (distribution[i.rating] || 0) + i.count;
+    const s = bySource[i.source] || (bySource[i.source] = { count: 0, weighted: 0 });
+    s.count += i.count;
+    s.weighted += i.rating * i.count;
+  });
+  const total = Object.values(distribution).reduce((a, b) => a + b, 0);
+  const rating = total
+    ? Math.round(Object.entries(distribution).reduce((a, [r, c]) => a + Number(r) * c, 0) / total * 100) / 100
+    : 0;
+  return { rating, total_reviews: total, distribution, bySource };
+}
+
+function renderPlatforms(bySource) {
+  const wrap = document.getElementById('platformsWrap');
+  wrap.querySelectorAll('.platform').forEach(el => el.remove());
+  Object.entries(bySource)
+    .sort((a, b) => b[1].count - a[1].count)
+    .forEach(([source, s]) => {
+      const avg = Math.round(s.weighted / s.count * 10) / 10;
+      const span = document.createElement('span');
+      span.className = 'platform';
+      span.innerHTML = `<b>${source.charAt(0).toUpperCase() + source.slice(1)}</b> <span class="tstars sm"></span> <span class="pnum">${avg} · ${s.count.toLocaleString()} reviews</span>`;
+      renderStars(span.querySelector('.tstars'), avg);
+      wrap.appendChild(span);
+    });
+}
+
+async function loadAggregates() {
+  const res = await fetch('real-review-data.json');
+  aggregates = await res.json(); // Zeppelin topics + snapshot fallback for aggregates
+
+  // Live aggregates from /statistics; fall back to the JSON snapshot on error
+  let live = null;
+  try {
+    live = computeAggregates((await fetchStatistics()).items);
+  } catch (e) { /* snapshot fallback */ }
+  const agg = live || aggregates.aggregate;
+
+  // Hero
+  document.getElementById('hero-rating').textContent = agg.rating;
+  document.getElementById('hero-total').innerHTML = `${agg.total_reviews.toLocaleString()} service reviews`;
+  renderStars(document.getElementById('hero-stars'), agg.rating);
+  document.getElementById('hero-tldr').textContent = `SelectSpecs.com is rated ${agg.rating} out of 5 from ${agg.total_reviews.toLocaleString()} customer reviews, each one tied to a verified purchase.`;
+  document.getElementById('hero-updated').textContent = live
+    ? 'Ratings update automatically as new reviews come in.'
+    : `Last updated ${new Date(aggregates.generated_at).toLocaleDateString()}.`;
+
+  // Snapshot
+  const snap = document.getElementById('snapshot');
+  snap.innerHTML = '<h2>Rating breakdown</h2>';
+  const dist = agg.distribution;
+  const tot = agg.total_reviews;
+  [5,4,3,2,1].forEach(s => {
+    const c = dist[s] || 0;
+    const p = tot ? Math.round(c / tot * 100) : 0;
+    const row = document.createElement('a');
+    row.className = 'row';
+    row.innerHTML = `<span>${s} ★</span><span class="bar"><b style="width:${p}%"></b></span><span>${p}% · ${c.toLocaleString()}</span>`;
+    row.onclick = () => {
+      state.ratings = [s];
+      state.page = 1;
+      loadReviews();
+    };
+    snap.appendChild(row);
+  });
+
+  // "Also rated on" strip from live per-source stats
+  if (live) renderPlatforms(live.bySource);
+
+  jsonLdData.aggregate = agg;
+
+  // Topics with real counts + live quote fetch
+  await renderTopics();
+
+  // Editorial description/summary/faq from the widget template config
+  await renderPageSummary();
+}
+
+// Data captured as it's fetched elsewhere (renderTopics/renderPageSummary/renderReviews),
+// assembled into one JSON-LD @graph once the initial load settles. Client-side only on this
+// test page — production must render this server-side (crawlers don't run JS), see
+// jsonld-aeo-extension-plan.md.
+const jsonLdData = { aggregate: null, topics: [], faq: [], reviews: [], topicOverviews: [] };
+
+function buildAndInjectJsonLd() {
+  const pageUrl = 'https://www.selectspecs.com/reviews';
+  const agg = jsonLdData.aggregate;
+
+  const graph = [];
+
+  const store = {
+    '@type': 'OnlineStore',
+    '@id': pageUrl + '#store',
+    name: 'SelectSpecs.com',
+    url: 'https://www.selectspecs.com',
+  };
+  if (agg) {
+    store.aggregateRating = {
+      '@type': 'AggregateRating',
+      ratingValue: agg.rating,
+      reviewCount: agg.total_reviews,
+      bestRating: 5,
+      worstRating: 1,
+    };
+  }
+  graph.push(store);
+
+  graph.push({
+    '@type': 'WebPage',
+    '@id': pageUrl,
+    name: 'SelectSpecs.com Service Reviews',
+    url: pageUrl,
+    mainEntity: { '@id': pageUrl + '#store' },
+    dateModified: new Date().toISOString(),
+    // Speculative/forward-positioning per jsonld-aeo-extension-plan.md §5.1 — no confirmed
+    // major crawler executes an advertised Action today. urlTemplate MUST stay same-origin
+    // (a customer-side proxy), never point at services.stacktome.com directly, same
+    // token-exposure constraint as the review-list pagination proxy.
+    potentialAction: {
+      '@type': 'AskAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: 'https://www.selectspecs.com/api/reviews/v1/summaries/page/answer',
+        httpMethod: 'POST',
+        encodingType: 'application/json',
+        contentType: 'application/json',
+      },
+      'query-input': 'required name=question',
+    },
+  });
+
+  graph.push({
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.selectspecs.com' },
+      { '@type': 'ListItem', position: 2, name: 'Reviews', item: pageUrl },
+    ],
+  });
+
+  if (agg) {
+    graph.push({
+      '@type': 'Dataset',
+      name: 'SelectSpecs.com rating distribution',
+      about: { '@id': pageUrl + '#store' },
+      variableMeasured: [1, 2, 3, 4, 5].map(star => ({
+        '@type': 'PropertyValue',
+        name: `${star}-star reviews`,
+        value: agg.distribution[star] || 0,
+      })),
+    });
+  }
+
+  if (jsonLdData.topics.length) {
+    graph.push({
+      '@type': 'Dataset',
+      name: 'SelectSpecs.com per-topic review breakdown',
+      about: { '@id': pageUrl + '#store' },
+      variableMeasured: jsonLdData.topics.map(t => ({
+        '@type': 'PropertyValue',
+        name: t.topic,
+        value: t.rating,
+        description: `${t.positivePercentage}% of ${t.count.toLocaleString()} reviews mentioning ${t.topic} rate it 4 stars or above`,
+      })),
+    });
+  }
+
+  // Real curated FAQ + topic-overview prose folded into one FAQPage — reuses the existing
+  // Question/acceptedAnswer schema type for both rather than inventing new vocabulary
+  // (jsonld-aeo-extension-plan.md §4.2); topic overviews use the same summaryText field as
+  // the topic cards, just with richer editorial content, no separate schema field needed.
+  const topicQuestions = (jsonLdData.topicOverviews || [])
+    .filter(t => t.summaryText)
+    .map(t => ({
+      '@type': 'Question',
+      name: `How do customers rate SelectSpecs' ${t.topic}?`,
+      acceptedAnswer: { '@type': 'Answer', text: t.summaryText },
+    }));
+  const faqQuestions = jsonLdData.faq.map(f => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: { '@type': 'Answer', text: f.answer },
+  }));
+  if (faqQuestions.length || topicQuestions.length) {
+    graph.push({
+      '@type': 'FAQPage',
+      mainEntity: faqQuestions.concat(topicQuestions),
+    });
+  }
+
+  jsonLdData.reviews.forEach((r, i) => {
+    graph.push({
+      '@type': 'Review',
+      '@id': pageUrl + '#review-' + i,
+      itemReviewed: { '@id': pageUrl + '#store' },
+      author: { '@type': 'Person', name: r.author || 'Anonymous' },
+      datePublished: r.datePublished,
+      headline: r.headline,
+      reviewBody: r.reviewBody,
+      reviewRating: { '@type': 'Rating', ratingValue: r.ratingValue, bestRating: 5, worstRating: 1 },
+      publisher: { '@id': pageUrl + '#store' },
+    });
+  });
+
+  const json = { '@context': 'https://schema.org', '@graph': graph };
+  let script = document.getElementById('pageJsonLd');
+  if (!script) {
+    script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'pageJsonLd';
+    document.head.appendChild(script);
+  }
+  script.textContent = JSON.stringify(json);
+}
+
+const API_KEY_HEADER = ENV_CONFIG[ENV].headers;
+// Verified live against both local and prod: same fields required either way.
+const BASE_REVIEW_PARAMS = { reviewType: 'service', country: 'gb', language: 'en' };
+const PAGE_SUMMARY_API = ENV_CONFIG[ENV].pageSummaryApi;
+const PAGE_ANSWER_API = ENV_CONFIG[ENV].pageAnswerApi;
+
+// POST /v1/summaries/page — editorial description/summary/topicPerformanceSummary/faq
+// stored in the widget template config. 404 (no review-page-tagged template yet) is
+// expected and handled gracefully, not an error.
+async function fetchPageSummary() {
+  const res = await fetch(PAGE_SUMMARY_API, {
+    method: 'POST',
+    headers: API_KEY_HEADER,
+    body: '{}'
+  });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error('summaries/page ' + res.status);
+  return res.json();
+}
+
+async function renderPageSummary() {
+  let summary = null;
+  try {
+    summary = await fetchPageSummary();
+  } catch (e) { /* leave description/summary blank, faq empty */ }
+
+  document.getElementById('hero-description').textContent = summary && summary.description ? summary.description : '';
+  document.getElementById('summary-text').textContent = summary && summary.summary ? summary.summary : '';
+
+  const faqList = summary && summary.faq ? summary.faq : [];
+  jsonLdData.faq = faqList;
+  renderFaq(faqList);
+
+  // Editorial per-topic overview prose (WidgetContent.topicPerformanceSummary — same
+  // summaryText field as before, just richer content; no schema change needed). Appended
+  // onto the already-rendered live topic card for that category, and folded into the
+  // FAQPage graph below as additional citable Q&A (see jsonld-aeo-extension-plan.md §4.2).
+  const topicOverviews = summary && summary.topicPerformanceSummary ? summary.topicPerformanceSummary : [];
+  jsonLdData.topicOverviews = topicOverviews;
+  topicOverviews.forEach(t => {
+    const card = document.querySelector(`.topic[data-topic="${t.topic}"]`);
+    if (card && t.summaryText) {
+      const p = document.createElement('p');
+      p.className = 'overview';
+      p.textContent = t.summaryText;
+      card.insertBefore(p, card.querySelector('.more'));
+    }
+  });
+}
+
+function renderFaq(faqList) {
+  const pillsWrap = document.getElementById('faqPills');
+  const listWrap = document.getElementById('faqList');
+  pillsWrap.innerHTML = '';
+  listWrap.innerHTML = '';
+
+  faqList.forEach((item, i) => {
+    const pill = document.createElement('button');
+    pill.className = 'qpill';
+    pill.textContent = item.question;
+    pillsWrap.appendChild(pill);
+
+    const details = document.createElement('details');
+    if (i === 0) details.open = true;
+    const summaryEl = document.createElement('summary');
+    summaryEl.textContent = item.question;
+    const p = document.createElement('p');
+    p.textContent = item.answer;
+    details.append(summaryEl, p);
+    listWrap.appendChild(details);
+  });
+
+  wireFaqSearch();
+}
+
+// Minimal markdown renderer for AI agent answers only (OpenAI reliably returns **bold** and
+// "- " bullet lists; nothing fancier). Escapes HTML first — the answer can quote real review
+// text, which is user-generated content, so it must never be interpreted as markup.
+function renderMarkdownLite(text) {
+  const wrap = document.createElement('div');
+  wrap.textContent = text;
+  const escaped = wrap.innerHTML;
+
+  const lines = escaped.split(/\n+/).map(l => l.trim()).filter(Boolean);
+  let html = '';
+  let inList = false;
+  lines.forEach(line => {
+    const bullet = line.match(/^[-*]\s+(.*)/);
+    if (bullet) {
+      if (!inList) { html += '<ul>'; inList = true; }
+      html += `<li>${bullet[1]}</li>`;
+    } else {
+      if (inList) { html += '</ul>'; inList = false; }
+      html += `<p>${line}</p>`;
+    }
+  });
+  if (inList) html += '</ul>';
+  return html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+}
+
+// Amazon-style FAQ search: filters the rendered Q&A live; on Enter/click with zero
+// matches, falls through to the live agent (POST /v1/summaries/page/answer) instead of
+// just pointing at the review list.
+function wireFaqSearch() {
+  const input = document.getElementById('faqq');
+  const goBtn = document.getElementById('faqgo');
+  const pills = Array.prototype.slice.call(document.querySelectorAll('#faqPills .qpill'));
+  const detailsEls = Array.prototype.slice.call(document.querySelectorAll('#faqList details'));
+  const noResult = document.getElementById('faqNoResult');
+  const aiBox = document.getElementById('aiAnswer');
+  const aiText = document.getElementById('aiAnswerText');
+  const aiMeta = document.getElementById('aiAnswerMeta');
+
+  function hideAi() {
+    aiBox.classList.remove('show', 'loading');
+  }
+
+  pills.forEach((pill, i) => {
+    pill.addEventListener('click', () => {
+      const d = detailsEls[i];
+      const opening = !d.open || !pill.classList.contains('on');
+      pills.forEach(p => p.classList.remove('on'));
+      detailsEls.forEach(x => { x.open = false; x.style.display = ''; });
+      input.value = '';
+      noResult.classList.remove('show');
+      hideAi();
+      if (opening) {
+        pill.classList.add('on');
+        d.open = true;
+        d.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  });
+
+  function filter() {
+    const q = input.value.trim().toLowerCase();
+    pills.forEach(p => p.classList.remove('on'));
+    let hits = 0;
+    detailsEls.forEach(d => {
+      const match = !q || d.textContent.toLowerCase().indexOf(q) > -1;
+      d.style.display = match ? '' : 'none';
+      d.open = !!q && match;
+      if (match) hits++;
+    });
+    noResult.classList.toggle('show', !!q && hits === 0);
+    if (hits > 0 || !q) hideAi();
+    return hits;
+  }
+
+  input.addEventListener('input', filter);
+
+  async function askAgent() {
+    const q = input.value.trim();
+    if (!q) return;
+    if (filter() > 0) return; // an existing FAQ already answers it
+    aiBox.classList.add('show', 'loading');
+    aiText.textContent = 'Looking through customer reviews…';
+    aiMeta.textContent = '';
+    try {
+      const res = await fetch(PAGE_ANSWER_API, {
+        method: 'POST',
+        headers: API_KEY_HEADER,
+        body: JSON.stringify({ question: q })
+      });
+      const data = await res.json();
+      aiBox.classList.remove('loading');
+      if (data && data.answer) {
+        aiText.innerHTML = renderMarkdownLite(data.answer);
+        aiMeta.textContent = data.usedReviews
+          ? 'Answer drawn from matching customer reviews.'
+          : 'Based on our overall reviews.';
+      } else {
+        aiText.textContent = "Sorry, we can't answer questions right now — try the reviews below.";
+        aiMeta.textContent = '';
+      }
+    } catch (e) {
+      aiBox.classList.remove('loading');
+      aiText.textContent = 'Sorry, something went wrong. Please try again.';
+      aiMeta.textContent = '';
+    }
+  }
+
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') askAgent(); });
+  goBtn.addEventListener('click', askAgent);
+
+  const toReviews = document.getElementById('faqToReviews');
+  if (toReviews) toReviews.addEventListener('click', hideAi);
+}
+
+// Live per-topic stats: one /summaries call per category with its keyword list.
+// Returns { rating, service: { count, star1..star5 } } for reviews matching the keywords.
+const SUMMARIES_API = ENV_CONFIG[ENV].summariesApi;
+
+async function fetchTopicSummary(keywords) {
+  const res = await fetch(SUMMARIES_API, {
+    method: 'POST',
+    headers: API_KEY_HEADER,
+    body: JSON.stringify({
+      ...BASE_REVIEW_PARAMS,
+      timeout: { timeoutMillis: 3000 },
+      keywords
+    })
+  });
+  if (!res.ok) throw new Error('summaries ' + res.status);
+  return res.json();
+}
+
+// Most recent review matching the topic keywords — one blockquote per card,
+// same as the prototype's topic quotes but live.
+async function fetchTopicQuote(keywords) {
+  const res = await fetch(REVIEWS_API, {
+    method: 'POST',
+    headers: API_KEY_HEADER,
+    body: JSON.stringify({
+      ...BASE_REVIEW_PARAMS,
+      keywords,
+      paging: { pageSize: 1, page: 1, includeTotal: false },
+      timeout: { timeoutMillis: 1000 },
+      sorting: [{ field: 'createdAt', direction: 'desc' }]
+    })
+  });
+  if (!res.ok) throw new Error('reviews ' + res.status);
+  const data = await res.json();
+  return data.items?.[0]?.review?.service?.text || '';
+}
+
+function escapeHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+async function renderTopics() {
+  const cont = document.getElementById('topics');
+  cont.innerHTML = '';
+
+  const categories = Object.keys(TOPIC_KEYWORDS);
+  const [summaries, quotes] = await Promise.all([
+    Promise.allSettled(categories.map(c => fetchTopicSummary(TOPIC_KEYWORDS[c]))),
+    Promise.allSettled(categories.map(c => fetchTopicQuote(TOPIC_KEYWORDS[c])))
+  ]);
+
+  jsonLdData.topics = [];
+  categories.forEach((category, i) => {
+    const r = summaries[i];
+    if (r.status !== 'fulfilled' || !r.value.service?.count) return;
+    const s = r.value.service;
+    const rating = r.value.rating;
+    const positive = Math.round((s.star4 + s.star5) / s.count * 100);
+    let quote = quotes[i].status === 'fulfilled' ? quotes[i].value : '';
+    if (quote.length > 180) quote = quote.slice(0, 177).replace(/\s+\S*$/, '') + '…';
+    jsonLdData.topics.push({ topic: category, rating, count: s.count, positivePercentage: positive });
+    const div = document.createElement('div');
+    div.className = 'topic';
+    div.dataset.topic = category;
+    div.innerHTML = `
+      <h3>${category}</h3>
+      <p class="verdict${rating < 3 ? ' negative' : ''}"><b>${rating} ★</b> across ${s.count.toLocaleString()} reviews — ${positive}% rate it 4★ or above</p>
+      ${quote ? `<blockquote>${escapeHtml(quote)}</blockquote>` : ''}
+      <a class="more" href="#review-browser">Filter reviews →</a>
+    `;
+    div.querySelector('.more').onclick = async (e) => {
+      // no preventDefault — let the #review-browser hash scroll happen natively
+      state.keywords = TOPIC_KEYWORDS[category];
+      state.page = 1;
+      await loadReviews();
+    };
+    cont.appendChild(div);
+  });
+}
+
+// Request shape verified to paginate reliably through all selectspecs reviews:
+// country "gb" + language "en", includeTotal:false, 1000ms timeout, createdAt desc.
+async function fetchReviews(extra = {}) {
+  const body = {
+    ...BASE_REVIEW_PARAMS,
+    paging: { pageSize: 10, page: state.page, includeTotal: false },
+    timeout: { timeoutMillis: 1000 },
+    sorting: [{ field: 'createdAt', direction: 'desc' }]
+  };
+
+  const q = document.getElementById('q').value.trim();
+
+  if (state.ratings) body.ratings = state.ratings;
+  if (state.keywords) body.keywords = state.keywords;
+  if (state.sentiment === 'positive') body.fromSentimentScore = 0.1;
+  if (state.sentiment === 'negative') body.fromSentimentScore = -0.9;
+  if (state.source) body.source = state.source;
+
+  if (q) {
+    // Send the whole query as one keyword rather than splitting on whitespace: the
+    // backend only ever consults extra keywords as an OR-style fallback when the first
+    // one doesn't fill the page, so a split query silently drops every word after the
+    // first. formatKw() on the backend already quotes multi-word keywords into a Lucene
+    // phrase match, so a single string here searches for the phrase as typed.
+    body.keywords = (body.keywords || []).concat([q]);
+  }
+  Object.assign(body, extra);
+
+  const res = await fetch(REVIEWS_API, {
+    method: 'POST',
+    headers: API_KEY_HEADER,
+    body: JSON.stringify(body)
+  });
+  return res.json();
+}
+
+// Total review count: same request with includeTotal:true — only safe unfiltered.
+async function fetchReviewsTotal() {
+  try {
+    const body = {
+      ...BASE_REVIEW_PARAMS,
+      paging: { pageSize: 10, page: 1, includeTotal: true },
+      timeout: { timeoutMillis: 1000 },
+      sorting: [{ field: 'createdAt', direction: 'desc' }]
+    };
+    const res = await fetch(REVIEWS_API, {
+      method: 'POST',
+      headers: API_KEY_HEADER,
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    const total = data.meta?.paging?.total;
+    if (typeof total === 'number' && total > 0) {
+      reviewsTotal = total;
+      updatePageInfo();
+    }
+  } catch (e) { /* keep "Page X+" fallback */ }
+}
+
+function renderReviews(data) {
+  const list = document.getElementById('reviews');
+  list.innerHTML = '';
+  // Backend `sorting` only indexes createdAt/sentimentScore (no rating sort), so
+  // "Lowest/Highest rated" is done client-side over the current page, same as prototype.html.
+  const sort = document.getElementById('sort').value;
+  const items = (data.items || []).slice();
+  if (sort === 'low') items.sort((a, b) => (a.review?.service?.rating || 0) - (b.review?.service?.rating || 0));
+  else if (sort === 'high') items.sort((a, b) => (b.review?.service?.rating || 0) - (a.review?.service?.rating || 0));
+
+  items.forEach(item => {
+    const svc = item.review?.service || {};
+    const div = document.createElement('article');
+    div.className = 'review';
+    const author = item.customer ? (item.customer.customerName || '').trim() : '';
+    const verified = item.isVerified ? '<span class="vcheck">✓ Verified order</span>' : '';
+    const sourceLabel = item.source ? item.source.charAt(0).toUpperCase() + item.source.slice(1) : 'Trustpilot';
+    const reply = svc.reply
+      ? `<div class="reply"><b>Reply from SelectSpecs.com</b>${svc.reply}</div>`
+      : '';
+    div.innerHTML = `
+      <div class="head">
+        <span class="stars-tip" data-tip="via ${escapeHtml(sourceLabel)}" tabindex="0"><span class="tstars sm"></span></span>
+        ${verified}
+        <span class="rate"><span class="who"><b>${author || 'Anonymous'}</b><span>${item.createdAt ? new Date(item.createdAt).toLocaleDateString() : ''}</span></span></span>
+      </div>
+      <h3>${escapeHtml(svc.heading || '')}</h3>
+      <p class="body">${escapeHtml(svc.text || '')}</p>
+      ${reply}
+    `;
+    renderStars(div.querySelector('.tstars'), svc.rating || 0);
+    list.appendChild(div);
+  });
+
+  document.getElementById('shown').textContent = items.length;
+  updatePageInfo();
+
+  // JSON-LD Review nodes mirror the initial, unfiltered page-1 load only (spec.md §5 —
+  // "the visible page-1 reviews"), not every subsequent filter/sort/page interaction.
+  if (!hasActiveFilters() && state.page === 1) {
+    jsonLdData.reviews = items.map(item => {
+      const svc = item.review?.service || {};
+      const author = item.customer ? (item.customer.customerName || '').trim() : '';
+      return {
+        author,
+        datePublished: item.createdAt ? new Date(item.createdAt).toISOString() : undefined,
+        headline: svc.heading || '',
+        reviewBody: svc.text || '',
+        ratingValue: svc.rating || 0,
+      };
+    });
+    buildAndInjectJsonLd();
+  }
+}
+
+function updatePageInfo() {
+  const pageCount = (!hasActiveFilters() && reviewsTotal) ? Math.ceil(reviewsTotal / 10) : null;
+  document.getElementById('pageInfo').textContent = pageCount
+    ? `Page ${state.page.toLocaleString()} of ${pageCount.toLocaleString()} (${reviewsTotal.toLocaleString()} reviews)`
+    : `Page ${state.page}+`;
+  // dim prev/next when there's nowhere to go; unfiltered/unknown-total pages always allow next
+  document.getElementById('prev').style.opacity = state.page > 1 ? '1' : '0.5';
+  document.getElementById('next').style.opacity = (pageCount && state.page >= pageCount) ? '0.5' : '1';
+}
+
+async function loadReviews(extra = {}) {
+  try {
+    const data = await fetchReviews(extra);
+    renderReviews(data);
+  } catch (e) {
+    document.getElementById('reviews').innerHTML = '<p>Error loading reviews from API.</p>';
+  }
+}
+
+function setupFilters() {
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  prevBtn.onclick = (e) => {
+    e.preventDefault();
+    if (state.page > 1) { state.page--; loadReviews(); }
+  };
+  nextBtn.onclick = (e) => {
+    e.preventDefault();
+    state.page++;
+    loadReviews();
+  };
+
+  const apply = document.getElementById('applyBtn');
+  apply.onclick = () => {
+    const s = document.getElementById('starSel').value;
+    state.ratings = s ? [parseInt(s)] : null;
+    const sent = document.getElementById('sentSel').value;
+    state.sentiment = sent || null;
+    const src = document.getElementById('sourceSel').value;
+    state.source = src || null;
+    state.page = 1;
+    loadReviews();
+  };
+
+  document.querySelectorAll('.chip').forEach(c => {
+    c.onclick = () => {
+      const topic = c.dataset.topic;
+      state.keywords = TOPIC_KEYWORDS[topic] || [topic];
+      state.page = 1;
+      document.querySelectorAll('.chip').forEach(x => x.classList.remove('on'));
+      c.classList.add('on');
+      loadReviews();
+    };
+  });
+
+  // Make the plain search box trigger on Enter (keyword search -> API)
+  const qInput = document.getElementById('q');
+  qInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      state.page = 1;
+      loadReviews();
+    }
+  });
+
+  // Add a clear filters button next to apply (if not already present)
+  if (!document.getElementById('clearBtn')) {
+    const clearBtn = document.createElement('button');
+    clearBtn.id = 'clearBtn';
+    clearBtn.textContent = 'Clear filters';
+    clearBtn.style.cssText = 'padding:8px 14px;border-radius:999px;background:#eee;color:#333;border:1px solid #ccc;cursor:pointer;margin-left:4px';
+    apply.parentNode.insertBefore(clearBtn, apply.nextSibling);
+
+    clearBtn.onclick = () => {
+      document.getElementById('starSel').value = '';
+      document.getElementById('sentSel').value = '';
+      document.getElementById('sourceSel').value = '';
+      document.getElementById('q').value = '';
+      document.querySelectorAll('.chip').forEach(x => x.classList.remove('on'));
+      state = { page: 1, ratings: null, keywords: null, sentiment: null, source: null, q: '' };
+      loadReviews();
+    };
+  }
+}
+
+async function init() {
+  await loadAggregates();
+  fetchReviewsTotal();   // one includeTotal:true call (unfiltered) for the pager total
+  await loadReviews();   // initial live call to API
+  renderTrendChart();     // 5 parallel /statistics calls (overall + 4 topics), non-blocking
+  setupFilters();         // also wires the #q Enter-to-search listener
+
+  // render stars on static elements
+  document.querySelectorAll('.tstars.xs').forEach(el => renderStars(el, parseFloat(el.dataset.r)));
+}
+
+init();
+</script>
+</body>
+</html>
