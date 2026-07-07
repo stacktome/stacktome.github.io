@@ -376,7 +376,6 @@ const TOPIC_KEYWORDS = {
 };
 
 let state = { page: 1, ratings: null, keywords: null, sentiment: null, source: null, q: '' };
-let aggregates = null;
 let reviewsTotal = null; // fetched once via includeTotal:true (unfiltered only)
 
 function hasActiveFilters() {
@@ -617,24 +616,14 @@ function renderPlatforms(bySource) {
 }
 
 async function loadAggregates() {
-  const res = await fetch('real-review-data.json');
-  aggregates = await res.json(); // Zeppelin topics + snapshot fallback for aggregates
-
-  // Live aggregates from /statistics; fall back to the JSON snapshot on error
-  let live = null;
-  try {
-    live = computeAggregates((await fetchStatistics()).items);
-  } catch (e) { /* snapshot fallback */ }
-  const agg = live || aggregates.aggregate;
+  const agg = computeAggregates((await fetchStatistics()).items);
 
   // Hero
   document.getElementById('hero-rating').textContent = agg.rating;
   document.getElementById('hero-total').innerHTML = `${agg.total_reviews.toLocaleString()} service reviews`;
   renderStars(document.getElementById('hero-stars'), agg.rating);
   document.getElementById('hero-tldr').textContent = `SelectSpecs.com is rated ${agg.rating} out of 5 from ${agg.total_reviews.toLocaleString()} customer reviews, each one tied to a verified purchase.`;
-  document.getElementById('hero-updated').textContent = live
-    ? 'Ratings update automatically as new reviews come in.'
-    : `Last updated ${new Date(aggregates.generated_at).toLocaleDateString()}.`;
+  document.getElementById('hero-updated').textContent = 'Ratings update automatically as new reviews come in.';
 
   // Snapshot
   const snap = document.getElementById('snapshot');
@@ -656,7 +645,7 @@ async function loadAggregates() {
   });
 
   // "Also rated on" strip from live per-source stats
-  if (live) renderPlatforms(live.bySource);
+  renderPlatforms(agg.bySource);
 
   jsonLdData.aggregate = agg;
 
