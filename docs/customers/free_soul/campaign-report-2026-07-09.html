@@ -338,7 +338,7 @@
 <ul class="action-list">
   <li>
     <div class="anum">1</div>
-    <div><strong>Add count_purchase ≥2 to segment 652 (purchases-skus)</strong> — This is the only segment without a purchase-count floor. Veg-SalCar-600 first-time buyers are currently invited from day 5 and are the source of the most extreme 1★ taste reviews. The existing draft for segment 652 narrows the dispatch window to 15–30 days but still includes first-timers. Adding <em>count_purchase ≥2</em> would align it with the logic already used in every other segment. If first-timers need a dedicated path, a separate segment with a longer wait window (e.g. 30–60 days) would be lower risk than inviting at day 5.</div>
+    <div><strong>Add count_purchase ≥2 to the purchases-skus segment (652)</strong> — This is the only segment without a purchase-count floor. Veg-SalCar-600 first-time buyers are currently invited from day 5 and are the source of the most extreme 1★ taste reviews. The existing draft for the purchases-skus segment narrows the dispatch window to 15–30 days but still includes first-timers. Adding <em>count_purchase ≥2</em> would align it with the logic already used in every other segment. If first-timers need a dedicated path, a separate segment with a longer wait window (e.g. 30–60 days) would be lower risk than inviting at day 5.</div>
   </li>
   <li>
     <div class="anum">2</div>
@@ -346,11 +346,11 @@
   </li>
   <li>
     <div class="anum">3</div>
-    <div><strong>Check whether campaign 240's daily cap is throttling the eligible pool</strong> — Segment 554 currently shows only 5 eligible customers. The campaign cap (maxEmails=100/day) and eventWindow=30 days means up to 3,000 invites per month could be sent if the pool existed. With 327 invites over 4 months (avg ~82/month), the throughput is fine if the pool is genuinely that small — but if ticket resolution volume is higher, some eligible customers may be missed. Compare ticket closure volume in the CRM against segment 554's pool history.</div>
+    <div><strong>Check whether the invite-closed campaign (240) daily cap is throttling the eligible pool</strong> — The closed-tickets segment (554) currently shows only 5 eligible customers. The campaign cap (maxEmails=100/day) and eventWindow=30 days means up to 3,000 invites per month could be sent if the pool were larger. With 327 invites over 4 months (avg ~82/month), the throughput is fine if the pool is genuinely that small — but if ticket resolution volume is higher, some eligible customers may be missed. Compare ticket closure volume in the CRM against the closed-tickets segment pool history.</div>
   </li>
   <li>
     <div class="anum">4</div>
-    <div><strong>Activate branded template A/B test on invite-loyal (424)</strong> — Branded <em>invite</em> and <em>reminder</em> templates exist in campaign 424's workflow at 0% weight. Campaign 424 is the lowest-risk test bed: 4.61★ avg rating, high-purchase-count audience, and large enough volume (~11k invites/month) to see meaningful open/click differences within 6–8 weeks at a 20% split. This would be the first data point on whether Free Soul-branded email outperforms TP-hosted email on CTR and review conversion.</div>
+    <div><strong>Activate branded template A/B test on the invite-loyal campaign (424)</strong> — Branded <em>invite</em> and <em>reminder</em> templates exist in the invite-loyal workflow at 0% weight. The invite-loyal campaign is the lowest-risk test bed: 4.61★ avg rating, high-purchase-count audience (≥6 orders), and large enough volume (~11k invites/month) to see meaningful open/click differences within 6–8 weeks at a 20% split. This would be the first data point on whether Free Soul-branded email outperforms the TP-hosted template on CTR and review conversion.</div>
   </li>
   <li>
     <div class="anum">5</div>
