@@ -164,68 +164,69 @@
 
 <!-- SEGMENT SETUP ANALYSIS -->
 <h2>Segment Setup Analysis</h2>
-<p>Current setup uses four segments targeting different customer cohorts. Below is an assessment of each against the key optimisation criteria.</p>
+<p>Segment filters verified against live config. Each segment's actual SQL logic is summarised below.</p>
 
 <div class="seg-grid">
   <div class="seg-card">
     <div class="seg-name">recent-purchases (552)</div>
-    <div class="seg-campaign">→ invite-tp campaign 237</div>
+    <div class="seg-campaign">→ invite-tp campaign 237 · 19,274 currently eligible</div>
     <div class="seg-row"><strong>Window:</strong> 5–30 days post-dispatch</div>
-    <div class="seg-row"><strong>Ticket exclusion:</strong> <span class="tag-warn">Broad</span> — excludes ALL customers with any ticket (even resolved 5★)</div>
-    <div class="seg-row"><strong>SKU exclusion:</strong> <span class="tag-ok">Partial</span> — first-time buyers with FS-1-CREAGLOW, Veg-Choc-600, Veg-Van-600, Veg-SalCar-600, Veg-Ber-600 are excluded</div>
-    <div class="seg-row"><strong>Repeat buyers:</strong> <span class="tag-issue">Mixed</span> — allows count_purchase = 1 for "good" SKUs; 2–5 for all SKUs. First-timers are included if they avoided the excluded SKUs.</div>
-    <div class="seg-row"><strong>Review quality risk:</strong> First-time buyers with taste complaints drive the majority of 1–2★ reviews in this campaign.</div>
+    <div class="seg-row"><strong>Purchase count:</strong> <span class="tag-ok">2–5</span> purchases (primary path) <span style="color:#888">OR</span> <span class="tag-warn">exactly 1</span> purchase AND SKU not in excluded list</div>
+    <div class="seg-row"><strong>Ticket exclusion:</strong> NOT IN any ticket (any status, any rating)</div>
+    <div class="seg-row"><strong>SKU exclusion for 1st-timers:</strong> FS-1-CREAGLOW, FS-Veg-Choc-600, FS-Veg-Van-600, Veg-SalCar-600, FS-Veg-Ber-600</div>
+    <div class="seg-row"><strong>Upper cap:</strong> count_purchase ≤5 — buyers with 6+ flow to segment 845</div>
+    <div class="seg-row"><strong>Verdict:</strong> <span class="tag-ok">Well structured</span> — 2+ repeat buyer filter already in place. First-timer OR branch is intentional: invites first-time buyers of non-risky SKUs.</div>
   </div>
   <div class="seg-card">
     <div class="seg-name">closed-tickets (554)</div>
-    <div class="seg-campaign">→ invite-closed campaign 240</div>
-    <div class="seg-row"><strong>Window:</strong> eventWindow=30 days, max 100/day</div>
-    <div class="seg-row"><strong>Ticket logic:</strong> <span class="tag-ok">Precise</span> — all tickets closed, rating ≥5, no tp-skip tag, excludes rating ≤3</div>
-    <div class="seg-row"><strong>Repeat buyers:</strong> No purchase-count filter — ticket customers at any purchase count</div>
-    <div class="seg-row"><strong>Result:</strong> <span class="tag-ok">Perfect</span> — 5.0★ average, zero negatives across 17 reviews. The strictest and best-performing segment.</div>
-    <div class="seg-row"><strong>Concern:</strong> Very low volume (327 invites / 4 months). Low eventWindow + maxEmails=100 limits throughput. If eligible pool is larger, volume is being throttled.</div>
+    <div class="seg-campaign">→ invite-closed campaign 240 · 5 currently eligible</div>
+    <div class="seg-row"><strong>Ticket logic:</strong> All tickets closed AND at least one rated ≥5★ AND no ticket rated ≤3★ AND no tp-skip tag</div>
+    <div class="seg-row"><strong>Purchase count:</strong> No filter — any purchase count</div>
+    <div class="seg-row"><strong>Verdict:</strong> <span class="tag-ok">Precise and correct</span> — 5.0★ average, zero negatives. Only 5 in pool today; pool resets daily as new tickets are closed.</div>
+    <div class="seg-row"><strong>Note:</strong> Current pool size (5) is very small — check if the eventWindow or maxEmails cap is throttling eligible customers who resolved tickets recently.</div>
   </div>
   <div class="seg-card">
     <div class="seg-name">purchases-skus (652)</div>
-    <div class="seg-campaign">→ invite-skus campaign 310</div>
-    <div class="seg-row"><strong>Window:</strong> 5–30 days post-dispatch</div>
-    <div class="seg-row"><strong>Ticket exclusion:</strong> <span class="tag-warn">Broad</span> — same as 552, excludes all ticket customers</div>
-    <div class="seg-row"><strong>SKU targeting:</strong> <span class="tag-warn">Narrow</span> — only Veg-SalCar-600. Other excluded-from-552 SKUs (Choc, Van, Ber, Creaglow) have no dedicated campaign.</div>
-    <div class="seg-row"><strong>Repeat buyers:</strong> count_purchase ≤5 (includes first-timers)</div>
-    <div class="seg-row"><strong>Result:</strong> 4.44★ avg with 3 negatives, including 1★ taste complaint specifically about salted caramel. The SKU targeting concentrates the highest-risk first-time product buyers.</div>
+    <div class="seg-campaign">→ invite-skus campaign 310 · 933 currently eligible</div>
+    <div class="seg-row"><strong>Window:</strong> 5–30 days post-dispatch <span class="tag-warn">(draft pending: 15–30 days)</span></div>
+    <div class="seg-row"><strong>SKU targeting:</strong> Veg-SalCar-600 only</div>
+    <div class="seg-row"><strong>Purchase count:</strong> <span class="tag-issue">≤5, no lower bound</span> — first-time buyers of salted caramel are included from day 5</div>
+    <div class="seg-row"><strong>Ticket exclusion:</strong> NOT IN any ticket</div>
+    <div class="seg-row"><strong>Verdict:</strong> The only segment without a purchase-count floor. First-time Veg-SalCar-600 buyers are the highest-risk cohort — responsible for the worst taste reviews ("ABSOLUTELY DISGUSTING 🤮"). The pending draft (15-30 day window) adds delay but doesn't filter first-timers out.</div>
+    <div class="seg-row"><strong>Gap:</strong> The other 4 excluded SKUs (Choc-600, Van-600, Ber-600, CREAGLOW) have no campaign — their first-time buyers get no invite at all.</div>
   </div>
   <div class="seg-card">
     <div class="seg-name">loyal-customers (845)</div>
-    <div class="seg-campaign">→ invite-loyal campaign 424</div>
+    <div class="seg-campaign">→ invite-loyal campaign 424 · 17,495 currently eligible</div>
     <div class="seg-row"><strong>Window:</strong> 5–30 days post-dispatch</div>
-    <div class="seg-row"><strong>Ticket exclusion:</strong> <span class="tag-warn">Broad</span> — excludes all ticket customers</div>
-    <div class="seg-row"><strong>Repeat buyers:</strong> <span class="tag-ok">Strong</span> — count_purchase ≥6, not yet reviewed</div>
-    <div class="seg-row"><strong>Result:</strong> 4.61★ avg, 0.4% review rate. Rating is good but review rate is the lowest of all campaigns. Customers with ≥6 purchases either don't engage with email CTAs or are more considered in their reviews.</div>
-    <div class="seg-row"><strong>Concern:</strong> 43,525 invites but only 124 reviews. The "NOT reviewed" filter is correct, but the low CTR (0.5%) suggests email engagement for this cohort is weak.</div>
+    <div class="seg-row"><strong>Purchase count:</strong> <span class="tag-ok">≥6</span> — strong repeat buyers only</div>
+    <div class="seg-row"><strong>Reviewed:</strong> NOT already reviewed</div>
+    <div class="seg-row"><strong>Ticket exclusion:</strong> NOT IN any ticket</div>
+    <div class="seg-row"><strong>Verdict:</strong> <span class="tag-ok">Clean and correct</span> — 4.61★ avg. The 0.3% review rate vs 43k invites is a CTA engagement issue, not a segment logic issue. These customers are already deeply familiar with the brand and may not feel compelled by email review requests.</div>
   </div>
 </div>
 
-<h3>Segment Optimisation Findings</h3>
+<h3>Segment Findings</h3>
 <div class="theme-grid">
   <div class="theme-card">
-    <div class="theme-title">Ticket exclusion — too broad in 552, 652, 845</div>
-    <div class="theme-count">Impact: all main campaigns</div>
-    <div class="theme-quotes">All three main segments use <em>NOT (customer_key IN ticket)</em> — this excludes customers who had a ticket at any point, even if it was resolved at 5★. Campaign 240 is supposed to pick them up, but with max 100 emails/day and eventWindow=30, many fall through the gap. Consider whether the ticket exclusion should be softened to "no open ticket" rather than "any ticket ever".</div>
+    <div class="theme-title">Segment 652: no purchase-count floor for Veg-SalCar-600</div>
+    <div class="theme-count">Only segment without a lower count_purchase bound</div>
+    <div class="theme-quotes">Segment 552 protects against first-time salted caramel buyers via the excluded-SKU list. But segment 652 (the dedicated Veg-SalCar-600 campaign) has <em>count_purchase ≤5</em> with no minimum — so first-time buyers land directly in this campaign. The pending draft only adjusts the dispatch window (15→30 days). Adding <em>count_purchase ≥2</em> to segment 652 would match the logic already in place for every other segment, and remove the cohort most likely to write "I tried it once, it was disgusting."</div>
   </div>
   <div class="theme-card">
-    <div class="theme-title">First-time buyers in segment 552 drive most negatives</div>
-    <div class="theme-count">34 of 51 negatives from invite-tp (campaign 237)</div>
-    <div class="theme-quotes">The SKU exclusion for first-timers covers 5 "difficult" SKUs, but first-timers with other SKUs are still invited. Taste complaints dominate the negatives — "salty", "too sweet", "powdery" — almost exclusively from customers who tried a product once and didn't like it. Setting min count_purchase ≥2 for segment 552 would remove this cohort. Estimated impact: significant reduction in 1★ reviews.</div>
+    <div class="theme-title">4 excluded SKUs have no invite campaign</div>
+    <div class="theme-count">FS-1-CREAGLOW, FS-Veg-Choc-600, FS-Veg-Van-600, FS-Veg-Ber-600</div>
+    <div class="theme-quotes">First-time buyers of these four SKUs are blocked from segment 552 but have no equivalent of campaign 310. They receive no review invite regardless of how satisfied they are. If these SKUs are considered risky only for first-timers, expanding segment 652 (or creating a new segment) to include them with a <em>count_purchase ≥2</em> filter would recover satisfied repeat buyers who are currently invisible.</div>
   </div>
   <div class="theme-card">
-    <div class="theme-title">invite-skus covers only one of five excluded SKUs</div>
-    <div class="theme-count">Veg-SalCar-600 only</div>
-    <div class="theme-quotes">Segment 552 excludes first-time buyers with: FS-1-CREAGLOW, FS-Veg-Choc-600, FS-Veg-Van-600, Veg-SalCar-600, FS-Veg-Ber-600. Only Veg-SalCar-600 has a dedicated campaign (310). First-timers buying the other four SKUs receive no invite at all. If the intent is to capture all first-timers, the skus campaign should be expanded to include the other four SKUs — or alternatively accept that these are too risky to invite.</div>
+    <div class="theme-title">Ticket exclusion is broad (any ticket = excluded)</div>
+    <div class="theme-count">Affects segments 552, 652, 845</div>
+    <div class="theme-quotes">All three main segments exclude customers who have ever had a ticket — regardless of resolution or rating. The closed-tickets campaign (240) is designed to pick these up, but with only 5 currently eligible and a small daily cap, high-rated resolved-ticket customers likely fall through. The exclusion logic itself is intentional; the question is whether the 240 campaign's throughput is sufficient to capture all of them.</div>
   </div>
   <div class="theme-card">
     <div class="theme-title">No branded-template A/B test on main campaigns</div>
     <div class="theme-count">Campaigns 310 and 424 have branded templates at 0% weight</div>
-    <div class="theme-quotes">The `invite` and `reminder` branded templates exist in the workflows for campaigns 310 and 424 but are disabled. Campaign 237 (highest volume) has no branded variant at all. Campaign 240 uses branded templates but the 5.0★ baseline makes comparison with TP meaningless. To understand whether the Free Soul-branded email drives higher conversion than the TP template, a 20–30% weight test on campaigns 237 or 424 would provide meaningful data within 1–2 months.</div>
+    <div class="theme-quotes">Branded <em>invite</em> and <em>reminder</em> templates exist in the workflows for campaigns 310 and 424 but are disabled. Campaign 240 uses branded templates, but its 5.0★ floor makes the comparison meaningless. A 20–30% weight test on campaign 424 (loyal, lowest risk) over Q3 would yield enough volume to compare open and click rates between TP-hosted and branded emails.</div>
   </div>
 </div>
 
@@ -335,23 +336,23 @@
 <ul class="action-list">
   <li>
     <div class="anum">1</div>
-    <div><strong>Test count_purchase ≥2 filter in segment 552 (recent-purchases)</strong> — First-time buyers are the primary source of 1★ taste complaints. Adding a minimum of 2 purchases to segment 552 would exclude single-order customers (who also have the excluded SKUs covered by campaign 310). Expected impact: meaningful reduction in 1★–2★ taste reviews from invite-tp without significantly reducing invite volume (repeat buyers dominate the eligible pool).</div>
+    <div><strong>Add count_purchase ≥2 to segment 652 (purchases-skus)</strong> — This is the only segment without a purchase-count floor. Veg-SalCar-600 first-time buyers are currently invited from day 5 and are the source of the most extreme 1★ taste reviews. The existing draft for segment 652 narrows the dispatch window to 15–30 days but still includes first-timers. Adding <em>count_purchase ≥2</em> would align it with the logic already used in every other segment. If first-timers need a dedicated path, a separate segment with a longer wait window (e.g. 30–60 days) would be lower risk than inviting at day 5.</div>
   </li>
   <li>
     <div class="anum">2</div>
-    <div><strong>Expand invite-skus (310) to cover all 5 excluded SKUs</strong> — Currently only Veg-SalCar-600 first-time buyers are invited via campaign 310. First-time buyers of FS-1-CREAGLOW, FS-Veg-Choc-600, FS-Veg-Van-600, and FS-Veg-Ber-600 are excluded from both 552 and 310 — they receive no invite. Either expand segment 652 to include all five SKUs, or create a separate segment per product line if monitoring is needed individually.</div>
+    <div><strong>Decide on the 4 excluded SKUs with no invite path</strong> — FS-1-CREAGLOW, FS-Veg-Choc-600, FS-Veg-Van-600, FS-Veg-Ber-600 are excluded from segment 552 for first-time buyers, and have no equivalent campaign to segment 310. Their satisfied repeat buyers (count_purchase ≥2) are also missing from any campaign since segment 552 only invites them at 2–5 and these SKUs are blocked for the first purchase. Clarify: are these SKUs permanently too risky to invite, or should segment 652 be expanded to include repeat buyers of all five excluded SKUs (not just salted caramel)?</div>
   </li>
   <li>
     <div class="anum">3</div>
-    <div><strong>Review ticket exclusion logic in segments 552, 652, 845</strong> — All three main segments use <em>NOT IN (any ticket)</em> which excludes customers with resolved-positive tickets. These customers should ideally flow to campaign 240 for a 5.0★ review. However, campaign 240's maxEmails=100/day and eventWindow=30 is a bottleneck. Confirm whether the eligible pool for closed-tickets is larger than 327/quarter — if so, raise the cap to capture more.</div>
+    <div><strong>Check whether campaign 240's daily cap is throttling the eligible pool</strong> — Segment 554 currently shows only 5 eligible customers. The campaign cap (maxEmails=100/day) and eventWindow=30 days means up to 3,000 invites per month could be sent if the pool existed. With 327 invites over 4 months (avg ~82/month), the throughput is fine if the pool is genuinely that small — but if ticket resolution volume is higher, some eligible customers may be missed. Compare ticket closure volume in the CRM against segment 554's pool history.</div>
   </li>
   <li>
     <div class="anum">4</div>
-    <div><strong>Activate branded template A/B test on invite-tp (237) or invite-loyal (424)</strong> — The branded templates (invite, reminder) exist in campaigns 310 and 424 at 0% weight. There is no performance data comparing branded vs TP templates on the main campaigns. Set one campaign to 20% branded / 80% TP for Q3 2026 to establish a baseline. Campaign 424 (loyal, higher avg rating) is the lower-risk test bed.</div>
+    <div><strong>Activate branded template A/B test on invite-loyal (424)</strong> — Branded <em>invite</em> and <em>reminder</em> templates exist in campaign 424's workflow at 0% weight. Campaign 424 is the lowest-risk test bed: 4.61★ avg rating, high-purchase-count audience, and large enough volume (~11k invites/month) to see meaningful open/click differences within 6–8 weeks at a 20% split. This would be the first data point on whether Free Soul-branded email outperforms TP-hosted email on CTR and review conversion.</div>
   </li>
   <li>
     <div class="anum">5</div>
-    <div><strong>Subscription complaints are systemic — flag to CX</strong> — 11 of 51 negatives relate to subscription experience: unexpected charges, inability to cancel (only pause), reminder emails missing or landing in junk. These are not invite-campaign issues but they <em>are</em> driving 1★–2★ reviews from otherwise loyal customers (invite-loyal cohort). The "stopped reminder emails" complaint from a 2-year customer is particularly notable. Escalate to the product/CX team for subscription UX review.</div>
+    <div><strong>Subscription complaints are systemic — flag to CX</strong> — 11 of 51 negatives relate to subscription experience: unexpected charges, inability to cancel (only pause), renewal reminder emails missing or landing in junk. These are not invite-campaign issues but they are driving 1★–2★ reviews from otherwise loyal customers (invite-loyal cohort). Notably, a 2-year customer gave 3★ specifically because renewal reminder emails stopped. Escalate to the product/CX team — this is a retention risk independent of TrustPilot.</div>
   </li>
 </ul>
 
