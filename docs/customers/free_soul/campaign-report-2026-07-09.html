@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Soul Campaign Performance Report — Mar–Jun 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #e84393; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #1a1a2e; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+  .kpi-grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 20px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  .split-box { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .split-box .split-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 12px; }
+  .split-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+  .split-row .slabel { color: #636e72; }
+  .split-row .sval { font-weight: 600; color: #1a1a2e; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .total-row td { background: #f4f4f4 !important; font-weight: 600; }
+  .closed-row td:first-child { border-left: 3px solid #00b894; }
+  .loyal-row td:first-child { border-left: 3px solid #e84393; }
+  .skus-row td:first-child { border-left: 3px solid #fdcb6e; }
+  .tp-row td:first-child { border-left: 3px solid #6c5ce7; }
+
+  .review-card { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 10px; }
+  .rc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .rc-source { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; color: #888; }
+  .rc-meta { font-size: 12px; color: #aaa; margin-left: auto; }
+  .rc-text { font-size: 13px; color: #444; line-height: 1.6; }
+  .rc-heading { font-weight: 600; color: #1a1a2e; margin-bottom: 4px; font-size: 13px; }
+
+  .rating-badge { display: inline-block; border-radius: 5px; padding: 2px 9px; font-size: 12px; font-weight: 700; }
+  .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff3e0; color: #e17055; }
+  .r3 { background: #fffde0; color: #b8860b; }
+  .r4 { background: #e8f5f0; color: #00b894; }
+  .r5 { background: #e8f5e8; color: #27ae60; }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 8px; }
+  .theme-card { background: #fff; border-radius: 10px; padding: 16px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .theme-card .theme-title { font-size: 13px; font-weight: 600; color: #1a1a2e; margin-bottom: 6px; }
+  .theme-card .theme-count { font-size: 12px; color: #888; margin-bottom: 8px; }
+  .theme-card .theme-quotes { font-size: 12px; color: #555; line-height: 1.7; }
+  .theme-card .theme-quotes em { color: #e17055; font-style: normal; }
+
+  .seg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 8px; }
+  .seg-card { background: #fff; border-radius: 10px; padding: 16px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .seg-card .seg-name { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .seg-card .seg-campaign { font-size: 11px; color: #888; margin-bottom: 10px; }
+  .seg-row { font-size: 12px; color: #555; margin-bottom: 5px; line-height: 1.5; }
+  .seg-row strong { color: #1a1a2e; }
+  .tag-ok { display: inline-block; background: #e8f5f0; color: #00b894; border-radius: 4px; padding: 1px 7px; font-size: 11px; font-weight: 600; }
+  .tag-warn { display: inline-block; background: #fff3e0; color: #e17055; border-radius: 4px; padding: 1px 7px; font-size: 11px; font-weight: 600; }
+  .tag-issue { display: inline-block; background: #ffeaea; color: #d63031; border-radius: 4px; padding: 1px 7px; font-size: 11px; font-weight: 600; }
+
+  .action-list { list-style: none; }
+  .action-list li { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; display: flex; gap: 12px; align-items: flex-start; font-size: 13px; line-height: 1.6; }
+  .action-list li .anum { background: #1a1a2e; color: #fff; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .note { font-size: 12px; color: #888; margin-top: 6px; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<h1>Free Soul — Campaign Performance Report</h1>
+<p class="subtitle">Period: March – June 2026 &nbsp;·&nbsp; Campaigns: invite-tp (237) · invite-closed (240) · invite-skus (310) · invite-loyal (424) &nbsp;·&nbsp; Generated: 9 Jul 2026</p>
+
+<!-- EXECUTIVE SUMMARY -->
+<h2>Executive Summary</h2>
+<div class="kpi-grid">
+  <div class="kpi"><div class="label">Total Invites</div><div class="value">90,048</div><div class="sub">Mar–Jun 2026</div></div>
+  <div class="kpi"><div class="label">Attributed Reviews</div><div class="value">444</div><div class="sub">0.49% review rate</div></div>
+  <div class="kpi"><div class="label">Avg Rating</div><div class="value">4.58★</div><div class="sub">attributed reviews</div></div>
+  <div class="kpi"><div class="label">Negatives ≤3★</div><div class="value">51</div><div class="sub">11.5% of attributed</div></div>
+</div>
+<div class="kpi-grid3" style="margin-top:16px;">
+  <div class="kpi"><div class="label">Total Reviews (incl. organic)</div><div class="value">734</div><div class="sub">444 attributed + 290 organic</div></div>
+  <div class="kpi"><div class="label">Emails Sent</div><div class="value">30,088</div><div class="sub">invite + reminder across all campaigns</div></div>
+  <div class="kpi"><div class="label">Avg Open Rate</div><div class="value">47.9%</div><div class="sub">across all campaigns</div></div>
+</div>
+<p>The four-month period shows a stable 4.58★ attributed average with a 0.49% overall review rate. The closed-ticket campaign (240) stands out with a perfect 5.0★ average and the highest review rate (5.2%), confirming the segment logic works well. The main invite-tp campaign (237) accounts for 64% of attributed reviews at 4.54★. The loyal campaign (424) underperforms on review rate (0.3%) relative to its invite volume. June data is intentionally sparse — most June invites will yield reviews in July.</p>
+
+<!-- CAMPAIGN VOLUME -->
+<h2>Campaign Volume (Mar–Jun 2026)</h2>
+<table>
+  <tr><th>Campaign</th><th>Mar Invites</th><th>Apr Invites</th><th>May Invites</th><th>Jun Invites</th><th>Total</th><th>Template</th></tr>
+  <tr class="tp-row"><td>invite-tp (237)</td><td>11,810</td><td>9,776</td><td>9,640</td><td>12,702</td><td><strong>43,928</strong></td><td>TP only</td></tr>
+  <tr class="closed-row"><td>invite-closed (240)</td><td>91</td><td>113</td><td>53</td><td>70</td><td><strong>327</strong></td><td>Branded (50/50 A/B)</td></tr>
+  <tr class="skus-row"><td>invite-skus (310)</td><td>501</td><td>485</td><td>767</td><td>655</td><td><strong>2,408</strong></td><td>TP only</td></tr>
+  <tr class="loyal-row"><td>invite-loyal (424)</td><td>11,499</td><td>10,761</td><td>9,044</td><td>12,221</td><td><strong>43,525</strong></td><td>TP only</td></tr>
+  <tr class="total-row"><td>Total</td><td>23,901</td><td>21,135</td><td>19,504</td><td>25,648</td><td><strong>90,188</strong></td><td>—</td></tr>
+</table>
+<p class="note">Invite counts are unique order_id sends. invite-tp and invite-loyal carry roughly equal volume. invite-closed is intentionally low — targets only customers with all tickets closed and rated ≥5★.</p>
+
+<!-- EMAIL PERFORMANCE -->
+<h2>Email Performance (Mar–Jun 2026)</h2>
+<table>
+  <tr><th>Campaign</th><th>Emails Sent</th><th>Unique Opens</th><th>Open %</th><th>Unique Clicks</th><th>Click %</th><th>Unsubs</th></tr>
+  <tr class="tp-row"><td>invite-tp (237)</td><td>15,163</td><td>7,388</td><td>48.7%</td><td>219</td><td>1.4%</td><td>77</td></tr>
+  <tr class="closed-row"><td>invite-closed (240)</td><td>101</td><td>47</td><td>46.5%</td><td>6</td><td class="best">5.9%</td><td>1</td></tr>
+  <tr class="skus-row"><td>invite-skus (310)</td><td>700</td><td>357</td><td class="best">51.0%</td><td>11</td><td>1.6%</td><td>4</td></tr>
+  <tr class="loyal-row"><td>invite-loyal (424)</td><td>14,124</td><td>6,281</td><td>44.5%</td><td>65</td><td class="worst">0.5%</td><td>43</td></tr>
+  <tr class="total-row"><td>Total</td><td>30,088</td><td>14,073</td><td>46.8%</td><td>301</td><td>1.0%</td><td>125</td></tr>
+</table>
+<p class="note">Email sent counts include invite + reminder steps. Open rates are strong across all campaigns (44–51%). invite-loyal's click rate (0.5%) is notably lower than invite-tp (1.4%) — loyal customers may be more likely to click through directly to TrustPilot from memory rather than the email link.</p>
+
+<!-- REVIEW RATE BY CAMPAIGN -->
+<h2>Review Rate by Campaign &amp; Month</h2>
+<table>
+  <tr><th>Campaign</th><th>Month</th><th>Invites</th><th>Attributed Reviews</th><th>Avg Rating</th><th>Negatives</th><th>Review Rate</th></tr>
+  <tr class="tp-row"><td rowspan="4">invite-tp (237)</td><td>Mar 2026</td><td>11,810</td><td>108</td><td>4.66★</td><td>10</td><td>0.9%</td></tr>
+  <tr class="tp-row"><td>Apr 2026</td><td>9,776</td><td>85</td><td>4.42★</td><td>14</td><td>0.9%</td></tr>
+  <tr class="tp-row"><td>May 2026</td><td>9,640</td><td>85</td><td>4.54★</td><td>9</td><td>0.9%</td></tr>
+  <tr class="tp-row"><td>Jun 2026</td><td>12,702</td><td>7</td><td class="neutral">4.29★ (partial)</td><td>1</td><td class="neutral">0.1% *</td></tr>
+  <tr class="closed-row"><td rowspan="4">invite-closed (240)</td><td>Mar 2026</td><td>91</td><td>6</td><td class="best">5.0★</td><td>0</td><td class="best">6.6%</td></tr>
+  <tr class="closed-row"><td>Apr 2026</td><td>113</td><td>10</td><td class="best">5.0★</td><td>0</td><td class="best">8.8%</td></tr>
+  <tr class="closed-row"><td>May 2026</td><td>53</td><td>1</td><td class="best">5.0★</td><td>0</td><td>1.9%</td></tr>
+  <tr class="closed-row"><td>Jun 2026</td><td>70</td><td>—</td><td class="neutral">—</td><td>—</td><td class="neutral">— *</td></tr>
+  <tr class="skus-row"><td rowspan="4">invite-skus (310)</td><td>Mar 2026</td><td>501</td><td>6</td><td>4.5★</td><td>1</td><td>1.2%</td></tr>
+  <tr class="skus-row"><td>Apr 2026</td><td>485</td><td>4</td><td class="best">5.0★</td><td>0</td><td>0.8%</td></tr>
+  <tr class="skus-row"><td>May 2026</td><td>767</td><td>8</td><td>4.13★</td><td>2</td><td>1.0%</td></tr>
+  <tr class="skus-row"><td>Jun 2026</td><td>655</td><td>—</td><td class="neutral">—</td><td>—</td><td class="neutral">— *</td></tr>
+  <tr class="loyal-row"><td rowspan="4">invite-loyal (424)</td><td>Mar 2026</td><td>11,499</td><td>44</td><td class="best">4.75★</td><td>3</td><td>0.4%</td></tr>
+  <tr class="loyal-row"><td>Apr 2026</td><td>10,761</td><td>45</td><td>4.42★</td><td>7</td><td>0.4%</td></tr>
+  <tr class="loyal-row"><td>May 2026</td><td>9,044</td><td>34</td><td>4.68★</td><td>4</td><td>0.4%</td></tr>
+  <tr class="loyal-row"><td>Jun 2026</td><td>12,221</td><td>1</td><td class="neutral">5.0★ (partial)</td><td>0</td><td class="neutral">0.0% *</td></tr>
+  <tr class="total-row"><td colspan="2">Total Mar–May (excl. Jun)</td><td>65,180</td><td>437</td><td>4.58★</td><td>51</td><td>0.67%</td></tr>
+</table>
+<p class="note">* June is excluded from averages — review lag means most June invites yield reviews in July. Mar–May review rate is 0.67%.</p>
+
+<!-- TEMPLATE PERFORMANCE -->
+<h2>Template Performance: Branded vs TP</h2>
+<p>Of the four campaigns, only <strong>invite-closed (240)</strong> runs a branded-template split. The other three campaigns (invite-tp, invite-skus, invite-loyal) all use the TP-hosted template exclusively. The branded templates for campaigns 310 and 424 exist in the workflow but are currently set to 0% weight.</p>
+<table>
+  <tr><th>Campaign</th><th>Template</th><th>Type</th><th>Mar–Jun Invites</th><th>Reviews</th><th>Avg Rating</th></tr>
+  <tr class="tp-row"><td>invite-tp (237)</td><td>invite-tp</td><td>TP</td><td>43,924</td><td>285</td><td>4.54★</td></tr>
+  <tr class="closed-row"><td rowspan="3">invite-closed (240)</td><td>invite-closed-tickets</td><td>Branded</td><td>68</td><td rowspan="2">2 (combined)</td><td rowspan="2" class="best">5.0★</td></tr>
+  <tr class="closed-row"><td>invite-closed-tickets-v2</td><td>Branded</td><td>70</td></tr>
+  <tr class="closed-row"><td>invite-tp (legacy)</td><td>TP</td><td>189</td><td>16</td><td class="best">5.0★</td></tr>
+  <tr class="skus-row"><td>invite-skus (310)</td><td>invite-tp</td><td>TP</td><td>2,408</td><td>18</td><td>4.44★</td></tr>
+  <tr class="loyal-row"><td>invite-loyal (424)</td><td>invite-tp</td><td>TP</td><td>43,525</td><td>124</td><td>4.61★</td></tr>
+</table>
+<p>For campaign 240, both branded and TP templates produce 5.0★ reviews — sample sizes are too small (2 vs 16) to draw statistical conclusions. The branded templates replaced the TP template in campaign 240 during this period. <strong>No A/B test data exists for the main campaigns</strong> — branded templates in campaigns 310 and 424 have weight 0%. Activating even a 20% split would provide meaningful comparison data over the next quarter.</p>
+
+<!-- SEGMENT SETUP ANALYSIS -->
+<h2>Segment Setup Analysis</h2>
+<p>Current setup uses four segments targeting different customer cohorts. Below is an assessment of each against the key optimisation criteria.</p>
+
+<div class="seg-grid">
+  <div class="seg-card">
+    <div class="seg-name">recent-purchases (552)</div>
+    <div class="seg-campaign">→ invite-tp campaign 237</div>
+    <div class="seg-row"><strong>Window:</strong> 5–30 days post-dispatch</div>
+    <div class="seg-row"><strong>Ticket exclusion:</strong> <span class="tag-warn">Broad</span> — excludes ALL customers with any ticket (even resolved 5★)</div>
+    <div class="seg-row"><strong>SKU exclusion:</strong> <span class="tag-ok">Partial</span> — first-time buyers with FS-1-CREAGLOW, Veg-Choc-600, Veg-Van-600, Veg-SalCar-600, Veg-Ber-600 are excluded</div>
+    <div class="seg-row"><strong>Repeat buyers:</strong> <span class="tag-issue">Mixed</span> — allows count_purchase = 1 for "good" SKUs; 2–5 for all SKUs. First-timers are included if they avoided the excluded SKUs.</div>
+    <div class="seg-row"><strong>Review quality risk:</strong> First-time buyers with taste complaints drive the majority of 1–2★ reviews in this campaign.</div>
+  </div>
+  <div class="seg-card">
+    <div class="seg-name">closed-tickets (554)</div>
+    <div class="seg-campaign">→ invite-closed campaign 240</div>
+    <div class="seg-row"><strong>Window:</strong> eventWindow=30 days, max 100/day</div>
+    <div class="seg-row"><strong>Ticket logic:</strong> <span class="tag-ok">Precise</span> — all tickets closed, rating ≥5, no tp-skip tag, excludes rating ≤3</div>
+    <div class="seg-row"><strong>Repeat buyers:</strong> No purchase-count filter — ticket customers at any purchase count</div>
+    <div class="seg-row"><strong>Result:</strong> <span class="tag-ok">Perfect</span> — 5.0★ average, zero negatives across 17 reviews. The strictest and best-performing segment.</div>
+    <div class="seg-row"><strong>Concern:</strong> Very low volume (327 invites / 4 months). Low eventWindow + maxEmails=100 limits throughput. If eligible pool is larger, volume is being throttled.</div>
+  </div>
+  <div class="seg-card">
+    <div class="seg-name">purchases-skus (652)</div>
+    <div class="seg-campaign">→ invite-skus campaign 310</div>
+    <div class="seg-row"><strong>Window:</strong> 5–30 days post-dispatch</div>
+    <div class="seg-row"><strong>Ticket exclusion:</strong> <span class="tag-warn">Broad</span> — same as 552, excludes all ticket customers</div>
+    <div class="seg-row"><strong>SKU targeting:</strong> <span class="tag-warn">Narrow</span> — only Veg-SalCar-600. Other excluded-from-552 SKUs (Choc, Van, Ber, Creaglow) have no dedicated campaign.</div>
+    <div class="seg-row"><strong>Repeat buyers:</strong> count_purchase ≤5 (includes first-timers)</div>
+    <div class="seg-row"><strong>Result:</strong> 4.44★ avg with 3 negatives, including 1★ taste complaint specifically about salted caramel. The SKU targeting concentrates the highest-risk first-time product buyers.</div>
+  </div>
+  <div class="seg-card">
+    <div class="seg-name">loyal-customers (845)</div>
+    <div class="seg-campaign">→ invite-loyal campaign 424</div>
+    <div class="seg-row"><strong>Window:</strong> 5–30 days post-dispatch</div>
+    <div class="seg-row"><strong>Ticket exclusion:</strong> <span class="tag-warn">Broad</span> — excludes all ticket customers</div>
+    <div class="seg-row"><strong>Repeat buyers:</strong> <span class="tag-ok">Strong</span> — count_purchase ≥6, not yet reviewed</div>
+    <div class="seg-row"><strong>Result:</strong> 4.61★ avg, 0.4% review rate. Rating is good but review rate is the lowest of all campaigns. Customers with ≥6 purchases either don't engage with email CTAs or are more considered in their reviews.</div>
+    <div class="seg-row"><strong>Concern:</strong> 43,525 invites but only 124 reviews. The "NOT reviewed" filter is correct, but the low CTR (0.5%) suggests email engagement for this cohort is weak.</div>
+  </div>
+</div>
+
+<h3>Segment Optimisation Findings</h3>
+<div class="theme-grid">
+  <div class="theme-card">
+    <div class="theme-title">Ticket exclusion — too broad in 552, 652, 845</div>
+    <div class="theme-count">Impact: all main campaigns</div>
+    <div class="theme-quotes">All three main segments use <em>NOT (customer_key IN ticket)</em> — this excludes customers who had a ticket at any point, even if it was resolved at 5★. Campaign 240 is supposed to pick them up, but with max 100 emails/day and eventWindow=30, many fall through the gap. Consider whether the ticket exclusion should be softened to "no open ticket" rather than "any ticket ever".</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title">First-time buyers in segment 552 drive most negatives</div>
+    <div class="theme-count">34 of 51 negatives from invite-tp (campaign 237)</div>
+    <div class="theme-quotes">The SKU exclusion for first-timers covers 5 "difficult" SKUs, but first-timers with other SKUs are still invited. Taste complaints dominate the negatives — "salty", "too sweet", "powdery" — almost exclusively from customers who tried a product once and didn't like it. Setting min count_purchase ≥2 for segment 552 would remove this cohort. Estimated impact: significant reduction in 1★ reviews.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title">invite-skus covers only one of five excluded SKUs</div>
+    <div class="theme-count">Veg-SalCar-600 only</div>
+    <div class="theme-quotes">Segment 552 excludes first-time buyers with: FS-1-CREAGLOW, FS-Veg-Choc-600, FS-Veg-Van-600, Veg-SalCar-600, FS-Veg-Ber-600. Only Veg-SalCar-600 has a dedicated campaign (310). First-timers buying the other four SKUs receive no invite at all. If the intent is to capture all first-timers, the skus campaign should be expanded to include the other four SKUs — or alternatively accept that these are too risky to invite.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title">No branded-template A/B test on main campaigns</div>
+    <div class="theme-count">Campaigns 310 and 424 have branded templates at 0% weight</div>
+    <div class="theme-quotes">The `invite` and `reminder` branded templates exist in the workflows for campaigns 310 and 424 but are disabled. Campaign 237 (highest volume) has no branded variant at all. Campaign 240 uses branded templates but the 5.0★ baseline makes comparison with TP meaningless. To understand whether the Free Soul-branded email drives higher conversion than the TP template, a 20–30% weight test on campaigns 237 or 424 would provide meaningful data within 1–2 months.</div>
+  </div>
+</div>
+
+<!-- NEGATIVE REVIEWS -->
+<h2>Negative Reviews (≤3★) — 51 Total</h2>
+
+<h3>Complaint Themes</h3>
+<div class="theme-grid">
+  <div class="theme-card">
+    <div class="theme-title">🧂 Taste: Too Salty</div>
+    <div class="theme-count">~12 reviews · Electrolytes primarily</div>
+    <div class="theme-quotes"><em>"Taste is so salty I can't drink it 😔"</em> · <em>"Horrible very strong sickening taste and salty"</em> · <em>"Quick delivery but the electrolytes have such a salty taste it's unpleasant"</em> · <em>"They taste horrible very salty"</em></div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title">🍬 Taste: Too Sweet / Flavour Dislike</div>
+    <div class="theme-count">~10 reviews · Protein powders, salted caramel</div>
+    <div class="theme-quotes"><em>"Salted caramel is too sweet — struggling to finish it"</em> · <em>"TASTE ABSOLUTELY DISGUSTING 🤮 I got the salted caramel"</em> · <em>"The chocolate flavour is really bad"</em> · <em>"Coffee too sweet, shake is nice"</em></div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title">📦 Delivery Issues</div>
+    <div class="theme-count">~9 reviews · Non-arrival, delays, customs</div>
+    <div class="theme-quotes"><em>"It has still not arrived"</em> · <em>"My order took 3 weeks to arrive, customer service was not helpful"</em> · <em>"International orders — forget it! Lost money twice"</em> · <em>"Mi pedido está atrasado, han pasado una semana"</em></div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title">🔄 Subscription / Cancellation Problems</div>
+    <div class="theme-count">~11 reviews · Biggest systemic issue</div>
+    <div class="theme-quotes"><em>"They automatically set you up to a subscription if you like it or not"</em> · <em>"Trying to cancel my subscription but they only let you pause"</em> · <em>"I've unsubscribed 3 times — all the emails!!!"</em> · <em>"Stopped sending reminder emails before renewals — feels cheeky"</em> · <em>"The reminder emails land in my junk box"</em></div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title">💰 Value / Quantity</div>
+    <div class="theme-count">~4 reviews</div>
+    <div class="theme-quotes"><em>"Expensive for what you get — the bag is a quarter full"</em> · <em>"Monthly subscription but only 20 days of protein?"</em> · <em>"Too much money to send to the states"</em></div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title">🎁 Product Quality / Other</div>
+    <div class="theme-count">~5 reviews</div>
+    <div class="theme-quotes"><em>"Very powdery taste regardless of blending time"</em> · <em>"Protein all over the delivery box — second time this happened"</em> · <em>"Broken lid — a piece of plastic came off"</em> · <em>"Free gift full of sugar and maltodextrin"</em></div>
+  </div>
+</div>
+
+<h3>Selected Negative Reviews</h3>
+
+<div class="review-card">
+  <div class="rc-header"><span class="rating-badge r1">1★</span><span class="rc-source">invite-loyal · Apr 2026</span><span class="rc-meta">6455470194930</span></div>
+  <div class="rc-heading">International Orders, Forget it!</div>
+  <div class="rc-text">I forgot that you do not do very well with international orders. I have not received my coffee and have been asked for so much information from the shipping company it is not worth the hassle. This is the second time I have not received within 3-5 days and lost money.</div>
+</div>
+
+<div class="review-card">
+  <div class="rc-header"><span class="rating-badge r1">1★</span><span class="rc-source">invite-tp · Apr 2026</span><span class="rc-meta">6401743323378</span></div>
+  <div class="rc-heading">They automatically set you up to a subscription</div>
+  <div class="rc-text">They automatically set you up to a subscription if you like it or not and they claim to send reminders however do not. The protein powder gets stuck in your throat from all the bits in it no matter how much blending you do. Only apologising now I've left a review. I most definitely did not select a subscription.</div>
+</div>
+
+<div class="review-card">
+  <div class="rc-header"><span class="rating-badge r1">1★</span><span class="rc-source">invite-skus · May 2026</span><span class="rc-meta">6467927605490</span></div>
+  <div class="rc-heading">TASTE ABSOLUTELY DISGUSTING 🤮</div>
+  <div class="rc-text">I got the salted caramel flavour and it was absolutely disgusting 🤮 I've never tasted anything so horrible!!!! I would never ever buy it again!!! Used once never again.</div>
+</div>
+
+<div class="review-card">
+  <div class="rc-header"><span class="rating-badge r2">2★</span><span class="rc-source">invite-loyal · Apr 2026</span><span class="rc-meta">6384871178482</span></div>
+  <div class="rc-heading">All the emails!!!</div>
+  <div class="rc-text">All the emails!!! I've unsubscribed 3 times!</div>
+</div>
+
+<div class="review-card">
+  <div class="rc-header"><span class="rating-badge r3">3★</span><span class="rc-source">invite-loyal · Apr 2026</span><span class="rc-meta">6404560617714</span></div>
+  <div class="rc-heading">Good quality, but subscription experience has slipped</div>
+  <div class="rc-text">I'm giving 3 stars because I genuinely love their products and have been a loyal customer for two years. However, I've recently noticed that they've stopped sending reminder emails before subscription renewals. As a result, I've ended up receiving products I don't need. It feels a bit cheeky — it benefits them financially but at the expense of customer experience. I really do like their products.</div>
+</div>
+
+<div class="review-card">
+  <div class="rc-header"><span class="rating-badge r3">3★</span><span class="rc-source">invite-loyal · May 2026</span><span class="rc-meta">6496926925042</span></div>
+  <div class="rc-heading">Monthly subscription but only 20 days of protein?</div>
+  <div class="rc-text">The bag contains 20 portions instead of 30, which is what I would have expected for a monthly subscription. What do I do with the last 10 days? It looks like tricky marketing. I also got a free metal container but the top doesn't fit so I can't close it. You really need to check quality control.</div>
+</div>
+
+<!-- POSITIVE HIGHLIGHTS -->
+<h2>Positive Highlights</h2>
+<div class="kpi-grid3">
+  <div class="split-box">
+    <div class="split-title">invite-closed (240) — Zero Negatives</div>
+    <div class="split-row"><span class="slabel">All reviews</span><span class="sval best">5.0★ (17/17)</span></div>
+    <div class="split-row"><span class="slabel">Negatives</span><span class="sval best">0</span></div>
+    <div class="split-row"><span class="slabel">Review rate</span><span class="sval">5.2%</span></div>
+    <p style="font-size:12px;color:#636e72;margin-top:10px;">Customers who rate their support ticket 5★ after it's closed consistently convert to 5★ TP reviews. The segment logic is the strongest in the account.</p>
+  </div>
+  <div class="split-box">
+    <div class="split-title">invite-loyal Mar (424)</div>
+    <div class="split-row"><span class="slabel">Avg rating</span><span class="sval best">4.75★</span></div>
+    <div class="split-row"><span class="slabel">Negatives</span><span class="sval">3 / 44 reviews</span></div>
+    <div class="split-row"><span class="slabel">Review rate</span><span class="sval">0.4%</span></div>
+    <p style="font-size:12px;color:#636e72;margin-top:10px;">Repeat buyers (6+ orders) reliably rate higher. March was the best loyal-campaign month at 4.75★.</p>
+  </div>
+  <div class="split-box">
+    <div class="split-title">invite-tp Mar (237)</div>
+    <div class="split-row"><span class="slabel">Avg rating</span><span class="sval best">4.66★</span></div>
+    <div class="split-row"><span class="slabel">Negatives</span><span class="sval">10 / 108 reviews</span></div>
+    <div class="split-row"><span class="slabel">Review rate</span><span class="sval">0.9%</span></div>
+    <p style="font-size:12px;color:#636e72;margin-top:10px;">March was the strongest main-campaign month. April dipped to 4.42★ driven by a cluster of subscription complaints.</p>
+  </div>
+</div>
+
+<!-- ACTION ITEMS -->
+<h2>Action Items</h2>
+<ul class="action-list">
+  <li>
+    <div class="anum">1</div>
+    <div><strong>Test count_purchase ≥2 filter in segment 552 (recent-purchases)</strong> — First-time buyers are the primary source of 1★ taste complaints. Adding a minimum of 2 purchases to segment 552 would exclude single-order customers (who also have the excluded SKUs covered by campaign 310). Expected impact: meaningful reduction in 1★–2★ taste reviews from invite-tp without significantly reducing invite volume (repeat buyers dominate the eligible pool).</div>
+  </li>
+  <li>
+    <div class="anum">2</div>
+    <div><strong>Expand invite-skus (310) to cover all 5 excluded SKUs</strong> — Currently only Veg-SalCar-600 first-time buyers are invited via campaign 310. First-time buyers of FS-1-CREAGLOW, FS-Veg-Choc-600, FS-Veg-Van-600, and FS-Veg-Ber-600 are excluded from both 552 and 310 — they receive no invite. Either expand segment 652 to include all five SKUs, or create a separate segment per product line if monitoring is needed individually.</div>
+  </li>
+  <li>
+    <div class="anum">3</div>
+    <div><strong>Review ticket exclusion logic in segments 552, 652, 845</strong> — All three main segments use <em>NOT IN (any ticket)</em> which excludes customers with resolved-positive tickets. These customers should ideally flow to campaign 240 for a 5.0★ review. However, campaign 240's maxEmails=100/day and eventWindow=30 is a bottleneck. Confirm whether the eligible pool for closed-tickets is larger than 327/quarter — if so, raise the cap to capture more.</div>
+  </li>
+  <li>
+    <div class="anum">4</div>
+    <div><strong>Activate branded template A/B test on invite-tp (237) or invite-loyal (424)</strong> — The branded templates (invite, reminder) exist in campaigns 310 and 424 at 0% weight. There is no performance data comparing branded vs TP templates on the main campaigns. Set one campaign to 20% branded / 80% TP for Q3 2026 to establish a baseline. Campaign 424 (loyal, higher avg rating) is the lower-risk test bed.</div>
+  </li>
+  <li>
+    <div class="anum">5</div>
+    <div><strong>Subscription complaints are systemic — flag to CX</strong> — 11 of 51 negatives relate to subscription experience: unexpected charges, inability to cancel (only pause), reminder emails missing or landing in junk. These are not invite-campaign issues but they <em>are</em> driving 1★–2★ reviews from otherwise loyal customers (invite-loyal cohort). The "stopped reminder emails" complaint from a 2-year customer is particularly notable. Escalate to the product/CX team for subscription UX review.</div>
+  </li>
+</ul>
+
+</div>
+</body>
+</html>
