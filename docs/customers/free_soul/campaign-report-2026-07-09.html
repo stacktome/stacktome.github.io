@@ -85,8 +85,23 @@
 <h1>Free Soul — Campaign Performance Report</h1>
 <p class="subtitle">Period: March – June 2026 &nbsp;·&nbsp; Campaigns: invite-tp (237) · invite-closed (240) · invite-skus (310) · invite-loyal (424) &nbsp;·&nbsp; Generated: 9 Jul 2026</p>
 
+<nav style="background:#fff;border-radius:10px;padding:16px 20px;box-shadow:0 1px 4px rgba(0,0,0,0.07);margin-bottom:28px;font-size:13px;">
+  <div style="font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.6px;font-size:10px;margin-bottom:10px;">Contents</div>
+  <ol style="margin:0;padding-left:18px;line-height:2;">
+    <li><a href="#exec-summary" style="color:#6c5ce7;text-decoration:none;">Executive Summary</a></li>
+    <li><a href="#campaign-volume" style="color:#6c5ce7;text-decoration:none;">Campaign Volume</a></li>
+    <li><a href="#email-performance" style="color:#6c5ce7;text-decoration:none;">Email Performance</a></li>
+    <li><a href="#review-rate" style="color:#6c5ce7;text-decoration:none;">Review Rate by Campaign &amp; Month</a></li>
+    <li><a href="#template-performance" style="color:#6c5ce7;text-decoration:none;">Template Performance</a></li>
+    <li><a href="#segment-analysis" style="color:#6c5ce7;text-decoration:none;">Segment Setup Analysis</a></li>
+    <li><a href="#negative-reviews" style="color:#6c5ce7;text-decoration:none;">Negative Reviews</a></li>
+    <li><a href="#positive-highlights" style="color:#6c5ce7;text-decoration:none;">Positive Highlights</a></li>
+    <li><a href="#action-items" style="color:#6c5ce7;text-decoration:none;">Action Items</a></li>
+  </ol>
+</nav>
+
 <!-- EXECUTIVE SUMMARY -->
-<h2>Executive Summary</h2>
+<h2 id="exec-summary">Executive Summary</h2>
 <div class="kpi-grid">
   <div class="kpi"><div class="label">Total Invites</div><div class="value">90,210</div><div class="sub">Mar–Jun 2026</div></div>
   <div class="kpi"><div class="label">Total Reviews</div><div class="value">638</div><div class="sub">471 attributed + 167 Jun organic</div></div>
@@ -101,7 +116,7 @@
 <p>The four-month period shows 471 attributed reviews (matched to an invite by order ID) plus 167 organic reviews in June (included due to attribution lag — most June invite conversions arrive in July). Mar–May figures are attributed only; June shows all reviews received. Total email volume including reminders was 230,421 — roughly 55–60k per month. The closed-ticket campaign (240) stands out with a perfect 5.0★ average and the highest review rate (5.2%), confirming the segment logic works well. The main invite-tp campaign (237) accounts for 64% of attributed reviews at 4.54★.</p>
 
 <!-- CAMPAIGN VOLUME -->
-<h2>Campaign Volume (Mar–Jun 2026)</h2>
+<h2 id="campaign-volume">Campaign Volume (Mar–Jun 2026)</h2>
 <table>
   <tr><th>Campaign</th><th>Mar</th><th>Apr</th><th>May</th><th>Jun</th><th>Invites</th><th>Reminders</th><th>Total Emails</th><th>Template</th></tr>
   <tr class="tp-row"><td>invite-tp (237)</td><td>11,811</td><td>9,778</td><td>9,641</td><td>12,705</td><td><strong>43,935</strong></td><td>83,943</td><td><strong>127,878</strong></td><td>TP only</td></tr>
@@ -113,7 +128,7 @@
 <p class="note">Monthly figures are invite sends only (basis for review rate). Reminder volume is additional — invite-tp generates nearly 2× reminders to invites due to its large non-responder pool. invite-loyal reminders exceed invites because loyal customers are more likely to need a nudge. Total email volume per month: Mar 60,699 · Apr 56,453 · May 52,782 · Jun 60,487.</p>
 
 <!-- EMAIL PERFORMANCE -->
-<h2>Email Performance (Mar–Jun 2026)</h2>
+<h2 id="email-performance">Email Performance (Mar–Jun 2026)</h2>
 <table>
   <tr><th>Campaign</th><th>Invites</th><th>Reminders</th><th>Total Emails</th><th>Open %</th><th>Click %</th><th>Review Rate<br><span style="font-weight:400;font-size:11px">(on invites)</span></th></tr>
   <tr class="tp-row"><td>invite-tp (237)</td><td>43,935</td><td>83,943</td><td><strong>127,878</strong></td><td>48.7%</td><td>1.4%</td><td>0.6%</td></tr>
@@ -125,7 +140,7 @@
 <p class="note">Invite and reminder volumes from parquet data. Open % and Click % from campaign email performance API (covers active templates). Review rate is attributed reviews ÷ invites (not total emails). invite-loyal sends more reminders than invites (53k vs 44k) — loyal customers have a higher non-response rate on the initial invite. invite-closed's 5.9% click rate reflects the high-intent nature of customers who already resolved a ticket positively.</p>
 
 <!-- REVIEW RATE BY CAMPAIGN -->
-<h2>Review Rate by Campaign &amp; Month</h2>
+<h2 id="review-rate">Review Rate by Campaign &amp; Month</h2>
 <table>
   <tr><th>Campaign</th><th>Month</th><th>Invites</th><th>Reviews (attributed + organic)</th><th>Avg Rating</th><th>Negatives</th><th>Review Rate</th></tr>
   <tr class="tp-row"><td rowspan="4">invite-tp (237)</td><td>Mar 2026</td><td>11,811</td><td>108</td><td>4.66★</td><td>10</td><td>0.9%</td></tr>
@@ -152,7 +167,7 @@
 <p class="note">* June attribution is incomplete — most June invites convert to reviews in July. June includes all reviews received (attributed + organic). Mar–May shows attributed reviews only. Organic = reviews with no matching order ID in the invite table. Negative reviews analysis below includes organic negatives with a traceable order ID across all months. Review rate = attributed reviews ÷ invites sent.</p>
 
 <!-- TEMPLATE PERFORMANCE -->
-<h2>Template Performance: Branded vs TP</h2>
+<h2 id="template-performance">Template Performance: Branded vs TP</h2>
 <p>Of the four campaigns, only <strong>invite-closed (240)</strong> runs a branded-template split. The other three campaigns (invite-tp, invite-skus, invite-loyal) all use the TP-hosted template exclusively. The branded templates for campaigns 310 and 424 exist in the workflow but are currently set to 0% weight.</p>
 <table>
   <tr><th>Campaign</th><th>Template</th><th>Type</th><th>Mar–Jun Invites</th><th>Reviews</th><th>Avg Rating</th></tr>
@@ -166,7 +181,7 @@
 <p>For campaign 240, both branded and TP templates produce 5.0★ reviews — sample sizes are too small (2 vs 16) to draw statistical conclusions. The branded templates replaced the TP template in campaign 240 during this period. <strong>No A/B test data exists for the main campaigns</strong> — branded templates in campaigns 310 and 424 have weight 0%. Activating even a 20% split would provide meaningful comparison data over the next quarter.</p>
 
 <!-- SEGMENT SETUP ANALYSIS -->
-<h2>Segment Setup Analysis</h2>
+<h2 id="segment-analysis">Segment Setup Analysis</h2>
 <p>Segment filters verified against live config. Each segment's actual SQL logic is summarised below.</p>
 
 <div class="seg-grid">
@@ -234,7 +249,7 @@
 </div>
 
 <!-- NEGATIVE REVIEWS -->
-<h2>Negative Reviews (≤3★) — 82 Total</h2>
+<h2 id="negative-reviews">Negative Reviews (≤3★) — 82 Total</h2>
 
 <h3>Attributed Complaint Themes (54 reviews)</h3>
 <div class="theme-grid">
@@ -351,7 +366,7 @@
 </div>
 
 <!-- POSITIVE HIGHLIGHTS -->
-<h2>Positive Highlights</h2>
+<h2 id="positive-highlights">Positive Highlights</h2>
 <div class="kpi-grid3">
   <div class="split-box">
     <div class="split-title">invite-closed (240) — Zero Negatives</div>
@@ -377,7 +392,7 @@
 </div>
 
 <!-- ACTION ITEMS -->
-<h2>Action Items</h2>
+<h2 id="action-items">Action Items</h2>
 <ul class="action-list">
   <li>
     <div class="anum">1</div>
