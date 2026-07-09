@@ -1,0 +1,541 @@
+<title>Mattress Online — Product Review Attribution Jan–Jun 2026</title>
+<style>
+  :root {
+    --bg:       #F4F3F0;
+    --surface:  #FFFFFF;
+    --text:     #18160F;
+    --muted:    #5C5851;
+    --faint:    #9A958F;
+    --border:   #E0DDD8;
+    --accent:   #1A4F96;
+    --accent-l: #EAF0FB;
+    --green:    #1E6B47;
+    --green-l:  #E6F4EC;
+    --amber:    #9A6200;
+    --amber-l:  #FEF3DC;
+    --red:      #B93232;
+    --red-l:    #FDEAEA;
+    --radius:   4px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:      #141210;
+      --surface: #1E1C18;
+      --text:    #EDE9E2;
+      --muted:   #9A948C;
+      --faint:   #5C5851;
+      --border:  #2A2822;
+      --accent:  #4A82D4;
+      --accent-l:#1A2540;
+      --green:   #3BAD72;
+      --green-l: #0F2A1C;
+      --amber:   #D4A040;
+      --amber-l: #2A1E06;
+      --red:     #E05454;
+      --red-l:   #2C0F0F;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg:#F4F3F0;--surface:#FFFFFF;--text:#18160F;--muted:#5C5851;
+    --faint:#9A958F;--border:#E0DDD8;--accent:#1A4F96;--accent-l:#EAF0FB;
+    --green:#1E6B47;--green-l:#E6F4EC;--amber:#9A6200;--amber-l:#FEF3DC;
+    --red:#B93232;--red-l:#FDEAEA;
+  }
+  :root[data-theme="dark"] {
+    --bg:#141210;--surface:#1E1C18;--text:#EDE9E2;--muted:#9A948C;
+    --faint:#5C5851;--border:#2A2822;--accent:#4A82D4;--accent-l:#1A2540;
+    --green:#3BAD72;--green-l:#0F2A1C;--amber:#D4A040;--amber-l:#2A1E06;
+    --red:#E05454;--red-l:#2C0F0F;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 15px; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, sans-serif;
+    line-height: 1.5;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; }
+
+  .report-header {
+    border-bottom: 2px solid var(--text);
+    padding-bottom: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  .report-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+  .report-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.75rem;
+    font-weight: normal;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .report-meta {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 2.25rem;
+  }
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.9rem 1rem;
+  }
+  .kpi-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 0.35rem;
+  }
+  .kpi-value {
+    font-size: 1.7rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+    line-height: 1;
+  }
+  .kpi-value.accent { color: var(--accent); }
+  .kpi-value.green  { color: var(--green); }
+  .kpi-sub {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+
+  .section-title {
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    font-weight: normal;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section { margin-bottom: 2.25rem; }
+
+  .chart-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.25rem 1rem;
+  }
+  canvas { display: block; width: 100%; }
+  .chart-legend {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 0.75rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+    flex-wrap: wrap;
+  }
+  .legend-dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    margin-right: 0.3rem;
+    vertical-align: middle;
+  }
+
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  thead th {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--faint);
+    padding: 0.55rem 0.75rem;
+    text-align: right;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  thead th:first-child,
+  thead th:nth-child(2) { text-align: left; }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody td {
+    padding: 0.5rem 0.75rem;
+    color: var(--text);
+    text-align: right;
+    vertical-align: middle;
+  }
+  tbody td:first-child { text-align: left; }
+  tbody td:nth-child(2) { text-align: left; color: var(--muted); }
+  .month-header td {
+    background: var(--accent-l);
+    color: var(--accent);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.75rem;
+    text-align: left !important;
+  }
+  .month-total td {
+    background: var(--bg);
+    font-weight: 600;
+    font-size: 0.79rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+  .month-total td:first-child { color: var(--muted); }
+  .rate-pill {
+    display: inline-block;
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .rate-good { background: var(--green-l); color: var(--green); }
+  .rate-mid  { background: var(--amber-l); color: var(--amber); }
+  .rate-zero { background: var(--border);  color: var(--faint); }
+
+  .review-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  .review-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.9rem 1rem;
+  }
+  .review-stars { color: var(--amber); font-size: 0.8rem; margin-bottom: 0.35rem; }
+  .review-text {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .review-meta {
+    font-size: 0.68rem;
+    color: var(--faint);
+    display: flex;
+    gap: 0.75rem;
+  }
+  .review-campaign { font-weight: 600; color: var(--accent); }
+
+  .camp-chip {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-right: 0.35rem;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+  .dash { color: var(--faint); }
+  .stars { color: var(--amber); }
+
+  @media (max-width: 600px) {
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .review-grid { grid-template-columns: 1fr; }
+    .kpi-value { font-size: 1.4rem; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="report-header">
+    <div class="report-eyebrow">Campaign Attribution Report</div>
+    <h1 class="report-title">Mattress Online — Product Reviews</h1>
+    <div class="report-meta">
+      <span>January – June 2026</span>
+      <span>Active campaigns: 4</span>
+      <span>Generated 9 Jul 2026</span>
+    </div>
+  </header>
+
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-label">Total Sends</div>
+      <div class="kpi-value accent">1,634</div>
+      <div class="kpi-sub">436 invites · 1,198 reminders</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Attributed Reviews</div>
+      <div class="kpi-value green">47</div>
+      <div class="kpi-sub">product reviews matched</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Review Rate</div>
+      <div class="kpi-value">10.8%</div>
+      <div class="kpi-sub">reviews / invite sends</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Avg Product Rating</div>
+      <div class="kpi-value">4.74 <span style="font-size:1rem;color:var(--amber)">★</span></div>
+      <div class="kpi-sub">across 47 reviews</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Monthly Trend — Sends vs Attributed Product Reviews</h2>
+    <div class="chart-wrap">
+      <canvas id="trendChart" height="180"></canvas>
+      <div class="chart-legend">
+        <span><span class="legend-dot" style="background:var(--accent);opacity:.25"></span>Total sends</span>
+        <span><span class="legend-dot" style="background:var(--accent)"></span>Invite sends</span>
+        <span><span class="legend-dot" style="background:var(--green)"></span>Attributed product reviews</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Monthly Breakdown by Campaign</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Campaign</th>
+            <th>Invites</th>
+            <th>Reminders</th>
+            <th>Total</th>
+            <th>Reviews</th>
+            <th>Rate</th>
+            <th>Avg ★</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Selected Product Reviews</h2>
+    <div class="review-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"The mattress is everything we were looking for. The assistant listened, walked us around the selections and left us to choose at our leisure. Delivery was carried out to the letter."</div>
+        <div class="review-meta"><span class="review-campaign">MO Store</span><span>May 2026</span></div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Best nights sleep in years. Great purchase."</div>
+        <div class="review-meta"><span class="review-campaign">MO Store</span><span>Apr 2026</span></div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"We can't quite believe how good this mattress is for the price! Having been loyal customers of Vispring beds for many years we decided to try something else — so glad we did!"</div>
+        <div class="review-meta"><span class="review-campaign">MO Sheffield</span><span>May 2026</span></div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Really comfortable mattress, excellent service instore and by the delivery people who took it, put it on our bed, and took all the rubbish and our old mattress away."</div>
+        <div class="review-meta"><span class="review-campaign">MO Store</span><span>Jun 2026</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const CAMPS = {
+  'The Bed Shop Store':         '#1A4F96',
+  'MO Store':                   '#1E6B47',
+  'MO Sheffield Outlet Store':  '#9A6200',
+  'Skipton Store':               '#7B4FA6',
+};
+
+const rows = [
+  ['Jan','The Bed Shop Store',31,91,4,4.71],
+  ['Jan','MO Store',39,78,6,5.0],
+  ['Jan','Skipton Store',2,16,0,null],
+  ['Jan','MO Sheffield Outlet Store',5,7,0,null],
+  ['Feb','MO Store',45,135,8,4.73],
+  ['Feb','The Bed Shop Store',30,69,4,4.11],
+  ['Feb','MO Sheffield Outlet Store',4,15,0,null],
+  ['Feb','Skipton Store',3,6,0,null],
+  ['Mar','MO Store',13,95,4,4.62],
+  ['Mar','The Bed Shop Store',13,89,1,5.0],
+  ['Mar','MO Sheffield Outlet Store',1,8,0,null],
+  ['Mar','Skipton Store',0,7,0,null],
+  ['Apr','The Bed Shop Store',30,68,1,5.0],
+  ['Apr','MO Store',29,68,5,4.56],
+  ['Apr','Skipton Store',4,8,0,null],
+  ['Apr','MO Sheffield Outlet Store',3,7,0,null],
+  ['May','The Bed Shop Store',29,71,2,5.0],
+  ['May','MO Store',22,66,3,4.67],
+  ['May','MO Sheffield Outlet Store',19,43,3,4.75],
+  ['May','Skipton Store',4,5,1,5.0],
+  ['Jun','The Bed Shop Store',39,108,0,null],
+  ['Jun','MO Store',42,79,2,5.0],
+  ['Jun','MO Sheffield Outlet Store',22,46,2,5.0],
+  ['Jun','Skipton Store',7,11,0,null],
+];
+
+const MONTH_NAMES = {Jan:'January',Feb:'February',Mar:'March',Apr:'April',May:'May',Jun:'June'};
+const months = ['Jan','Feb','Mar','Apr','May','Jun'];
+const tbody = document.getElementById('tableBody');
+
+months.forEach(mo => {
+  const mrows = rows.filter(r => r[0] === mo);
+  const totInv = mrows.reduce((s,r) => s+r[2], 0);
+  const totRem = mrows.reduce((s,r) => s+r[3], 0);
+  const totRev = mrows.reduce((s,r) => s+r[4], 0);
+  const ratedRevs = mrows.filter(r => r[5] !== null && r[4] > 0);
+  const weightedSum = ratedRevs.reduce((s,r) => s + r[5]*r[4], 0);
+  const weightedCnt = ratedRevs.reduce((s,r) => s+r[4], 0);
+  const avgRat = weightedCnt > 0 ? (weightedSum/weightedCnt).toFixed(2) : null;
+
+  const mhTr = document.createElement('tr');
+  mhTr.className = 'month-header';
+  mhTr.innerHTML = `<td colspan="8">${MONTH_NAMES[mo]} 2026</td>`;
+  tbody.appendChild(mhTr);
+
+  mrows.forEach(([,camp,inv,rem,rev,rat]) => {
+    const rate = inv > 0 ? (100*rev/inv).toFixed(1) : null;
+    const ratePill = rev === 0
+      ? `<span class="rate-pill rate-zero">—</span>`
+      : parseFloat(rate) >= 15
+        ? `<span class="rate-pill rate-good">${rate}%</span>`
+        : `<span class="rate-pill rate-mid">${rate}%</span>`;
+    const ratingStr = rat !== null
+      ? `<span class="stars">${'★'.repeat(Math.round(rat))}</span> <span style="color:var(--muted);font-size:.75rem">${rat}</span>`
+      : `<span class="dash">—</span>`;
+    const color = CAMPS[camp] || '#888';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="camp-chip" style="background:${color}"></span></td>
+      <td>${camp}</td>
+      <td>${inv}</td>
+      <td>${rem}</td>
+      <td>${inv+rem}</td>
+      <td style="font-weight:600;color:${rev>0?'var(--green)':'var(--faint)'}">${rev||'—'}</td>
+      <td>${ratePill}</td>
+      <td>${ratingStr}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  const totTr = document.createElement('tr');
+  totTr.className = 'month-total';
+  const totRate = totInv > 0 ? (100*totRev/totInv).toFixed(1)+'%' : '—';
+  totTr.innerHTML = `
+    <td></td><td>Month total</td>
+    <td>${totInv}</td><td>${totRem}</td><td>${totInv+totRem}</td>
+    <td style="color:var(--green);font-weight:700">${totRev}</td>
+    <td>${totRate}</td>
+    <td>${avgRat ? avgRat+'★' : '—'}</td>`;
+  tbody.appendChild(totTr);
+});
+
+function drawChart() {
+  const canvas = document.getElementById('trendChart');
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.parentElement.clientWidth - 40;
+  const H = 180;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  canvas.width  = W * dpr;
+  canvas.height = H * dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const sts = getComputedStyle(document.documentElement);
+  const accent = sts.getPropertyValue('--accent').trim();
+  const green  = sts.getPropertyValue('--green').trim();
+  const border = sts.getPropertyValue('--border').trim();
+  const muted  = sts.getPropertyValue('--muted').trim();
+  const faint  = sts.getPropertyValue('--faint').trim();
+
+  const data = [
+    {mo:'Jan',sends:271,invites:77, reviews:10},
+    {mo:'Feb',sends:307,invites:82, reviews:12},
+    {mo:'Mar',sends:226,invites:27, reviews:5},
+    {mo:'Apr',sends:217,invites:66, reviews:6},
+    {mo:'May',sends:259,invites:74, reviews:9},
+    {mo:'Jun',sends:354,invites:110,reviews:4},
+  ];
+
+  const PAD = {t:16, r:12, b:32, l:48};
+  const cw = W - PAD.l - PAD.r;
+  const ch = H - PAD.t - PAD.b;
+  const maxS = Math.max(...data.map(d => d.sends));
+  const maxR = Math.max(...data.map(d => d.reviews));
+  const n = data.length;
+
+  // Grid
+  ctx.strokeStyle = border;
+  ctx.lineWidth = 1;
+  [0, 0.25, 0.5, 0.75, 1].forEach(f => {
+    const y = PAD.t + ch*(1-f);
+    ctx.beginPath(); ctx.moveTo(PAD.l, y); ctx.lineTo(PAD.l+cw, y); ctx.stroke();
+    if (f > 0) {
+      ctx.fillStyle = faint;
+      ctx.font = '10px system-ui';
+      ctx.textAlign = 'right';
+      ctx.fillText(Math.round(f*maxS), PAD.l-6, y+4);
+    }
+  });
+
+  const bw = cw / n;
+  const bW = bw * 0.34;
+
+  data.forEach((d, i) => {
+    const cx = PAD.l + bw*i + bw/2;
+
+    const sh = (d.sends/maxS)*ch;
+    ctx.fillStyle = accent + '28';
+    ctx.fillRect(cx-bW-1, PAD.t+ch-sh, bW, sh);
+
+    const ih = (d.invites/maxS)*ch;
+    ctx.fillStyle = accent + '99';
+    ctx.fillRect(cx-bW-1, PAD.t+ch-ih, bW, ih);
+
+    const rh = (d.reviews/maxR)*ch*0.65;
+    ctx.fillStyle = green;
+    ctx.fillRect(cx+1, PAD.t+ch-rh, bW, rh);
+
+    ctx.fillStyle = green;
+    ctx.font = 'bold 10px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText(d.reviews, cx+1+bW/2, PAD.t+ch-rh-4);
+
+    ctx.fillStyle = muted;
+    ctx.font = '11px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText(d.mo, cx, PAD.t+ch+18);
+  });
+}
+
+requestAnimationFrame(drawChart);
+window.addEventListener('resize', drawChart);
+new MutationObserver(drawChart).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+</script>
