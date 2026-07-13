@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITOL Recruit Campaign Performance Report — Jul 7–13, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #1a1a2e; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .stars { color: #fdcb6e; }
+  .delta-up { color: #00b894; font-size: 11px; }
+  .delta-flat { color: #888; font-size: 11px; }
+  .delta-down { color: #d63031; font-size: 11px; }
+
+  .total-row td { background: #f0f0f0 !important; font-weight: 600; }
+
+  .campaign-block { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 16px; overflow: hidden; }
+  .camp-header { background: #1a1a2e; color: #fff; padding: 10px 16px; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 10px; }
+  .camp-header .badge { background: #6c5ce7; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
+  .camp-header .badge-gold { background: #fdcb6e; color: #5d4037; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .camp-header .badge-blue { background: #0984e3; color: #fff; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .review-card { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; }
+  .review-card:last-child { border-bottom: none; }
+  .review-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+  .rating-badge { font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 8px; }
+  .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff3e0; color: #e17055; }
+  .r3 { background: #fffde0; color: #b8860b; }
+  .r4 { background: #eaf4fb; color: #2980b9; }
+  .r5 { background: #e8f8f5; color: #00b894; }
+  .review-heading { font-weight: 600; color: #1a1a2e; margin-bottom: 5px; font-size: 13px; }
+  .review-text { font-style: italic; color: #555; line-height: 1.6; font-size: 13px; }
+  .review-meta-line { font-size: 11px; color: #888; margin-bottom: 6px; }
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-warn { display: inline-block; background: #fff3e0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #e17055; font-weight: 600; }
+  .tag-ok { display: inline-block; background: #e8f8f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #00b894; }
+  .name-tag { display: inline-block; background: #6c5ce7; color: #fff; border-radius: 4px; padding: 2px 8px; font-size: 11px; }
+
+  .all-clear { background: #e8f8f5; border: 1.5px solid #00b894; border-radius: 10px; padding: 20px 22px; color: #00b894; font-weight: 600; font-size: 14px; }
+  .success-banner { background: #e8f8f5; border: 2px solid #00b894; border-radius: 10px; padding: 18px 22px; margin-bottom: 16px; }
+  .success-banner .sb-title { color: #00b894; font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+  .warning { background: #fff9e6; border: 1.5px solid #fdcb6e; border-radius: 10px; padding: 16px 20px; color: #5d4037; font-size: 13px; line-height: 1.6; margin-bottom: 12px; }
+  .info-box { background: #f0f4ff; border: 1.5px solid #a0b4e8; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #2c3e6e; line-height: 1.6; }
+  .note { font-size: 12px; color: #888; margin-top: 4px; }
+
+  .staff-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .staff-chip { background: #f0edff; color: #6c5ce7; border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 600; }
+  .staff-chip-role { font-weight: 400; color: #888; font-size: 11px; margin-left: 4px; }
+  .organic-chip { background: #f0f0f0; color: #636e72; border-radius: 20px; padding: 4px 14px; font-size: 12px; }
+
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>ITOL Recruit &mdash; Campaign Performance Report</h1>
+  <div class="subtitle">Review invite analysis &nbsp;&bull;&nbsp; Jul 7&ndash;13, 2026 &nbsp;&bull;&nbsp; Generated 2026-07-13 &nbsp;&bull;&nbsp; Campaigns 624, 633, 646&ndash;651</div>
+
+  <nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #6c5ce7;font-size:14px;line-height:2;">
+    <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+    <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Executive Summary</a>
+    <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Campaign Performance</a>
+    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Campaign Breakdown</a>
+    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. All Reviews</a>
+    <a href="#s5" style="color:#444;text-decoration:none;">5. Staff Mentions</a>
+  </nav>
+
+  <!-- 1. Executive Summary -->
+  <h2 id="s1">1. Executive Summary</h2>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Total Invites Sent</div>
+      <div class="value">136</div>
+      <div class="sub">unique invite orders &nbsp;<span class="delta-down">&minus;10.0% vs prior week (151)</span></div>
+    </div>
+    <div class="kpi">
+      <div class="label">Reviews Attributed</div>
+      <div class="value">10</div>
+      <div class="sub">campaign-attributed reviews &nbsp;<span class="delta-down">&minus;1 vs prior week (11)</span></div>
+    </div>
+    <div class="kpi">
+      <div class="label">Overall Review Rate</div>
+      <div class="value">7.35%</div>
+      <div class="sub">reviews / invites &nbsp;<span class="delta-up">+0.07pp vs 7.28% last week</span></div>
+    </div>
+    <div class="kpi">
+      <div class="label">Avg Order Rating</div>
+      <div class="value">4.75</div>
+      <div class="sub">out of 5.00 &nbsp;<span class="delta-down">&minus;0.25 vs prior week (5.00)</span></div>
+    </div>
+  </div>
+  <p class="note" style="margin-top:8px;">&#9432; Total invite emails this week: 137 (API sends across campaigns 624, 633, 646&ndash;651). Review rate uses 136 unique invite order_ids (Zeppelin). 1 organic review also received (5&#9733;). Review data from Delta Lake up to Jul 11; Jul 12&ndash;13 reviews may not yet be captured. Prior week (Jun 29&ndash;Jul 5): 151 unique invites, 11 attributed + 2 organic reviews, 7.28% rate, 5.00&#9733;.</p>
+
+  <div class="warning" style="margin-top:16px;">
+    &#9888;&nbsp; <strong>Rating dip this week.</strong> Average attributed rating fell from 5.00&#9733; to 4.75&#9733; due to 2&times;4&#9733; reviews — Eze Victor (Support, tutor feedback) and Cynthia Alamezie (Exam Pass v2, constructive PRINCE2 feedback). Both reviews are positive with actionable suggestions, not negative. No 1&ndash;3&#9733; reviews received.
+  </div>
+
+  <!-- 2. Campaign Performance Table -->
+  <h2 id="s2">2. Campaign Performance</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th>ID</th>
+        <th>Sent</th>
+        <th>Open Rate</th>
+        <th>Click Rate</th>
+        <th>Unsubs</th>
+        <th>Reviews</th>
+        <th>Review Rate</th>
+        <th>Avg Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Welcome Call/Setup Campaign</td>
+        <td>646</td>
+        <td>56</td>
+        <td class="neutral">69.6%</td>
+        <td>5.4%</td>
+        <td>0</td>
+        <td>0</td>
+        <td class="neutral">0.00%</td>
+        <td class="neutral">&mdash;</td>
+      </tr>
+      <tr>
+        <td>Hubspot (Main) Invite TP Campaign</td>
+        <td>624</td>
+        <td>40</td>
+        <td class="best">72.5%</td>
+        <td class="best">17.5%</td>
+        <td>0</td>
+        <td>4</td>
+        <td>10.00%</td>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td>
+      </tr>
+      <tr>
+        <td>Support Campaign</td>
+        <td>647</td>
+        <td>23</td>
+        <td>65.2%</td>
+        <td>17.4%</td>
+        <td>0</td>
+        <td>3</td>
+        <td class="best">13.04%</td>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.50</td>
+      </tr>
+      <tr>
+        <td>Assignment Completion Campaign (HR/CIPD)</td>
+        <td>650</td>
+        <td>5</td>
+        <td class="best">100.0%</td>
+        <td>0.0%</td>
+        <td>0</td>
+        <td>0</td>
+        <td class="neutral">0.00%</td>
+        <td class="neutral">&mdash;</td>
+      </tr>
+      <tr>
+        <td>Exam Pass v1 Campaign</td>
+        <td>648</td>
+        <td>4</td>
+        <td>75.0%</td>
+        <td class="best">50.0%</td>
+        <td>0</td>
+        <td>2</td>
+        <td class="best">50.00%</td>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td>
+      </tr>
+      <tr>
+        <td>Exam Pass v2 Campaign</td>
+        <td>649</td>
+        <td>4</td>
+        <td>75.0%</td>
+        <td>25.0%</td>
+        <td>0</td>
+        <td>1</td>
+        <td>25.00%</td>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.00</td>
+      </tr>
+      <tr>
+        <td>From Invite TP Campaign</td>
+        <td>633</td>
+        <td>3</td>
+        <td>66.7%</td>
+        <td>0.0%</td>
+        <td>0</td>
+        <td>0</td>
+        <td class="neutral">0.00%</td>
+        <td class="neutral">&mdash;</td>
+      </tr>
+      <tr>
+        <td>Completion/Closure Campaign</td>
+        <td>651</td>
+        <td>2</td>
+        <td>50.0%</td>
+        <td>0.0%</td>
+        <td>0</td>
+        <td>0</td>
+        <td class="neutral">0.00%</td>
+        <td class="neutral">&mdash;</td>
+      </tr>
+      <tr class="total-row">
+        <td>TOTAL</td>
+        <td></td>
+        <td>137</td>
+        <td>70.8%</td>
+        <td>12.4%</td>
+        <td>0</td>
+        <td>10 attr &middot; 1 org</td>
+        <td>7.35%</td>
+        <td>4.75&#9733;</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">&#9432; Invite counts from Zeppelin (Delta Lake, exact Jul 7&ndash;13). Open/click rates from campaign report API (directionally accurate for the period). Campaigns 607, 698, 699, 700, 701, 710 had 0 sends this week.</p>
+
+  <!-- 3. Campaign Breakdown -->
+  <h2 id="s3">3. Campaign Breakdown</h2>
+  <table>
+    <thead>
+      <tr><th>Campaign</th><th>Review Rate</th><th>CTR</th><th>Avg Rating</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Exam Pass v1 Campaign</td>
+        <td class="best">50.00%</td>
+        <td class="best">50.0%</td>
+        <td class="best">5.00&#9733;</td>
+        <td>Best review rate this week &mdash; 2 reviews from 4 sends. Highest CTR of any campaign (50%). Students who have passed their exam remain highly motivated to leave reviews. Arkadiusz Pietras (PM-Tutor, Jul 7) and Mayank Soni (PM-Tutor, Jul 9, APM PFQ) both left 5&#9733; reviews praising course structure and team support.</td>
+      </tr>
+      <tr>
+        <td>Exam Pass v2 Campaign</td>
+        <td class="best">25.00%</td>
+        <td>25.0%</td>
+        <td>4.00&#9733;</td>
+        <td>1 review from 4 sends. Cynthia Alamezie (PM-Tutor, Jul 11) left a 4&#9733; with constructive feedback: materials and responsiveness praised, but recommends adding real-life practitioner examples to the PRINCE2 Practitioner course. Actionable product improvement suggestion &mdash; worth flagging to curriculum team.</td>
+      </tr>
+      <tr>
+        <td>Support Campaign</td>
+        <td class="best">13.04%</td>
+        <td>17.4%</td>
+        <td>4.50&#9733;</td>
+        <td>3 reviews from 23 sends. Staff named: <strong>Emmanuel Phiri</strong> twice (Eze Victor 4&#9733; + Raphael Grant 5&#9733;). Emmanuel is clearly a standout tutor &mdash; two independent reviewers cited him as a key reason for satisfaction. Duisberg Tyche (5&#9733;, Jul 7) praised the team's readiness to help. The single 4&#9733; reflects high expectations rather than poor service.</td>
+      </tr>
+      <tr>
+        <td>Hubspot (Main) Invite TP Campaign</td>
+        <td>10.00%</td>
+        <td class="best">17.5%</td>
+        <td class="best">5.00&#9733;</td>
+        <td>4 reviews from 40 sends, all 5&#9733;. CTR remained strong at 17.5% (vs 19.4% prior week, directionally stable). Jack Parsons (Jul 7), Chukwudi Chinke (Jul 8), Ronald Fraser (Jul 9), and Fenton Chance (Jul 10) all praised professionalism and communication quality.</td>
+      </tr>
+      <tr>
+        <td>Welcome Call/Setup Campaign</td>
+        <td class="worst">0.00%</td>
+        <td>5.4%</td>
+        <td class="neutral">&mdash;</td>
+        <td>Largest campaign this week (56 sends) but 0 reviews. CTR dropped from 9.1% last week to 5.4% &mdash; a concerning reversal after last week's partial recovery. Welcome Call is a new-student trigger; low CTR may reflect that recipients are at the very beginning of their journey and not yet ready to review. Monitor whether CTR stabilises or continues declining.</td>
+      </tr>
+      <tr>
+        <td>Low/zero-volume campaigns (633, 650, 651)</td>
+        <td class="neutral">0.00%</td>
+        <td>&mdash;</td>
+        <td class="neutral">&mdash;</td>
+        <td>633 (3 sends, 66.7% open), 650 (5 sends, 100% open), 651 (2 sends, 50% open). All strong open rates but too early in the funnel for conversion. Assignment Completion (650) with 100% open rate is the most engaged small segment &mdash; watch for reviews as volume builds.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 4. All Reviews This Week -->
+  <h2 id="s4">4. All Reviews &mdash; Jul 7&ndash;13, 2026</h2>
+
+  <div class="info-box">&#9432;&nbsp; <strong>11 total reviews this week</strong> (10 attributed + 1 organic). 9 reviews at 5&#9733;, 2 at 4&#9733;. No negative or 1&ndash;3&#9733; reviews. Staff named in 3 reviews: Emmanuel Phiri (tutor, &#215;2), Amanda (recruitment advisor, organic). Review data is confirmed through Jul 11; Jul 12&ndash;13 reviews may appear next week.</div>
+
+  <!-- Support Campaign -->
+  <div class="campaign-block">
+    <div class="camp-header">
+      Support Campaign &nbsp;&bull;&nbsp; ID 647 &nbsp;&bull;&nbsp; 3 reviews
+      <span class="badge-blue">4.50&#9733; avg</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r4">4&#9733;</span>
+        <span class="tag">Jul 9, 2026</span>
+        <span class="tag">order 1783602147473-4-Coding/AI-Tutor</span>
+        <span class="name-tag">Emmanuel Phiri</span>
+      </div>
+      <div class="review-heading">My experience here has been&hellip;</div>
+      <div class="review-text">"My experience here has been exceptional, largely due to the guidance and support of my tutor, <strong>Mr. Emmanuel Phiri</strong>. He has consistently demonstrated genuine care, offering clear direction and unwavering encouragement, especially during moments when I felt discouraged. His mentorship is truly outstanding, and his advice is one in a million."</div>
+      <div class="review-meta-line">Eze Victor &mdash; victoreze31@yahoo.com</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r5">5&#9733;</span>
+        <span class="tag">Jul 7, 2026</span>
+        <span class="tag">order 1783427729849-10-Data-Tutor</span>
+      </div>
+      <div class="review-heading">It&rsquo;s been great so far.</div>
+      <div class="review-text">"It's been great so far. The team has been very helpful with explanations and their readiness to help is top notch. Thank you"</div>
+      <div class="review-meta-line">Duisberg Tyche &mdash; duisbergbuss@gmail.com</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r5">5&#9733;</span>
+        <span class="tag">Jul 8, 2026</span>
+        <span class="tag">order 1783512298694-4-Coding/AI-Tutor</span>
+        <span class="name-tag">Emmanuel Phiri</span>
+      </div>
+      <div class="review-heading">It is very easy to understand for&hellip;</div>
+      <div class="review-text">"It is very easy to understand for someone who is just starting in this new experience. My progression is at a steady pace thanks to my tutor <strong>Emmanuel Phiri</strong>!"</div>
+      <div class="review-meta-line">Raphael Grant &mdash; grantraphael@yahoo.co.uk</div>
+    </div>
+  </div>
+
+  <!-- Hubspot Main -->
+  <div class="campaign-block">
+    <div class="camp-header">
+      Hubspot (Main) Invite TP Campaign &nbsp;&bull;&nbsp; ID 624 &nbsp;&bull;&nbsp; 4 reviews
+      <span class="badge-gold">5.00&#9733; avg</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r5">5&#9733;</span>
+        <span class="tag">Jul 7, 2026</span>
+        <span class="tag">order 62115497521</span>
+      </div>
+      <div class="review-heading">Very upfront about what to expect and&hellip;</div>
+      <div class="review-text">"Very upfront about what to expect and what you are getting from the course."</div>
+      <div class="review-meta-line">Jack Parsons &mdash; jackparsons17501@gmail.com</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r5">5&#9733;</span>
+        <span class="tag">Jul 8, 2026</span>
+        <span class="tag">order 62115459439</span>
+      </div>
+      <div class="review-heading">I am pleased with the professionalism&hellip;</div>
+      <div class="review-text">"I am pleased with the professionalism being exhibited so far with members of your team towards onboarding me."</div>
+      <div class="review-meta-line">Chukwudi Chinke &mdash; co_chinke@yahoo.com</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r5">5&#9733;</span>
+        <span class="tag">Jul 9, 2026</span>
+        <span class="tag">order 62115722149</span>
+      </div>
+      <div class="review-heading">All communication and exchanges were&hellip;</div>
+      <div class="review-text">"All communication and exchanges were professional, clear, concise. All my questions were answered promptly, which is impressive. So far, I have every trust in ITOL based on just a few exchanges."</div>
+      <div class="review-meta-line">Ronald Fraser &mdash; fraser.roni@gmail.com</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r5">5&#9733;</span>
+        <span class="tag">Jul 10, 2026</span>
+        <span class="tag">order 62480764551</span>
+      </div>
+      <div class="review-heading">Very Professional extremely talented&hellip;</div>
+      <div class="review-text">"Very Professional extremely talented and helpful, and knowledgeable. Very much appreciated for the assistance. Thank you."</div>
+      <div class="review-meta-line">Fenton Chance &mdash; info@oddm-educational-research.co.uk</div>
+    </div>
+  </div>
+
+  <!-- Exam Pass v1 -->
+  <div class="campaign-block">
+    <div class="camp-header">
+      Exam Pass v1 Campaign &nbsp;&bull;&nbsp; ID 648 &nbsp;&bull;&nbsp; 2 reviews
+      <span class="badge-gold">5.00&#9733; avg</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r5">5&#9733;</span>
+        <span class="tag">Jul 7, 2026</span>
+        <span class="tag">order 1783433864976-3-PM-Tutor</span>
+      </div>
+      <div class="review-heading">Worth it</div>
+      <div class="review-text">"Great delivered. Knowledge, preparation and support on point. Also a huge advantage of learning at one's own pace."</div>
+      <div class="review-meta-line">Arkadiusz Pietras &mdash; pietras_a@proton.me</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r5">5&#9733;</span>
+        <span class="tag">Jul 9, 2026</span>
+        <span class="tag">order 1783521951391-3-PM-Tutor</span>
+      </div>
+      <div class="review-heading">APM PFQ Exam experience Review</div>
+      <div class="review-text">"I have recently attended the APM PFQ exam and would say it was possible because of the ITOL Learning's easy module structure, well explained and support from the team."</div>
+      <div class="review-meta-line">Mayank Soni &mdash; mayanksoni052@gmail.com</div>
+    </div>
+  </div>
+
+  <!-- Exam Pass v2 -->
+  <div class="campaign-block">
+    <div class="camp-header">
+      Exam Pass v2 Campaign &nbsp;&bull;&nbsp; ID 649 &nbsp;&bull;&nbsp; 1 review
+      <span class="badge-blue">4.00&#9733; avg</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r4">4&#9733;</span>
+        <span class="tag">Jul 11, 2026</span>
+        <span class="tag">order 1783684762296-15-PM-Tutor</span>
+        <span class="tag-warn">constructive feedback</span>
+      </div>
+      <div class="review-heading">Positive learning experience</div>
+      <div class="review-text">"The reading materials were clear, structured, and easy to follow, and any questions I raised were answered quickly, which made the learning experience smooth. As a recommendation, ITOnline Training could strengthen the PRINCE2 Practitioner course by explaining the rationale behind each concept using real&#8209;life practitioner examples. This would help learners better understand how the principles, Practices and processes apply in an actual project environment."</div>
+      <div class="review-meta-line">Cynthia Alamezie &mdash; cynthianonye22@gmail.com</div>
+    </div>
+  </div>
+
+  <!-- Organic -->
+  <div class="campaign-block">
+    <div class="camp-header">
+      Organic reviews (no invite match) &nbsp;&bull;&nbsp; 1 review
+      <span class="badge-gold">5.00&#9733; avg</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r5">5&#9733;</span>
+        <span class="tag">Jul 8, 2026</span>
+        <span class="organic-chip">organic</span>
+        <span class="name-tag">Amanda</span>
+      </div>
+      <div class="review-heading">Highly Recommend Amanda at ITOL Recruit</div>
+      <div class="review-text">"Amanda made my journey with ITOL Recruit a pleasant one. She does her job well and goes above and beyond to get things done. In a few months, I have seen a great difference in the recruitment process. She is thoughtful and proactive, and knows when to make changes when required. She tailors the whole experience to suit my individual needs. She is also an excellent communicator, always quick to respond and happy to explain the next steps clearly. She responds promptly to any questions or concerns I have. Her mock interview sessions were particularly helpful, giving me the confidence and structure I needed going into real interviews. She genuinely listens and takes the time to understand where you are in your journey, rather than applying a template approach. I always felt supported, never just like another number in the process. I am so glad to have her as my recruitment advisor."</div>
+      <div class="review-meta-line">Praise A &mdash; organic (no email on file)</div>
+    </div>
+  </div>
+
+  <!-- 5. Staff Mentions -->
+  <h2 id="s5">5. Staff Mentions This Week</h2>
+
+  <p>2 staff members named across 3 reviews this week. Emmanuel Phiri is the standout with two independent attributed mentions.</p>
+  <div class="staff-grid" style="margin-top:12px;">
+    <span class="staff-chip">Emmanuel Phiri <span class="staff-chip-role">Coding / Data Tutor (&times;2)</span></span>
+    <span class="staff-chip">Amanda <span class="staff-chip-role">Recruitment Advisor (organic)</span></span>
+  </div>
+
+  <div class="info-box" style="margin-top:18px;">
+    &#128204;&nbsp; <strong>Emmanuel Phiri is gaining traction as a standout tutor.</strong> Two independent reviewers (Eze Victor and Raphael Grant) named him this week, both from Coding/Data pathways. The 4&#9733; review from Eze Victor is positive &mdash; it reflects high expectations of the tutor rather than dissatisfaction. Consider acknowledging Emmanuel internally and using his approach as a model for other tutors.<br><br>
+    &#128204;&nbsp; <strong>PRINCE2 real-life examples gap.</strong> Cynthia Alamezie&rsquo;s 4&#9733; review specifically calls out a lack of real-life practitioner examples in the PRINCE2 Practitioner course. This is an actionable curriculum note worth sharing with the course team.<br><br>
+    &#128204;&nbsp; <strong>Welcome Call CTR decline resumed.</strong> After recovering to 9.1% last week (from 2.0%), CTR dropped back to 5.4% this week &mdash; and 0 reviews from 56 sends. The campaign&rsquo;s role as a very early touchpoint may structurally limit review conversion. Consider whether a reminder or a later-stage resend to non-reviewers would help.
+  </div>
+
+  <div class="footer">
+    ITOL Recruit campaign report &mdash; Jul 7&ndash;13, 2026 &mdash; Generated 2026-07-13<br>
+    Data sources: Stacktome campaign API, Zeppelin (Delta Lake it_review + it_invites_0713) &mdash; Notebook 2MN9W4ABP
+  </div>
+
+</div>
+</body>
+</html>
