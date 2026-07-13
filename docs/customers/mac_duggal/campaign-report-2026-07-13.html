@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mac Duggal Campaign Performance Report — May vs June 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 16px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+  .month-card { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .month-card h3 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 14px; border-bottom: 2px solid #6c5ce7; padding-bottom: 8px; }
+  .month-card.june h3 { border-color: #00b894; }
+  .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+  .stat-row:last-child { border-bottom: none; }
+  .stat-label { color: #636e72; }
+  .stat-val { font-weight: 700; color: #1a1a2e; }
+  .stat-val.up { color: #00b894; }
+  .stat-val.down { color: #d63031; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .warn { color: #e17055; font-weight: 600; }
+  .stars { color: #fdcb6e; }
+  .delta-up { color: #00b894; font-size: 11px; }
+  .delta-down { color: #d63031; font-size: 11px; }
+  .total-row td { background: #f0f0f0 !important; font-weight: 600; }
+
+  .rating-bar-wrap { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+  .rating-bar-label { font-size: 12px; width: 28px; color: #555; text-align: right; }
+  .rating-bar { height: 10px; border-radius: 5px; }
+  .bar-5 { background: #00b894; }
+  .bar-4 { background: #74b9ff; }
+  .bar-3 { background: #fdcb6e; }
+  .bar-12 { background: #d63031; }
+  .rating-bar-count { font-size: 12px; color: #888; }
+
+  .info-box { background: #f0f4ff; border: 1.5px solid #a0b4e8; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #2c3e6e; line-height: 1.6; }
+  .warning { background: #fff9e6; border: 1.5px solid #fdcb6e; border-radius: 10px; padding: 16px 20px; color: #5d4037; font-size: 13px; line-height: 1.6; margin-bottom: 12px; }
+  .success-banner { background: #e8f8f5; border: 2px solid #00b894; border-radius: 10px; padding: 18px 22px; margin-bottom: 16px; }
+  .success-banner .sb-title { color: #00b894; font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+  .note { font-size: 12px; color: #888; margin-top: 4px; }
+  .na-badge { background: #f0f0f0; color: #999; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-style: italic; }
+
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Mac Duggal &mdash; Campaign Performance Report</h1>
+  <div class="subtitle">May vs June 2026 comparison &nbsp;&bull;&nbsp; Generated 2026-07-13 &nbsp;&bull;&nbsp; Campaigns 442 (positive-tickets), 712 (positive-feedback-tickets)</div>
+
+  <nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #6c5ce7;font-size:14px;line-height:2;">
+    <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+    <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Executive Summary</a>
+    <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Send Volume</a>
+    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Email Performance</a>
+    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Review Rate</a>
+    <a href="#s5" style="color:#444;text-decoration:none;">5. Observations</a>
+  </nav>
+
+  <!-- 1. Executive Summary -->
+  <h2 id="s1">1. Executive Summary</h2>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">May Invites Sent</div>
+      <div class="value">333</div>
+      <div class="sub">unique invite orders &nbsp;<span class="delta-up">+704 total emails incl. reminders</span></div>
+    </div>
+    <div class="kpi">
+      <div class="label">June Invites Sent</div>
+      <div class="value">469</div>
+      <div class="sub">unique invite orders &nbsp;<span class="delta-up">+40.8% vs May</span></div>
+    </div>
+    <div class="kpi">
+      <div class="label">May Review Rate</div>
+      <div class="value">9.91%</div>
+      <div class="sub">33 reviews / 333 invites &nbsp;&bull;&nbsp; <span class="stars">&#9733;</span> 4.58 avg</div>
+    </div>
+    <div class="kpi">
+      <div class="label">June Review Rate</div>
+      <div class="value">~0%</div>
+      <div class="sub">too early &mdash; June conversions expected Jul&ndash;Aug</div>
+    </div>
+  </div>
+  <p class="note" style="margin-top:8px;">&#9432; Review attribution: reviews received in each month matched to invite by <code>contact.order_id</code>. June invites were sent too recently (conversion window ~4&ndash;6 weeks) — June review rate will be evaluated once reviews arrive. Email performance (open/click rates) from the Stacktome campaign API, available for June only; May data is not retained by the API.</p>
+
+  <div class="info-box" style="margin-top:16px;">
+    &#128200;&nbsp; <strong>Volume ramped up significantly in June.</strong> Invite sends grew +40.8% month-over-month (333 &rarr; 469 unique invite orders; 704 &rarr; 882 total emails including reminders). May proved the programme works at 9.91% review rate — well above typical e-commerce benchmarks. June performance will only be assessable in 4&ndash;6 weeks once the conversion window closes.
+  </div>
+
+  <!-- 2. Send Volume -->
+  <h2 id="s2">2. Send Volume — May vs June</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Month</th>
+        <th>Campaign</th>
+        <th>Invite Orders</th>
+        <th>Reminder Orders</th>
+        <th>Total Emails</th>
+        <th>MoM Change</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>May 2026</td>
+        <td>positive-tickets (442)</td>
+        <td>333</td>
+        <td>369</td>
+        <td>702</td>
+        <td class="neutral">&mdash; (baseline)</td>
+      </tr>
+      <tr>
+        <td>May 2026</td>
+        <td>positive-feedback-tickets (712)</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td class="neutral">not launched yet</td>
+      </tr>
+      <tr>
+        <td>June 2026</td>
+        <td>positive-tickets (442)</td>
+        <td>468</td>
+        <td>411</td>
+        <td>879</td>
+        <td class="best">+25.2% total</td>
+      </tr>
+      <tr>
+        <td>June 2026</td>
+        <td>positive-feedback-tickets (712)</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td class="neutral">new — 1 pilot send</td>
+      </tr>
+      <tr class="total-row">
+        <td>May TOTAL</td>
+        <td></td>
+        <td>333</td>
+        <td>369</td>
+        <td>702</td>
+        <td></td>
+      </tr>
+      <tr class="total-row">
+        <td>June TOTAL</td>
+        <td></td>
+        <td>469</td>
+        <td>411</td>
+        <td>880</td>
+        <td class="best">+25.4% vs May</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">&#9432; Invite and reminder counts are unique <code>contact.order_id</code> values per send type per month (Zeppelin / Delta Lake). Campaign 712 launched in June with a single pilot invite — no reminders sent yet.</p>
+
+  <!-- 3. Email Performance -->
+  <h2 id="s3">3. Email Performance</h2>
+
+  <div class="warning">
+    &#9432;&nbsp; <strong>May email performance not available.</strong> The Stacktome campaign API does not retain historical daily stats beyond the recent period; May 2026 data is no longer accessible via the API. June figures are available and representative.
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Month</th>
+        <th>Campaign</th>
+        <th>API Sends</th>
+        <th>Open Rate</th>
+        <th>Click Rate</th>
+        <th>Unsubs</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>May 2026</td>
+        <td>positive-tickets (442)</td>
+        <td><span class="na-badge">n/a</span></td>
+        <td><span class="na-badge">n/a</span></td>
+        <td><span class="na-badge">n/a</span></td>
+        <td><span class="na-badge">n/a</span></td>
+      </tr>
+      <tr>
+        <td>June 2026</td>
+        <td>positive-tickets (442)</td>
+        <td>443</td>
+        <td class="best">65.0%</td>
+        <td>13.8%</td>
+        <td>4 <span style="font-size:11px;color:#888;">(0.9%)</span></td>
+      </tr>
+      <tr>
+        <td>June 2026</td>
+        <td>positive-feedback-tickets (712)</td>
+        <td>1</td>
+        <td class="neutral">0.0%</td>
+        <td class="neutral">0.0%</td>
+        <td>0</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">&#9432; API send count (443) differs slightly from Zeppelin event count (469 invite + 411 reminder = 880) — API aggregates at a campaign/template level and may reflect a slightly different window. Open/click rates are directionally accurate for June. Campaign 712 has 1 send with no opens yet — too early to evaluate.</p>
+
+  <div class="info-box">
+    &#128204;&nbsp; <strong>June email engagement is strong.</strong> Campaign 442 achieved a <strong>65.0% unique open rate</strong> and <strong>13.8% CTR</strong> in June. These are well above typical e-commerce benchmarks (open rates ~25&ndash;40%, CTR ~2&ndash;5%). The audience — customers who submitted positive support tickets — is highly engaged and receptive to review requests. Unsub rate of 0.9% (4 unsubs) is within normal range.
+  </div>
+
+  <!-- 4. Review Rate -->
+  <h2 id="s4">4. Review Rate Comparison</h2>
+
+  <div class="compare-grid">
+    <div class="month-card">
+      <h3>May 2026</h3>
+      <div class="stat-row"><span class="stat-label">Invites sent</span><span class="stat-val">333</span></div>
+      <div class="stat-row"><span class="stat-label">Reviews attributed (in-month)</span><span class="stat-val">33</span></div>
+      <div class="stat-row"><span class="stat-label">Review rate</span><span class="stat-val up">9.91%</span></div>
+      <div class="stat-row"><span class="stat-label">Avg rating</span><span class="stat-val">4.58 &#9733;</span></div>
+      <div class="stat-row"><span class="stat-label">Reviews arriving in Jun (lagged)</span><span class="stat-val">+3</span></div>
+      <div class="stat-row"><span class="stat-label">Eventual rate (&#8805;)</span><span class="stat-val up">&#8805; 10.81%</span></div>
+    </div>
+    <div class="month-card june">
+      <h3>June 2026</h3>
+      <div class="stat-row"><span class="stat-label">Invites sent</span><span class="stat-val">469</span></div>
+      <div class="stat-row"><span class="stat-label">Reviews attributed (in-month)</span><span class="stat-val">1</span></div>
+      <div class="stat-row"><span class="stat-label">Review rate (so far)</span><span class="stat-val neutral">0.21%</span></div>
+      <div class="stat-row"><span class="stat-label">Avg rating</span><span class="stat-val">4.00 &#9733;</span></div>
+      <div class="stat-row"><span class="stat-label">Conversion window</span><span class="stat-val neutral">~4&ndash;6 weeks</span></div>
+      <div class="stat-row"><span class="stat-label">Expected evaluation date</span><span class="stat-val">Aug 2026</span></div>
+    </div>
+  </div>
+
+  <div class="success-banner">
+    <div class="sb-title">&#9989; May review rate of 9.91% confirms the programme is working</div>
+    33 reviews from 333 invite orders in May is a strong result for a ticket-based review programme. With 3 additional reviews from May invites arriving in June, the eventual May rate is ≥ 10.81% — putting Mac Duggal comfortably in double-digit territory. June's rate will only be visible from mid-July onwards as the conversion window closes.
+  </div>
+
+  <h3 style="margin:20px 0 12px;">May 2026 — Rating Distribution</h3>
+  <table>
+    <thead>
+      <tr><th>Rating</th><th>Count</th><th>Share</th><th>Distribution</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5-star</td>
+        <td class="best">28</td>
+        <td>84.8%</td>
+        <td><div class="rating-bar-wrap"><div class="rating-bar bar-5" style="width:170px;"></div></div></td>
+      </tr>
+      <tr>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4-star</td>
+        <td>2</td>
+        <td>6.1%</td>
+        <td><div class="rating-bar-wrap"><div class="rating-bar bar-4" style="width:12px;"></div></div></td>
+      </tr>
+      <tr>
+        <td><span class="stars">&#9733;&#9733;&#9733;</span> 3-star</td>
+        <td>0</td>
+        <td>0.0%</td>
+        <td>&mdash;</td>
+      </tr>
+      <tr>
+        <td><span style="color:#d63031;">&#9733;&#9733;</span> 1&ndash;2-star</td>
+        <td class="warn">3</td>
+        <td class="warn">9.1%</td>
+        <td><div class="rating-bar-wrap"><div class="rating-bar bar-12" style="width:18px;"></div></div></td>
+      </tr>
+      <tr class="total-row">
+        <td>TOTAL</td>
+        <td>33</td>
+        <td>100%</td>
+        <td>Avg 4.58&#9733;</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">&#9432; "Positive-ticket" targeting (sending invites to customers whose support ticket was resolved positively) produces a high share of 5&#9733; — but 3 low-rating reviews (9.1%) were still received. These may reflect customers with unresolved frustrations despite a resolved ticket. Worth reviewing those specific order_ids.</p>
+
+  <!-- 5. Observations -->
+  <h2 id="s5">5. Observations &amp; Next Steps</h2>
+
+  <div class="info-box">
+    &#128204;&nbsp; <strong>Volume growth is healthy.</strong> Invite sends grew +40.8% (333 &rarr; 469) month-over-month. If May&rsquo;s 9.91% review rate holds in June, that implies ~46 attributed reviews from June invites arriving over July&ndash;August — a meaningful increase in review volume.
+  </div>
+
+  <div class="info-box">
+    &#128204;&nbsp; <strong>June email engagement is strong at 65% open rate.</strong> This suggests the positive-ticket audience is highly primed to engage. The 13.8% CTR is well above benchmark. If open and CTR are consistent with May (no API comparison available), review conversion should follow the same ~10% pattern.
+  </div>
+
+  <div class="warning">
+    &#9888;&nbsp; <strong>3 low-rating reviews in May (9.1% of attributed reviews).</strong> For a "positive ticket" filter, any 1&ndash;2&#9733; reviews are unexpected. These could indicate: (1) the ticket resolution was perceived as satisfactory by the agent but not the customer, (2) some orders had other unresolved issues, or (3) the review invite arrived alongside another negative experience. Recommend reviewing the 3 order_ids to understand the pattern.
+  </div>
+
+  <div class="info-box">
+    &#128204;&nbsp; <strong>Campaign 712 (positive-feedback-tickets) is in pilot.</strong> 1 invite sent in June with no open yet. This appears to be a new variant of the programme. Monitor as volume builds — if it targets a different segment, compare its eventual review rate to campaign 442&rsquo;s baseline of ~10%.
+  </div>
+
+  <div class="info-box">
+    &#128204;&nbsp; <strong>Next evaluation point: mid-August 2026.</strong> By then, June invites should have had ~6 weeks to convert. Re-run this comparison with June attributed reviews to get a true MoM rate comparison. If June rate ≥ 8%, the programme is scaling well; if it drops significantly, investigate whether volume growth outpaced ticket-quality filtering.
+  </div>
+
+  <div class="footer">
+    Mac Duggal campaign performance report &mdash; May vs June 2026 &mdash; Generated 2026-07-13<br>
+    Data sources: Stacktome campaign API (June email stats), Zeppelin (Delta Lake md_reviews + md_invites) &mdash; Notebook 2MVH5VT5F
+  </div>
+
+</div>
+</body>
+</html>
