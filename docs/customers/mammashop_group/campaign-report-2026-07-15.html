@@ -161,20 +161,19 @@
   <div class="kpi-grid">
     <div class="kpi"><div class="label">Total Reviews</div><div class="value">18</div><div class="sub">MA 11 · NB 3 · HK 3 · LK 1</div></div>
     <div class="kpi highlight"><div class="label">Group Avg Rating</div><div class="value">4.17★</div><div class="sub">3 negatives (MA 1★+2★, NB 1★)</div></div>
-    <div class="kpi warn"><div class="label">Email Sends</div><div class="value">4,446</div><div class="sub">Open%: N/A — API unavailable</div></div>
-    <div class="kpi"><div class="label">Group Open Rate</div><div class="value">N/A</div><div class="sub">Campaign report API returning 500</div></div>
+    <div class="kpi"><div class="label">Email Sends</div><div class="value">4,446</div><div class="sub">Open%: 56.8% · CTR 2.0% · 79 unsubs</div></div>
+    <div class="kpi good"><div class="label">Group Open Rate</div><div class="value">56.8%</div><div class="sub">CTR 2.0% · 79 unsubs</div></div>
     <div class="kpi good"><div class="label">Attribution Rate</div><div class="value">38.9%</div><div class="sub">7 of 18 reviews</div></div>
   </div>
 
   <div class="warn-box">
     <p><strong>Three negatives require attention.</strong> Mammashop 1★ (Jul 10) — learning tower ordered but out of stock; no proactive notification, only chatbot support available. Naturebaby 1★ (Jul 13) — customer strongly advises against shopping here; chatbot CS barrier, product quality variance issue, poor service even after reaching a human agent. Mammashop 2★ (Jul 15, DE, attributed) — mouse toy received loose in a plain plastic bag with no gift packaging; disappointing unboxing for customer's grandchild.</p>
     <p><strong>Send volume jumped to 4,446 — mammashop DK campaign (652) reactivated.</strong> Last week's send count was 1,474 with a note that campaign 652 had dropped to 224 and was marked inactive. This week 652 sent 1,562 invites + 833 reminders = 2,395. The campaign is clearly back to full operation. The A/B test weights have also been updated — most campaigns now running 100% brand template, indicating the test has been concluded in favour of brand templates.</p>
-    <p><strong>Email open/CTR data unavailable this week.</strong> The campaign report API (/api/invites/v1/campaigns/{id}/report) returned HTTP 500 for all accounts. Send volumes below are from Zeppelin/Delta Lake. Open rate and CTR are omitted until the API is restored.</p>
   </div>
 
   <!-- BRAND TEMPLATE PERFORMANCE -->
   <h2 id="s2">Brand Template Performance — Week 4 (A/B Test Concluded)</h2>
-  <p style="margin-bottom:16px;">Week 4 of the TP vs brand template comparison (launched Jun 16). <strong>Critical update: the A/B test has been concluded.</strong> TP weights have been set to 0 for all major send campaigns — brand templates are now the default. Open rate comparison is unavailable this week (API down). Send distribution is shown below to document the transition.</p>
+  <p style="margin-bottom:16px;">Week 4 of the TP vs brand template comparison (launched Jun 16). <strong>Critical update: the A/B test has been concluded.</strong> TP weights have been set to 0 for all major send campaigns — brand templates are now the default. Send distribution is shown below to document the transition.</p>
 
   <div class="good-box">
     <p><strong>Brand templates adopted as the default across the group.</strong> Campaign 652 (mammashop invite-recent-dk), which had 50/50 TP/brand weighting through Weeks 1–3, now shows 0 TP sends and 1,562 brand sends. All other invite-recent campaigns across the group have similarly moved to near-100% brand weighting. The three weeks of accumulated data (Weeks 1–3) consistently showed +6 to +19pp brand template lift, confirming the decision.</p>
@@ -236,11 +235,11 @@
     </div>
   </div>
 
-  <p style="font-size:12px;color:#888;margin-top:-6px;margin-bottom:20px;"><em>Open rate comparison omitted this week — campaign report API unavailable (HTTP 500). Resume week-over-week open rate tracking once API is restored.</em></p>
+  <p style="font-size:12px;color:#888;margin-top:-6px;margin-bottom:20px;"><em>With the A/B test concluded, open rate comparisons resume from next week using brand-template-only baselines.</em></p>
 
   <!-- EMAIL PERFORMANCE TABLE -->
   <h2 id="s3">Email Performance by Campaign</h2>
-  <p style="margin-bottom:14px;">Send volumes from Zeppelin/Delta Lake (Jul 9–15, 2026). Open%, CTR and unsubs unavailable — campaign report API returned HTTP 500 for all accounts this week.</p>
+  <p style="margin-bottom:14px;">Send volumes (Invites/Reminders/Total) from Zeppelin/Delta Lake. Open%, CTR and unsubs from the Stacktome campaign report API (Jul 9–15, 2026).</p>
 
   <table>
     <thead>
@@ -263,54 +262,54 @@
         <td style="text-align:right">1,562</td>
         <td style="text-align:right">833</td>
         <td style="text-align:right">2,395</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right">56.4%</td>
+        <td style="text-align:right">1.8%</td>
+        <td style="text-align:right">32</td>
       </tr>
       <tr>
         <td>invite-recent-de</td>
         <td style="text-align:right">223</td>
         <td style="text-align:right">83</td>
         <td style="text-align:right">306</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right">51.2%</td>
+        <td style="text-align:right">2.3%</td>
+        <td style="text-align:right">13</td>
       </tr>
       <tr>
         <td>invite-recent-se</td>
         <td style="text-align:right">122</td>
         <td style="text-align:right">155</td>
         <td style="text-align:right">277</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right">62.9%</td>
+        <td style="text-align:right">1.1%</td>
+        <td style="text-align:right">8</td>
       </tr>
       <tr>
         <td>invite-recent-fr</td>
         <td style="text-align:right">120</td>
         <td style="text-align:right">155</td>
         <td style="text-align:right">275</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right">52.6%</td>
+        <td style="text-align:right">2.1%</td>
+        <td style="text-align:right">4</td>
       </tr>
       <tr>
         <td>invite-recent-nl</td>
         <td style="text-align:right">113</td>
         <td style="text-align:right">73</td>
         <td style="text-align:right">186</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right">51.6%</td>
+        <td style="text-align:right">0.8%</td>
+        <td style="text-align:right">4</td>
       </tr>
       <tr>
         <td>positive-tickets</td>
         <td style="text-align:right">7</td>
         <td style="text-align:right">10</td>
         <td style="text-align:right">17</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right">69.2%</td>
+        <td style="text-align:right">7.7%</td>
+        <td style="text-align:right">0</td>
       </tr>
       <!-- Naturebaby -->
       <tr>
@@ -319,45 +318,45 @@
         <td style="text-align:right">332</td>
         <td style="text-align:right">189</td>
         <td style="text-align:right">521</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right">61.6%</td>
+        <td style="text-align:right">1.9%</td>
+        <td style="text-align:right">9</td>
       </tr>
       <tr>
         <td>invite-recent-de</td>
         <td style="text-align:right">19</td>
         <td style="text-align:right">18</td>
         <td style="text-align:right">37</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right">42.3%</td>
+        <td style="text-align:right">3.8%</td>
+        <td style="text-align:right">0</td>
       </tr>
       <tr>
         <td>invite-recent-fr</td>
         <td style="text-align:right">13</td>
         <td style="text-align:right">13</td>
         <td style="text-align:right">26</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right">58.8%</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">0</td>
       </tr>
       <tr>
         <td>invite-recent-se</td>
         <td style="text-align:right">13</td>
         <td style="text-align:right">9</td>
         <td style="text-align:right">22</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right">78.9%</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">1</td>
       </tr>
       <tr>
         <td>positive-tickets</td>
         <td style="text-align:right">0</td>
         <td style="text-align:right">1</td>
         <td style="text-align:right">1</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right">100.0%</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">0</td>
       </tr>
       <!-- Loukrudt -->
       <tr>
@@ -366,9 +365,9 @@
         <td style="text-align:right">171</td>
         <td style="text-align:right">106</td>
         <td style="text-align:right">277</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right">56.4%</td>
+        <td style="text-align:right">0.4%</td>
+        <td style="text-align:right">7</td>
       </tr>
       <!-- Hoppekids -->
       <tr>
@@ -377,45 +376,45 @@
         <td style="text-align:right">21</td>
         <td style="text-align:right">0</td>
         <td style="text-align:right">21</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right">65.0%</td>
+        <td style="text-align:right">20.0%</td>
+        <td style="text-align:right">1</td>
       </tr>
       <tr>
         <td>invite-recent-dk</td>
         <td style="text-align:right">19</td>
         <td style="text-align:right">21</td>
         <td style="text-align:right">40</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right">52.5%</td>
+        <td style="text-align:right">2.5%</td>
+        <td style="text-align:right">0</td>
       </tr>
       <tr>
         <td>invite-recent-de</td>
         <td style="text-align:right">12</td>
         <td style="text-align:right">10</td>
         <td style="text-align:right">22</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right">40.0%</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">0</td>
       </tr>
       <tr>
         <td>invite-recent-no</td>
         <td style="text-align:right">9</td>
         <td style="text-align:right">8</td>
         <td style="text-align:right">17</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right">84.6%</td>
+        <td style="text-align:right">7.7%</td>
+        <td style="text-align:right">0</td>
       </tr>
       <tr>
         <td>invite-recent-se</td>
         <td style="text-align:right">4</td>
         <td style="text-align:right">2</td>
         <td style="text-align:right">6</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
-        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right">66.7%</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">0</td>
       </tr>
       <!-- Totals -->
       <tr class="row-total">
@@ -423,7 +422,9 @@
         <td style="text-align:right">2,760</td>
         <td style="text-align:right">1,686</td>
         <td style="text-align:right">4,446</td>
-        <td colspan="3" style="text-align:center;font-size:11px;color:#888;font-weight:400;">Open/CTR/Unsubs unavailable — API HTTP 500</td>
+        <td style="text-align:right">56.8%</td>
+        <td style="text-align:right">2.0%</td>
+        <td style="text-align:right">79</td>
       </tr>
     </tbody>
   </table>
@@ -446,8 +447,8 @@
       <div class="acct-card-body">
         <div class="mini-kpi-row">
           <div class="mini-kpi"><div class="mv">3,456</div><div class="ml">Sends</div></div>
-          <div class="mini-kpi"><div class="mv">N/A</div><div class="ml">Open</div></div>
-          <div class="mini-kpi"><div class="mv">N/A</div><div class="ml">CTR</div></div>
+          <div class="mini-kpi"><div class="mv">55.9%</div><div class="ml">Open</div></div>
+          <div class="mini-kpi"><div class="mv">1.8%</div><div class="ml">CTR</div></div>
           <div class="mini-kpi"><div class="mv">4</div><div class="ml">Attributed</div></div>
           <div class="mini-kpi"><div class="mv">7</div><div class="ml">Organic</div></div>
         </div>
@@ -489,8 +490,8 @@
       <div class="acct-card-body">
         <div class="mini-kpi-row">
           <div class="mini-kpi"><div class="mv">607</div><div class="ml">Sends</div></div>
-          <div class="mini-kpi"><div class="mv">N/A</div><div class="ml">Open</div></div>
-          <div class="mini-kpi"><div class="mv">N/A</div><div class="ml">CTR</div></div>
+          <div class="mini-kpi"><div class="mv">61.2%</div><div class="ml">Open</div></div>
+          <div class="mini-kpi"><div class="mv">1.9%</div><div class="ml">CTR</div></div>
           <div class="mini-kpi"><div class="mv">2</div><div class="ml">Attributed</div></div>
           <div class="mini-kpi"><div class="mv">1</div><div class="ml">Organic</div></div>
         </div>
@@ -532,8 +533,8 @@
       <div class="acct-card-body">
         <div class="mini-kpi-row">
           <div class="mini-kpi"><div class="mv">277</div><div class="ml">Sends</div></div>
-          <div class="mini-kpi"><div class="mv">N/A</div><div class="ml">Open</div></div>
-          <div class="mini-kpi"><div class="mv">N/A</div><div class="ml">CTR</div></div>
+          <div class="mini-kpi"><div class="mv">56.4%</div><div class="ml">Open</div></div>
+          <div class="mini-kpi"><div class="mv">0.4%</div><div class="ml">CTR</div></div>
           <div class="mini-kpi"><div class="mv">0</div><div class="ml">Attributed</div></div>
           <div class="mini-kpi"><div class="mv">1</div><div class="ml">Organic</div></div>
         </div>
@@ -571,8 +572,8 @@
       <div class="acct-card-body">
         <div class="mini-kpi-row">
           <div class="mini-kpi"><div class="mv">106</div><div class="ml">Sends</div></div>
-          <div class="mini-kpi"><div class="mv">N/A</div><div class="ml">Open</div></div>
-          <div class="mini-kpi"><div class="mv">N/A</div><div class="ml">CTR</div></div>
+          <div class="mini-kpi"><div class="mv">58.5%</div><div class="ml">Open</div></div>
+          <div class="mini-kpi"><div class="mv">6.4%</div><div class="ml">CTR</div></div>
           <div class="mini-kpi"><div class="mv">1</div><div class="ml">Attributed</div></div>
           <div class="mini-kpi"><div class="mv">2</div><div class="ml">Organic</div></div>
         </div>
