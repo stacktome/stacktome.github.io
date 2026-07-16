@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mammashop Group — Weekly Report Jul 9–15 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .kpi.highlight { border-top: 3px solid #e17055; }
+  .kpi.good { border-top: 3px solid #00b894; }
+  .kpi.warn { border-top: 3px solid #fdcb6e; }
+
+  .acct-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 8px; }
+  .acct-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow: hidden; }
+  .acct-card-header { padding: 10px 16px; font-weight: 700; font-size: 13px; color: #fff; display: flex; align-items: center; gap: 10px; }
+  .acct-mammashop { background: #6c5ce7; }
+  .acct-naturebaby { background: #00b894; }
+  .acct-loukrudt { background: #0984e3; }
+  .acct-hoppekids { background: #e17055; }
+  .acct-card-body { padding: 14px 16px; }
+
+  .mini-kpi-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
+  .mini-kpi { text-align: center; }
+  .mini-kpi .mv { font-size: 20px; font-weight: 700; color: #1a1a2e; }
+  .mini-kpi .ml { font-size: 10px; text-transform: uppercase; color: #888; letter-spacing: .5px; }
+
+  .attr-bar-wrap { margin: 8px 0 12px; }
+  .attr-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: #636e72; margin-bottom: 4px; }
+  .attr-bar { height: 10px; border-radius: 5px; background: #dfe6e9; overflow: hidden; display: flex; }
+  .attr-fill { height: 100%; background: #6c5ce7; }
+  .organic-fill { height: 100%; background: #b2bec3; }
+
+  .split-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+  .split-box { border-radius: 8px; padding: 10px 14px; }
+  .split-attr { background: #f0eeff; border-left: 3px solid #6c5ce7; }
+  .split-organic { background: #f5f6fa; border-left: 3px solid #b2bec3; }
+  .split-box .sb-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 4px; }
+  .split-box .sb-count { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+  .split-box .sb-avg { font-size: 12px; color: #636e72; margin-top: 2px; }
+  .split-box .sb-note { font-size: 11px; color: #888; margin-top: 3px; }
+
+  .star-dist { display: flex; gap: 4px; margin: 10px 0; align-items: flex-end; height: 40px; }
+  .star-col { display: flex; flex-direction: column; align-items: center; flex: 1; }
+  .star-bar { width: 100%; border-radius: 3px 3px 0 0; }
+  .s5 { background: #00b894; } .s4 { background: #55efc4; } .s3 { background: #fdcb6e; }
+  .s2 { background: #e17055; } .s1 { background: #d63031; }
+  .star-label { font-size: 9px; color: #999; margin-top: 2px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  th { background: #f8f9ff; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; }
+  td { padding: 9px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafbff; }
+  .row-total td { background: #f8f9ff; font-weight: 600; }
+
+  .brand-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; color: #fff; }
+  .bp-mammashop { background: #6c5ce7; }
+  .bp-naturebaby { background: #00b894; }
+  .bp-loukrudt { background: #0984e3; }
+  .bp-hoppekids { background: #e17055; }
+
+  .r2 { color: #e17055; font-weight: 600; }
+  .r5 { color: #00b894; font-weight: 600; }
+  .review-text { font-size: 12px; color: #636e72; line-height: 1.5; max-width: 400px; }
+
+  .insight-box { background: #fff; border-left: 4px solid #6c5ce7; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .insight-box p { margin-bottom: 6px; }
+  .insight-box p:last-child { margin-bottom: 0; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .warn-box p { margin-bottom: 6px; }
+  .warn-box p:last-child { margin-bottom: 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .good-box p { margin-bottom: 6px; }
+  .good-box p:last-child { margin-bottom: 0; }
+  .info-box { background: #f5f6fa; border-left: 4px solid #b2bec3; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .info-box p { margin-bottom: 6px; }
+  .info-box p:last-child { margin-bottom: 0; }
+  .good { color: #00b894; font-weight: 600; }
+  .warn { color: #e17055; font-weight: 600; }
+  .neutral { color: #636e72; }
+
+  .tmpl-summary-row { display: flex; gap: 14px; flex-wrap: wrap; margin: 16px 0; }
+  .tmpl-summary-card { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); flex: 1; min-width: 200px; display: flex; align-items: flex-start; gap: 12px; }
+  .brand-dot { width: 12px; height: 12px; border-radius: 50%; margin-top: 3px; flex-shrink: 0; }
+  .tsb-brand { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .tsb-rates { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .tsb-tp { font-size: 13px; color: #636e72; }
+  .tsb-arrow { color: #b2bec3; }
+  .tsb-brand-rate { font-size: 13px; font-weight: 600; color: #1a1a2e; }
+  .tsb-delta { font-size: 12px; font-weight: 700; padding: 2px 7px; border-radius: 10px; }
+  .tsb-delta.pos { background: #e8fff6; color: #00b894; }
+  .tsb-delta.neg { background: #fff0f0; color: #e17055; }
+  .tsb-delta.flat { background: #f5f5f5; color: #636e72; }
+
+  .tmpl-compare-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px; }
+  .tmpl-card { background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .tmpl-card-brand { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #f0f0f0; }
+  .tmpl-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .tmpl-row-label { font-size: 11px; color: #888; width: 100px; flex-shrink: 0; }
+  .tmpl-row-bar-wrap { flex: 1; }
+  .tmpl-dual-bar { display: flex; gap: 2px; height: 18px; border-radius: 4px; overflow: visible; font-size: 10px; }
+  .bar-tp { background: #b2bec3; display: flex; align-items: center; padding-left: 4px; color: #fff; border-radius: 3px 0 0 3px; font-size: 10px; min-width: 32px; }
+  .bar-brand { background: #6c5ce7; display: flex; align-items: center; padding-left: 4px; color: #fff; border-radius: 0 3px 3px 0; font-size: 10px; min-width: 32px; }
+  .tmpl-delta { font-size: 12px; font-weight: 700; min-width: 58px; text-align: right; }
+  .delta-pos { color: #00b894; }
+  .delta-neg { color: #e17055; }
+  .delta-flat { color: #636e72; }
+
+  .review-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 14px; overflow: hidden; }
+  .review-card-header { padding: 10px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #f0f0f0; }
+  .review-card-body { padding: 12px 16px; }
+  .rating-badge { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; font-size: 13px; font-weight: 700; color: #fff; }
+  .r1b { background: #d63031; }
+  .r2b { background: #e17055; }
+  .r3b { background: #fdcb6e; color: #333; }
+  .r4b { background: #55efc4; color: #333; }
+  .r5b { background: #00b894; }
+  .source-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+  .sp-attr { background: #e8f4fd; color: #0984e3; }
+  .sp-organic { background: #f0f0f0; color: #636e72; }
+
+  .action-list { list-style: none; margin: 0; padding: 0; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 16px; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 10px; }
+  .al-icon { font-size: 16px; flex-shrink: 0; }
+  .al-text { font-size: 13px; color: #4a4a4a; line-height: 1.5; }
+
+  nav a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Mammashop Group — Weekly Report</h1>
+  <p class="subtitle">All 4 brands &bull; Jul 9–15, 2026 &bull; Generated Jul 16, 2026</p>
+
+  <nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #6c5ce7;font-size:14px;line-height:2;">
+    <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+    <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Group Overview</a>
+    <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Brand Template Performance</a>
+    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Email Performance by Campaign</a>
+    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Per-Brand Breakdown</a>
+    <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Reviews This Week</a>
+    <a href="#s6" style="color:#444;text-decoration:none;">6. Action Items</a>
+  </nav>
+
+  <!-- GROUP OVERVIEW -->
+  <h2 id="s1">Group Overview</h2>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Total Reviews</div><div class="value">18</div><div class="sub">MA 11 · NB 3 · HK 3 · LK 1</div></div>
+    <div class="kpi highlight"><div class="label">Group Avg Rating</div><div class="value">4.17★</div><div class="sub">3 negatives (MA 1★+2★, NB 1★)</div></div>
+    <div class="kpi warn"><div class="label">Email Sends</div><div class="value">4,446</div><div class="sub">Open%: N/A — API unavailable</div></div>
+    <div class="kpi"><div class="label">Group Open Rate</div><div class="value">N/A</div><div class="sub">Campaign report API returning 500</div></div>
+    <div class="kpi good"><div class="label">Attribution Rate</div><div class="value">38.9%</div><div class="sub">7 of 18 reviews</div></div>
+  </div>
+
+  <div class="warn-box">
+    <p><strong>Three negatives require attention.</strong> Mammashop 1★ (Jul 10) — learning tower ordered but out of stock; no proactive notification, only chatbot support available. Naturebaby 1★ (Jul 13) — customer strongly advises against shopping here; chatbot CS barrier, product quality variance issue, poor service even after reaching a human agent. Mammashop 2★ (Jul 15, DE, attributed) — mouse toy received loose in a plain plastic bag with no gift packaging; disappointing unboxing for customer's grandchild.</p>
+    <p><strong>Send volume jumped to 4,446 — mammashop DK campaign (652) reactivated.</strong> Last week's send count was 1,474 with a note that campaign 652 had dropped to 224 and was marked inactive. This week 652 sent 1,562 invites + 833 reminders = 2,395. The campaign is clearly back to full operation. The A/B test weights have also been updated — most campaigns now running 100% brand template, indicating the test has been concluded in favour of brand templates.</p>
+    <p><strong>Email open/CTR data unavailable this week.</strong> The campaign report API (/api/invites/v1/campaigns/{id}/report) returned HTTP 500 for all accounts. Send volumes below are from Zeppelin/Delta Lake. Open rate and CTR are omitted until the API is restored.</p>
+  </div>
+
+  <!-- BRAND TEMPLATE PERFORMANCE -->
+  <h2 id="s2">Brand Template Performance — Week 4 (A/B Test Concluded)</h2>
+  <p style="margin-bottom:16px;">Week 4 of the TP vs brand template comparison (launched Jun 16). <strong>Critical update: the A/B test has been concluded.</strong> TP weights have been set to 0 for all major send campaigns — brand templates are now the default. Open rate comparison is unavailable this week (API down). Send distribution is shown below to document the transition.</p>
+
+  <div class="good-box">
+    <p><strong>Brand templates adopted as the default across the group.</strong> Campaign 652 (mammashop invite-recent-dk), which had 50/50 TP/brand weighting through Weeks 1–3, now shows 0 TP sends and 1,562 brand sends. All other invite-recent campaigns across the group have similarly moved to near-100% brand weighting. The three weeks of accumulated data (Weeks 1–3) consistently showed +6 to +19pp brand template lift, confirming the decision.</p>
+    <p><strong>Exception: positive-tickets campaigns remain 100% TP template.</strong> Campaigns 667 (mammashop), 669 (naturebaby) and 670 (hoppekids) serve a Google Review redirect use case and are intentionally kept on the TP template. This is correct behaviour.</p>
+  </div>
+
+  <div class="tmpl-summary-row">
+    <div class="tmpl-summary-card">
+      <div class="brand-dot" style="background:#6c5ce7;"></div>
+      <div>
+        <div class="tsb-brand">Mammashop</div>
+        <div class="tsb-rates">
+          <span class="tsb-tp">34 TP sends</span>
+          <span class="tsb-arrow">→</span>
+          <span class="tsb-brand-rate">2,106 brand sends</span>
+          <span class="tsb-delta pos">98.4% brand</span>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:3px;">dk 100% · de 96% · se 93% · fr 94% · nl 90% (invites only)</div>
+      </div>
+    </div>
+    <div class="tmpl-summary-card">
+      <div class="brand-dot" style="background:#00b894;"></div>
+      <div>
+        <div class="tsb-brand">Naturebaby</div>
+        <div class="tsb-rates">
+          <span class="tsb-tp">19 TP sends</span>
+          <span class="tsb-arrow">→</span>
+          <span class="tsb-brand-rate">358 brand sends</span>
+          <span class="tsb-delta pos">95% brand</span>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:3px;">dk 94.6% · de 100% · se 100% · fr 92.3% (invites only)</div>
+      </div>
+    </div>
+    <div class="tmpl-summary-card">
+      <div class="brand-dot" style="background:#0984e3;"></div>
+      <div>
+        <div class="tsb-brand">Loukrudt</div>
+        <div class="tsb-rates">
+          <span class="tsb-tp">9 TP sends</span>
+          <span class="tsb-arrow">→</span>
+          <span class="tsb-brand-rate">162 brand sends</span>
+          <span class="tsb-delta pos">94.7% brand</span>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:3px;">invite-recent: 9 TP / 162 brand (invites only)</div>
+      </div>
+    </div>
+    <div class="tmpl-summary-card">
+      <div class="brand-dot" style="background:#e17055;"></div>
+      <div>
+        <div class="tsb-brand">Hoppekids</div>
+        <div class="tsb-rates">
+          <span class="tsb-tp">12 TP sends</span>
+          <span class="tsb-arrow">→</span>
+          <span class="tsb-brand-rate">53 brand sends</span>
+          <span class="tsb-delta pos">82% brand</span>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:3px;">en 66.7% · dk 100% · de 83% · no 78% · se 75% (invites only)</div>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:12px;color:#888;margin-top:-6px;margin-bottom:20px;"><em>Open rate comparison omitted this week — campaign report API unavailable (HTTP 500). Resume week-over-week open rate tracking once API is restored.</em></p>
+
+  <!-- EMAIL PERFORMANCE TABLE -->
+  <h2 id="s3">Email Performance by Campaign</h2>
+  <p style="margin-bottom:14px;">Send volumes from Zeppelin/Delta Lake (Jul 9–15, 2026). Open%, CTR and unsubs unavailable — campaign report API returned HTTP 500 for all accounts this week.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Brand</th>
+        <th>Campaign</th>
+        <th style="text-align:right">Invites</th>
+        <th style="text-align:right">Reminders</th>
+        <th style="text-align:right">Total Sends</th>
+        <th style="text-align:right">Open%</th>
+        <th style="text-align:right">CTR</th>
+        <th style="text-align:right">Unsubs</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Mammashop -->
+      <tr>
+        <td rowspan="6"><span class="brand-pill bp-mammashop">mammashop</span></td>
+        <td>invite-recent-dk</td>
+        <td style="text-align:right">1,562</td>
+        <td style="text-align:right">833</td>
+        <td style="text-align:right">2,395</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+      </tr>
+      <tr>
+        <td>invite-recent-de</td>
+        <td style="text-align:right">223</td>
+        <td style="text-align:right">83</td>
+        <td style="text-align:right">306</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+      </tr>
+      <tr>
+        <td>invite-recent-se</td>
+        <td style="text-align:right">122</td>
+        <td style="text-align:right">155</td>
+        <td style="text-align:right">277</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+      </tr>
+      <tr>
+        <td>invite-recent-fr</td>
+        <td style="text-align:right">120</td>
+        <td style="text-align:right">155</td>
+        <td style="text-align:right">275</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+      </tr>
+      <tr>
+        <td>invite-recent-nl</td>
+        <td style="text-align:right">113</td>
+        <td style="text-align:right">73</td>
+        <td style="text-align:right">186</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+      </tr>
+      <tr>
+        <td>positive-tickets</td>
+        <td style="text-align:right">7</td>
+        <td style="text-align:right">10</td>
+        <td style="text-align:right">17</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+      </tr>
+      <!-- Naturebaby -->
+      <tr>
+        <td rowspan="5"><span class="brand-pill bp-naturebaby">naturebaby</span></td>
+        <td>invite-recent-dk</td>
+        <td style="text-align:right">332</td>
+        <td style="text-align:right">189</td>
+        <td style="text-align:right">521</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+      </tr>
+      <tr>
+        <td>invite-recent-de</td>
+        <td style="text-align:right">19</td>
+        <td style="text-align:right">18</td>
+        <td style="text-align:right">37</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+      </tr>
+      <tr>
+        <td>invite-recent-fr</td>
+        <td style="text-align:right">13</td>
+        <td style="text-align:right">13</td>
+        <td style="text-align:right">26</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+      </tr>
+      <tr>
+        <td>invite-recent-se</td>
+        <td style="text-align:right">13</td>
+        <td style="text-align:right">9</td>
+        <td style="text-align:right">22</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+      </tr>
+      <tr>
+        <td>positive-tickets</td>
+        <td style="text-align:right">0</td>
+        <td style="text-align:right">1</td>
+        <td style="text-align:right">1</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+      </tr>
+      <!-- Loukrudt -->
+      <tr>
+        <td><span class="brand-pill bp-loukrudt">loukrudt</span></td>
+        <td>invite-recent</td>
+        <td style="text-align:right">171</td>
+        <td style="text-align:right">106</td>
+        <td style="text-align:right">277</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+      </tr>
+      <!-- Hoppekids -->
+      <tr>
+        <td rowspan="5"><span class="brand-pill bp-hoppekids">hoppekids</span></td>
+        <td>invite-recent-en</td>
+        <td style="text-align:right">21</td>
+        <td style="text-align:right">0</td>
+        <td style="text-align:right">21</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+      </tr>
+      <tr>
+        <td>invite-recent-dk</td>
+        <td style="text-align:right">19</td>
+        <td style="text-align:right">21</td>
+        <td style="text-align:right">40</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+      </tr>
+      <tr>
+        <td>invite-recent-de</td>
+        <td style="text-align:right">12</td>
+        <td style="text-align:right">10</td>
+        <td style="text-align:right">22</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+      </tr>
+      <tr>
+        <td>invite-recent-no</td>
+        <td style="text-align:right">9</td>
+        <td style="text-align:right">8</td>
+        <td style="text-align:right">17</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+      </tr>
+      <tr>
+        <td>invite-recent-se</td>
+        <td style="text-align:right">4</td>
+        <td style="text-align:right">2</td>
+        <td style="text-align:right">6</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+        <td style="text-align:right" class="neutral">—</td>
+      </tr>
+      <!-- Totals -->
+      <tr class="row-total">
+        <td colspan="2">TOTAL — all campaigns</td>
+        <td style="text-align:right">2,760</td>
+        <td style="text-align:right">1,686</td>
+        <td style="text-align:right">4,446</td>
+        <td colspan="3" style="text-align:center;font-size:11px;color:#888;font-weight:400;">Open/CTR/Unsubs unavailable — API HTTP 500</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <p><strong>Positive-reviews campaigns (702/703/704) — 0 sends for 2nd consecutive week.</strong> These were running at 67–71% open rates in late Jun and expected to produce first review conversions Jul 7–14. Two weeks of zero sends now. Diagnose: segment exhaustion, pause, or scheduler issue. See Action Items.</p>
+    <p><strong>Mammashop DK send spike explained.</strong> Campaign 652 went from 224 sends last week (marked inactive) to 2,395 this week. The "inactive" flag appears to have been temporary — possibly a segment refresh or scheduler restart. The campaign is now operating above its pre-drop volume.</p>
+  </div>
+
+  <!-- PER-BRAND BREAKDOWN -->
+  <h2 id="s4">Per-Brand Breakdown</h2>
+  <div class="acct-grid">
+
+    <!-- Mammashop -->
+    <div class="acct-card">
+      <div class="acct-card-header acct-mammashop">
+        <span>Mammashop</span>
+        <span style="margin-left:auto;font-size:11px;opacity:0.85;">11 reviews · 4.18★</span>
+      </div>
+      <div class="acct-card-body">
+        <div class="mini-kpi-row">
+          <div class="mini-kpi"><div class="mv">3,456</div><div class="ml">Sends</div></div>
+          <div class="mini-kpi"><div class="mv">N/A</div><div class="ml">Open</div></div>
+          <div class="mini-kpi"><div class="mv">N/A</div><div class="ml">CTR</div></div>
+          <div class="mini-kpi"><div class="mv">4</div><div class="ml">Attributed</div></div>
+          <div class="mini-kpi"><div class="mv">7</div><div class="ml">Organic</div></div>
+        </div>
+        <div class="attr-bar-wrap">
+          <div class="attr-bar-label"><span>Attributed (36.4%)</span><span>Organic (63.6%)</span></div>
+          <div class="attr-bar"><div class="attr-fill" style="width:36.4%;"></div><div class="organic-fill" style="width:63.6%;"></div></div>
+        </div>
+        <div class="split-compare">
+          <div class="split-box split-attr">
+            <div class="sb-label">Attributed</div>
+            <div class="sb-count">4 <span style="font-size:13px;color:#636e72;">reviews</span></div>
+            <div class="sb-avg">avg 4.25★ (3×5★, 1×2★)</div>
+            <div class="sb-note">invite-recent-dk (×3) · invite-recent-de (×1)</div>
+          </div>
+          <div class="split-box split-organic">
+            <div class="sb-label">Organic</div>
+            <div class="sb-count">7 <span style="font-size:13px;color:#636e72;">reviews</span></div>
+            <div class="sb-avg">avg 4.14★ (5×5★, 1×3★, 1×1★)</div>
+            <div class="sb-note">1★ out-of-stock + chatbot — action required</div>
+          </div>
+        </div>
+        <div class="star-dist">
+          <div class="star-col"><div class="star-bar s5" style="height:40px;"></div><div class="star-label">5★ ×8</div></div>
+          <div class="star-col"><div class="star-bar s4" style="height:0px;"></div><div class="star-label">4★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s3" style="height:5px;"></div><div class="star-label">3★ ×1</div></div>
+          <div class="star-col"><div class="star-bar s2" style="height:5px;"></div><div class="star-label">2★ ×1</div></div>
+          <div class="star-col"><div class="star-bar s1" style="height:5px;"></div><div class="star-label">1★ ×1</div></div>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:6px;">positive-reviews (702): 0 sends again this week — 2nd consecutive week. Campaign 652 DK reactivated: 2,395 sends.</div>
+      </div>
+    </div>
+
+    <!-- Naturebaby -->
+    <div class="acct-card">
+      <div class="acct-card-header acct-naturebaby">
+        <span>Naturebaby</span>
+        <span style="margin-left:auto;font-size:11px;opacity:0.85;">3 reviews · 3.0★</span>
+      </div>
+      <div class="acct-card-body">
+        <div class="mini-kpi-row">
+          <div class="mini-kpi"><div class="mv">607</div><div class="ml">Sends</div></div>
+          <div class="mini-kpi"><div class="mv">N/A</div><div class="ml">Open</div></div>
+          <div class="mini-kpi"><div class="mv">N/A</div><div class="ml">CTR</div></div>
+          <div class="mini-kpi"><div class="mv">2</div><div class="ml">Attributed</div></div>
+          <div class="mini-kpi"><div class="mv">1</div><div class="ml">Organic</div></div>
+        </div>
+        <div class="attr-bar-wrap">
+          <div class="attr-bar-label"><span>Attributed (66.7%)</span><span>Organic (33.3%)</span></div>
+          <div class="attr-bar"><div class="attr-fill" style="width:66.7%;"></div><div class="organic-fill" style="width:33.3%;"></div></div>
+        </div>
+        <div class="split-compare">
+          <div class="split-box split-attr">
+            <div class="sb-label">Attributed</div>
+            <div class="sb-count">2 <span style="font-size:13px;color:#636e72;">reviews</span></div>
+            <div class="sb-avg">avg 4.0★ (1×5★, 1×3★)</div>
+            <div class="sb-note">invite-recent-dk: madpakke 3★ (size) · alt gik godt 5★</div>
+          </div>
+          <div class="split-box split-organic">
+            <div class="sb-label">Organic</div>
+            <div class="sb-count">1 <span style="font-size:13px;color:#636e72;">review</span></div>
+            <div class="sb-avg">avg 1.0★</div>
+            <div class="sb-note">1★ chatbot CS barrier + product quality — action required</div>
+          </div>
+        </div>
+        <div class="star-dist">
+          <div class="star-col"><div class="star-bar s5" style="height:40px;"></div><div class="star-label">5★ ×1</div></div>
+          <div class="star-col"><div class="star-bar s4" style="height:0px;"></div><div class="star-label">4★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s3" style="height:40px;"></div><div class="star-label">3★ ×1</div></div>
+          <div class="star-col"><div class="star-bar s2" style="height:0px;"></div><div class="star-label">2★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s1" style="height:40px;"></div><div class="star-label">1★ ×1</div></div>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:6px;">Tough week — 1 of 3 reviews is a 1★ complaint. invite-positive (704): 0 sends this week.</div>
+      </div>
+    </div>
+
+    <!-- Loukrudt -->
+    <div class="acct-card">
+      <div class="acct-card-header acct-loukrudt">
+        <span>Loukrudt</span>
+        <span style="margin-left:auto;font-size:11px;opacity:0.85;">1 review · 5.0★</span>
+      </div>
+      <div class="acct-card-body">
+        <div class="mini-kpi-row">
+          <div class="mini-kpi"><div class="mv">277</div><div class="ml">Sends</div></div>
+          <div class="mini-kpi"><div class="mv">N/A</div><div class="ml">Open</div></div>
+          <div class="mini-kpi"><div class="mv">N/A</div><div class="ml">CTR</div></div>
+          <div class="mini-kpi"><div class="mv">0</div><div class="ml">Attributed</div></div>
+          <div class="mini-kpi"><div class="mv">1</div><div class="ml">Organic</div></div>
+        </div>
+        <div class="split-compare">
+          <div class="split-box split-attr">
+            <div class="sb-label">Attributed</div>
+            <div class="sb-count">0 <span style="font-size:13px;color:#636e72;">reviews</span></div>
+            <div class="sb-avg">—</div>
+            <div class="sb-note"></div>
+          </div>
+          <div class="split-box split-organic">
+            <div class="sb-label">Organic</div>
+            <div class="sb-count">1 <span style="font-size:13px;color:#636e72;">review</span></div>
+            <div class="sb-avg">avg 5.0★</div>
+            <div class="sb-note">"Super — hurtig levering. Kun en hel masse +++"</div>
+          </div>
+        </div>
+        <div class="star-dist">
+          <div class="star-col"><div class="star-bar s5" style="height:40px;"></div><div class="star-label">5★ ×1</div></div>
+          <div class="star-col"><div class="star-bar s4" style="height:0px;"></div><div class="star-label">4★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s3" style="height:0px;"></div><div class="star-label">3★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s2" style="height:0px;"></div><div class="star-label">2★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s1" style="height:0px;"></div><div class="star-label">1★ ×0</div></div>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:6px;">positive-reviews (703): 0 sends this week — 2nd consecutive week. Brand template adoption complete (94.7% brand invites).</div>
+      </div>
+    </div>
+
+    <!-- Hoppekids -->
+    <div class="acct-card">
+      <div class="acct-card-header acct-hoppekids">
+        <span>Hoppekids</span>
+        <span style="margin-left:auto;font-size:11px;opacity:0.85;">3 reviews · 5.0★</span>
+      </div>
+      <div class="acct-card-body">
+        <div class="mini-kpi-row">
+          <div class="mini-kpi"><div class="mv">106</div><div class="ml">Sends</div></div>
+          <div class="mini-kpi"><div class="mv">N/A</div><div class="ml">Open</div></div>
+          <div class="mini-kpi"><div class="mv">N/A</div><div class="ml">CTR</div></div>
+          <div class="mini-kpi"><div class="mv">1</div><div class="ml">Attributed</div></div>
+          <div class="mini-kpi"><div class="mv">2</div><div class="ml">Organic</div></div>
+        </div>
+        <div class="attr-bar-wrap">
+          <div class="attr-bar-label"><span>Attributed (33.3%)</span><span>Organic (66.7%)</span></div>
+          <div class="attr-bar"><div class="attr-fill" style="width:33.3%;"></div><div class="organic-fill" style="width:66.7%;"></div></div>
+        </div>
+        <div class="split-compare">
+          <div class="split-box split-attr">
+            <div class="sb-label">Attributed</div>
+            <div class="sb-count">1 <span style="font-size:13px;color:#636e72;">review</span></div>
+            <div class="sb-avg">avg 5.0★</div>
+            <div class="sb-note">invite-recent-en — "Great product and fast delivery"</div>
+          </div>
+          <div class="split-box split-organic">
+            <div class="sb-label">Organic</div>
+            <div class="sb-count">2 <span style="font-size:13px;color:#636e72;">reviews</span></div>
+            <div class="sb-avg">avg 5.0★</div>
+            <div class="sb-note">DHL delivery failure (5★ despite DHL); CS praise for Emma</div>
+          </div>
+        </div>
+        <div class="star-dist">
+          <div class="star-col"><div class="star-bar s5" style="height:40px;"></div><div class="star-label">5★ ×3</div></div>
+          <div class="star-col"><div class="star-bar s4" style="height:0px;"></div><div class="star-label">4★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s3" style="height:0px;"></div><div class="star-label">3★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s2" style="height:0px;"></div><div class="star-label">2★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s1" style="height:0px;"></div><div class="star-label">1★ ×0</div></div>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:6px;">Clean week — all 5★. DHL delivery failure in EN market (July 7) reported in a 5★ review — worth tracking with logistics.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- REVIEWS THIS WEEK -->
+  <h2 id="s5">Reviews This Week (Jul 9–15)</h2>
+  <p style="margin-bottom:16px;">18 reviews total (deduped): mammashop 11, naturebaby 3, hoppekids 3, loukrudt 1. Three negatives require follow-up.</p>
+
+  <h3>Negative Reviews (1–2★)</h3>
+
+  <div class="review-card">
+    <div class="review-card-header">
+      <div class="rating-badge r1b">1★</div>
+      <div>
+        <span class="brand-pill bp-mammashop">mammashop</span>
+        <span class="source-pill sp-organic" style="margin-left:6px;">organic</span>
+      </div>
+      <div style="margin-left:auto;font-size:12px;color:#888;">Jul 10 · no order ID (organic)</div>
+    </div>
+    <div class="review-card-body">
+      <p style="font-weight:600;margin-bottom:6px;">Jeg har bestilt et legetårn</p>
+      <p class="review-text">Customer ordered a learning tower 2 weeks before they needed it. Turns out the item was out of stock. The customer was not informed at any point — they simply waited. When they finally contacted support they could only do so in writing via chatbot. No phone or live agent contact available. Customer calls out that this is "simpelthen ikke godt nok" and that proactive communication and personal contact are the minimum expected when items go out of stock.</p>
+      <div style="margin-top:10px;padding:8px 12px;background:#fff8f0;border-radius:6px;font-size:12px;color:#e17055;">
+        <strong>Issues:</strong> Out-of-stock product sold without notification · No proactive communication to customer · Chatbot-only support (no human contact option) · Customer discovered issue themselves after waiting. Search HelpScout for "legetårn" + "udsolgt" + Jul 10.
+      </div>
+    </div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-card-header">
+      <div class="rating-badge r1b">1★</div>
+      <div>
+        <span class="brand-pill bp-naturebaby">naturebaby</span>
+        <span class="source-pill sp-organic" style="margin-left:6px;">organic</span>
+      </div>
+      <div style="margin-left:auto;font-size:12px;color:#888;">Jul 13 · no order ID (organic)</div>
+    </div>
+    <div class="review-card-body">
+      <p style="font-weight:600;margin-bottom:6px;">Vil kraftig fraråde at handle her</p>
+      <p class="review-text">Customer strongly advises against shopping at Naturebaby. Had to navigate a chatbot before reaching a human CS agent, and even after getting through, the wait was long and the service quality was poor. The product received deviated in function from earlier products from the same brand that the customer owned — the difference was unexpected and unpleasant. Overall a very disappointing experience; customer says they would rather spend their money elsewhere.</p>
+      <div style="margin-top:10px;padding:8px 12px;background:#fff8f0;border-radius:6px;font-size:12px;color:#e17055;">
+        <strong>Issues:</strong> Chatbot-first CS flow — barrier to reaching a human agent · Long wait even after escalating · Product quality/functionality variance vs same-brand products the customer already owns · CS response quality poor even after escalation. Search HelpScout for naturebaby, late Jul 13 or prior.
+      </div>
+    </div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-card-header">
+      <div class="rating-badge r2b">2★</div>
+      <div>
+        <span class="brand-pill bp-mammashop">mammashop</span>
+        <span class="source-pill sp-attr" style="margin-left:6px;">attributed</span>
+      </div>
+      <div style="margin-left:auto;font-size:12px;color:#888;">Jul 15 · order 8662504603982 · invite-recent-de</div>
+    </div>
+    <div class="review-card-body">
+      <p style="font-weight:600;margin-bottom:6px;">Leider keine positive Erfahrung</p>
+      <p class="review-text">Customer (Monique Wolters Heijster) purchased a mouse toy as a gift for their grandchild. After unwrapping, the mouse was simply lying loose in a plain plastic bag — no tissue paper, no gift pouch, no decorative packaging of any kind. The customer and their grandchild were very disappointed by the unboxing experience. The review gives 2★ specifically because the presentation was entirely absent.</p>
+      <div style="margin-top:10px;padding:8px 12px;background:#f5f5f5;border-radius:6px;font-size:12px;color:#636e72;">
+        <strong>Note:</strong> This is a packaging presentation issue, not a product defect or delivery problem. The item is likely a Maileg/Mousy toy. Check whether the product listing shows any gift packaging or decorative presentation — if the item is commonly gifted and typically includes presentation packaging, flag this to the mammashop buying/warehouse team. If the plastic bag is the supplier default, no action needed but consider product description clarity.
+      </div>
+    </div>
+  </div>
+
+  <h3>Borderline (3★)</h3>
+
+  <div class="review-card">
+    <div class="review-card-header">
+      <div class="rating-badge r3b">3★</div>
+      <div>
+        <span class="brand-pill bp-mammashop">mammashop</span>
+        <span class="source-pill sp-organic" style="margin-left:6px;">organic</span>
+      </div>
+      <div style="margin-left:auto;font-size:12px;color:#888;">Jul 10 · order 8661522612558 · FR</div>
+    </div>
+    <div class="review-card-body">
+      <p style="font-weight:600;margin-bottom:6px;">Tout était conforme à mes attentes</p>
+      <p class="review-text">Everything met expectations. Single regret: one of the small Loumax/Stella mouse houses arrived damaged — its elements had been separated and packed loosely without care to fit in the sub-box. The packaging was done under pressure and without adequate protection. The reviewer still broadly rates the overall experience as adequate (3★) but flags the damaged packaging specifically.</p>
+      <div style="margin-top:10px;padding:8px 12px;background:#f5f5f5;border-radius:6px;font-size:12px;color:#636e72;">
+        <strong>Note:</strong> Warehouse or carrier packing issue for Loumax/Stella mouse house. Check whether the item is fragile and whether the current packing protocol provides adequate padding. May be a recurring issue for this product. Flag to mammashop logistics/warehouse.
+      </div>
+    </div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-card-header">
+      <div class="rating-badge r3b">3★</div>
+      <div>
+        <span class="brand-pill bp-naturebaby">naturebaby</span>
+        <span class="source-pill sp-attr" style="margin-left:6px;">attributed</span>
+      </div>
+      <div style="margin-left:auto;font-size:12px;color:#888;">Jul 14 · order 13387357618559 · invite-recent-dk</div>
+    </div>
+    <div class="review-card-body">
+      <p style="font-weight:600;margin-bottom:6px;">I var hurtige til at levere</p>
+      <p class="review-text">Fast delivery. But the lunch box (madpakke) purchased was much smaller in real life than it appeared in the product photos. Reviewer acknowledges they could have checked the measurements but felt the image was misleading. They also note difficulty unsubscribing from the many promotional emails that arrived after purchase.</p>
+      <div style="margin-top:10px;padding:8px 12px;background:#f5f5f5;border-radius:6px;font-size:12px;color:#636e72;">
+        <strong>Note:</strong> Two separate issues: (1) Product photo scale — review the lunch box product listing to ensure dimensions are clearly displayed and the hero image conveys actual size. (2) Post-purchase email frequency — if the customer used the unsubscribe link there is no action, but if they struggled to find it, this is a CS friction point. Pass to naturebaby marketing.
+      </div>
+    </div>
+  </div>
+
+  <h3>Positive Reviews (5★)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Rating</th>
+        <th>Brand</th>
+        <th>Campaign</th>
+        <th>Heading / Snippet</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-hoppekids">HK</span></td>
+        <td>invite-recent-en</td>
+        <td>Great product and fast delivery — "all great."</td>
+        <td>Jul 9</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-hoppekids">HK</span></td>
+        <td>organic</td>
+        <td>DHL delay saga (5★ Hoppekids despite DHL failure) — "I am completely satisfied with my purchase… [DHL] was clearly unsatisfactory." Customer travelled 120 km when DHL failed to deliver on the promised date.</td>
+        <td>Jul 9</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-loukrudt">LK</span></td>
+        <td>organic</td>
+        <td>Super — "Hurtig levering. Kun en hel masse ++++++++++++++ herfra"</td>
+        <td>Jul 9</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-mammashop">MA</span></td>
+        <td>organic</td>
+        <td>Megastore — "Aussuchen und Bestellen alles Megaeinfach. Saleangebote… Bezahlung und Lieferung geht schnell und unkompliziert."</td>
+        <td>Jul 9</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-mammashop">MA</span></td>
+        <td>invite-recent-dk</td>
+        <td>Nemt at bestille og hurtigt levering — "Så jeg er meget tilfreds"</td>
+        <td>Jul 9</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-hoppekids">HK</span></td>
+        <td>organic</td>
+        <td>Super quick response — "My request was resolved promptly by Emma."</td>
+        <td>Jul 10</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-mammashop">MA</span></td>
+        <td>organic</td>
+        <td>Parfait ! — "Sérieux, rapidité, qualité. Je recommande Mammashop."</td>
+        <td>Jul 10</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-mammashop">MA</span></td>
+        <td>organic</td>
+        <td>Tres bien — "Livraison rapide"</td>
+        <td>Jul 11</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-mammashop">MA</span></td>
+        <td>organic</td>
+        <td>alles prima — "Tolles Produkt und schnelle und unkomplizierte Lieferung"</td>
+        <td>Jul 13</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-mammashop">MA</span></td>
+        <td>organic</td>
+        <td>Keine Mängel — "Alles gut..."</td>
+        <td>Jul 13</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-mammashop">MA</span></td>
+        <td>invite-recent-dk</td>
+        <td>Tutto perfetto! — "Prezzi competitivi, precisione e velocità di spedizione."</td>
+        <td>Jul 13</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-mammashop">MA</span></td>
+        <td>invite-recent-dk</td>
+        <td>Hurtig levering og god pris</td>
+        <td>Jul 13</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-naturebaby">NB</span></td>
+        <td>invite-recent-dk</td>
+        <td>Alt gik som det skulle — "info - transport og produkterne"</td>
+        <td>Jul 15</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px;color:#888;margin-top:-10px;">Note: Hoppekids Jul 10 "Super quick response" review appeared as a duplicate in Delta Lake; counted once. DHL complaint in HK Jul 9 review is logged under hoppekids organic — pass to logistics tracking.</p>
+
+  <!-- ACTION ITEMS -->
+  <h2 id="s6">Action Items</h2>
+  <ul class="action-list">
+    <li>
+      <div class="al-icon">🔴</div>
+      <div class="al-text"><strong>Mammashop 1★ — out-of-stock product sold without notification; chatbot-only support.</strong> Customer ordered a learning tower (legetårn) two weeks before they needed it. Item was out of stock. Mammashop did not notify the customer at any point. When the customer finally reached out, they could only use a chatbot — no human agent available. This is a two-part failure: (1) inventory visibility at time of purchase or stock-out alert missing; (2) no accessible live CS channel. Search HelpScout for "legetårn" + "udsolgt" + Jul 10. Confirm whether a refund or reservation was offered. Review whether out-of-stock alerts are automatically sent to customers with pending orders.</div>
+    </li>
+    <li>
+      <div class="al-icon">🔴</div>
+      <div class="al-text"><strong>Naturebaby 1★ — chatbot barrier + product quality variance + poor CS quality.</strong> Customer strongly advises against shopping here. Three distinct issues: (1) chatbot-first CS flow prevents reaching a human agent efficiently; (2) product received has different functionality than same-brand products the customer already owns — unexpected and unexplained; (3) CS response quality was poor even after escalation. Search HelpScout for naturebaby, around Jul 13. Confirm whether this customer was offered a resolution. Separately evaluate whether the chatbot flow has an adequate human escalation path and whether product variance between model years/batches is disclosed in the listing.</div>
+    </li>
+    <li>
+      <div class="al-icon">🔴</div>
+      <div class="al-text"><strong>Positive-reviews campaigns (702/703/704) — 2nd consecutive week with 0 sends; escalate.</strong> These campaigns (mammashop 702, loukrudt 703, naturebaby 704) sent 0 emails for the second week in a row. Last active with 67–71% open rates in late Jun. First review conversions were expected Jul 7–14. Diagnose: (a) check segment member counts — if segments are empty, the audience has been fully contacted and needs a refresh; (b) check campaign scheduler status — if campaigns are paused, determine who paused them and why; (c) check for any platform-level issue. If these campaigns are permanently done for the current audience cohort, document that and plan the next cohort.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>Mammashop 2★ — mouse toy delivered without gift packaging.</strong> Customer gifted a mouse toy to their grandchild; received in a plain plastic bag with no tissue paper or decorative packaging. Disappointing unboxing for a gift purchase. Order 8662504603982 (DE, invite-recent-de). Check the product listing — if it shows or implies gift presentation, the warehouse packing needs to be updated. If the item typically includes gift packaging from the supplier, flag a fulfilment QA issue. If the plastic bag is correct for this SKU, ensure the listing sets accurate expectations.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>Mammashop 3★ (FR) — Loumax/Stella mouse house arrived with damaged packaging.</strong> One element of the mouse house set was packed too tightly — elements separated and loosely assembled without care. Product itself may be intact but presentation was poor. Order 8661522612558 (FR, organic). Flag to mammashop warehouse for QA: check whether this product line has a packing protocol issue or if it's a one-off. If multiple orders for this SKU show similar issues, a packaging spec update may be warranted.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>Naturebaby 3★ — lunch box (madpakke) photo size misleading + email unsubscribe friction.</strong> Customer expected a larger item based on product photos. Also noted difficulty unsubscribing from post-purchase marketing emails. Two separate actions: (1) review the madpakke product listing — add a prominent dimensions callout or a scale reference (e.g., coin or hand) in product images; (2) check the unsubscribe flow for naturebaby post-purchase emails — confirm it takes no more than one click and the link is easy to find in the email footer.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟢</div>
+      <div class="al-text"><strong>Mammashop DK campaign (652) fully reactivated — 1,562 invites + 833 reminders this week.</strong> Last week's "inactive" flag and 224-send count appear to have been temporary. Campaign is now running above its pre-drop volume. Monitor next week to confirm stability. Now 100% brand template (A/B test concluded for DK).</div>
+    </li>
+    <li>
+      <div class="al-icon">🟢</div>
+      <div class="al-text"><strong>A/B test concluded — brand templates adopted as default across the group.</strong> All major invite-recent campaigns now run at 95–100% brand template weight (week 4). TP weight set to 0 for mammashop DK, naturebaby DK/DE/SE, loukrudt, and hoppekids DK. Weeks 1–3 data showed consistent +6 to +19pp open rate lift for brand templates — the test outcome is clear. Resume open rate tracking (without TP comparison) once the API is restored to confirm brand template performance baseline.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟢</div>
+      <div class="al-text"><strong>Hoppekids CS staff praise — Emma resolved request promptly.</strong> Organic Jul 10 review specifically names Emma and praises the speed of resolution. Share positive feedback with the CS team.</div>
+    </li>
+    <li>
+      <div class="al-icon">🔵</div>
+      <div class="al-text"><strong>Fix campaign report API — returning HTTP 500 for all accounts.</strong> The /api/invites/v1/campaigns/{id}/report endpoint returned 500 errors for every account this week. Open rate, CTR, and unsub data are unavailable as a result. Restore the API before next week's report. This is the second structural data gap in as many weeks (last week was positive-reviews campaigns, this week is open rate tracking).</div>
+    </li>
+    <li>
+      <div class="al-icon">🔵</div>
+      <div class="al-text"><strong>Add hoppekids positive-reviews campaign (carry-over from last week).</strong> MA (702), LK (703), NB (704) all have positive-reviewer re-engagement campaigns. Hoppekids has none. With DK sending steadily and all 5★ reviews this week, the audience is ready. Define a segment of past 4–5★ hoppekids reviewers and launch a campaign. Expected open rate: 65–70% based on peer brands.</div>
+    </li>
+  </ul>
+
+</div>
+</body>
+</html>
