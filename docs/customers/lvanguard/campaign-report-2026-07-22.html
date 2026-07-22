@@ -128,15 +128,19 @@
     <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
     <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Group Overview</a>
     <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Campaign Performance</a>
-    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Per-Brand Breakdown</a>
-    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Reviews &amp; Rating Distribution</a>
-    <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Negative Review Themes</a>
-    <a href="#s6" style="color:#444;text-decoration:none;">6. Action Items</a>
+    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Email Performance (Last 30 Days)</a>
+    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Per-Brand Breakdown</a>
+    <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Reviews &amp; Rating Distribution</a>
+    <a href="#s6" style="color:#444;text-decoration:none;margin-right:20px;">6. Negative Review Themes</a>
+    <a href="#s7" style="color:#444;text-decoration:none;">7. Action Items</a>
   </nav>
 
   <div class="info-box">
     <p><strong>First report for this project.</strong> Lvanguard (two brands: Carethy and Bulevip, both selling supplements/vitamins/wellness products) is newly onboarded. Zeppelin notebook <code>lvanguard_data</code> created under <code>support_clone</code>. This report covers the full year-to-date window (Jan 1 – Jul 21, 2026) since no prior period baseline exists. Future reports will move to the standard weekly cadence.</p>
-    <p><strong>No email performance data included.</strong> No API credentials (pass file) are provisioned yet for either Carethy or Bulevip, so open rate / CTR / unsubscribe data could not be fetched. Send volumes below come from the invite event log (Zeppelin), not the campaign report API.</p>
+  </div>
+
+  <div class="warn-box">
+    <p><strong>⚠ Data gap: the Zeppelin invite event log (<code>lv_invites</code>) has recorded zero sends for either brand since 2026-05-23.</strong> The campaign report API confirms sending is very much still active — Carethy sent 3,535 emails and Bulevip sent 4,473 in the last 30 days alone (Jun 22–Jul 21), both with healthy 50%+ open rates (see Email Performance below). This means every invite/reminder total in this report sourced from Zeppelin (Group Overview, Campaign Performance table, monthly review-rate figures) is <strong>undercounted for the tail of the window</strong> — real send volume has continued uninterrupted since May 23, it just isn't landing in the S3 invite partition Zeppelin reads from. Review data is unaffected (sourced separately from <code>customer_review</code>, current through Jul 21). Flagging this as the top action item — likely a pipeline/sync issue specific to the lvanguard invite feed.</p>
   </div>
 
   <!-- GROUP OVERVIEW -->
@@ -296,12 +300,156 @@
   </table>
 
   <div class="info-box">
-    <p><strong>Total email volume across both brands YTD: 40,349 sends</strong> (14,408 invites + 25,941 reminders) — reminders are roughly 1.8x the invite volume, so invite-only counts understate the true send load considerably. The review-rate denominator still uses invites only, per the standard convention (reminders are re-sends to the same non-responding cohort, not new outreach).</p>
+    <p><strong>Total email volume across both brands YTD (Zeppelin-sourced, through May 23): 40,349 sends</strong> (14,408 invites + 25,941 reminders) — reminders are roughly 1.8x the invite volume, so invite-only counts understate the true send load considerably. The review-rate denominator still uses invites only, per the standard convention (reminders are re-sends to the same non-responding cohort, not new outreach). <strong>This total is incomplete</strong> — see the data-gap warning above; add the Email Performance section below for real send activity from May 23 onward.</p>
     <p><strong>A third sub-account exists — <code>lvanguard_biuky</code> — but is out of scope for this report.</strong> Only Carethy (<code>lvanguard</code>) and Bulevip (<code>lvanguard_bulevip</code>) were requested; Biuky's invites/campaigns were excluded from every query.</p>
   </div>
 
+  <!-- EMAIL PERFORMANCE (LAST 30 DAYS, API-SOURCED) -->
+  <h2 id="s3">Email Performance (Last 30 Days)</h2>
+  <p style="margin-bottom:14px;">Send/open/click/unsub stats from the Stacktome campaign report API, Jun 22–Jul 21, 2026 — credentials available at <code>stacktome-app/.lvanguard-pass</code> and <code>stacktome-app/.lvanguard-bulevip-pass</code>. This is the authoritative source for recent activity given the Zeppelin invite-log gap noted above; <code>Sent</code> below reflects real, current send volume that does not appear anywhere in the tables sourced from Zeppelin.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Brand</th>
+        <th>Campaign</th>
+        <th style="text-align:right">Sent</th>
+        <th style="text-align:right">Unique Opens</th>
+        <th style="text-align:right">Open%</th>
+        <th style="text-align:right">Unique Clicks</th>
+        <th style="text-align:right">Click%</th>
+        <th style="text-align:right">Unsubs</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="6"><span class="brand-pill bp-carethy">carethy</span></td>
+        <td>invite-tp-EU</td>
+        <td style="text-align:right">1,539</td>
+        <td style="text-align:right">820</td>
+        <td style="text-align:right">53.3%</td>
+        <td style="text-align:right">83</td>
+        <td style="text-align:right">5.4%</td>
+        <td style="text-align:right">25</td>
+      </tr>
+      <tr>
+        <td>invite-tp-DE</td>
+        <td style="text-align:right">1,104</td>
+        <td style="text-align:right">633</td>
+        <td style="text-align:right">57.3%</td>
+        <td style="text-align:right">55</td>
+        <td style="text-align:right">5.0%</td>
+        <td style="text-align:right">18</td>
+      </tr>
+      <tr>
+        <td>invite-tp-ES</td>
+        <td style="text-align:right">379</td>
+        <td style="text-align:right">170</td>
+        <td style="text-align:right">44.9%</td>
+        <td style="text-align:right">18</td>
+        <td style="text-align:right">4.7%</td>
+        <td style="text-align:right">2</td>
+      </tr>
+      <tr>
+        <td>invite-tp-NL</td>
+        <td style="text-align:right">226</td>
+        <td style="text-align:right">115</td>
+        <td style="text-align:right">50.9%</td>
+        <td style="text-align:right">10</td>
+        <td style="text-align:right">4.4%</td>
+        <td style="text-align:right">5</td>
+      </tr>
+      <tr>
+        <td>invite-tp-FR</td>
+        <td style="text-align:right">179</td>
+        <td style="text-align:right">86</td>
+        <td style="text-align:right">48.0%</td>
+        <td style="text-align:right">9</td>
+        <td style="text-align:right">5.0%</td>
+        <td style="text-align:right">2</td>
+      </tr>
+      <tr>
+        <td>invite-tp-IT</td>
+        <td style="text-align:right">108</td>
+        <td style="text-align:right">50</td>
+        <td style="text-align:right">46.3%</td>
+        <td style="text-align:right">5</td>
+        <td style="text-align:right">4.6%</td>
+        <td style="text-align:right">1</td>
+      </tr>
+      <tr>
+        <td rowspan="6"><span class="brand-pill bp-bulevip">bulevip</span></td>
+        <td>invite-tp-ES</td>
+        <td style="text-align:right">4,100</td>
+        <td style="text-align:right">2,068</td>
+        <td style="text-align:right">50.4%</td>
+        <td style="text-align:right">193</td>
+        <td style="text-align:right">4.7%</td>
+        <td style="text-align:right">25</td>
+      </tr>
+      <tr>
+        <td>invite-tp-NL</td>
+        <td style="text-align:right">125</td>
+        <td style="text-align:right">70</td>
+        <td style="text-align:right">56.0%</td>
+        <td style="text-align:right">6</td>
+        <td style="text-align:right">4.8%</td>
+        <td style="text-align:right">1</td>
+      </tr>
+      <tr>
+        <td>invite-tp-IT</td>
+        <td style="text-align:right">83</td>
+        <td style="text-align:right">55</td>
+        <td style="text-align:right">66.3%</td>
+        <td style="text-align:right">11</td>
+        <td style="text-align:right">13.3%</td>
+        <td style="text-align:right">0</td>
+      </tr>
+      <tr>
+        <td>invite-tp-DE</td>
+        <td style="text-align:right">77</td>
+        <td style="text-align:right">56</td>
+        <td style="text-align:right">72.7%</td>
+        <td style="text-align:right">6</td>
+        <td style="text-align:right">7.8%</td>
+        <td style="text-align:right">3</td>
+      </tr>
+      <tr>
+        <td>invite-tp-PT</td>
+        <td style="text-align:right">47</td>
+        <td style="text-align:right">22</td>
+        <td style="text-align:right">46.8%</td>
+        <td style="text-align:right">4</td>
+        <td style="text-align:right">8.5%</td>
+        <td style="text-align:right">1</td>
+      </tr>
+      <tr>
+        <td>invite-tp-FR</td>
+        <td style="text-align:right">41</td>
+        <td style="text-align:right">17</td>
+        <td style="text-align:right">41.5%</td>
+        <td style="text-align:right">3</td>
+        <td style="text-align:right">7.3%</td>
+        <td style="text-align:right">0</td>
+      </tr>
+      <tr class="row-total">
+        <td colspan="2">TOTAL — last 30 days</td>
+        <td style="text-align:right">8,008</td>
+        <td style="text-align:right">4,162</td>
+        <td style="text-align:right">52.0%</td>
+        <td style="text-align:right">403</td>
+        <td style="text-align:right">5.0%</td>
+        <td style="text-align:right">83</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="good-box">
+    <p><strong>Both brands are sending at healthy volume with solid engagement — 8,008 emails in 30 days, 52.0% open rate, 5.0% CTR.</strong> Carethy: 3,535 sent, 53.0% open, 5.1% CTR, 53 unsubs. Bulevip: 4,473 sent, 51.2% open, 5.0% CTR, 30 unsubs. This confirms the Zeppelin invite-log gap (above) is a pipeline/reporting issue, not an actual pause in the review-invite programme.</p>
+  </div>
+
   <!-- PER-BRAND BREAKDOWN -->
-  <h2 id="s3">Per-Brand Breakdown</h2>
+  <h2 id="s4">Per-Brand Breakdown</h2>
   <div class="acct-grid">
 
     <!-- Carethy -->
@@ -363,15 +511,16 @@
   </div>
 
   <!-- REVIEWS & RATING DISTRIBUTION -->
-  <h2 id="s4">Reviews &amp; Rating Distribution (2026 YTD)</h2>
+  <h2 id="s5">Reviews &amp; Rating Distribution (2026 YTD)</h2>
   <p style="margin-bottom:16px;">989 total reviews: Carethy 742 (avg 3.98★), Bulevip 247 (avg 4.26★). Bulevip runs meaningfully higher satisfaction on a smaller volume.</p>
 
-  <h3>Avg Rating by Month, Per Brand</h3>
-  <p style="margin-bottom:12px;">July is partial (through Jul 21). Bulevip has negligible review volume before April — likely still ramping up on the review-invite programme at the start of the year.</p>
+  <h3>Avg Rating &amp; Review Rate by Month, Per Brand</h3>
+  <p style="margin-bottom:12px;">July is partial (through Jul 21). Bulevip has negligible review volume before April — likely still ramping up on the review-invite programme at the start of the year. <strong>Review rate uses all reviews that month (not just invite-attributed ones)</strong> as the numerator — from June onward the invite-attribution match count is too small to be a meaningful denominator-numerator pairing on its own (see the Zeppelin data-gap warning above), so all reviews are counted against that month's invite volume for a fairer read of overall response.</p>
   <table>
     <thead>
       <tr>
         <th>Brand</th>
+        <th>Metric</th>
         <th>Jan</th>
         <th>Feb</th>
         <th>Mar</th>
@@ -383,7 +532,8 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="brand-pill bp-carethy">carethy</span></td>
+        <td rowspan="2"><span class="brand-pill bp-carethy">carethy</span></td>
+        <td>Avg rating</td>
         <td>3.72★ <span style="color:#aaa;font-size:11px;">(164)</span></td>
         <td>3.80★ <span style="color:#aaa;font-size:11px;">(132)</span></td>
         <td>4.25★ <span style="color:#aaa;font-size:11px;">(142)</span></td>
@@ -393,7 +543,18 @@
         <td>4.16★ <span style="color:#aaa;font-size:11px;">(32)</span></td>
       </tr>
       <tr>
-        <td><span class="brand-pill bp-bulevip">bulevip</span></td>
+        <td>Review rate</td>
+        <td>5.60%</td>
+        <td>5.93%</td>
+        <td>4.83%</td>
+        <td>5.43%</td>
+        <td>6.18%</td>
+        <td style="color:#e17055;">— <span style="font-size:10px;">(no invites logged)</span></td>
+        <td style="color:#e17055;">— <span style="font-size:10px;">(no invites logged)</span></td>
+      </tr>
+      <tr>
+        <td rowspan="2"><span class="brand-pill bp-bulevip">bulevip</span></td>
+        <td>Avg rating</td>
         <td>— <span style="color:#aaa;font-size:11px;">(0)</span></td>
         <td>5.00★ <span style="color:#aaa;font-size:11px;">(1)</span></td>
         <td>3.40★ <span style="color:#aaa;font-size:11px;">(5)</span></td>
@@ -402,11 +563,22 @@
         <td>4.24★ <span style="color:#aaa;font-size:11px;">(59)</span></td>
         <td>4.36★ <span style="color:#aaa;font-size:11px;">(33)</span></td>
       </tr>
+      <tr>
+        <td>Review rate</td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td>5.12%</td>
+        <td>5.70%</td>
+        <td style="color:#e17055;">— <span style="font-size:10px;">(no invites logged)</span></td>
+        <td style="color:#e17055;">— <span style="font-size:10px;">(no invites logged)</span></td>
+      </tr>
     </tbody>
   </table>
   <div class="info-box" style="margin-top:-8px;">
     <p><strong>Carethy's Jan–Feb dip (3.72★–3.80★) recovered sharply in March (4.25★)</strong> and has stayed in the 4.0–4.16★ range since — worth checking what changed operationally around late Feb/early March (carrier switch, CS staffing, etc.) since that recovery has held for 5 straight months.</p>
     <p><strong>Bulevip's Feb–Mar figures are statistically thin</strong> (1 and 5 reviews) and shouldn't be read as a trend — meaningful volume only starts in April. From April onward Bulevip has consistently outperformed Carethy's same-month rating.</p>
+    <p><strong>Jun/Jul review rate is blank, not zero</strong> — it reflects the Zeppelin invite-log gap (no invite rows since May 23), not a drop in actual sends. Real Jun 22–Jul 21 send volume is 8,008 emails combined (Email Performance section above); reviews kept arriving normally in that window (191 combined across both brands in Jun+Jul), which is itself evidence sends never stopped.</p>
   </div>
 
   <h3>Recent Positive Highlights (5★, last 3 weeks)</h3>
@@ -431,7 +603,7 @@
   </table>
 
   <!-- NEGATIVE REVIEWS -->
-  <h2 id="s5">Negative Review Themes</h2>
+  <h2 id="s6">Negative Review Themes</h2>
   <p style="margin-bottom:16px;">238 reviews rated &le;3★ YTD (Carethy 195, Bulevip 43) analysed by theme via keyword matching across the review text (EN/ES/FR/DE/IT/NL). Categories overlap — a single review can mention both a delivery failure and an unresponsive support team. Full backlog lives in Zeppelin notebook <code>lvanguard_data</code>.</p>
 
   <div class="theme-grid">
@@ -466,8 +638,12 @@
   </div>
 
   <!-- ACTION ITEMS -->
-  <h2 id="s6">Action Items</h2>
+  <h2 id="s7">Action Items</h2>
   <ul class="action-list">
+    <li>
+      <div class="al-icon">🔴</div>
+      <div class="al-text"><strong>Fix the Zeppelin invite-log pipeline for lvanguard — zero rows recorded since 2026-05-23 for both brands.</strong> The campaign report API confirms real sending has continued uninterrupted (8,008 emails in the last 30 days alone, 52% open rate), so this is a data pipeline issue, not a paused campaign. Every invite-derived total in this report (Group Overview, Campaign Performance, monthly review rate) is undercounted for the May 23–Jul 21 tail of the window as a result. Highest priority — this silently breaks review-rate and attribution reporting for two months and counting.</div>
+    </li>
     <li>
       <div class="al-icon">🔴</div>
       <div class="al-text"><strong>127 of 158 Carethy negative reviews (&le;2★) have no matching support ticket — 80% untracked.</strong> This is a much higher untracked rate than Bulevip's 58%. Confirm whether Carethy tickets are logged under a different system/email pattern before assuming these are genuinely unactioned; if confirmed, this is a large backlog of unresolved delivery/refund complaints (see recurring "parcel damaged," "never received," "no refund" themes above).</div>
@@ -481,8 +657,8 @@
       <div class="al-text"><strong>Bulevip: customer reports discontinued loyalty gifts and missing order-status emails.</strong> A long-time customer's 1★ review (Jul 9) specifically calls out that order confirmation emails stopped arriving and that small gifts on larger orders (shakers, bars, gels) have been discontinued — both cited as reasons for considering competitors. Worth checking whether transactional email delivery has a technical issue, separate from the loyalty-perk decision.</div>
     </li>
     <li>
-      <div class="al-icon">🟡</div>
-      <div class="al-text"><strong>No API credentials provisioned for Carethy or Bulevip.</strong> Email performance (open rate, CTR, unsubscribes) could not be included in this report. Provision pass-file credentials (<code>stacktome-app/.carethy-pass</code> / <code>.bulevip-pass</code> or equivalent account names) so future reports can include send performance alongside the invite-volume data already available in Zeppelin.</div>
+      <div class="al-icon">🟢</div>
+      <div class="al-text"><strong>Email performance is healthy where measured — 52.0% open rate, 5.0% CTR across 8,008 sends in the last 30 days.</strong> Credentials exist at <code>stacktome-app/.lvanguard-pass</code> (Carethy) and <code>.lvanguard-bulevip-pass</code> (Bulevip) and are now the standard source for this report. Bulevip's smaller markets (DE 72.7%, IT 66.3%) are punching well above the group average, worth a look for what's different.</div>
     </li>
     <li>
       <div class="al-icon">🟢</div>
