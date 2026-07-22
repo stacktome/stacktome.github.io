@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lvanguard Group — 2026 Year-to-Date Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #00b894; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .kpi.highlight { border-top: 3px solid #f0932b; }
+  .kpi.good { border-top: 3px solid #00b894; }
+  .kpi.warn { border-top: 3px solid #e17055; }
+
+  .acct-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 8px; }
+  .acct-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow: hidden; }
+  .acct-card-header { padding: 10px 16px; font-weight: 700; font-size: 13px; color: #fff; display: flex; align-items: center; gap: 10px; }
+  .acct-carethy { background: #00b894; }
+  .acct-bulevip { background: #00cec9; }
+  .acct-card-body { padding: 14px 16px; }
+
+  .mini-kpi-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
+  .mini-kpi { text-align: center; }
+  .mini-kpi .mv { font-size: 20px; font-weight: 700; color: #1a1a2e; }
+  .mini-kpi .ml { font-size: 10px; text-transform: uppercase; color: #888; letter-spacing: .5px; }
+
+  .attr-bar-wrap { margin: 8px 0 12px; }
+  .attr-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: #636e72; margin-bottom: 4px; }
+  .attr-bar { height: 10px; border-radius: 5px; background: #dfe6e9; overflow: hidden; display: flex; }
+  .attr-fill { height: 100%; background: #00b894; }
+  .organic-fill { height: 100%; background: #b2bec3; }
+
+  .split-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+  .split-box { border-radius: 8px; padding: 10px 14px; }
+  .split-attr { background: #eafff6; border-left: 3px solid #00b894; }
+  .split-organic { background: #f5f6fa; border-left: 3px solid #b2bec3; }
+  .split-box .sb-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 4px; }
+  .split-box .sb-count { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+  .split-box .sb-avg { font-size: 12px; color: #636e72; margin-top: 2px; }
+  .split-box .sb-note { font-size: 11px; color: #888; margin-top: 3px; }
+
+  .star-dist { display: flex; gap: 4px; margin: 10px 0; align-items: flex-end; height: 60px; }
+  .star-col { display: flex; flex-direction: column; align-items: center; flex: 1; justify-content: flex-end; }
+  .star-bar { width: 100%; border-radius: 3px 3px 0 0; }
+  .s5 { background: #00b894; } .s4 { background: #55efc4; } .s3 { background: #fdcb6e; }
+  .s2 { background: #e17055; } .s1 { background: #d63031; }
+  .star-label { font-size: 9px; color: #999; margin-top: 2px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  th { background: #f4fffb; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; }
+  td { padding: 9px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafffd; }
+  .row-total td { background: #f4fffb; font-weight: 600; }
+
+  .brand-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; color: #fff; }
+  .bp-carethy { background: #00b894; }
+  .bp-bulevip { background: #00cec9; }
+
+  .r2 { color: #e17055; font-weight: 600; }
+  .r5 { color: #00b894; font-weight: 600; }
+  .review-text { font-size: 12px; color: #636e72; line-height: 1.5; max-width: 460px; }
+
+  .insight-box { background: #fff; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .insight-box p { margin-bottom: 6px; }
+  .insight-box p:last-child { margin-bottom: 0; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .warn-box p { margin-bottom: 6px; }
+  .warn-box p:last-child { margin-bottom: 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .good-box p { margin-bottom: 6px; }
+  .good-box p:last-child { margin-bottom: 0; }
+  .info-box { background: #f5f6fa; border-left: 4px solid #b2bec3; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .info-box p { margin-bottom: 6px; }
+  .info-box p:last-child { margin-bottom: 0; }
+  .good { color: #00b894; font-weight: 600; }
+  .warn { color: #e17055; font-weight: 600; }
+  .neutral { color: #636e72; }
+
+  .review-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 14px; overflow: hidden; }
+  .review-card-header { padding: 10px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #f0f0f0; }
+  .review-card-body { padding: 12px 16px; }
+  .rating-badge { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; font-size: 13px; font-weight: 700; color: #fff; }
+  .r1b { background: #d63031; }
+  .r2b { background: #e17055; }
+  .r3b { background: #fdcb6e; color: #333; }
+  .r4b { background: #55efc4; color: #333; }
+  .r5b { background: #00b894; }
+  .source-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+  .sp-attr { background: #e6fbf6; color: #00997a; }
+  .sp-organic { background: #f0f0f0; color: #636e72; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #fdecec; color: #d63031; }
+  .tag-ok { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #eafff6; color: #00997a; }
+
+  .action-list { list-style: none; margin: 0; padding: 0; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 16px; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 10px; }
+  .al-icon { font-size: 16px; flex-shrink: 0; }
+  .al-text { font-size: 13px; color: #4a4a4a; line-height: 1.5; }
+
+  nav a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Lvanguard Group — Year-to-Date Report</h1>
+  <p class="subtitle">Carethy &amp; Bulevip &bull; Jan 1 – Jul 21, 2026 &bull; Generated Jul 22, 2026 &bull; First report for this project</p>
+
+  <nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #00b894;font-size:14px;line-height:2;">
+    <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+    <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Group Overview</a>
+    <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Campaign Performance</a>
+    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Per-Brand Breakdown</a>
+    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Reviews &amp; Rating Distribution</a>
+    <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Negative Reviews Requiring Action</a>
+    <a href="#s6" style="color:#444;text-decoration:none;">6. Action Items</a>
+  </nav>
+
+  <div class="info-box">
+    <p><strong>First report for this project.</strong> Lvanguard (two brands: Carethy and Bulevip, both selling supplements/vitamins/wellness products) is newly onboarded. Zeppelin notebook <code>lvanguard_data</code> created under <code>support_clone</code>. This report covers the full year-to-date window (Jan 1 – Jul 21, 2026) since no prior period baseline exists. Future reports will move to the standard weekly cadence.</p>
+    <p><strong>No email performance data included.</strong> No API credentials (pass file) are provisioned yet for either Carethy or Bulevip, so open rate / CTR / unsubscribe data could not be fetched. Send volumes below come from the invite event log (Zeppelin), not the campaign report API.</p>
+  </div>
+
+  <!-- GROUP OVERVIEW -->
+  <h2 id="s1">Group Overview</h2>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Total Reviews</div><div class="value">989</div><div class="sub">Carethy 742 &middot; Bulevip 247</div></div>
+    <div class="kpi highlight"><div class="label">Group Avg Rating</div><div class="value">4.05★</div><div class="sub">Carethy 3.98★ &middot; Bulevip 4.26★</div></div>
+    <div class="kpi"><div class="label">Total Invites Sent</div><div class="value">14,407</div><div class="sub">Carethy 11,654 &middot; Bulevip 2,753</div></div>
+    <div class="kpi good"><div class="label">Attribution Rate</div><div class="value">69.4%</div><div class="sub">686 of 989 reviews via invite</div></div>
+    <div class="kpi warn"><div class="label">Negative, No Ticket</div><div class="value">148</div><div class="sub">of 194 reviews rated &le;2★</div></div>
+  </div>
+
+  <div class="warn-box">
+    <p><strong>148 of 194 negative (&le;2★) reviews YTD have no matching support ticket</strong> — 127 on Carethy (80% of its 158 negatives), 21 on Bulevip (58% of its 36 negatives). Match is by email against <code>lv_tickets</code>; some may reflect tickets logged under a different email or channel, but the gap is large enough on Carethy specifically to warrant a suppression/escalation review — see Action Items.</p>
+    <p><strong>Delivery and carrier issues are the dominant complaint theme across both brands.</strong> Damaged parcels, "parcel damaged" carrier status with no resolution, missing items from multi-box orders, wrong item shipped, and unresponsive customer service after a delivery failure recur constantly in the negative review text for both Carethy (DE/FR/UK/ES markets) and Bulevip (ES market, frequently naming specific carrier delays).</p>
+  </div>
+
+  <!-- CAMPAIGN PERFORMANCE -->
+  <h2 id="s2">Campaign Performance — 2026 YTD (Jan 1 – Jul 21)</h2>
+  <p style="margin-bottom:14px;">Invite sends and attributed reviews per campaign. Attribution join uses full invite history (all-time); review rate denominator uses invites only (reminders excluded). Source: <code>lv_invites</code> / <code>lv_review</code> in Zeppelin notebook <code>lvanguard_data</code>.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Brand</th>
+        <th>Campaign</th>
+        <th style="text-align:right">Invites Sent</th>
+        <th style="text-align:right">Reviews</th>
+        <th style="text-align:right">Review Rate</th>
+        <th style="text-align:right">Avg Rating</th>
+        <th style="text-align:right">Min / Max</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="6"><span class="brand-pill bp-carethy">carethy</span></td>
+        <td>invite-tp-EU</td>
+        <td style="text-align:right">4,548</td>
+        <td style="text-align:right">212</td>
+        <td style="text-align:right">4.66%</td>
+        <td style="text-align:right">4.21</td>
+        <td style="text-align:right">1 / 5</td>
+      </tr>
+      <tr>
+        <td>invite-tp-DE</td>
+        <td style="text-align:right">3,454</td>
+        <td style="text-align:right">146</td>
+        <td style="text-align:right">4.23%</td>
+        <td style="text-align:right">3.97</td>
+        <td style="text-align:right">1 / 5</td>
+      </tr>
+      <tr>
+        <td>invite-tp-ES</td>
+        <td style="text-align:right">1,740</td>
+        <td style="text-align:right">88</td>
+        <td style="text-align:right">5.06%</td>
+        <td style="text-align:right">4.15</td>
+        <td style="text-align:right">1 / 5</td>
+      </tr>
+      <tr>
+        <td>invite-tp-NL</td>
+        <td style="text-align:right">861</td>
+        <td style="text-align:right">41</td>
+        <td style="text-align:right">4.76%</td>
+        <td style="text-align:right">4.10</td>
+        <td style="text-align:right">1 / 5</td>
+      </tr>
+      <tr>
+        <td>invite-tp-FR</td>
+        <td style="text-align:right">756</td>
+        <td style="text-align:right">43</td>
+        <td style="text-align:right">5.69%</td>
+        <td style="text-align:right">3.77</td>
+        <td style="text-align:right">1 / 5</td>
+      </tr>
+      <tr>
+        <td>invite-tp-IT</td>
+        <td style="text-align:right">295</td>
+        <td style="text-align:right">19</td>
+        <td style="text-align:right">6.44%</td>
+        <td style="text-align:right">4.37</td>
+        <td style="text-align:right">1 / 5</td>
+      </tr>
+      <tr>
+        <td rowspan="6"><span class="brand-pill bp-bulevip">bulevip</span></td>
+        <td>invite-tp-ES</td>
+        <td style="text-align:right">2,520</td>
+        <td style="text-align:right">118</td>
+        <td style="text-align:right">4.68%</td>
+        <td style="text-align:right">4.25</td>
+        <td style="text-align:right">1 / 5</td>
+      </tr>
+      <tr>
+        <td>invite-tp-IT</td>
+        <td style="text-align:right">64</td>
+        <td style="text-align:right">9</td>
+        <td style="text-align:right">14.06%</td>
+        <td style="text-align:right">4.22</td>
+        <td style="text-align:right">1 / 5</td>
+      </tr>
+      <tr>
+        <td>invite-tp-PT</td>
+        <td style="text-align:right">41</td>
+        <td style="text-align:right">4</td>
+        <td style="text-align:right">9.76%</td>
+        <td style="text-align:right">5.00</td>
+        <td style="text-align:right">5 / 5</td>
+      </tr>
+      <tr>
+        <td>invite-tp-FR</td>
+        <td style="text-align:right">26</td>
+        <td style="text-align:right">2</td>
+        <td style="text-align:right">7.69%</td>
+        <td style="text-align:right">4.50</td>
+        <td style="text-align:right">4 / 5</td>
+      </tr>
+      <tr>
+        <td>invite-tp-NL</td>
+        <td style="text-align:right">65</td>
+        <td style="text-align:right">3</td>
+        <td style="text-align:right">4.62%</td>
+        <td style="text-align:right">5.00</td>
+        <td style="text-align:right">5 / 5</td>
+      </tr>
+      <tr>
+        <td>invite-tp-DE</td>
+        <td style="text-align:right">37</td>
+        <td style="text-align:right">1</td>
+        <td style="text-align:right">2.70%</td>
+        <td style="text-align:right">5.00</td>
+        <td style="text-align:right">5 / 5</td>
+      </tr>
+      <tr class="row-total">
+        <td colspan="2">TOTAL — all campaigns</td>
+        <td style="text-align:right">14,407</td>
+        <td style="text-align:right">686</td>
+        <td style="text-align:right">4.76%</td>
+        <td style="text-align:right">—</td>
+        <td style="text-align:right">—</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <p><strong>Note on reminders:</strong> reminder sends are excluded from the invite counts and review-rate denominator above — only <code>email_send_type = 'invite'</code> rows count, per the standard reporting convention.</p>
+    <p><strong>A third sub-account exists — <code>lvanguard_biuky</code> — but is out of scope for this report.</strong> Only Carethy (<code>lvanguard</code>) and Bulevip (<code>lvanguard_bulevip</code>) were requested; Biuky's invites/campaigns were excluded from every query.</p>
+  </div>
+
+  <!-- PER-BRAND BREAKDOWN -->
+  <h2 id="s3">Per-Brand Breakdown</h2>
+  <div class="acct-grid">
+
+    <!-- Carethy -->
+    <div class="acct-card">
+      <div class="acct-card-header acct-carethy">
+        <span>Carethy</span>
+        <span style="margin-left:auto;font-size:11px;opacity:0.85;">742 reviews · 3.98★</span>
+      </div>
+      <div class="acct-card-body">
+        <div class="mini-kpi-row">
+          <div class="mini-kpi"><div class="mv">11,654</div><div class="ml">Invites</div></div>
+          <div class="mini-kpi"><div class="mv">549</div><div class="ml">Attributed</div></div>
+          <div class="mini-kpi"><div class="mv">192</div><div class="ml">Organic</div></div>
+          <div class="mini-kpi"><div class="mv">158</div><div class="ml">Negative &le;2★</div></div>
+        </div>
+        <div class="attr-bar-wrap">
+          <div class="attr-bar-label"><span>Attributed (74.1%)</span><span>Organic (25.9%)</span></div>
+          <div class="attr-bar"><div class="attr-fill" style="width:74.1%;"></div><div class="organic-fill" style="width:25.9%;"></div></div>
+        </div>
+        <div class="star-dist">
+          <div class="star-col"><div class="star-bar s5" style="height:60px;"></div><div class="star-label">5★ ×468</div></div>
+          <div class="star-col"><div class="star-bar s4" style="height:10px;"></div><div class="star-label">4★ ×79</div></div>
+          <div class="star-col"><div class="star-bar s3" style="height:5px;"></div><div class="star-label">3★ ×37</div></div>
+          <div class="star-col"><div class="star-bar s2" style="height:3px;"></div><div class="star-label">2★ ×25</div></div>
+          <div class="star-col"><div class="star-bar s1" style="height:17px;"></div><div class="star-label">1★ ×133</div></div>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:6px;">Best campaign: invite-tp-IT (6.44% rate, low volume). Largest volume: invite-tp-EU (4,548 invites, 212 reviews). 127 of 158 negative reviews (80%) have no matching ticket.</div>
+      </div>
+    </div>
+
+    <!-- Bulevip -->
+    <div class="acct-card">
+      <div class="acct-card-header acct-bulevip">
+        <span>Bulevip</span>
+        <span style="margin-left:auto;font-size:11px;opacity:0.85;">247 reviews · 4.26★</span>
+      </div>
+      <div class="acct-card-body">
+        <div class="mini-kpi-row">
+          <div class="mini-kpi"><div class="mv">2,753</div><div class="ml">Invites</div></div>
+          <div class="mini-kpi"><div class="mv">137</div><div class="ml">Attributed</div></div>
+          <div class="mini-kpi"><div class="mv">110</div><div class="ml">Organic</div></div>
+          <div class="mini-kpi"><div class="mv">36</div><div class="ml">Negative &le;2★</div></div>
+        </div>
+        <div class="attr-bar-wrap">
+          <div class="attr-bar-label"><span>Attributed (55.5%)</span><span>Organic (44.5%)</span></div>
+          <div class="attr-bar"><div class="attr-fill" style="width:55.5%;"></div><div class="organic-fill" style="width:44.5%;"></div></div>
+        </div>
+        <div class="star-dist">
+          <div class="star-col"><div class="star-bar s5" style="height:60px;"></div><div class="star-label">5★ ×175</div></div>
+          <div class="star-col"><div class="star-bar s4" style="height:10px;"></div><div class="star-label">4★ ×29</div></div>
+          <div class="star-col"><div class="star-bar s3" style="height:3px;"></div><div class="star-label">3★ ×7</div></div>
+          <div class="star-col"><div class="star-bar s2" style="height:2px;"></div><div class="star-label">2★ ×3</div></div>
+          <div class="star-col"><div class="star-bar s1" style="height:12px;"></div><div class="star-label">1★ ×33</div></div>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:6px;">Best campaign: invite-tp-IT (14.06% rate). Largest volume: invite-tp-ES (2,520 invites, 118 reviews). 21 of 36 negative reviews (58%) have no matching ticket — a lower gap than Carethy but still notable.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- REVIEWS & RATING DISTRIBUTION -->
+  <h2 id="s4">Reviews &amp; Rating Distribution (2026 YTD)</h2>
+  <p style="margin-bottom:16px;">989 total reviews: Carethy 742 (avg 3.98★), Bulevip 247 (avg 4.26★). Bulevip runs meaningfully higher satisfaction on a smaller volume.</p>
+
+  <h3>Recent Positive Highlights (5★, last 3 weeks)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Brand</th>
+        <th>Heading / Snippet</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="r5">5★</span> <span class="brand-pill bp-carethy">carethy</span></td><td>"I highly recommend Carethy. Very good products, excellent customer service and prompt delivery. Carethy is a company you can definitely trust."</td><td>Jul 13</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="brand-pill bp-carethy">carethy</span></td><td>"Couldn't find product in UK but could order at reasonable price. Quick delivery, well protected. Very pleased. Would order again."</td><td>Jul 15</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="brand-pill bp-carethy">carethy</span></td><td>"My order arrived in perfect condition and on time." (first-time customer)</td><td>Jul 15</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="brand-pill bp-carethy">carethy</span></td><td>"Always a great service with excellent delivery to the UK."</td><td>Jul 16</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="brand-pill bp-bulevip">bulevip</span></td><td>"Great website and high-quality products — the delivery was on time, and paying with Klarna was a great option for me. My protein is of great quality."</td><td>Jul 19</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="brand-pill bp-bulevip">bulevip</span></td><td>"Pedi unas pastillas de L-carnitina y no me han llegado. He enviado un correo… me han solucionado el problema al instante. Grandes profesionales." (fast recovery from a delivery miss)</td><td>Jul 16</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="brand-pill bp-bulevip">bulevip</span></td><td>"Muy buena proteina a buen precio. La gestión ha sido genial y ha llegado rápido y sin ningún problema."</td><td>Jul 15</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="brand-pill bp-bulevip">bulevip</span></td><td>"Siempre son súper rápidos en la entrega, con una brutal variedad de productos."</td><td>Jul 15</td></tr>
+    </tbody>
+  </table>
+
+  <!-- NEGATIVE REVIEWS -->
+  <h2 id="s5">Negative Reviews Requiring Action</h2>
+  <p style="margin-bottom:16px;">194 reviews rated &le;2★ YTD (Carethy 158, Bulevip 36); 148 have no matching support ticket by email. Full backlog lives in Zeppelin notebook <code>lvanguard_data</code> (paragraph: "Sample recent 1-star no-ticket reviews per account") — below is a representative sample of the most recent untracked 1★ cases per brand.</p>
+
+  <h3>Carethy — Recent 1★, No Ticket</h3>
+
+  <div class="review-card">
+    <div class="review-card-header">
+      <div class="rating-badge r1b">1★</div>
+      <div><span class="brand-pill bp-carethy">carethy</span> <span class="tag" style="margin-left:6px;">No ticket</span></div>
+      <div style="margin-left:auto;font-size:12px;color:#888;">Jul 19 · order 4520887 · DE</div>
+    </div>
+    <div class="review-card-body">
+      <p style="font-weight:600;margin-bottom:6px;">Paket beschädigt und 17 Tage ohne Lösung</p>
+      <p class="review-text">Customer ordered Jul 2; carrier marked the parcel "damaged" on Jul 8, repeated failed delivery attempts logged through Jul 11, then the package was returned to depot with no further communication. 17 days waiting with no resolution or refund/reshipment offered.</p>
+    </div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-card-header">
+      <div class="rating-badge r1b">1★</div>
+      <div><span class="brand-pill bp-carethy">carethy</span> <span class="tag" style="margin-left:6px;">No ticket</span></div>
+      <div style="margin-left:auto;font-size:12px;color:#888;">Jul 16 · order PHA-4517960</div>
+    </div>
+    <div class="review-card-body">
+      <p style="font-weight:600;margin-bottom:6px;">Very disappointing experience.</p>
+      <p class="review-text">Order never arrived (~1 month). Customer completed ID verification for a refund but it has still not been processed; support keeps replying that the case is "being reviewed" with no timeline.</p>
+    </div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-card-header">
+      <div class="rating-badge r1b">1★</div>
+      <div><span class="brand-pill bp-carethy">carethy</span> <span class="tag" style="margin-left:6px;">No ticket</span></div>
+      <div style="margin-left:auto;font-size:12px;color:#888;">Jul 24 · order 4520903</div>
+    </div>
+    <div class="review-card-body">
+      <p style="font-weight:600;margin-bottom:6px;">My order has not arrived</p>
+      <p class="review-text">Short complaint, no further detail given in the review text — order never received.</p>
+    </div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-card-header">
+      <div class="rating-badge r1b">1★</div>
+      <div><span class="brand-pill bp-carethy">carethy</span> <span class="tag" style="margin-left:6px;">No ticket</span></div>
+      <div style="margin-left:auto;font-size:12px;color:#888;">Jun 24</div>
+    </div>
+    <div class="review-card-body">
+      <p style="font-weight:600;margin-bottom:6px;">The box had come undone</p>
+      <p class="review-text">Poor packaging — box arrived already open, one of 7 items missing (fell out in transit). Customer says they won't reorder.</p>
+    </div>
+  </div>
+
+  <h3>Bulevip — Recent 1★, No Ticket</h3>
+
+  <div class="review-card">
+    <div class="review-card-header">
+      <div class="rating-badge r1b">1★</div>
+      <div><span class="brand-pill bp-bulevip">bulevip</span> <span class="tag" style="margin-left:6px;">No ticket</span></div>
+      <div style="margin-left:auto;font-size:12px;color:#888;">Jul 21 · order 3011564 · ES</div>
+    </div>
+    <div class="review-card-body">
+      <p style="font-weight:600;margin-bottom:6px;">He recibido un pedido equivocado</p>
+      <p class="review-text">Ordered Vitobest products, received the wrong (duplicate) item instead. Customer has emailed support several times over multiple days with no reply — "servicio al cliente pésimo."</p>
+    </div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-card-header">
+      <div class="rating-badge r1b">1★</div>
+      <div><span class="brand-pill bp-bulevip">bulevip</span> <span class="tag" style="margin-left:6px;">No ticket</span></div>
+      <div style="margin-left:auto;font-size:12px;color:#888;">Jul 9 · ES</div>
+    </div>
+    <div class="review-card-body">
+      <p style="font-weight:600;margin-bottom:6px;">MALA EXPERIENCIA, HA CAMBIADO PARA MAL...</p>
+      <p class="review-text">Long-time customer reports service decline: no order confirmation/status emails despite complaints, order split between pickup point and home address without explanation, no proactive delay notice, and discontinued small gifts on larger orders that used to encourage loyalty. Considering alternatives.</p>
+    </div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-card-header">
+      <div class="rating-badge r1b">1★</div>
+      <div><span class="brand-pill bp-bulevip">bulevip</span> <span class="tag" style="margin-left:6px;">No ticket</span></div>
+      <div style="margin-left:auto;font-size:12px;color:#888;">Jun 17</div>
+    </div>
+    <div class="review-card-body">
+      <p style="font-weight:600;margin-bottom:6px;">Muy mala experiencia me han perdido un paquete y ni paquete ni dinero</p>
+      <p class="review-text">Package lost by carrier; ~2 weeks of back-and-forth providing requested documentation with no refund or replacement yet.</p>
+    </div>
+  </div>
+
+  <!-- ACTION ITEMS -->
+  <h2 id="s6">Action Items</h2>
+  <ul class="action-list">
+    <li>
+      <div class="al-icon">🔴</div>
+      <div class="al-text"><strong>127 of 158 Carethy negative reviews (&le;2★) have no matching support ticket — 80% untracked.</strong> This is a much higher untracked rate than Bulevip's 58%. Confirm whether Carethy tickets are logged under a different system/email pattern before assuming these are genuinely unactioned; if confirmed, this is a large backlog of unresolved delivery/refund complaints (see recurring "parcel damaged," "never received," "no refund" themes above).</div>
+    </li>
+    <li>
+      <div class="al-icon">🔴</div>
+      <div class="al-text"><strong>Carrier/delivery failures are the dominant complaint driver on both brands.</strong> Damaged parcels stuck in "parcel damaged" carrier status with no follow-up, lost packages requiring repeated customer-side documentation, wrong/missing items in multi-item orders, and orders split across delivery methods without notice. Recommend a logistics review — carrier performance and proactive delay/damage notifications appear to be the single biggest lever for rating improvement on both brands.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>Bulevip: customer reports discontinued loyalty gifts and missing order-status emails.</strong> A long-time customer's 1★ review (Jul 9) specifically calls out that order confirmation emails stopped arriving and that small gifts on larger orders (shakers, bars, gels) have been discontinued — both cited as reasons for considering competitors. Worth checking whether transactional email delivery has a technical issue, separate from the loyalty-perk decision.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>No API credentials provisioned for Carethy or Bulevip.</strong> Email performance (open rate, CTR, unsubscribes) could not be included in this report. Provision pass-file credentials (<code>stacktome-app/.carethy-pass</code> / <code>.bulevip-pass</code> or equivalent account names) so future reports can include send performance alongside the invite-volume data already available in Zeppelin.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟢</div>
+      <div class="al-text"><strong>Bulevip invite-tp-IT is the standout campaign: 14.06% review rate</strong> (9 reviews from 64 invites, avg 4.22★) — more than double the next-best campaign on either brand. Low volume, but worth investigating whether the IT market messaging or audience is doing something differently that could be replicated.</div>
+    </li>
+    <li>
+      <div class="al-icon">🔵</div>
+      <div class="al-text"><strong>Onboarding note: a third sub-account, <code>lvanguard_biuky</code>, exists under the same <code>_projectId=lvanguard</code> but was out of scope for this report.</strong> If Biuky should be included going forward, confirm its real brand name and add it to the Account Registry and this report's structure.</div>
+    </li>
+  </ul>
+
+</div>
+</body>
+</html>
