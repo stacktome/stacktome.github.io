@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SelectSpecs — Invite Performance Follow-up (Jun 1–17 vs Jul 1–17, 2026)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 860px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 24px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 32px; }
+  h2 { font-size: 16px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 13px; font-weight: 600; color: #4a4a4a; margin: 16px 0 8px; }
+  p { line-height: 1.65; color: #4a4a4a; margin-bottom: 10px; font-size: 13px; }
+
+  /* ToC */
+  .toc { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 24px; }
+  .toc .box-label { margin-bottom: 8px; }
+  .toc ol { margin: 0 0 0 18px; font-size: 13px; line-height: 1.9; }
+  .toc a { color: #6c5ce7; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* KPI grid */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 16px 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-top: 3px solid #6c5ce7; }
+  .kpi.green { border-top-color: #00b894; }
+  .kpi.amber { border-top-color: #fdcb6e; }
+  .kpi.blue  { border-top-color: #0984e3; }
+  .kpi.red   { border-top-color: #d63031; }
+  .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; line-height: 1; }
+  .kpi .delta { font-size: 11px; margin-top: 5px; font-weight: 600; }
+  .kpi .delta.up { color: #00b894; }
+  .kpi .delta.down { color: #d63031; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 3px; }
+
+  /* Comparison table */
+  .cmp-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin: 14px 0 24px; }
+  .cmp-table th { background: #f8f9ff; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .4px; color: #636e72; border-bottom: 2px solid #eee; }
+  .cmp-table td { padding: 11px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+  .cmp-table tr:last-child td { border-bottom: none; }
+  .cmp-table .metric-col { color: #636e72; font-size: 12px; }
+  .period-a { color: #6c5ce7; font-weight: 700; }
+  .period-b { color: #b2bec3; font-weight: 600; }
+  .delta-col { font-weight: 700; }
+  .delta-up { color: #00b894; }
+  .delta-down { color: #d63031; }
+  .delta-neutral { color: #636e72; }
+
+  /* Star distribution */
+  .dist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0 28px; }
+  .dist-card { background: #fff; border-radius: 10px; padding: 16px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .dist-card .card-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 12px; }
+  .dist-card .card-title .period-tag { display: inline-block; padding: 2px 8px; border-radius: 8px; font-size: 10px; margin-left: 6px; }
+  .tag-a { background: #f0ecff; color: #6c5ce7; }
+  .tag-b { background: #f0f0f0; color: #636e72; }
+  .star-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .star-label { font-size: 12px; color: #636e72; width: 22px; flex-shrink: 0; text-align: right; }
+  .bar-track { flex: 1; height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 5px; }
+  .fill-5 { background: #00b894; }
+  .fill-4 { background: #55efc4; }
+  .fill-3 { background: #fdcb6e; }
+  .fill-2 { background: #e17055; }
+  .fill-1 { background: #d63031; }
+  .star-count { font-size: 11px; color: #888; width: 60px; text-align: right; flex-shrink: 0; }
+
+  /* Info / note boxes */
+  .info-box { background: #f0f8ff; border-left: 4px solid #0984e3; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; }
+  .amber-box { background: #fffbf0; border-left: 4px solid #fdcb6e; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; }
+  .red-box { background: #fff5f5; border-left: 4px solid #d63031; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; }
+  .box-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; font-weight: 700; color: #888; margin-bottom: 6px; }
+
+  /* Period label pills */
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .pill-a { background: #f0ecff; color: #6c5ce7; }
+  .pill-b { background: #f0f0f0; color: #636e72; }
+
+  /* Theme table */
+  .theme-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin: 14px 0 24px; }
+  .theme-table th { background: #f8f9ff; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .4px; color: #636e72; border-bottom: 2px solid #eee; }
+  .theme-table td { padding: 11px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: top; }
+  .theme-table tr:last-child td { border-bottom: none; }
+  .quote { font-style: italic; color: #636e72; font-size: 12px; }
+
+  /* Actions */
+  .action-list { list-style: none; padding: 0; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 16px; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 10px; font-size: 13px; line-height: 1.6; align-items: flex-start; }
+  .action-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #6c5ce7; color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>SelectSpecs — Invite Performance Follow-up</h1>
+  <p class="subtitle">Two 17-day periods compared: Jun 1–17 vs Jul 1–17, 2026 &bull; Follow-up to the Jul 2 report &bull; Generated Jul 22, 2026</p>
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="box-label">Contents</div>
+    <ol>
+      <li><a href="#comparison">Period Comparison</a></li>
+      <li><a href="#stars">Star Distribution</a></li>
+      <li><a href="#negatives">Negative Review Themes (Jul 1–17)</a></li>
+      <li><a href="#findings">Key Findings</a></li>
+      <li><a href="#actions">Recommended Actions</a></li>
+    </ol>
+  </div>
+
+  <!-- TOP KPIs -->
+  <div class="kpi-grid">
+    <div class="kpi green">
+      <div class="label">Review Rate Uplift</div>
+      <div class="value">+105%</div>
+      <div class="delta up">3.05% → 6.26%</div>
+    </div>
+    <div class="kpi green">
+      <div class="label">Reviews Collected</div>
+      <div class="value">+16%</div>
+      <div class="delta up">166 → 192</div>
+    </div>
+    <div class="kpi red">
+      <div class="label">Avg Rating</div>
+      <div class="value">−0.12★</div>
+      <div class="delta down">4.45 → 4.33</div>
+    </div>
+    <div class="kpi red">
+      <div class="label">1-Star Share</div>
+      <div class="value">+2.6pp</div>
+      <div class="delta down">7.8% → 10.4% (13 → 20)</div>
+    </div>
+  </div>
+
+  <!-- PERIOD COMPARISON -->
+  <h2 id="comparison">Period Comparison</h2>
+
+  <div class="info-box">
+    <div class="box-label">Methodology</div>
+    <p><span class="pill pill-b">Jun 1–17</span> is the early-programme period — it includes the initial backlog blasts (~3,000 invites sent Jun 2–4 alone) that seeded the campaign. <span class="pill pill-a">Jul 1–17</span> is the steady-state period requested for this follow-up, now that the programme has settled into a daily send rhythm. <strong>Review rate = reviews received in period ÷ distinct orders receiving an initial invite in the same period</strong> (email_send_type = invite, deduplicated by order_id; reminders excluded from the denominator). Both windows are fully closed — the July window ended 5 days before generation.</p>
+  </div>
+
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th><span class="period-b">Jun 1–17</span></th>
+        <th><span class="period-a">Jul 1–17</span></th>
+        <th>Delta</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="metric-col">Invite emails sent (initial invites)</td>
+        <td>5,453</td>
+        <td>3,066</td>
+        <td class="delta-col delta-neutral">−2,387 (−44%)</td>
+      </tr>
+      <tr>
+        <td class="metric-col">Distinct orders invited (invite-only)</td>
+        <td>5,451</td>
+        <td>3,066</td>
+        <td class="delta-col delta-neutral">−2,385 (−44%)</td>
+      </tr>
+      <tr>
+        <td class="metric-col">Reminder emails sent</td>
+        <td>3,961</td>
+        <td>3,874</td>
+        <td class="delta-col delta-neutral">−87</td>
+      </tr>
+      <tr>
+        <td class="metric-col">Reviews received</td>
+        <td>166</td>
+        <td>192</td>
+        <td class="delta-col delta-up">+26 (+16%)</td>
+      </tr>
+      <tr>
+        <td class="metric-col"><strong>Review rate</strong> (invite-only, distinct orders)</td>
+        <td><strong>3.05%</strong></td>
+        <td><strong>6.26%</strong></td>
+        <td class="delta-col delta-up">+3.21pp (+105%)</td>
+      </tr>
+      <tr>
+        <td class="metric-col">Review rate (all emailed orders incl. reminder-only)</td>
+        <td>2.95% (5,626 orders)</td>
+        <td>3.97% (4,832 orders)</td>
+        <td class="delta-col delta-up">+1.02pp</td>
+      </tr>
+      <tr>
+        <td class="metric-col">Average rating</td>
+        <td>4.45★</td>
+        <td>4.33★</td>
+        <td class="delta-col delta-down">−0.12★</td>
+      </tr>
+      <tr>
+        <td class="metric-col">% 5-star reviews</td>
+        <td>77.7% (129/166)</td>
+        <td>75.5% (145/192)</td>
+        <td class="delta-col delta-down">−2.2pp</td>
+      </tr>
+      <tr>
+        <td class="metric-col">% 1-star reviews</td>
+        <td>7.8% (13/166)</td>
+        <td>10.4% (20/192)</td>
+        <td class="delta-col delta-down">+2.6pp</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="amber-box">
+    <div class="box-label">Reading the rate honestly</div>
+    <p>The headline +105% rate uplift is real but flattered by two structural effects. First, the June denominator is inflated by the Jun 2–4 backlog blasts (~3,000 invites), many of which converted to reviews <em>after</em> Jun 17 — those reviews landed in later windows, including this July one. Second, July's 192 reviews include conversions from late-June invites (1,766 of July's 4,832 emailed orders received only reminders — their initial invite was sent in June). Both effects push the same direction seen in the Jul 2 report: the programme's true steady-state rate is likely in the <strong>5–6%</strong> range, consistent with the 5.33% measured for Jun 18–Jul 1 which has since had time to close.</p>
+  </div>
+
+  <!-- STAR DISTRIBUTION -->
+  <h2 id="stars">Star Distribution</h2>
+  <div class="dist-grid">
+
+    <div class="dist-card">
+      <div class="card-title">Jul 1–17 <span class="period-tag tag-a">Current</span></div>
+      <div class="star-row">
+        <span class="star-label">5★</span>
+        <div class="bar-track"><div class="bar-fill fill-5" style="width:75.5%"></div></div>
+        <span class="star-count">145 (75.5%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">4★</span>
+        <div class="bar-track"><div class="bar-fill fill-4" style="width:6.8%"></div></div>
+        <span class="star-count">13 (6.8%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">3★</span>
+        <div class="bar-track"><div class="bar-fill fill-3" style="width:3.6%"></div></div>
+        <span class="star-count">7 (3.6%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">2★</span>
+        <div class="bar-track"><div class="bar-fill fill-2" style="width:3.6%"></div></div>
+        <span class="star-count">7 (3.6%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">1★</span>
+        <div class="bar-track"><div class="bar-fill fill-1" style="width:10.4%"></div></div>
+        <span class="star-count">20 (10.4%)</span>
+      </div>
+    </div>
+
+    <div class="dist-card">
+      <div class="card-title">Jun 1–17 <span class="period-tag tag-b">Prior</span></div>
+      <div class="star-row">
+        <span class="star-label">5★</span>
+        <div class="bar-track"><div class="bar-fill fill-5" style="width:77.7%"></div></div>
+        <span class="star-count">129 (77.7%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">4★</span>
+        <div class="bar-track"><div class="bar-fill fill-4" style="width:6.0%"></div></div>
+        <span class="star-count">10 (6.0%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">3★</span>
+        <div class="bar-track"><div class="bar-fill fill-3" style="width:7.2%"></div></div>
+        <span class="star-count">12 (7.2%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">2★</span>
+        <div class="bar-track"><div class="bar-fill fill-2" style="width:1.2%"></div></div>
+        <span class="star-count">2 (1.2%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">1★</span>
+        <div class="bar-track"><div class="bar-fill fill-1" style="width:7.8%"></div></div>
+        <span class="star-count">13 (7.8%)</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- NEGATIVE THEMES -->
+  <h2 id="negatives">Negative Review Themes (Jul 1–17)</h2>
+
+  <p>All 27 negative reviews (20 one-star + 7 two-star) from the July window were read and grouped. Four clear operational themes emerge:</p>
+
+  <table class="theme-table">
+    <thead>
+      <tr><th>Theme</th><th>Reviews</th><th>Representative quotes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Wrong / unusable lenses</strong></td>
+        <td>9</td>
+        <td class="quote">"Wrong lenses in frame. Too strong could not see out. Looks like my daughter's prescription" &bull; "arrived with the wrong lenses fitted and are therefore unusable" &bull; "Can't see through my glasses properly, it's not clear enough"</td>
+      </tr>
+      <tr>
+        <td><strong>Delivery failure / never received</strong></td>
+        <td>7</td>
+        <td class="quote">"My glasses have not arrived yet, despite paying extra for an early delivery date" &bull; "I never received my order.. I paid over £30 and they never arrived" &bull; "Never delivered my glasses and ignoring my refund requests" (posted twice by the same customer)</td>
+      </tr>
+      <tr>
+        <td><strong>Frame build quality</strong></td>
+        <td>6</td>
+        <td class="quote">"The arm on my glasses broke within a week" &bull; "hinges fail… so cheaply made" &bull; "lens fell out on left and right, not secure — there's clearly a manufacturing issue"</td>
+      </tr>
+      <tr>
+        <td><strong>Customer service / refunds / pricing</strong></td>
+        <td>5</td>
+        <td class="quote">"I requested a refund of my £83.50 last week" &bull; "initial quotation for a re-glaze was £30… soon increased" &bull; "sent an invoice saying they need more money for items that aren't in stock"</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="red-box">
+    <div class="box-label">Escalation-worthy</div>
+    <p>Several 1★ reviews describe <strong>open, unresolved cases</strong> — undelivered orders with ignored refund requests and a month-old order still unfulfilled. These customers reviewed <em>while their issue was live</em>, the same pattern flagged on other accounts: invites reaching customers with open problems convert dissatisfied silence into public 1★ reviews. Two reviews from one customer used the word "scammers".</p>
+  </div>
+
+  <!-- KEY FINDINGS -->
+  <h2 id="findings">Key Findings</h2>
+
+  <div class="good-box">
+    <div class="box-label">Efficiency, not volume, is driving reviews</div>
+    <p>July collected <strong>more reviews from far fewer invites</strong>: 192 reviews from 3,066 invited orders vs 166 from 5,451 — the invite-order review rate doubled (3.05% → 6.26%). Even on the most conservative denominator (all emailed orders including reminder-only carryover), the rate improved 2.95% → 3.97%. The programme's mid-June changes (reminder cycle, A/B templates) are holding up at steady state.</p>
+  </div>
+
+  <div class="amber-box">
+    <div class="box-label">Invite volume nearly halved</div>
+    <p>Initial invites dropped 44% (5,453 → 3,066). Most of the gap is the June backlog blasts (~3,000 invites on Jun 2–4) not recurring — July's ~180/day average reflects real order flow. But daily sends are uneven (543 on Jul 1, then single digits on Jul 5–6 and Jul 12–13, 9 on Jul 17); worth confirming the send schedule isn't silently skipping days.</p>
+  </div>
+
+  <div class="red-box">
+    <div class="box-label">Rating quality slipped</div>
+    <p>Average rating fell 4.45★ → 4.33★ and 1★ share rose to 10.4% — the reverse of the improvement in the Jul 2 report (4.61★, 5.9% 1★ for Jun 18–Jul 1). The negatives are concentrated in fixable operations: wrong lenses fitted (9 reviews) and delivery failures (7) account for 59% of all negatives. These are order-verified customers, so the signal is genuine.</p>
+  </div>
+
+  <!-- ACTIONS -->
+  <h2 id="actions">Recommended Actions</h2>
+  <ul class="action-list">
+    <li>
+      <div class="action-num">1</div>
+      <div><strong>Escalate the lens quality-control signal to SelectSpecs.</strong> 9 of 27 negatives report wrong or unusable lenses — including one apparent prescription swap between two same-day orders from one household. This is the single largest driver of the rating decline and points at the glazing/dispatch QC step.</div>
+    </li>
+    <li>
+      <div class="action-num">2</div>
+      <div><strong>Suppress invites for orders with open delivery or support issues.</strong> At least 7 negatives came from customers whose orders never arrived or whose refund was pending. Gating invites on delivery confirmation / no open ticket would have prevented most of these public 1★ reviews.</div>
+    </li>
+    <li>
+      <div class="action-num">3</div>
+      <div><strong>Verify the send schedule.</strong> Daily invite volume swings from 543 to single digits with near-zero days on Jul 5–6, 12–13, and 17. If order flow is steady, sends are batching or skipping — smoothing this stabilises the weekly review inflow.</div>
+    </li>
+    <li>
+      <div class="action-num">4</div>
+      <div><strong>Adopt ~6% (invite-orders, closed window) as the steady-state benchmark.</strong> The Jul 1–17 rate of 6.26% and the now-closed Jun 18–Jul 1 rate of 5.33% bracket the programme's real performance at 5–6%. Track this metric monthly on closed windows rather than re-litigating the baseline.</div>
+    </li>
+  </ul>
+
+  <div style="margin-top:48px;padding-top:20px;border-top:1px solid #eee;font-size:11px;color:#aaa;text-align:center;">
+    Generated Jul 22, 2026 &mdash; Stacktome Support &mdash; SelectSpecs invite performance follow-up &mdash; Data: Zeppelin notebook 2MUPD7DAS
+  </div>
+
+</div>
+</body>
+</html>
