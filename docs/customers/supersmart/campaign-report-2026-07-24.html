@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supersmart Campaign Performance Report — 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #1a1a2e; margin: 22px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .zero { color: #b2bec3; }
+  .stars { color: #fdcb6e; }
+
+  .rating-bar { display: flex; gap: 3px; align-items: center; }
+  .rb { height: 10px; border-radius: 2px; min-width: 4px; }
+  .rb5 { background: #00b894; }
+  .rb4 { background: #55efc4; }
+  .rb3 { background: #fdcb6e; }
+  .rb2 { background: #e17055; }
+  .rb1 { background: #d63031; }
+
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-warn { display: inline-block; background: #fff3e0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #e67e22; font-weight: 600; }
+  .tag-ok { display: inline-block; background: #e8f8f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #00b894; }
+  .info-box { background: #f0f4ff; border: 1.5px solid #a0b4e8; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #2c3e6e; line-height: 1.6; }
+  .warn-box { background: #fff5f5; border: 1.5px solid #d63031; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #c0392b; line-height: 1.6; }
+  .gap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 16px; }
+  .gap-card { background: #fff; border-radius: 10px; padding: 16px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .gap-card .country { font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 4px; }
+  .gap-card .orders { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+  .gap-card .detail { font-size: 11px; color: #aaa; margin-top: 2px; }
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+
+  .toc { background: #fff; border-radius: 10px; padding: 18px 22px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 36px; }
+  .toc ul { list-style: none; padding: 0; }
+  .toc li { padding: 4px 0; font-size: 13px; }
+  .toc a { color: #6c5ce7; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Supersmart &mdash; Campaign Performance Report</h1>
+  <div class="subtitle">Product review invite analysis &nbsp;&bull;&nbsp; Jul 17&ndash;23, 2026 &nbsp;&bull;&nbsp; Generated 2026-07-24</div>
+
+  <div class="toc">
+    <strong>Contents</strong>
+    <ul>
+      <li><a href="#summary">1. Executive Summary</a></li>
+      <li><a href="#campaigns">2. Campaign Performance</a></li>
+      <li><a href="#products">3. Product Breakdown &mdash; invite-products (all markets)</a></li>
+      <li><a href="#concerns">4. Quality Concerns</a></li>
+      <li><a href="#gap">5. Gap Analysis &mdash; Uninvited 2026 Orders</a></li>
+    </ul>
+  </div>
+
+  <!-- 1. Executive Summary -->
+  <h2 id="summary">1. Executive Summary</h2>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Total Invites Sent</div>
+      <div class="value">2,889</div>
+      <div class="sub">4 active campaigns</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Attributed Reviews</div>
+      <div class="value">51</div>
+      <div class="sub">product_rating matched to invite</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Overall Review Rate</div>
+      <div class="value">1.77%</div>
+      <div class="sub">reviews / invite sends</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Avg Product Rating</div>
+      <div class="value">4.61</div>
+      <div class="sub">out of 5.00</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>Attribution method:</strong> Reviews are attributed to a campaign when <code>review.order_id = invite.contact.order_id</code>. Supersmart uses product review invites &mdash; attribution uses <code>product_rating</code> (falling back to <code>order_rating</code>). The attribution join uses full invite history; invites-sent and reviews are both scoped to this week (Jul 17&ndash;23).
+    <br><br>
+    <strong>Market expansion since the last report (2026-06-08):</strong> Supersmart launched dedicated <strong>invite-products</strong> flows for Germany (campaign 736), Italy (738), and Spain (740) on 2026-07-16 &mdash; one day before this window opens. The account was previously FR-only via campaign 532. This is the first full week of DE/IT/ES sends. Each market also has a paired <code>-response</code> campaign (533/737/739/741) that sends Google-review-response emails, not product invites &mdash; excluded from all invite and review-rate figures here, consistent with how non-invite campaigns are handled account-wide.
+    <br><br>
+    <strong>Note:</strong> the two minor campaigns flagged in the last report (0853 &ldquo;Relance cr&egrave;me&rdquo; and 0875 &ldquo;invite-incentive&rdquo;) no longer appear anywhere in the invite data &mdash; their partitions are gone from the pipeline (confirmed by direct path listing). They are not included in this report.
+    <br><br>
+    56 additional reviews this week (avg 4.52&#9733;) had no matching invite of any kind and are organic; they are not included in the campaign figures above.
+  </div>
+
+  <!-- 2. Campaign Performance -->
+  <h2 id="campaigns">2. Campaign Performance</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th>Period</th>
+        <th>Sends</th>
+        <th>Reviews</th>
+        <th>Rate</th>
+        <th>Avg Rating</th>
+        <th>Positive</th>
+        <th>Negative</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>invite-products</strong> (FR)</td>
+        <td class="neutral">Jul 17 &ndash; 23</td>
+        <td>1,556</td>
+        <td>32</td>
+        <td class="best">2.06%</td>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.59</td>
+        <td class="best">30</td>
+        <td class="worst">2</td>
+      </tr>
+      <tr>
+        <td><strong>invite-products-de</strong> (DE)</td>
+        <td class="neutral">Jul 17 &ndash; 23</td>
+        <td>484</td>
+        <td>9</td>
+        <td>1.86%</td>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.67</td>
+        <td class="best">8</td>
+        <td class="worst">1</td>
+      </tr>
+      <tr>
+        <td><strong>invite-products-es</strong> (ES)</td>
+        <td class="neutral">Jul 17 &ndash; 23</td>
+        <td>384</td>
+        <td>5</td>
+        <td>1.30%</td>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.60</td>
+        <td class="best">5</td>
+        <td class="zero">0</td>
+      </tr>
+      <tr>
+        <td><strong>invite-products-it</strong> (IT)</td>
+        <td class="neutral">Jul 17 &ndash; 23</td>
+        <td>465</td>
+        <td>5</td>
+        <td>1.08%</td>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.60</td>
+        <td class="best">5</td>
+        <td class="zero">0</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note" style="font-size:12px;color:#888;margin-top:6px;">
+    <strong>Sends</strong> is invite-type emails only (distinct orders), per the review-rate denominator convention. Reminders sent this same week are tracked separately and excluded from the rate: FR 326, DE 184, ES 184, IT 97. Email API sanity check (opens/clicks, all send types combined): FR 1,536 sent / 45.8% open, DE 473 sent / 43.1% open, ES 387 sent / 40.3% open, IT 457 sent / 38.7% open &mdash; consistent with the invite+reminder volumes above.
+  </p>
+
+  <!-- 3. Product Breakdown -->
+  <h2 id="products">3. Product Breakdown &mdash; invite-products (all markets)</h2>
+  <p>All 49 products invited this week across the four <strong>invite-products</strong> campaigns (FR/DE/IT/ES combined), showing invited orders, attributed reviews, conversion rate, and rating distribution. Sorted by invited volume descending.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>SKU</th>
+        <th>Product</th>
+        <th>Invited</th>
+        <th>Reviews</th>
+        <th>Rate</th>
+        <th>Avg</th>
+        <th style="color:#55efc4">r5</th>
+        <th style="color:#81ecec">r4</th>
+        <th style="color:#fdcb6e">r3</th>
+        <th style="color:#e17055">r&le;2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>0401</td><td>Zinc L-Carnosine</td><td>691</td><td>13</td><td class="best">1.88%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td><td>13</td><td>0</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0573</td><td>OptiMag</td><td>363</td><td>10</td><td class="best">2.75%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.60</td><td>6</td><td>4</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0072</td><td>N-Acetyl Cysteine</td><td>150</td><td>2</td><td>1.33%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td><td>2</td><td>0</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0363</td><td>Zinc Orotate</td><td>119</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0880</td><td>Deep Sleep Complex</td><td>76</td><td>1</td><td>1.32%</td><td><span class="worst">&#9733;&#9733;&#9733; 3.00</span></td><td>0</td><td>0</td><td>1</td><td class="zero">0</td></tr>
+      <tr><td>0870</td><td>Methylene Blue</td><td>73</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0734</td><td>Liposomal Vitamin C</td><td>65</td><td>2</td><td class="best">3.08%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td><td>2</td><td>0</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0665</td><td>Iron Bisglycinate</td><td>60</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0860</td><td>Cholesterol Complex Formula</td><td>51</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0600</td><td>Marine Collagen</td><td>50</td><td>1</td><td>2.00%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td><td>1</td><td>0</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0866</td><td>SporesBiotics Formula</td><td>46</td><td>1</td><td>2.17%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.00</td><td>0</td><td>1</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0847</td><td>OmegaVision Pro</td><td>42</td><td>2</td><td class="best">4.76%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td><td>2</td><td>0</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0630</td><td>Super Curcuma</td><td>39</td><td>1</td><td>2.56%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td><td>1</td><td>0</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0863</td><td>Homocysteine Control</td><td>34</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0869</td><td>SaffronMag Relax Complex</td><td>34</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0610</td><td>Grey Hair Formula</td><td>32</td><td>4</td><td class="best">12.50%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.50</td><td>2</td><td>2</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0849</td><td>Daily Kids Gummies</td><td>30</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0802</td><td>Daily Beauty</td><td>26</td><td>2</td><td class="best">7.69%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.50</td><td>1</td><td>1</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0624</td><td>Water Retention Formula</td><td>25</td><td>1</td><td>4.00%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.00</td><td>0</td><td>1</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0857</td><td>Myo + D-Chiro Inositol Ovarian Complex</td><td>23</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0064</td><td>Triple C</td><td>21</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0806</td><td>Daily 1&reg;</td><td>20</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0844</td><td>Menopause Support</td><td>20</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0872</td><td>Liposomal Apigenin</td><td>19</td><td>2</td><td class="best">10.53%</td><td><span class="worst">&#9733;&#9733;&#9733;&#9733; 4.00</span></td><td>1</td><td>0</td><td>1</td><td class="zero">0</td></tr>
+      <tr><td>0858</td><td>Antrodia Liver Health</td><td>19</td><td>1</td><td>5.26%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.00</td><td>0</td><td>1</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0547</td><td>Natural Sleep Formula</td><td>19</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0854</td><td>Super Shatavari</td><td>19</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0425</td><td>Super Shilajit</td><td>18</td><td>1</td><td>5.56%</td><td><span class="worst">&#9733;&#9733; 2.00 &#9660;</span></td><td>0</td><td>0</td><td>0</td><td class="worst">1</td></tr>
+      <tr><td>0871</td><td>Clear Skin Formula</td><td>18</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0873</td><td>TUDCA Bile Complex</td><td>17</td><td>1</td><td>5.88%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td><td>1</td><td>0</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0883</td><td>Butyrate Max Bioactivity</td><td>17</td><td>1</td><td>5.88%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td><td>1</td><td>0</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0623</td><td>Weight Loss Booster</td><td>17</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0382</td><td>Super Maca</td><td>17</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0736</td><td>CSAT&reg; 250 mg</td><td>16</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0782</td><td>Damiana Extract</td><td>14</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0423</td><td>TMG</td><td>14</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0711</td><td>Prosexstim</td><td>13</td><td>1</td><td class="best">7.69%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td><td>1</td><td>0</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0877</td><td>Herbal Respiratory Formula</td><td>13</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0855</td><td>Uric Acid Control</td><td>12</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0778</td><td>Bone Health</td><td>11</td><td>1</td><td class="best">9.09%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.00</td><td>0</td><td>1</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0882</td><td>Trigonelline</td><td>10</td><td>1</td><td class="best">10.00%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td><td>1</td><td>0</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0667</td><td>Fat &amp; Carb Blocker</td><td>10</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0754</td><td>Organic Acacia</td><td>8</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0836</td><td>Brewer's Yeast Hair Boost</td><td>7</td><td>1</td><td class="best">14.29%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.00</td><td>0</td><td>1</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0616</td><td>Cycloastragenol</td><td>7</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0399</td><td>Celadrin&reg;</td><td>6</td><td>1</td><td class="best">16.67%</td><td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.00</td><td>0</td><td>1</td><td>0</td><td class="zero">0</td></tr>
+      <tr><td>0330</td><td>Injuv&reg; Hyaluronic Acid</td><td>6</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0307</td><td>Relora&reg; 250 mg</td><td>5</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+      <tr><td>0746</td><td>Triple Protect</td><td>3</td><td class="zero">0</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td><td class="zero">&mdash;</td></tr>
+    </tbody>
+  </table>
+
+  <p class="note" style="font-size:12px;color:#888;margin-top:6px;">
+    <strong>27 of 49 invited products received no attributed review this week</strong> &mdash; expected at this volume; most are low-invite-count SKUs. The product catalog behind invite-products has grown to 50 SKUs total (up from 40 in the last report) as new items enter rotation across the four markets.
+  </p>
+
+  <!-- 4. Quality Concerns -->
+  <h2 id="concerns">4. Quality Concerns</h2>
+  <div class="info-box">
+    <strong>Much quieter week than the last report.</strong> Only 3 of 51 attributed reviews this week rated &le;3, and none is a 1&ndash;2&#9733; complaint &mdash; the lowest is a single 2&#9733;. Products flagged in the last report (0860 Cholesterol Complex Formula, 0711 Prosexstim, 0423 TMG, 0847 OmegaVision Pro, 0858 Antrodia Liver Health) received <strong>zero new reviews</strong> this week, so there is nothing to update on them.
+  </div>
+
+  <h3>0425 &mdash; Super Shilajit &nbsp;<span class="tag-warn">Monitor</span></h3>
+  <p>1 review this week, rating <strong class="worst">2</strong>. Reviewer reports no noticeable effect from the product. First negative review for this SKU in the current dataset.</p>
+  <table>
+    <thead><tr><th>Rating</th><th>Review</th><th>Date</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="worst"><span class="stars">&#9733;&#9733;</span> 2</td>
+        <td>Bonjour, D&eacute;sol&eacute; je n'ai pas ressenti un effet surprenant. Bonne journ&eacute;e.</td>
+        <td>2026-07-21</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>Theme:</strong> perceived lack of noticeable effect. Single data point &mdash; monitor for recurrence before treating as a pattern.</p>
+
+  <h3>0872 &mdash; Liposomal Apigenin &nbsp;<span class="tag-ok">Low risk</span></h3>
+  <p>2 reviews this week, avg 4.00. One rating-3 review is the <strong>first review from the new German market</strong> (invite-products-de, launched Jul 16) &mdash; not a quality complaint, but a price/value comparison against a competitor offering double the quantity at a similar price.</p>
+  <table>
+    <thead><tr><th>Rating</th><th>Review</th><th>Date</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="stars">&#9733;&#9733;&#9733;</span> 3</td>
+        <td>Bei Super Smart ist man generell gut aufgehoben (Transparenz, Analysezertifikate, Reinheit, schnelle Lieferung, Abo-Preise). Der Wermutstropfen: Dasselbe Pr&auml;parat gibt es in identischer Qualit&auml;t bei einem Konkurrenzunternehmen zum etwa gleichen Preis in doppelter Menge.</td>
+        <td>2026-07-18</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>Theme:</strong> value-for-money vs. a named competitor's larger pack size, not a product-quality issue. Worth tracking as more DE reviews arrive &mdash; pricing/packaging perception could recur in this market.</p>
+
+  <h3>0880 &mdash; Deep Sleep Complex &nbsp;<span class="tag-warn">Monitor</span></h3>
+  <p>1 review this week, rating 3. Reviewer did not notice a clear improvement in sleep quality.</p>
+  <table>
+    <thead><tr><th>Rating</th><th>Review</th><th>Date</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="stars">&#9733;&#9733;&#9733;</span> 3</td>
+        <td>Je n'ai pas senti d'am&eacute;lioration nette de mon sommeil.</td>
+        <td>2026-07-21</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>Theme:</strong> perceived inefficacy for sleep improvement. Single review, low invite volume (76 this week) &mdash; monitor before drawing conclusions.</p>
+
+  <!-- 5. Gap Analysis -->
+  <h2 id="gap">5. Gap Analysis &mdash; Uninvited 2026 Orders</h2>
+  <p>Orders placed in 2026, past 14-day delivery lag, not yet invited by any invite-products campaign, no ticket, no prior review. Snapshot as of report generation (2026-07-24); not scoped to this week's window.</p>
+
+  <div class="info-box">
+    Filtered to orders containing at least one of the 50 current campaign product SKUs, Jan 1 2026 &ndash; present, past 14-day delivery lag, not yet invited (any of FR/DE/IT/ES), no open ticket, no prior review.
+  </div>
+
+  <div class="kpi-grid" style="grid-template-columns: repeat(3,1fr);">
+    <div class="kpi">
+      <div class="label">Eligible Uninvited Orders</div>
+      <div class="value">14,071</div>
+      <div class="sub">containing invited product SKUs</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Avg Days Since Order</div>
+      <div class="value">~118</div>
+      <div class="sub">all well past delivery lag</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Estimated Reviews If Invited</div>
+      <div class="value">~271</div>
+      <div class="sub">at each market's current rate</div>
+    </div>
+  </div>
+
+  <h3>Top markets by eligible uninvited orders</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Country</th>
+        <th>Uninvited Orders</th>
+        <th>Distinct SKUs</th>
+        <th>Avg Days Since Order</th>
+        <th>Est. Reviews at Market Rate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>FR</strong></td><td class="worst">9,822</td><td>50</td><td>119</td><td class="best">~202</td></tr>
+      <tr><td><strong>BE</strong></td><td>723</td><td>49</td><td>115</td><td class="best">~13</td></tr>
+      <tr><td><strong>CH</strong></td><td>693</td><td>49</td><td>111</td><td class="best">~12</td></tr>
+      <tr><td><strong>ES</strong></td><td>592</td><td>49</td><td>114</td><td class="best">~8</td></tr>
+      <tr><td><strong>IT</strong></td><td>556</td><td>48</td><td>116</td><td>~6</td></tr>
+      <tr><td><strong>DE</strong></td><td>509</td><td>45</td><td>117</td><td>~9</td></tr>
+      <tr><td><strong>LU</strong></td><td>333</td><td>46</td><td>112</td><td>~6</td></tr>
+      <tr><td><strong>AT</strong></td><td>201</td><td>39</td><td>118</td><td>~4</td></tr>
+      <tr><td><strong>NL</strong></td><td>189</td><td>42</td><td>114</td><td>~3</td></tr>
+      <tr><td><strong>GB</strong></td><td>111</td><td>30</td><td>124</td><td>~2</td></tr>
+      <tr><td><strong>PT</strong></td><td>98</td><td>38</td><td>114</td><td>~2</td></tr>
+      <tr><td><strong>Other (33 countries)</strong></td><td>~244</td><td>&mdash;</td><td>~117</td><td>~4</td></tr>
+    </tbody>
+  </table>
+  <p class="note" style="font-size:12px;color:#888;margin-top:6px;">
+    Estimates use each market's own campaign rate where one now exists (FR 2.06%, DE 1.86%, IT 1.08%, ES 1.30%) and the blended overall rate (1.77%) for countries with no dedicated campaign.
+  </p>
+
+  <div class="info-box" style="margin-top:16px;">
+    <strong>Recommendation:</strong> The FR backlog keeps growing (9,822 uninvited orders, up from 8,269 at the last report) even with the FR campaign running continuously &mdash; send volume for <strong>invite-products</strong> (FR) is not keeping pace with order volume. This remains the clearest opportunity: ~202 additional reviews at the current FR rate. The new DE/IT/ES campaigns are already working through their own backlogs (each down from the last report's combined single-market estimate), which is expected to continue as they ramp.
+  </div>
+
+  <div class="footer">Generated 2026-07-24 &mdash; Data window: Jul 17 &ndash; 23, 2026 &mdash; Notebook: supersmart_data_clone (2MVM4EZM9)</div>
+</div>
+</body>
+</html>
