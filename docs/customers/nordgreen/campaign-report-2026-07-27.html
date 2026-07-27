@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nordgreen — 2026 Year-to-Date Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #00b894; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .kpi.highlight { border-top: 3px solid #f0932b; }
+  .kpi.good { border-top: 3px solid #00b894; }
+  .kpi.warn { border-top: 3px solid #e17055; }
+
+  .star-dist { display: flex; gap: 4px; margin: 10px 0; align-items: flex-end; height: 60px; }
+  .star-col { display: flex; flex-direction: column; align-items: center; flex: 1; justify-content: flex-end; }
+  .star-bar { width: 100%; border-radius: 3px 3px 0 0; }
+  .s5 { background: #00b894; } .s4 { background: #55efc4; } .s3 { background: #fdcb6e; }
+  .s2 { background: #e17055; } .s1 { background: #d63031; }
+  .star-label { font-size: 9px; color: #999; margin-top: 2px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  th { background: #f4fffb; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; }
+  td { padding: 9px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafffd; }
+  .row-total td { background: #f4fffb; font-weight: 600; }
+
+  .r2 { color: #e17055; font-weight: 600; }
+  .r5 { color: #00b894; font-weight: 600; }
+  .review-text { font-size: 12px; color: #636e72; line-height: 1.5; max-width: 460px; }
+
+  .insight-box { background: #fff; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .insight-box p { margin-bottom: 6px; }
+  .insight-box p:last-child { margin-bottom: 0; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .warn-box p { margin-bottom: 6px; }
+  .warn-box p:last-child { margin-bottom: 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .good-box p { margin-bottom: 6px; }
+  .good-box p:last-child { margin-bottom: 0; }
+  .info-box { background: #f5f6fa; border-left: 4px solid #b2bec3; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .info-box p { margin-bottom: 6px; }
+  .info-box p:last-child { margin-bottom: 0; }
+  .good { color: #00b894; font-weight: 600; }
+  .warn { color: #e17055; font-weight: 600; }
+  .neutral { color: #636e72; }
+
+  .rating-badge { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; font-size: 13px; font-weight: 700; color: #fff; }
+  .r1b { background: #d63031; }
+  .r2b { background: #e17055; }
+  .r3b { background: #fdcb6e; color: #333; }
+  .r4b { background: #55efc4; color: #333; }
+  .r5b { background: #00b894; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #fdecec; color: #d63031; }
+  .tag-ok { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #eafff6; color: #00997a; }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 20px; }
+  .theme-card { background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .theme-card .icon { font-size: 24px; margin-bottom: 8px; }
+  .theme-card .theme-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .theme-card .count { font-size: 11px; color: #888; margin-bottom: 8px; }
+  .theme-card p { font-size: 12px; color: #555; margin: 0; line-height: 1.5; }
+
+  .action-list { list-style: none; margin: 0; padding: 0; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 16px; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 10px; }
+  .al-icon { font-size: 16px; flex-shrink: 0; }
+  .al-text { font-size: 13px; color: #4a4a4a; line-height: 1.5; }
+
+  nav a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Nordgreen — Year-to-Date Report</h1>
+  <p class="subtitle">Jan 1 – Jul 27, 2026 &bull; Generated Jul 27, 2026 &bull; First report for this project</p>
+
+  <nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #00b894;font-size:14px;line-height:2;">
+    <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+    <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Overview</a>
+    <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Campaign Performance</a>
+    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Reviews &amp; Rating Distribution</a>
+    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Email Performance (Last 30 Days)</a>
+    <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Negative Review Themes</a>
+    <a href="#s6" style="color:#444;text-decoration:none;">6. Action Items</a>
+  </nav>
+
+  <div class="info-box">
+    <p><strong>First report for this project.</strong> Nordgreen (Danish watch brand, single account: <code>_projectId=nordgreen</code>, <code>_accountId=newnordgreen</code>) is newly onboarded. Zeppelin notebook <code>support/nordgreen_2026_report</code> created. This report covers the full year-to-date window (Jan 1 – Jul 27, 2026) since no prior period baseline exists.</p>
+    <p><strong>Data note:</strong> the invite event log at this path is Delta-formatted per campaign, same gotcha previously found on Lvanguard's invite table — a raw glob-parquet read over-counts from stale superseded files (25,572 vs the correct 3,597 on a single-campaign spot check). All invite/reminder figures below use the Delta reader.</p>
+    <p><strong>Attribution note (per request):</strong> the Campaign Performance table below is restricted to <strong>Jan–May 2026</strong>. From <strong>June 2026 onward, reviews are shown as organic/unattributed figures only</strong> — not matched to a specific campaign send — see the note under Reviews &amp; Rating Distribution.</p>
+    <p><strong>No ticket data source exists yet for this account</strong> (<code>/customer_ticket/_projectId=nordgreen</code> returns no path), so — unlike other onboarded accounts — this report cannot cross-check negative reviews against support tickets.</p>
+  </div>
+
+  <!-- OVERVIEW -->
+  <h2 id="s1">Overview</h2>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Total Reviews (YTD)</div><div class="value">231</div><div class="sub">Trustpilot order reviews</div></div>
+    <div class="kpi highlight"><div class="label">Avg Rating</div><div class="value">4.16★</div><div class="sub">151×5★ &middot; 32×4★ &middot; 28×1★</div></div>
+    <div class="kpi"><div class="label">Total Emails Sent</div><div class="value">10,751</div><div class="sub">7,194 invites &middot; 3,557 reminders</div></div>
+    <div class="kpi"><div class="label">Campaigns</div><div class="value">2</div><div class="sub">invite-jp (458) &middot; invite-en (459)</div></div>
+    <div class="kpi warn"><div class="label">Negative (&le;2★)</div><div class="value">38</div><div class="sub">16.5% of 231 reviews</div></div>
+  </div>
+
+  <div class="insight-box">
+    <p><strong>Overall rating is healthy at 4.16★</strong>, with 79% of reviews (183 of 231) at 4★ or 5★. The negative tail (38 reviews, 16.5%) is dominated by product durability complaints and warranty/repair policy frustration — see Negative Review Themes below.</p>
+  </div>
+
+  <!-- CAMPAIGN PERFORMANCE -->
+  <h2 id="s2">Campaign Performance — Jan 1 – May 31, 2026</h2>
+  <p style="margin-bottom:14px;">Full email volume (invites + reminders) and attributed reviews per campaign, <strong>restricted to Jan–May</strong>. Attribution join matches invite <code>order_id</code> to review <code>order_id</code>; the review-rate denominator uses invites only (reminders excluded), per the standard reporting convention. Source: <code>nord_invites</code> / <code>nord_review</code> in Zeppelin notebook <code>support/nordgreen_2026_report</code>.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th style="text-align:right">Invites</th>
+        <th style="text-align:right">Reminders</th>
+        <th style="text-align:right">Total Sends</th>
+        <th style="text-align:right">Reviews</th>
+        <th style="text-align:right">Review Rate</th>
+        <th style="text-align:right">Avg Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>invite-jp (458)</td>
+        <td style="text-align:right">1,008</td>
+        <td style="text-align:right">960</td>
+        <td style="text-align:right">1,968</td>
+        <td style="text-align:right">16</td>
+        <td style="text-align:right">1.59%</td>
+        <td style="text-align:right">3.75</td>
+      </tr>
+      <tr>
+        <td>invite-en (459)</td>
+        <td style="text-align:right">5,148</td>
+        <td style="text-align:right">1,617</td>
+        <td style="text-align:right">6,765</td>
+        <td style="text-align:right">61</td>
+        <td style="text-align:right">1.18%</td>
+        <td style="text-align:right">4.46</td>
+      </tr>
+      <tr class="row-total">
+        <td>TOTAL — Jan–May campaigns</td>
+        <td style="text-align:right">6,156</td>
+        <td style="text-align:right">2,577</td>
+        <td style="text-align:right">8,733</td>
+        <td style="text-align:right">77</td>
+        <td style="text-align:right">1.25%</td>
+        <td style="text-align:right">—</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <p><strong>invite-en (459) is the higher-volume, higher-satisfaction campaign</strong> (5,148 invites, 4.46★ attributed avg) versus invite-jp (458) at 1,008 invites and 3.75★. invite-jp's lower attributed rating is worth a look — it's a small sample (16 reviews) so could be noise, but it's the lowest average-rating segment in the Jan–May data.</p>
+    <p><strong>June/July reviews (44 total: 31 in June, 13 in July) are not attributed to a specific campaign in this table</strong> — they're counted in the Overview's Total Reviews figure but treated as organic/unattributed reference figures, per the note above. Full YTD send volume (all months, unattributed) is 7,194 invites / 3,557 reminders / 10,751 total — see the Overview KPIs.</p>
+  </div>
+
+  <!-- REVIEWS & RATING DISTRIBUTION -->
+  <h2 id="s3">Reviews &amp; Rating Distribution (2026 YTD)</h2>
+  <p style="margin-bottom:16px;">231 total reviews, avg 4.16★. Star distribution: 151×5★, 32×4★, 10×3★, 10×2★, 28×1★.</p>
+
+  <div class="star-dist">
+    <div class="star-col"><div class="star-bar s5" style="height:60px;"></div><div class="star-label">5★ &times;151</div></div>
+    <div class="star-col"><div class="star-bar s4" style="height:13px;"></div><div class="star-label">4★ &times;32</div></div>
+    <div class="star-col"><div class="star-bar s3" style="height:4px;"></div><div class="star-label">3★ &times;10</div></div>
+    <div class="star-col"><div class="star-bar s2" style="height:4px;"></div><div class="star-label">2★ &times;10</div></div>
+    <div class="star-col"><div class="star-bar s1" style="height:11px;"></div><div class="star-label">1★ &times;28</div></div>
+  </div>
+
+  <h3>Avg Rating &amp; Review Rate by Month</h3>
+  <p style="margin-bottom:12px;">July is partial (through Jul 27). Review rate = total reviews that month / invites sent that month (invites only, reminders excluded). <strong>Jun/Jul figures (marked *) are for reference only</strong> — per the attribution note above, these are organic/unattributed counts, not matched to a specific campaign send.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th>Jan</th>
+        <th>Feb</th>
+        <th>Mar</th>
+        <th>Apr</th>
+        <th>May</th>
+        <th>Jun</th>
+        <th>Jul*</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Reviews</td>
+        <td>32</td>
+        <td>15</td>
+        <td>45</td>
+        <td>64</td>
+        <td>31</td>
+        <td style="color:#888;">31*</td>
+        <td style="color:#888;">13*</td>
+      </tr>
+      <tr>
+        <td>Avg rating</td>
+        <td>3.75★</td>
+        <td>4.00★</td>
+        <td>4.29★</td>
+        <td>4.03★</td>
+        <td>4.58★</td>
+        <td style="color:#888;">4.48★*</td>
+        <td style="color:#888;">3.77★*</td>
+      </tr>
+      <tr>
+        <td>Invites sent</td>
+        <td>696</td>
+        <td>805</td>
+        <td>3,070</td>
+        <td>1,082</td>
+        <td>503</td>
+        <td>628</td>
+        <td>410</td>
+      </tr>
+      <tr>
+        <td>Review rate</td>
+        <td>4.60%</td>
+        <td>1.86%</td>
+        <td>1.47%</td>
+        <td>5.91%</td>
+        <td>6.16%</td>
+        <td style="color:#888;">4.94%*</td>
+        <td style="color:#888;">3.17%*</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="info-box" style="margin-top:-8px;">
+    <p><strong>March had a 4x invite-volume spike (3,070 vs a ~500–1,100 typical range) that coincided with the lowest review rate of the year (1.47%)</strong> and a below-average rating month (4.29★ is fine in isolation, but sits below April–May). Worth checking what drove the March send-volume spike — a segment/batch change, a backlog clear-out, or a new audience — since it doesn't appear to have converted as well as the smaller, steadier months.</p>
+    <p><strong>April–May was the strongest stretch</strong> (5.91% and 6.16% review rate, 4.03★–4.58★), on invite volume back down to the typical range.</p>
+  </div>
+
+  <h3>Recent Positive Highlights (5★, last 4 weeks)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Heading / Snippet</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="r5">5★</span> "I love the watches from Nordgreen! They are beautifully designed, excellent quality, and last for many years. The customer service is always friendly, helpful, and responds quickly. There is a wide selection, so everyone can find a watch they like. I highly recommend Nordgreen!"</td><td>Jul 13</td></tr>
+      <tr><td><span class="r5">5★</span> "Mesh watch strap — I wasn't keen on the leather strap my watch came with... So I decided to buy a silver mesh one. So glad I did. My watch looks so much better... Delivery was quick and I am very pleased with my purchase."</td><td>Jul 1</td></tr>
+      <tr><td><span class="r5">5★</span> "Zuverlässiges Unternehmen — Das Unternehmen hat die Uhr sehr schnell verschickt und ich konnte gut nachverfolgen, wo sich die Sendung befindet." (fast dispatch, good tracking)</td><td>Jun 26</td></tr>
+      <tr><td><span class="r5">5★</span> "Kleiner Makel, sofort neue Uhr. ... Für den Kunden geht es nicht besser." (minor defect, replacement sent immediately, no help needed to be asked for)</td><td>Jun 23</td></tr>
+      <tr><td><span class="r5">5★</span> "Excellent product, fast delivery."</td><td>Jun 23</td></tr>
+    </tbody>
+  </table>
+
+  <!-- EMAIL PERFORMANCE (LAST 30 DAYS, API-SOURCED) -->
+  <h2 id="s4">Email Performance (Last 30 Days)</h2>
+  <p style="margin-bottom:14px;">Open/click/unsub stats from the Stacktome campaign report API, Jun 28–Jul 27, 2026 — credentials at <code>stacktome-app/.nordgreen-pass</code>. The report API only retains a trailing window of history (first available data point Jun 28), so these figures cover the last 30 days only and won't match a calendar-month slice of the YTD tables above.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th style="text-align:right">Sent</th>
+        <th style="text-align:right">Unique Opens</th>
+        <th style="text-align:right">Open%</th>
+        <th style="text-align:right">Unique Clicks</th>
+        <th style="text-align:right">Click%</th>
+        <th style="text-align:right">Unsubs</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>invite-jp (458)</td>
+        <td style="text-align:right">313</td>
+        <td style="text-align:right">203</td>
+        <td style="text-align:right">64.9%</td>
+        <td style="text-align:right">5</td>
+        <td style="text-align:right">1.6%</td>
+        <td style="text-align:right">7</td>
+      </tr>
+      <tr>
+        <td>invite-en (459)</td>
+        <td style="text-align:right">614</td>
+        <td style="text-align:right">354</td>
+        <td style="text-align:right">57.7%</td>
+        <td style="text-align:right">21</td>
+        <td style="text-align:right">3.4%</td>
+        <td style="text-align:right">23</td>
+      </tr>
+      <tr class="row-total">
+        <td>TOTAL — last 30 days</td>
+        <td style="text-align:right">927</td>
+        <td style="text-align:right">557</td>
+        <td style="text-align:right">60.1%</td>
+        <td style="text-align:right">26</td>
+        <td style="text-align:right">2.8%</td>
+        <td style="text-align:right">30</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="good-box">
+    <p><strong>Strong open rates on both campaigns — 60.1% blended over the last 30 days.</strong> invite-jp leads at 64.9% open despite lower click-through (1.6% vs invite-en's 3.4%); invite-en drives more absolute engagement (354 opens, 21 clicks) on higher volume. Unsub rate (30 of 927 sends, 3.2%) is on the higher side and worth watching if it trends up.</p>
+  </div>
+
+  <!-- NEGATIVE REVIEWS -->
+  <h2 id="s5">Negative Review Themes</h2>
+  <p style="margin-bottom:16px;">38 reviews rated &le;2★ YTD, analysed by theme via keyword matching across the review text (EN/DE/FR/JA/DA and other markets). Categories overlap — a single review can mention both a product defect and a slow support response. Full backlog lives in Zeppelin notebook <code>support/nordgreen_2026_report</code>.</p>
+
+  <div class="theme-grid">
+    <div class="theme-card">
+      <div class="icon">⌚</div>
+      <div class="theme-title">Product Durability &amp; Defects</div>
+      <div class="count">15 of 38 negative reviews (39%)</div>
+      <p>The dominant theme by a wide margin. Straps/bands breaking or detaching (sometimes within the first day of wear), crown/winder mechanisms failing or jamming, scratch-prone watch glass, and desynced or stuck hands. Several reviewers report the fault recurring after a warranty replacement.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">🛠️</div>
+      <div class="theme-title">Warranty &amp; Repair Policy Frustration</div>
+      <div class="count">10 of 38 negative reviews (26%)</div>
+      <p>Customers report Nordgreen does not offer a repair service or sell individual replacement parts (e.g. straps, pins), and denies claims once the product is just past the warranty window — even for what reviewers describe as manufacturing-quality failures. A recurring complaint given the brand's "built to last" positioning.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">📦</div>
+      <div class="theme-title">Delivery &amp; Customs Issues</div>
+      <div class="count">8 of 38 negative reviews (21%)</div>
+      <p>Packages never arriving despite payment confirmation, unclear tracking, and unexpected customs duties/tariffs charged on international orders (US, CH) with no advance notice from Nordgreen.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">💬</div>
+      <div class="theme-title">Customer Service Response Quality</div>
+      <div class="count">4 of 38 negative reviews (11%)</div>
+      <p>Reviewers describe being routed through an AI assistant for several message exchanges before reaching a human, or receiving no reply at all to a support request for multiple weeks.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">🔋</div>
+      <div class="theme-title">Battery Replacement Difficulty</div>
+      <div class="count">4 of 38 negative reviews (11%)</div>
+      <p>Reviewers report that local watchmakers cannot open the case back to replace the battery, and that Nordgreen has no repair workshop of its own — leaving otherwise-working watches unusable once the battery dies.</p>
+    </div>
+  </div>
+
+  <!-- ACTION ITEMS -->
+  <h2 id="s6">Action Items</h2>
+  <ul class="action-list">
+    <li>
+      <div class="al-icon">🔴</div>
+      <div class="al-text"><strong>Product durability is the dominant complaint driver (39% of negative reviews).</strong> Strap/band failures (including same-day detachment), crown/winder mechanism jams, and scratch-prone glass recur across markets. Worth a quality-control review with the manufacturer, particularly on strap attachment hardware, which is named repeatedly.</div>
+    </li>
+    <li>
+      <div class="al-icon">🔴</div>
+      <div class="al-text"><strong>Warranty/repair policy is generating its own dissatisfaction independent of the underlying defect (26% of negative reviews).</strong> Customers are denied repairs just past the warranty window and told no parts/repair service exists at all — several explicitly contrast this with the brand's "built to last, sustainable" marketing. A documented repair/parts programme (even paid) would likely convert a chunk of these into neutral-to-positive outcomes.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>March saw a 4x invite-volume spike (3,070 vs a typical 500–1,100/month) that coincided with the year's lowest review rate (1.47%).</strong> Confirm what drove the spike (segment change, backlog clear-out, new audience) — it doesn't appear to be converting to reviews as well as the steadier months around it.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>No support-ticket data source exists yet for this account.</strong> Every other onboarded account in this reporting programme cross-checks negative reviews against a ticket table to flag unresolved complaints; Nordgreen currently can't be checked this way. Confirm whether ticket data can be piped into the same pipeline (<code>/customer_ticket/_projectId=nordgreen</code>) for the next report.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟢</div>
+      <div class="al-text"><strong>Email performance is strong — 60.1% blended open rate over the last 30 days</strong>, with invite-jp leading at 64.9%. Unsub rate (3.2%) is on the higher side of what's typically healthy and worth a periodic check if it trends upward.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟢</div>
+      <div class="al-text"><strong>April–May was the strongest stretch of the year</strong> (5.91% and 6.16% review rate, 4.03★–4.58★) on normal invite volume — worth understanding what was different operationally to see if it can be sustained.</div>
+    </li>
+  </ul>
+
+</div>
+</body>
+</html>
