@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Holloways of Ludlow — 2026 Year-to-Date Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #0984e3; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .kpi.highlight { border-top: 3px solid #0984e3; }
+  .kpi.good { border-top: 3px solid #00b894; }
+  .kpi.warn { border-top: 3px solid #e17055; }
+
+  .split-compare { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 10px 0; }
+  .split-box { border-radius: 8px; padding: 10px 14px; }
+  .split-attr { background: #eaf3ff; border-left: 3px solid #0984e3; }
+  .split-organic { background: #f5f6fa; border-left: 3px solid #b2bec3; }
+  .split-unknown { background: #fff8f0; border-left: 3px solid #fdcb6e; }
+  .split-box .sb-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 4px; }
+  .split-box .sb-count { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+  .split-box .sb-avg { font-size: 12px; color: #636e72; margin-top: 2px; }
+  .split-box .sb-note { font-size: 11px; color: #888; margin-top: 3px; }
+
+  .star-dist { display: flex; gap: 4px; margin: 10px 0; align-items: flex-end; height: 60px; }
+  .star-col { display: flex; flex-direction: column; align-items: center; flex: 1; justify-content: flex-end; }
+  .star-bar { width: 100%; border-radius: 3px 3px 0 0; }
+  .s5 { background: #0984e3; } .s4 { background: #74b9ff; } .s3 { background: #fdcb6e; }
+  .s2 { background: #e17055; } .s1 { background: #d63031; }
+  .star-label { font-size: 9px; color: #999; margin-top: 2px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  th { background: #f0f7ff; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; }
+  td { padding: 9px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafcff; }
+  .row-total td { background: #f0f7ff; font-weight: 600; }
+
+  .r2 { color: #e17055; font-weight: 600; }
+  .r5 { color: #00b894; font-weight: 600; }
+  .review-text { font-size: 12px; color: #636e72; line-height: 1.5; max-width: 460px; }
+
+  .insight-box { background: #fff; border-left: 4px solid #0984e3; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .insight-box p { margin-bottom: 6px; }
+  .insight-box p:last-child { margin-bottom: 0; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .warn-box p { margin-bottom: 6px; }
+  .warn-box p:last-child { margin-bottom: 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .good-box p { margin-bottom: 6px; }
+  .good-box p:last-child { margin-bottom: 0; }
+  .info-box { background: #f5f6fa; border-left: 4px solid #b2bec3; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .info-box p { margin-bottom: 6px; }
+  .info-box p:last-child { margin-bottom: 0; }
+  .good { color: #00b894; font-weight: 600; }
+  .warn { color: #e17055; font-weight: 600; }
+  .neutral { color: #636e72; }
+
+  .review-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 14px; overflow: hidden; }
+  .review-card-header { padding: 10px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #f0f0f0; }
+  .review-card-body { padding: 12px 16px; }
+  .rating-badge { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; font-size: 13px; font-weight: 700; color: #fff; }
+  .r1b { background: #d63031; }
+  .r2b { background: #e17055; }
+  .r3b { background: #fdcb6e; color: #333; }
+  .r4b { background: #74b9ff; color: #333; }
+  .r5b { background: #0984e3; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #fdecec; color: #d63031; }
+  .tag-ok { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #eafff6; color: #00997a; }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 20px; }
+  .theme-card { background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .theme-card .icon { font-size: 24px; margin-bottom: 8px; }
+  .theme-card .theme-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .theme-card .count { font-size: 11px; color: #888; margin-bottom: 8px; }
+  .theme-card p { font-size: 12px; color: #555; margin: 0; line-height: 1.5; }
+
+  .action-list { list-style: none; margin: 0; padding: 0; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 16px; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 10px; }
+  .al-icon { font-size: 16px; flex-shrink: 0; }
+  .al-text { font-size: 13px; color: #4a4a4a; line-height: 1.5; }
+
+  nav a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Holloways of Ludlow — Year-to-Date Report</h1>
+  <p class="subtitle">Jan 1 &ndash; Jul 29, 2026 &bull; Generated Jul 30, 2026 &bull; Platform: Trustpilot &bull; First report from the new <code>holloways_of_ludlow_data</code> notebook</p>
+
+  <nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #0984e3;font-size:14px;line-height:2;">
+    <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+    <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Overview</a>
+    <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Campaign Performance</a>
+    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Email Performance (Last 30 Days)</a>
+    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Reviews &amp; Rating Distribution</a>
+    <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Product Reviews</a>
+    <a href="#s6" style="color:#444;text-decoration:none;margin-right:20px;">6. Negative Review Themes</a>
+    <a href="#s7" style="color:#444;text-decoration:none;">7. Action Items</a>
+  </nav>
+
+  <div class="info-box">
+    <p><strong>First report generated from the new <code>holloways_of_ludlow_data</code> notebook (support_clone).</strong> A prior Jan&ndash;May 2026 report exists (built in the production notebook <code>hollowaysofludlow_data</code>, not a support_clone reporting notebook) &mdash; this report supersedes it with a full 2026 YTD window (Jan 1 &ndash; Jul 29) through the latest complete day, built the standard way per <a href="https://github.com" style="color:#0984e3;">campaigns/07-weekly-report.md</a>.</p>
+    <p><strong>Data note:</strong> the invite event log at this path is Delta-formatted (has a <code>_delta_log</code>), same as Lvanguard. Unlike Lvanguard, a plain-parquet read here does <em>not</em> silently miss recent data (both readers reach the same max date) &mdash; but it does return slightly more rows than the Delta read for at least one campaign (17,357 vs 17,235 for <code>invite-tp</code>), consistent with picking up superseded/compacted files the Delta log would exclude. This notebook always reads via <code>format("delta")</code> to avoid that risk.</p>
+    <p><strong>Single account, three campaigns, one new since the last report.</strong> Campaigns were discovered dynamically (filesystem listing + <code>GET /api/invites/v1/campaigns</code>, cross-checked): <code>invite-tp</code> (461) and <code>positive-closed-tickets</code> (510) existed in the Jan&ndash;May report; <code>invite-product</code> (685) is new, first send 2026-06-12, and has a narrower schema (no <code>_accountId</code>/<code>_campaignId</code>/<code>_projectId</code> data columns) that required dropping those columns before unioning with the other two.</p>
+  </div>
+
+  <!-- OVERVIEW -->
+  <h2 id="s1">1. Overview</h2>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Order Reviews</div><div class="value">387</div><div class="sub">avg 4.57&#9733;</div></div>
+    <div class="kpi highlight"><div class="label">Product Reviews</div><div class="value">285</div><div class="sub">avg 4.89&#9733;</div></div>
+    <div class="kpi"><div class="label">Total Emails Sent</div><div class="value">16,883</div><div class="sub">8,734 invites &middot; 8,149 reminders</div></div>
+    <div class="kpi"><div class="label">Total Invites Sent</div><div class="value">8,734</div><div class="sub">across 3 campaigns</div></div>
+    <div class="kpi warn"><div class="label">Rating &le;2&#9733;, No Ticket</div><div class="value">31</div><div class="sub">of 37 reviews rated &le;2&#9733; (84%)</div></div>
+  </div>
+
+  <h3>Order Review Attribution</h3>
+  <div class="split-compare">
+    <div class="split-box split-attr">
+      <div class="sb-label">Attributed to a campaign</div>
+      <div class="sb-count">238</div>
+      <div class="sb-avg">61.5% of 387 order reviews</div>
+    </div>
+    <div class="split-box split-organic">
+      <div class="sb-label">Organic (no invite match)</div>
+      <div class="sb-count">37</div>
+      <div class="sb-avg">9.6% of 387 order reviews</div>
+    </div>
+    <div class="split-box split-unknown">
+      <div class="sb-label">No join key available</div>
+      <div class="sb-count">112</div>
+      <div class="sb-avg">28.9% of 387 order reviews</div>
+    </div>
+  </div>
+  <p style="margin-top:-6px;font-size:12px;color:#888;">"No join key" reviews carry neither <code>order_id</code> nor <code>email</code> in the review event itself &mdash; they cannot be matched to an invite by either key, so they are neither confirmed organic nor confirmed attributed. This is a genuine gap in the review event data, not an attribution-logic bug: every invite record has both fields populated, so the gap is entirely on the review side.</p>
+
+  <div class="warn-box">
+    <p><strong>31 of 37 reviews rated &le;2&#9733; (84%) have no matching support ticket</strong> &mdash; matched by email against <code>hl_ticket</code>. Delivery/dispatch delay is the dominant complaint by far (30 of 41 reviews rated &le;3&#9733;, 73%), frequently 8&ndash;12 weeks from order to delivery with little proactive communication.</p>
+    <p><strong>Order-level satisfaction has declined through the year</strong> while product-level satisfaction has stayed high and stable (4.89&#9733; on 285 product reviews, only 5 rated &le;3&#9733;) &mdash; see the monthly trend in Section 4. This points at fulfilment/logistics rather than product quality as the driver.</p>
+  </div>
+
+  <!-- CAMPAIGN PERFORMANCE -->
+  <h2 id="s2">2. Campaign Performance &mdash; 2026 YTD (Jan 1 &ndash; Jul 29)</h2>
+  <p style="margin-bottom:14px;">Full email volume (invites + reminders) and attributed order reviews per campaign. Attribution join matches on <code>order_id</code> first, falling back to <code>email</code> when <code>order_id</code> is absent from the review event (see Section 1 note on the "no join key" gap). Source: <code>hl_invites</code> / <code>hl_review</code> in Zeppelin notebook <code>holloways_of_ludlow_data</code>.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th style="text-align:right">Invites</th>
+        <th style="text-align:right">Reminders</th>
+        <th style="text-align:right">Total Sends</th>
+        <th style="text-align:right">Reviews</th>
+        <th style="text-align:right">Review Rate</th>
+        <th style="text-align:right">Avg Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>invite-tp (461)</td>
+        <td style="text-align:right">7,666</td>
+        <td style="text-align:right">7,578</td>
+        <td style="text-align:right">15,244</td>
+        <td style="text-align:right">212</td>
+        <td style="text-align:right">2.77%</td>
+        <td style="text-align:right">4.83</td>
+      </tr>
+      <tr>
+        <td>positive-closed-tickets (510)</td>
+        <td style="text-align:right">255</td>
+        <td style="text-align:right">237</td>
+        <td style="text-align:right">492</td>
+        <td style="text-align:right">26</td>
+        <td style="text-align:right" class="good">10.20%</td>
+        <td style="text-align:right">4.88</td>
+      </tr>
+      <tr>
+        <td>invite-product (685) <span style="color:#aaa;font-size:11px;">new, since Jun 12</span></td>
+        <td style="text-align:right">813</td>
+        <td style="text-align:right">334</td>
+        <td style="text-align:right">1,147</td>
+        <td style="text-align:right">0</td>
+        <td style="text-align:right">0.00%</td>
+        <td style="text-align:right">&mdash;</td>
+      </tr>
+      <tr class="row-total">
+        <td>TOTAL</td>
+        <td style="text-align:right">8,734</td>
+        <td style="text-align:right">8,149</td>
+        <td style="text-align:right">16,883</td>
+        <td style="text-align:right">238</td>
+        <td style="text-align:right">2.72%</td>
+        <td style="text-align:right">&mdash;</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <p><strong><code>positive-closed-tickets</code> remains Holloways&rsquo; most efficient review-generation mechanism</strong> at 10.20% &mdash; roughly 4&times; the rate of the main <code>invite-tp</code> campaign (2.77%), consistent with the Jan&ndash;May report's finding. It sends to customers whose support ticket was positively resolved, and every one of its 26 attributed reviews is 3&#9733; or higher (avg 4.88).</p>
+    <p><strong><code>invite-product</code> (685) is a new campaign, first seen 2026-06-12, with 0 attributed reviews from 813 invites so far.</strong> It wasn't part of the Jan&ndash;May report. Too early to call this a performance problem &mdash; under 7 weeks of history and review submission commonly lags the invite by weeks &mdash; but worth checking again next report if the rate stays at zero once more time has passed.</p>
+  </div>
+
+  <!-- EMAIL PERFORMANCE -->
+  <h2 id="s3">3. Email Performance (Last 30 Days)</h2>
+  <p style="margin-bottom:14px;">Open/click/unsub stats from the Stacktome campaign report API, Jun 30&ndash;Jul 29, 2026 &mdash; credentials at <code>stacktome-app/.holloways_of_ludlow-pass</code>. Sent counts are for the trailing-30-day API window specifically; the same window in Zeppelin shows 2,211 / 90 / 845 total sends per campaign respectively (vs API's 2,075 / 86 / 780) &mdash; a ~6&ndash;8% gap consistent with known bucketing/timezone differences between the two sources, not a data error.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th style="text-align:right">Sent</th>
+        <th style="text-align:right">Unique Opens</th>
+        <th style="text-align:right">Open%</th>
+        <th style="text-align:right">Unique Clicks</th>
+        <th style="text-align:right">Click%</th>
+        <th style="text-align:right">Unsubs</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>invite-tp</td>
+        <td style="text-align:right">2,075</td>
+        <td style="text-align:right">1,313</td>
+        <td style="text-align:right">63.3%</td>
+        <td style="text-align:right">84</td>
+        <td style="text-align:right">4.0%</td>
+        <td style="text-align:right">35</td>
+      </tr>
+      <tr>
+        <td>positive-closed-tickets</td>
+        <td style="text-align:right">86</td>
+        <td style="text-align:right">56</td>
+        <td style="text-align:right">65.1%</td>
+        <td style="text-align:right">12</td>
+        <td style="text-align:right" class="good">14.0%</td>
+        <td style="text-align:right">0</td>
+      </tr>
+      <tr>
+        <td>invite-product</td>
+        <td style="text-align:right">780</td>
+        <td style="text-align:right">422</td>
+        <td style="text-align:right">54.1%</td>
+        <td style="text-align:right">10</td>
+        <td style="text-align:right" class="warn">1.3%</td>
+        <td style="text-align:right">15</td>
+      </tr>
+      <tr class="row-total">
+        <td>TOTAL &mdash; last 30 days</td>
+        <td style="text-align:right">2,941</td>
+        <td style="text-align:right">1,791</td>
+        <td style="text-align:right">60.9%</td>
+        <td style="text-align:right">106</td>
+        <td style="text-align:right">3.6%</td>
+        <td style="text-align:right">50</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="warn-box">
+    <p><strong>invite-product's click-through rate (1.3%) and unsub rate (1.9%, 15/780) are both notably worse than the other two campaigns</strong> (4.0% and 14.0% CTR; &lt;2% and 0% unsubs). Combined with its 0% review-attribution rate above, this campaign is worth a closer look &mdash; audience targeting, subject line, or send cadence may need adjustment.</p>
+  </div>
+
+  <!-- REVIEWS & RATING DISTRIBUTION -->
+  <h2 id="s4">4. Reviews &amp; Rating Distribution (2026 YTD)</h2>
+  <p style="margin-bottom:16px;">387 order-level reviews YTD, avg 4.57&#9733;. Distribution is heavily skewed toward 5&#9733; (331), with a long tail of 1&#9733; (33) driving nearly all of the negative volume.</p>
+
+  <div class="star-dist" style="max-width:420px;">
+    <div class="star-col"><div class="star-bar s5" style="height:60px;"></div><div class="star-label">5&#9733; &times;331</div></div>
+    <div class="star-col"><div class="star-bar s4" style="height:3px;"></div><div class="star-label">4&#9733; &times;15</div></div>
+    <div class="star-col"><div class="star-bar s3" style="height:1px;"></div><div class="star-label">3&#9733; &times;4</div></div>
+    <div class="star-col"><div class="star-bar s2" style="height:1px;"></div><div class="star-label">2&#9733; &times;4</div></div>
+    <div class="star-col"><div class="star-bar s1" style="height:6px;"></div><div class="star-label">1&#9733; &times;33</div></div>
+  </div>
+
+  <h3>Monthly Invites, Reviews &amp; Avg Rating</h3>
+  <p style="margin-bottom:12px;">July is partial (through Jul 29). Review rate = order reviews that month / invites sent that month, all campaigns combined.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th>Jan</th>
+        <th>Feb</th>
+        <th>Mar</th>
+        <th>Apr</th>
+        <th>May</th>
+        <th>Jun</th>
+        <th>Jul*</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Invites sent</td>
+        <td>1,321</td><td>1,211</td><td>972</td><td>1,261</td><td>898</td><td>1,283</td><td>1,385</td>
+      </tr>
+      <tr>
+        <td>Reviews</td>
+        <td>89</td><td>76</td><td>44</td><td>58</td><td>48</td><td>33</td><td>39</td>
+      </tr>
+      <tr>
+        <td>Avg rating</td>
+        <td>4.78&#9733;</td><td>4.80&#9733;</td><td>4.82&#9733;</td><td>4.64&#9733;</td><td>4.46&#9733;</td>
+        <td class="warn">3.73&#9733;</td><td>4.10&#9733;</td>
+      </tr>
+      <tr>
+        <td>Review rate</td>
+        <td>6.74%</td><td>6.28%</td><td>4.53%</td><td>4.60%</td><td>5.35%</td>
+        <td class="warn">2.57%</td><td>2.82%*</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="info-box" style="margin-top:-8px;">
+    <p><strong>June was the low point of the year on both dimensions</strong> &mdash; avg rating dropped to 3.73&#9733; (from 4.46&#9733; in May) and review rate fell to 2.57% (from a 4.5&ndash;6.7% range Jan&ndash;May). July has recovered somewhat (4.10&#9733;, 2.82%) but both remain below the Jan&ndash;Mar baseline. This lines up with the delivery-delay theme below &mdash; several of the most detailed complaints describe orders placed in April/May taking 8&ndash;12 weeks to arrive, landing as reviews in June/July.</p>
+    <p><strong>*July figures are partial</strong> (through Jul 29, the latest complete day at generation time) &mdash; both the rating and rate may shift as more of the month's reviews land.</p>
+  </div>
+
+  <h3>Recent Positive Highlights (5&#9733;, last 3 weeks)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Heading / Snippet</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="r5">5&#9733;</span> "I called to correct the delivery address, got through straight away and the operator was really friendly and helpful. Delivery was super fast too.. faultless."</td><td>Jul 29</td></tr>
+      <tr><td><span class="r5">5&#9733;</span> "Despite changing our delivery date several times... their transportation broke down... The Winchester team were fantastic, went out of their way to find a solution and got us our table delivered on time." (Outstanding Customer Service)</td><td>Jul 24</td></tr>
+      <tr><td><span class="r5">5&#9733;</span> "Fantastic - Everyone very helpful and Galiena in the Bath branch went more than the extra mile... Very very good quality products and exemplary service."</td><td>Jul 24</td></tr>
+      <tr><td><span class="r5">5&#9733;</span> "Great range of products at good prices. Very quick delivery too."</td><td>Jul 23</td></tr>
+      <tr><td><span class="r5">5&#9733;</span> "Amazing service! I ordered online with ease and my item was delivered quickly and efficiently by the courier. I would definitely recommend Holloways of Ludlow!"</td><td>Jul 20</td></tr>
+    </tbody>
+  </table>
+
+  <!-- PRODUCT REVIEWS (HOLLOWAYS-SPECIFIC) -->
+  <h2 id="s5">5. Product Reviews</h2>
+  <p style="margin-bottom:14px;">Holloways tracks product-level reviews (per SKU) separately from order-level reviews, via the same <code>review</code> event with <code>event_subtype = 'review_product'</code>. This dimension doesn't exist in the Lvanguard reference report &mdash; it's carried over from Holloways' own schema because it materially changes the story: product quality is not where the problem is.</p>
+  <div class="good-box">
+    <p><strong>285 product reviews YTD, avg 4.89&#9733; &mdash; only 5 rated &le;3&#9733; (1.75%).</strong> This is far higher and far more stable than the order-level average (4.57&#9733;, with 41 of 387 &le;3&#9733;, 10.6%). The gap strongly suggests the products themselves are well-regarded and the order-level dissatisfaction is driven by fulfilment, delivery, and customer-service handling rather than the goods sold &mdash; consistent with the delivery-delay theme dominating the order-level negative reviews (Section 6).</p>
+  </div>
+
+  <!-- NEGATIVE REVIEWS -->
+  <h2 id="s6">6. Negative Review Themes</h2>
+  <p style="margin-bottom:16px;">41 order reviews rated &le;3&#9733; YTD, analysed by keyword match across the review text (English only &mdash; Holloways' customer base is UK/English, unlike Lvanguard's multi-market footprint). Categories overlap &mdash; a single review can describe both a delivery delay and unresponsive support.</p>
+
+  <div class="theme-grid">
+    <div class="theme-card">
+      <div class="icon">&#128230;</div>
+      <div class="theme-title">Delivery &amp; Dispatch Delays</div>
+      <div class="count">30 of 41 negative reviews (73%)</div>
+      <p>The dominant theme by a wide margin. Orders described as taking 8&ndash;12 weeks against a quoted 2&ndash;6 week window, repeatedly, across multiple independent reviews. Several name FedEx or third-party couriers specifically for missed/rescheduled delivery windows.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#128172;</div>
+      <div class="theme-title">Unresponsive Communication</div>
+      <div class="count">22 of 41 negative reviews (54%)</div>
+      <p>Customers describe emailing multiple times with no reply, phone lines going unanswered, and having to chase repeatedly for basic order-status updates. Frequently compounds a delivery delay rather than standing alone.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#128230;</div>
+      <div class="theme-title">Wrong, Damaged, or Missing Items</div>
+      <div class="count">11 of 41 negative reviews (27%)</div>
+      <p>Wrong size or item shipped, partial/incomplete multi-item orders, and faulty goods on arrival (one lamp arrived without a required ceiling plate; a replacement part was then the wrong colour/design).</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#128176;</div>
+      <div class="theme-title">Refunds &amp; Returns</div>
+      <div class="count">15 of 41 negative reviews (37%)</div>
+      <p>Refunds eventually processed but slow, and at least one case of a legitimate return request being refused until the customer cited consumer legislation &mdash; echoes the same finding from the Jan&ndash;May report.</p>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <p><strong>31 of 37 reviews rated &le;2&#9733; (84%) have no matching support ticket</strong> (matched by email against <code>hl_ticket</code>). Given how consistently the negative review text describes customers repeatedly emailing and phoning without success, this gap plausibly reflects genuinely unresolved contact attempts rather than tickets simply logged elsewhere &mdash; worth a closer look given how specific and detailed the underlying complaints are.</p>
+  </div>
+
+  <h3>Representative Negative Reviews</h3>
+  <div class="review-card">
+    <div class="review-card-header"><span class="rating-badge r1b">1&#9733;</span><strong>Poor customer service and no item</strong><span class="tag" style="margin-left:auto;">No ticket</span></div>
+    <div class="review-card-body"><p class="review-text">Order placed 26 Apr, estimated 4&ndash;6 weeks; after 8 weeks with no updates the customer had to chase via email, phone, and social media. After ~10 weeks a partial delivery arrived missing the garden table. Refund eventually processed after further chasing, with no proactive communication throughout the 12-week process.</p></div>
+  </div>
+  <div class="review-card">
+    <div class="review-card-header"><span class="rating-badge r1b">1&#9733;</span><strong>Late delivery timelines and negligent delivery process, goods might be stolen</strong><span class="tag" style="margin-left:auto;">No ticket</span></div>
+    <div class="review-card-body"><p class="review-text">10 weeks after ordering £1,380 of dining chairs, FedEx delivered with no signature required and left the parcel on a porch in a flat building with no photo proof &mdash; nothing was found. Contrasts the (lack of) delivery care against two competitors who used white-glove, signature-required delivery for similarly priced goods.</p></div>
+  </div>
+  <div class="review-card">
+    <div class="review-card-header"><span class="rating-badge r1b">1&#9733;</span><strong>Misleading description</strong><span class="tag" style="margin-left:auto;">No ticket</span></div>
+    <div class="review-card-body"><p class="review-text">Bathroom lights described as "polished brass" without disclosing they were lacquered, discovered only after installation; return was refused. Customer also reports being told the review would be "taken offline" unless more detail was added &mdash; worth checking that review-moderation messaging isn't reading as a threat to customers.</p></div>
+  </div>
+  <div class="review-card">
+    <div class="review-card-header"><span class="rating-badge r2b">2&#9733;</span><strong>A Month Waiting, Then Chaos After Cancelling</strong><span class="tag" style="margin-left:auto;">No ticket</span></div>
+    <div class="review-card-body"><p class="review-text">After a month with no delivery and shifting explanations, the customer cancelled &mdash; but the item still arrived the next day via courier APC, was refused, and APC attempted delivery again two days later despite the cancellation and refund already being processed. Coordination gap between Holloways and its delivery partner.</p></div>
+  </div>
+  <div class="review-card">
+    <div class="review-card-header"><span class="rating-badge r1b">1&#9733;</span><strong>Wrong order sent</strong><span class="tag-ok" style="margin-left:auto;">Ticket: matched</span></div>
+    <div class="review-card-body"><p class="review-text">Wrong item sent, with a slow response on the return &mdash; the customer's second time raising an issue with an order. One of only 6 of the 37 &le;2&#9733; reviews with a matching ticket on file.</p></div>
+  </div>
+
+  <!-- ACTION ITEMS -->
+  <h2 id="s7">7. Action Items</h2>
+  <ul class="action-list">
+    <li>
+      <div class="al-icon">&#128308;</div>
+      <div class="al-text"><strong>Delivery/dispatch delay is the dominant complaint driver &mdash; 73% of negative reviews.</strong> Repeated pattern of 8&ndash;12 week waits against 2&ndash;6 week quoted windows, often with no proactive update until the customer chases. This is the single biggest lever for rating improvement: either tighten the quoted lead times to match reality, or invest in proactive delay communication so customers aren't left guessing.</div>
+    </li>
+    <li>
+      <div class="al-icon">&#128308;</div>
+      <div class="al-text"><strong>31 of 37 reviews rated &le;2&#9733; (84%) have no matching support ticket.</strong> Given how many of these reviews describe the customer emailing and phoning repeatedly with no reply, confirm whether these contacts are being logged at all before assuming the gap is a matching artefact &mdash; the review text itself suggests a real response-handling problem, not just a data-matching one.</div>
+    </li>
+    <li>
+      <div class="al-icon">&#128993;</div>
+      <div class="al-text"><strong>invite-product (685) shows early warning signs: 0% review rate, 1.3% CTR, 1.9% unsub rate</strong> &mdash; all worse than the other two campaigns. Still under 7 weeks old, so not yet conclusive, but flag for a closer look at targeting/messaging if the pattern holds next report.</div>
+    </li>
+    <li>
+      <div class="al-icon">&#128993;</div>
+      <div class="al-text"><strong>June was a low point on both review rate (2.57%) and avg rating (3.73&#9733;)</strong>, with a partial recovery in July (2.82%, 4.10&#9733;). Worth revisiting once more of July's reviews have landed to confirm whether this is a genuine recovery or still-incomplete data.</div>
+    </li>
+    <li>
+      <div class="al-icon">&#128994;</div>
+      <div class="al-text"><strong>positive-closed-tickets (510) is Holloways' most efficient review-generation mechanism at 10.20% &mdash; ~4&times; the main invite-tp campaign</strong>, and every one of its attributed reviews is 3&#9733;+ (avg 4.88). Scaling this campaign to more resolved tickets would directly grow the attributed review count and lift the blended average rating.</div>
+    </li>
+    <li>
+      <div class="al-icon">&#128994;</div>
+      <div class="al-text"><strong>Product quality is not the problem.</strong> Product-level reviews average 4.89&#9733; with only 1.75% rated &le;3&#9733;, versus 10.6% at the order level. The gap between the two is the clearest evidence that fulfilment and service, not the goods themselves, are driving order-level dissatisfaction.</div>
+    </li>
+    <li>
+      <div class="al-icon">&#128309;</div>
+      <div class="al-text"><strong>Onboarding note: this is the first report from the new <code>holloways_of_ludlow_data</code> notebook (support_clone).</strong> 28.9% of order reviews (112 of 387) have neither <code>order_id</code> nor <code>email</code> and can never be attributed by either key &mdash; a genuine data gap on the review side worth raising with data engineering if campaign-level attribution completeness matters for future reporting. See <code>campaigns/07-weekly-report.md</code> for the full setup.</div>
+    </li>
+  </ul>
+
+</div>
+</body>
+</html>
