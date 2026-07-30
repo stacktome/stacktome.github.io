@@ -115,6 +115,7 @@
     <p><strong>First report generated from the new <code>holloways_of_ludlow_data</code> notebook (support_clone).</strong> A prior Jan&ndash;May 2026 report exists (built in the production notebook <code>hollowaysofludlow_data</code>, not a support_clone reporting notebook) &mdash; this report supersedes it with a full 2026 YTD window (Jan 1 &ndash; Jul 29) through the latest complete day, built the standard way per <a href="https://github.com" style="color:#0984e3;">campaigns/07-weekly-report.md</a>.</p>
     <p><strong>Data note:</strong> the invite event log at this path is Delta-formatted (has a <code>_delta_log</code>), same as Lvanguard. Unlike Lvanguard, a plain-parquet read here does <em>not</em> silently miss recent data (both readers reach the same max date) &mdash; but it does return slightly more rows than the Delta read for at least one campaign (17,357 vs 17,235 for <code>invite-tp</code>), consistent with picking up superseded/compacted files the Delta log would exclude. This notebook always reads via <code>format("delta")</code> to avoid that risk.</p>
     <p><strong>Single account, three campaigns, one new since the last report.</strong> Campaigns were discovered dynamically (filesystem listing + <code>GET /api/invites/v1/campaigns</code>, cross-checked): <code>invite-tp</code> (461) and <code>positive-closed-tickets</code> (510) existed in the Jan&ndash;May report; <code>invite-product</code> (685) is new, first send 2026-06-12, and has a narrower schema (no <code>_accountId</code>/<code>_campaignId</code>/<code>_projectId</code> data columns) that required dropping those columns before unioning with the other two.</p>
+    <p><strong>Correction (same day, 2026-07-30):</strong> the first draft's only review-attribution query filtered to <code>event_subtype = 'review_order'</code>, so it never joined <code>review_product</code> events to invite history at all &mdash; every campaign's product-review count read as 0, which made <code>invite-product</code> (a product-review campaign) look like it had zero engagement. A parallel attribution query was added using the same order_id-first/email-fallback convention against <code>product_rating</code> instead of <code>order_rating</code>; Section 5 now shows the corrected per-campaign breakdown (invite-product: 9 attributed product reviews from 813 invites, all 5&#9733;).</p>
   </div>
 
   <!-- OVERVIEW -->
@@ -154,7 +155,8 @@
 
   <!-- CAMPAIGN PERFORMANCE -->
   <h2 id="s2">2. Campaign Performance &mdash; 2026 YTD (Jan 1 &ndash; Jul 29)</h2>
-  <p style="margin-bottom:14px;">Full email volume (invites + reminders) and attributed order reviews per campaign. Attribution join matches on <code>order_id</code> first, falling back to <code>email</code> when <code>order_id</code> is absent from the review event (see Section 1 note on the "no join key" gap). Source: <code>hl_invites</code> / <code>hl_review</code> in Zeppelin notebook <code>holloways_of_ludlow_data</code>.</p>
+  <p style="margin-bottom:14px;">Full email volume (invites + reminders) and attributed <strong>order</strong> reviews per campaign. Attribution join matches on <code>order_id</code> first, falling back to <code>email</code> when <code>order_id</code> is absent from the review event (see Section 1 note on the "no join key" gap). Source: <code>hl_invites</code> / <code>hl_review</code> in Zeppelin notebook <code>holloways_of_ludlow_data</code>.</p>
+  <p style="margin-top:-10px;margin-bottom:14px;font-size:12px;color:#888;"><strong>This table covers order-level reviews only.</strong> <code>invite-product</code> solicits <em>product</em>-level reviews (<code>review_product</code> / <code>product_rating</code>), a separate event type this table doesn't count &mdash; see its attribution in Section 5.</p>
 
   <table>
     <thead>
@@ -163,8 +165,8 @@
         <th style="text-align:right">Invites</th>
         <th style="text-align:right">Reminders</th>
         <th style="text-align:right">Total Sends</th>
-        <th style="text-align:right">Reviews</th>
-        <th style="text-align:right">Review Rate</th>
+        <th style="text-align:right">Order Reviews</th>
+        <th style="text-align:right">Order Review Rate</th>
         <th style="text-align:right">Avg Rating</th>
       </tr>
     </thead>
@@ -192,8 +194,8 @@
         <td style="text-align:right">813</td>
         <td style="text-align:right">334</td>
         <td style="text-align:right">1,147</td>
-        <td style="text-align:right">0</td>
-        <td style="text-align:right">0.00%</td>
+        <td style="text-align:right">0<br><span style="color:#888;font-size:11px;font-weight:normal;">(9 product reviews &mdash; Section 5)</span></td>
+        <td style="text-align:right">0.00%<br><span style="color:#888;font-size:11px;font-weight:normal;">order-level only</span></td>
         <td style="text-align:right">&mdash;</td>
       </tr>
       <tr class="row-total">
@@ -210,7 +212,7 @@
 
   <div class="info-box">
     <p><strong><code>positive-closed-tickets</code> remains Holloways&rsquo; most efficient review-generation mechanism</strong> at 10.20% &mdash; roughly 4&times; the rate of the main <code>invite-tp</code> campaign (2.77%), consistent with the Jan&ndash;May report's finding. It sends to customers whose support ticket was positively resolved, and every one of its 26 attributed reviews is 3&#9733; or higher (avg 4.88).</p>
-    <p><strong><code>invite-product</code> (685) is a new campaign, first seen 2026-06-12, with 0 attributed reviews from 813 invites so far.</strong> It wasn't part of the Jan&ndash;May report. Too early to call this a performance problem &mdash; under 7 weeks of history and review submission commonly lags the invite by weeks &mdash; but worth checking again next report if the rate stays at zero once more time has passed.</p>
+    <p><strong><code>invite-product</code> (685), new since 2026-06-12, has 0 attributed <em>order</em> reviews &mdash; expected, since it solicits product reviews, not order reviews; this table only ever counts order-level reviews.</strong> It is <em>not</em> a zero-review campaign overall &mdash; see Section 5 for its product-review attribution: 9 attributed reviews from 813 invites (1.1%), all 5&#9733;, validated at the individual product/SKU level.</p>
   </div>
 
   <!-- EMAIL PERFORMANCE -->
@@ -270,7 +272,7 @@
   </table>
 
   <div class="warn-box">
-    <p><strong>invite-product's click-through rate (1.3%) and unsub rate (1.9%, 15/780) are both notably worse than the other two campaigns</strong> (4.0% and 14.0% CTR; &lt;2% and 0% unsubs). Combined with its 0% review-attribution rate above, this campaign is worth a closer look &mdash; audience targeting, subject line, or send cadence may need adjustment.</p>
+    <p><strong>invite-product's click-through rate (1.3%) and unsub rate (1.9%, 15/780) are both notably worse than the other two campaigns</strong> (4.0% and 14.0% CTR; &lt;2% and 0% unsubs). Its product-review attribution rate is a modest 1.1% (Section 5) &mdash; not zero, but still the weakest of the three campaigns on both engagement and review conversion. Worth a closer look at audience targeting, subject line, or send cadence.</p>
   </div>
 
   <!-- REVIEWS & RATING DISTRIBUTION -->
@@ -345,9 +347,95 @@
 
   <!-- PRODUCT REVIEWS (HOLLOWAYS-SPECIFIC) -->
   <h2 id="s5">5. Product Reviews</h2>
-  <p style="margin-bottom:14px;">Holloways tracks product-level reviews (per SKU) separately from order-level reviews, via the same <code>review</code> event with <code>event_subtype = 'review_product'</code>. This dimension doesn't exist in the Lvanguard reference report &mdash; it's carried over from Holloways' own schema because it materially changes the story: product quality is not where the problem is.</p>
+  <p style="margin-bottom:14px;">Holloways tracks product-level reviews (per SKU) separately from order-level reviews, via the same <code>review</code> event with <code>event_subtype = 'review_product'</code> and the <code>product_rating</code> column. This dimension doesn't exist in the Lvanguard reference report &mdash; it's carried over from Holloways' own schema because it materially changes the story: product quality is not where the problem is.</p>
   <div class="good-box">
     <p><strong>285 product reviews YTD, avg 4.89&#9733; &mdash; only 5 rated &le;3&#9733; (1.75%).</strong> This is far higher and far more stable than the order-level average (4.57&#9733;, with 41 of 387 &le;3&#9733;, 10.6%). The gap strongly suggests the products themselves are well-regarded and the order-level dissatisfaction is driven by fulfilment, delivery, and customer-service handling rather than the goods sold &mdash; consistent with the delivery-delay theme dominating the order-level negative reviews (Section 6).</p>
+  </div>
+
+  <h3>Product Review Attribution by Campaign</h3>
+  <p style="margin-bottom:14px;">Corrected in this report: an earlier draft never joined <code>review_product</code> events to invite history at all &mdash; the only attribution query built for this account (Section 2) filtered to <code>event_subtype = 'review_order'</code>, so every campaign's product-review count silently read as 0, including <code>invite-product</code>'s. The query below applies the same order_id-first / email-fallback convention used for order reviews, joined against <code>product_rating</code> instead of <code>order_rating</code>.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th style="text-align:right">Attributed Product Reviews</th>
+        <th style="text-align:right">Avg Rating</th>
+        <th style="text-align:right">Min Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>invite-tp (461)</td>
+        <td style="text-align:right">187</td>
+        <td style="text-align:right">4.93</td>
+        <td style="text-align:right">1</td>
+      </tr>
+      <tr>
+        <td>positive-closed-tickets (510)</td>
+        <td style="text-align:right">33</td>
+        <td style="text-align:right">4.73</td>
+        <td style="text-align:right">1</td>
+      </tr>
+      <tr>
+        <td>invite-product (685)</td>
+        <td style="text-align:right" class="good">9</td>
+        <td style="text-align:right">5.00</td>
+        <td style="text-align:right">5</td>
+      </tr>
+      <tr class="row-total">
+        <td>TOTAL (distinct reviews, all-campaign)</td>
+        <td style="text-align:right">226</td>
+        <td style="text-align:right">&mdash;</td>
+        <td style="text-align:right">&mdash;</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="margin-top:-10px;font-size:12px;color:#888;">Per-campaign counts sum to 229, 3 more than the 226 distinct reviews attributed account-wide &mdash; the same reconciliation pattern documented for email performance: a handful of orders were invited by more than one campaign, so their product review is counted once per matching campaign above. 59 of 285 product reviews (20.7%) are organic (no invite match by either key); unlike order reviews, there is no "no join key" bucket here because every product review carries an <code>email</code> (100%), even when <code>order_id</code> is absent (49.5% of rows).</p>
+
+  <div class="split-compare">
+    <div class="split-box split-attr">
+      <div class="sb-label">Attributed to a campaign</div>
+      <div class="sb-count">226</div>
+      <div class="sb-avg">79.3% of 285 product reviews</div>
+    </div>
+    <div class="split-box split-organic">
+      <div class="sb-label">Organic (no invite match)</div>
+      <div class="sb-count">59</div>
+      <div class="sb-avg">20.7% of 285 product reviews</div>
+    </div>
+  </div>
+
+  <h3>Product-Level Validation of invite-product's 9 Attributed Reviews</h3>
+  <p style="margin-bottom:12px;">The order_id/email match above only confirms the <em>customer and order</em> line up with an invite-product send &mdash; it doesn't by itself confirm the review is for a product that invite-product actually asked about. Checked each of the 9 individually against the invited order's product/SKU list:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Matched via</th>
+        <th style="text-align:right">Count</th>
+        <th>Product-level result</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>order_id</code></td>
+        <td style="text-align:right" class="good">5</td>
+        <td>Confirmed &mdash; reviewed SKU matches exactly one of the invited order's product SKUs in all 5 cases (e.g. SKU <code>54581118992769</code> reviewed = SKU <code>54581118992769</code> invited). Product <em>names</em> differ slightly in string form (the invite carries the full variant name, e.g. "&hellip; Altura Step Stool <strong>- Oak</strong>", the review stores the base name) &mdash; this is a formatting difference, not a mismatch; the SKU match is exact in every case.</td>
+      </tr>
+      <tr>
+        <td><code>email</code> only</td>
+        <td style="text-align:right" class="warn">4</td>
+        <td>Not verifiable at the product level. These 4 reviews carry no <code>order_id</code> and no <code>product_sku</code>/<code>product_name</code> at all &mdash; the review event itself doesn't record which product was reviewed beyond a numeric <code>product_review_id</code>. Attribution here rests on email match alone; product/SKU-level confirmation is not possible with the data available, not assumed to be correct.</td>
+      </tr>
+      <tr class="row-total">
+        <td>TOTAL</td>
+        <td style="text-align:right">9</td>
+        <td>0 mismatches found among the 5 checkable cases; 4 are an acknowledged verification gap, not a failed check.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="good-box">
+    <p><strong>Count unchanged at 9.</strong> Of the 5 reviews with an <code>order_id</code>, 100% have an exact SKU match against the specific product(s) invite-product invited on that order &mdash; the strongest available confirmation. The remaining 4 (matched by email only, sent since campaign inception) cannot be checked at product level because the review event carries no SKU, product name, or order reference &mdash; this is disclosed as a data limitation, not folded into the "confirmed" count.</p>
   </div>
 
   <!-- NEGATIVE REVIEWS -->
@@ -420,7 +508,7 @@
     </li>
     <li>
       <div class="al-icon">&#128993;</div>
-      <div class="al-text"><strong>invite-product (685) shows early warning signs: 0% review rate, 1.3% CTR, 1.9% unsub rate</strong> &mdash; all worse than the other two campaigns. Still under 7 weeks old, so not yet conclusive, but flag for a closer look at targeting/messaging if the pattern holds next report.</div>
+      <div class="al-text"><strong>invite-product (685) shows early warning signs on engagement: 1.3% CTR, 1.9% unsub rate</strong> &mdash; both worse than the other two campaigns. Product-review attribution is not zero (corrected this report: 9 attributed reviews from 813 invites, 1.1%, all 5&#9733; &mdash; see Section 5), but the weak CTR/unsub combination is still worth a look at targeting/messaging if it holds under more volume. Still under 7 weeks old.</div>
     </li>
     <li>
       <div class="al-icon">&#128993;</div>
