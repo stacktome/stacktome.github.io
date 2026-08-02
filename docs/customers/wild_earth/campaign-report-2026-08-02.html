@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wild Earth — 2026 Year-to-Date Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #2d8659; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .kpi.highlight { border-top: 3px solid #f0932b; }
+  .kpi.good { border-top: 3px solid #2d8659; }
+  .kpi.warn { border-top: 3px solid #e17055; }
+
+  .star-dist { display: flex; gap: 4px; margin: 10px 0; align-items: flex-end; height: 60px; }
+  .star-col { display: flex; flex-direction: column; align-items: center; flex: 1; justify-content: flex-end; }
+  .star-bar { width: 100%; border-radius: 3px 3px 0 0; }
+  .s5 { background: #2d8659; } .s4 { background: #74b98f; } .s3 { background: #fdcb6e; }
+  .s2 { background: #e17055; } .s1 { background: #d63031; }
+  .star-label { font-size: 9px; color: #999; margin-top: 2px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  th { background: #f3faf6; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; }
+  td { padding: 9px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafffd; }
+  .row-total td { background: #f3faf6; font-weight: 600; }
+
+  .type-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; color: #fff; }
+  .tp-service { background: #0984e3; }
+  .tp-product { background: #2d8659; }
+
+  .r2 { color: #e17055; font-weight: 600; }
+  .r5 { color: #2d8659; font-weight: 600; }
+  .review-text { font-size: 12px; color: #636e72; line-height: 1.5; max-width: 460px; }
+
+  .insight-box { background: #fff; border-left: 4px solid #2d8659; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .insight-box p { margin-bottom: 6px; }
+  .insight-box p:last-child { margin-bottom: 0; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .warn-box p { margin-bottom: 6px; }
+  .warn-box p:last-child { margin-bottom: 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #2d8659; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .good-box p { margin-bottom: 6px; }
+  .good-box p:last-child { margin-bottom: 0; }
+  .info-box { background: #f5f6fa; border-left: 4px solid #b2bec3; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .info-box p { margin-bottom: 6px; }
+  .info-box p:last-child { margin-bottom: 0; }
+  .pending-box { background: #fdf3e7; border-left: 4px solid #f0932b; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .pending-box p { margin-bottom: 6px; }
+  .pending-box p:last-child { margin-bottom: 0; }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 20px; }
+  .theme-card { background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .theme-card .icon { font-size: 24px; margin-bottom: 8px; }
+  .theme-card .theme-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .theme-card .count { font-size: 11px; color: #888; margin-bottom: 8px; }
+  .theme-card p { font-size: 12px; color: #555; margin: 0; line-height: 1.5; }
+
+  .action-list { list-style: none; margin: 0; padding: 0; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 16px; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 10px; }
+  .al-icon { font-size: 16px; flex-shrink: 0; }
+  .al-text { font-size: 13px; color: #4a4a4a; line-height: 1.5; }
+
+  nav a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Wild Earth — Year-to-Date Report</h1>
+  <p class="subtitle">Jan 1 – Jul 31, 2026 &bull; Generated Aug 2, 2026 &bull; First report for this project</p>
+
+  <nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #2d8659;font-size:14px;line-height:2;">
+    <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+    <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Overview</a>
+    <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Campaign Performance</a>
+    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Email Performance</a>
+    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Rating &amp; Review Trends</a>
+    <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Negative Review Themes</a>
+    <a href="#s6" style="color:#444;text-decoration:none;margin-right:20px;">6. Positive Highlights</a>
+    <a href="#s7" style="color:#444;text-decoration:none;">7. Action Items</a>
+  </nav>
+
+  <div class="info-box">
+    <p><strong>First report for this project.</strong> Wild Earth (outdoor/camping/hiking gear retailer) is newly onboarded to weekly reporting. Zeppelin notebook <code>wild_earth_data_clone</code> created under <code>support_clone</code>. This report covers the full year-to-date window (Jan 1 – Jul 31, 2026) since no prior period baseline exists. Future reports move to the standard weekly cadence.</p>
+    <p><strong>Data note:</strong> the invite event log at this path is Delta-formatted per campaign (not a plain-parquet date glob), and campaign IDs 588 (<code>response-stacktome</code>), 594 (<code>stacktome-review-replies</code>) are review-<em>response</em> campaigns rather than invite campaigns, and 230 (<code>test</code>) is a single test row — all three are excluded from every invite/review-rate figure below. Only campaigns 200 (<code>invite</code>) and 543 (<code>invite-10</code>) are review invites.</p>
+    <p><strong>Reviews include both service and product ratings</strong> — Wild Earth collects order/service reviews (<code>order_rating</code>, mostly Google) alongside per-product reviews (<code>product_rating</code>, mostly Trustpilot/Stacktome/Judge.me) on the same event stream. Every section below reports both.</p>
+    <p><strong>Email performance API gotcha discovered building this report:</strong> the campaign report endpoint (<code>/campaigns/{id}/report</code>) only retains roughly the trailing 30 days of daily stats regardless of the date range requested — campaign 200 (<code>invite</code>, inactive since before that window) returns zero rows even though Zeppelin shows 36,985 invites sent to it earlier in the year. This isn't a bug or a credentials issue; it means YTD email performance can only be reconstructed for whatever is still active within that window. See Email Performance below.</p>
+  </div>
+
+  <!-- OVERVIEW -->
+  <h2 id="s1">Overview</h2>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Total Reviews</div><div class="value">2,967</div><div class="sub">Product 2,820 &middot; Service 147</div></div>
+    <div class="kpi highlight"><div class="label">Avg Rating</div><div class="value">4.76★</div><div class="sub">Product 4.76★ &middot; Service 4.78★</div></div>
+    <div class="kpi"><div class="label">Total Invites Sent</div><div class="value">79,473</div><div class="sub">+72,643 reminders</div></div>
+    <div class="kpi"><div class="label">Distinct Invited Orders</div><div class="value">78,363</div><div class="sub">invite 36,684 &middot; invite-10 41,679</div></div>
+    <div class="kpi warn"><div class="label">Negative (&le;2★), No Ticket</div><div class="value">73</div><div class="sub">of 88 reviews rated &le;2★ (83%)</div></div>
+  </div>
+
+  <div class="warn-box">
+    <p><strong>132 of 153 reviews rated &le;3★ YTD (86%) have no matching support ticket</strong> — email-matched against <code>we_tickets</code>. Narrowing to the more urgent &le;2★ band, 73 of 88 (83%) are untracked. Some may reflect tickets logged under a different email or channel, but the gap is large enough to warrant a suppression/escalation review — see Action Items.</p>
+    <p><strong>Product reviews (2,820) outnumber service reviews (147) roughly 19:1.</strong> The invite programme and review sources (Trustpilot, Judge.me, Stacktome widget) are structured around per-product feedback; Google is the main source of service-style reviews.</p>
+  </div>
+
+  <!-- CAMPAIGN PERFORMANCE -->
+  <h2 id="s2">Campaign Performance — Jan 1 – Jul 31, 2026</h2>
+  <p style="margin-bottom:14px;">Full email volume (invites + reminders, <code>email_send_type='invite'</code> only in the denominator) and attributed reviews per campaign, split by review type. Attribution join uses full invite history (all-time); review rate denominator uses invites sent in-window only (reminders excluded). Source: <code>we_invites</code> / <code>we_review</code> in Zeppelin notebook <code>wild_earth_data_clone</code>.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th>Review Type</th>
+        <th style="text-align:right">Invites</th>
+        <th style="text-align:right">Reminders</th>
+        <th style="text-align:right">Reviews</th>
+        <th style="text-align:right">Review Rate</th>
+        <th style="text-align:right">Avg Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="2">invite <span style="color:#aaa;font-size:11px;">(id 200)</span></td>
+        <td><span class="type-pill tp-product">product</span></td>
+        <td rowspan="2" style="text-align:right">36,985</td>
+        <td rowspan="2" style="text-align:right">32,675</td>
+        <td style="text-align:right">1,340</td>
+        <td style="text-align:right">3.62%</td>
+        <td style="text-align:right">4.75</td>
+      </tr>
+      <tr>
+        <td><span class="type-pill tp-service">service</span></td>
+        <td style="text-align:right">13</td>
+        <td style="text-align:right">0.04%</td>
+        <td style="text-align:right">4.54</td>
+      </tr>
+      <tr>
+        <td rowspan="2">invite-10 <span style="color:#aaa;font-size:11px;">(id 543)</span></td>
+        <td><span class="type-pill tp-product">product</span></td>
+        <td rowspan="2" style="text-align:right">42,488</td>
+        <td rowspan="2" style="text-align:right">39,968</td>
+        <td style="text-align:right">1,413</td>
+        <td style="text-align:right">3.33%</td>
+        <td style="text-align:right">4.78</td>
+      </tr>
+      <tr>
+        <td><span class="type-pill tp-service">service</span></td>
+        <td style="text-align:right">4</td>
+        <td style="text-align:right">0.01%</td>
+        <td style="text-align:right">4.75</td>
+      </tr>
+      <tr>
+        <td rowspan="2">organic / unattributed</td>
+        <td><span class="type-pill tp-product">product</span></td>
+        <td rowspan="2" style="text-align:right">—</td>
+        <td rowspan="2" style="text-align:right">—</td>
+        <td style="text-align:right">106</td>
+        <td style="text-align:right">—</td>
+        <td style="text-align:right">4.73</td>
+      </tr>
+      <tr>
+        <td><span class="type-pill tp-service">service</span></td>
+        <td style="text-align:right">130</td>
+        <td style="text-align:right">—</td>
+        <td style="text-align:right">4.81</td>
+      </tr>
+      <tr class="row-total">
+        <td colspan="2">TOTAL — Jan–Jul</td>
+        <td style="text-align:right">79,473</td>
+        <td style="text-align:right">72,643</td>
+        <td style="text-align:right">3,006*</td>
+        <td style="text-align:right">3.48%</td>
+        <td style="text-align:right">—</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <p><strong>*The per-campaign attribution sum (3,006) is 39 higher than the account's total distinct reviews (2,967).</strong> This is expected: a small number of orders were invited by both <code>invite</code> and <code>invite-10</code> in overlapping periods, so their review counts once toward each campaign's row. The 2,967 figure in the Overview KPIs is the authoritative deduplicated total; treat per-campaign attribution as directional, not additive.</p>
+  </div>
+
+  <!-- EMAIL PERFORMANCE -->
+  <h2 id="s3">Email Performance (Jul 3 – 31, 2026)</h2>
+  <p style="margin-bottom:14px;">Open/click/unsubscribe stats from the Stacktome campaign report API — credentials at <code>stacktome-app/.wild_earth-pass</code>. <strong>The API retains only the trailing ~30 days of daily stats</strong>, so this section covers Jul 3–31 rather than the full Jan–Jul window; it is not comparable to the YTD send volumes in Campaign Performance above.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th style="text-align:right">Sent</th>
+        <th style="text-align:right">Unique Opens</th>
+        <th style="text-align:right">Open%</th>
+        <th style="text-align:right">Unique Clicks</th>
+        <th style="text-align:right">Click%</th>
+        <th style="text-align:right">Unsubs</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>invite <span style="color:#aaa;font-size:11px;">(id 200)</span></td>
+        <td style="text-align:right">0</td>
+        <td style="text-align:right">0</td>
+        <td style="text-align:right">—</td>
+        <td style="text-align:right">0</td>
+        <td style="text-align:right">—</td>
+        <td style="text-align:right">0</td>
+      </tr>
+      <tr>
+        <td>invite-10 <span style="color:#aaa;font-size:11px;">(id 543)</span></td>
+        <td style="text-align:right">16,331</td>
+        <td style="text-align:right">9,244</td>
+        <td style="text-align:right">56.6%</td>
+        <td style="text-align:right">442</td>
+        <td style="text-align:right">2.7%</td>
+        <td style="text-align:right">226</td>
+      </tr>
+      <tr class="row-total">
+        <td>TOTAL — Jul 3–31</td>
+        <td style="text-align:right">16,331</td>
+        <td style="text-align:right">9,244</td>
+        <td style="text-align:right">56.6%</td>
+        <td style="text-align:right">442</td>
+        <td style="text-align:right">2.7%</td>
+        <td style="text-align:right">226</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="good-box">
+    <p><strong>invite-10 is sending at strong engagement — 56.6% open rate, 2.7% CTR</strong> across 16,331 emails in the trailing window, well above typical benchmarks. <code>invite</code> (id 200) shows zero because it's been inactive since before the API's ~30-day retention window — its historical YTD volume (36,985 invites + 32,675 reminders, per Campaign Performance above) predates what this endpoint can still return, not a tracking failure.</p>
+  </div>
+
+  <!-- RATING & REVIEW TRENDS -->
+  <h2 id="s4">Rating &amp; Review Trends (2026 YTD)</h2>
+  <p style="margin-bottom:16px;">2,967 total reviews across the window, avg 4.76★. Volume peaked in April (515) and has trended down through July (332) while rating has stayed stable in the high 4.6s–4.8s throughout.</p>
+
+  <table>
+    <thead>
+      <tr><th>Month</th><th style="text-align:right">Reviews</th><th style="text-align:right">Avg Rating</th><th style="text-align:right">Negative (&le;2★)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Jan</td><td style="text-align:right">376</td><td style="text-align:right">4.82</td><td style="text-align:right">7</td></tr>
+      <tr><td>Feb</td><td style="text-align:right">474</td><td style="text-align:right">4.68</td><td style="text-align:right">27</td></tr>
+      <tr><td>Mar</td><td style="text-align:right">504</td><td style="text-align:right">4.79</td><td style="text-align:right">11</td></tr>
+      <tr><td>Apr</td><td style="text-align:right">515</td><td style="text-align:right">4.75</td><td style="text-align:right">18</td></tr>
+      <tr><td>May</td><td style="text-align:right">422</td><td style="text-align:right">4.76</td><td style="text-align:right">8</td></tr>
+      <tr><td>Jun</td><td style="text-align:right">344</td><td style="text-align:right">4.77</td><td style="text-align:right">10</td></tr>
+      <tr><td>Jul</td><td style="text-align:right">332</td><td style="text-align:right">4.82</td><td style="text-align:right">6</td></tr>
+    </tbody>
+  </table>
+
+  <div class="insight-box">
+    <p><strong>February stands out with 27 negative (&le;2★) reviews</strong> — more than double every other month — despite a mid-range 474 total reviews and a still-solid 4.68★ average. Worth a closer look at what shipped or changed operationally in February; every other month sits at 6–18 negatives.</p>
+  </div>
+
+  <h3>Rating Distribution by Review Type</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:8px;">
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+      <div style="font-size:12px;font-weight:600;color:#2d8659;margin-bottom:8px;">Product reviews (2,820)</div>
+      <div class="star-dist">
+        <div class="star-col"><div class="star-bar s5" style="height:60px;"></div><div class="star-label">5★ ×2416</div></div>
+        <div class="star-col"><div class="star-bar s4" style="height:7px;"></div><div class="star-label">4★ ×263</div></div>
+        <div class="star-col"><div class="star-bar s3" style="height:2px;"></div><div class="star-label">3★ ×58</div></div>
+        <div class="star-col"><div class="star-bar s2" style="height:1px;"></div><div class="star-label">2★ ×41</div></div>
+        <div class="star-col"><div class="star-bar s1" style="height:1px;"></div><div class="star-label">1★ ×42</div></div>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,0.07);">
+      <div style="font-size:12px;font-weight:600;color:#0984e3;margin-bottom:8px;">Service reviews (147)</div>
+      <div class="star-dist">
+        <div class="star-col"><div class="star-bar s5" style="height:60px;"></div><div class="star-label">5★ ×131</div></div>
+        <div class="star-col"><div class="star-bar s4" style="height:3px;"></div><div class="star-label">4★ ×7</div></div>
+        <div class="star-col"><div class="star-bar s3" style="height:2px;"></div><div class="star-label">3★ ×5</div></div>
+        <div class="star-col"><div class="star-bar s2" style="height:1px;"></div><div class="star-label">2★ ×1</div></div>
+        <div class="star-col"><div class="star-bar s1" style="height:1px;"></div><div class="star-label">1★ ×3</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEGATIVE REVIEW THEMES -->
+  <h2 id="s5">Negative Review Themes</h2>
+  <p style="margin-bottom:16px;">153 reviews rated &le;3★ YTD (150 with review text) analysed by keyword matching against the review heading + text. Categories overlap — a single review can mention both a sizing complaint and a durability failure. Full backlog lives in Zeppelin notebook <code>wild_earth_data_clone</code>.</p>
+
+  <div class="theme-grid">
+    <div class="theme-card">
+      <div class="icon">🔧</div>
+      <div class="theme-title">Durability / Quality Defects</div>
+      <div class="count">27 of 150 negative reviews (18%)</div>
+      <p>Soles peeling off footwear within weeks of light use, zips and seams failing on first or second use, tent/swag seams leaking in rain, straps and clips breaking. The single largest theme, and the one most likely to reflect a genuine product-quality issue rather than a fit/expectation mismatch.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">💬</div>
+      <div class="theme-title">Refunds, Returns &amp; Customer Service</div>
+      <div class="count">25 of 150 negative reviews (17%)</div>
+      <p>Orders cancelled without explanation, slow refunds, unanswered emails, and a return policy customers describe as costly (return shipping charged back to them). Includes one high-visibility Trustpilot review alleging a refused ~$1,000 refund over a food-safety concern — see Action Items.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">📏</div>
+      <div class="theme-title">Sizing &amp; Fit</div>
+      <div class="count">22 of 150 negative reviews (15%)</div>
+      <p>Footwear and apparel running small or narrow, wrong size shipped versus what was ordered, and helmets/caps described as fitting differently than expected. Concentrated in shoes, jackets, and headwear.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">📦</div>
+      <div class="theme-title">Delivery &amp; Courier</div>
+      <div class="count">11 of 150 negative reviews (7%)</div>
+      <p>Aramex named repeatedly for misdelivery to the wrong address and long delays; a handful of "never delivered" / non-arrival complaints. Smaller in volume than on some accounts, but Aramex specifically recurs across multiple independent reviews.</p>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <p><strong>132 of 153 reviews rated &le;3★ (86%) have no matching support ticket</strong> — match is by email against <code>we_tickets</code>. This is a large untracked backlog; some may reflect tickets logged under a different email or channel (in-store, phone), but the gap is worth a targeted audit given the volume. See Action Items.</p>
+  </div>
+
+  <!-- POSITIVE HIGHLIGHTS -->
+  <h2 id="s6">Positive Highlights (5★, last 3 weeks of window)</h2>
+  <table>
+    <thead>
+      <tr><th>Type</th><th>Heading / Snippet</th><th>Source</th><th>Date</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="r5">5★</span> <span class="type-pill tp-service">service</span></td><td>"I have been shopping at Wild Earth for some time and have consistently been impressed by the quality of both the products and the customer service… Eli took the time to guide her through the available options and ensure she left with the right helmet... Highly recommended."</td><td>Google</td><td>Jul 30</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="type-pill tp-service">service</span></td><td>"Haden was fantastic at making sure I would get order on time"</td><td>Google</td><td>Jul 28</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="type-pill tp-product">product</span></td><td>Osprey Duro Dyna Pro Running Belt — "Perfect running belt… doesn't bounce and is also easy to adjust. I wore it for a 44km run."</td><td>Stacktome</td><td>Jul 27</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="type-pill tp-product">product</span></td><td>Altra Olympus 6 Hike Mid GTX — "SO comfortable. I didn't think I was ever going to be able to enjoy hiking again… Like walking on a cloud. Great grip and ankle support."</td><td>Stacktome</td><td>Jul 27</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="type-pill tp-product">product</span></td><td>Big Agnes Copper Spur 2-Person XL Footprint — detailed, thoughtful setup review noting the thin tent floor and how the footprint protects it.</td><td>Stacktome</td><td>Jul 26</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="type-pill tp-product">product</span></td><td>UGG Classic Ultra Mini — "very good quality, sooo comfy and really nice shoes overall."</td><td>Stacktome</td><td>Jul 26</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ACTION ITEMS -->
+  <h2 id="s7">Action Items</h2>
+  <ul class="action-list">
+    <li>
+      <div class="al-icon">🔴</div>
+      <div class="al-text"><strong>132 of 153 negative (&le;3★) reviews YTD have no matching support ticket (86%)</strong> — 73 of the more urgent &le;2★ band (83%). Confirm whether tickets are logged under a different system/email/channel before assuming these are genuinely unactioned; if confirmed, this is a sizeable backlog of unresolved product-quality and refund complaints.</div>
+    </li>
+    <li>
+      <div class="al-icon">🔴</div>
+      <div class="al-text"><strong>Durability/quality defects are the single largest negative theme (27 of 150, 18%)</strong> — soles peeling, seams and zips failing early, tent/swag leaks. Recommend a QC review with the affected suppliers/SKUs; the review text names specific products repeatedly (see Zeppelin notebook for the full list).</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>A 1★ Trustpilot review (Jul 5) alleges a refused ~$1,000 refund</strong> for 10 bags of dog food over a described food-safety/quality concern, from a self-identified long-time customer. Flagged individually given the financial size and public visibility, regardless of aggregate theme stats — worth an individual follow-up.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>February had 27 negative (&le;2★) reviews — more than double any other month</strong> in the window, despite average volume and a still-healthy 4.68★. Worth checking what shipped, or what operational change occurred, around that period.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>Aramex is named repeatedly in delivery complaints</strong> (wrong-address delivery, multi-week delays). Smaller theme by volume (11 of 150) but concentrated on one named carrier across independent reviews — worth a carrier-performance check.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟢</div>
+      <div class="al-text"><strong>invite-10 is sending at strong engagement — 56.6% open rate, 2.7% CTR</strong> across 16,331 emails in the trailing 30 days. Worth documenting what's driving it (subject line, send timing, audience quality) so it can be replicated if <code>invite</code> is ever reactivated.</div>
+    </li>
+    <li>
+      <div class="al-icon">🔵</div>
+      <div class="al-text"><strong>Two non-invite campaigns exist on the account</strong> — 588 (<code>response-stacktome</code>) and 594 (<code>stacktome-review-replies</code>), both review-response rather than review-invite flows — plus a single-row test campaign (230). All three are excluded from invite/review-rate figures above; confirm this scope is correct going forward.</div>
+    </li>
+  </ul>
+
+</div>
+</body>
+</html>
