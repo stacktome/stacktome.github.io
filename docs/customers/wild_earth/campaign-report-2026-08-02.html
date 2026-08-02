@@ -95,9 +95,9 @@
 
   <div class="info-box">
     <p><strong>First report for this project.</strong> Wild Earth (outdoor/camping/hiking gear retailer) is newly onboarded to weekly reporting. Zeppelin notebook <code>wild_earth_data_clone</code> created under <code>support_clone</code>. This report covers the full year-to-date window (Jan 1 – Jul 31, 2026) since no prior period baseline exists. Future reports move to the standard weekly cadence.</p>
-    <p><strong>Data note:</strong> the invite event log at this path is Delta-formatted per campaign (not a plain-parquet date glob), and campaign IDs 588 (<code>response-stacktome</code>), 594 (<code>stacktome-review-replies</code>) are review-<em>response</em> campaigns rather than invite campaigns, and 230 (<code>test</code>) is a single test row — all three are excluded from every invite/review-rate figure below. Only campaigns 200 (<code>invite</code>) and 543 (<code>invite-10</code>) are review invites.</p>
+    <p><strong>Data note:</strong> the invite event log at this path is Delta-formatted per campaign (not a plain-parquet date glob), and campaign IDs 588 (<code>response-stacktome</code>), 594 (<code>stacktome-review-replies</code>) are review-<em>response</em> campaigns rather than invite campaigns, and 230 (<code>test</code>) is a single test row — all three are excluded from every invite/review-rate figure below. Only campaigns 200 (<code>invite-trustpilot</code>) and 543 (<code>invite-stacktome</code>) are review invites.</p>
     <p><strong>Reviews include both service and product ratings</strong> — Wild Earth collects order/service reviews (<code>order_rating</code>, mostly Google) alongside per-product reviews (<code>product_rating</code>, mostly Trustpilot/Stacktome/Judge.me) on the same event stream. Every section below reports both.</p>
-    <p><strong>Email performance API gotcha discovered building this report:</strong> the campaign report endpoint (<code>/campaigns/{id}/report</code>) only retains roughly the trailing 30 days of daily stats regardless of the date range requested — campaign 200 (<code>invite</code>, inactive since before that window) returns zero rows even though Zeppelin shows 36,985 invites sent to it earlier in the year. This isn't a bug or a credentials issue; it means YTD email performance can only be reconstructed for whatever is still active within that window. See Email Performance below.</p>
+    <p><strong>Email performance API gotcha discovered building this report:</strong> the campaign report endpoint (<code>/campaigns/{id}/report</code>) only retains roughly the trailing 30 days of daily stats regardless of the date range requested — campaign 200 (<code>invite-trustpilot</code>, inactive since before that window) returns zero rows even though Zeppelin shows 36,985 invites sent to it earlier in the year. This isn't a bug or a credentials issue; it means YTD email performance can only be reconstructed for whatever is still active within that window. See Email Performance below.</p>
   </div>
 
   <!-- OVERVIEW -->
@@ -106,7 +106,7 @@
     <div class="kpi"><div class="label">Total Reviews</div><div class="value">2,967</div><div class="sub">Product 2,820 &middot; Service 147</div></div>
     <div class="kpi highlight"><div class="label">Avg Rating</div><div class="value">4.76★</div><div class="sub">Product 4.76★ &middot; Service 4.78★</div></div>
     <div class="kpi"><div class="label">Total Invites Sent</div><div class="value">79,473</div><div class="sub">+72,643 reminders</div></div>
-    <div class="kpi"><div class="label">Distinct Invited Orders</div><div class="value">78,363</div><div class="sub">invite 36,684 &middot; invite-10 41,679</div></div>
+    <div class="kpi"><div class="label">Distinct Invited Orders</div><div class="value">78,363</div><div class="sub">invite-trustpilot 36,684 &middot; invite-stacktome 41,679</div></div>
     <div class="kpi warn"><div class="label">Negative (&le;2★), No Ticket</div><div class="value">73</div><div class="sub">of 88 reviews rated &le;2★ (83%)</div></div>
   </div>
 
@@ -133,7 +133,7 @@
     </thead>
     <tbody>
       <tr>
-        <td rowspan="2">invite <span style="color:#aaa;font-size:11px;">(id 200)</span></td>
+        <td rowspan="2">invite-trustpilot <span style="color:#aaa;font-size:11px;">(id 200)</span></td>
         <td><span class="type-pill tp-product">product</span></td>
         <td rowspan="2" style="text-align:right">36,985</td>
         <td rowspan="2" style="text-align:right">32,675</td>
@@ -148,7 +148,7 @@
         <td style="text-align:right">4.54</td>
       </tr>
       <tr>
-        <td rowspan="2">invite-10 <span style="color:#aaa;font-size:11px;">(id 543)</span></td>
+        <td rowspan="2">invite-stacktome <span style="color:#aaa;font-size:11px;">(id 543)</span></td>
         <td><span class="type-pill tp-product">product</span></td>
         <td rowspan="2" style="text-align:right">42,488</td>
         <td rowspan="2" style="text-align:right">39,968</td>
@@ -189,7 +189,7 @@
   </table>
 
   <div class="info-box">
-    <p><strong>*The per-campaign attribution sum (3,006) is 39 higher than the account's total distinct reviews (2,967).</strong> This is expected: a small number of orders were invited by both <code>invite</code> and <code>invite-10</code> in overlapping periods, so their review counts once toward each campaign's row. The 2,967 figure in the Overview KPIs is the authoritative deduplicated total; treat per-campaign attribution as directional, not additive.</p>
+    <p><strong>*The per-campaign attribution sum (3,006) is 39 higher than the account's total distinct reviews (2,967).</strong> This is expected: a small number of orders were invited by both <code>invite-trustpilot</code> and <code>invite-stacktome</code> in overlapping periods, so their review counts once toward each campaign's row. The 2,967 figure in the Overview KPIs is the authoritative deduplicated total; treat per-campaign attribution as directional, not additive.</p>
   </div>
 
   <!-- EMAIL PERFORMANCE -->
@@ -210,7 +210,7 @@
     </thead>
     <tbody>
       <tr>
-        <td>invite <span style="color:#aaa;font-size:11px;">(id 200)</span></td>
+        <td>invite-trustpilot <span style="color:#aaa;font-size:11px;">(id 200)</span></td>
         <td style="text-align:right">0</td>
         <td style="text-align:right">0</td>
         <td style="text-align:right">—</td>
@@ -219,7 +219,7 @@
         <td style="text-align:right">0</td>
       </tr>
       <tr>
-        <td>invite-10 <span style="color:#aaa;font-size:11px;">(id 543)</span></td>
+        <td>invite-stacktome <span style="color:#aaa;font-size:11px;">(id 543)</span></td>
         <td style="text-align:right">16,331</td>
         <td style="text-align:right">9,244</td>
         <td style="text-align:right">56.6%</td>
@@ -240,7 +240,7 @@
   </table>
 
   <div class="good-box">
-    <p><strong>invite-10 is sending at strong engagement — 56.6% open rate, 2.7% CTR</strong> across 16,331 emails in the trailing window, well above typical benchmarks. <code>invite</code> (id 200) shows zero because it's been inactive since before the API's ~30-day retention window — its historical YTD volume (36,985 invites + 32,675 reminders, per Campaign Performance above) predates what this endpoint can still return, not a tracking failure.</p>
+    <p><strong>invite-stacktome is sending at strong engagement — 56.6% open rate, 2.7% CTR</strong> across 16,331 emails in the trailing window, well above typical benchmarks. <code>invite-trustpilot</code> (id 200) shows zero because it's been inactive since before the API's ~30-day retention window — its historical YTD volume (36,985 invites + 32,675 reminders, per Campaign Performance above) predates what this endpoint can still return, not a tracking failure.</p>
   </div>
 
   <!-- RATING & REVIEW TRENDS -->
@@ -366,7 +366,7 @@
     </li>
     <li>
       <div class="al-icon">🟢</div>
-      <div class="al-text"><strong>invite-10 is sending at strong engagement — 56.6% open rate, 2.7% CTR</strong> across 16,331 emails in the trailing 30 days. Worth documenting what's driving it (subject line, send timing, audience quality) so it can be replicated if <code>invite</code> is ever reactivated.</div>
+      <div class="al-text"><strong>invite-stacktome is sending at strong engagement — 56.6% open rate, 2.7% CTR</strong> across 16,331 emails in the trailing 30 days. Worth documenting what's driving it (subject line, send timing, audience quality) so it can be replicated if <code>invite-trustpilot</code> is ever reactivated.</div>
     </li>
     <li>
       <div class="al-icon">🔵</div>

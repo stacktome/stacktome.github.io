@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wild Earth Reviews — Live Render Test</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  body{margin:0;font-family:Arial,sans-serif;background:#fff}
+  .host-nav{background:#16324f;color:#fff;padding:14px 24px;font-size:15px}
+  .host-nav a{color:#fff;text-decoration:none;margin-right:18px}
+  .host-footer{background:#16324f;color:#cfe0ff;padding:18px 24px;font-size:13px;margin-top:40px}
+  .status{max-width:880px;margin:16px auto 0;padding:0 20px;font-family:system-ui,sans-serif;font-size:13px;color:#67737f}
+  .status.err{color:#c4453c}
+  .status code{background:#f2f4f7;padding:1px 5px;border-radius:3px}
+</style>
+</head>
+<body>
+<nav class="host-nav"><a href="/">Home</a><a href="/hiking">Hiking</a><a href="/camping">Camping</a><a href="/reviews">Reviews</a></nav>
+<p class="status" id="status">Loading live render from services.stacktome.com…</p>
+<main id="app"></main>
+<div class="host-footer">© WildEarth.com.au — host page chrome, not part of the render-service fragment</div>
+<script>
+// Internal test page ONLY — fetches the render fragment live, client-side, on every page load,
+// so this always reflects current production state (no stale static snapshot to keep in sync).
+// Uses wild_earth's org backend apikey directly in the browser: normally never done (the org key
+// has full account-wide access, not just this template), and this repo is a public GitHub Pages
+// site — explicitly approved for this internal, noindex test page, same as the SelectSpecs one.
+// Never do this on a real customer-facing page.
+//
+// For a version that needs no key at all, open render-fragment-test.html — a built snapshot of
+// this same render. Its interactions still work, because the fragment carries its own
+// domain-restricted public key, stamped in by the render service from the template's own config.
+var API_BASE = 'https://services.stacktome.com/api/reviews';
+var APIKEY = 'LsT6KR5KBUqfchgOLXHakCVakBCPlBQY';   // wild_earth org backend key
+var TEMPLATE_ID = '723';                            // wild_earth's "review-page" template
+var ROOT_ID = 'wildearth-reviews';
+
+var statusEl = document.getElementById('status');
+
+fetch(API_BASE + '/v1/templates/' + TEMPLATE_ID + '/page', {
+  method: 'POST',
+  headers: { apikey: APIKEY, 'Content-Type': 'application/json' },
+  body: JSON.stringify({ rootId: ROOT_ID }),
+}).then(function(r){
+  if (!r.ok) throw new Error('render service returned ' + r.status);
+  return r.text();
+}).then(function(html){
+  var app = document.getElementById('app');
+  app.innerHTML = html;
+
+  // innerHTML never executes embedded <script> tags — the fragment's own pagination/filter/
+  // AI-box JS lives in one, so it has to be re-created and re-inserted to actually run.
+  // Nothing else is patched in: template 723 sets publicReviewsApiKey in its own config, so the
+  // render already stamps data-st-auth-value and the client-side calls authenticate. (An older
+  // version of this file patched that attribute by hand, from when wild_earth had no key set.)
+  app.querySelectorAll('script').forEach(function(oldScript){
+    var newScript = document.createElement('script');
+    Array.prototype.forEach.call(oldScript.attributes, function(attr){ newScript.setAttribute(attr.name, attr.value); });
+    newScript.textContent = oldScript.textContent;
+    oldScript.parentNode.replaceChild(newScript, oldScript);
+  });
+  statusEl.textContent = 'Live render fetched at ' + new Date().toISOString();
+}).catch(function(err){
+  statusEl.className = 'status err';
+  statusEl.textContent = 'Render fetch failed: ' + err.message;
+});
+</script>
+</body>
+</html>
