@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITOL Recruit Campaign Performance Report — Jul 27–Aug 2, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #1a1a2e; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .stars { color: #fdcb6e; }
+  .delta-up { color: #00b894; font-size: 11px; }
+  .delta-flat { color: #888; font-size: 11px; }
+  .delta-down { color: #d63031; font-size: 11px; }
+
+  .total-row td { background: #f0f0f0 !important; font-weight: 600; }
+
+  .campaign-block { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 16px; overflow: hidden; }
+  .camp-header { background: #1a1a2e; color: #fff; padding: 10px 16px; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 10px; }
+  .camp-header .badge { background: #6c5ce7; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
+  .camp-header .badge-gold { background: #fdcb6e; color: #5d4037; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .camp-header .badge-blue { background: #0984e3; color: #fff; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .camp-header .badge-red { background: #d63031; color: #fff; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .review-card { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; }
+  .review-card:last-child { border-bottom: none; }
+  .review-card.urgent { background: #fff6f6; border-left: 4px solid #d63031; }
+  .review-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+  .rating-badge { font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 8px; }
+  .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff3e0; color: #e17055; }
+  .r3 { background: #fffde0; color: #b8860b; }
+  .r4 { background: #eaf4fb; color: #2980b9; }
+  .r5 { background: #e8f8f5; color: #00b894; }
+  .review-heading { font-weight: 600; color: #1a1a2e; margin-bottom: 5px; font-size: 13px; }
+  .review-text { font-style: italic; color: #555; line-height: 1.6; font-size: 13px; }
+  .review-meta-line { font-size: 11px; color: #888; margin-bottom: 6px; }
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-warn { display: inline-block; background: #fff3e0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #e17055; font-weight: 600; }
+  .tag-urgent { display: inline-block; background: #ffeaea; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #d63031; font-weight: 700; }
+  .tag-ok { display: inline-block; background: #e8f8f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #00b894; }
+  .name-tag { display: inline-block; background: #6c5ce7; color: #fff; border-radius: 4px; padding: 2px 8px; font-size: 11px; }
+
+  .all-clear { background: #e8f8f5; border: 1.5px solid #00b894; border-radius: 10px; padding: 20px 22px; color: #00b894; font-weight: 600; font-size: 14px; }
+  .success-banner { background: #e8f8f5; border: 2px solid #00b894; border-radius: 10px; padding: 18px 22px; margin-bottom: 16px; }
+  .success-banner .sb-title { color: #00b894; font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+  .warning { background: #fff9e6; border: 1.5px solid #fdcb6e; border-radius: 10px; padding: 16px 20px; color: #5d4037; font-size: 13px; line-height: 1.6; margin-bottom: 12px; }
+  .alert { background: #fff6f6; border: 2px solid #d63031; border-radius: 10px; padding: 16px 20px; color: #7a1f1f; font-size: 13px; line-height: 1.6; margin-bottom: 12px; }
+  .info-box { background: #f0f4ff; border: 1.5px solid #a0b4e8; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #2c3e6e; line-height: 1.6; }
+  .note { font-size: 12px; color: #888; margin-top: 4px; }
+
+  .staff-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .staff-chip { background: #f0edff; color: #6c5ce7; border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 600; }
+  .staff-chip-role { font-weight: 400; color: #888; font-size: 11px; margin-left: 4px; }
+  .organic-chip { background: #f0f0f0; color: #636e72; border-radius: 20px; padding: 4px 14px; font-size: 12px; }
+
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>ITOL Recruit &mdash; Campaign Performance Report</h1>
+  <div class="subtitle">Review invite analysis &nbsp;&bull;&nbsp; Jul 27&ndash;Aug 2, 2026 &nbsp;&bull;&nbsp; Generated 2026-08-03 &nbsp;&bull;&nbsp; Campaigns 624, 633, 646&ndash;651, 700, 701</div>
+
+  <nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #6c5ce7;font-size:14px;line-height:2;">
+    <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+    <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Executive Summary</a>
+    <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Campaign Performance</a>
+    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Campaign Breakdown</a>
+    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. All Reviews</a>
+    <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Staff Mentions</a>
+    <a href="#s6" style="color:#444;text-decoration:none;">6. Action Items</a>
+  </nav>
+
+  <!-- 1. Executive Summary -->
+  <h2 id="s1">1. Executive Summary</h2>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Total Invites Sent</div>
+      <div class="value">180</div>
+      <div class="sub">unique invite orders &nbsp;<span class="delta-up">+18.4% vs prior week (152)</span></div>
+    </div>
+    <div class="kpi">
+      <div class="label">Reviews Attributed</div>
+      <div class="value">10</div>
+      <div class="sub">campaign-attributed reviews &nbsp;<span class="delta-down">&minus;5 vs prior week (15)</span></div>
+    </div>
+    <div class="kpi">
+      <div class="label">Overall Review Rate</div>
+      <div class="value">5.56%</div>
+      <div class="sub">reviews / invites &nbsp;<span class="delta-down">&minus;4.31pp vs 9.87% last week</span></div>
+    </div>
+    <div class="kpi">
+      <div class="label">Avg Order Rating</div>
+      <div class="value">4.54</div>
+      <div class="sub">out of 5.00 &nbsp;<span class="delta-down">&minus;0.14 vs prior week (4.68)</span></div>
+    </div>
+  </div>
+  <p class="note" style="margin-top:8px;">&#9432; Invite volume rebounded sharply (180 unique orders, +18.4% from last week's series-low 152) but conversion cooled: 13 total reviews (10 attributed + 3 organic), down from last week's 19 (&minus;31.6%). Because invites grew while reviews fell, the attributed rate dropped hard to 5.56% from 9.87% &mdash; the mirror image of last week's denominator effect, not a step change in underlying review behaviour. Rating distribution: 9&times;5&#9733;, 3&times;4&#9733;, 1&times;2&#9733; &mdash; the first sub-4&#9733; review since the Jul 13&ndash;19 report's single 1&#9733;. Attributed avg 4.80&#9733;, organic avg 3.67&#9733;. Review data is complete through Aug 2, matching the window end exactly, so this window is fully captured.</p>
+
+  <div class="warning" style="margin-top:16px;">
+    &#9888;&nbsp; <strong>Clean streak ends &mdash; one 2&#9733; review, but the reviewer can't be reached.</strong> &ldquo;NS&rdquo; (organic, Jul 30) rated 2&#9733; and wrote a pacing complaint &mdash; <em>&ldquo;Too much info, little time.. the course should be for more than a year. Also feel like need to do our own research for it to make better sense.&rdquo;</em> No order ID, full name, or email is on file, so unlike the Jul 13&ndash;19 report's 1&#9733; case (Osatohanmwen Byrom, who could be identified and flagged for outreach), this one can't be routed to an individual &mdash; it reads as structural feedback about course pacing rather than a service failure. See Action Items.
+  </div>
+
+  <div class="info-box">&#9432;&nbsp; <strong>Clean window, no overlap.</strong> This report covers Mon Jul 27 &ndash; Sun Aug 2, starting the day immediately after the Jul 20&ndash;26 report's end date, so no dates are double-counted between the two reports (confirmed: 0 invites and only 2 pre-existing Jul 26 reviews fall outside this window's date filters). Data freshness confirmed before computing totals: the review table covers through 2026-08-02, exactly the window end, so nothing here is truncated. No order was invited by more than one campaign this week either (unlike Jul 20&ndash;26's two dual-invited orders), so the per-campaign Sent column below sums exactly to the 180-order total.</div>
+
+  <!-- 2. Campaign Performance Table -->
+  <h2 id="s2">2. Campaign Performance</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th>ID</th>
+        <th>Sent</th>
+        <th>Open Rate</th>
+        <th>Click Rate</th>
+        <th>Unsubs</th>
+        <th>Reviews</th>
+        <th>Review Rate</th>
+        <th>Avg Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Welcome Call/Setup Campaign</td>
+        <td>646</td>
+        <td>106</td>
+        <td>72.4%</td>
+        <td>6.7%</td>
+        <td>1</td>
+        <td>3</td>
+        <td>2.83%</td>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.67</td>
+      </tr>
+      <tr>
+        <td>Hubspot (Main) Invite TP Campaign</td>
+        <td>624</td>
+        <td>50</td>
+        <td>72.0%</td>
+        <td>12.0%</td>
+        <td>0</td>
+        <td>3</td>
+        <td>6.00%</td>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td>
+      </tr>
+      <tr>
+        <td>Support Campaign</td>
+        <td>647</td>
+        <td>11</td>
+        <td>72.7%</td>
+        <td>9.1%</td>
+        <td>0</td>
+        <td>1</td>
+        <td>9.09%</td>
+        <td class="worst"><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.00</td>
+      </tr>
+      <tr>
+        <td>Exam Pass v1 Campaign</td>
+        <td>648</td>
+        <td>5</td>
+        <td>92.9%</td>
+        <td>21.4%</td>
+        <td>0</td>
+        <td>2</td>
+        <td class="best">40.00%</td>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td>
+      </tr>
+      <tr>
+        <td>Exam Pass v2 Campaign</td>
+        <td>649</td>
+        <td>5</td>
+        <td class="best">100.0%</td>
+        <td class="best">40.0%</td>
+        <td>0</td>
+        <td>1</td>
+        <td>20.00%</td>
+        <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td>
+      </tr>
+      <tr>
+        <td>Completion/Closure Campaign</td>
+        <td>651</td>
+        <td>1</td>
+        <td>100.0%</td>
+        <td>0.0%</td>
+        <td>0</td>
+        <td>0</td>
+        <td class="neutral">0.00%</td>
+        <td class="neutral">&mdash;</td>
+      </tr>
+      <tr>
+        <td>From Invite TP Campaign</td>
+        <td>633</td>
+        <td>1</td>
+        <td>100.0%</td>
+        <td>0.0%</td>
+        <td>0</td>
+        <td>0</td>
+        <td class="neutral">0.00%</td>
+        <td class="neutral">&mdash;</td>
+      </tr>
+      <tr>
+        <td>Job Placement / Successful Employment Campaign</td>
+        <td>700</td>
+        <td>1</td>
+        <td>100.0%</td>
+        <td>0.0%</td>
+        <td>0</td>
+        <td>0</td>
+        <td class="neutral">0.00%</td>
+        <td class="neutral">&mdash;</td>
+      </tr>
+      <tr class="total-row">
+        <td>TOTAL</td>
+        <td></td>
+        <td>180</td>
+        <td>75.0%</td>
+        <td>10.1%</td>
+        <td>1</td>
+        <td>10 attr &middot; 3 org</td>
+        <td>5.56%</td>
+        <td>4.54&#9733;</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">&#9432; Invite counts are unique invite <code>order_id</code>s from Zeppelin (parquet, exact Jul 27&ndash;Aug 2, <code>email_send_type = 'invite'</code> only). The per-campaign column sums to 180, matching the total exactly &mdash; no order was invited by more than one campaign this week. Open/click rates come from the campaign report API over the same date range; Exam Pass v1 Campaign (648) shows 14 sends in the API vs 5 unique invite orders in Zeppelin because 648 also sent 9 reminder emails this week (8 invite + 15 reminder event rows) &mdash; the API's <code>sent</code> figure includes reminders, but the review-rate denominator excludes them, the same convention used throughout this report. Welcome Call/Setup Campaign (646) shows 105 sends in the API vs 106 unique invite orders in Zeppelin, a 1-order rounding difference immaterial to the rate. Campaigns 650, 698, 699, 701 and 710 had 0 sends this week. Campaign 607 (4-5 Start TP Review &mdash; Google Review Response) sent 13 emails at 46.2% open, but these are <code>email_send_type = 'response'</code>, not review invites, so they are excluded from all invite and review-rate figures.</p>
+
+  <!-- 3. Campaign Breakdown -->
+  <h2 id="s3">3. Campaign Breakdown</h2>
+  <table>
+    <thead>
+      <tr><th>Campaign</th><th>Review Rate</th><th>CTR</th><th>Avg Rating</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Exam Pass v1 Campaign</td>
+        <td class="best">40.00%</td>
+        <td>21.4%</td>
+        <td>5.00&#9733;</td>
+        <td>Best-converting campaign again this week &mdash; up from last week's already-strong 28.57% &mdash; on just 5 sends, both reviews a full 5&#9733;. Aiman Qudoos credits tutor Steven Crabbe by name for &ldquo;excellent support&rdquo; and clear explanations of complex concepts, the second review this week to independently name a tutor called Steven (see Staff Mentions).</td>
+      </tr>
+      <tr>
+        <td>Exam Pass v2 Campaign</td>
+        <td>20.00%</td>
+        <td class="best">40.0%</td>
+        <td>5.00&#9733;</td>
+        <td>Bounced back from last week's zero-review week to a 20.00% rate (1 review from 5 sends) with the week's best engagement stats: 100% open, 40% click. John Abraham's 5&#9733; review credits tutor &ldquo;Steven&rdquo; for &ldquo;outstanding&rdquo; support &mdash; the same first name as Exam Pass v1's Aiman Qudoos review, worth confirming whether it's the same tutor working across both exam-pass pathways.</td>
+      </tr>
+      <tr>
+        <td>Support Campaign</td>
+        <td>9.09%</td>
+        <td>9.1%</td>
+        <td class="worst">4.00&#9733;</td>
+        <td>Rate fell to 9.09% from last week's 14.63%, and the sole review dropped to 4&#9733; after a run of 5&#9733;s. Solomon Opoku still credits staff member Neville by name for help with SQL difficulties, but 4.00&#9733; is now the week's lowest campaign average.</td>
+      </tr>
+      <tr>
+        <td>Hubspot (Main) Invite TP Campaign</td>
+        <td>6.00%</td>
+        <td>12.0%</td>
+        <td>5.00&#9733;</td>
+        <td>3 reviews from 50 sends (6.00%), down from last week's 10.34% on much higher volume, but quality recovered to a perfect 5.00&#9733; average from 4.33&#9733;. All three reviews name staff individually &mdash; Ashley, Ollie, and Sandy &mdash; the most staff mentions of any single campaign this week.</td>
+      </tr>
+      <tr>
+        <td>Welcome Call/Setup Campaign</td>
+        <td class="neutral">2.83%</td>
+        <td>6.7%</td>
+        <td>4.67&#9733;</td>
+        <td>Sends climbed to 106 from 68 last week, but the rate cooled to 2.83% from 4.41% and the average slipped to 4.67&#9733; from a perfect 5.00&#9733;, pulled down by a single 4&#9733; review (Anna Todorova) alongside two 5&#9733;s. Lisa is named in both 5&#9733; reviews (Martin Gakpetor; Amarnath Balachandran) &mdash; her second consecutive week with a mention in this report, after last week's Support Campaign review.</td>
+      </tr>
+      <tr>
+        <td>Completion/Closure (651), From Invite TP (633) &amp; Job Placement/Successful Employment (700)</td>
+        <td class="neutral">0.00%</td>
+        <td>0.0%</td>
+        <td class="neutral">&mdash;</td>
+        <td>Each sent a single email this week and produced no reviews. Completion/Closure is down from last week's 1 review (Tahmid Mohammed, 4&#9733;); From Invite TP and Job Placement/Successful Employment are both coming off a zero-send week, so one send each isn't yet a trend either way.</td>
+      </tr>
+      <tr>
+        <td>Zero-send campaigns (650, 698, 699, 701, 710)</td>
+        <td class="neutral">&mdash;</td>
+        <td>&mdash;</td>
+        <td class="neutral">&mdash;</td>
+        <td>Assignment Completion HR/CIPD (650) sent nothing this week, down from 1 send last week. CV Tailoring Session (698), Mock Interview (699) and CV Redraft Session (710) remain idle across the entire reported series. General Recruitment Support (701) is now idle for a second straight week, having converted a review two weeks ago before going quiet &mdash; worth confirming this is a natural low-volume dip rather than a stopped trigger.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 4. All Reviews This Week -->
+  <h2 id="s4">4. All Reviews &mdash; Jul 27&ndash;Aug 2, 2026</h2>
+
+  <div class="info-box">&#9432;&nbsp; <strong>13 total reviews this week</strong> (10 attributed + 3 organic), down from last week's 19. 9 reviews at 5&#9733;, 3 at 4&#9733;, 1 at 2&#9733; &mdash; no 1&#9733; or 3&#9733; reviews. Eight staff members were named by name across eight reviews.</div>
+
+  <!-- Welcome Call/Setup -->
+  <div class="campaign-block">
+    <div class="camp-header">
+      Welcome Call/Setup Campaign &nbsp;&bull;&nbsp; ID 646 &nbsp;&bull;&nbsp; 3 reviews
+      <span class="badge-blue">4.67&#9733; avg</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r5">5&#9733;</span>
+        <span class="tag">Jul 29, 2026</span>
+        <span class="tag">order 1785317620989-8-Welcome-Calls</span>
+        <span class="name-tag">Didier</span>
+        <span class="name-tag">Lisa</span>
+      </div>
+      <div class="review-heading">A great experience.</div>
+      <div class="review-text">&ldquo;I have just joined the programme and it has been a great experience so far. Thanks to Didier and Lisa.&rdquo;</div>
+      <div class="review-meta-line">Martin Gakpetor &mdash; mgakpet@gmail.com</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r5">5&#9733;</span>
+        <span class="tag">Jul 30, 2026</span>
+        <span class="tag">order 1785317568442-8-Welcome-Calls</span>
+        <span class="name-tag">Jen</span>
+        <span class="name-tag">Lisa</span>
+      </div>
+      <div class="review-heading">Thanks Jen, and Lisa for the support</div>
+      <div class="review-text">&ldquo;Highly recommended for someone looking forward to upskill and get into a highly paid new role. Thanks Jen, and Lisa for the support&rdquo;</div>
+      <div class="review-meta-line">Amarnath Balachandran &mdash; amarnath321b@gmail.com</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r4">4&#9733;</span>
+        <span class="tag">Jul 30, 2026</span>
+        <span class="tag">order 1785317665705-8-Welcome-Calls</span>
+      </div>
+      <div class="review-heading">Helpful and clear explanation</div>
+      <div class="review-text">&ldquo;Helpful and clear explanation, calm and friendly&rdquo;</div>
+      <div class="review-meta-line">Anna Todorova &mdash; anntdsa@gmail.com</div>
+    </div>
+  </div>
+
+  <!-- Hubspot Main -->
+  <div class="campaign-block">
+    <div class="camp-header">
+      Hubspot (Main) Invite TP Campaign &nbsp;&bull;&nbsp; ID 624 &nbsp;&bull;&nbsp; 3 reviews
+      <span class="badge-gold">5.00&#9733; avg</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r5">5&#9733;</span>
+        <span class="tag">Jul 27, 2026</span>
+        <span class="tag">order 63087273623</span>
+        <span class="name-tag">Ashley</span>
+      </div>
+      <div class="review-heading">It was an excellent service</div>
+      <div class="review-text">&ldquo;It was an excellent service. They are very honest and you can trust them to follow through with their words. Ashley was exceptional and answered all of my questions with ease&rdquo;</div>
+      <div class="review-meta-line">Reenal Upadhayay &mdash; reenal.upadhayay@gmail.com</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r5">5&#9733;</span>
+        <span class="tag">Jul 29, 2026</span>
+        <span class="tag">order 63222154156</span>
+        <span class="name-tag">Ollie</span>
+      </div>
+      <div class="review-heading">Ollie was fantastic!</div>
+      <div class="review-text">&ldquo;Ollie was fantastic! Understood my needs and clearly guided me in the right direction. Very happy with the service and advice so far!&rdquo;</div>
+      <div class="review-meta-line">Shane Mc Duling &mdash; shanemcduling@gmail.com</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r5">5&#9733;</span>
+        <span class="tag">Jul 29, 2026</span>
+        <span class="tag">order 63222281326</span>
+        <span class="name-tag">Sandy</span>
+      </div>
+      <div class="review-heading">Sandy,one of the staff at ITOl recruit&hellip;</div>
+      <div class="review-text">&ldquo;Sandy,one of the staff at ITOl recruit reached out to me and explained the process well&rdquo;</div>
+      <div class="review-meta-line">Grace Wanjeri &mdash; gnyambura34@gmail.com</div>
+    </div>
+  </div>
+
+  <!-- Exam Pass v1 -->
+  <div class="campaign-block">
+    <div class="camp-header">
+      Exam Pass v1 Campaign &nbsp;&bull;&nbsp; ID 648 &nbsp;&bull;&nbsp; 2 reviews
+      <span class="badge-gold">5.00&#9733; avg</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r5">5&#9733;</span>
+        <span class="tag">Jul 31, 2026</span>
+        <span class="tag">order 1785312993970-15-PM-Tutor</span>
+        <span class="name-tag">Steven Crabbe</span>
+      </div>
+      <div class="review-heading">I had a very positive experience with&hellip;</div>
+      <div class="review-text">&ldquo;I had a very positive experience with the ITOL Recruit platform while completing the PRINCE2 Foundation course. The platform was well organised, easy to navigate, and provided a good learning experience with useful resources to support my preparation. I would also like to give special thanks to Steven Crabbe for his excellent support throughout the course. His clear explanations made complex concepts much easier to understand, and his teaching approach helped me build confidence and prepare effectively for the exam. I appreciate the quality of the training and the guidance provided, and I would highly recommend the platform, including my tutor Steven, the exam department and support team to anyone looking to complete their PRINCE2 certifications.&rdquo;</div>
+      <div class="review-meta-line">Aiman Qudoos &mdash; aimanqudoos786@gmail.com</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r5">5&#9733;</span>
+        <span class="tag">Aug 2, 2026</span>
+        <span class="tag">order 1785397344335-8-Welcome-Calls</span>
+      </div>
+      <div class="review-heading">Good</div>
+      <div class="review-text">&ldquo;Good experience&rdquo;</div>
+      <div class="review-meta-line">Anthonia Kuyoro &mdash; falowoanthonia@gmail.com</div>
+    </div>
+  </div>
+
+  <!-- Support Campaign -->
+  <div class="campaign-block">
+    <div class="camp-header">
+      Support Campaign &nbsp;&bull;&nbsp; ID 647 &nbsp;&bull;&nbsp; 1 review
+      <span class="badge-blue">4.00&#9733; avg</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r4">4&#9733;</span>
+        <span class="tag">Jul 31, 2026</span>
+        <span class="tag">order 1785498845605-10-Data-Tutor</span>
+        <span class="name-tag">Neville</span>
+      </div>
+      <div class="review-heading">I got excellent support during my SQL&hellip;</div>
+      <div class="review-text">&ldquo;I got excellent support during my SQL difficulties from Neville and I can say it really helped me&rdquo;</div>
+      <div class="review-meta-line">Solomon Opoku &mdash; opokusolomon1212@gmail.com</div>
+    </div>
+  </div>
+
+  <!-- Exam Pass v2 -->
+  <div class="campaign-block">
+    <div class="camp-header">
+      Exam Pass v2 Campaign &nbsp;&bull;&nbsp; ID 649 &nbsp;&bull;&nbsp; 1 review
+      <span class="badge-gold">5.00&#9733; avg</span>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r5">5&#9733;</span>
+        <span class="tag">Jul 31, 2026</span>
+        <span class="tag">order 1785140590244-15-PM-Tutor</span>
+        <span class="name-tag">Steven</span>
+      </div>
+      <div class="review-heading">I had a fantastic experience completing&hellip;</div>
+      <div class="review-text">&ldquo;I had a fantastic experience completing my course with ITOL. The curriculum was clear, well-structured, and incredibly practical. A special thanks to my tutor, Steven, whose support was outstanding throughout the entire process. He was always approachable, provided thorough and constructive feedback, and truly went above and beyond to help me succeed. Highly recommended for anyone looking to advance their professional development!&rdquo;</div>
+      <div class="review-meta-line">John Abraham &mdash; johnabrahamkalayil@gmail.com</div>
+    </div>
+  </div>
+
+  <!-- Organic -->
+  <div class="campaign-block">
+    <div class="camp-header">
+      Organic reviews (no invite match) &nbsp;&bull;&nbsp; 3 reviews
+      <span class="badge-blue">3.67&#9733; avg</span>
+    </div>
+    <div class="review-card urgent">
+      <div class="review-meta">
+        <span class="rating-badge r2">2&#9733;</span>
+        <span class="tag">Jul 30, 2026</span>
+        <span class="organic-chip">organic</span>
+      </div>
+      <div class="review-heading">Less time</div>
+      <div class="review-text">&ldquo;Too much info, little time.. the course should be for more than a year. Also feel like need to do our own research for it to make better sense.&rdquo;</div>
+      <div class="review-meta-line">NS &mdash; no email on file</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r4">4&#9733;</span>
+        <span class="tag">Aug 2, 2026</span>
+        <span class="organic-chip">organic</span>
+      </div>
+      <div class="review-heading">The tutors are very friendly with the&hellip;</div>
+      <div class="review-text">&ldquo;The tutors are very friendly with the students in their work experience and they are very helpful in the future of my work place and in my way of handling exams by focusing on the requirements needed in passing the exam. They are promting reaching out the needs of the customer by providing important information in their services.&rdquo;</div>
+      <div class="review-meta-line">Ezinwa Aguwa &mdash; ezinwaaguwa@gmail.com</div>
+    </div>
+    <div class="review-card">
+      <div class="review-meta">
+        <span class="rating-badge r5">5&#9733;</span>
+        <span class="tag">Jul 29, 2026</span>
+        <span class="organic-chip">organic</span>
+      </div>
+      <div class="review-heading">Recruitment process</div>
+      <div class="review-text">&ldquo;The Recruitment team were efficient, even when i was interested they kept calling and gibing me reasons to join, the onboarding was fast and effective.&rdquo;</div>
+      <div class="review-meta-line">Godknows Unula &mdash; godknowsunula75@gmail.com</div>
+    </div>
+  </div>
+
+  <!-- 5. Staff Mentions -->
+  <h2 id="s5">5. Staff Mentions This Week</h2>
+
+  <p>Eight staff members were named across eight reviews. Steven (Steven Crabbe) is the standout: named independently in two reviews from two different campaigns &mdash; Exam Pass v1 and Exam Pass v2 &mdash; the same double-mention distinction Jen held last week.</p>
+  <div class="staff-grid" style="margin-top:12px;">
+    <span class="staff-chip">Steven Crabbe <span class="staff-chip-role">Tutor, Exam Pass v1 &amp; v2 (&times;2)</span></span>
+    <span class="staff-chip">Lisa <span class="staff-chip-role">Welcome Call/Setup (&times;2)</span></span>
+    <span class="staff-chip">Ashley <span class="staff-chip-role">Hubspot Main</span></span>
+    <span class="staff-chip">Ollie <span class="staff-chip-role">Hubspot Main</span></span>
+    <span class="staff-chip">Sandy <span class="staff-chip-role">Hubspot Main</span></span>
+    <span class="staff-chip">Didier <span class="staff-chip-role">Welcome Call/Setup</span></span>
+    <span class="staff-chip">Jen <span class="staff-chip-role">Welcome Call/Setup</span></span>
+    <span class="staff-chip">Neville <span class="staff-chip-role">Support, SQL help</span></span>
+  </div>
+
+  <div class="info-box" style="margin-top:18px;">
+    &#128204;&nbsp; <strong>Steven (Steven Crabbe) named in two independent reviews, across two different campaigns.</strong> Aiman Qudoos (Exam Pass v1) names him in full as &ldquo;Steven Crabbe&rdquo;; John Abraham (Exam Pass v2) names only &ldquo;Steven&rdquo; in an unrelated order &mdash; almost certainly the same tutor teaching across both exam-pass pathways, mirroring Jen's cross-campaign mention last week.<br><br>
+    &#128204;&nbsp; <strong>Lisa named for a second consecutive week.</strong> After being credited in last week's Support Campaign review, Lisa appears in both of this week's 5&#9733; Welcome Call/Setup reviews (alongside Didier in one, Jen in the other) &mdash; the account's clearest repeat-recognition case this week.<br><br>
+    &#128204;&nbsp; <strong>Hubspot Main's best staff-recognition week yet.</strong> All three of this campaign's reviews this week name a staff member individually (Ashley, Ollie, Sandy) &mdash; previously reviews here named individuals only sporadically.
+  </div>
+
+  <!-- 6. Action Items -->
+  <h2 id="s6">6. Action Items</h2>
+  <table>
+    <thead>
+      <tr><th>Priority</th><th>Item</th><th>Detail</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>&#128993; Monitor</td>
+        <td>Log the 2&#9733; pacing complaint &mdash; not individually reachable</td>
+        <td>&ldquo;NS&rdquo; (organic, Jul 30) rated 2&#9733; and asked for a longer, less compressed course. No order ID, full name, or email is on file, so this can't become a 1:1 outreach case like last week's 1&#9733; review &mdash; log it as curriculum/pacing feedback instead.</td>
+      </tr>
+      <tr>
+        <td>&#128309; Setup</td>
+        <td>Confirm whether &ldquo;Steven&rdquo; is one tutor across two campaigns</td>
+        <td>Exam Pass v1's Aiman Qudoos names &ldquo;Steven Crabbe&rdquo;; Exam Pass v2's John Abraham names &ldquo;Steven&rdquo; in an unrelated order the same week. If it's the same tutor teaching both pathways, that's worth recognizing directly; if two different Stevens, worth a naming clarification for future reports.</td>
+      </tr>
+      <tr>
+        <td>&#128309; Setup</td>
+        <td>Re-check triggers on campaigns 698, 699, 710</td>
+        <td>CV Tailoring Session (698), Mock Interview (699) and CV Redraft Session (710) have sent zero emails across the entire reported series (since early June) &mdash; unchanged from every prior report.</td>
+      </tr>
+      <tr>
+        <td>&#128993; Monitor</td>
+        <td>General Recruitment Support (701) idle for a second straight week</td>
+        <td>Converted a review two weeks ago (Jul 13&ndash;19) then sent nothing in both the Jul 20&ndash;26 and Jul 27&ndash;Aug 2 windows. Confirm this is a natural low-volume dip in a small funnel and not a stalled trigger &mdash; carried over from last week's open item.</td>
+      </tr>
+      <tr>
+        <td>&#128994; Positive</td>
+        <td>Acknowledge Ashley, Ollie and Sandy</td>
+        <td>All three named individually in this week's Hubspot Main reviews &mdash; the campaign's best staff-recognition week yet, alongside Steven Crabbe's cross-campaign mentions in Exam Pass v1/v2 and Lisa's second consecutive week of recognition.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    ITOL Recruit campaign report &mdash; Jul 27&ndash;Aug 2, 2026 &mdash; Generated 2026-08-03<br>
+    Data sources: Stacktome campaign report API, Zeppelin (Delta Lake it_review + it_invites_0802) &mdash; Notebook 2MN9W4ABP
+  </div>
+
+</div>
+</body>
+</html>
