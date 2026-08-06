@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mammashop Group — Weekly Report Jul 30–Aug 5 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .kpi.highlight { border-top: 3px solid #e17055; }
+  .kpi.good { border-top: 3px solid #00b894; }
+  .kpi.warn { border-top: 3px solid #fdcb6e; }
+
+  .acct-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 8px; }
+  .acct-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow: hidden; }
+  .acct-card-header { padding: 10px 16px; font-weight: 700; font-size: 13px; color: #fff; display: flex; align-items: center; gap: 10px; }
+  .acct-mammashop { background: #6c5ce7; }
+  .acct-naturebaby { background: #00b894; }
+  .acct-loukrudt { background: #0984e3; }
+  .acct-hoppekids { background: #e17055; }
+  .acct-card-body { padding: 14px 16px; }
+
+  .mini-kpi-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
+  .mini-kpi { text-align: center; }
+  .mini-kpi .mv { font-size: 20px; font-weight: 700; color: #1a1a2e; }
+  .mini-kpi .ml { font-size: 10px; text-transform: uppercase; color: #888; letter-spacing: .5px; }
+
+  .attr-bar-wrap { margin: 8px 0 12px; }
+  .attr-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: #636e72; margin-bottom: 4px; }
+  .attr-bar { height: 10px; border-radius: 5px; background: #dfe6e9; overflow: hidden; display: flex; }
+  .attr-fill { height: 100%; background: #6c5ce7; }
+  .organic-fill { height: 100%; background: #b2bec3; }
+
+  .split-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+  .split-box { border-radius: 8px; padding: 10px 14px; }
+  .split-attr { background: #f0eeff; border-left: 3px solid #6c5ce7; }
+  .split-organic { background: #f5f6fa; border-left: 3px solid #b2bec3; }
+  .split-box .sb-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 4px; }
+  .split-box .sb-count { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+  .split-box .sb-avg { font-size: 12px; color: #636e72; margin-top: 2px; }
+  .split-box .sb-note { font-size: 11px; color: #888; margin-top: 3px; }
+
+  .star-dist { display: flex; gap: 4px; margin: 10px 0; align-items: flex-end; height: 40px; }
+  .star-col { display: flex; flex-direction: column; align-items: center; flex: 1; }
+  .star-bar { width: 100%; border-radius: 3px 3px 0 0; }
+  .s5 { background: #00b894; } .s4 { background: #55efc4; } .s3 { background: #fdcb6e; }
+  .s2 { background: #e17055; } .s1 { background: #d63031; }
+  .star-label { font-size: 9px; color: #999; margin-top: 2px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  th { background: #f8f9ff; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; }
+  td { padding: 9px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafbff; }
+  .row-total td { background: #f8f9ff; font-weight: 600; }
+
+  .brand-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; color: #fff; }
+  .bp-mammashop { background: #6c5ce7; }
+  .bp-naturebaby { background: #00b894; }
+  .bp-loukrudt { background: #0984e3; }
+  .bp-hoppekids { background: #e17055; }
+
+  .r2 { color: #e17055; font-weight: 600; }
+  .r5 { color: #00b894; font-weight: 600; }
+  .r4 { color: #55b894; font-weight: 600; }
+  .review-text { font-size: 12px; color: #636e72; line-height: 1.5; max-width: 400px; }
+
+  .insight-box { background: #fff; border-left: 4px solid #6c5ce7; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .insight-box p { margin-bottom: 6px; }
+  .insight-box p:last-child { margin-bottom: 0; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .warn-box p { margin-bottom: 6px; }
+  .warn-box p:last-child { margin-bottom: 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .good-box p { margin-bottom: 6px; }
+  .good-box p:last-child { margin-bottom: 0; }
+  .info-box { background: #f5f6fa; border-left: 4px solid #b2bec3; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .info-box p { margin-bottom: 6px; }
+  .info-box p:last-child { margin-bottom: 0; }
+  .good { color: #00b894; font-weight: 600; }
+  .warn { color: #e17055; font-weight: 600; }
+  .neutral { color: #636e72; }
+
+  .tmpl-summary-row { display: flex; gap: 14px; flex-wrap: wrap; margin: 16px 0; }
+  .tmpl-summary-card { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); flex: 1; min-width: 200px; display: flex; align-items: flex-start; gap: 12px; }
+  .brand-dot { width: 12px; height: 12px; border-radius: 50%; margin-top: 3px; flex-shrink: 0; }
+  .tsb-brand { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .tsb-rates { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .tsb-tp { font-size: 13px; color: #636e72; }
+  .tsb-arrow { color: #b2bec3; }
+  .tsb-brand-rate { font-size: 13px; font-weight: 600; color: #1a1a2e; }
+  .tsb-delta { font-size: 12px; font-weight: 700; padding: 2px 7px; border-radius: 10px; }
+  .tsb-delta.pos { background: #e8fff6; color: #00b894; }
+  .tsb-delta.neg { background: #fff0f0; color: #e17055; }
+  .tsb-delta.flat { background: #f5f5f5; color: #636e72; }
+
+  .tmpl-compare-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px; }
+  .tmpl-card { background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .tmpl-card-brand { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #f0f0f0; }
+  .tmpl-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .tmpl-row-label { font-size: 11px; color: #888; width: 100px; flex-shrink: 0; }
+  .tmpl-row-bar-wrap { flex: 1; }
+  .tmpl-dual-bar { display: flex; gap: 2px; height: 18px; border-radius: 4px; overflow: visible; font-size: 10px; }
+  .bar-tp { background: #b2bec3; display: flex; align-items: center; padding-left: 4px; color: #fff; border-radius: 3px 0 0 3px; font-size: 10px; min-width: 32px; }
+  .bar-brand { background: #6c5ce7; display: flex; align-items: center; padding-left: 4px; color: #fff; border-radius: 0 3px 3px 0; font-size: 10px; min-width: 32px; }
+  .tmpl-delta { font-size: 12px; font-weight: 700; min-width: 58px; text-align: right; }
+  .delta-pos { color: #00b894; }
+  .delta-neg { color: #e17055; }
+  .delta-flat { color: #636e72; }
+
+  .review-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 14px; overflow: hidden; }
+  .review-card-header { padding: 10px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #f0f0f0; }
+  .review-card-body { padding: 12px 16px; }
+  .rating-badge { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; font-size: 13px; font-weight: 700; color: #fff; }
+  .r1b { background: #d63031; }
+  .r2b { background: #e17055; }
+  .r3b { background: #fdcb6e; color: #333; }
+  .r4b { background: #55efc4; color: #333; }
+  .r5b { background: #00b894; }
+  .source-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+  .sp-attr { background: #e8f4fd; color: #0984e3; }
+  .sp-organic { background: #f0f0f0; color: #636e72; }
+
+  .action-list { list-style: none; margin: 0; padding: 0; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 16px; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 10px; }
+  .al-icon { font-size: 16px; flex-shrink: 0; }
+  .al-text { font-size: 13px; color: #4a4a4a; line-height: 1.5; }
+
+  nav a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Mammashop Group — Weekly Report</h1>
+  <p class="subtitle">All 4 brands &bull; Jul 30&ndash;Aug 5, 2026 &bull; Generated Aug 6, 2026</p>
+
+  <nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #6c5ce7;font-size:14px;line-height:2;">
+    <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+    <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Group Overview</a>
+    <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Brand Template Performance</a>
+    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Email Performance by Campaign</a>
+    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Per-Brand Breakdown</a>
+    <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Reviews This Week</a>
+    <a href="#s6" style="color:#444;text-decoration:none;">6. Action Items</a>
+  </nav>
+
+  <!-- GROUP OVERVIEW -->
+  <h2 id="s1">Group Overview</h2>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Total Reviews</div><div class="value">11</div><div class="sub">MA 11 · NB 0 · HK 0 · LK 0</div></div>
+    <div class="kpi highlight"><div class="label">Group Avg Rating</div><div class="value">4.64★</div><div class="sub">1 negative (MA 1★)</div></div>
+    <div class="kpi"><div class="label">Email Sends</div><div class="value">5,331</div><div class="sub">Open%: 54.5% · CTR 1.4% · 99 unsubs</div></div>
+    <div class="kpi good"><div class="label">Group Open Rate</div><div class="value">54.5%</div><div class="sub">CTR 1.4% · 99 unsubs</div></div>
+    <div class="kpi good"><div class="label">Attribution Rate</div><div class="value">18.2%</div><div class="sub">2 of 11 reviews</div></div>
+  </div>
+
+  <div class="warn-box">
+    <p><strong>Three brands went completely silent on reviews this week — Naturebaby, Loukrudt and Hoppekids all recorded zero.</strong> This isn't a sends problem: all three kept sending invites at normal or higher volume (Naturebaby 632, Loukrudt 209, Hoppekids 80). Every review this week (11 of 11) came from Mammashop. Small brands here typically produce 1–3 reviews/week each, so a simultaneous zero across all three is a first for this report series — most likely sampling variance given the small base rates, but worth confirming next week isn't a review-collection gap rather than genuine quiet.</p>
+    <p><strong>The positive-reviews re-engagement campaigns are active again after being escalated last report.</strong> Mammashop (702), Loukrudt (703) and Naturebaby (704, <code>invite-positive</code>) had all been idle a full month and were flagged three reports running. This week all three sent invites (7 / 2 / 3 respectively) for the first time since the idle streak began. Good sign, but one week of sends isn't proof the fix is durable — confirm it holds next report before closing this out.</p>
+    <p><strong>Mammashop's only negative this week cites the same product line flagged in the very first weekly report.</strong> A 1★ organic review (order 8756348748110) reports a defective "læringstårn" (learning tower) and zero response from customer service across both chat and email. The very first Mammashop report (week of Jul 10) also flagged a 1★ learning-tower complaint. Two data points three weeks apart isn't a trend yet, but it's worth a quick check on whether this SKU has an above-average defect or CS-routing issue.</p>
+  </div>
+
+  <!-- BRAND TEMPLATE PERFORMANCE -->
+  <h2 id="s2">Brand Template Performance — Status Check (A/B Test Concluded)</h2>
+  <p style="margin-bottom:16px;">The TP vs. brand template test concluded three weeks ago (A/B weights set to 0 for all major send campaigns). This week's data confirms the migration continues to hold: brand templates remain the default across all four brands, with residual TP sends limited to the intentional <code>positive-tickets</code> exception campaigns (Google Review redirect use case, kept on TP by design).</p>
+
+  <div class="tmpl-summary-row">
+    <div class="tmpl-summary-card">
+      <div class="brand-dot" style="background:#6c5ce7;"></div>
+      <div>
+        <div class="tsb-brand">Mammashop</div>
+        <div class="tsb-rates">
+          <span class="tsb-tp">13 TP sends</span>
+          <span class="tsb-arrow">→</span>
+          <span class="tsb-brand-rate">1,915 brand sends</span>
+          <span class="tsb-delta flat">99.3% brand</span>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:3px;">All 13 TP sends are positive-tickets (667) — intentional exception</div>
+      </div>
+    </div>
+    <div class="tmpl-summary-card">
+      <div class="brand-dot" style="background:#00b894;"></div>
+      <div>
+        <div class="tsb-brand">Naturebaby</div>
+        <div class="tsb-rates">
+          <span class="tsb-tp">1 TP send</span>
+          <span class="tsb-arrow">→</span>
+          <span class="tsb-brand-rate">631 brand sends</span>
+          <span class="tsb-delta flat">99.8% brand</span>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:3px;">The 1 TP send is positive-tickets (669) — intentional exception</div>
+      </div>
+    </div>
+    <div class="tmpl-summary-card">
+      <div class="brand-dot" style="background:#0984e3;"></div>
+      <div>
+        <div class="tsb-brand">Loukrudt</div>
+        <div class="tsb-rates">
+          <span class="tsb-tp">0 TP sends</span>
+          <span class="tsb-arrow">→</span>
+          <span class="tsb-brand-rate">209 brand sends</span>
+          <span class="tsb-delta flat">100% brand</span>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:3px;">invite-recent + positive-reviews: fully migrated (invites only)</div>
+      </div>
+    </div>
+    <div class="tmpl-summary-card">
+      <div class="brand-dot" style="background:#e17055;"></div>
+      <div>
+        <div class="tsb-brand">Hoppekids</div>
+        <div class="tsb-rates">
+          <span class="tsb-tp">3 TP sends</span>
+          <span class="tsb-arrow">→</span>
+          <span class="tsb-brand-rate">77 brand sends</span>
+          <span class="tsb-delta flat">96.3% brand</span>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:3px;">All 3 TP sends are positive-tickets (670) — intentional exception</div>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:12px;color:#888;margin-top:-6px;margin-bottom:20px;"><em>No fresh TP-vs-brand open-rate comparison this week — TP volume remains too small (0–13 sends/brand, all on the intentional positive-tickets exception) for a meaningful lift calculation. As noted in prior reports, this section will likely be simplified or retired unless the exception campaigns become a focus.</em></p>
+
+  <!-- EMAIL PERFORMANCE TABLE -->
+  <h2 id="s3">Email Performance by Campaign</h2>
+  <p style="margin-bottom:14px;">Send volumes (Invites/Reminders/Total) from Zeppelin/Delta Lake. Open%, CTR and unsubs from the Stacktome campaign report API (Jul 30&ndash;Aug 5, 2026), computed against the API's own per-campaign sent total — which runs consistently lower than the Zeppelin Total Sends column for this account (invite+reminder rows vs. the API's own send accounting); treat the two as separate systems of record rather than expecting them to tie out exactly.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Brand</th>
+        <th>Campaign</th>
+        <th style="text-align:right">Invites</th>
+        <th style="text-align:right">Reminders</th>
+        <th style="text-align:right">Total Sends</th>
+        <th style="text-align:right">Open%</th>
+        <th style="text-align:right">CTR</th>
+        <th style="text-align:right">Unsubs</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Mammashop -->
+      <tr>
+        <td rowspan="7"><span class="brand-pill bp-mammashop">mammashop</span></td>
+        <td>invite-recent-dk</td>
+        <td style="text-align:right">1,171</td>
+        <td style="text-align:right">1,020</td>
+        <td style="text-align:right">2,191</td>
+        <td style="text-align:right">51.8%</td>
+        <td style="text-align:right">1.1%</td>
+        <td style="text-align:right">31</td>
+      </tr>
+      <tr>
+        <td>invite-recent-de</td>
+        <td style="text-align:right">433</td>
+        <td style="text-align:right">644</td>
+        <td style="text-align:right">1,077</td>
+        <td style="text-align:right">58.1%</td>
+        <td style="text-align:right">2.2%</td>
+        <td style="text-align:right">25</td>
+      </tr>
+      <tr>
+        <td>invite-recent-nl</td>
+        <td style="text-align:right">105</td>
+        <td style="text-align:right">122</td>
+        <td style="text-align:right">227</td>
+        <td style="text-align:right">49.0%</td>
+        <td style="text-align:right">2.8%</td>
+        <td style="text-align:right">6</td>
+      </tr>
+      <tr>
+        <td>invite-recent-fr</td>
+        <td style="text-align:right">102</td>
+        <td style="text-align:right">107</td>
+        <td style="text-align:right">209</td>
+        <td style="text-align:right">53.2%</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">4</td>
+      </tr>
+      <tr>
+        <td>invite-recent-se</td>
+        <td style="text-align:right">97</td>
+        <td style="text-align:right">98</td>
+        <td style="text-align:right">195</td>
+        <td style="text-align:right">59.8%</td>
+        <td style="text-align:right">1.6%</td>
+        <td style="text-align:right">3</td>
+      </tr>
+      <tr>
+        <td>positive-tickets</td>
+        <td style="text-align:right">13</td>
+        <td style="text-align:right">8</td>
+        <td style="text-align:right">21</td>
+        <td style="text-align:right">58.8%</td>
+        <td style="text-align:right">17.6%</td>
+        <td style="text-align:right">0</td>
+      </tr>
+      <tr>
+        <td>positive-reviews</td>
+        <td style="text-align:right">7</td>
+        <td style="text-align:right">0</td>
+        <td style="text-align:right">7</td>
+        <td style="text-align:right">57.1%</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">0</td>
+      </tr>
+      <!-- Naturebaby -->
+      <tr>
+        <td rowspan="6"><span class="brand-pill bp-naturebaby">naturebaby</span></td>
+        <td>invite-recent-dk</td>
+        <td style="text-align:right">577</td>
+        <td style="text-align:right">249</td>
+        <td style="text-align:right">826</td>
+        <td style="text-align:right">55.5%</td>
+        <td style="text-align:right">0.6%</td>
+        <td style="text-align:right">17</td>
+      </tr>
+      <tr>
+        <td>invite-recent-de</td>
+        <td style="text-align:right">29</td>
+        <td style="text-align:right">45</td>
+        <td style="text-align:right">74</td>
+        <td style="text-align:right">65.2%</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">1</td>
+      </tr>
+      <tr>
+        <td>invite-recent-fr</td>
+        <td style="text-align:right">12</td>
+        <td style="text-align:right">17</td>
+        <td style="text-align:right">29</td>
+        <td style="text-align:right">66.7%</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">1</td>
+      </tr>
+      <tr>
+        <td>invite-recent-se</td>
+        <td style="text-align:right">10</td>
+        <td style="text-align:right">10</td>
+        <td style="text-align:right">20</td>
+        <td style="text-align:right">33.3%</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">0</td>
+      </tr>
+      <tr>
+        <td>positive-tickets</td>
+        <td style="text-align:right">1</td>
+        <td style="text-align:right">1</td>
+        <td style="text-align:right">2</td>
+        <td style="text-align:right">50.0%</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">0</td>
+      </tr>
+      <tr>
+        <td>invite-positive</td>
+        <td style="text-align:right">3</td>
+        <td style="text-align:right">0</td>
+        <td style="text-align:right">3</td>
+        <td style="text-align:right">66.7%</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">0</td>
+      </tr>
+      <!-- Loukrudt -->
+      <tr>
+        <td rowspan="2"><span class="brand-pill bp-loukrudt">loukrudt</span></td>
+        <td>invite-recent</td>
+        <td style="text-align:right">207</td>
+        <td style="text-align:right">99</td>
+        <td style="text-align:right">306</td>
+        <td style="text-align:right">61.1%</td>
+        <td style="text-align:right">1.3%</td>
+        <td style="text-align:right">10</td>
+      </tr>
+      <tr>
+        <td>positive-reviews</td>
+        <td style="text-align:right">2</td>
+        <td style="text-align:right">0</td>
+        <td style="text-align:right">2</td>
+        <td style="text-align:right">100.0%</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">0</td>
+      </tr>
+      <!-- Hoppekids -->
+      <tr>
+        <td rowspan="6"><span class="brand-pill bp-hoppekids">hoppekids</span></td>
+        <td>invite-recent-dk</td>
+        <td style="text-align:right">55</td>
+        <td style="text-align:right">32</td>
+        <td style="text-align:right">87</td>
+        <td style="text-align:right">52.5%</td>
+        <td style="text-align:right">3.4%</td>
+        <td style="text-align:right">1</td>
+      </tr>
+      <tr>
+        <td>invite-recent-de</td>
+        <td style="text-align:right">10</td>
+        <td style="text-align:right">12</td>
+        <td style="text-align:right">22</td>
+        <td style="text-align:right">37.5%</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">0</td>
+      </tr>
+      <tr>
+        <td>invite-recent-no</td>
+        <td style="text-align:right">11</td>
+        <td style="text-align:right">10</td>
+        <td style="text-align:right">21</td>
+        <td style="text-align:right">57.1%</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">0</td>
+      </tr>
+      <tr>
+        <td>invite-recent-en</td>
+        <td style="text-align:right">0</td>
+        <td style="text-align:right">5</td>
+        <td style="text-align:right">5</td>
+        <td style="text-align:right">20.0%</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">0</td>
+      </tr>
+      <tr>
+        <td>invite-recent-se</td>
+        <td style="text-align:right">1</td>
+        <td style="text-align:right">0</td>
+        <td style="text-align:right">1</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">0</td>
+      </tr>
+      <tr>
+        <td>positive-tickets</td>
+        <td style="text-align:right">3</td>
+        <td style="text-align:right">3</td>
+        <td style="text-align:right">6</td>
+        <td style="text-align:right">50.0%</td>
+        <td style="text-align:right">0.0%</td>
+        <td style="text-align:right">0</td>
+      </tr>
+      <!-- Totals -->
+      <tr class="row-total">
+        <td colspan="2">TOTAL — all campaigns</td>
+        <td style="text-align:right">2,849</td>
+        <td style="text-align:right">2,482</td>
+        <td style="text-align:right">5,331</td>
+        <td style="text-align:right">54.5%</td>
+        <td style="text-align:right">1.4%</td>
+        <td style="text-align:right">99</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <p><strong>Positive-reviews campaigns (702/703/704) reactivated — first sends in a month.</strong> mammashop (702, 7 sends), loukrudt (703, 2 sends) and naturebaby (704 <code>invite-positive</code>, 3 sends) all resumed this week after four consecutive idle weeks and three straight escalations in prior reports. Volumes are still small; confirm the resumption holds next report rather than closing this item out now.</p>
+    <p><strong>Mammashop send volume down slightly (4,163 → 3,927, -5.7%), Naturebaby up sharply (733 → 954, +30.1%).</strong> Both DK and DE eased back for Mammashop (DK 2,267→2,191, -3.4%; DE 1,117→1,077, -3.6%) after several weeks of DE growth. Naturebaby DK drove the group-wide gain (558→826, +48.0%). Net effect: group total essentially flat (5,357 → 5,331, -0.5%).</p>
+  </div>
+
+  <!-- PER-BRAND BREAKDOWN -->
+  <h2 id="s4">Per-Brand Breakdown</h2>
+  <div class="acct-grid">
+
+    <!-- Mammashop -->
+    <div class="acct-card">
+      <div class="acct-card-header acct-mammashop">
+        <span>Mammashop</span>
+        <span style="margin-left:auto;font-size:11px;opacity:0.85;">11 reviews · 4.64★</span>
+      </div>
+      <div class="acct-card-body">
+        <div class="mini-kpi-row">
+          <div class="mini-kpi"><div class="mv">3,927</div><div class="ml">Sends</div></div>
+          <div class="mini-kpi"><div class="mv">53.7%</div><div class="ml">Open</div></div>
+          <div class="mini-kpi"><div class="mv">1.5%</div><div class="ml">CTR</div></div>
+          <div class="mini-kpi"><div class="mv">2</div><div class="ml">Attributed</div></div>
+          <div class="mini-kpi"><div class="mv">9</div><div class="ml">Organic</div></div>
+        </div>
+        <div class="attr-bar-wrap">
+          <div class="attr-bar-label"><span>Attributed (18.2%)</span><span>Organic (81.8%)</span></div>
+          <div class="attr-bar"><div class="attr-fill" style="width:18.2%;"></div><div class="organic-fill" style="width:81.8%;"></div></div>
+        </div>
+        <div class="split-compare">
+          <div class="split-box split-attr">
+            <div class="sb-label">Attributed</div>
+            <div class="sb-count">2 <span style="font-size:13px;color:#636e72;">reviews</span></div>
+            <div class="sb-avg">avg 5.0★</div>
+            <div class="sb-note">invite-recent-de (5★) · invite-recent-dk (5★)</div>
+          </div>
+          <div class="split-box split-organic">
+            <div class="sb-label">Organic</div>
+            <div class="sb-count">9 <span style="font-size:13px;color:#636e72;">reviews</span></div>
+            <div class="sb-avg">avg 4.56★ (8×5★, 1×1★)</div>
+            <div class="sb-note">1 negative — defective learning tower, no CS response (order 8756348748110)</div>
+          </div>
+        </div>
+        <div class="star-dist">
+          <div class="star-col"><div class="star-bar s5" style="height:40px;"></div><div class="star-label">5★ ×10</div></div>
+          <div class="star-col"><div class="star-bar s4" style="height:0px;"></div><div class="star-label">4★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s3" style="height:0px;"></div><div class="star-label">3★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s2" style="height:0px;"></div><div class="star-label">2★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s1" style="height:4px;"></div><div class="star-label">1★ ×1</div></div>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:6px;">positive-reviews (702): back to 7 sends this week after a month idle. Send volume down 5.7% (DK and DE both eased back).</div>
+      </div>
+    </div>
+
+    <!-- Naturebaby -->
+    <div class="acct-card">
+      <div class="acct-card-header acct-naturebaby">
+        <span>Naturebaby</span>
+        <span style="margin-left:auto;font-size:11px;opacity:0.85;">0 reviews</span>
+      </div>
+      <div class="acct-card-body">
+        <div class="mini-kpi-row">
+          <div class="mini-kpi"><div class="mv">954</div><div class="ml">Sends</div></div>
+          <div class="mini-kpi"><div class="mv">56.2%</div><div class="ml">Open</div></div>
+          <div class="mini-kpi"><div class="mv">0.5%</div><div class="ml">CTR</div></div>
+          <div class="mini-kpi"><div class="mv">0</div><div class="ml">Attributed</div></div>
+          <div class="mini-kpi"><div class="mv">0</div><div class="ml">Organic</div></div>
+        </div>
+        <div class="split-compare">
+          <div class="split-box split-attr">
+            <div class="sb-label">Attributed</div>
+            <div class="sb-count">0 <span style="font-size:13px;color:#636e72;">reviews</span></div>
+            <div class="sb-avg">—</div>
+            <div class="sb-note"></div>
+          </div>
+          <div class="split-box split-organic">
+            <div class="sb-label">Organic</div>
+            <div class="sb-count">0 <span style="font-size:13px;color:#636e72;">reviews</span></div>
+            <div class="sb-avg">—</div>
+            <div class="sb-note">No reviews this week</div>
+          </div>
+        </div>
+        <div class="star-dist">
+          <div class="star-col"><div class="star-bar s5" style="height:0px;"></div><div class="star-label">5★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s4" style="height:0px;"></div><div class="star-label">4★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s3" style="height:0px;"></div><div class="star-label">3★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s2" style="height:0px;"></div><div class="star-label">2★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s1" style="height:0px;"></div><div class="star-label">1★ ×0</div></div>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:6px;">Zero reviews despite highest-ever weekly send volume (954, +30.1% w/w) — send volume is not the constraint here. invite-positive (704): back to 3 sends after a month idle.</div>
+      </div>
+    </div>
+
+    <!-- Loukrudt -->
+    <div class="acct-card">
+      <div class="acct-card-header acct-loukrudt">
+        <span>Loukrudt</span>
+        <span style="margin-left:auto;font-size:11px;opacity:0.85;">0 reviews</span>
+      </div>
+      <div class="acct-card-body">
+        <div class="mini-kpi-row">
+          <div class="mini-kpi"><div class="mv">308</div><div class="ml">Sends</div></div>
+          <div class="mini-kpi"><div class="mv">61.4%</div><div class="ml">Open</div></div>
+          <div class="mini-kpi"><div class="mv">1.3%</div><div class="ml">CTR</div></div>
+          <div class="mini-kpi"><div class="mv">0</div><div class="ml">Attributed</div></div>
+          <div class="mini-kpi"><div class="mv">0</div><div class="ml">Organic</div></div>
+        </div>
+        <div class="split-compare">
+          <div class="split-box split-attr">
+            <div class="sb-label">Attributed</div>
+            <div class="sb-count">0 <span style="font-size:13px;color:#636e72;">reviews</span></div>
+            <div class="sb-avg">—</div>
+            <div class="sb-note"></div>
+          </div>
+          <div class="split-box split-organic">
+            <div class="sb-label">Organic</div>
+            <div class="sb-count">0 <span style="font-size:13px;color:#636e72;">reviews</span></div>
+            <div class="sb-avg">—</div>
+            <div class="sb-note">No reviews this week</div>
+          </div>
+        </div>
+        <div class="star-dist">
+          <div class="star-col"><div class="star-bar s5" style="height:0px;"></div><div class="star-label">5★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s4" style="height:0px;"></div><div class="star-label">4★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s3" style="height:0px;"></div><div class="star-label">3★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s2" style="height:0px;"></div><div class="star-label">2★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s1" style="height:0px;"></div><div class="star-label">1★ ×0</div></div>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:6px;">3-negative-review streak breaks — zero reviews at all this week, not a 4th negative. positive-reviews (703): back to 2 sends after a month idle.</div>
+      </div>
+    </div>
+
+    <!-- Hoppekids -->
+    <div class="acct-card">
+      <div class="acct-card-header acct-hoppekids">
+        <span>Hoppekids</span>
+        <span style="margin-left:auto;font-size:11px;opacity:0.85;">0 reviews</span>
+      </div>
+      <div class="acct-card-body">
+        <div class="mini-kpi-row">
+          <div class="mini-kpi"><div class="mv">142</div><div class="ml">Sends</div></div>
+          <div class="mini-kpi"><div class="mv">48.5%</div><div class="ml">Open</div></div>
+          <div class="mini-kpi"><div class="mv">2.0%</div><div class="ml">CTR</div></div>
+          <div class="mini-kpi"><div class="mv">0</div><div class="ml">Attributed</div></div>
+          <div class="mini-kpi"><div class="mv">0</div><div class="ml">Organic</div></div>
+        </div>
+        <div class="split-compare">
+          <div class="split-box split-attr">
+            <div class="sb-label">Attributed</div>
+            <div class="sb-count">0 <span style="font-size:13px;color:#636e72;">reviews</span></div>
+            <div class="sb-avg">—</div>
+            <div class="sb-note"></div>
+          </div>
+          <div class="split-box split-organic">
+            <div class="sb-label">Organic</div>
+            <div class="sb-count">0 <span style="font-size:13px;color:#636e72;">reviews</span></div>
+            <div class="sb-avg">—</div>
+            <div class="sb-note">No reviews this week</div>
+          </div>
+        </div>
+        <div class="star-dist">
+          <div class="star-col"><div class="star-bar s5" style="height:0px;"></div><div class="star-label">5★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s4" style="height:0px;"></div><div class="star-label">4★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s3" style="height:0px;"></div><div class="star-label">3★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s2" style="height:0px;"></div><div class="star-label">2★ ×0</div></div>
+          <div class="star-col"><div class="star-bar s1" style="height:0px;"></div><div class="star-label">1★ ×0</div></div>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:6px;">Back to zero reviews after last report's 2 (incl. the product-safety complaint, still open). Smallest brand by send volume (142) — still no positive-reviews campaign of its own.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- REVIEWS THIS WEEK -->
+  <h2 id="s5">Reviews This Week (Jul 30&ndash;Aug 5)</h2>
+  <p style="margin-bottom:16px;">11 reviews total (deduped), all Mammashop — naturebaby, loukrudt and hoppekids had none this week. One negative requires follow-up.</p>
+
+  <h3>Negative Reviews (1&ndash;2★)</h3>
+
+  <div class="review-card">
+    <div class="review-card-header">
+      <div class="rating-badge r1b">1★</div>
+      <div>
+        <span class="brand-pill bp-mammashop">mammashop</span>
+        <span class="source-pill sp-organic" style="margin-left:6px;">organic</span>
+      </div>
+      <div style="margin-left:auto;font-size:12px;color:#888;">Aug 5 · order 8756348748110 (organic — not campaign-matched)</div>
+    </div>
+    <div class="review-card-body">
+      <p style="font-weight:600;margin-bottom:6px;">Elendig kundeservice</p>
+      <p class="review-text">Customer bought a learning tower ("læringstårn") that appears to be defective. They tried contacting customer service through both chat and email and received no response at all. Describes it as very frustrating and terrible customer service.</p>
+      <div style="margin-top:10px;padding:8px 12px;background:#fff8f0;border-radius:6px;font-size:12px;color:#e17055;">
+        <strong>Issues:</strong> Product defect (learning tower) · Zero response from CS across two separate channels (chat and email), not just slow — a channel-availability gap, not a tone/quality issue. Search HelpScout for order 8756348748110. Note: the very first Mammashop weekly report (week of Jul 10) also flagged a 1★ learning-tower defect complaint — worth a quick check on whether this SKU has an above-average defect or CS-routing issue rather than two unrelated incidents three weeks apart.
+      </div>
+    </div>
+  </div>
+
+  <h3>Positive Reviews (4&ndash;5★)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Rating</th>
+        <th>Brand</th>
+        <th>Campaign</th>
+        <th>Heading / Snippet</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-mammashop">MA</span></td>
+        <td>organic</td>
+        <td>Taske mm. — bag, toiletry bag and lunch box all received in perfect condition (DK)</td>
+        <td>Jul 30</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-mammashop">MA</span></td>
+        <td>organic</td>
+        <td>War alles super!🩷 (DE)</td>
+        <td>Jul 31</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-mammashop">MA</span></td>
+        <td>organic</td>
+        <td>Es ist qualitativ hochwertig — high quality, impressed by the craftsmanship, would recommend (DE)</td>
+        <td>Aug 1</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-mammashop">MA</span></td>
+        <td>organic</td>
+        <td>Super Trinkflaschen — great water bottles, would buy again (DE)</td>
+        <td>Aug 4</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-mammashop">MA</span></td>
+        <td>invite-recent-de</td>
+        <td>Klare Empfehlung — uncomplicated, prompt, reliable ordering process</td>
+        <td>Aug 4</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-mammashop">MA</span></td>
+        <td>organic</td>
+        <td>Stort udvalg og en fantastisk kundeservice — wide selection, competitive prices, fast delivery, CS responded immediately (DK)</td>
+        <td>Aug 5</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-mammashop">MA</span></td>
+        <td>invite-recent-dk</td>
+        <td>Havde en god oplevelse — good experience, fast delivery</td>
+        <td>Aug 5</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-mammashop">MA</span></td>
+        <td>organic</td>
+        <td>Hurtig levering og god service. (DK)</td>
+        <td>Aug 5</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-mammashop">MA</span></td>
+        <td>organic</td>
+        <td>Hurtig levering — well packaged, delivered 1.5 days after ordering (DK)</td>
+        <td>Aug 5</td>
+      </tr>
+      <tr>
+        <td><span class="r5">5★</span></td>
+        <td><span class="brand-pill bp-mammashop">MA</span></td>
+        <td>organic</td>
+        <td>Super fint — fast delivery, goods as expected (DK)</td>
+        <td>Aug 5</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px;color:#888;margin-top:-10px;">No borderline (3★) reviews this week — all 11 Mammashop reviews were either 5★ (10) or the single 1★ complaint above.</p>
+
+  <!-- ACTION ITEMS -->
+  <h2 id="s6">Action Items</h2>
+  <ul class="action-list">
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>Mammashop 1★ — defective learning tower, zero CS response via chat or email (order 8756348748110).</strong> Not a slow or unhelpful reply — no response at all across two channels. Search HelpScout for the order. Also worth a quick check on whether this product line has an above-average defect rate: the very first weekly report (week of Jul 10) flagged a separate 1★ learning-tower complaint, so this is now two data points three weeks apart.</div>
+    </li>
+    <li>
+      <div class="al-icon">🔵</div>
+      <div class="al-text"><strong>Three of four brands (Naturebaby, Loukrudt, Hoppekids) had zero reviews this week despite normal-to-record send volume.</strong> Naturebaby in particular hit its highest weekly send volume yet (954, +30.1%) and still produced no reviews. Most likely small-sample variance given these brands typically run 1–3 reviews/week, but confirm next report this isn't a review-collection or attribution gap rather than genuine quiet.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟢</div>
+      <div class="al-text"><strong>Positive-reviews campaigns (702/703/704) resumed sending after a month idle and three straight escalations.</strong> Mammashop (7), Loukrudt (2) and Naturebaby (3, <code>invite-positive</code>) all sent invites this week for the first time since the idle streak began. Encouraging, but confirm it holds next report before treating this as resolved.</div>
+    </li>
+    <li>
+      <div class="al-icon">🔵</div>
+      <div class="al-text"><strong>Hoppekids still has no positive-reviews campaign of its own (carried over, 3rd report running).</strong> MA (702), LK (703), NB (704) all have positive-reviewer re-engagement campaigns; Hoppekids does not. Last report's product-safety complaint (still open, no resolution reported) makes this a lower priority to launch until sentiment stabilizes, but the gap remains worth tracking.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟢</div>
+      <div class="al-text"><strong>Brand template migration remains stable (96.3–100% brand across all four brands).</strong> The only remaining TP sends are the intentional positive-tickets exception campaigns (13 mammashop, 1 naturebaby, 3 hoppekids). No action needed.</div>
+    </li>
+  </ul>
+
+</div>
+</body>
+</html>
