@@ -88,12 +88,12 @@
   <div class="toc">
     <div class="box-label">Contents</div>
     <ol>
-      <li><a href="#headline">Headline Finding — a Tracking Gap, Not Just a Rate Change</a></li>
       <li><a href="#comparison">Period Comparison</a></li>
       <li><a href="#breakdown">Review Attribution Breakdown</a></li>
       <li><a href="#freshness">Data Freshness &amp; Prior-Report Caveat</a></li>
       <li><a href="#findings">Key Findings</a></li>
       <li><a href="#actions">Recommended Actions</a></li>
+      <li><a href="#notes">Notes — Methodology &amp; Data Quality Detail</a></li>
     </ol>
   </div>
 
@@ -104,12 +104,6 @@
       <div class="value">4.40% → 6.60%</div>
       <div class="delta up">+2.20pp (+50.0%)</div>
       <div class="sub">All reviews landing in window ÷ invites sent in window — not attribution-dependent</div>
-    </div>
-    <div class="kpi blue">
-      <div class="label">Order_id Tracked</div>
-      <div class="value">22.5% → 85.6%</div>
-      <div class="delta up">reviews with a usable join key</div>
-      <div class="sub">The real story of this window — see below</div>
     </div>
     <div class="kpi amber">
       <div class="label">Verified Conv. Rate (as observed)</div>
@@ -136,30 +130,10 @@
     </div>
   </div>
 
-  <!-- HEADLINE -->
-  <h2 id="headline">Headline Finding — a Tracking Gap, Not Just a Rate Change</h2>
-
-  <div class="red-box">
-    <div class="box-label">Most reviews in the July window can't be matched to anything</div>
-    <p>Before comparing rates, the join had to be checked properly: does the <code>order_id</code> on each review actually match an invite ever sent to that order? Doing this exposed that <strong>77.5% of Jul 22–31 reviews (62 of 80) carry no <code>order_id</code> and no <code>email</code> at all</strong> — they cannot be matched to an invitation by any method, so their true origin (invited vs. organic) is genuinely unknown, not just "organic." In the Aug 1–10 window this "no join key" share drops to <strong>14.4% (15 of 104)</strong>. The daily trend shows a sharp change right at the month boundary:</p>
-    <table class="cmp-table" style="margin-top:10px;">
-      <thead><tr><th>Date</th><th>Reviews</th><th>% missing order_id</th></tr></thead>
-      <tbody>
-        <tr><td class="metric-col">Jul 25–31 (7 days)</td><td>54</td><td>77.8%</td></tr>
-        <tr><td class="metric-col">Aug 1</td><td>14</td><td>35.7%</td></tr>
-        <tr><td class="metric-col">Aug 2–9 (8 days)</td><td>90</td><td>11.1%</td></tr>
-      </tbody>
-    </table>
-    <p style="margin-top:8px;">This looks like a data-pipeline fix that landed right around Aug 1–2, not a gradual trend — June overall was 36.2% missing, July 28.3%, August (so far) 14.4%, but the days immediately before Aug 1 were far worse (70–100%) than the monthly average suggests. <strong>This means the Jul 22–31 vs Aug 1–10 comparison is not apples-to-apples on raw review counts</strong> — a large part of any rate change reflects newly-visible attribution, not necessarily a change in customer behaviour. See <a href="#freshness">below</a> for what this implies about the Jul 22 report's own headline numbers.</p>
-  </div>
-
   <!-- PERIOD COMPARISON -->
   <h2 id="comparison">Period Comparison</h2>
 
-  <div class="info-box">
-    <div class="box-label">Methodology</div>
-    <p><span class="pill pill-b">Jul 22–31</span> and <span class="pill pill-a">Aug 1–10</span> are the two requested 10-day windows. Unlike the naive "reviews in period ÷ invites in period" ratio used in earlier reports, this analysis performs a real join: every review's <code>order_id</code> is matched against the <strong>full invite history</strong> (all-time, not just the window) via <code>order_review_id</code>-keyed attribution, distinguishing (a) <strong>invite-attributed, same-window</strong> — the order was invited within this same 10-day window, (b) <strong>invite-attributed, carryover</strong> — the order was invited at some earlier date, this review just landed in the window, (c) <strong>confirmed organic</strong> — the order has an <code>order_id</code> but was never invited, and (d) <strong>no join key</strong> — no <code>order_id</code> or <code>email</code> on the review, so attribution is unknowable. <strong>Verified invitation conversion rate = invite-attributed same-window reviews ÷ distinct orders invited in that same window</strong> (<code>email_send_type = 'invite'</code>). Alongside it, <strong>"Total review rate" = all reviews landing in the window (attributed + organic + no-join-key combined) ÷ invites sent in that window</strong> — this is not attribution-dependent, so the order_id tracking gap doesn't affect it; it answers "how much total review volume came in per invite sent," regardless of whether any individual review can be proven to trace back to an invite. For a period-over-period read of non-invited volume, <strong>"Organic reviews — total" combines (c) and (d)</strong> — no-join-key reviews are grouped with confirmed organic as a best-estimate, since every no-join-key review in both windows is a Trustpilot-sourced row with no invite trace, matching the profile of the confirmed-organic rows rather than the invite-attributed ones; this is a working assumption, not a certainty, given (d)'s attribution is technically unknowable.</p>
-  </div>
+  <p>Full breakdown below; see <a href="#notes">Notes</a> for how "attributed," "organic," and "no join key" are defined and for the order_id tracking-gap finding behind the July numbers.</p>
 
   <table class="cmp-table">
     <thead>
@@ -240,11 +214,6 @@
     </tbody>
   </table>
 
-  <div class="amber-box">
-    <div class="box-label">Gap-adjusted estimate for July</div>
-    <p>Of Jul 22–31's 18 reviews that <em>do</em> carry an order_id, 6 (33.3%) were same-window attributed, 4 (22.2%) carryover, 8 (44.4%) confirmed organic. Applying that same split to the 62 unkeyed reviews as a rough estimate (assuming the tracking gap is random with respect to invitation status, which cannot be verified) yields an estimated ~21 additional same-window-attributed reviews, for an adjusted rate of roughly <strong>~1.47%</strong> (26.7/1,820) — still well below August's as-observed 3.94%. Even under this generous adjustment, August looks structurally better, but the true size of the gap is uncertain and this estimate should not be quoted as a hard number.</p>
-  </div>
-
   <!-- BREAKDOWN -->
   <h2 id="breakdown">Review Attribution Breakdown</h2>
   <div class="dist-grid">
@@ -320,7 +289,7 @@
 
   <div class="red-box">
     <div class="box-label">This calls the Jul 22 report's headline rate into question</div>
-    <p>The Jul 22 report (Jun 1–17 vs Jul 1–17) computed "review rate" as <em>reviews landing in period ÷ invites sent in period</em> — a same-window count, without verifying via <code>order_id</code> that those reviews actually came from invited orders. Given what this analysis found — most reviews in that era carry no <code>order_id</code>, and the ones that do split roughly 40/30/30 between same-window / carryover / organic — the previously published <strong>6.26% (Jul 1–17)</strong> and <strong>3.05% (Jun 1–17)</strong> figures are very likely overstated as measures of true invitation-to-review conversion; they mostly reflect coincidental timing between two independently-growing counts, inflated further by the same order_id gap documented here. This report's numbers are not directly comparable to those earlier ones as a result. <strong>Recommend re-running the Jun–Jul comparison with proper order_id-based attribution before citing those percentages again.</strong></p>
+    <p>The Jul 22 report's 6.26% (Jul 1–17) and 3.05% (Jun 1–17) "review rate" figures used the same same-window counting approach, without verifying via <code>order_id</code> that reviews actually came from invited orders — see <a href="#notes">Notes</a> for why those numbers are likely overstated. <strong>Recommend re-running that comparison with proper order_id-based attribution before citing those percentages again.</strong></p>
   </div>
 
   <!-- FINDINGS -->
@@ -328,12 +297,12 @@
 
   <div class="good-box">
     <div class="box-label">Total review rate is up 50% and isn't affected by the tracking gap</div>
-    <p>Because it doesn't require order_id attribution, <strong>total review rate (4.40% → 6.60%)</strong> is the one number in this report unaffected by the pipeline issue above — it's a straight count of all reviews landing in the window divided by invites sent, the same formula used in the Jul 22 report's benchmarks. Aug 1–10's 6.60% sits right in the 6%+ steady-state band that report identified, and is comparable to it in a way the attribution-based rates in this report are not.</p>
+    <p>Because it doesn't require order_id attribution, <strong>total review rate (4.40% → 6.60%)</strong> is the one number in this report unaffected by the order_id tracking gap (see <a href="#notes">Notes</a>) — it's a straight count of all reviews landing in the window divided by invites sent, the same formula used in the Jul 22 report's benchmarks. Aug 1–10's 6.60% sits right in the 6%+ steady-state band that report identified.</p>
   </div>
 
   <div class="good-box">
     <div class="box-label">August looks better even after accounting for the tracking gap</div>
-    <p>The as-observed jump (0.33% → 3.94%) is not a reliable read of behavioural change — most of it is the order_id gap closing. But even the conservative gap-adjusted estimate for July (~1.47%) sits well below August's as-observed 3.94%, so the direction of improvement is likely real; only the magnitude is uncertain.</p>
+    <p>The as-observed jump in verified conversion rate (0.33% → 3.94%) is not a reliable read of behavioural change — most of it is the order_id gap closing (see <a href="#notes">Notes</a> for a gap-adjusted estimate). Even under a generous adjustment, August still comes out ahead, so the direction of improvement is likely real; only the magnitude is uncertain.</p>
   </div>
 
   <div class="info-box">
@@ -367,6 +336,24 @@
       <div><strong>Re-measure this comparison once the order_id fix has had 30+ days to mature and both windows are fully closed.</strong> Today's numbers mix a genuine tracking-gap closure with an unclosed current window — a clean read needs both effects to settle.</div>
     </li>
   </ul>
+
+  <!-- NOTES -->
+  <h2 id="notes">Notes — Methodology &amp; Data Quality Detail</h2>
+
+  <div class="info-box">
+    <div class="box-label">Definitions</div>
+    <p>Each review's <code>order_id</code> is joined against the full invite history (all-time, not just the window) to classify it as <strong>same-window</strong> (invited within the window being measured), <strong>carryover</strong> (invited earlier, reviewed in this window), <strong>confirmed organic</strong> (has an order_id, never invited), or <strong>no join key</strong> (no order_id/email — unattributable). <em>Verified invitation conversion rate</em> = same-window attributed ÷ invites sent that window. <em>Total review rate</em> = all reviews (any bucket) ÷ invites sent that window — not attribution-dependent. <em>Organic — total</em> combines confirmed organic + no join key as a best estimate.</p>
+  </div>
+
+  <div class="amber-box">
+    <div class="box-label">Order_id tracking gap</div>
+    <p>77.5% of Jul 22–31 reviews (62/80) had no order_id or email at all, vs. 14.4% in Aug 1–10 (15/104) — a sharp change right at the month boundary (Jul 25–31: 77.8% missing; Aug 1: 35.7%; Aug 2–9: 11.1%), consistent with a data-pipeline fix landing ~Aug 1–2. This means the two windows aren't apples-to-apples on raw counts — a chunk of August's higher attributed-review share is newly-visible tracking, not necessarily new behaviour. Gap-adjusted estimate: applying the attribution split seen in July's 18 order_id-having reviews (33% same-window / 22% carryover / 44% organic) to its 62 unkeyed reviews yields an estimated verified conversion rate of ~1.47% for July, still below August's 3.94% — direction holds, magnitude uncertain.</p>
+  </div>
+
+  <div class="red-box">
+    <div class="box-label">Implication for the Jul 22 report</div>
+    <p>That report's 6.26% (Jul 1–17) and 3.05% (Jun 1–17) "review rate" figures used the same same-window-count method without an order_id join. Given the tracking gap found here likely extends into that period, those figures are probably overstated as a measure of true conversion — recommend re-running with proper attribution before citing them again.</p>
+  </div>
 
   <div style="margin-top:48px;padding-top:20px;border-top:1px solid #eee;font-size:11px;color:#aaa;text-align:center;">
     Generated Aug 10, 2026 &mdash; Stacktome Support &mdash; SelectSpecs verified invitation conversion follow-up &mdash; Data: Zeppelin notebook 2MUPD7DAS
