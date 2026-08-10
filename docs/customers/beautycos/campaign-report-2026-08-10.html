@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beautycos Group — Aug 3–9, 2026 Weekly Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 1100px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 24px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 20px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  nav.toc { margin: 24px 0 32px; padding: 16px 20px; background: #f8f9fa; border-radius: 8px; border-left: 3px solid #6c5ce7; font-size: 14px; line-height: 2; }
+  nav.toc strong { display: block; margin-bottom: 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: #888; }
+  nav.toc a { color: #444; text-decoration: none; margin-right: 20px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 16px 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 5px; }
+  .kpi .value { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 10px; color: #aaa; margin-top: 3px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 14px; }
+  th { background: #f8f9ff; text-align: left; padding: 10px 12px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; white-space: nowrap; }
+  td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: middle; white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafbff; }
+  .market-label { font-weight: 600; color: #1a1a2e; }
+  td.warn { color: #d63031; font-weight: 600; }
+  td.good { color: #00b894; font-weight: 600; }
+  td.neutral { color: #636e72; }
+  .table-scroll { overflow-x: auto; }
+
+  .row-inactive td { color: #b2bec3; }
+  .row-inactive .market-label { color: #b2bec3; }
+
+  .rating-badge { font-weight: 700; font-size: 13px; }
+  .r1 { color: #d63031; }
+  .r2 { color: #e17055; }
+  .r3 { color: #fdcb6e; }
+  .r4 { color: #55efc4; }
+  .r5 { color: #00b894; }
+
+  .source-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; white-space: nowrap; }
+  .sp-attr { background: #f0eeff; color: #6c5ce7; }
+  .sp-organic { background: #f0f0f0; color: #636e72; }
+
+  .insight { background: #fff; border-left: 4px solid #6c5ce7; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .insight p { margin-bottom: 4px; }
+  .insight p:last-child { margin-bottom: 0; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+  .warn-box p { margin-bottom: 4px; color: #4a4a4a; }
+  .warn-box p:last-child { margin-bottom: 0; }
+
+  .finding-list { list-style: none; }
+  .finding-list li { background: #fff; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); line-height: 1.55; }
+  .finding-list li strong { color: #1a1a2e; }
+
+  .muted { color: #888; font-size: 12px; }
+  footer { margin-top: 40px; color: #aaa; font-size: 11px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Beautycos Group — Weekly Campaign Report</h1>
+  <p class="subtitle">Window: Aug 3–9, 2026 &bull; 15 markets (13 active, 2 inactive) &bull; First report for this group &bull; Generated 2026-08-10</p>
+
+  <nav class="toc">
+    <strong>Contents</strong>
+    <a href="#s1">1. Group Overview</a>
+    <a href="#s2">2. Account Breakdown — Invites &amp; Reviews</a>
+    <a href="#s3">3. Email Performance — Opens &amp; Clicks</a>
+    <a href="#s4">4. Attributed Reviews (detail)</a>
+    <a href="#s5">5. Beautycos AT &amp; DE — Inactive Accounts</a>
+    <a href="#s6">6. Findings &amp; Recommendations</a>
+  </nav>
+
+  <h2 id="s1">1. Group Overview</h2>
+  <p>This is the first weekly report for the Beautycos Group — 15 single-market Trustpilot review-invite accounts (<code>_projectId=beautycos</code>), each running one <code>invite-tp</code> campaign (invite + 7-day reminder). 13 of 15 launched sending this week; Denmark has been live since Jul 30 as the group's pilot market. Austria and Germany are currently inactive with zero send activity — see Section 5.</p>
+
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Invites Sent</div><div class="value">3,569</div><div class="sub">across 13 active markets</div></div>
+    <div class="kpi"><div class="label">Reminders Sent</div><div class="value">300</div><div class="sub">Denmark only — 7-day delay not yet elapsed elsewhere</div></div>
+    <div class="kpi"><div class="label">Reviews This Week</div><div class="value">39</div><div class="sub">4 attributed &middot; 35 organic</div></div>
+    <div class="kpi"><div class="label">Group Review Rate</div><div class="value">0.11%</div><div class="sub">attributed / invites sent (reminders excluded)</div></div>
+    <div class="kpi"><div class="label">Avg Rating — Organic</div><div class="value">4.17&#9733;</div><div class="sub">N=35, group-weighted</div></div>
+    <div class="kpi"><div class="label">Avg Rating — Attributed</div><div class="value">2.00&#9733;</div><div class="sub">N=4 — too small to be meaningful yet</div></div>
+    <div class="kpi"><div class="label">5&#9733; Share</div><div class="value">69%</div><div class="sub">27 of 39 reviews this week</div></div>
+    <div class="kpi"><div class="label">Active Markets</div><div class="value">13 / 15</div><div class="sub">AT &amp; DE inactive — see Section 5</div></div>
+  </div>
+
+  <div class="insight">
+    <p><strong>Launch-week snapshot, not a trend yet.</strong> Denmark (the pilot market, live since Jul 30) accounts for 69% of this week's invite volume (2,450 of 3,569) and 46% of reviews (18 of 39). The other 12 active markets only started sending Aug 3, so per-market review counts are mostly 0 or 1 — not enough volume to draw conclusions from review rate or attributed rating yet. Reminders have only fired for Denmark, since the 7-day delay hasn't elapsed for the Aug 3 cohort within this window; expect reminder volume across all 13 active markets from next week's report onward.</p>
+  </div>
+
+  <h2 id="s2">2. Account Breakdown — Invites &amp; Reviews</h2>
+  <p>Sorted by invites sent, descending. Review rate = attributed reviews &divide; invites sent (reminders excluded from the denominator, per convention). Source: Zeppelin (<code>bc_invites</code> / <code>bc_review</code>, notebook <code>2MY241VKS</code>), cross-checked against the campaign report API.</p>
+
+  <div class="table-scroll">
+  <table>
+    <thead>
+      <tr>
+        <th>Market</th>
+        <th>Status</th>
+        <th>Invites</th>
+        <th>Reminders</th>
+        <th>Attributed reviews</th>
+        <th>Organic reviews</th>
+        <th>Review rate</th>
+        <th>Avg &#9733; attributed</th>
+        <th>Avg &#9733; organic</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="market-label">Denmark (DK)</td><td>active</td><td>2,450</td><td>300</td><td>1</td><td>17</td><td>0.04%</td><td class="warn">3.00</td><td class="good">4.88</td></tr>
+      <tr><td class="market-label">Norway (NO)</td><td>active</td><td>329</td><td>0</td><td>0</td><td>3</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="neutral">3.67</td></tr>
+      <tr><td class="market-label">Netherlands (NL)</td><td>active</td><td>252</td><td>0</td><td>1</td><td>3</td><td>0.40%</td><td class="warn">2.00</td><td class="warn">2.67</td></tr>
+      <tr><td class="market-label">Sweden (SE)</td><td>active</td><td>252</td><td>0</td><td>0</td><td>4</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="good">5.00</td></tr>
+      <tr><td class="market-label">United Kingdom (UK)</td><td>active</td><td>84</td><td>0</td><td>1</td><td>2</td><td>1.19%</td><td class="warn">1.00</td><td class="neutral">3.00</td></tr>
+      <tr><td class="market-label">Italy (IT)</td><td>active</td><td>35</td><td>0</td><td>0</td><td>1</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="good">5.00</td></tr>
+      <tr><td class="market-label">France (FR)</td><td>active</td><td>42</td><td>0</td><td>1</td><td>1</td><td>2.38%</td><td class="warn">2.00</td><td class="good">5.00</td></tr>
+      <tr><td class="market-label">Poland (PL)</td><td>active</td><td>28</td><td>0</td><td>0</td><td>2</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="warn">1.00</td></tr>
+      <tr><td class="market-label">Czechia (CZ)</td><td>active</td><td>25</td><td>0</td><td>0</td><td>0</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
+      <tr><td class="market-label">Spain (ES)</td><td>active</td><td>21</td><td>0</td><td>0</td><td>1</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="warn">1.00</td></tr>
+      <tr><td class="market-label">Finland (FI)</td><td>active</td><td>21</td><td>0</td><td>0</td><td>0</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
+      <tr><td class="market-label">Ireland (IE)</td><td>active</td><td>17</td><td>0</td><td>0</td><td>0</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
+      <tr><td class="market-label">Belgium (BE)</td><td>active</td><td>13</td><td>0</td><td>0</td><td>1</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="good">5.00</td></tr>
+      <tr class="row-inactive"><td class="market-label">Austria (AT)</td><td>inactive</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
+      <tr class="row-inactive"><td class="market-label">Germany (DE)</td><td>inactive &#9888;</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
+    </tbody>
+    <tfoot>
+      <tr style="font-weight:700;"><td>Group total</td><td>13/15 active</td><td>3,569</td><td>300</td><td>4</td><td>35</td><td>0.11%</td><td>2.00</td><td>4.17</td></tr>
+    </tfoot>
+  </table>
+  </div>
+  <p class="muted">Germany (&#9888;) is inactive with an additionally broken sender address — see Section 5. Rows with 0 reviews and 0 invites (AT, DE) reflect genuinely empty data, verified via both the campaign API and direct Zeppelin storage listing, not a query gap.</p>
+
+  <h2 id="s3">3. Email Performance — Opens &amp; Clicks</h2>
+  <p>From the invite API's per-campaign report endpoint (<code>POST /campaigns/{id}/report</code>), daily-bucketed and summed over Aug 3&ndash;9. Unaffected markets have no reminder row shown, since reminders have not fired yet outside Denmark. Not available for Austria (zero sends) or Germany (broken sender — endpoint returns HTTP 400).</p>
+
+  <div class="table-scroll">
+  <table>
+    <thead>
+      <tr>
+        <th>Market</th>
+        <th>Invite sent</th>
+        <th>Invite unique opens</th>
+        <th>Open %</th>
+        <th>Invite unique clicks</th>
+        <th>Click %</th>
+        <th>Reminder sent</th>
+        <th>Reminder unique opens</th>
+        <th>Reminder open %</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="market-label">Denmark (DK)</td><td>2,450</td><td>1,143</td><td>46.7%</td><td>81</td><td>3.3%</td><td>300</td><td>180</td><td>60.0%</td></tr>
+      <tr><td class="market-label">Norway (NO)</td><td>329</td><td>163</td><td>49.5%</td><td>25</td><td>7.6%</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td class="market-label">Netherlands (NL)</td><td>252</td><td>120</td><td>47.6%</td><td>14</td><td>5.6%</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td class="market-label">Sweden (SE)</td><td>252</td><td>142</td><td>56.3%</td><td>19</td><td>7.5%</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td class="market-label">United Kingdom (UK)</td><td>84</td><td>45</td><td>53.6%</td><td>5</td><td>6.0%</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td class="market-label">Italy (IT)</td><td>35</td><td>17</td><td>48.6%</td><td>9</td><td>25.7%</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td class="market-label">France (FR)</td><td>42</td><td>19</td><td>45.2%</td><td>1</td><td>2.4%</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td class="market-label">Poland (PL)</td><td>28</td><td>12</td><td>42.9%</td><td>4</td><td>14.3%</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td class="market-label">Czechia (CZ)</td><td>25</td><td>11</td><td>44.0%</td><td>0</td><td>0.0%</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td class="market-label">Spain (ES)</td><td>21</td><td>10</td><td>47.6%</td><td>1</td><td>4.8%</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td class="market-label">Finland (FI)</td><td>21</td><td>13</td><td>61.9%</td><td>5</td><td>23.8%</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td class="market-label">Ireland (IE)</td><td>17</td><td>8</td><td>47.1%</td><td>1</td><td>5.9%</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr><td class="market-label">Belgium (BE)</td><td>13</td><td>7</td><td>53.8%</td><td>2</td><td>15.4%</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+    </tbody>
+    <tfoot>
+      <tr style="font-weight:700;"><td>Group total</td><td>3,569</td><td>1,710</td><td>47.9%</td><td>167</td><td>4.7%</td><td>300</td><td>180</td><td>60.0%</td></tr>
+    </tfoot>
+  </table>
+  </div>
+  <p class="muted">Small-sample note: Italy, Finland, Poland, and Belgium show unusually high click rates (14&ndash;26%) on very small sends (13&ndash;35 invites) — a handful of clicks moves the percentage sharply. Not yet a signal worth acting on.</p>
+
+  <h2 id="s4">4. Attributed Reviews (detail)</h2>
+  <p>All 4 campaign-attributed reviews from the window — i.e. the reviewer's <code>order_id</code> matched a Beautycos invite send. The other 35 reviews this week are organic (no matching invite on file, mostly pre-existing Trustpilot activity for markets like Denmark that predate this campaign).</p>
+
+  <div class="table-scroll">
+  <table>
+    <thead><tr><th>Market</th><th>Rating</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td class="market-label">United Kingdom (UK)</td><td class="rating-badge r1">1&#9733;</td><td>First attributed review for the UK launch — worth a manual look given campaign 729 is brand new this week.</td></tr>
+      <tr><td class="market-label">France (FR)</td><td class="rating-badge r2">2&#9733;</td><td>First attributed review for the FR launch.</td></tr>
+      <tr><td class="market-label">Netherlands (NL)</td><td class="rating-badge r2">2&#9733;</td><td>First attributed review for the NL launch.</td></tr>
+      <tr><td class="market-label">Denmark (DK)</td><td class="rating-badge r3">3&#9733;</td><td>One of 18 DK reviews this week; DK's attributed pool will grow week over week from its Jul 30 start.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="warn-box">
+    <p><strong>All 4 attributed reviews so far are &le;3&#9733;.</strong> With N=1 per market (N=1 for DK's attributed count specifically, out of 18 total DK reviews), this is not statistically meaningful yet — a single unhappy early responder swings the average completely. Flagging for awareness, not alarm: worth checking again once each market has 5&ndash;10+ attributed reviews.</p>
+  </div>
+
+  <h2 id="s5">5. Beautycos AT &amp; DE — Inactive Accounts</h2>
+  <p>Per the account requirement, both markets appear in every table above with zero activity. Details on why:</p>
+
+  <div class="warn-box">
+    <p><strong>Austria (beautycos_at) — campaign 734, status inactive.</strong> Zero sends, all-time. Confirmed two ways: the campaign report API returns an empty <code>stats: []</code> array with no date filter applied (i.e. not just this week — ever), and no <code>_accountId=beautycos_at</code> directory exists at all under <code>/events/invites/email/_projectId=beautycos/</code> in storage. The campaign targets the native Trustpilot integration (no <code>customInviteLink</code> configured). Historical Trustpilot reviews do exist for this market outside the invite flow (25,784-row scan found an <code>app_id=beautycos_at</code> slice), but none fall in this week's window.</p>
+    <p><strong>Germany (beautycos_de) — campaign 727, status inactive.</strong> Same empty-storage situation as Austria (no <code>_accountId=beautycos_de</code> directory), plus an active configuration bug: the campaign report API call fails outright with <code>HTTP 400 Unknown_Sender — "noreply.invitations@beautycos.de"</code>. This means the sending domain/address is not provisioned, which would block sends even if the campaign were reactivated. Recommend flagging to whoever owns Beautycos email infrastructure — this needs a sender-domain fix, not just a campaign reactivation.</p>
+  </div>
+
+  <h2 id="s6">6. Findings &amp; Recommendations</h2>
+  <ul class="finding-list">
+    <li><strong>This is a launch-week snapshot.</strong> 13 of 15 markets sent their first-ever invite on Aug 3, 2026; only Denmark has meaningful history (since Jul 30). Review rate, attributed rating, and open/click percentages will all be noisy for at least 2&ndash;3 more weekly cycles — avoid over-reading single-digit sample sizes.</li>
+    <li><strong>Denmark is the outlier by design, not by accident.</strong> It's the pilot market and carries 69% of this week's invite volume and 46% of reviews. Group-level averages are effectively Denmark-weighted until the other 12 markets scale up — consider reporting DK separately from the "other 12" median in future weeks, the way Den Sidste Flaske splits its markets.</li>
+    <li><strong>Fix Germany's sender address.</strong> This is the one actionable infrastructure bug from this report — <code>noreply.invitations@beautycos.de</code> isn't a valid registered sender, blocking API-based reporting and presumably any future send attempts for that market.</li>
+    <li><strong>Reconfirm Austria's status.</strong> Zero sends ever (not just paused) suggests this market may never have been fully launched, rather than recently deactivated — worth a business-side check on whether AT is still planned.</li>
+    <li><strong>Organic signal (4.17&#9733;, N=35) looks healthier than the attributed signal (2.00&#9733;, N=4) this week</strong> — but both are too small to compare meaningfully yet. Once attributed volume builds, watch whether that gap persists (as it does for Den Sidste Flaske's DK market) or converges.</li>
+    <li><strong>Data model is clean and consistent across all 13 active markets</strong> — identical <code>contact</code> struct schema in the invites Delta tables (no <code>unionByName</code> surprises), and <code>customer_review</code> is exclusively <code>event_subtype='review_order'</code> / <code>event_source='trustpilot'</code> group-wide, i.e. order-level Trustpilot reviews only, no product reviews. This matches every campaign's <code>productInviteTarget: null</code> configuration.</li>
+    <li><strong>Naming gotcha for future reports:</strong> Belgium's storage <code>_accountId</code> is <code>beautycos_be</code>, not the pass-file/<code>ST_ACCOUNT</code> name <code>beautycos_be_nl</code>. Always translate between the two — see the Account Registry entry.</li>
+    <li><strong>Czechia has zero Trustpilot reviews of any kind so far</strong> (not just this week — the full 2026 review scan found none), despite an active campaign since Aug 3. Smallest engagement signal of the 13 active markets; watch next week.</li>
+  </ul>
+
+  <footer>Generated 2026-08-10 &mdash; Data window: Aug 3&ndash;9, 2026 &mdash; Source: Zeppelin notebook <code>support_clone/beautycos_data</code> (2MY241VKS) + Stacktome invites API</footer>
+
+</div>
+</body>
+</html>
