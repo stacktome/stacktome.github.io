@@ -34,6 +34,15 @@
   td.good { color: #00b894; font-weight: 600; }
   td.neutral { color: #636e72; }
   .table-scroll { overflow-x: auto; }
+  .table-fit { overflow: visible; }
+
+  .breakdown-table th { font-size: 9px; padding: 6px 5px; white-space: normal; line-height: 1.25; letter-spacing: .2px; }
+  .breakdown-table td { padding: 6px 5px; font-size: 12px; white-space: nowrap; }
+  .breakdown-table td.market-label { font-weight: 600; }
+
+  .email-table th { font-size: 9px; padding: 6px 5px; white-space: normal; line-height: 1.25; letter-spacing: .2px; }
+  .email-table td { padding: 6px 5px; font-size: 12px; white-space: nowrap; }
+  .email-table td.market-label { font-weight: 600; }
 
   .row-inactive td { color: #b2bec3; }
   .row-inactive .market-label { color: #b2bec3; }
@@ -101,61 +110,62 @@
   <h2 id="s2">2. Account Breakdown — Invites &amp; Reviews</h2>
   <p>Sorted by invites sent, descending. Review rate = attributed reviews &divide; invites sent (reminders excluded from the denominator, per convention). Source: Zeppelin (<code>bc_invites</code> / <code>bc_review</code>, notebook <code>2MY241VKS</code>), cross-checked against the campaign report API.</p>
 
-  <div class="table-scroll">
-  <table>
+  <div class="table-fit">
+  <table class="breakdown-table">
     <thead>
       <tr>
         <th>Market</th>
         <th>Status</th>
         <th>Invites</th>
-        <th>Reminders</th>
-        <th>Attributed reviews</th>
-        <th>Organic reviews</th>
-        <th>Review rate</th>
-        <th>Avg &#9733; attributed</th>
-        <th>Avg &#9733; organic</th>
+        <th>Remind.</th>
+        <th>Attr. rev</th>
+        <th>Organic rev</th>
+        <th>Rev rate</th>
+        <th>Avg&#9733; Attr</th>
+        <th>Avg&#9733; Org</th>
+        <th>Avg&#9733; All</th>
       </tr>
     </thead>
     <tbody>
-      <tr><td class="market-label">Denmark (DK)</td><td>active</td><td>2,450</td><td>300</td><td>1</td><td>17</td><td>0.04%</td><td class="warn">3.00</td><td class="good">4.88</td></tr>
-      <tr><td class="market-label">Norway (NO)</td><td>active</td><td>329</td><td>0</td><td>0</td><td>3</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="neutral">3.67</td></tr>
-      <tr><td class="market-label">Netherlands (NL)</td><td>active</td><td>252</td><td>0</td><td>1</td><td>3</td><td>0.40%</td><td class="warn">2.00</td><td class="warn">2.67</td></tr>
-      <tr><td class="market-label">Sweden (SE)</td><td>active</td><td>252</td><td>0</td><td>0</td><td>4</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="good">5.00</td></tr>
-      <tr><td class="market-label">United Kingdom (UK)</td><td>active</td><td>84</td><td>0</td><td>1</td><td>2</td><td>1.19%</td><td class="warn">1.00</td><td class="neutral">3.00</td></tr>
-      <tr><td class="market-label">Italy (IT)</td><td>active</td><td>35</td><td>0</td><td>0</td><td>1</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="good">5.00</td></tr>
-      <tr><td class="market-label">France (FR)</td><td>active</td><td>42</td><td>0</td><td>1</td><td>1</td><td>2.38%</td><td class="warn">2.00</td><td class="good">5.00</td></tr>
-      <tr><td class="market-label">Poland (PL)</td><td>active</td><td>28</td><td>0</td><td>0</td><td>2</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="warn">1.00</td></tr>
-      <tr><td class="market-label">Czechia (CZ)</td><td>active</td><td>25</td><td>0</td><td>0</td><td>0</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
-      <tr><td class="market-label">Spain (ES)</td><td>active</td><td>21</td><td>0</td><td>0</td><td>1</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="warn">1.00</td></tr>
-      <tr><td class="market-label">Finland (FI)</td><td>active</td><td>21</td><td>0</td><td>0</td><td>0</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
-      <tr><td class="market-label">Ireland (IE)</td><td>active</td><td>17</td><td>0</td><td>0</td><td>0</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
-      <tr><td class="market-label">Belgium (BE)</td><td>active</td><td>13</td><td>0</td><td>0</td><td>1</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="good">5.00</td></tr>
-      <tr class="row-inactive"><td class="market-label">Austria (AT)</td><td>inactive</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
-      <tr class="row-inactive"><td class="market-label">Germany (DE)</td><td>inactive &#9888;</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
+      <tr><td class="market-label">Denmark (DK)</td><td>active</td><td>2,450</td><td>300</td><td>1</td><td>17</td><td>0.04%</td><td class="warn">3.00</td><td class="good">4.88</td><td class="good">4.78</td></tr>
+      <tr><td class="market-label">Norway (NO)</td><td>active</td><td>329</td><td>0</td><td>0</td><td>3</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="neutral">3.67</td><td class="neutral">3.67</td></tr>
+      <tr><td class="market-label">Netherlands (NL)</td><td>active</td><td>252</td><td>0</td><td>1</td><td>3</td><td>0.40%</td><td class="warn">2.00</td><td class="warn">2.67</td><td class="warn">2.50</td></tr>
+      <tr><td class="market-label">Sweden (SE)</td><td>active</td><td>252</td><td>0</td><td>0</td><td>4</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="good">5.00</td><td class="good">5.00</td></tr>
+      <tr><td class="market-label">United Kingdom (UK)</td><td>active</td><td>84</td><td>0</td><td>1</td><td>2</td><td>1.19%</td><td class="warn">1.00</td><td class="neutral">3.00</td><td class="warn">2.33</td></tr>
+      <tr><td class="market-label">Italy (IT)</td><td>active</td><td>35</td><td>0</td><td>0</td><td>1</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="good">5.00</td><td class="good">5.00</td></tr>
+      <tr><td class="market-label">France (FR)</td><td>active</td><td>42</td><td>0</td><td>1</td><td>1</td><td>2.38%</td><td class="warn">2.00</td><td class="good">5.00</td><td class="neutral">3.50</td></tr>
+      <tr><td class="market-label">Poland (PL)</td><td>active</td><td>28</td><td>0</td><td>0</td><td>2</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="warn">1.00</td><td class="warn">1.00</td></tr>
+      <tr><td class="market-label">Czechia (CZ)</td><td>active</td><td>25</td><td>0</td><td>0</td><td>0</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
+      <tr><td class="market-label">Spain (ES)</td><td>active</td><td>21</td><td>0</td><td>0</td><td>1</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="warn">1.00</td><td class="warn">1.00</td></tr>
+      <tr><td class="market-label">Finland (FI)</td><td>active</td><td>21</td><td>0</td><td>0</td><td>0</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
+      <tr><td class="market-label">Ireland (IE)</td><td>active</td><td>17</td><td>0</td><td>0</td><td>0</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
+      <tr><td class="market-label">Belgium (BE)</td><td>active</td><td>13</td><td>0</td><td>0</td><td>1</td><td>0.00%</td><td class="neutral">&mdash;</td><td class="good">5.00</td><td class="good">5.00</td></tr>
+      <tr class="row-inactive"><td class="market-label">Austria (AT)</td><td>inactive</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
+      <tr class="row-inactive"><td class="market-label">Germany (DE)</td><td>inactive &#9888;</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td><td class="neutral">&mdash;</td></tr>
     </tbody>
     <tfoot>
-      <tr style="font-weight:700;"><td>Group total</td><td>13/15 active</td><td>3,569</td><td>300</td><td>4</td><td>35</td><td>0.11%</td><td>2.00</td><td>4.17</td></tr>
+      <tr style="font-weight:700;"><td>Group total</td><td>13/15 active</td><td>3,569</td><td>300</td><td>4</td><td>35</td><td>0.11%</td><td>2.00</td><td>4.17</td><td>3.95</td></tr>
     </tfoot>
   </table>
   </div>
-  <p class="muted">Germany (&#9888;) is inactive with an additionally broken sender address — see Section 5. Rows with 0 reviews and 0 invites (AT, DE) reflect genuinely empty data, verified via both the campaign API and direct Zeppelin storage listing, not a query gap.</p>
+  <p class="muted">Avg&#9733; All = true combined average across attributed + organic review rows together (computed from underlying rating sums, not by averaging the two other columns). Germany (&#9888;) is inactive with an additionally broken sender address — see Section 5. Rows with 0 reviews and 0 invites (AT, DE) reflect genuinely empty data, verified via both the campaign API and direct Zeppelin storage listing, not a query gap.</p>
 
   <h2 id="s3">3. Email Performance — Opens &amp; Clicks</h2>
   <p>From the invite API's per-campaign report endpoint (<code>POST /campaigns/{id}/report</code>), daily-bucketed and summed over Aug 3&ndash;9. Unaffected markets have no reminder row shown, since reminders have not fired yet outside Denmark. Not available for Austria (zero sends) or Germany (broken sender — endpoint returns HTTP 400).</p>
 
-  <div class="table-scroll">
-  <table>
+  <div class="table-fit">
+  <table class="email-table">
     <thead>
       <tr>
         <th>Market</th>
-        <th>Invite sent</th>
-        <th>Invite unique opens</th>
+        <th>Sent</th>
+        <th>Opens</th>
         <th>Open %</th>
-        <th>Invite unique clicks</th>
+        <th>Clicks</th>
         <th>Click %</th>
-        <th>Reminder sent</th>
-        <th>Reminder unique opens</th>
-        <th>Reminder open %</th>
+        <th>Rem. sent</th>
+        <th>Rem. opens</th>
+        <th>Rem. open %</th>
       </tr>
     </thead>
     <tbody>
