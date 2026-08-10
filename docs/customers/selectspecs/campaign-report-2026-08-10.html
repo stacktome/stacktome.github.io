@@ -21,7 +21,7 @@
   .toc a { color: #6c5ce7; text-decoration: none; }
   .toc a:hover { text-decoration: underline; }
 
-  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 28px; }
   .kpi { background: #fff; border-radius: 10px; padding: 16px 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-top: 3px solid #6c5ce7; }
   .kpi.green { border-top-color: #00b894; }
   .kpi.amber { border-top-color: #fdcb6e; }
@@ -122,6 +122,12 @@
       <div class="value">4.36★ → 4.46★</div>
       <div class="delta up">+0.10★</div>
     </div>
+    <div class="kpi red">
+      <div class="label">Organic Reviews (total)</div>
+      <div class="value">70 → 20</div>
+      <div class="delta down">87.5% → 19.2% of all reviews</div>
+      <div class="sub">Confirmed organic + no-join-key, both periods</div>
+    </div>
   </div>
 
   <!-- HEADLINE -->
@@ -146,7 +152,7 @@
 
   <div class="info-box">
     <div class="box-label">Methodology</div>
-    <p><span class="pill pill-b">Jul 22–31</span> and <span class="pill pill-a">Aug 1–10</span> are the two requested 10-day windows. Unlike the naive "reviews in period ÷ invites in period" ratio used in earlier reports, this analysis performs a real join: every review's <code>order_id</code> is matched against the <strong>full invite history</strong> (all-time, not just the window) via <code>order_review_id</code>-keyed attribution, distinguishing (a) <strong>invite-attributed, same-window</strong> — the order was invited within this same 10-day window, (b) <strong>invite-attributed, carryover</strong> — the order was invited at some earlier date, this review just landed in the window, (c) <strong>confirmed organic</strong> — the order has an <code>order_id</code> but was never invited, and (d) <strong>no join key</strong> — no <code>order_id</code> or <code>email</code> on the review, so attribution is unknowable. <strong>Verified invitation conversion rate = invite-attributed same-window reviews ÷ distinct orders invited in that same window</strong> (<code>email_send_type = 'invite'</code>).</p>
+    <p><span class="pill pill-b">Jul 22–31</span> and <span class="pill pill-a">Aug 1–10</span> are the two requested 10-day windows. Unlike the naive "reviews in period ÷ invites in period" ratio used in earlier reports, this analysis performs a real join: every review's <code>order_id</code> is matched against the <strong>full invite history</strong> (all-time, not just the window) via <code>order_review_id</code>-keyed attribution, distinguishing (a) <strong>invite-attributed, same-window</strong> — the order was invited within this same 10-day window, (b) <strong>invite-attributed, carryover</strong> — the order was invited at some earlier date, this review just landed in the window, (c) <strong>confirmed organic</strong> — the order has an <code>order_id</code> but was never invited, and (d) <strong>no join key</strong> — no <code>order_id</code> or <code>email</code> on the review, so attribution is unknowable. <strong>Verified invitation conversion rate = invite-attributed same-window reviews ÷ distinct orders invited in that same window</strong> (<code>email_send_type = 'invite'</code>). For a period-over-period read of non-invited volume, <strong>"Organic reviews — total" combines (c) and (d)</strong> — no-join-key reviews are grouped with confirmed organic as a best-estimate, since every no-join-key review in both windows is a Trustpilot-sourced row with no invite trace, matching the profile of the confirmed-organic rows rather than the invite-attributed ones; this is a working assumption, not a certainty, given (d)'s attribution is technically unknowable.</p>
   </div>
 
   <table class="cmp-table">
@@ -182,6 +188,12 @@
         <td>8 (10.0%)</td>
         <td>5 (4.8%)</td>
         <td class="delta-col delta-neutral">−3</td>
+      </tr>
+      <tr class="subtotal">
+        <td class="metric-col"><strong>Organic reviews — total</strong> (confirmed organic + no join key, best-estimate)</td>
+        <td><strong>70 (87.5%)</strong></td>
+        <td><strong>20 (19.2%)</strong></td>
+        <td class="delta-col delta-down">−50 (−71.4%)</td>
       </tr>
       <tr>
         <td class="metric-col">— invite-attributed, carryover (invited before window)</td>
@@ -247,6 +259,11 @@
         <div class="bar-track"><div class="bar-fill fill-key" style="width:14.4%"></div></div>
         <span class="star-count">15 (14.4%)</span>
       </div>
+      <div class="star-row" style="border-top:1px solid #f0f0f0; padding-top:6px; margin-top:2px;">
+        <span class="star-label"><strong>Organic (combined)</strong></span>
+        <div class="bar-track"><div class="bar-fill fill-organic" style="width:19.2%"></div></div>
+        <span class="star-count"><strong>20 (19.2%)</strong></span>
+      </div>
     </div>
 
     <div class="dist-card">
@@ -270,6 +287,11 @@
         <span class="star-label">No join key</span>
         <div class="bar-track"><div class="bar-fill fill-key" style="width:77.5%"></div></div>
         <span class="star-count">62 (77.5%)</span>
+      </div>
+      <div class="star-row" style="border-top:1px solid #f0f0f0; padding-top:6px; margin-top:2px;">
+        <span class="star-label"><strong>Organic (combined)</strong></span>
+        <div class="bar-track"><div class="bar-fill fill-organic" style="width:87.5%"></div></div>
+        <span class="star-count"><strong>70 (87.5%)</strong></span>
       </div>
     </div>
 
@@ -300,6 +322,11 @@
   <div class="info-box">
     <div class="box-label">Carryover matters — invites don't convert same-window</div>
     <p>In August, carryover reviews (invited before the window, reviewed within it) are 21.2% of all reviews — nearly as large as the same-window-attributed share was for the <em>entire</em> July window. This confirms the account's known pattern of multi-week review lag and is why same-window-only rates will always understate a campaign's eventual yield.</p>
+  </div>
+
+  <div class="amber-box">
+    <div class="box-label">Organic volume swung hard the other way</div>
+    <p>Using the consistent, combined definition (confirmed organic + no-join-key) for both periods, organic reviews fell from <strong>70 (87.5% of all reviews)</strong> in Jul 22–31 to <strong>20 (19.2%)</strong> in Aug 1–10 — a swing of the same size as the invite-attributed increase, and largely the mirror image of the tracking-gap finding above rather than a separate signal. Read the mix shift (organic-dominated → invite-dominated), not the organic count in isolation, since a chunk of what's now counted as "invite-attributed" in August would very likely have been counted the same way in July had the order_id been captured.</p>
   </div>
 
   <div class="good-box">
