@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SelectSpecs — Verified Invitation Conversion Rate (Jul 1–10 vs Aug 1–10, 2026)</title>
+<title>SelectSpecs — Verified Invitation Conversion Rate (Jul 22–31 vs Aug 1–10, 2026)</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
@@ -13,6 +13,7 @@
   h2 { font-size: 16px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
   h3 { font-size: 13px; font-weight: 600; color: #4a4a4a; margin: 16px 0 8px; }
   p { line-height: 1.65; color: #4a4a4a; margin-bottom: 10px; font-size: 13px; }
+  code { background: #f0f0f5; padding: 1px 5px; border-radius: 4px; font-size: 12px; }
 
   .toc { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 24px; }
   .toc .box-label { margin-bottom: 8px; }
@@ -27,16 +28,17 @@
   .kpi.blue  { border-top-color: #0984e3; }
   .kpi.red   { border-top-color: #d63031; }
   .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
-  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; line-height: 1; }
+  .kpi .value { font-size: 24px; font-weight: 700; color: #1a1a2e; line-height: 1; }
   .kpi .delta { font-size: 11px; margin-top: 5px; font-weight: 600; }
   .kpi .delta.up { color: #00b894; }
   .kpi .delta.down { color: #d63031; }
-  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 3px; }
+  .kpi .sub { font-size: 10px; color: #aaa; margin-top: 4px; line-height: 1.4; }
 
   .cmp-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin: 14px 0 24px; }
   .cmp-table th { background: #f8f9ff; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .4px; color: #636e72; border-bottom: 2px solid #eee; }
   .cmp-table td { padding: 11px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
   .cmp-table tr:last-child td { border-bottom: none; }
+  .cmp-table tr.subtotal td { background: #fafaff; }
   .cmp-table .metric-col { color: #636e72; font-size: 12px; }
   .period-a { color: #6c5ce7; font-weight: 700; }
   .period-b { color: #b2bec3; font-weight: 600; }
@@ -52,15 +54,14 @@
   .tag-a { background: #f0ecff; color: #6c5ce7; }
   .tag-b { background: #f0f0f0; color: #636e72; }
   .star-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-  .star-label { font-size: 12px; color: #636e72; width: 22px; flex-shrink: 0; text-align: right; }
+  .star-label { font-size: 12px; color: #636e72; width: 90px; flex-shrink: 0; text-align: right; }
   .bar-track { flex: 1; height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden; }
   .bar-fill { height: 100%; border-radius: 5px; }
-  .fill-5 { background: #00b894; }
-  .fill-4 { background: #55efc4; }
-  .fill-3 { background: #fdcb6e; }
-  .fill-2 { background: #e17055; }
-  .fill-1 { background: #d63031; }
-  .star-count { font-size: 11px; color: #888; width: 60px; text-align: right; flex-shrink: 0; }
+  .fill-key { background: #b2bec3; }
+  .fill-organic { background: #fdcb6e; }
+  .fill-carry { background: #74b9ff; }
+  .fill-same { background: #00b894; }
+  .star-count { font-size: 11px; color: #888; width: 90px; text-align: right; flex-shrink: 0; }
 
   .info-box { background: #f0f8ff; border-left: 4px solid #0984e3; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; }
   .amber-box { background: #fffbf0; border-left: 4px solid #fdcb6e; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; }
@@ -81,15 +82,16 @@
 <div class="wrapper">
 
   <h1>SelectSpecs — Verified Invitation Conversion Rate</h1>
-  <p class="subtitle">Two 10-day periods compared: Jul 1–10 vs Aug 1–10, 2026 &bull; Ad-hoc follow-up to the Jul 22 report &bull; Generated Aug 10, 2026</p>
+  <p class="subtitle">Two 10-day periods compared: Jul 22–31 vs Aug 1–10, 2026 &bull; Ad-hoc follow-up to the Jul 22 report &bull; Generated Aug 10, 2026</p>
 
   <!-- TOC -->
   <div class="toc">
     <div class="box-label">Contents</div>
     <ol>
+      <li><a href="#headline">Headline Finding — a Tracking Gap, Not Just a Rate Change</a></li>
       <li><a href="#comparison">Period Comparison</a></li>
-      <li><a href="#freshness">Data Freshness &amp; Window Caveat</a></li>
-      <li><a href="#stars">Star Distribution</a></li>
+      <li><a href="#breakdown">Review Attribution Breakdown</a></li>
+      <li><a href="#freshness">Data Freshness &amp; Prior-Report Caveat</a></li>
       <li><a href="#findings">Key Findings</a></li>
       <li><a href="#actions">Recommended Actions</a></li>
     </ol>
@@ -97,26 +99,46 @@
 
   <!-- TOP KPIs -->
   <div class="kpi-grid">
-    <div class="kpi green">
-      <div class="label">Verified Conversion Rate</div>
-      <div class="value">6.60%</div>
-      <div class="delta up">6.22% → 6.60% (+0.38pp)</div>
+    <div class="kpi blue">
+      <div class="label">Order_id Tracked</div>
+      <div class="value">22.5% → 85.6%</div>
+      <div class="delta up">reviews with a usable join key</div>
+      <div class="sub">The real story of this window — see below</div>
     </div>
     <div class="kpi amber">
-      <div class="label">Verified Invites Sent</div>
-      <div class="value">−27.9%</div>
-      <div class="delta down">2,185 → 1,575</div>
+      <div class="label">Verified Conv. Rate (as observed)</div>
+      <div class="value">0.33% → 3.94%</div>
+      <div class="delta up">same-window attributed only</div>
+      <div class="sub">Not directly comparable — July understated by the tracking gap</div>
     </div>
     <div class="kpi amber">
-      <div class="label">Reviews Collected</div>
-      <div class="value">−23.5%</div>
-      <div class="delta down">136 → 104</div>
+      <div class="label">Verified Conv. Rate (gap-adjusted est.)</div>
+      <div class="value">~1.47% → 3.94%</div>
+      <div class="delta up">assumes same attribution mix in unkeyed rows</div>
+      <div class="sub">Rough estimate — see methodology</div>
     </div>
     <div class="kpi green">
-      <div class="label">Avg Rating</div>
-      <div class="value">4.46★</div>
-      <div class="delta up">4.43★ → 4.46★</div>
+      <div class="label">Avg Rating (all reviews)</div>
+      <div class="value">4.36★ → 4.46★</div>
+      <div class="delta up">+0.10★</div>
     </div>
+  </div>
+
+  <!-- HEADLINE -->
+  <h2 id="headline">Headline Finding — a Tracking Gap, Not Just a Rate Change</h2>
+
+  <div class="red-box">
+    <div class="box-label">Most reviews in the July window can't be matched to anything</div>
+    <p>Before comparing rates, the join had to be checked properly: does the <code>order_id</code> on each review actually match an invite ever sent to that order? Doing this exposed that <strong>77.5% of Jul 22–31 reviews (62 of 80) carry no <code>order_id</code> and no <code>email</code> at all</strong> — they cannot be matched to an invitation by any method, so their true origin (invited vs. organic) is genuinely unknown, not just "organic." In the Aug 1–10 window this "no join key" share drops to <strong>14.4% (15 of 104)</strong>. The daily trend shows a sharp change right at the month boundary:</p>
+    <table class="cmp-table" style="margin-top:10px;">
+      <thead><tr><th>Date</th><th>Reviews</th><th>% missing order_id</th></tr></thead>
+      <tbody>
+        <tr><td class="metric-col">Jul 25–31 (7 days)</td><td>54</td><td>77.8%</td></tr>
+        <tr><td class="metric-col">Aug 1</td><td>14</td><td>35.7%</td></tr>
+        <tr><td class="metric-col">Aug 2–9 (8 days)</td><td>90</td><td>11.1%</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:8px;">This looks like a data-pipeline fix that landed right around Aug 1–2, not a gradual trend — June overall was 36.2% missing, July 28.3%, August (so far) 14.4%, but the days immediately before Aug 1 were far worse (70–100%) than the monthly average suggests. <strong>This means the Jul 22–31 vs Aug 1–10 comparison is not apples-to-apples on raw review counts</strong> — a large part of any rate change reflects newly-visible attribution, not necessarily a change in customer behaviour. See <a href="#freshness">below</a> for what this implies about the Jul 22 report's own headline numbers.</p>
   </div>
 
   <!-- PERIOD COMPARISON -->
@@ -124,14 +146,14 @@
 
   <div class="info-box">
     <div class="box-label">Methodology</div>
-    <p><span class="pill pill-b">Jul 1–10</span> is the prior-month reference window; <span class="pill pill-a">Aug 1–10</span> is the current-month window requested for this comparison. <strong>Verified invitation conversion rate = reviews received in period ÷ distinct verified-purchase orders receiving an initial invite email in the same period</strong> (<code>email_send_type = 'invite'</code>, deduplicated by <code>order_id</code>; reminders excluded from the denominator). This is the same metric documented as "review rate (invite-only, distinct orders)" in the Jul 22 report — same formula, new label. Three campaigns send under <code>email_send_type = 'invite'</code> on this account (<strong>invite-EN</strong>, <strong>closed-tickets</strong>, <strong>positive-reviews</strong>); all three are included since all are order-triggered invitations to verified purchasers. Campaign mix was checked and is stable across both windows (invite-EN ≈98% of volume in both), so the rate change below is not a mix-shift artifact.</p>
+    <p><span class="pill pill-b">Jul 22–31</span> and <span class="pill pill-a">Aug 1–10</span> are the two requested 10-day windows. Unlike the naive "reviews in period ÷ invites in period" ratio used in earlier reports, this analysis performs a real join: every review's <code>order_id</code> is matched against the <strong>full invite history</strong> (all-time, not just the window) via <code>order_review_id</code>-keyed attribution, distinguishing (a) <strong>invite-attributed, same-window</strong> — the order was invited within this same 10-day window, (b) <strong>invite-attributed, carryover</strong> — the order was invited at some earlier date, this review just landed in the window, (c) <strong>confirmed organic</strong> — the order has an <code>order_id</code> but was never invited, and (d) <strong>no join key</strong> — no <code>order_id</code> or <code>email</code> on the review, so attribution is unknowable. <strong>Verified invitation conversion rate = invite-attributed same-window reviews ÷ distinct orders invited in that same window</strong> (<code>email_send_type = 'invite'</code>).</p>
   </div>
 
   <table class="cmp-table">
     <thead>
       <tr>
         <th>Metric</th>
-        <th><span class="period-b">Jul 1–10</span></th>
+        <th><span class="period-b">Jul 22–31</span></th>
         <th><span class="period-a">Aug 1–10</span></th>
         <th>Delta</th>
       </tr>
@@ -139,147 +161,150 @@
     <tbody>
       <tr>
         <td class="metric-col">Verified invites sent (distinct orders, invite-type)</td>
-        <td>2,185</td>
+        <td>1,820</td>
         <td>1,575</td>
-        <td class="delta-col delta-neutral">−610 (−27.9%)</td>
+        <td class="delta-col delta-neutral">−245 (−13.5%)</td>
       </tr>
       <tr>
-        <td class="metric-col">Reviews received</td>
-        <td>136</td>
+        <td class="metric-col">Total reviews landing in window</td>
+        <td>80</td>
         <td>104</td>
-        <td class="delta-col delta-down">−32 (−23.5%)</td>
+        <td class="delta-col delta-up">+24 (+30.0%)</td>
       </tr>
       <tr>
-        <td class="metric-col"><strong>Verified invitation conversion rate</strong></td>
-        <td><strong>6.22%</strong></td>
-        <td><strong>6.60%</strong></td>
-        <td class="delta-col delta-up">+0.38pp (+6.1%)</td>
+        <td class="metric-col">— no join key (unattributable)</td>
+        <td>62 (77.5%)</td>
+        <td>15 (14.4%)</td>
+        <td class="delta-col delta-neutral">tracking gap, see above</td>
       </tr>
       <tr>
-        <td class="metric-col">Conversion rate (all emailed orders, incl. reminder-only)</td>
-        <td>3.44% (3,951 orders)</td>
-        <td>3.51% (2,965 orders)</td>
-        <td class="delta-col delta-up">+0.07pp</td>
+        <td class="metric-col">— confirmed organic (has key, never invited)</td>
+        <td>8 (10.0%)</td>
+        <td>5 (4.8%)</td>
+        <td class="delta-col delta-neutral">−3</td>
       </tr>
       <tr>
-        <td class="metric-col">Average rating</td>
-        <td>4.43★</td>
+        <td class="metric-col">— invite-attributed, carryover (invited before window)</td>
+        <td>4 (5.0%)</td>
+        <td>22 (21.2%)</td>
+        <td class="delta-col delta-up">+18</td>
+      </tr>
+      <tr>
+        <td class="metric-col">— invite-attributed, same-window</td>
+        <td>6 (7.5%)</td>
+        <td>62 (59.6%)</td>
+        <td class="delta-col delta-up">+56</td>
+      </tr>
+      <tr class="subtotal">
+        <td class="metric-col"><strong>Verified invitation conversion rate</strong> (same-window attributed ÷ invites sent)</td>
+        <td><strong>0.33%</strong> (6/1,820)</td>
+        <td><strong>3.94%</strong> (62/1,575)</td>
+        <td class="delta-col delta-up">+3.61pp — read with caution, see headline</td>
+      </tr>
+      <tr class="subtotal">
+        <td class="metric-col">Broader rate (same-window + carryover attributed ÷ invites sent)</td>
+        <td>0.55% (10/1,820)</td>
+        <td>5.33% (84/1,575)</td>
+        <td class="delta-col delta-up">+4.78pp</td>
+      </tr>
+      <tr>
+        <td class="metric-col">Average rating — all reviews in window</td>
+        <td>4.36★</td>
         <td>4.46★</td>
-        <td class="delta-col delta-up">+0.03★</td>
-      </tr>
-      <tr>
-        <td class="metric-col">% 5-star reviews</td>
-        <td>77.9% (106/136)</td>
-        <td>76.0% (79/104)</td>
-        <td class="delta-col delta-down">−1.9pp</td>
-      </tr>
-      <tr>
-        <td class="metric-col">% 1-star reviews</td>
-        <td>7.4% (10/136)</td>
-        <td>6.7% (7/104)</td>
-        <td class="delta-col delta-up">−0.7pp</td>
+        <td class="delta-col delta-up">+0.10★</td>
       </tr>
     </tbody>
   </table>
 
-  <div class="good-box">
-    <div class="box-label">Sanity check — matched 9-day closed window</div>
-    <p>To rule out the partial current day distorting the headline, the same comparison was re-run on <strong>Jul 1–9 vs Aug 1–9</strong> (9 full days each, excluding Aug 10 entirely): 2,059 invites / 126 reviews / <strong>6.12%</strong> for July vs 1,554 invites / 104 reviews / <strong>6.69%</strong> for August. Zero reviews landed on Aug 10 in either version — the review table's data for that date has not arrived yet (see freshness note below) — so the 10-day and 9-day readings for August are effectively identical. The improvement is real, not a day-count artifact.</p>
-  </div>
-
-  <!-- FRESHNESS -->
-  <h2 id="freshness">Data Freshness &amp; Window Caveat</h2>
-
   <div class="amber-box">
-    <div class="box-label">The Aug 1–10 window is not closed</div>
-    <p>This report was generated <strong>today, Aug 10, 2026</strong> — the standard rule of excluding the generation day from a window was relaxed here because the request specifically asked for "this month 10 days." The review table's <code>MAX(ts_event)</code> is <strong>Aug 9</strong>: no Aug 10 reviews have landed yet, and Aug 10's own invite partition is still filling (41 invite events by query time vs 400+ on a typical peak day this window). More importantly, invites sent late in the August window (especially Aug 5–10) have had only 0–5 days to convert, versus 31–40 days for the July cohort by the time of this report. The Jul 22 report documented this account's reviews arriving weeks after the triggering invite — so <strong>6.60% is very likely a floor for August's eventual rate, not a ceiling.</strong> Re-measure on a fully closed 10-day window (e.g. once Aug 20 has passed) to get a like-for-like reading.</p>
+    <div class="box-label">Gap-adjusted estimate for July</div>
+    <p>Of Jul 22–31's 18 reviews that <em>do</em> carry an order_id, 6 (33.3%) were same-window attributed, 4 (22.2%) carryover, 8 (44.4%) confirmed organic. Applying that same split to the 62 unkeyed reviews as a rough estimate (assuming the tracking gap is random with respect to invitation status, which cannot be verified) yields an estimated ~21 additional same-window-attributed reviews, for an adjusted rate of roughly <strong>~1.47%</strong> (26.7/1,820) — still well below August's as-observed 3.94%. Even under this generous adjustment, August looks structurally better, but the true size of the gap is uncertain and this estimate should not be quoted as a hard number.</p>
   </div>
 
-  <div class="info-box">
-    <div class="box-label">Data quality note — duplicate raw invite rows (Aug 8)</div>
-    <p>Raw invite parquet for Aug 8 contains exact-duplicate rows under the <strong>invite-EN</strong> campaign: 420 invite-type events but only 212 distinct orders — most orders appear twice with an identical <code>order_id</code> and identical <code>ts_event</code> down to the microsecond. This report's denominator already deduplicates via <code>COUNT(DISTINCT order_id)</code>, so the rates above are unaffected, but it's worth flagging to engineering — if the app dashboard's "sends" counter does not deduplicate the same way, it will overstate Aug 8 volume by roughly 2x.</p>
-  </div>
-
-  <!-- STAR DISTRIBUTION -->
-  <h2 id="stars">Star Distribution</h2>
+  <!-- BREAKDOWN -->
+  <h2 id="breakdown">Review Attribution Breakdown</h2>
   <div class="dist-grid">
 
     <div class="dist-card">
-      <div class="card-title">Aug 1–10 <span class="period-tag tag-a">Current</span></div>
+      <div class="card-title">Aug 1–10 <span class="period-tag tag-a">Current</span> — 104 reviews</div>
       <div class="star-row">
-        <span class="star-label">5★</span>
-        <div class="bar-track"><div class="bar-fill fill-5" style="width:76.0%"></div></div>
-        <span class="star-count">79 (76.0%)</span>
+        <span class="star-label">Same-window</span>
+        <div class="bar-track"><div class="bar-fill fill-same" style="width:59.6%"></div></div>
+        <span class="star-count">62 (59.6%)</span>
       </div>
       <div class="star-row">
-        <span class="star-label">4★</span>
-        <div class="bar-track"><div class="bar-fill fill-4" style="width:10.6%"></div></div>
-        <span class="star-count">11 (10.6%)</span>
+        <span class="star-label">Carryover</span>
+        <div class="bar-track"><div class="bar-fill fill-carry" style="width:21.2%"></div></div>
+        <span class="star-count">22 (21.2%)</span>
       </div>
       <div class="star-row">
-        <span class="star-label">3★</span>
-        <div class="bar-track"><div class="bar-fill fill-3" style="width:3.8%"></div></div>
-        <span class="star-count">4 (3.8%)</span>
+        <span class="star-label">Organic</span>
+        <div class="bar-track"><div class="bar-fill fill-organic" style="width:4.8%"></div></div>
+        <span class="star-count">5 (4.8%)</span>
       </div>
       <div class="star-row">
-        <span class="star-label">2★</span>
-        <div class="bar-track"><div class="bar-fill fill-2" style="width:2.9%"></div></div>
-        <span class="star-count">3 (2.9%)</span>
-      </div>
-      <div class="star-row">
-        <span class="star-label">1★</span>
-        <div class="bar-track"><div class="bar-fill fill-1" style="width:6.7%"></div></div>
-        <span class="star-count">7 (6.7%)</span>
+        <span class="star-label">No join key</span>
+        <div class="bar-track"><div class="bar-fill fill-key" style="width:14.4%"></div></div>
+        <span class="star-count">15 (14.4%)</span>
       </div>
     </div>
 
     <div class="dist-card">
-      <div class="card-title">Jul 1–10 <span class="period-tag tag-b">Prior</span></div>
+      <div class="card-title">Jul 22–31 <span class="period-tag tag-b">Prior</span> — 80 reviews</div>
       <div class="star-row">
-        <span class="star-label">5★</span>
-        <div class="bar-track"><div class="bar-fill fill-5" style="width:77.9%"></div></div>
-        <span class="star-count">106 (77.9%)</span>
+        <span class="star-label">Same-window</span>
+        <div class="bar-track"><div class="bar-fill fill-same" style="width:7.5%"></div></div>
+        <span class="star-count">6 (7.5%)</span>
       </div>
       <div class="star-row">
-        <span class="star-label">4★</span>
-        <div class="bar-track"><div class="bar-fill fill-4" style="width:5.9%"></div></div>
-        <span class="star-count">8 (5.9%)</span>
+        <span class="star-label">Carryover</span>
+        <div class="bar-track"><div class="bar-fill fill-carry" style="width:5.0%"></div></div>
+        <span class="star-count">4 (5.0%)</span>
       </div>
       <div class="star-row">
-        <span class="star-label">3★</span>
-        <div class="bar-track"><div class="bar-fill fill-3" style="width:4.4%"></div></div>
-        <span class="star-count">6 (4.4%)</span>
+        <span class="star-label">Organic</span>
+        <div class="bar-track"><div class="bar-fill fill-organic" style="width:10.0%"></div></div>
+        <span class="star-count">8 (10.0%)</span>
       </div>
       <div class="star-row">
-        <span class="star-label">2★</span>
-        <div class="bar-track"><div class="bar-fill fill-2" style="width:4.4%"></div></div>
-        <span class="star-count">6 (4.4%)</span>
-      </div>
-      <div class="star-row">
-        <span class="star-label">1★</span>
-        <div class="bar-track"><div class="bar-fill fill-1" style="width:7.4%"></div></div>
-        <span class="star-count">10 (7.4%)</span>
+        <span class="star-label">No join key</span>
+        <div class="bar-track"><div class="bar-fill fill-key" style="width:77.5%"></div></div>
+        <span class="star-count">62 (77.5%)</span>
       </div>
     </div>
 
   </div>
+  <p style="margin-top:-16px;">All reviews on this account arrive via Trustpilot or Google (no direct Stacktome-widget reviews); the "no join key" bucket is 100% Trustpilot in both windows, consistent with a webhook/import step not always carrying the order reference through — not a difference in review source mix.</p>
 
-  <!-- KEY FINDINGS -->
+  <!-- FRESHNESS -->
+  <h2 id="freshness">Data Freshness &amp; Prior-Report Caveat</h2>
+
+  <div class="amber-box">
+    <div class="box-label">The Aug 1–10 window is not closed</div>
+    <p>Generated today, Aug 10, 2026. The review table's <code>MAX(ts_event)</code> is Aug 9 — no Aug 10 reviews have landed yet — and invites sent late in the August window (Aug 5–10) have had only 0–5 days to convert vs 10–20 days for the July cohort. Expect August's rate to climb further as the window matures.</p>
+  </div>
+
+  <div class="red-box">
+    <div class="box-label">This calls the Jul 22 report's headline rate into question</div>
+    <p>The Jul 22 report (Jun 1–17 vs Jul 1–17) computed "review rate" as <em>reviews landing in period ÷ invites sent in period</em> — a same-window count, without verifying via <code>order_id</code> that those reviews actually came from invited orders. Given what this analysis found — most reviews in that era carry no <code>order_id</code>, and the ones that do split roughly 40/30/30 between same-window / carryover / organic — the previously published <strong>6.26% (Jul 1–17)</strong> and <strong>3.05% (Jun 1–17)</strong> figures are very likely overstated as measures of true invitation-to-review conversion; they mostly reflect coincidental timing between two independently-growing counts, inflated further by the same order_id gap documented here. This report's numbers are not directly comparable to those earlier ones as a result. <strong>Recommend re-running the Jun–Jul comparison with proper order_id-based attribution before citing those percentages again.</strong></p>
+  </div>
+
+  <!-- FINDINGS -->
   <h2 id="findings">Key Findings</h2>
 
   <div class="good-box">
-    <div class="box-label">Conversion rate improved on a smaller invite base</div>
-    <p>August converted <strong>6.60%</strong> of verified invitations into reviews vs <strong>6.22%</strong> in July, even though invite volume fell 27.9% (2,185 → 1,575). This is the same "efficiency, not volume" pattern the Jul 22 report identified between June and July — the account continues to hold a steady-state rate in the <strong>6%+</strong> band across three consecutive measurement windows now (Jul 1–17: 6.26%; Jul 1–10: 6.22%; Aug 1–10: 6.60%).</p>
+    <div class="box-label">August looks better even after accounting for the tracking gap</div>
+    <p>The as-observed jump (0.33% → 3.94%) is not a reliable read of behavioural change — most of it is the order_id gap closing. But even the conservative gap-adjusted estimate for July (~1.47%) sits well below August's as-observed 3.94%, so the direction of improvement is likely real; only the magnitude is uncertain.</p>
   </div>
 
-  <div class="amber-box">
-    <div class="box-label">Provisional reading — likely to climb further</div>
-    <p>Because the August window is only 0–10 days old at generation time, its 6.60% figure has not had the same maturation time as July's 31–40-day-old cohort. Given this account's documented pattern of late-arriving reviews, the true August conversion rate is more likely to end up above 6.60% than below it once the window fully closes.</p>
+  <div class="info-box">
+    <div class="box-label">Carryover matters — invites don't convert same-window</div>
+    <p>In August, carryover reviews (invited before the window, reviewed within it) are 21.2% of all reviews — nearly as large as the same-window-attributed share was for the <em>entire</em> July window. This confirms the account's known pattern of multi-week review lag and is why same-window-only rates will always understate a campaign's eventual yield.</p>
   </div>
 
   <div class="good-box">
-    <div class="box-label">Rating quality held steady and healthy</div>
-    <p>Average rating ticked up slightly (4.43★ → 4.46★) and 1-star share improved (7.4% → 6.7%), with no signs of the quality slippage the Jul 22 report flagged for the back half of July. Sample sizes are modest (104–136 reviews per window), so treat the star-distribution deltas as directional rather than statistically decisive.</p>
+    <div class="box-label">Rating quality improved</div>
+    <p>Average rating across all reviews (regardless of attribution) rose from 4.36★ to 4.46★. Sample sizes are small (80–104 reviews per window), so treat this as directional.</p>
   </div>
 
   <!-- ACTIONS -->
@@ -287,15 +312,15 @@
   <ul class="action-list">
     <li>
       <div class="action-num">1</div>
-      <div><strong>Re-measure on a fully closed Aug 1–10 window in ~2–3 weeks.</strong> Today's 6.60% is a floor, not a final number — confirm whether the gap over July widens once late-window invites finish converting.</div>
+      <div><strong>Escalate the order_id tracking gap to engineering.</strong> 77.5% of late-July reviews and even 14.4% of August reviews cannot be attributed to any invite by any method. Identify what changed around Aug 1–2 and confirm it's a genuine fix (not a filter that's silently dropping other data) — and check whether the gap can be backfilled for June–July history.</div>
     </li>
     <li>
       <div class="action-num">2</div>
-      <div><strong>Flag the Aug 8 duplicate invite-EN rows to engineering.</strong> Exact-duplicate order_id + timestamp pairs suggest a double-send or double-log event on that date; harmless to this report's math (deduplicated) but worth confirming it isn't inflating the app dashboard's raw send count or, worse, actually double-emailing customers.</div>
+      <div><strong>Re-audit the Jul 22 report's 6.26% / 3.05% "review rate" figures</strong> using this same order_id-attribution methodology before they're cited again — those numbers were built on same-window counts without a verified join and are likely overstated.</div>
     </li>
     <li>
       <div class="action-num">3</div>
-      <div><strong>Adopt 10-day rolling windows as a faster signal, anchored to the 5-6%+ closed-window benchmark.</strong> Three consecutive readings (6.26%, 6.22%, 6.60%) now corroborate the steady-state range identified in the Jul 22 report — continue tracking monthly on closed windows for the authoritative figure, using 10-day snapshots like this one only as an early read.</div>
+      <div><strong>Re-measure this comparison once the order_id fix has had 30+ days to mature and both windows are fully closed.</strong> Today's numbers mix a genuine tracking-gap closure with an unclosed current window — a clean read needs both effects to settle.</div>
     </li>
   </ul>
 
