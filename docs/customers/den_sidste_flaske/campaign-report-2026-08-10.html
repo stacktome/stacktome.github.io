@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Den Sidste Flaske — July 2026 Group Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 1040px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 28px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 20px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+  p.note { font-size: 12px; color: #888; margin-top: 8px; }
+
+  nav.toc { background: #fff; border-radius: 10px; padding: 16px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 28px; font-size: 13px; }
+  nav.toc .toc-label { font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: .6px; font-size: 10px; margin-bottom: 10px; }
+  nav.toc ol { margin: 0; padding-left: 18px; line-height: 2; }
+  nav.toc a { color: #6c5ce7; text-decoration: none; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 16px; }
+  .kpi-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 16px 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 5px; }
+  .kpi .value { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 10px; color: #aaa; margin-top: 3px; }
+  .kpi.warn .value { color: #e17055; }
+  .kpi.danger .value { color: #d63031; }
+  .kpi.good .value { color: #00b894; }
+
+  .market-badge { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: #fff; margin-right: 8px; }
+  .mb-dk { background: #6c5ce7; }
+  .mb-de { background: #0984e3; }
+  .mb-se { background: #e17055; }
+
+  .market-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+  .market-card { background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .market-card .mc-name { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 10px; }
+  .market-card .mc-avg { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .market-card .mc-sub { font-size: 11px; color: #888; margin-top: 2px; margin-bottom: 10px; }
+  .mc-row { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; border-top: 1px solid #f0f0f0; color: #636e72; }
+  .mc-row strong { color: #2d3436; }
+
+  .split-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+  .split-box { border-radius: 8px; padding: 10px 14px; }
+  .split-attr { background: #f0eeff; border-left: 3px solid #6c5ce7; }
+  .split-organic { background: #f5f6fa; border-left: 3px solid #b2bec3; }
+  .split-box .sb-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 4px; }
+  .split-box .sb-count { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+  .split-box .sb-avg { font-size: 12px; color: #636e72; margin-top: 2px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 14px; }
+  th { background: #f8f9ff; text-align: left; padding: 10px 12px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; white-space: nowrap; }
+  td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr.total-row td { font-weight: 600; background: #f8f9ff; border-top: 2px solid #eee; }
+  td.warn { color: #e17055; font-weight: 600; }
+  td.danger { color: #d63031; font-weight: 600; }
+  td.good { color: #00b894; font-weight: 600; }
+
+  .insight { background: #fff; border-left: 4px solid #6c5ce7; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+  .danger-box { background: #fff0f0; border-left: 4px solid #d63031; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 14px 0; }
+  .theme-card { background: #fff; border-radius: 8px; padding: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .theme-card .th-label { font-size: 12px; font-weight: 600; color: #1a1a2e; margin-bottom: 4px; }
+  .theme-card .th-count { font-size: 22px; font-weight: 700; }
+  .theme-card .th-note { font-size: 11px; color: #888; margin-top: 3px; line-height: 1.5; }
+  .tc-delivery .th-count { color: #e17055; }
+  .tc-stock .th-count { color: #d63031; }
+  .tc-quality .th-count { color: #fdcb6e; }
+  .tc-misc .th-count { color: #6c5ce7; }
+
+  .review-card { background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 12px; }
+  .rc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .rating-badge { font-weight: 700; font-size: 13px; }
+  .r1 { color: #d63031; }
+  .r2 { color: #e17055; }
+  .r3 { color: #fdcb6e; }
+  .rc-market { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+  .rc-dk { background: #f0eeff; color: #6c5ce7; }
+  .rc-de { background: #e8f4fd; color: #0984e3; }
+  .rc-se { background: #fff0ec; color: #e17055; }
+  .sp-attr { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; background: #f0eeff; color: #6c5ce7; }
+  .sp-organic { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; background: #f0f0f0; color: #636e72; }
+  .rc-meta { font-size: 11px; color: #aaa; }
+  .rc-text { font-size: 13px; color: #4a4a4a; line-height: 1.55; }
+  .rc-gloss { font-size: 12px; color: #888; font-style: italic; margin-top: 6px; }
+
+  .action-list { list-style: none; padding: 0; }
+  .action-list li { display: flex; gap: 14px; background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 12px; }
+  .anum { width: 28px; height: 28px; border-radius: 50%; background: #6c5ce7; color: #fff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+  .prev-compare { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0; }
+  .pc-card { background: #fff; border-radius: 8px; padding: 12px 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .pc-card .pc-market { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 8px; }
+  .pc-row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; }
+  .pc-row .pc-label { color: #888; }
+  .arrow-up { color: #d63031; } .arrow-dn { color: #00b894; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<h1>Den Sidste Flaske — July 2026 Group Report</h1>
+<p class="subtitle">All markets (DK · DE · SE) &nbsp;·&nbsp; Campaign period: July 2026 &nbsp;·&nbsp; Generated: 10 Aug 2026</p>
+
+<nav class="toc">
+  <div class="toc-label">Contents</div>
+  <ol>
+    <li><a href="#exec-summary">Executive Summary</a></li>
+    <li><a href="#july-volume">July Volume — Invites &amp; Sends</a></li>
+    <li><a href="#market-performance">Market Performance</a></li>
+    <li><a href="#attribution">Attribution Split</a></li>
+    <li><a href="#negative-reviews">Negative Reviews</a></li>
+    <li><a href="#mom-comparison">Month-on-Month Comparison</a></li>
+    <li><a href="#action-items">Action Items</a></li>
+  </ol>
+</nav>
+
+<!-- EXECUTIVE SUMMARY -->
+<h2 id="exec-summary">Executive Summary</h2>
+
+<div class="kpi-grid">
+  <div class="kpi good">
+    <div class="label">Group Avg Rating</div>
+    <div class="value">4.50★</div>
+    <div class="sub">vs 4.16★ June (all markets)</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Total Reviews</div>
+    <div class="value">336</div>
+    <div class="sub">DK 245 · DE 62 · SE 29</div>
+  </div>
+  <div class="kpi good">
+    <div class="label">Negatives ≤3★</div>
+    <div class="value">42</div>
+    <div class="sub">12.5% of total — DK 34 · DE 4 · SE 4</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Total Invites Sent</div>
+    <div class="value">8,146</div>
+    <div class="sub">DK 6,200 · DE 909 · SE 1,037</div>
+  </div>
+  <div class="kpi good">
+    <div class="label">Campaign Avg (Attributed)</div>
+    <div class="value">4.58★</div>
+    <div class="sub">85 attributed reviews</div>
+  </div>
+</div>
+
+<div class="good-box">
+  <p><strong>DK's June delivery crisis eased substantially in July.</strong> The negative-review rate fell from 26.7% in June to 13.9% in July, and the DK average climbed from 4.04★ to 4.49★. Delivery/logistics complaints are still the single largest theme (roughly half of DK's 34 negatives) — dag-til-dag delivery promises are still being broken on a subset of orders, a driver-language complaint appeared for the first time (courier could not read Danish addresses or speak Danish/English), and one customer described three consecutive failed deliveries — but the volume and severity are both down sharply from June's crisis peak. This reads as a real, if partial, recovery rather than a resolved issue.</p>
+</div>
+
+<div class="insight">
+  <p><strong>DE's attribution rate and volume both declined despite invite volume falling only 20%.</strong> Absolute attributed reviews dropped from 31 in June to 18 in July (56.4% → 29.0% of DE's total), a larger drop than invite volume alone explains (1,132 → 909 invites, -19.7%). DE's email open/click data could not be fetched this month — see the credential gap noted below — so it isn't possible yet to tell whether this is a deliverability problem or organic growth outpacing invited growth. Overall DE quality held steady (4.67★ → 4.61★, still healthy). SE continued its recovery: the attributed average that crashed to 3.5★ in June (driven by delivery complainants) is back up to 4.13★, and the Airmee delivery-delay theme flagged in June is still present but smaller (2 of SE's 4 negatives).</p>
+</div>
+
+<!-- JULY VOLUME -->
+<h2 id="july-volume">July Volume — Invites &amp; Sends</h2>
+
+<table>
+  <tr><th>Market</th><th>Campaign</th><th>Campaign ID</th><th>Invites</th><th>Reminders</th><th>Total Sends</th></tr>
+  <tr>
+    <td><span class="market-badge mb-dk">DK</span></td>
+    <td>invite-tp</td><td>391</td>
+    <td>6,200</td><td>6,200</td><td>12,400</td>
+  </tr>
+  <tr>
+    <td><span class="market-badge mb-de">DE</span></td>
+    <td>invite-recent</td><td>585</td>
+    <td>907</td><td>1,434</td><td>2,341</td>
+  </tr>
+  <tr>
+    <td><span class="market-badge mb-de">DE</span></td>
+    <td>invite-tp <span class="note" style="font-size:10px;">(new, pilot volume)</span></td><td>518</td>
+    <td>2</td><td>4</td><td>6</td>
+  </tr>
+  <tr>
+    <td><span class="market-badge mb-se">SE</span></td>
+    <td>invite-recent</td><td>576</td>
+    <td>1,035</td><td>1,550</td><td>2,585</td>
+  </tr>
+  <tr>
+    <td><span class="market-badge mb-se">SE</span></td>
+    <td>invite-tp <span class="note" style="font-size:10px;">(new, pilot volume)</span></td><td>519</td>
+    <td>2</td><td>2</td><td>4</td>
+  </tr>
+  <tr class="total-row">
+    <td colspan="3">Group Total</td>
+    <td>8,146</td><td>9,190</td><td>17,336</td>
+  </tr>
+</table>
+<p class="note">New this month: campaigns 518 (DE) and 519 (SE) both named "invite-tp" appeared with 2 invites each — the same campaign name DK's main campaign uses. Volume is too small to affect any total meaningfully, but worth confirming with the account team whether this is an intentional pilot of the DK-style invite-tp flow in DE/SE. DE invite volume fell 19.7% vs June (1,132 → 909); SE invite volume rose 2.5% (1,012 → 1,037); DK rose 10.9% (5,589 → 6,200).</p>
+
+<!-- MARKET PERFORMANCE -->
+<h2 id="market-performance">Market Performance</h2>
+
+<div class="market-grid">
+  <div class="market-card">
+    <div class="mc-name"><span class="market-badge mb-dk">DK</span> den_sidste_flaske</div>
+    <div class="mc-avg" style="color:#00b894;">4.49★</div>
+    <div class="mc-sub">245 reviews — Jul 2026</div>
+    <div class="mc-row"><span>5★</span><strong>187 (76.3%)</strong></div>
+    <div class="mc-row"><span>4★</span><strong>24 (9.8%)</strong></div>
+    <div class="mc-row"><span style="color:#fdcb6e;">3★</span><strong>14 (5.7%)</strong></div>
+    <div class="mc-row"><span style="color:#e17055;">2★</span><strong>8 (3.3%)</strong></div>
+    <div class="mc-row"><span style="color:#d63031;">1★</span><strong>12 (4.9%)</strong></div>
+    <div class="mc-row" style="margin-top:6px;border-top:2px solid #eee;"><span>Attributed avg</span><strong style="color:#00b894;">4.64★</strong></div>
+    <div class="mc-row"><span>Organic avg</span><strong style="color:#00b894;">4.45★</strong></div>
+    <div class="mc-row"><span>Review rate</span><strong>0.95% (59/6,200)</strong></div>
+  </div>
+  <div class="market-card">
+    <div class="mc-name"><span class="market-badge mb-de">DE</span> den_sidste_flaske_de</div>
+    <div class="mc-avg" style="color:#00b894;">4.61★</div>
+    <div class="mc-sub">62 reviews — Jul 2026</div>
+    <div class="mc-row"><span>5★</span><strong>47 (75.8%)</strong></div>
+    <div class="mc-row"><span>4★</span><strong>11 (17.7%)</strong></div>
+    <div class="mc-row" style="color:#fdcb6e;"><span>3★</span><strong>1 (1.6%)</strong></div>
+    <div class="mc-row"><span style="color:#e17055;">2★</span><strong>1 (1.6%)</strong></div>
+    <div class="mc-row"><span style="color:#d63031;">1★</span><strong>2 (3.2%)</strong></div>
+    <div class="mc-row" style="margin-top:6px;border-top:2px solid #eee;"><span>Attributed avg</span><strong style="color:#6c5ce7;">4.56★</strong></div>
+    <div class="mc-row"><span>Organic avg</span><strong>4.64★</strong></div>
+    <div class="mc-row"><span>Review rate</span><strong>1.98% (18/909)</strong></div>
+  </div>
+  <div class="market-card">
+    <div class="mc-name"><span class="market-badge mb-se">SE</span> den_sidste_flaske_se</div>
+    <div class="mc-avg" style="color:#00b894;">4.31★</div>
+    <div class="mc-sub">29 reviews — Jul 2026</div>
+    <div class="mc-row"><span>5★</span><strong>19 (65.5%)</strong></div>
+    <div class="mc-row"><span>4★</span><strong>6 (20.7%)</strong></div>
+    <div class="mc-row" style="color:#fdcb6e;"><span>3★</span><strong>1 (3.4%)</strong></div>
+    <div class="mc-row"><span style="color:#e17055;">2★</span><strong>0</strong></div>
+    <div class="mc-row"><span style="color:#d63031;">1★</span><strong>3 (10.3%)</strong></div>
+    <div class="mc-row" style="margin-top:6px;border-top:2px solid #eee;"><span>Attributed avg</span><strong>4.13★</strong></div>
+    <div class="mc-row"><span>Organic avg</span><strong>4.38★</strong></div>
+    <div class="mc-row"><span>Review rate</span><strong>0.77% (8/1,037)</strong></div>
+  </div>
+</div>
+
+<!-- ATTRIBUTION SPLIT -->
+<h2 id="attribution">Attribution Split</h2>
+
+<table>
+  <tr><th>Market</th><th>Total Reviews</th><th>Attributed</th><th>Organic</th><th>Att %</th><th>Avg (Attributed)</th><th>Avg (Organic)</th><th>Review Rate</th></tr>
+  <tr>
+    <td><span class="market-badge mb-dk">DK</span></td>
+    <td>245</td><td>59</td><td>186</td><td>24.1%</td>
+    <td class="good">4.64★</td><td class="good">4.45★</td><td>0.95%</td>
+  </tr>
+  <tr>
+    <td><span class="market-badge mb-de">DE</span></td>
+    <td>62</td><td>18</td><td>44</td><td>29.0%</td>
+    <td>4.56★</td><td class="good">4.64★</td><td class="good">1.98%</td>
+  </tr>
+  <tr>
+    <td><span class="market-badge mb-se">SE</span></td>
+    <td>29</td><td>8</td><td>21</td><td>27.6%</td>
+    <td>4.13★</td><td>4.38★</td><td>0.77%</td>
+  </tr>
+  <tr class="total-row">
+    <td>Group</td>
+    <td>336</td><td>85</td><td>251</td><td>25.3%</td>
+    <td>~4.58★</td><td>~4.48★</td><td>1.04%</td>
+  </tr>
+</table>
+
+<p>Attribution uses the same full-invite-history, app_id-scoped method as June (order_id join, with email recovered from <code>customer_purchase.order_number</code> for reviews that carry no email — still the large majority: 95%+ of July's organic-looking reviews had no email attached). Group attribution rate fell from 38.8% in June to 25.3% in July — but this is not evenly distributed: DK's rate fell (36.2% → 24.1%) even as its invite volume and total review count both rose, meaning organic review volume grew faster than attributed volume; DE's rate fell more sharply (56.4% → 29.0%) alongside an actual decline in invite volume; SE's rate rose (20.0% → 27.6%).</p>
+
+<p class="note">Methodology note: June's figures shown throughout this report (here and in the Month-on-Month section) are a corrected recompute of the originally published June report, not a re-fetch of new data. The original June build's purchase-order email-recovery step was not scoped by <code>app_id</code>, which could cross-attribute a review in one market to another market's campaign. Recomputing with the fix applied left DK unchanged (84 attributed) but corrected DE from 32→31 and SE from 6→4 attributed reviews — group-level totals (307 reviews, 70 negatives, 4.16★ overall) are unchanged and match the originally published report exactly, so this is a small, contained correction, not a restatement of June's headline numbers.</p>
+
+<!-- NEGATIVE REVIEWS -->
+<h2 id="negative-reviews">Negative Reviews (≤3★) — 42 Total</h2>
+
+<h3>Complaint Themes</h3>
+<div class="theme-grid">
+  <div class="theme-card tc-delivery">
+    <div class="th-label">🚚 Delivery Failure — still the top theme, but smaller</div>
+    <div class="th-count">~21 reviews</div>
+    <div class="th-note">Broken "dag til dag levering" promises, split/partial deliveries, wrong-address drop-offs, and — new this month — a courier who could neither read Danish addresses nor speak Danish or English, requiring the customer to send someone out to guide him. SE's Airmee delivery-delay pattern from June continued at smaller volume (2 cases). Still the largest single theme, but roughly a third of June's volume in absolute terms.</div>
+  </div>
+  <div class="theme-card tc-stock">
+    <div class="th-label">📦 Stock &amp; Fulfilment Errors</div>
+    <div class="th-count">~5 reviews</div>
+    <div class="th-note">Wrong wines substituted for advertised ones without disclosure ("bait and switch" complaint, DK), only 50% of an order delivered with no ETA on the rest after 14 days (DK), wrong wine style delivered (rosé ordered, red received, DK), and one case in DE of duplicate delivery tied to a confusing double-charge/refund on PayPal.</div>
+  </div>
+  <div class="theme-card tc-quality">
+    <div class="th-label">🍷 Wine Quality</div>
+    <div class="th-count">~10 reviews</div>
+    <div class="th-note">Mostly taste/preference complaints (wine "not to my taste", inconsistent bottle-to-bottle quality in mixed cases) rather than the acute defect pattern from June. One SE review describes a genuinely undrinkable bottle with a dried-out cork — the same class of quality-control issue as June's clearance-box complaint, but isolated rather than a disclosed batch problem this time.</div>
+  </div>
+  <div class="theme-card tc-misc">
+    <div class="th-label">⚙️ Other</div>
+    <div class="th-count">~6 reviews</div>
+    <div class="th-note">A satisfaction survey sent before the order had even arrived (two separate DK complaints about this timing), a misleading "sale" price claim in DE (discount computed against an inflated reference price), aggressive post-purchase marketing (DK), and an address-lookup failure at checkout for a long-time customer (DK).</div>
+  </div>
+</div>
+
+<h3>Selected Reviews — DK</h3>
+
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r1">1★</span>
+    <span class="rc-market rc-dk">DK</span>
+    <span class="sp-organic">organic</span>
+    <span class="rc-meta">#460650DSF · Jul 17</span>
+  </div>
+  <div class="rc-text">"Har bestilt i mandags 12 flasker vin til en 20 års fødselsdag... Nu det fredag og vi har stadig ikke modtaget vinen. Jeg har været i dialog ind over det meste af dagen med den sidste flaske, og får nu afvide først kan levere vinen på mandag det vil sige 7 dage efter. Det er under alt kritik... Hold jer langt væk."</div>
+  <div class="rc-gloss">(Ordered 12 bottles for a 20th birthday on Monday, promised delivery Thursday; still not delivered Friday, now told Monday — 7 days late.)</div>
+</div>
+
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r1">1★</span>
+    <span class="rc-market rc-dk">DK</span>
+    <span class="sp-organic">organic</span>
+    <span class="rc-meta">Jul 15</span>
+  </div>
+  <div class="rc-text">"De snyder deres kunder på det groveste. Jeg købte en smagekasse med rosévin, som jeg havde set annonceret på Instagram. Da jeg modtog kassen havde de dog udskiftet flere af flaskerne med billigere alternativer, uden at det blev gjort tydeligt."</div>
+  <div class="rc-gloss">(Ordered a rosé tasting box from an Instagram ad; several bottles were substituted with cheaper alternatives without disclosure.)</div>
+</div>
+
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r2">2★</span>
+    <span class="rc-market rc-dk">DK</span>
+    <span class="sp-attr">attributed</span>
+    <span class="rc-meta">13205895709050 · Jul 6</span>
+  </div>
+  <div class="rc-text">"Elendig service ved dør til dørlevering, Hvordan kan det undgås? Vinen er udmærket"</div>
+  <div class="rc-gloss">(Poor door-to-door delivery service; the wine itself was fine — an invited, otherwise-satisfied customer flagging delivery specifically.)</div>
+</div>
+
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r3">3★</span>
+    <span class="rc-market rc-dk">DK</span>
+    <span class="sp-organic">organic</span>
+    <span class="rc-meta">Jul 23</span>
+  </div>
+  <div class="rc-text">"Vinen skønnes at være ok. Leveringstiden er ikke ok. På indgangssiden til den sidste flaske fremgår det at der er dag til dag levering, men det overholdes ikke. Bestilte en onsdag og fik leveret mandagen i den efterfølgende uge."</div>
+  <div class="rc-gloss">(Wine was fine; delivery time was not — the "day-to-day delivery" promise on the homepage was not met. Ordered Wednesday, delivered the following Monday.)</div>
+</div>
+
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r3">3★</span>
+    <span class="rc-market rc-dk">DK</span>
+    <span class="sp-organic">organic</span>
+    <span class="rc-meta">Jul 30</span>
+  </div>
+  <div class="rc-text">"Dybt problematisk at chaufføren hverken kan tale dansk eller engelsk. Leveringen blev sendt retur i går da chaufføren heller ikke kunne læse skilte og finde det rette hus. I dag måtte jeg sætte folk i området til at lokalisere ham og guide ham til huset."</div>
+  <div class="rc-gloss">(Deeply problematic that the driver speaks neither Danish nor English — the delivery was returned the previous day because he couldn't read signs or find the house; today the customer had to send people out to guide him.)</div>
+</div>
+
+<h3>Selected Reviews — DE &amp; SE</h3>
+
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r1">1★</span>
+    <span class="rc-market rc-de">DE</span>
+    <span class="sp-attr">attributed</span>
+    <span class="rc-meta">6134958850094 · Jul 4</span>
+  </div>
+  <div class="rc-text">"Liebe Freunde, ich bin von dem Wein komplett enttäuscht. Er riecht schon unsympathisch und das Geschmackserlebnis ist wirklich mau. Ich kann froh sein, dass meine Göste sehr höflich waren. Die halbe Sendung ist übrigens nie angekommen."</div>
+  <div class="rc-gloss">(Completely disappointed with the wine — smells off, poor taste. Half the shipment never arrived.)</div>
+</div>
+
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r1">1★</span>
+    <span class="rc-market rc-de">DE</span>
+    <span class="sp-organic">organic</span>
+    <span class="rc-meta">Jul 31</span>
+  </div>
+  <div class="rc-text">"Leider ist die Lieferung doppelt erfolgt. Auf meine erste Bestellung gab es keine Bestellbestätigung. Auf die zweite schon. Beide Male wurde mit PayPal bezahlt. Der Betrag von der ersten Bestellung wurde offenbar storniert..."</div>
+  <div class="rc-gloss">(Delivery arrived twice — no order confirmation on the first order, only the second, both paid via PayPal; the first charge was apparently cancelled but the confusion remained.)</div>
+</div>
+
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r1">1★</span>
+    <span class="rc-market rc-se">SE</span>
+    <span class="sp-organic">organic</span>
+    <span class="rc-meta">Jul 5</span>
+  </div>
+  <div class="rc-text">"Ej drickbart vin. Inte sälga dåligt vin. Mycket dåligt. Vin Smakade ättika. På två flaskor var korken så torr att den inte gick att få upp. Hällde ut vinet. Ej drickbart"</div>
+  <div class="rc-gloss">(Undrinkable wine, tasted of vinegar; two bottles had corks so dried out they couldn't be opened. Poured it out.)</div>
+</div>
+
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r1">1★</span>
+    <span class="rc-market rc-se">SE</span>
+    <span class="sp-attr">attributed</span>
+    <span class="rc-meta">6310719291547 · Jul 9</span>
+  </div>
+  <div class="rc-text">"Problem med leverans, kunde inte vara hemma vid leverans. Ingen återkoppling från fraktbolaget om när jag kommer få leverans."</div>
+  <div class="rc-gloss">(Delivery problem — couldn't be home for delivery, no follow-up from the carrier [Airmee] about a new delivery time.)</div>
+</div>
+
+<!-- MOM COMPARISON -->
+<h2 id="mom-comparison">Month-on-Month Comparison (June → July)</h2>
+
+<div class="prev-compare">
+  <div class="pc-card">
+    <div class="pc-market"><span class="market-badge mb-dk">DK</span> den_sidste_flaske</div>
+    <div class="pc-row"><span class="pc-label">Avg rating</span><span>4.04 → <strong class="arrow-dn">4.49★</strong> ▲</span></div>
+    <div class="pc-row"><span class="pc-label">Total reviews</span><span>232 → 245</span></div>
+    <div class="pc-row"><span class="pc-label">Attributed</span><span>84 → 59 (36.2% → 24.1%)</span></div>
+    <div class="pc-row"><span class="pc-label">Neg rate</span><span>26.7% → <strong class="arrow-dn">13.9%</strong> ▼</span></div>
+    <div class="pc-row"><span class="pc-label">Attributed avg</span><span>4.25 → <strong class="arrow-dn">4.64★</strong> ▲</span></div>
+  </div>
+  <div class="pc-card">
+    <div class="pc-market"><span class="market-badge mb-de">DE</span> den_sidste_flaske_de</div>
+    <div class="pc-row"><span class="pc-label">Avg rating</span><span>4.67 → <strong class="arrow-up">4.61★</strong> ▼ (minor)</span></div>
+    <div class="pc-row"><span class="pc-label">Total reviews</span><span>55 → 62</span></div>
+    <div class="pc-row"><span class="pc-label">Attributed</span><span>31 → <strong class="arrow-up">18</strong> (56.4% → 29.0%)</span></div>
+    <div class="pc-row"><span class="pc-label">Neg rate</span><span>7.3% → 6.5% (~stable)</span></div>
+    <div class="pc-row"><span class="pc-label">Attributed avg</span><span>4.77 → 4.56★ (minor decline)</span></div>
+  </div>
+  <div class="pc-card">
+    <div class="pc-market"><span class="market-badge mb-se">SE</span> den_sidste_flaske_se</div>
+    <div class="pc-row"><span class="pc-label">Avg rating</span><span>4.15 → <strong class="arrow-dn">4.31★</strong> ▲</span></div>
+    <div class="pc-row"><span class="pc-label">Total reviews</span><span>20 → 29</span></div>
+    <div class="pc-row"><span class="pc-label">Attributed</span><span>4 → 8 (20.0% → 27.6%)</span></div>
+    <div class="pc-row"><span class="pc-label">Neg rate</span><span>20.0% → <strong class="arrow-dn">13.8%</strong> ▼</span></div>
+    <div class="pc-row"><span class="pc-label">Attributed avg</span><span>3.50 → <strong class="arrow-dn">4.13★</strong> ▲ (delivery complaints easing)</span></div>
+  </div>
+</div>
+
+<p>DK's recovery is the headline story of the month: the negative rate roughly halved (26.7% → 13.9%) and the attributed average rose from 4.25★ to 4.64★, even as invite volume grew 10.9%. DE is the market to watch — its attributed review count fell from 31 to 18 despite invite volume declining only 19.7%, a gap not fully explained by invite volume alone; without DE's email open/click data (blocked this month, see Action Items) it isn't possible to say whether this is a deliverability issue or something else. SE's attributed average recovered from June's delivery-driven 3.5★ low back to 4.13★, consistent with the smaller Airmee complaint volume this month (2 cases vs June's larger cluster).</p>
+
+<p class="note">Invite/reminder/send volumes for June above are the figures from the originally published June report (plain counts, unaffected by attribution methodology, so no reason to requery). Review-attribution KPIs for June (attributed/organic split, ratings) are recomputed with this report's corrected, app_id-scoped method — see the methodology note in the Attribution Split section above.</p>
+
+<!-- ACTION ITEMS -->
+<h2 id="action-items">Action Items</h2>
+
+<ul class="action-list">
+  <li>
+    <div class="anum">1</div>
+    <div><strong>Keep pressure on DK delivery reliability — improving, not solved.</strong> The negative rate roughly halved from June, but delivery/logistics is still the largest complaint theme (~21 of 42 negatives group-wide, most in DK), and a new failure mode appeared this month: a courier unable to read Danish addresses or communicate in Danish/English, forcing the customer to physically guide him. Whatever corrective action was taken after the June report appears to be working — continue it, and specifically flag the language/address-literacy issue to the carrier as a new, distinct problem from the June "dag til dag" timing issue.</div>
+  </li>
+  <li>
+    <div class="anum">2</div>
+    <div><strong>Investigate DE's attributed-review decline and restore DE API credentials.</strong> DE's attributed reviews fell from 31 to 18 (56.4% → 29.0% of DE's total) on a 19.7% invite-volume decline — the drop in attribution outpaces the drop in sends. This report could not fetch DE's email open/click data to check whether deliverability degraded: <code>stacktome-app/.den_sidste_flaske_de-pass</code> is byte-identical to the DK pass file (same username/password) and DE's actual campaign (585) returns 404 under that token. There is currently no known-good DE API credential. Get a correct DE login provisioned, then re-run the email-performance check for campaign 585 before drawing conclusions about deliverability vs. organic growth.</div>
+  </li>
+  <li>
+    <div class="anum">3</div>
+    <div><strong>Continue monitoring Airmee (SE) delivery delays.</strong> Two of SE's four July negatives are Airmee-related delivery delays, continuing the pattern flagged in the June report. SE's attributed average recovered sharply this month (3.5★ → 4.13★) as the volume of delivery complainants among invited customers dropped, but the underlying carrier issue has not visibly changed — worth a direct check-in with Airmee if this persists into August.</div>
+  </li>
+  <li>
+    <div class="anum">4</div>
+    <div><strong>Confirm the new DE/SE "invite-tp" pilot campaigns (518, 519).</strong> Both appeared in July with 2 invites each — trivial volume, but they share a name with DK's main campaign and weren't present in June. Confirm with the account team whether this is an intentional pilot before it scales, so future reports can label it correctly rather than lumping it into "invite-recent" totals.</div>
+  </li>
+  <li>
+    <div class="anum">5</div>
+    <div><strong>Fix the DK/SE email-performance reconciliation gap before trusting open/click rates at face value.</strong> API-reported "sent" for July doesn't cleanly match Zeppelin invite counts for either market with a working credential: DK API sent 7,679 vs. 6,200 Zeppelin invites (+23.9%); SE API sent 1,448 vs. 1,037 Zeppelin invites (+39.6%). This is a larger gap than the ~6–8% bucketing mismatch documented for other accounts and doesn't match a simple invite+reminder sum either — worth a closer look at what the campaign-report endpoint is actually bucketing for this account before the open/click percentages are used in a customer-facing context. Zeppelin remains the authoritative source for send volume in this report.</div>
+  </li>
+</ul>
+
+</div>
+</body>
+</html>
