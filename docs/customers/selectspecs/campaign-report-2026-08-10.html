@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SelectSpecs — Verified Invitation Conversion Rate (Jul 1–10 vs Aug 1–10, 2026)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 860px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 24px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 32px; }
+  h2 { font-size: 16px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 13px; font-weight: 600; color: #4a4a4a; margin: 16px 0 8px; }
+  p { line-height: 1.65; color: #4a4a4a; margin-bottom: 10px; font-size: 13px; }
+
+  .toc { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 24px; }
+  .toc .box-label { margin-bottom: 8px; }
+  .toc ol { margin: 0 0 0 18px; font-size: 13px; line-height: 1.9; }
+  .toc a { color: #6c5ce7; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 16px 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-top: 3px solid #6c5ce7; }
+  .kpi.green { border-top-color: #00b894; }
+  .kpi.amber { border-top-color: #fdcb6e; }
+  .kpi.blue  { border-top-color: #0984e3; }
+  .kpi.red   { border-top-color: #d63031; }
+  .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; line-height: 1; }
+  .kpi .delta { font-size: 11px; margin-top: 5px; font-weight: 600; }
+  .kpi .delta.up { color: #00b894; }
+  .kpi .delta.down { color: #d63031; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 3px; }
+
+  .cmp-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin: 14px 0 24px; }
+  .cmp-table th { background: #f8f9ff; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .4px; color: #636e72; border-bottom: 2px solid #eee; }
+  .cmp-table td { padding: 11px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+  .cmp-table tr:last-child td { border-bottom: none; }
+  .cmp-table .metric-col { color: #636e72; font-size: 12px; }
+  .period-a { color: #6c5ce7; font-weight: 700; }
+  .period-b { color: #b2bec3; font-weight: 600; }
+  .delta-col { font-weight: 700; }
+  .delta-up { color: #00b894; }
+  .delta-down { color: #d63031; }
+  .delta-neutral { color: #636e72; }
+
+  .dist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0 28px; }
+  .dist-card { background: #fff; border-radius: 10px; padding: 16px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .dist-card .card-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 12px; }
+  .dist-card .card-title .period-tag { display: inline-block; padding: 2px 8px; border-radius: 8px; font-size: 10px; margin-left: 6px; }
+  .tag-a { background: #f0ecff; color: #6c5ce7; }
+  .tag-b { background: #f0f0f0; color: #636e72; }
+  .star-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .star-label { font-size: 12px; color: #636e72; width: 22px; flex-shrink: 0; text-align: right; }
+  .bar-track { flex: 1; height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 5px; }
+  .fill-5 { background: #00b894; }
+  .fill-4 { background: #55efc4; }
+  .fill-3 { background: #fdcb6e; }
+  .fill-2 { background: #e17055; }
+  .fill-1 { background: #d63031; }
+  .star-count { font-size: 11px; color: #888; width: 60px; text-align: right; flex-shrink: 0; }
+
+  .info-box { background: #f0f8ff; border-left: 4px solid #0984e3; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; }
+  .amber-box { background: #fffbf0; border-left: 4px solid #fdcb6e; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; }
+  .red-box { background: #fff5f5; border-left: 4px solid #d63031; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; }
+  .box-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; font-weight: 700; color: #888; margin-bottom: 6px; }
+
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .pill-a { background: #f0ecff; color: #6c5ce7; }
+  .pill-b { background: #f0f0f0; color: #636e72; }
+
+  .action-list { list-style: none; padding: 0; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 16px; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 10px; font-size: 13px; line-height: 1.6; align-items: flex-start; }
+  .action-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #6c5ce7; color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>SelectSpecs — Verified Invitation Conversion Rate</h1>
+  <p class="subtitle">Two 10-day periods compared: Jul 1–10 vs Aug 1–10, 2026 &bull; Ad-hoc follow-up to the Jul 22 report &bull; Generated Aug 10, 2026</p>
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="box-label">Contents</div>
+    <ol>
+      <li><a href="#comparison">Period Comparison</a></li>
+      <li><a href="#freshness">Data Freshness &amp; Window Caveat</a></li>
+      <li><a href="#stars">Star Distribution</a></li>
+      <li><a href="#findings">Key Findings</a></li>
+      <li><a href="#actions">Recommended Actions</a></li>
+    </ol>
+  </div>
+
+  <!-- TOP KPIs -->
+  <div class="kpi-grid">
+    <div class="kpi green">
+      <div class="label">Verified Conversion Rate</div>
+      <div class="value">6.60%</div>
+      <div class="delta up">6.22% → 6.60% (+0.38pp)</div>
+    </div>
+    <div class="kpi amber">
+      <div class="label">Verified Invites Sent</div>
+      <div class="value">−27.9%</div>
+      <div class="delta down">2,185 → 1,575</div>
+    </div>
+    <div class="kpi amber">
+      <div class="label">Reviews Collected</div>
+      <div class="value">−23.5%</div>
+      <div class="delta down">136 → 104</div>
+    </div>
+    <div class="kpi green">
+      <div class="label">Avg Rating</div>
+      <div class="value">4.46★</div>
+      <div class="delta up">4.43★ → 4.46★</div>
+    </div>
+  </div>
+
+  <!-- PERIOD COMPARISON -->
+  <h2 id="comparison">Period Comparison</h2>
+
+  <div class="info-box">
+    <div class="box-label">Methodology</div>
+    <p><span class="pill pill-b">Jul 1–10</span> is the prior-month reference window; <span class="pill pill-a">Aug 1–10</span> is the current-month window requested for this comparison. <strong>Verified invitation conversion rate = reviews received in period ÷ distinct verified-purchase orders receiving an initial invite email in the same period</strong> (<code>email_send_type = 'invite'</code>, deduplicated by <code>order_id</code>; reminders excluded from the denominator). This is the same metric documented as "review rate (invite-only, distinct orders)" in the Jul 22 report — same formula, new label. Three campaigns send under <code>email_send_type = 'invite'</code> on this account (<strong>invite-EN</strong>, <strong>closed-tickets</strong>, <strong>positive-reviews</strong>); all three are included since all are order-triggered invitations to verified purchasers. Campaign mix was checked and is stable across both windows (invite-EN ≈98% of volume in both), so the rate change below is not a mix-shift artifact.</p>
+  </div>
+
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th><span class="period-b">Jul 1–10</span></th>
+        <th><span class="period-a">Aug 1–10</span></th>
+        <th>Delta</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="metric-col">Verified invites sent (distinct orders, invite-type)</td>
+        <td>2,185</td>
+        <td>1,575</td>
+        <td class="delta-col delta-neutral">−610 (−27.9%)</td>
+      </tr>
+      <tr>
+        <td class="metric-col">Reviews received</td>
+        <td>136</td>
+        <td>104</td>
+        <td class="delta-col delta-down">−32 (−23.5%)</td>
+      </tr>
+      <tr>
+        <td class="metric-col"><strong>Verified invitation conversion rate</strong></td>
+        <td><strong>6.22%</strong></td>
+        <td><strong>6.60%</strong></td>
+        <td class="delta-col delta-up">+0.38pp (+6.1%)</td>
+      </tr>
+      <tr>
+        <td class="metric-col">Conversion rate (all emailed orders, incl. reminder-only)</td>
+        <td>3.44% (3,951 orders)</td>
+        <td>3.51% (2,965 orders)</td>
+        <td class="delta-col delta-up">+0.07pp</td>
+      </tr>
+      <tr>
+        <td class="metric-col">Average rating</td>
+        <td>4.43★</td>
+        <td>4.46★</td>
+        <td class="delta-col delta-up">+0.03★</td>
+      </tr>
+      <tr>
+        <td class="metric-col">% 5-star reviews</td>
+        <td>77.9% (106/136)</td>
+        <td>76.0% (79/104)</td>
+        <td class="delta-col delta-down">−1.9pp</td>
+      </tr>
+      <tr>
+        <td class="metric-col">% 1-star reviews</td>
+        <td>7.4% (10/136)</td>
+        <td>6.7% (7/104)</td>
+        <td class="delta-col delta-up">−0.7pp</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="good-box">
+    <div class="box-label">Sanity check — matched 9-day closed window</div>
+    <p>To rule out the partial current day distorting the headline, the same comparison was re-run on <strong>Jul 1–9 vs Aug 1–9</strong> (9 full days each, excluding Aug 10 entirely): 2,059 invites / 126 reviews / <strong>6.12%</strong> for July vs 1,554 invites / 104 reviews / <strong>6.69%</strong> for August. Zero reviews landed on Aug 10 in either version — the review table's data for that date has not arrived yet (see freshness note below) — so the 10-day and 9-day readings for August are effectively identical. The improvement is real, not a day-count artifact.</p>
+  </div>
+
+  <!-- FRESHNESS -->
+  <h2 id="freshness">Data Freshness &amp; Window Caveat</h2>
+
+  <div class="amber-box">
+    <div class="box-label">The Aug 1–10 window is not closed</div>
+    <p>This report was generated <strong>today, Aug 10, 2026</strong> — the standard rule of excluding the generation day from a window was relaxed here because the request specifically asked for "this month 10 days." The review table's <code>MAX(ts_event)</code> is <strong>Aug 9</strong>: no Aug 10 reviews have landed yet, and Aug 10's own invite partition is still filling (41 invite events by query time vs 400+ on a typical peak day this window). More importantly, invites sent late in the August window (especially Aug 5–10) have had only 0–5 days to convert, versus 31–40 days for the July cohort by the time of this report. The Jul 22 report documented this account's reviews arriving weeks after the triggering invite — so <strong>6.60% is very likely a floor for August's eventual rate, not a ceiling.</strong> Re-measure on a fully closed 10-day window (e.g. once Aug 20 has passed) to get a like-for-like reading.</p>
+  </div>
+
+  <div class="info-box">
+    <div class="box-label">Data quality note — duplicate raw invite rows (Aug 8)</div>
+    <p>Raw invite parquet for Aug 8 contains exact-duplicate rows under the <strong>invite-EN</strong> campaign: 420 invite-type events but only 212 distinct orders — most orders appear twice with an identical <code>order_id</code> and identical <code>ts_event</code> down to the microsecond. This report's denominator already deduplicates via <code>COUNT(DISTINCT order_id)</code>, so the rates above are unaffected, but it's worth flagging to engineering — if the app dashboard's "sends" counter does not deduplicate the same way, it will overstate Aug 8 volume by roughly 2x.</p>
+  </div>
+
+  <!-- STAR DISTRIBUTION -->
+  <h2 id="stars">Star Distribution</h2>
+  <div class="dist-grid">
+
+    <div class="dist-card">
+      <div class="card-title">Aug 1–10 <span class="period-tag tag-a">Current</span></div>
+      <div class="star-row">
+        <span class="star-label">5★</span>
+        <div class="bar-track"><div class="bar-fill fill-5" style="width:76.0%"></div></div>
+        <span class="star-count">79 (76.0%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">4★</span>
+        <div class="bar-track"><div class="bar-fill fill-4" style="width:10.6%"></div></div>
+        <span class="star-count">11 (10.6%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">3★</span>
+        <div class="bar-track"><div class="bar-fill fill-3" style="width:3.8%"></div></div>
+        <span class="star-count">4 (3.8%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">2★</span>
+        <div class="bar-track"><div class="bar-fill fill-2" style="width:2.9%"></div></div>
+        <span class="star-count">3 (2.9%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">1★</span>
+        <div class="bar-track"><div class="bar-fill fill-1" style="width:6.7%"></div></div>
+        <span class="star-count">7 (6.7%)</span>
+      </div>
+    </div>
+
+    <div class="dist-card">
+      <div class="card-title">Jul 1–10 <span class="period-tag tag-b">Prior</span></div>
+      <div class="star-row">
+        <span class="star-label">5★</span>
+        <div class="bar-track"><div class="bar-fill fill-5" style="width:77.9%"></div></div>
+        <span class="star-count">106 (77.9%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">4★</span>
+        <div class="bar-track"><div class="bar-fill fill-4" style="width:5.9%"></div></div>
+        <span class="star-count">8 (5.9%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">3★</span>
+        <div class="bar-track"><div class="bar-fill fill-3" style="width:4.4%"></div></div>
+        <span class="star-count">6 (4.4%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">2★</span>
+        <div class="bar-track"><div class="bar-fill fill-2" style="width:4.4%"></div></div>
+        <span class="star-count">6 (4.4%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">1★</span>
+        <div class="bar-track"><div class="bar-fill fill-1" style="width:7.4%"></div></div>
+        <span class="star-count">10 (7.4%)</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- KEY FINDINGS -->
+  <h2 id="findings">Key Findings</h2>
+
+  <div class="good-box">
+    <div class="box-label">Conversion rate improved on a smaller invite base</div>
+    <p>August converted <strong>6.60%</strong> of verified invitations into reviews vs <strong>6.22%</strong> in July, even though invite volume fell 27.9% (2,185 → 1,575). This is the same "efficiency, not volume" pattern the Jul 22 report identified between June and July — the account continues to hold a steady-state rate in the <strong>6%+</strong> band across three consecutive measurement windows now (Jul 1–17: 6.26%; Jul 1–10: 6.22%; Aug 1–10: 6.60%).</p>
+  </div>
+
+  <div class="amber-box">
+    <div class="box-label">Provisional reading — likely to climb further</div>
+    <p>Because the August window is only 0–10 days old at generation time, its 6.60% figure has not had the same maturation time as July's 31–40-day-old cohort. Given this account's documented pattern of late-arriving reviews, the true August conversion rate is more likely to end up above 6.60% than below it once the window fully closes.</p>
+  </div>
+
+  <div class="good-box">
+    <div class="box-label">Rating quality held steady and healthy</div>
+    <p>Average rating ticked up slightly (4.43★ → 4.46★) and 1-star share improved (7.4% → 6.7%), with no signs of the quality slippage the Jul 22 report flagged for the back half of July. Sample sizes are modest (104–136 reviews per window), so treat the star-distribution deltas as directional rather than statistically decisive.</p>
+  </div>
+
+  <!-- ACTIONS -->
+  <h2 id="actions">Recommended Actions</h2>
+  <ul class="action-list">
+    <li>
+      <div class="action-num">1</div>
+      <div><strong>Re-measure on a fully closed Aug 1–10 window in ~2–3 weeks.</strong> Today's 6.60% is a floor, not a final number — confirm whether the gap over July widens once late-window invites finish converting.</div>
+    </li>
+    <li>
+      <div class="action-num">2</div>
+      <div><strong>Flag the Aug 8 duplicate invite-EN rows to engineering.</strong> Exact-duplicate order_id + timestamp pairs suggest a double-send or double-log event on that date; harmless to this report's math (deduplicated) but worth confirming it isn't inflating the app dashboard's raw send count or, worse, actually double-emailing customers.</div>
+    </li>
+    <li>
+      <div class="action-num">3</div>
+      <div><strong>Adopt 10-day rolling windows as a faster signal, anchored to the 5-6%+ closed-window benchmark.</strong> Three consecutive readings (6.26%, 6.22%, 6.60%) now corroborate the steady-state range identified in the Jul 22 report — continue tracking monthly on closed windows for the authoritative figure, using 10-day snapshots like this one only as an early read.</div>
+    </li>
+  </ul>
+
+  <div style="margin-top:48px;padding-top:20px;border-top:1px solid #eee;font-size:11px;color:#aaa;text-align:center;">
+    Generated Aug 10, 2026 &mdash; Stacktome Support &mdash; SelectSpecs verified invitation conversion follow-up &mdash; Data: Zeppelin notebook 2MUPD7DAS
+  </div>
+
+</div>
+</body>
+</html>
