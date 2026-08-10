@@ -99,6 +99,12 @@
 
   <!-- TOP KPIs -->
   <div class="kpi-grid">
+    <div class="kpi green">
+      <div class="label">Total Review Rate (incl. organic)</div>
+      <div class="value">4.40% → 6.60%</div>
+      <div class="delta up">+2.20pp (+50.0%)</div>
+      <div class="sub">All reviews landing in window ÷ invites sent in window — not attribution-dependent</div>
+    </div>
     <div class="kpi blue">
       <div class="label">Order_id Tracked</div>
       <div class="value">22.5% → 85.6%</div>
@@ -152,7 +158,7 @@
 
   <div class="info-box">
     <div class="box-label">Methodology</div>
-    <p><span class="pill pill-b">Jul 22–31</span> and <span class="pill pill-a">Aug 1–10</span> are the two requested 10-day windows. Unlike the naive "reviews in period ÷ invites in period" ratio used in earlier reports, this analysis performs a real join: every review's <code>order_id</code> is matched against the <strong>full invite history</strong> (all-time, not just the window) via <code>order_review_id</code>-keyed attribution, distinguishing (a) <strong>invite-attributed, same-window</strong> — the order was invited within this same 10-day window, (b) <strong>invite-attributed, carryover</strong> — the order was invited at some earlier date, this review just landed in the window, (c) <strong>confirmed organic</strong> — the order has an <code>order_id</code> but was never invited, and (d) <strong>no join key</strong> — no <code>order_id</code> or <code>email</code> on the review, so attribution is unknowable. <strong>Verified invitation conversion rate = invite-attributed same-window reviews ÷ distinct orders invited in that same window</strong> (<code>email_send_type = 'invite'</code>). For a period-over-period read of non-invited volume, <strong>"Organic reviews — total" combines (c) and (d)</strong> — no-join-key reviews are grouped with confirmed organic as a best-estimate, since every no-join-key review in both windows is a Trustpilot-sourced row with no invite trace, matching the profile of the confirmed-organic rows rather than the invite-attributed ones; this is a working assumption, not a certainty, given (d)'s attribution is technically unknowable.</p>
+    <p><span class="pill pill-b">Jul 22–31</span> and <span class="pill pill-a">Aug 1–10</span> are the two requested 10-day windows. Unlike the naive "reviews in period ÷ invites in period" ratio used in earlier reports, this analysis performs a real join: every review's <code>order_id</code> is matched against the <strong>full invite history</strong> (all-time, not just the window) via <code>order_review_id</code>-keyed attribution, distinguishing (a) <strong>invite-attributed, same-window</strong> — the order was invited within this same 10-day window, (b) <strong>invite-attributed, carryover</strong> — the order was invited at some earlier date, this review just landed in the window, (c) <strong>confirmed organic</strong> — the order has an <code>order_id</code> but was never invited, and (d) <strong>no join key</strong> — no <code>order_id</code> or <code>email</code> on the review, so attribution is unknowable. <strong>Verified invitation conversion rate = invite-attributed same-window reviews ÷ distinct orders invited in that same window</strong> (<code>email_send_type = 'invite'</code>). Alongside it, <strong>"Total review rate" = all reviews landing in the window (attributed + organic + no-join-key combined) ÷ invites sent in that window</strong> — this is not attribution-dependent, so the order_id tracking gap doesn't affect it; it answers "how much total review volume came in per invite sent," regardless of whether any individual review can be proven to trace back to an invite. For a period-over-period read of non-invited volume, <strong>"Organic reviews — total" combines (c) and (d)</strong> — no-join-key reviews are grouped with confirmed organic as a best-estimate, since every no-join-key review in both windows is a Trustpilot-sourced row with no invite trace, matching the profile of the confirmed-organic rows rather than the invite-attributed ones; this is a working assumption, not a certainty, given (d)'s attribution is technically unknowable.</p>
   </div>
 
   <table class="cmp-table">
@@ -176,6 +182,12 @@
         <td>80</td>
         <td>104</td>
         <td class="delta-col delta-up">+24 (+30.0%)</td>
+      </tr>
+      <tr class="subtotal">
+        <td class="metric-col"><strong>Total review rate</strong> (all reviews, incl. organic ÷ invites sent)</td>
+        <td><strong>4.40%</strong> (80/1,820)</td>
+        <td><strong>6.60%</strong> (104/1,575)</td>
+        <td class="delta-col delta-up">+2.20pp (+50.0%)</td>
       </tr>
       <tr>
         <td class="metric-col">— no join key (unattributable)</td>
@@ -313,6 +325,11 @@
 
   <!-- FINDINGS -->
   <h2 id="findings">Key Findings</h2>
+
+  <div class="good-box">
+    <div class="box-label">Total review rate is up 50% and isn't affected by the tracking gap</div>
+    <p>Because it doesn't require order_id attribution, <strong>total review rate (4.40% → 6.60%)</strong> is the one number in this report unaffected by the pipeline issue above — it's a straight count of all reviews landing in the window divided by invites sent, the same formula used in the Jul 22 report's benchmarks. Aug 1–10's 6.60% sits right in the 6%+ steady-state band that report identified, and is comparable to it in a way the attribution-based rates in this report are not.</p>
+  </div>
 
   <div class="good-box">
     <div class="box-label">August looks better even after accounting for the tracking gap</div>
