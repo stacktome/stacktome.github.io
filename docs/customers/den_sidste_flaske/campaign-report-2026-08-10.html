@@ -20,7 +20,7 @@
   nav.toc ol { margin: 0; padding-left: 18px; line-height: 2; }
   nav.toc a { color: #6c5ce7; text-decoration: none; }
 
-  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 16px; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 16px; }
   .kpi-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
   .kpi { background: #fff; border-radius: 10px; padding: 16px 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
   .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 5px; }
@@ -107,13 +107,14 @@
 <div class="wrapper">
 
 <h1>Den Sidste Flaske — July 2026 Group Report</h1>
-<p class="subtitle">All markets (DK · DE · SE) &nbsp;·&nbsp; Campaign period: July 2026 &nbsp;·&nbsp; Generated: 10 Aug 2026</p>
+<p class="subtitle">All markets (DK · DE · SE) &nbsp;·&nbsp; Campaign period: July 2026 &nbsp;·&nbsp; Generated: 10 Aug 2026 &nbsp;·&nbsp; Updated: 11 Aug 2026 (email performance added, review rate redefined — see notes below)</p>
 
 <nav class="toc">
   <div class="toc-label">Contents</div>
   <ol>
     <li><a href="#exec-summary">Executive Summary</a></li>
     <li><a href="#july-volume">July Volume — Invites &amp; Sends</a></li>
+    <li><a href="#email-performance">Email Performance</a></li>
     <li><a href="#market-performance">Market Performance</a></li>
     <li><a href="#attribution">Attribution Split</a></li>
     <li><a href="#negative-reviews">Negative Reviews</a></li>
@@ -151,7 +152,14 @@
     <div class="value">4.58★</div>
     <div class="sub">85 attributed reviews</div>
   </div>
+  <div class="kpi">
+    <div class="label">Review Rate (Total)</div>
+    <div class="value">4.12%</div>
+    <div class="sub">336 reviews / 8,146 invites &bull; attributed-only 1.04%</div>
+  </div>
 </div>
+
+<p class="note">Primary review rate redefined this update: (attributed + organic reviews) / invites sent, replacing the attributed-only rate as the headline metric. Only ~30% of reviews carry a matchable <code>order_id</code>, so the attributed-only rate materially understated actual review volume — see the Attribution Split section for both figures side by side. Underlying review counts and attribution logic are unchanged; only the review-rate presentation changed.</p>
 
 <div class="good-box">
   <p><strong>DK's June delivery crisis eased substantially in July.</strong> The negative-review rate fell from 26.7% in June to 13.9% in July, and the DK average climbed from 4.04★ to 4.49★. Delivery/logistics complaints are still the single largest theme (roughly half of DK's 34 negatives) — dag-til-dag delivery promises are still being broken on a subset of orders, a driver-language complaint appeared for the first time (courier could not read Danish addresses or speak Danish/English), and one customer described three consecutive failed deliveries — but the volume and severity are both down sharply from June's crisis peak. This reads as a real, if partial, recovery rather than a resolved issue.</p>
@@ -198,6 +206,55 @@
 </table>
 <p class="note">New this month: campaigns 518 (DE) and 519 (SE) both named "invite-tp" appeared with 2 invites each — the same campaign name DK's main campaign uses. Volume is too small to affect any total meaningfully, but worth confirming with the account team whether this is an intentional pilot of the DK-style invite-tp flow in DE/SE. DE invite volume fell 19.7% vs June (1,132 → 909); SE invite volume rose 2.5% (1,012 → 1,037); DK rose 10.9% (5,589 → 6,200).</p>
 
+<!-- EMAIL PERFORMANCE -->
+<h2 id="email-performance">Email Performance</h2>
+
+<p>Fetched fresh from the Stacktome campaign report API (<code>/campaigns/{id}/report</code>) on 2026-08-11 for the July 2026 window (2026-07-01 to 2026-07-31), split by workflow step using each campaign's own template metadata. DK and SE credentials worked; DE's did not — see note below the table.</p>
+
+<table>
+  <tr><th>Market</th><th>Campaign step</th><th>Sent</th><th>Unique Opens</th><th>Open Rate</th><th>Unique Clicks</th><th>Click Rate</th><th>Unsubs</th></tr>
+  <tr>
+    <td rowspan="3"><span class="market-badge mb-dk">DK</span></td>
+    <td>Invite</td>
+    <td>3,666</td><td>2,071</td><td>56.5%</td><td>308</td><td>8.4%</td><td>59</td>
+  </tr>
+  <tr>
+    <td>Reminder</td>
+    <td>3,631</td><td>2,414</td><td>66.5%</td><td>402</td><td>11.1%</td><td>41</td>
+  </tr>
+  <tr class="total-row">
+    <td>Total (391)</td>
+    <td>7,297</td><td>4,485</td><td>61.5%</td><td>710</td><td>9.7%</td><td>100</td>
+  </tr>
+  <tr>
+    <td><span class="market-badge mb-de">DE</span></td>
+    <td colspan="7" class="warn">Unavailable — campaigns 585 and 518 return HTTP 404 under the <code>.den_sidste_flaske_de-pass</code> token (see note below)</td>
+  </tr>
+  <tr>
+    <td rowspan="3"><span class="market-badge mb-se">SE</span></td>
+    <td>Invite</td>
+    <td>498</td><td>306</td><td>61.4%</td><td>61</td><td>12.2%</td><td>5</td>
+  </tr>
+  <tr>
+    <td>Reminder</td>
+    <td>906</td><td>512</td><td>56.5%</td><td>105</td><td>11.6%</td><td>9</td>
+  </tr>
+  <tr class="total-row">
+    <td>Total (576 + 519)</td>
+    <td>1,404</td><td>818</td><td>58.3%</td><td>166</td><td>11.8%</td><td>14</td>
+  </tr>
+  <tr class="total-row">
+    <td colspan="2">Group Total (DK + SE only — DE excluded)</td>
+    <td>8,701</td><td>5,303</td><td>60.9%</td><td>876</td><td>10.1%</td><td>114</td>
+  </tr>
+</table>
+
+<div class="warn-box">
+  <p><strong>DE email performance still unavailable — credential gap confirmed again on re-check.</strong> Re-attempted 2026-08-11 as part of this update: <code>stacktome-app/.den_sidste_flaske_de-pass</code> logs in successfully but into the same organization as the DK token (its <code>/campaigns</code> listing returns DK's campaigns — 391, 392, 414, 419 — not DE's), and a direct call for DE's actual campaigns (585, 518) still returns <code>{"detail":"Not found."}</code>. This is unchanged from the gap noted in the original July report; still no known-good DE API credential. DE's Zeppelin-sourced numbers elsewhere in this report (invites, reviews, ratings) are unaffected — only the open/click API metrics are blocked.</p>
+</div>
+
+<p class="note">Reconciliation vs. Zeppelin invite counts (invites-only, excluding reminders): DK API sent 7,297 vs. 6,200 Zeppelin invites (+17.7%); SE API sent 1,404 vs. 1,037 Zeppelin invites (+35.4%). Both gaps are in the same direction and rough range as flagged in the original report (then +23.9% / +39.6%, fetched at a different time) — this looks like a consistent bucketing or lookback-window difference in the campaign-report endpoint rather than a one-off fluke, but the exact cause is still unresolved. Treat open/click rates as directionally useful, not exact; Zeppelin remains authoritative for send volume.</p>
+
 <!-- MARKET PERFORMANCE -->
 <h2 id="market-performance">Market Performance</h2>
 
@@ -213,7 +270,8 @@
     <div class="mc-row"><span style="color:#d63031;">1★</span><strong>12 (4.9%)</strong></div>
     <div class="mc-row" style="margin-top:6px;border-top:2px solid #eee;"><span>Attributed avg</span><strong style="color:#00b894;">4.64★</strong></div>
     <div class="mc-row"><span>Organic avg</span><strong style="color:#00b894;">4.45★</strong></div>
-    <div class="mc-row"><span>Review rate</span><strong>0.95% (59/6,200)</strong></div>
+    <div class="mc-row" style="margin-top:6px;border-top:2px solid #eee;"><span><strong>Review rate (total)</strong></span><strong style="color:#6c5ce7;">3.95% (245/6,200)</strong></div>
+    <div class="mc-row"><span style="font-size:11px;color:#aaa;">Review rate (attributed)</span><strong style="font-size:11px;color:#aaa;">0.95% (59/6,200)</strong></div>
   </div>
   <div class="market-card">
     <div class="mc-name"><span class="market-badge mb-de">DE</span> den_sidste_flaske_de</div>
@@ -226,7 +284,8 @@
     <div class="mc-row"><span style="color:#d63031;">1★</span><strong>2 (3.2%)</strong></div>
     <div class="mc-row" style="margin-top:6px;border-top:2px solid #eee;"><span>Attributed avg</span><strong style="color:#6c5ce7;">4.56★</strong></div>
     <div class="mc-row"><span>Organic avg</span><strong>4.64★</strong></div>
-    <div class="mc-row"><span>Review rate</span><strong>1.98% (18/909)</strong></div>
+    <div class="mc-row" style="margin-top:6px;border-top:2px solid #eee;"><span><strong>Review rate (total)</strong></span><strong style="color:#6c5ce7;">6.82% (62/909)</strong></div>
+    <div class="mc-row"><span style="font-size:11px;color:#aaa;">Review rate (attributed)</span><strong style="font-size:11px;color:#aaa;">1.98% (18/909)</strong></div>
   </div>
   <div class="market-card">
     <div class="mc-name"><span class="market-badge mb-se">SE</span> den_sidste_flaske_se</div>
@@ -239,7 +298,8 @@
     <div class="mc-row"><span style="color:#d63031;">1★</span><strong>3 (10.3%)</strong></div>
     <div class="mc-row" style="margin-top:6px;border-top:2px solid #eee;"><span>Attributed avg</span><strong>4.13★</strong></div>
     <div class="mc-row"><span>Organic avg</span><strong>4.38★</strong></div>
-    <div class="mc-row"><span>Review rate</span><strong>0.77% (8/1,037)</strong></div>
+    <div class="mc-row" style="margin-top:6px;border-top:2px solid #eee;"><span><strong>Review rate (total)</strong></span><strong style="color:#6c5ce7;">2.80% (29/1,037)</strong></div>
+    <div class="mc-row"><span style="font-size:11px;color:#aaa;">Review rate (attributed)</span><strong style="font-size:11px;color:#aaa;">0.77% (8/1,037)</strong></div>
   </div>
 </div>
 
@@ -247,28 +307,29 @@
 <h2 id="attribution">Attribution Split</h2>
 
 <table>
-  <tr><th>Market</th><th>Total Reviews</th><th>Attributed</th><th>Organic</th><th>Att %</th><th>Avg (Attributed)</th><th>Avg (Organic)</th><th>Review Rate</th></tr>
+  <tr><th>Market</th><th>Total Reviews</th><th>Attributed</th><th>Organic</th><th>Att %</th><th>Avg (Attributed)</th><th>Avg (Organic)</th><th>Review Rate (Total)</th><th>Review Rate (Attr.)</th></tr>
   <tr>
     <td><span class="market-badge mb-dk">DK</span></td>
     <td>245</td><td>59</td><td>186</td><td>24.1%</td>
-    <td class="good">4.64★</td><td class="good">4.45★</td><td>0.95%</td>
+    <td class="good">4.64★</td><td class="good">4.45★</td><td><strong>3.95%</strong></td><td style="color:#aaa;">0.95%</td>
   </tr>
   <tr>
     <td><span class="market-badge mb-de">DE</span></td>
     <td>62</td><td>18</td><td>44</td><td>29.0%</td>
-    <td>4.56★</td><td class="good">4.64★</td><td class="good">1.98%</td>
+    <td>4.56★</td><td class="good">4.64★</td><td class="good"><strong>6.82%</strong></td><td style="color:#aaa;">1.98%</td>
   </tr>
   <tr>
     <td><span class="market-badge mb-se">SE</span></td>
     <td>29</td><td>8</td><td>21</td><td>27.6%</td>
-    <td>4.13★</td><td>4.38★</td><td>0.77%</td>
+    <td>4.13★</td><td>4.38★</td><td><strong>2.80%</strong></td><td style="color:#aaa;">0.77%</td>
   </tr>
   <tr class="total-row">
     <td>Group</td>
     <td>336</td><td>85</td><td>251</td><td>25.3%</td>
-    <td>~4.58★</td><td>~4.48★</td><td>1.04%</td>
+    <td>~4.58★</td><td>~4.48★</td><td><strong>4.12%</strong></td><td style="color:#aaa;">1.04%</td>
   </tr>
 </table>
+<p class="note"><strong>Review Rate (Total)</strong> = (attributed + organic reviews) / invites sent — the primary review-rate metric as of this update. <strong>Review Rate (Attr.)</strong> = attributed reviews / invites sent — kept as a secondary reference figure; it understates actual review volume because roughly 70% of reviews carry no matchable <code>order_id</code> and land in the organic bucket. Neither figure changes the underlying review counts or the attribution join — only which rate is presented as primary.</p>
 
 <p>Attribution uses the same full-invite-history, app_id-scoped method as June (order_id join, with email recovered from <code>customer_purchase.order_number</code> for reviews that carry no email — still the large majority: 95%+ of July's organic-looking reviews had no email attached). Group attribution rate fell from 38.8% in June to 25.3% in July — but this is not evenly distributed: DK's rate fell (36.2% → 24.1%) even as its invite volume and total review count both rose, meaning organic review volume grew faster than attributed volume; DE's rate fell more sharply (56.4% → 29.0%) alongside an actual decline in invite volume; SE's rate rose (20.0% → 27.6%).</p>
 
@@ -415,6 +476,7 @@
     <div class="pc-row"><span class="pc-label">Attributed</span><span>84 → 59 (36.2% → 24.1%)</span></div>
     <div class="pc-row"><span class="pc-label">Neg rate</span><span>26.7% → <strong class="arrow-dn">13.9%</strong> ▼</span></div>
     <div class="pc-row"><span class="pc-label">Attributed avg</span><span>4.25 → <strong class="arrow-dn">4.64★</strong> ▲</span></div>
+    <div class="pc-row" style="border-top:1px solid #f0f0f0;padding-top:6px;margin-top:2px;"><span class="pc-label"><strong>Review rate (total)</strong></span><span><strong>4.15% → 3.95%</strong></span></div>
   </div>
   <div class="pc-card">
     <div class="pc-market"><span class="market-badge mb-de">DE</span> den_sidste_flaske_de</div>
@@ -423,6 +485,7 @@
     <div class="pc-row"><span class="pc-label">Attributed</span><span>31 → <strong class="arrow-up">18</strong> (56.4% → 29.0%)</span></div>
     <div class="pc-row"><span class="pc-label">Neg rate</span><span>7.3% → 6.5% (~stable)</span></div>
     <div class="pc-row"><span class="pc-label">Attributed avg</span><span>4.77 → 4.56★ (minor decline)</span></div>
+    <div class="pc-row" style="border-top:1px solid #f0f0f0;padding-top:6px;margin-top:2px;"><span class="pc-label"><strong>Review rate (total)</strong></span><span><strong class="arrow-dn">4.86% → 6.82%</strong> ▲</span></div>
   </div>
   <div class="pc-card">
     <div class="pc-market"><span class="market-badge mb-se">SE</span> den_sidste_flaske_se</div>
@@ -431,12 +494,13 @@
     <div class="pc-row"><span class="pc-label">Attributed</span><span>4 → 8 (20.0% → 27.6%)</span></div>
     <div class="pc-row"><span class="pc-label">Neg rate</span><span>20.0% → <strong class="arrow-dn">13.8%</strong> ▼</span></div>
     <div class="pc-row"><span class="pc-label">Attributed avg</span><span>3.50 → <strong class="arrow-dn">4.13★</strong> ▲ (delivery complaints easing)</span></div>
+    <div class="pc-row" style="border-top:1px solid #f0f0f0;padding-top:6px;margin-top:2px;"><span class="pc-label"><strong>Review rate (total)</strong></span><span><strong class="arrow-dn">1.98% → 2.80%</strong> ▲</span></div>
   </div>
 </div>
 
-<p>DK's recovery is the headline story of the month: the negative rate roughly halved (26.7% → 13.9%) and the attributed average rose from 4.25★ to 4.64★, even as invite volume grew 10.9%. DE is the market to watch — its attributed review count fell from 31 to 18 despite invite volume declining only 19.7%, a gap not fully explained by invite volume alone; without DE's email open/click data (blocked this month, see Action Items) it isn't possible to say whether this is a deliverability issue or something else. SE's attributed average recovered from June's delivery-driven 3.5★ low back to 4.13★, consistent with the smaller Airmee complaint volume this month (2 cases vs June's larger cluster).</p>
+<p>DK's recovery is the headline story of the month: the negative rate roughly halved (26.7% → 13.9%) and the attributed average rose from 4.25★ to 4.64★, even as invite volume grew 10.9%. Its total review rate held roughly flat (4.15% → 3.95%) — invite volume outgrew total review volume slightly, which is a normal dilution effect, not a sign the recovery is illusory. DE is the market to watch on attribution specifically — its attributed review count fell from 31 to 18 despite invite volume declining only 19.7%, a gap not fully explained by invite volume alone; without DE's email open/click data (blocked this month, see Action Items) it isn't possible to say whether this is a deliverability issue or something else. Notably DE's <em>total</em> review rate actually rose (4.86% → 6.82%) — the decline is specific to attribution matching, not overall review volume. SE's attributed average recovered from June's delivery-driven 3.5★ low back to 4.13★, consistent with the smaller Airmee complaint volume this month (2 cases vs June's larger cluster), and its total review rate also rose (1.98% → 2.80%).</p>
 
-<p class="note">Invite/reminder/send volumes for June above are the figures from the originally published June report (plain counts, unaffected by attribution methodology, so no reason to requery). Review-attribution KPIs for June (attributed/organic split, ratings) are recomputed with this report's corrected, app_id-scoped method — see the methodology note in the Attribution Split section above.</p>
+<p class="note">Invite/reminder/send volumes for June above are the figures from the originally published June report (plain counts, unaffected by attribution methodology, so no reason to requery). Review-attribution KPIs for June (attributed/organic split, ratings) are recomputed with this report's corrected, app_id-scoped method — see the methodology note in the Attribution Split section above. June's total review rate = June's total review count (232 DK / 55 DE / 20 SE / 307 group — unchanged by the attribution recompute, confirmed matching the originally published June report) over the published June invite volume.</p>
 
 <!-- ACTION ITEMS -->
 <h2 id="action-items">Action Items</h2>
@@ -448,7 +512,7 @@
   </li>
   <li>
     <div class="anum">2</div>
-    <div><strong>Investigate DE's attributed-review decline and restore DE API credentials.</strong> DE's attributed reviews fell from 31 to 18 (56.4% → 29.0% of DE's total) on a 19.7% invite-volume decline — the drop in attribution outpaces the drop in sends. This report could not fetch DE's email open/click data to check whether deliverability degraded: <code>stacktome-app/.den_sidste_flaske_de-pass</code> is byte-identical to the DK pass file (same username/password) and DE's actual campaign (585) returns 404 under that token. There is currently no known-good DE API credential. Get a correct DE login provisioned, then re-run the email-performance check for campaign 585 before drawing conclusions about deliverability vs. organic growth.</div>
+    <div><strong>Restore DE API credentials — still broken as of 2026-08-11.</strong> DE's attributed reviews fell from 31 to 18 (56.4% → 29.0% of DE's total) on a 19.7% invite-volume decline — the drop in attribution outpaces the drop in sends, though DE's total review rate actually rose (4.86% → 6.82%), so this looks more like an attribution-matching question than a deliverability one. Re-attempted the email-performance fetch for this update: <code>stacktome-app/.den_sidste_flaske_de-pass</code> still logs into the same organization as the DK token (not a separate DE org) and campaigns 585/518 still return 404. There is currently no known-good DE API credential. Get a correct DE login provisioned, then re-run the email-performance check for campaigns 585/518.</div>
   </li>
   <li>
     <div class="anum">3</div>
@@ -460,7 +524,7 @@
   </li>
   <li>
     <div class="anum">5</div>
-    <div><strong>Fix the DK/SE email-performance reconciliation gap before trusting open/click rates at face value.</strong> API-reported "sent" for July doesn't cleanly match Zeppelin invite counts for either market with a working credential: DK API sent 7,679 vs. 6,200 Zeppelin invites (+23.9%); SE API sent 1,448 vs. 1,037 Zeppelin invites (+39.6%). This is a larger gap than the ~6–8% bucketing mismatch documented for other accounts and doesn't match a simple invite+reminder sum either — worth a closer look at what the campaign-report endpoint is actually bucketing for this account before the open/click percentages are used in a customer-facing context. Zeppelin remains the authoritative source for send volume in this report.</div>
+    <div><strong>Fix the DK/SE email-performance reconciliation gap before trusting open/click rates at face value.</strong> API-reported "sent" for July doesn't cleanly match Zeppelin invite counts for either market with a working credential: DK API sent 7,297 vs. 6,200 Zeppelin invites (+17.7%); SE API sent 1,404 vs. 1,037 Zeppelin invites (+35.4%) — see the Email Performance section for the full split by invite/reminder step. This is a larger gap than the ~6–8% bucketing mismatch documented for other accounts and doesn't match a simple invite+reminder sum either — worth a closer look at what the campaign-report endpoint is actually bucketing for this account before the open/click percentages are used in a customer-facing context. Zeppelin remains the authoritative source for send volume in this report.</div>
   </li>
 </ul>
 
