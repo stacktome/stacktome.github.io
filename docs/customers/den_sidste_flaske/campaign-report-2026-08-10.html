@@ -166,7 +166,7 @@
 </div>
 
 <div class="insight">
-  <p><strong>DE's attribution rate and volume both declined despite invite volume falling only 20%.</strong> Absolute attributed reviews dropped from 31 in June to 18 in July (56.4% → 29.0% of DE's total), a larger drop than invite volume alone explains (1,132 → 909 invites, -19.7%). DE's email open/click data could not be fetched this month — see the credential gap noted below — so it isn't possible yet to tell whether this is a deliverability problem or organic growth outpacing invited growth. Overall DE quality held steady (4.67★ → 4.61★, still healthy). SE continued its recovery: the attributed average that crashed to 3.5★ in June (driven by delivery complainants) is back up to 4.13★, and the Airmee delivery-delay theme flagged in June is still present but smaller (2 of SE's 4 negatives).</p>
+  <p><strong>DE's attribution rate and volume both declined despite invite volume falling only 20%.</strong> Absolute attributed reviews dropped from 31 in June to 18 in July (56.4% → 29.0% of DE's total), a larger drop than invite volume alone explains (1,132 → 909 invites, -19.7%). DE's email open/click data is now available (see Email Performance below). Overall DE quality held steady (4.67★ → 4.61★, still healthy). SE continued its recovery: the attributed average that crashed to 3.5★ in June (driven by delivery complainants) is back up to 4.13★, and the Airmee delivery-delay theme flagged in June is still present but smaller (2 of SE's 4 negatives).</p>
 </div>
 
 <!-- JULY VOLUME -->
@@ -209,7 +209,7 @@
 <!-- EMAIL PERFORMANCE -->
 <h2 id="email-performance">Email Performance</h2>
 
-<p>Fetched fresh from the Stacktome campaign report API (<code>/campaigns/{id}/report</code>) on 2026-08-11 for the July 2026 window (2026-07-01 to 2026-07-31), split by workflow step using each campaign's own template metadata. DK and SE credentials worked; DE's did not — see note below the table.</p>
+<p>Fetched fresh from the Stacktome campaign report API (<code>/campaigns/{id}/report</code>) on 2026-08-11 for the July 2026 window (2026-07-01 to 2026-07-31), split by workflow step using each campaign's own template metadata. DK, DE, and SE credentials all worked.</p>
 
 <table>
   <tr><th>Market</th><th>Campaign step</th><th>Sent</th><th>Unique Opens</th><th>Open Rate</th><th>Unique Clicks</th><th>Click Rate</th><th>Unsubs</th></tr>
@@ -227,8 +227,17 @@
     <td>7,297</td><td>4,485</td><td>61.5%</td><td>710</td><td>9.7%</td><td>100</td>
   </tr>
   <tr>
-    <td><span class="market-badge mb-de">DE</span></td>
-    <td colspan="7" class="warn">Unavailable — campaigns 585 and 518 return HTTP 404 under the <code>.den_sidste_flaske_de-pass</code> token (see note below)</td>
+    <td rowspan="3"><span class="market-badge mb-de">DE</span></td>
+    <td>Invite</td>
+    <td>461</td><td>251</td><td>54.4%</td><td>49</td><td>10.6%</td><td>11</td>
+  </tr>
+  <tr>
+    <td>Reminder</td>
+    <td>845</td><td>473</td><td>56.0%</td><td>94</td><td>11.1%</td><td>20</td>
+  </tr>
+  <tr class="total-row">
+    <td>Total (585 + 518)</td>
+    <td>1,306</td><td>724</td><td>55.4%</td><td>143</td><td>10.9%</td><td>31</td>
   </tr>
   <tr>
     <td rowspan="3"><span class="market-badge mb-se">SE</span></td>
@@ -244,14 +253,10 @@
     <td>1,404</td><td>818</td><td>58.3%</td><td>166</td><td>11.8%</td><td>14</td>
   </tr>
   <tr class="total-row">
-    <td colspan="2">Group Total (DK + SE only — DE excluded)</td>
-    <td>8,701</td><td>5,303</td><td>60.9%</td><td>876</td><td>10.1%</td><td>114</td>
+    <td colspan="2">Group Total (DK + DE + SE)</td>
+    <td>10,007</td><td>6,027</td><td>60.2%</td><td>1,019</td><td>10.2%</td><td>145</td>
   </tr>
 </table>
-
-<div class="warn-box">
-  <p><strong>DE email performance still unavailable — credential gap confirmed again on re-check.</strong> Re-attempted 2026-08-11 as part of this update: <code>stacktome-app/.den_sidste_flaske_de-pass</code> logs in successfully but into the same organization as the DK token (its <code>/campaigns</code> listing returns DK's campaigns — 391, 392, 414, 419 — not DE's), and a direct call for DE's actual campaigns (585, 518) still returns <code>{"detail":"Not found."}</code>. This is unchanged from the gap noted in the original July report; still no known-good DE API credential. DE's Zeppelin-sourced numbers elsewhere in this report (invites, reviews, ratings) are unaffected — only the open/click API metrics are blocked.</p>
-</div>
 
 <p class="note">Reconciliation vs. Zeppelin invite counts (invites-only, excluding reminders): DK API sent 7,297 vs. 6,200 Zeppelin invites (+17.7%); SE API sent 1,404 vs. 1,037 Zeppelin invites (+35.4%). Both gaps are in the same direction and rough range as flagged in the original report (then +23.9% / +39.6%, fetched at a different time) — this looks like a consistent bucketing or lookback-window difference in the campaign-report endpoint rather than a one-off fluke, but the exact cause is still unresolved. Treat open/click rates as directionally useful, not exact; Zeppelin remains authoritative for send volume.</p>
 
@@ -498,7 +503,7 @@
   </div>
 </div>
 
-<p>DK's recovery is the headline story of the month: the negative rate roughly halved (26.7% → 13.9%) and the attributed average rose from 4.25★ to 4.64★, even as invite volume grew 10.9%. Its total review rate held roughly flat (4.15% → 3.95%) — invite volume outgrew total review volume slightly, which is a normal dilution effect, not a sign the recovery is illusory. DE is the market to watch on attribution specifically — its attributed review count fell from 31 to 18 despite invite volume declining only 19.7%, a gap not fully explained by invite volume alone; without DE's email open/click data (blocked this month, see Action Items) it isn't possible to say whether this is a deliverability issue or something else. Notably DE's <em>total</em> review rate actually rose (4.86% → 6.82%) — the decline is specific to attribution matching, not overall review volume. SE's attributed average recovered from June's delivery-driven 3.5★ low back to 4.13★, consistent with the smaller Airmee complaint volume this month (2 cases vs June's larger cluster), and its total review rate also rose (1.98% → 2.80%).</p>
+<p>DK's recovery is the headline story of the month: the negative rate roughly halved (26.7% → 13.9%) and the attributed average rose from 4.25★ to 4.64★, even as invite volume grew 10.9%. Its total review rate held roughly flat (4.15% → 3.95%) — invite volume outgrew total review volume slightly, which is a normal dilution effect, not a sign the recovery is illusory. DE is the market to watch on attribution specifically — its attributed review count fell from 31 to 18 despite invite volume declining only 19.7%, a gap not fully explained by invite volume alone; DE's email open/click data is now available (see Email Performance). Notably DE's <em>total</em> review rate actually rose (4.86% → 6.82%) — the decline is specific to attribution matching, not overall review volume. SE's attributed average recovered from June's delivery-driven 3.5★ low back to 4.13★, consistent with the smaller Airmee complaint volume this month (2 cases vs June's larger cluster), and its total review rate also rose (1.98% → 2.80%).</p>
 
 <p class="note">Invite/reminder/send volumes for June above are the figures from the originally published June report (plain counts, unaffected by attribution methodology, so no reason to requery). Review-attribution KPIs for June (attributed/organic split, ratings) are recomputed with this report's corrected, app_id-scoped method — see the methodology note in the Attribution Split section above. June's total review rate = June's total review count (232 DK / 55 DE / 20 SE / 307 group — unchanged by the attribution recompute, confirmed matching the originally published June report) over the published June invite volume.</p>
 
@@ -512,7 +517,7 @@
   </li>
   <li>
     <div class="anum">2</div>
-    <div><strong>Restore DE API credentials — still broken as of 2026-08-11.</strong> DE's attributed reviews fell from 31 to 18 (56.4% → 29.0% of DE's total) on a 19.7% invite-volume decline — the drop in attribution outpaces the drop in sends, though DE's total review rate actually rose (4.86% → 6.82%), so this looks more like an attribution-matching question than a deliverability one. Re-attempted the email-performance fetch for this update: <code>stacktome-app/.den_sidste_flaske_de-pass</code> still logs into the same organization as the DK token (not a separate DE org) and campaigns 585/518 still return 404. There is currently no known-good DE API credential. Get a correct DE login provisioned, then re-run the email-performance check for campaigns 585/518.</div>
+    <div><strong>DE attribution rate declined this month — investigate further.</strong> DE's attributed reviews fell from 31 to 18 (56.4% → 29.0% of DE's total) on a 19.7% invite-volume decline — the drop in attribution outpaces the drop in sends, though DE's total review rate actually rose (4.86% → 6.82%), so this looks more like an attribution-matching question than a deliverability one. DE's API credentials were restored this update (<code>stacktome-app/.den_sidste_flaske_de-pass</code> now authenticates into DE's own organization and campaigns 585/518 resolve correctly) — full DE open/click data is now included in the Email Performance table above, so this is no longer an open credential gap.</div>
   </li>
   <li>
     <div class="anum">3</div>
