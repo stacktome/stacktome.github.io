@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jewlr — Campaign Progress Report | Aug 24–30, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 40px 48px 36px; }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .brand { font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; opacity: 0.6; }
+  .period-badge { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500; }
+  .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+  .header-sub { font-size: 13px; opacity: 0.7; }
+  .wrapper { max-width: 1020px; margin: 0 auto; padding: 32px 24px 60px; }
+
+  h2 { font-size: 17px; font-weight: 700; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #0f3460; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 16px 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-top: 3px solid #0f3460; }
+  .kpi.green  { border-top-color: #00b894; }
+  .kpi.amber  { border-top-color: #fd7e14; }
+  .kpi.red    { border-top-color: #d63031; }
+  .kpi.purple { border-top-color: #6c5ce7; }
+  .kpi-val   { font-size: 22px; font-weight: 700; color: #1a1a2e; line-height: 1; margin-bottom: 4px; }
+  .kpi-label { font-size: 10px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: #6c757d; }
+  .kpi-sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  th { background: #f8f9ff; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; }
+  td { padding: 9px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafbff; }
+  .row-total td { background: #f8f9ff; font-weight: 600; }
+  .row-inactive td { color: #aaa; }
+  .status-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; }
+  .status-active { background: #e8fff6; color: #00b894; }
+  .status-inactive { background: #f5f5f5; color: #999; }
+
+  .insight-box { background: #fff; border-left: 4px solid #6c5ce7; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .insight-box p, .warn-box p, .good-box p { margin-bottom: 6px; }
+  .insight-box p:last-child, .warn-box p:last-child, .good-box p:last-child { margin-bottom: 0; }
+  .good { color: #00b894; font-weight: 600; }
+  .warn { color: #e17055; font-weight: 600; }
+  .neutral { color: #636e72; }
+
+  /* Template comparison (TP vs brand-v1) */
+  .tmpl-summary-row { display: flex; gap: 14px; flex-wrap: wrap; margin: 16px 0; }
+  .tmpl-summary-card { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); flex: 1; min-width: 220px; display: flex; align-items: flex-start; gap: 12px; }
+  .brand-dot { width: 12px; height: 12px; border-radius: 50%; margin-top: 3px; flex-shrink: 0; }
+  .tsb-brand { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .tsb-rates { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .tsb-tp { font-size: 13px; color: #636e72; }
+  .tsb-arrow { color: #b2bec3; }
+  .tsb-brand-rate { font-size: 13px; font-weight: 600; color: #1a1a2e; }
+  .tsb-delta { font-size: 12px; font-weight: 700; padding: 2px 7px; border-radius: 10px; }
+  .tsb-delta.pos { background: #e8fff6; color: #00b894; }
+  .tsb-delta.neg { background: #fff0f0; color: #e17055; }
+  .tsb-delta.flat { background: #f5f5f5; color: #636e72; }
+
+  .tmpl-compare-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px; }
+  .tmpl-card { background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .tmpl-card-brand { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #f0f0f0; }
+  .tmpl-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .tmpl-row-label { font-size: 11px; color: #888; width: 90px; flex-shrink: 0; }
+  .tmpl-row-bar-wrap { flex: 1; }
+  .tmpl-dual-bar { display: flex; gap: 2px; height: 18px; border-radius: 4px; overflow: visible; font-size: 10px; }
+  .bar-tp { background: #b2bec3; display: flex; align-items: center; padding-left: 4px; color: #fff; border-radius: 3px 0 0 3px; font-size: 10px; min-width: 34px; }
+  .bar-brand { background: #6c5ce7; display: flex; align-items: center; padding-left: 4px; color: #fff; border-radius: 0 3px 3px 0; font-size: 10px; min-width: 34px; }
+  .tmpl-delta { font-size: 12px; font-weight: 700; min-width: 58px; text-align: right; }
+  .delta-pos { color: #00b894; }
+  .delta-neg { color: #e17055; }
+  .delta-flat { color: #636e72; }
+
+  /* Review cards */
+  .review-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 14px; overflow: hidden; }
+  .review-card-header { padding: 10px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #f0f0f0; }
+  .review-card-body { padding: 12px 16px; }
+  .rating-badge { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; }
+  .r1b { background: #d63031; } .r2b { background: #e17055; } .r3b { background: #fdcb6e; color: #333; }
+  .source-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+  .sp-attr { background: #e8f4fd; color: #0984e3; }
+  .sp-organic { background: #f0f0f0; color: #636e72; }
+  .tag { display: inline-block; background: #fff0f0; color: #d63031; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 8px; margin-left: 6px; }
+  .tag-ok { display: inline-block; background: #f0fff8; color: #00b894; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 8px; margin-left: 6px; }
+  .review-text { font-size: 13px; color: #4a4a4a; line-height: 1.55; }
+  .review-meta { font-size: 11px; color: #999; margin-top: 8px; }
+
+  /* Action items */
+  .action-list { list-style: none; margin: 0; padding: 0; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 16px; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 10px; }
+  .al-icon { font-size: 16px; flex-shrink: 0; }
+  .al-text { font-size: 13px; color: #4a4a4a; line-height: 1.5; }
+
+  nav a:hover { text-decoration: underline; }
+  footer { text-align: center; font-size: 12px; color: #999; margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <span class="brand">Jewlr &bull; Trustpilot Review Invitations</span>
+    <span class="period-badge">Aug 24 – 30, 2026</span>
+  </div>
+  <h1>Campaign Progress Report</h1>
+  <div class="header-sub">Generated Aug 31, 2026 &bull; 7-day trailing window</div>
+</div>
+
+<div class="wrapper">
+
+  <nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #6c5ce7;font-size:14px;line-height:2;">
+    <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+    <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Executive Summary</a>
+    <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Campaign Performance</a>
+    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Brand vs TP Template Comparison</a>
+    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Ticket-Gating Fix — Impact</a>
+    <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Negative Reviews</a>
+    <a href="#s6" style="color:#444;text-decoration:none;">6. Action Items</a>
+  </nav>
+
+  <h2 id="s1">1. Executive Summary</h2>
+
+  <div class="kpi-grid">
+    <div class="kpi purple">
+      <div class="kpi-val">341</div>
+      <div class="kpi-label">Invites Sent</div>
+      <div class="kpi-sub">+337 reminders</div>
+    </div>
+    <div class="kpi amber">
+      <div class="kpi-val">7</div>
+      <div class="kpi-label">TP Reviews</div>
+      <div class="kpi-sub">6 attributed &middot; 1 organic</div>
+    </div>
+    <div class="kpi red">
+      <div class="kpi-val">3.57★</div>
+      <div class="kpi-label">Avg Rating (all)</div>
+      <div class="kpi-sub">down from 5.00★ last week</div>
+    </div>
+    <div class="kpi red">
+      <div class="kpi-val">4</div>
+      <div class="kpi-label">Negative (&le;3★)</div>
+      <div class="kpi-sub">57.1% of window reviews</div>
+    </div>
+    <div class="kpi amber">
+      <div class="kpi-val">1.47%</div>
+      <div class="kpi-label">Review Rate (735)</div>
+      <div class="kpi-sub">reviews / invites sent</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-val">1,290</div>
+      <div class="kpi-label">Live Segment Size</div>
+      <div class="kpi-sub">Aug 31, was 1,223 on Aug 24</div>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <p><strong>Review quality collapsed this window &mdash; the account's worst since the ticket-gating fix landed.</strong> Campaign 735's average rating fell to 3.80★ from 5.00★ last week, with 3 of its 5 attributed reviews rated &le;3★ (60%, vs 0% in each of the last two reports). Including the 1 organic 1★ complaint and 1 review attributed to the long-dormant legacy campaign 101 (see Section 2), the window's blended average is 3.57★ across all 7 reviews. This is a small sample (n=7) and could be noise, but it is a sharp, one-window reversal worth watching closely next week rather than dismissing outright.</p>
+    <p><strong>Invite volume held essentially flat (342 &rarr; 341) while reminders more than doubled (165 &rarr; 337, +104.2%)</strong> &mdash; the mirror image of last week, where invites surged and reminders were still declining off the pre-cutover backlog. This reads as last week's invite surge now working its way through the reminder step on schedule, not a new trend in either direction.</p>
+    <p><strong>The Jewlr-branded template's open-rate gap widened sharply this week after three weeks of relative stability.</strong> Invite step: &minus;16.3pp &rarr; &minus;16.1pp &rarr; &minus;15.6pp &rarr; <strong>&minus;20.7pp</strong> this week, its worst yet. Reminder step: &minus;14.1pp &rarr; &minus;13.6pp &rarr; &minus;16.6pp &rarr; <strong>&minus;17.6pp</strong>, now four straight weeks of widening. See Section 3 &mdash; the tentative positive click-rate signal for brand from the past two weeks has also disappeared this window.</p>
+  </div>
+
+  <h2 id="s2">2. Campaign Performance</h2>
+  <p>Review attribution joins Trustpilot reviews in the window to the full invite history (not just this window's sends) by <code>order_id</code>, per the standard weekly-report methodology. Invite/reminder totals use distinct <code>order_id</code> counts throughout.</p>
+
+  <table>
+    <thead>
+      <tr><th>Campaign</th><th>Status</th><th>Invites Sent</th><th>Reminders</th><th>Reviews</th><th>Review Rate</th><th>Avg Rating</th><th>Negatives</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>735 &mdash; Jewlr Review Request V2</strong></td>
+        <td><span class="status-pill status-active">Active</span></td>
+        <td>341</td>
+        <td>337</td>
+        <td>5</td>
+        <td>1.47%</td>
+        <td>3.80★</td>
+        <td>3</td>
+      </tr>
+      <tr class="row-inactive">
+        <td>101 &mdash; Jewlr Review Request (legacy) <span class="tag" style="background:#fff3e0;color:#e17055;">Dormant attribution</span></td>
+        <td><span class="status-pill status-inactive">Inactive since Jul 8</span></td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>n/a&#8224;</td>
+        <td>5.00★</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>Organic (no invite match)</td>
+        <td>&mdash;</td>
+        <td>&mdash;</td>
+        <td>&mdash;</td>
+        <td>1</td>
+        <td>&mdash;</td>
+        <td>1.00★</td>
+        <td>1</td>
+      </tr>
+      <tr class="row-total">
+        <td>Total</td>
+        <td></td>
+        <td>341</td>
+        <td>337</td>
+        <td>7</td>
+        <td></td>
+        <td>3.57★</td>
+        <td>4</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:12px;color:#888;">&#8224; 101 sent zero invites or reminders this window (fully inactive since the Jul 17 cutover) but received 1 review this period (5★, order <code>j2039781478</code>) via a historical invite in the all-time attribution table &mdash; the same &ldquo;dormant-campaign attribution&rdquo; pattern other accounts on this notebook family have flagged: the standing all-time-attribution rule correctly credits it, but a rate is undefined against a zero denominator. Not seen in the last two Jewlr reports, so noted here rather than silently folded into the total. Invite sends were again concentrated late and unevenly across the week: 1 invite on Mon Aug 24, none at all on Tue Aug 25 (reminder-only day), then 53/65/100/100/22 on Wed&ndash;Sun &mdash; Thu+Fri (Aug 28&ndash;29) alone accounted for 200 of 341 invited orders (58.6%).</p>
+
+  <h2 id="s3">3. Brand vs TP Template Comparison</h2>
+  <p>Since Jul 17, campaign 735 has run a 50/50 split between the original Trustpilot-style template (<code>invite</code> / <code>reminder</code>, ids 240/448) and the Jewlr-branded variant (<code>invite-brand-v1</code> / <code>reminder-brand-v1</code>, ids 1181/1182). Open/click figures below are from the invite API report endpoint, summed daily over the window; review-conversion figures are from Zeppelin attribution by the template each order's invite/reminder actually carried.</p>
+
+  <div class="tmpl-summary-row">
+    <div class="tmpl-summary-card">
+      <div class="brand-dot" style="background:#6c5ce7;"></div>
+      <div>
+        <div class="tsb-brand">Invite step — open rate</div>
+        <div class="tsb-rates">
+          <span class="tsb-tp">57.1% TP</span>
+          <span class="tsb-arrow">→</span>
+          <span class="tsb-brand-rate">36.4% brand</span>
+          <span class="tsb-delta neg">&minus;20.7pp</span>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:3px;">170 TP &middot; 165 brand sends (API)</div>
+      </div>
+    </div>
+    <div class="tmpl-summary-card">
+      <div class="brand-dot" style="background:#0984e3;"></div>
+      <div>
+        <div class="tsb-brand">Reminder step — open rate</div>
+        <div class="tsb-rates">
+          <span class="tsb-tp">60.0% TP</span>
+          <span class="tsb-arrow">→</span>
+          <span class="tsb-brand-rate">42.4% brand</span>
+          <span class="tsb-delta neg">&minus;17.6pp</span>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:3px;">150 TP &middot; 177 brand sends (API)</div>
+      </div>
+    </div>
+    <div class="tmpl-summary-card">
+      <div class="brand-dot" style="background:#00b894;"></div>
+      <div>
+        <div class="tsb-brand">Invite step — review conversion</div>
+        <div class="tsb-rates">
+          <span class="tsb-tp">0.58% TP</span>
+          <span class="tsb-arrow">→</span>
+          <span class="tsb-brand-rate">0.60% brand</span>
+          <span class="tsb-delta pos">+0.02pp</span>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:3px;">1 review (TP) vs 1 (brand); very small samples</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Open / Click / Unsubscribe — TP vs Brand</h3>
+  <div class="tmpl-compare-grid">
+    <div class="tmpl-card">
+      <div class="tmpl-card-brand" style="color:#6c5ce7;">Invite step (templates 240 vs 1181)</div>
+      <div class="tmpl-row">
+        <div class="tmpl-row-label">Open rate</div>
+        <div class="tmpl-row-bar-wrap">
+          <div class="tmpl-dual-bar">
+            <div class="bar-tp" style="width:57.1%">57.1%</div>
+            <div class="bar-brand" style="width:36.4%">36.4%</div>
+          </div>
+        </div>
+        <div class="tmpl-delta delta-neg">&minus;20.7pp</div>
+      </div>
+      <div class="tmpl-row">
+        <div class="tmpl-row-label">Click rate</div>
+        <div class="tmpl-row-bar-wrap">
+          <div class="tmpl-dual-bar">
+            <div class="bar-tp" style="width:2.4%">2.4%</div>
+            <div class="bar-brand" style="width:2.4%">2.4%</div>
+          </div>
+        </div>
+        <div class="tmpl-delta delta-flat">0.0pp</div>
+      </div>
+      <div style="font-size:11px;color:#888;margin-top:8px;">TP: 170 sent, 2 unsubs. Brand: 165 sent, 0 unsubs.</div>
+    </div>
+
+    <div class="tmpl-card">
+      <div class="tmpl-card-brand" style="color:#0984e3;">Reminder step (templates 448 vs 1182)</div>
+      <div class="tmpl-row">
+        <div class="tmpl-row-label">Open rate</div>
+        <div class="tmpl-row-bar-wrap">
+          <div class="tmpl-dual-bar">
+            <div class="bar-tp" style="width:60.0%">60.0%</div>
+            <div class="bar-brand" style="width:42.4%">42.4%</div>
+          </div>
+        </div>
+        <div class="tmpl-delta delta-neg">&minus;17.6pp</div>
+      </div>
+      <div class="tmpl-row">
+        <div class="tmpl-row-label">Click rate</div>
+        <div class="tmpl-row-bar-wrap">
+          <div class="tmpl-dual-bar">
+            <div class="bar-tp" style="width:2.0%">2.0%</div>
+            <div class="bar-brand" style="width:1.7%">1.7%</div>
+          </div>
+        </div>
+        <div class="tmpl-delta delta-neg">&minus;0.3pp</div>
+      </div>
+      <div style="font-size:11px;color:#888;margin-top:8px;">TP: 150 sent, 3 unsubs. Brand: 177 sent, 1 unsub.</div>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Step</th><th>Template</th><th>Sent (fresh, this window)</th><th>Review Rate</th><th>Avg Rating</th><th>Negatives</th></tr>
+    </thead>
+    <tbody>
+      <tr><td rowspan="2">Invite</td><td>invite (tp)</td><td>173</td><td>0.58%</td><td>3.00★</td><td>1</td></tr>
+      <tr><td>invite-brand-v1</td><td>168</td><td>0.60%</td><td>5.00★</td><td>0</td></tr>
+      <tr><td rowspan="2">Reminder</td><td>reminder (tp)</td><td>156</td><td>0.64%</td><td>5.00★</td><td>0</td></tr>
+      <tr><td>reminder-brand-v1</td><td>181</td><td>1.10%</td><td>3.00★</td><td>2</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn-box">
+    <p><strong>The open-rate gap widened sharply this week after three weeks of relative stability.</strong> Invite step: &minus;16.3pp &rarr; &minus;16.1pp &rarr; &minus;15.6pp &rarr; <strong>&minus;20.7pp</strong> this week, its worst yet. Reminder step: &minus;14.1pp &rarr; &minus;13.6pp &rarr; &minus;16.6pp &rarr; <strong>&minus;17.6pp</strong>, now four straight weeks of widening rather than narrowing. The tentative positive click-rate signal for brand from the past two weeks (+0.6pp then +1.7pp on invite) disappeared entirely this window (0.0pp, flat); reminder-step click also turned slightly negative for brand (&minus;0.3pp, was +0.1pp last week).</p>
+    <p>Review-conversion adds a second, smaller-sample signal pointing the same direction on the reminder step specifically: 2 of this window's 3 negative attributed reviews are matched to a <code>reminder-brand-v1</code> touch (avg 3.00★, 2 of 2 negative), versus a clean 5.00★ on TP's single reminder-step review. The invite step is more mixed (TP's 1 review was also negative, brand-v1's was 5★), and neither step's conversion sample (1&ndash;2 reviews per cell) is conclusive on its own. <strong>Recommendation unchanged, and now stronger:</strong> reduce or pause <code>invite-brand-v1</code>/<code>reminder-brand-v1</code>'s send weight &mdash; the open-rate gap has held or widened for four consecutive weeks on both steps, hit its widest point yet this week, and the one counter-signal that had softened the case (rising brand click rates) is now gone.</p>
+  </div>
+
+  <h2 id="s4">4. Ticket-Gating Fix — Impact</h2>
+  <p>Segment 1158 (<code>invite-eligible-no-ticket</code>, feeds campaign 735) had its exclusion template fixed on Aug 10 (see the Aug 10 report) &mdash; swapping from a status-literal check that never matched Jewlr's ticket data to a null-safe any-status check. This section covers the third week since.</p>
+
+  <div class="good-box">
+    <p><strong>The fix continues to work exactly as intended.</strong> Zero of the 341 distinct customers invited this window carried an open (active/pending) support ticket at invite time &mdash; and unlike the prior two reports, there is not even a post-invite edge case to note this week.</p>
+  </div>
+
+  <div class="good-box">
+    <p><strong>The segment grew for a second consecutive week.</strong> Live size stands at <strong>1,290</strong> as of Aug 31, up from 1,223 on Aug 24 (+67, +5.5%) &mdash; following last week's first-ever net gain (+27, +2.3%) after the initial 49% two-week contraction. The diff log shows a similar mid-week-positive, edge-negative pattern to last week: strong net additions Aug 26&ndash;29 (+219 combined, including the largest single-day intake yet, Aug 28's +115) more than offsetting declines on Aug 24&ndash;25 and Aug 30 (&minus;156 combined).</p>
+    <p><strong>Two straight weeks of growth is a stronger signal than one.</strong> The segment has now gone 1,196 &rarr; 1,223 &rarr; 1,290 over the last two reports &mdash; consistent, compounding growth rather than a single-week blip. This further supports last week's tentative read: new-order inflow is not just keeping pace with the exclusion filter but outpacing it, and ~1,200&ndash;1,300 and still rising looks more like the segment's real, larger steady state than a residual drain. Still worth one more week of confirmation before treating the growth rate itself as stable, since this week's rate (+5.5%) more than doubled last week's (+2.3%).</p>
+  </div>
+
+  <h2 id="s5">5. Negative Reviews (&le;3★)</h2>
+
+  <div class="warn-box">
+    <p><strong>4 negative reviews this window (3 attributed to 735 + 1 organic) &mdash; the account's worst window since the ticket-gating fix, up from 0 in each of the last two reports.</strong> Two of the four reference sizing/resizing problems, one references an incomplete paid add-on (engraving), and one is a non-delivery complaint. One customer (see below) already had an active support ticket for the same issue as of the review date.</p>
+  </div>
+
+  <div class="review-card">
+    <div class="review-card-header">
+      <span class="rating-badge r1b">1★</span>
+      <span class="source-pill sp-organic">Organic &middot; no invite match</span>
+      <span class="source-pill" style="background:#fff0f0;color:#d63031;margin-left:auto;">No order_id / no email on file</span>
+    </div>
+    <div class="review-card-body">
+      <div class="review-text"><strong>Very disappointed</strong> &mdash; &ldquo;Very disappointed. Ordered and paid for goods which have never been received. No response from customer service within the timescale indicated. Will not be using again.&rdquo;</div>
+      <div class="review-meta">2026-08-30 09:17:58 &middot; No <code>order_id</code> or email captured, so this cannot be matched to a specific order or cross-checked against tickets.</div>
+    </div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-card-header">
+      <span class="rating-badge r3b">3★</span>
+      <span class="source-pill sp-attr">Attributed &middot; 735</span>
+      <span class="tag" style="margin-left:auto;">Active ticket at review time</span>
+    </div>
+    <div class="review-card-body">
+      <div class="review-text"><strong>The ring is really pretty but the&hellip;</strong> &mdash; &ldquo;The ring is really pretty but the sizing is wrong, I had to get it resized twice because it was still too big.&rdquo;</div>
+      <div class="review-meta">martinbq2005@gmail.com &middot; order <code>j2032598183</code> &middot; 2026-08-27 01:41:40 &middot; Customer has an <strong>active</strong> resizing-related ticket (&ldquo;Re: Inquire about resizing&rdquo;, opened 2026-08-26, one day before this review) plus 3 earlier closed resizing tickets dating back to 2026-08-23 &mdash; this is a repeat, unresolved sizing issue, not a one-off.</div>
+    </div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-card-header">
+      <span class="rating-badge r3b">3★</span>
+      <span class="source-pill sp-attr">Attributed &middot; 735</span>
+      <span class="tag-ok" style="margin-left:auto;">No open ticket</span>
+    </div>
+    <div class="review-card-body">
+      <div class="review-text"><strong>Engraving not done</strong> &mdash; &ldquo;Despite paying for and selecting The Engraved option, the engraving was never completed. They did refund the missed step, however that isn't the point.&rdquo;</div>
+      <div class="review-meta">robert.money1985@gmail.com &middot; order <code>j2065584180</code> &middot; 2026-08-28 18:34:45 &middot; No matching support ticket on file &mdash; refund was apparently processed outside the ticket system, or without one being opened.</div>
+    </div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-card-header">
+      <span class="rating-badge r3b">3★</span>
+      <span class="source-pill sp-attr">Attributed &middot; 735</span>
+      <span class="tag-ok" style="margin-left:auto;">No open ticket</span>
+    </div>
+    <div class="review-card-body">
+      <div class="review-text"><strong>Well the gold plated silver got scuffed&hellip;</strong> &mdash; &ldquo;Well the gold plated silver got scuffed by a swiffer mop handle.&rdquo;</div>
+      <div class="review-meta">ruschwilliam2@gmail.com &middot; order <code>j0120872189</code> &middot; 2026-08-28 20:56:26 &middot; Accidental-damage complaint, not a product or fulfillment defect &mdash; included for completeness, likely not actionable.</div>
+    </div>
+  </div>
+
+  <h2 id="s6">6. Action Items</h2>
+  <ul class="action-list">
+    <li><span class="al-icon">⚠️</span><span class="al-text"><strong>Investigate this window's quality drop</strong> (Sections 1, 5) &mdash; 4 of 7 reviews (57.1%) were negative, vs 0 of 5 last week and 0 of 26 the week before. Sample is small (n=7) and could be noise, but two of the four cases (sizing/resizing, incomplete engraving) point at operational fulfillment misses rather than random dissatisfaction. Worth a specific check next week on whether this was a one-off batch or order-processing issue around Aug 26&ndash;28.</span></li>
+    <li><span class="al-icon">📞</span><span class="al-text"><strong>Follow up with martinbq2005@gmail.com (order j2032598183)</strong> (Section 5) &mdash; left a 3★ review about a resizing issue while carrying an <em>active</em> ticket for the same problem, plus 3 prior closed tickets since Aug 23. This looks like a repeat case that support has not fully resolved despite multiple contacts &mdash; a candidate for escalation beyond the standard ticket queue.</span></li>
+    <li><span class="al-icon">📊</span><span class="al-text"><strong>Decide on brand-template weighting</strong> (Section 3) &mdash; the open-rate gap has now held or widened for four consecutive weeks on both steps and hit its widest point yet this window (&minus;20.7pp invite, &minus;17.6pp reminder), while the tentative positive click-rate signal for brand from the past two weeks has disappeared. Reinforced by this window's reminder-step review-conversion split (brand-v1: 2 of 2 reviews negative; TP: 0 of 1). Recommend reducing or pausing <code>invite-brand-v1</code>/<code>reminder-brand-v1</code>'s send weight.</span></li>
+    <li><span class="al-icon">📈</span><span class="al-text"><strong>Segment rebound is now a two-week trend</strong> (Section 4) &mdash; live size grew for a second straight week (1,223 &rarr; 1,290, +5.5%, following +2.3% the week before). Strengthens the read that ~1,200+ and rising is closer to the segment's real steady state than a still-draining backlog, though the accelerating growth rate itself is worth one more week of confirmation.</span></li>
+  </ul>
+
+  <footer>
+    Generated Aug 31, 2026 &mdash; Data window: Aug 24–30, 2026 &mdash; Jewlr Campaign Progress Report<br>
+    Next report: standard 7-day trailing window, generated the following Monday.
+  </footer>
+
+</div>
+</body>
+</html>
