@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Soul — Monthly Report (Aug vs Jul 2026)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #e84393; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #1a1a2e; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+  .kpi-grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 20px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  .split-box { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .split-box .split-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 12px; }
+  .split-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+  .split-row .slabel { color: #636e72; }
+  .split-row .sval { font-weight: 600; color: #1a1a2e; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .total-row td { background: #f4f4f4 !important; font-weight: 600; }
+  .closed-row td:first-child { border-left: 3px solid #00b894; }
+  .loyal-row td:first-child { border-left: 3px solid #e84393; }
+  .skus-row td:first-child { border-left: 3px solid #fdcb6e; }
+  .tp-row td:first-child { border-left: 3px solid #6c5ce7; }
+
+  .review-card { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 10px; }
+  .rc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .rc-source { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; color: #888; }
+  .rc-meta { font-size: 12px; color: #aaa; margin-left: auto; }
+  .rc-text { font-size: 13px; color: #444; line-height: 1.6; }
+  .rc-heading { font-weight: 600; color: #1a1a2e; margin-bottom: 4px; font-size: 13px; }
+
+  .rating-badge { display: inline-block; border-radius: 5px; padding: 2px 9px; font-size: 12px; font-weight: 700; }
+  .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff3e0; color: #e17055; }
+  .r3 { background: #fffde0; color: #b8860b; }
+  .r4 { background: #e8f5f0; color: #00b894; }
+  .r5 { background: #e8f5e8; color: #27ae60; }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 8px; }
+  .theme-card { background: #fff; border-radius: 10px; padding: 16px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .theme-card .theme-title { font-size: 13px; font-weight: 600; color: #1a1a2e; margin-bottom: 6px; }
+  .theme-card .theme-count { font-size: 12px; color: #888; margin-bottom: 8px; }
+  .theme-card .theme-quotes { font-size: 12px; color: #555; line-height: 1.7; }
+  .theme-card .theme-quotes em { color: #e17055; font-style: normal; }
+
+  .seg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 8px; }
+  .seg-card { background: #fff; border-radius: 10px; padding: 16px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .seg-card .seg-name { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .seg-card .seg-campaign { font-size: 11px; color: #888; margin-bottom: 10px; }
+  .seg-row { font-size: 12px; color: #555; margin-bottom: 5px; line-height: 1.5; }
+  .seg-row strong { color: #1a1a2e; }
+  .tag-ok { display: inline-block; background: #e8f5f0; color: #00b894; border-radius: 4px; padding: 1px 7px; font-size: 11px; font-weight: 600; }
+  .tag-warn { display: inline-block; background: #fff3e0; color: #e17055; border-radius: 4px; padding: 1px 7px; font-size: 11px; font-weight: 600; }
+  .tag-issue { display: inline-block; background: #ffeaea; color: #d63031; border-radius: 4px; padding: 1px 7px; font-size: 11px; font-weight: 600; }
+
+  .action-list { list-style: none; }
+  .action-list li { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; display: flex; gap: 12px; align-items: flex-start; font-size: 13px; line-height: 1.6; }
+  .action-list li .anum { background: #1a1a2e; color: #fff; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .note { font-size: 12px; color: #888; margin-top: 6px; font-style: italic; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+  .info-box { background: #f5f6fa; border-left: 4px solid #b2bec3; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<h1>Free Soul — Monthly Report</h1>
+<p class="subtitle">Aug 1&ndash;31, 2026 vs Jul 1&ndash;31, 2026 &nbsp;&middot;&nbsp; Campaigns: invite-tp (237) &middot; invite-closed (240) &middot; invite-skus (310) &middot; invite-loyal (424) &nbsp;&middot;&nbsp; Generated: 1 Sep 2026 &nbsp;&middot;&nbsp; Follows the Jun&ndash;Jul 2026 report (generated 11 Aug 2026); the Mar&ndash;Jun 2026 rolling summary (9 Jul 2026) is two reports back and used here only for longer-run baseline context</p>
+
+<nav style="background:#fff;border-radius:10px;padding:16px 20px;box-shadow:0 1px 4px rgba(0,0,0,0.07);margin-bottom:28px;font-size:13px;">
+  <div style="font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.6px;font-size:10px;margin-bottom:10px;">Contents</div>
+  <ol style="margin:0;padding-left:18px;line-height:2;">
+    <li><a href="#exec-summary" style="color:#6c5ce7;text-decoration:none;">Executive Summary</a></li>
+    <li><a href="#campaign-volume" style="color:#6c5ce7;text-decoration:none;">Campaign Volume</a></li>
+    <li><a href="#email-performance" style="color:#6c5ce7;text-decoration:none;">Email Performance</a></li>
+    <li><a href="#review-rate" style="color:#6c5ce7;text-decoration:none;">Review Rate &amp; Attribution Split</a></li>
+    <li><a href="#template-performance" style="color:#6c5ce7;text-decoration:none;">Template Performance</a></li>
+    <li><a href="#segment-analysis" style="color:#6c5ce7;text-decoration:none;">Segment Setup Analysis</a></li>
+    <li><a href="#negative-reviews" style="color:#6c5ce7;text-decoration:none;">Negative Reviews</a></li>
+    <li><a href="#positive-highlights" style="color:#6c5ce7;text-decoration:none;">Positive Highlights</a></li>
+    <li><a href="#action-items" style="color:#6c5ce7;text-decoration:none;">Action Items</a></li>
+  </ol>
+</nav>
+
+<div class="info-box">
+  <p><strong>For longer-run context:</strong> the Mar&ndash;Jun report's originally-published June attributed-review count (8, explicitly flagged there as lag-affected) was later recomputed and corrected to <strong>30</strong> in the Jun&ndash;Jul report (11 Aug 2026), once conversions had matured — per-campaign: invite-tp 22, invite-closed 0, invite-skus 1, invite-loyal 7. June's organic count (167), combined total (197), and negatives (32) were already correct in the original report and unchanged by that correction. This report doesn't restate June's figures directly, but any future reference to June should use the corrected 30, not the original 8.</p>
+</div>
+
+<!-- EXECUTIVE SUMMARY -->
+<h2 id="exec-summary">Executive Summary</h2>
+<div class="kpi-grid">
+  <div class="kpi"><div class="label">Total Invites</div><div class="value">20,842</div><div class="sub">Aug 2026 &middot; Jul: 18,384 (+13.4%)</div></div>
+  <div class="kpi"><div class="label">Total Reviews</div><div class="value">147</div><div class="sub">Aug (all received) &middot; Jul: 158, of which 84 attributed</div></div>
+  <div class="kpi"><div class="label">Avg Rating</div><div class="value">4.43&#9733;</div><div class="sub">Aug, all reviews &middot; Jul: 4.38&#9733;</div></div>
+  <div class="kpi"><div class="label">Negatives &le;3&#9733;</div><div class="value">23</div><div class="sub">Aug (15.6% of 147) &middot; Jul: 28 (17.7% of 158)</div></div>
+</div>
+<div class="kpi-grid3" style="margin-top:16px;">
+  <div class="kpi"><div class="label">Total Emails Sent</div><div class="value">40,538</div><div class="sub">Aug: 20,842 invites sent + 19,696 reminders</div></div>
+  <div class="kpi"><div class="label">Review Rate (Jul, settled)</div><div class="value">0.46%</div><div class="sub">84 attributed / 18,384 invites sent</div></div>
+  <div class="kpi"><div class="label">Review Rate (Aug, provisional)</div><div class="value">0.49%</div><div class="sub">102 attributed so far / 20,842 invites sent &mdash; still climbing, see note</div></div>
+</div>
+<p>August invite volume rose 13.4% over July (20,842 vs 18,384), driven almost entirely by <strong>invite-skus (310) more than doubling</strong> (1,577&rarr;3,457) after a segment-eligibility fix landed (see Segment Setup Analysis). Reviews received in August (147, all sources) are essentially flat vs July (158) and the average rating held steady (4.38&#9733;&rarr;4.43&#9733;), with negatives down both in count (28&rarr;23) and share (17.7%&rarr;15.6%).</p>
+<p><strong>Methodology note, carried forward from the Jun&ndash;Jul report's June/July treatment:</strong> July is fully settled (over a month closed at generation time) and its 84-review, 0.46% figure is <em>attributed-only</em> &mdash; matched to a specific invite by order ID. August closed only one day before this report was generated, so its attribution is still catching up: some late-August invitees haven't had time to review yet, and some will still convert in September. Per the Jun&ndash;Jul report's own convention, August's headline figures (147 reviews, 4.43&#9733;, 23 negatives) are <em>all reviews received</em> (attributed + organic), not attributed-only, and should not be read as directly comparable to July's attributed-only rate. <strong>August's attributed count already stands at 102, ahead of July's fully-settled 84</strong> &mdash; for comparison, June's fully-settled attributed count (once corrected in the Jun&ndash;Jul report) was only 30, well below July's 84, so August continuing to run ahead of July is a genuine continuation of that recovery, not just a lag artifact. The exact August figure will still move as trailing conversions arrive; treat it as a strong early read, not a final one.</p>
+
+<!-- CAMPAIGN VOLUME -->
+<h2 id="campaign-volume">Campaign Volume (Jul vs Aug 2026)</h2>
+<table>
+  <tr><th>Campaign</th><th>Jul Invites</th><th>Aug Invites</th><th>Invite &Delta;</th><th>Jul Reminders</th><th>Aug Reminders</th><th>Jul Total</th><th>Aug Total</th></tr>
+  <tr class="tp-row"><td>invite-tp (237)</td><td>7,625</td><td>6,160</td><td class="worst">&minus;19.2%</td><td>10,810</td><td>6,254</td><td><strong>18,435</strong></td><td><strong>12,414</strong></td></tr>
+  <tr class="closed-row"><td>invite-closed (240)</td><td>62</td><td>77</td><td class="best">+24.2%</td><td>61</td><td>65</td><td><strong>123</strong></td><td><strong>142</strong></td></tr>
+  <tr class="skus-row"><td>invite-skus (310)</td><td>1,577</td><td>3,457</td><td class="best">+119.2%</td><td>883</td><td>3,465</td><td><strong>2,460</strong></td><td><strong>6,922</strong></td></tr>
+  <tr class="loyal-row"><td>invite-loyal (424)</td><td>9,120</td><td>11,148</td><td class="best">+22.2%</td><td>10,465</td><td>9,912</td><td><strong>19,585</strong></td><td><strong>21,060</strong></td></tr>
+  <tr class="total-row"><td>Total</td><td>18,384</td><td>20,842</td><td class="best">+13.4%</td><td>22,219</td><td>19,696</td><td><strong>40,603</strong></td><td><strong>40,538</strong></td></tr>
+</table>
+<p class="note">"Invites"/"Reminders" here are raw invite-send and reminder-send event counts (not deduplicated by order), consistent with how the Jun&ndash;Jul report counted them (its July figures match this table exactly, campaign-by-campaign). For invite-closed (240) specifically, a handful of orders receive more than one invite send within a month, so the raw send count runs slightly ahead of the distinct-order count (e.g. 62 sends vs 58 distinct orders in July); every rate calculation in this report uses the raw send count as the denominator, matching the Jun&ndash;Jul report's convention, so it stays comparable month to month. invite-tp's drop and invite-skus/invite-loyal's rises roughly offset at the total-email level (40,603 vs 40,538, essentially flat) despite large swings underneath. Two additional campaigns exist on the account &mdash; 742 ("response", an automated reply-type send, not a review invite &mdash; excluded from all invite/review-rate figures, same convention as ITOL's campaign 607) and 745 ("test", no data in this account's invite path) &mdash; both outside the scope of this report, unchanged from the Mar&ndash;Jun report's four-campaign set otherwise.</p>
+
+<!-- EMAIL PERFORMANCE -->
+<h2 id="email-performance">Email Performance</h2>
+<p>Neither month has full-month API coverage as of this report's generation date &mdash; both are shown as the best available partial window, clearly labeled, rather than treated as full-month figures.</p>
+<h3>August 2026 (Aug 4&ndash;31, fresh pull)</h3>
+<table>
+  <tr><th>Campaign</th><th>Sent</th><th>Unique Opens</th><th>Open %</th><th>Unique Clicks</th><th>Click %</th><th>Unsubs</th></tr>
+  <tr class="tp-row"><td>invite-tp (237)</td><td>9,288</td><td>4,315</td><td>46.5%</td><td>46</td><td>0.5%</td><td>70</td></tr>
+  <tr class="closed-row"><td>invite-closed (240)</td><td>119</td><td>58</td><td class="best">48.7%</td><td>0</td><td class="worst">0.0%</td><td>0</td></tr>
+  <tr class="skus-row"><td>invite-skus (310)</td><td>5,425</td><td>2,500</td><td>46.1%</td><td>36</td><td>0.7%</td><td>21</td></tr>
+  <tr class="loyal-row"><td>invite-loyal (424)</td><td>18,864</td><td>8,029</td><td>42.6%</td><td>43</td><td class="worst">0.2%</td><td>48</td></tr>
+  <tr class="total-row"><td>Total</td><td>33,696</td><td>14,902</td><td>44.2%</td><td>125</td><td>0.4%</td><td>139</td></tr>
+</table>
+<p class="note"><strong>Covers Aug 4&ndash;31 only, not the full month</strong> &mdash; the Stacktome campaign-report API's retention window had already rolled past Aug 1&ndash;3 by the time this report was generated (verified: earliest available data point across all campaigns is Aug 4). Reconciled against Zeppelin sends for the same Aug 4&ndash;31 window: invite-tp 9,215 vs API 9,288 (+0.8%), invite-closed 119 vs 119 (exact), invite-skus 5,334 vs 5,425 (+1.7%), invite-loyal 18,060 vs 18,864 (+4.5%) &mdash; all within normal bucketing/timezone tolerance, and tighter than the Jun&ndash;Jul report's July reconciliation (85&ndash;95%, see below).</p>
+
+<h3>July 2026 (Jul 12&ndash;31, carried forward from the Jun&ndash;Jul report &mdash; not re-fetched)</h3>
+<p class="note" style="font-style:normal;">By this report's generation date the API's retention window no longer reaches July at all (confirmed: it now starts Aug 4). The Jun&ndash;Jul report (11 Aug 2026) captured July before that window closed, but even then only reached back to Jul 12 &mdash; Jul 1&ndash;11 was never available at any point. These are that report's own figures, reused rather than re-derived, same convention used for Holloways/SelectSpecs this cycle when fresh API data had already rolled out of retention.</p>
+<table>
+  <tr><th>Campaign</th><th>Sent</th><th>Unique Opens</th><th>Open %</th><th>Unique Clicks</th><th>Click %</th><th>Unsubs</th></tr>
+  <tr class="tp-row"><td>invite-tp (237)</td><td>6,915</td><td>3,322</td><td>48.0%</td><td>32</td><td>0.5%</td><td>49</td></tr>
+  <tr class="closed-row"><td>invite-closed (240)</td><td>51</td><td>25</td><td class="best">49.0%</td><td>0</td><td>0.0%</td><td>1</td></tr>
+  <tr class="skus-row"><td>invite-skus (310)</td><td>2,007</td><td>837</td><td>41.7%</td><td>16</td><td class="best">0.8%</td><td>7</td></tr>
+  <tr class="loyal-row"><td>invite-loyal (424)</td><td>9,405</td><td>3,951</td><td>42.0%</td><td>29</td><td>0.3%</td><td>32</td></tr>
+  <tr class="total-row"><td>Total</td><td>18,378</td><td>8,135</td><td>44.3%</td><td>77</td><td>0.4%</td><td>89</td></tr>
+</table>
+<p class="note">Covers Jul 12&ndash;31 only (20 of July's 31 days) &mdash; not comparable to a full-month total, and not the same 20-day span as August's Aug 4&ndash;31 (28 days), so the two tables above are directional colour, not a clean apples-to-apples MoM comparison. Per the Jun&ndash;Jul report's own reconciliation against Zeppelin sends for the same Jul 12&ndash;31 window: invite-tp 88%, invite-closed 85%, invite-skus 95%, invite-loyal 91% (API as % of Zeppelin) &mdash; a wider gap than August's 96&ndash;100% reconciliation above, though still within the range seen elsewhere in this portfolio. Note the Jun&ndash;Jul report's own finding that its "Sent" figure appears to include both invite and reminder sends per campaign, not invites alone &mdash; so neither table's Sent column is directly comparable to the invite-only counts used as the review-rate denominator elsewhere in this report. The Jun&ndash;Jul report explicitly warned this exact gap would recur ("stats should be pulled and archived within the API's retention window rather than reconstructed later") &mdash; which is exactly what happened here for July, and will happen to August's own figures above once ~30 more days pass.</p>
+
+<!-- REVIEW RATE & ATTRIBUTION -->
+<h2 id="review-rate">Review Rate by Campaign &amp; Attribution Split</h2>
+<table>
+  <tr><th>Campaign</th><th>Month</th><th>Invites</th><th>Attributed Reviews</th><th>Avg Rating</th><th>Negatives</th><th>Review Rate</th></tr>
+  <tr class="tp-row"><td rowspan="2">invite-tp (237)</td><td>Jul 2026</td><td>7,625</td><td>51</td><td>4.25&#9733;</td><td>11</td><td>0.67%</td></tr>
+  <tr class="tp-row"><td>Aug 2026</td><td>6,160</td><td>53</td><td>4.23&#9733;</td><td>12</td><td class="best">0.86%</td></tr>
+  <tr class="closed-row"><td rowspan="2">invite-closed (240)</td><td>Jul 2026</td><td>62</td><td>4</td><td>4.75&#9733;</td><td>0</td><td class="best">6.45%</td></tr>
+  <tr class="closed-row"><td>Aug 2026</td><td>77</td><td>6</td><td class="best">5.00&#9733;</td><td>0</td><td class="best">7.79%</td></tr>
+  <tr class="skus-row"><td rowspan="2">invite-skus (310)</td><td>Jul 2026</td><td>1,577</td><td>6</td><td class="worst">3.33&#9733;</td><td>3</td><td>0.38%</td></tr>
+  <tr class="skus-row"><td>Aug 2026</td><td>3,457</td><td>26</td><td class="best">4.85&#9733;</td><td>1</td><td class="best">0.75%</td></tr>
+  <tr class="loyal-row"><td rowspan="2">invite-loyal (424)</td><td>Jul 2026</td><td>9,120</td><td>23</td><td>4.65&#9733;</td><td>2</td><td>0.25%</td></tr>
+  <tr class="loyal-row"><td>Aug 2026</td><td>11,148</td><td>17</td><td>4.65&#9733;</td><td>2</td><td class="worst">0.15%</td></tr>
+  <tr class="total-row"><td colspan="2">Jul total (attributed only, settled)</td><td>18,384</td><td>84</td><td>4.38&#9733;</td><td>16</td><td>0.46%</td></tr>
+  <tr class="total-row"><td colspan="2">Aug total (attributed only, provisional)</td><td>20,842</td><td>102</td><td>4.45&#9733;</td><td>15</td><td>0.49%*</td></tr>
+</table>
+<p class="note">"Invites" is the raw invite-send count (matching the Jun&ndash;Jul report's convention — see the Campaign Volume note on why this differs slightly from distinct-order counts for invite-closed specifically). * Aug review rate is provisional &mdash; see the Executive Summary methodology note. invite-skus (310)'s jump from 3.33&#9733;/3 negatives (Jul) to 4.85&#9733;/1 negative (Aug), despite volume more than doubling, coincides with the segment fix described below (see that section for what's confirmed vs. inferred).</p>
+
+<h3>Account-Wide Attribution Split (all reviews, not just campaign-attributed)</h3>
+<div class="kpi-grid3">
+  <div class="split-box">
+    <div class="split-title">Jul 2026 (158 total reviews)</div>
+    <div class="split-row"><span class="slabel">Attributed &mdash; same-window</span><span class="sval">83 (4.31&#9733;)</span></div>
+    <div class="split-row"><span class="slabel">Attributed &mdash; carryover</span><span class="sval">1 (5.00&#9733;)</span></div>
+    <div class="split-row"><span class="slabel">Organic (has order ID, no match)</span><span class="sval">14 (4.21&#9733;)</span></div>
+    <div class="split-row"><span class="slabel">No order ID at all</span><span class="sval">60 (4.50&#9733;)</span></div>
+  </div>
+  <div class="split-box">
+    <div class="split-title">Aug 2026 (147 total reviews)</div>
+    <div class="split-row"><span class="slabel">Attributed &mdash; same-window</span><span class="sval">89 (4.54&#9733;)</span></div>
+    <div class="split-row"><span class="slabel">Attributed &mdash; carryover</span><span class="sval">13 (4.23&#9733;)</span></div>
+    <div class="split-row"><span class="slabel">Organic (has order ID, no match)</span><span class="sval">6 (3.67&#9733;)</span></div>
+    <div class="split-row"><span class="slabel">No order ID at all</span><span class="sval">39 (4.36&#9733;)</span></div>
+  </div>
+  <div class="split-box">
+    <div class="split-title">What each bucket means</div>
+    <p style="font-size:12px;color:#636e72;line-height:1.6;">"Same-window" = invite and review fall in the same calendar month (the cleanest read of that month's own conversion). "Carryover" = review matches an invite sent in an <em>earlier</em> month &mdash; a real, attributed conversion, just not from that month's own sends. "Organic" = the review has an order ID but it matches no invite in history &mdash; genuinely un-invited. "No order ID" = <strong>roughly a third of all reviews both months (38% Jul, 27% Aug)</strong> carry no order ID whatsoever and cannot be checked against invite history by any key &mdash; a data-completeness gap on the review event itself, not an attribution-logic failure. This is a materially larger unattributable share than most other accounts and worth a closer look at whether Trustpilot review submissions are reliably passing order references back to Free Soul's tracking.</p>
+  </div>
+</div>
+
+<!-- TEMPLATE PERFORMANCE -->
+<h2 id="template-performance">Template Performance: Branded vs TP</h2>
+<div class="good-box">
+  <p><strong>The branded-template A/B test recommended in the Mar&ndash;Jun report (Action Item #4) is now live &mdash; and was extended to all three main campaigns, not just invite-loyal as recommended.</strong> invite-tp (237), invite-skus (310), and invite-loyal (424) all now split meaningful volume between branded and TP-hosted templates; only invite-closed (240) remains TP-only (unchanged, appropriate given its small, high-intent volume). The split has also visibly ramped up within the two months &mdash; invite-loyal went from a ~22% branded share in July to ~50% in August.</p>
+</div>
+<table>
+  <tr><th>Campaign</th><th>Template</th><th>Month</th><th>Invites</th><th>Reviews</th><th>Avg Rating</th><th>Review Rate</th></tr>
+  <tr class="tp-row"><td rowspan="2">invite-tp (237)</td><td>Branded</td><td>Jul</td><td>1,296</td><td>12</td><td class="best">4.58&#9733;</td><td class="best">0.93%</td></tr>
+  <tr class="tp-row"><td>TP</td><td>Jul</td><td>6,329</td><td>49</td><td>4.12&#9733;</td><td>0.77%</td></tr>
+  <tr class="tp-row"><td>Branded</td><td>Aug</td><td>3,053</td><td>27</td><td>4.26&#9733;</td><td class="best">0.88%</td></tr>
+  <tr class="tp-row"><td>TP</td><td>Aug</td><td>3,107</td><td>16</td><td>4.31&#9733;</td><td>0.51%</td></tr>
+  <tr class="skus-row"><td rowspan="2">invite-skus (310)</td><td>Branded</td><td>Jul</td><td>677</td><td>2</td><td class="best">5.00&#9733;</td><td>0.30%</td></tr>
+  <tr class="skus-row"><td>TP</td><td>Jul</td><td>900</td><td>5</td><td class="worst">3.00&#9733;</td><td>0.56%</td></tr>
+  <tr class="skus-row"><td>Branded</td><td>Aug</td><td>1,724</td><td>10</td><td class="best">5.00&#9733;</td><td>0.58%</td></tr>
+  <tr class="skus-row"><td>TP</td><td>Aug</td><td>1,733</td><td>15</td><td>4.73&#9733;</td><td class="best">0.87%</td></tr>
+  <tr class="loyal-row"><td rowspan="2">invite-loyal (424)</td><td>Branded</td><td>Jul</td><td>2,041</td><td>4</td><td class="best">5.00&#9733;</td><td>0.20%</td></tr>
+  <tr class="loyal-row"><td>TP</td><td>Jul</td><td>7,079</td><td>19</td><td>4.58&#9733;</td><td class="best">0.27%</td></tr>
+  <tr class="loyal-row"><td>Branded</td><td>Aug</td><td>5,644</td><td>6</td><td>4.33&#9733;</td><td>0.11%</td></tr>
+  <tr class="loyal-row"><td>TP</td><td>Aug</td><td>5,504</td><td>10</td><td class="best">4.80&#9733;</td><td class="best">0.18%</td></tr>
+</table>
+<p class="note">Two months of live A/B data is still a thin sample per cell (as few as 2&ndash;27 reviews), so no campaign shows a consistent, repeatable branded-vs-TP winner yet: branded template leads on rating for invite-tp and invite-skus in both months, but TP leads on review rate for invite-loyal in both months. Worth revisiting after a full quarter of data before drawing a conclusion, exactly as the Mar&ndash;Jun report anticipated. (The Jun&ndash;Jul report didn't cover templates.)</p>
+
+<!-- SEGMENT SETUP ANALYSIS -->
+<h2 id="segment-analysis">Segment Setup Analysis</h2>
+<p>Live segment membership snapshots were re-pulled and checked against the Mar&ndash;Jun report's four verdicts and recommendations (the Jun&ndash;Jul report didn't cover segments directly, though its Findings section referenced the invite-skus concern in passing — see below). Segment <em>filter logic</em> itself isn't directly readable from Zeppelin (only membership snapshots are) &mdash; where a change in pool composition strongly implies a logic change, that's noted as inferred, not confirmed from config.</p>
+
+<div class="seg-grid">
+  <div class="seg-card">
+    <div class="seg-name">recent-purchases (552)</div>
+    <div class="seg-campaign">&rarr; invite-tp campaign 237 &middot; 16,539 currently eligible (was 19,274)</div>
+    <div class="seg-row"><strong>Status:</strong> <span class="tag-ok">Unchanged, no action was recommended here</span> &mdash; pool size moved with normal churn.</div>
+  </div>
+  <div class="seg-card">
+    <div class="seg-name">closed-tickets (554)</div>
+    <div class="seg-campaign">&rarr; invite-closed campaign 240 &middot; 3 currently eligible (was 5)</div>
+    <div class="seg-row"><strong>Status:</strong> <span class="tag-warn">Mar&ndash;Jun report's Action Item #3 (check whether the daily cap is throttling this pool) appears unactioned</span> &mdash; the pool is still tiny (3 vs 5) and campaign 240 volume only grew modestly (62&rarr;77 invites sent). Not mentioned in the Jun&ndash;Jul report either. Whether this reflects genuinely low closed-ticket volume or a still-unexamined cap can't be confirmed from this session's data alone.</div>
+  </div>
+  <div class="seg-card">
+    <div class="seg-name">purchases-skus (652)</div>
+    <div class="seg-campaign">&rarr; invite-skus campaign 310 &middot; 6,624 currently eligible (was 933)</div>
+    <div class="seg-row"><strong>Status:</strong> <span class="tag-ok">Mar&ndash;Jun report's Action Item #1 confirmed fixed &mdash; and landed recently.</span> Pulled the live membership snapshot directly: <code>count_purchase</code> now has a minimum of <strong>2</strong> across all 6,624 eligible customers (distribution: 2,602 at count=2, 1,722 at 3, 1,315 at 4, 985 at 5) &mdash; the exact fix recommended in the Mar&ndash;Jun report, verified empirically rather than assumed. <strong>The Jun&ndash;Jul report (11 Aug 2026) still described this as an open concern</strong> ("worth revisiting alongside the March&ndash;June report's flagged concern about first-time Veg-SalCar-600 buyers lacking a purchase-count floor"), so the fix landed sometime between Aug 11 and Sep 1 &mdash; this report is the first to confirm it's live. The expanded, floor-adjusted pool is the direct explanation for invite-skus' volume more than doubling (1,577&rarr;3,457 invites). Its average rating also improved over the same period, from 3.33&#9733; to 4.85&#9733;, with negatives falling from 3 to 1 &mdash; first-time Veg-SalCar-600 buyers, the source of the harshest taste complaints, are no longer in this pool, which is a plausible contributor to that improvement. This report doesn't isolate that effect from other things that changed on this campaign in the same window (notably the branded-template rollout, see Template Performance), so treat the rating/negatives shift as an observed correlation consistent with the segment fix, not a confirmed causal result.</div>
+  </div>
+  <div class="seg-card">
+    <div class="seg-name">loyal-customers (845)</div>
+    <div class="seg-campaign">&rarr; invite-loyal campaign 424 &middot; 17,801 currently eligible (was 17,495)</div>
+    <div class="seg-row"><strong>Status:</strong> <span class="tag-ok">Unchanged, no action was recommended here</span> &mdash; stable pool size.</div>
+  </div>
+</div>
+<div class="warn-box">
+  <p><strong>Mar&ndash;Jun report's Action Item #2 (open a campaign for the 4 non-salted-caramel excluded SKUs) does not appear to have been actioned</strong> &mdash; the live campaign list is still exactly the same four review-invite campaigns as that report (plus an unrelated "response" campaign), with no new SKU-targeted campaign. Not mentioned in the Jun&ndash;Jul report. Not re-verified against segment config directly, only against the account's campaign list.</p>
+  <p><strong>A fifth segment, "recovery", now exists</strong> with 1 customer currently eligible &mdash; not present in either prior report and not mapped to any of the four known campaigns. Volume is trivial, but flag with the account team to confirm what it's for before it scales, same treatment given to Den Sidste Flaske's unexplained new pilot campaigns.</p>
+</div>
+
+<!-- NEGATIVE REVIEWS -->
+<h2 id="negative-reviews">Negative Reviews (&le;3&#9733;) &mdash; 28 Jul, 23 Aug</h2>
+
+<h3>Complaint Themes (keyword-tallied against full review text, both months)</h3>
+<div class="theme-grid">
+  <div class="theme-card">
+    <div class="theme-title">&#128535; Taste &amp; Flavour (salty, sweet, artificial, texture)</div>
+    <div class="theme-count">Jul: 18 of 28 (64%) &middot; Aug: 15 of 23 (65%) &mdash; still the dominant theme, unchanged share</div>
+    <div class="theme-quotes"><em>"Unbearable salty taste... I can't stomach this product as it's like drinking pure salt water"</em> (Jul) &middot; <em>"The taste and texture was awful"</em> (Aug) &middot; <em>"I purchased the hydrate electrolytes, unfortunately the taste was just awful. I can only describe it as drinking slime"</em> (Aug)</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title">&#128260; Subscription / Cancellation</div>
+    <div class="theme-count">Jul: 10 of 28 (36%) &middot; Aug: 7 of 23 (30%) &mdash; easing slightly</div>
+    <div class="theme-quotes"><em>"Try to cancel keep taking money out bank"</em> (Jul) &middot; <em>"Trying to cancel this subscription and unable too!"</em> (Aug) &middot; <em>"Incorrect/false subscription discount"</em> (Jul)</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title">&#128230; Delivery / Non-Arrival / Refunds</div>
+    <div class="theme-count">Jul: 10 of 28 (36%) &middot; Aug: 10 of 23 (43%) &mdash; slightly up as a share</div>
+    <div class="theme-quotes"><em>"I did not receive this package"</em> (Jul) &middot; <em>"I am utterly disgusted by Free Soul's attitude... regarding undelivered orders (totaling &pound;162.95 across orders...)"</em> (Aug) &middot; <em>"the parcel was sent back to you... there was no delivery- no refusal"</em> (Aug)</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title">&#128172; Customer Service / No Response</div>
+    <div class="theme-count">Jul: 3 of 28 (11%) &middot; Aug: 8 of 23 (35%) &mdash; <strong>notably up</strong>, worth watching next month</div>
+    <div class="theme-quotes"><em>"Appalling customer service and complete disregard for UK Consumer Law"</em> (Aug) &middot; <em>"I have emailed over a week ago with no response"</em> (Aug) &middot; <em>"Customer service is shocking... continued to send items which I have asked to be refunded"</em> (Jul)</div>
+  </div>
+</div>
+<p class="note">Categories overlap (a review describing an undelivered order with no support response counts in both Delivery and Customer Service). Counts are from a direct keyword match against full review text, not manual eyeballing, so are reproducible against the underlying data.</p>
+
+<h3>Selected Negative Reviews</h3>
+<div class="review-card">
+  <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">invite-tp &middot; Jul 2026</span><span class="rc-meta">organic-adjacent, attributed</span></div>
+  <div class="rc-heading">Unbearable salty taste</div>
+  <div class="rc-text">Unbearable salty taste. I did lots of research and made sure reviews were good, there was no sugar, all the things I needed in the drink. Whilst I appreciate that there may be an element of salty taste, these were unbearable, they were a struggle to get through.</div>
+</div>
+<div class="review-card">
+  <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">organic &middot; Aug 2026</span></div>
+  <div class="rc-heading">Appalling customer service and complete disregard for UK Consumer Law</div>
+  <div class="rc-text">I am utterly disgusted by Free Soul's attitude and complete lack of accountability regarding undelivered orders (totalling &pound;162.95 across three orders)...</div>
+</div>
+<div class="review-card">
+  <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">invite-skus &middot; Jul 2026</span></div>
+  <div class="rc-heading">0 out of 10</div>
+  <div class="rc-text">I was so excited to try this, but never been disappointed so much. It's so sweet it's actually unbearable to eat. I tried everything &mdash; even tiny spoon into my yoghurt, and it was still disgusting. I will be asking for refund as it's impossible to c[ancel]...</div>
+</div>
+<div class="review-card">
+  <div class="rc-header"><span class="rating-badge r3">3&#9733;</span><span class="rc-source">invite-loyal &middot; Aug 2026</span></div>
+  <div class="rc-heading">Stingy</div>
+  <div class="rc-text">I've had a subscription for years and love the convenience, as well as the brand's focus on women's needs. However, I don't feel that same care extends to loyal customers. An offer for a free Soul Cup didn't apply, and customer service was dismissive...</div>
+</div>
+
+<h3>Organic Negative Themes &mdash; Topic Inference</h3>
+<p style="font-size:13px;color:#636e72;margin-bottom:12px;">Reviews with no invite match (no order ID, or an order ID that matches nothing) &mdash; can't be attributed to a campaign, but the text still surfaces real signal.</p>
+<div class="theme-grid">
+  <div class="theme-card">
+    <div class="theme-title">Customer service / unresolved complaints, both months</div>
+    <div class="theme-count">Organic complaints skew more toward customer-service breakdowns than attributed ones</div>
+    <div class="theme-quotes"><em>"Customer service is shocking I emailed in April and May to advise to cancel my subscriptions they continued to send items..."</em> (Jul) &middot; <em>"They said th[ey couldn't help without the account email]"</em> (Aug, truncated) &mdash; consistent with the Mar&ndash;Jun report's finding that the most frustrated customers who go to Trustpilot unprompted are disproportionately those who feel unheard through normal channels.</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title">Ethical/formulation concerns (isolated, both new this period)</div>
+    <div class="theme-count">2 reviews, both organic, both Jul&ndash;Aug</div>
+    <div class="theme-quotes"><em>"Really disappointed with the brand's focus on single serving packaging... creating products that create more plastic waste is irresponsible"</em> (Jul) &middot; <em>"The Vegan Protein Blend contains artificial sweeteners and xanthum gum and tastes dreadful"</em> (Aug) &mdash; small sample, but a different complaint register than the taste/delivery/subscription clusters dominating elsewhere; worth watching if it recurs.</div>
+  </div>
+</div>
+
+<!-- POSITIVE HIGHLIGHTS -->
+<h2 id="positive-highlights">Positive Highlights (August)</h2>
+<div class="kpi-grid3">
+  <div class="split-box">
+    <div class="split-title">invite-closed (240) &mdash; Zero Negatives, Again</div>
+    <div class="split-row"><span class="slabel">Attributed reviews</span><span class="sval best">6, all 5&#9733;</span></div>
+    <div class="split-row"><span class="slabel">Review rate</span><span class="sval">7.79%</span></div>
+    <p style="font-size:12px;color:#636e72;margin-top:10px;">Consistent with both the Mar&ndash;Jun and Jun&ndash;Jul reports' findings &mdash; this remains the account's strongest-converting, cleanest segment.</p>
+  </div>
+  <div class="split-box">
+    <div class="split-title">invite-skus (310) &mdash; Turnaround Month</div>
+    <div class="split-row"><span class="slabel">Avg rating</span><span class="sval best">4.85&#9733;</span></div>
+    <div class="split-row"><span class="slabel">Negatives</span><span class="sval">1 / 26 reviews</span></div>
+    <p style="font-size:12px;color:#636e72;margin-top:10px;">Jul's worst-performing campaign (3.33&#9733;) is Aug's best-improved, coinciding with the segment 652 fix (see Segment Setup Analysis for what's confirmed vs. inferred).</p>
+  </div>
+  <div class="split-box">
+    <div class="split-title">Sample 5&#9733; quotes, August</div>
+    <p style="font-size:12px;color:#636e72;line-height:1.6;"><em>"I've been really impressed with Free Soul so far. Their vegan chocolate protein shake is genuinely one of the best I've tried"</em> (organic) &middot; <em>"Love the greens and hydrate electrolytes from here, quick service, products arrived very fast"</em> (invite-tp) &middot; <em>"Brilliant quality! I have tried the electrolytes, ladies multivitamins and apple cider gummies and so far I'm really impressed"</em> (invite-tp)</p>
+  </div>
+</div>
+
+<!-- ACTION ITEMS -->
+<h2 id="action-items">Action Items</h2>
+<ul class="action-list">
+  <li>
+    <div class="anum">1</div>
+    <div><strong>Confirm the "recovery" segment (1 eligible, unmapped to any known campaign) with the account team before it scales.</strong> New since both prior reports, trivial volume today, but undocumented.</div>
+  </li>
+  <li>
+    <div class="anum">2</div>
+    <div><strong>Investigate whether the closed-tickets segment (554) throughput is still capped.</strong> The Mar&ndash;Jun report's Action Item #3 flagged this; the eligible pool has if anything shrunk further (5&rarr;3), and it wasn't mentioned in the Jun&ndash;Jul report or investigated this cycle either.</div>
+  </li>
+  <li>
+    <div class="anum">3</div>
+    <div><strong>Investigate why ~30&ndash;38% of reviews carry no order ID at all</strong> (60 of 158 in Jul, 39 of 147 in Aug) &mdash; a materially larger unattributable share than most other accounts in this portfolio. Worth checking whether Trustpilot's review-submission flow is reliably passing an order reference back for this account specifically.</div>
+  </li>
+  <li>
+    <div class="anum">4</div>
+    <div><strong>Customer-service complaint share rose sharply in August negatives (11%&rarr;35% of negatives)</strong> &mdash; driven by reviews describing unanswered emails and disputed refunds. Watch whether this is a one-month blip or the start of a trend; if it persists, it points at a support-response capacity issue independent of product or delivery.</div>
+  </li>
+  <li>
+    <div class="anum">5</div>
+    <div><strong>Let the branded-vs-TP template A/B test (now live account-wide) run at least one more full month before drawing conclusions</strong> &mdash; current cells are as thin as 2&ndash;27 reviews and show no consistent winner across campaigns yet.</div>
+  </li>
+  <li>
+    <div class="anum">6</div>
+    <div><strong>Taste complaints (salty/sweet/artificial) remain the single largest negative-review driver at a stable ~65% share.</strong> The invite-skus segment fix (Mar&ndash;Jun report's Action Item #1, confirmed landed between Aug 11 and Sep 1) coincides with a marked improvement in that one campaign's numbers, though this report hasn't isolated the fix from other concurrent changes (e.g. the branded-template rollout). If the segment logic is confirmed as the driver, consider whether the same "exclude first-time buyers of complaint-prone SKUs" approach could be extended to invite-tp and invite-loyal, which still carry the bulk of the salty-taste complaint volume.</div>
+  </li>
+</ul>
+
+</div>
+</body>
+</html>
