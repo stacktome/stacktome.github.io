@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Holloways of Ludlow — August 2026 Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #0984e3; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .kpi.highlight { border-top: 3px solid #0984e3; }
+  .kpi.good { border-top: 3px solid #00b894; }
+  .kpi.warn { border-top: 3px solid #e17055; }
+
+  .star-dist { display: flex; gap: 4px; margin: 10px 0; align-items: flex-end; height: 60px; }
+  .star-col { display: flex; flex-direction: column; align-items: center; flex: 1; justify-content: flex-end; }
+  .star-bar { width: 100%; border-radius: 3px 3px 0 0; }
+  .s5 { background: #0984e3; } .s4 { background: #74b9ff; } .s3 { background: #fdcb6e; }
+  .s2 { background: #e17055; } .s1 { background: #d63031; }
+  .star-label { font-size: 9px; color: #999; margin-top: 2px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  th { background: #f0f7ff; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; }
+  td { padding: 9px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafcff; }
+  .row-total td { background: #f0f7ff; font-weight: 600; }
+
+  .r2 { color: #e17055; font-weight: 600; }
+  .r5 { color: #00b894; font-weight: 600; }
+  .review-text { font-size: 12px; color: #636e72; line-height: 1.5; max-width: 460px; }
+
+  .insight-box { background: #fff; border-left: 4px solid #0984e3; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .insight-box p { margin-bottom: 6px; }
+  .insight-box p:last-child { margin-bottom: 0; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .warn-box p { margin-bottom: 6px; }
+  .warn-box p:last-child { margin-bottom: 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .good-box p { margin-bottom: 6px; }
+  .good-box p:last-child { margin-bottom: 0; }
+  .info-box { background: #f5f6fa; border-left: 4px solid #b2bec3; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .info-box p { margin-bottom: 6px; }
+  .info-box p:last-child { margin-bottom: 0; }
+  .good { color: #00b894; font-weight: 600; }
+  .warn { color: #e17055; font-weight: 600; }
+  .neutral { color: #636e72; }
+
+  .review-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 14px; overflow: hidden; }
+  .review-card-header { padding: 10px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #f0f0f0; }
+  .review-card-body { padding: 12px 16px; }
+  .rating-badge { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; font-size: 13px; font-weight: 700; color: #fff; }
+  .r1b { background: #d63031; }
+  .r2b { background: #e17055; }
+  .r3b { background: #fdcb6e; color: #333; }
+  .r4b { background: #74b9ff; color: #333; }
+  .r5b { background: #0984e3; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #fdecec; color: #d63031; }
+  .tag-ok { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #eafff6; color: #00997a; }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 20px; }
+  .theme-card { background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .theme-card .icon { font-size: 24px; margin-bottom: 8px; }
+  .theme-card .theme-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .theme-card .count { font-size: 11px; color: #888; margin-bottom: 8px; }
+  .theme-card p { font-size: 12px; color: #555; margin: 0; line-height: 1.5; }
+
+  .action-list { list-style: none; margin: 0; padding: 0; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 16px; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 10px; }
+  .al-icon { font-size: 16px; flex-shrink: 0; }
+  .al-text { font-size: 13px; color: #4a4a4a; line-height: 1.5; }
+
+  nav a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Holloways of Ludlow — August 2026 Report</h1>
+  <p class="subtitle">Aug 1&ndash;31, 2026, vs. full Jul 1&ndash;31, 2026 &bull; Generated Sep 1, 2026 &bull; Platform: Trustpilot &bull; First month-over-month report for this account (previous report was a 2026 year-to-date baseline, Jan 1&ndash;Jul 29)</p>
+
+  <nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #0984e3;font-size:14px;line-height:2;">
+    <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+    <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Overview</a>
+    <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Campaign Performance</a>
+    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Email Performance</a>
+    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Reviews &amp; Rating Distribution</a>
+    <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Product Reviews</a>
+    <a href="#s6" style="color:#444;text-decoration:none;margin-right:20px;">6. Negative Review Themes</a>
+    <a href="#s7" style="color:#444;text-decoration:none;">7. Action Items</a>
+  </nav>
+
+  <!-- OVERVIEW -->
+  <h2 id="s1">1. Overview</h2>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Order Reviews</div><div class="value">43</div><div class="sub">avg 4.51&#9733; &middot; Jul: 43 @ 4.19&#9733;</div></div>
+    <div class="kpi highlight"><div class="label">Product Reviews</div><div class="value">22</div><div class="sub">avg 4.68&#9733; &middot; Jul: 5 @ 4.20&#9733;</div></div>
+    <div class="kpi"><div class="label">Total Emails Sent</div><div class="value">4,815</div><div class="sub">2,162 invites &middot; 2,653 reminders</div></div>
+    <div class="kpi"><div class="label">Total Invites Sent</div><div class="value">2,162</div><div class="sub">Jul: 2,259 &middot; across 3 campaigns</div></div>
+    <div class="kpi warn"><div class="label">Rating &le;2&#9733;</div><div class="value">4</div><div class="sub">of 43 order reviews &middot; Jul: 9 of 43</div></div>
+  </div>
+
+  <div class="info-box">
+    <p>Campaign-level attribution wasn&rsquo;t available for order-level reviews this period, so review-rate and campaign-conversion figures for order reviews aren&rsquo;t shown below. This doesn&rsquo;t affect product-review attribution (Section 5) or the overall review and rating counts throughout this report, which are unaffected and shown in full.</p>
+  </div>
+
+  <div class="insight-box">
+    <p><strong>Order-level rating recovered in August (4.51&#9733;, up from July's 4.19&#9733;)</strong>, and product-level reviews jumped from 5 to 22 reviews at a strong 4.68&#9733;. Both signals point the same direction as the year-to-date report's core finding: products are well-regarded; it's fulfilment and delivery driving the order-level negatives (Section 6).</p>
+  </div>
+
+  <!-- CAMPAIGN PERFORMANCE -->
+  <h2 id="s2">2. Campaign Performance &mdash; August vs. July 2026</h2>
+  <p style="margin-bottom:14px;">Full email volume (invites + reminders) per campaign, both months. The same three active campaigns are running as in the previous report, with no new ones added.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th style="text-align:right">Invites (Aug)</th>
+        <th style="text-align:right">Reminders (Aug)</th>
+        <th style="text-align:right">Total (Aug)</th>
+        <th style="text-align:right">Invites (Jul)</th>
+        <th style="text-align:right">Reminders (Jul)</th>
+        <th style="text-align:right">Total (Jul)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>invite-tp</td>
+        <td style="text-align:right">1,134</td>
+        <td style="text-align:right">1,210</td>
+        <td style="text-align:right">2,344</td>
+        <td style="text-align:right">1,250</td>
+        <td style="text-align:right">1,182</td>
+        <td style="text-align:right">2,432</td>
+      </tr>
+      <tr>
+        <td>positive-closed-tickets</td>
+        <td style="text-align:right">28</td>
+        <td style="text-align:right">31</td>
+        <td style="text-align:right">59</td>
+        <td style="text-align:right">45</td>
+        <td style="text-align:right">51</td>
+        <td style="text-align:right">96</td>
+      </tr>
+      <tr>
+        <td>invite-product</td>
+        <td style="text-align:right">1,000</td>
+        <td style="text-align:right">1,412</td>
+        <td style="text-align:right">2,412</td>
+        <td style="text-align:right">964</td>
+        <td style="text-align:right">211</td>
+        <td style="text-align:right">1,175</td>
+      </tr>
+      <tr class="row-total">
+        <td>TOTAL</td>
+        <td style="text-align:right">2,162</td>
+        <td style="text-align:right">2,653</td>
+        <td style="text-align:right">4,815</td>
+        <td style="text-align:right">2,259</td>
+        <td style="text-align:right">1,444</td>
+        <td style="text-align:right">3,703</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <p><strong>invite-product has roughly reached parity with invite-tp on send volume</strong> &mdash; 1,000 invites in August vs. invite-tp's 1,134, up from 964 vs. 1,250 in July. It's clearly out of its early-ramp phase and now a full second pillar of send volume. Its product-review results are covered in Section 5.</p>
+    <p><strong>positive-closed-tickets volume fell month-over-month</strong> (45&rarr;28 invites, 96&rarr;59 total sends). Since this campaign is triggered by resolved support tickets, worth checking with the account on whether ticket-resolution volume itself dropped this period.</p>
+  </div>
+
+  <!-- EMAIL PERFORMANCE -->
+  <h2 id="s3">3. Email Performance</h2>
+  <p style="margin-bottom:14px;">Open, click, and unsubscribe rates for each campaign, both months. August figures cover most but not all of the month &mdash; a few of the earliest days aren't included in this reading, though this represents the large majority of the month's volume. July figures are carried over from the most recent available reading for that period, which covers a nearby window rather than the exact calendar month; treat the July numbers as a close approximation rather than an exact recomputation.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th style="text-align:right">Sent</th>
+        <th style="text-align:right">Unique Opens</th>
+        <th style="text-align:right">Open%</th>
+        <th style="text-align:right">Unique Clicks</th>
+        <th style="text-align:right">Click%</th>
+        <th style="text-align:right">Unsubs</th>
+        <th>Coverage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>invite-tp &mdash; Aug</td>
+        <td style="text-align:right">1,864</td>
+        <td style="text-align:right">1,224</td>
+        <td style="text-align:right">65.7%</td>
+        <td style="text-align:right">78</td>
+        <td style="text-align:right">4.2%</td>
+        <td style="text-align:right">40</td>
+        <td>Aug 2&ndash;31</td>
+      </tr>
+      <tr>
+        <td>invite-tp &mdash; Jul <span style="color:#aaa;font-size:11px;">(most recent available)</span></td>
+        <td style="text-align:right">2,075</td>
+        <td style="text-align:right">1,313</td>
+        <td style="text-align:right">63.3%</td>
+        <td style="text-align:right">84</td>
+        <td style="text-align:right">4.0%</td>
+        <td style="text-align:right">35</td>
+        <td>Jun 30&ndash;Jul 29</td>
+      </tr>
+      <tr>
+        <td>positive-closed-tickets &mdash; Aug</td>
+        <td style="text-align:right">51</td>
+        <td style="text-align:right">37</td>
+        <td style="text-align:right">72.5%</td>
+        <td style="text-align:right">11</td>
+        <td style="text-align:right" class="good">21.6%</td>
+        <td style="text-align:right">0</td>
+        <td>Aug 4&ndash;31</td>
+      </tr>
+      <tr>
+        <td>positive-closed-tickets &mdash; Jul <span style="color:#aaa;font-size:11px;">(most recent available)</span></td>
+        <td style="text-align:right">86</td>
+        <td style="text-align:right">56</td>
+        <td style="text-align:right">65.1%</td>
+        <td style="text-align:right">12</td>
+        <td style="text-align:right" class="good">14.0%</td>
+        <td style="text-align:right">0</td>
+        <td>Jun 30&ndash;Jul 29</td>
+      </tr>
+      <tr>
+        <td>invite-product &mdash; Aug</td>
+        <td style="text-align:right">1,960</td>
+        <td style="text-align:right">1,200</td>
+        <td style="text-align:right">61.2%</td>
+        <td style="text-align:right">43</td>
+        <td style="text-align:right" class="warn">2.2%</td>
+        <td style="text-align:right">39</td>
+        <td>Aug 2&ndash;31</td>
+      </tr>
+      <tr>
+        <td>invite-product &mdash; Jul <span style="color:#aaa;font-size:11px;">(most recent available)</span></td>
+        <td style="text-align:right">780</td>
+        <td style="text-align:right">422</td>
+        <td style="text-align:right">54.1%</td>
+        <td style="text-align:right">10</td>
+        <td style="text-align:right" class="warn">1.3%</td>
+        <td style="text-align:right">15</td>
+        <td>Jun 30&ndash;Jul 29</td>
+      </tr>
+      <tr class="row-total">
+        <td>TOTAL &mdash; Aug</td>
+        <td style="text-align:right">3,875</td>
+        <td style="text-align:right">2,461</td>
+        <td style="text-align:right">63.5%</td>
+        <td style="text-align:right">132</td>
+        <td style="text-align:right">3.4%</td>
+        <td style="text-align:right">79</td>
+        <td>&mdash;</td>
+      </tr>
+      <tr class="row-total">
+        <td>TOTAL &mdash; Jul <span style="color:#aaa;font-size:11px;font-weight:normal;">(most recent available)</span></td>
+        <td style="text-align:right">2,941</td>
+        <td style="text-align:right">1,791</td>
+        <td style="text-align:right">60.9%</td>
+        <td style="text-align:right">106</td>
+        <td style="text-align:right">3.6%</td>
+        <td style="text-align:right">50</td>
+        <td>&mdash;</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="warn-box">
+    <p><strong>invite-product's click-through rate stayed the weakest of the three campaigns</strong> (2.2% in August, 1.3% in July) with the highest unsubscribe rate alongside invite-tp (39/1,960 = 2.0% in August). Its product-review results are healthy (Section 5), so this reads as an engagement or creative issue rather than a relevance problem.</p>
+  </div>
+
+  <!-- REVIEWS & RATING DISTRIBUTION -->
+  <h2 id="s4">4. Reviews &amp; Rating Distribution</h2>
+  <p style="margin-bottom:16px;">43 order-level reviews in August (avg 4.51&#9733;), 43 in July (avg 4.19&#9733;). August is more skewed toward 5&#9733; than July, with a shorter negative tail.</p>
+
+  <h3>August</h3>
+  <div class="star-dist" style="max-width:420px;">
+    <div class="star-col"><div class="star-bar s5" style="height:60px;"></div><div class="star-label">5&#9733; &times;34</div></div>
+    <div class="star-col"><div class="star-bar s4" style="height:7px;"></div><div class="star-label">4&#9733; &times;4</div></div>
+    <div class="star-col"><div class="star-bar s3" style="height:2px;"></div><div class="star-label">3&#9733; &times;1</div></div>
+    <div class="star-col"><div class="star-bar s2" style="height:2px;"></div><div class="star-label">2&#9733; &times;1</div></div>
+    <div class="star-col"><div class="star-bar s1" style="height:5px;"></div><div class="star-label">1&#9733; &times;3</div></div>
+  </div>
+
+  <h3>July (full month)</h3>
+  <div class="star-dist" style="max-width:420px;">
+    <div class="star-col"><div class="star-bar s5" style="height:60px;"></div><div class="star-label">5&#9733; &times;34</div></div>
+    <div class="star-col"><div class="star-bar s4" style="height:1px;"></div><div class="star-label">4&#9733; &times;0</div></div>
+    <div class="star-col"><div class="star-bar s3" style="height:1px;"></div><div class="star-label">3&#9733; &times;0</div></div>
+    <div class="star-col"><div class="star-bar s2" style="height:2px;"></div><div class="star-label">2&#9733; &times;1</div></div>
+    <div class="star-col"><div class="star-bar s1" style="height:14px;"></div><div class="star-label">1&#9733; &times;8</div></div>
+  </div>
+  <p style="margin-top:-6px;font-size:12px;color:#888;">July had no 3&#9733; or 4&#9733; reviews at all &mdash; a fully bimodal split between 5&#9733; (34) and 1&#9733; (8) plus one 2&#9733;. August's distribution is more typical, with a small middle tier reappearing (4&#9733; &times;4, 3&#9733; &times;1).</p>
+
+  <h3>Monthly Invites, Reviews &amp; Avg Rating (2026, extended through August)</h3>
+  <p style="margin-bottom:12px;">Invites reflect unique orders invited per calendar month, across all campaigns &mdash; the same measure used in the previous report (recomputing June this way returns 1,283, matching what was previously published). Reviews-to-invites ratio = order reviews that month &divide; invites sent that month &mdash; a raw ratio, not a verified conversion rate, since campaign-level attribution isn't available for order reviews this period (see the note in the Overview).</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th>Jan</th>
+        <th>Feb</th>
+        <th>Mar</th>
+        <th>Apr</th>
+        <th>May</th>
+        <th>Jun</th>
+        <th>Jul</th>
+        <th>Aug</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Invites sent</td>
+        <td>1,321</td><td>1,211</td><td>972</td><td>1,261</td><td>898</td><td>1,283</td><td>1,796</td><td>2,111</td>
+      </tr>
+      <tr>
+        <td>Reviews</td>
+        <td>89</td><td>76</td><td>44</td><td>58</td><td>48</td><td>33</td><td>43</td><td>43</td>
+      </tr>
+      <tr>
+        <td>Avg rating</td>
+        <td>4.78&#9733;</td><td>4.80&#9733;</td><td>4.82&#9733;</td><td>4.64&#9733;</td><td>4.46&#9733;</td>
+        <td class="warn">3.73&#9733;</td><td>4.19&#9733;</td><td class="good">4.51&#9733;</td>
+      </tr>
+      <tr>
+        <td>Reviews / Invites (raw ratio)</td>
+        <td>6.74%</td><td>6.28%</td><td>4.53%</td><td>4.60%</td><td>5.35%</td>
+        <td>2.57%</td><td>2.39%</td><td>2.04%</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="info-box" style="margin-top:-8px;">
+    <p><strong>July figures corrected to the full month.</strong> The previous report published July before the month had ended, covering only Jul 1&ndash;29: 1,385 invites and 39 reviews, at 4.10&#9733; and a 2.82% reviews-to-invites ratio. This report reflects the complete month: <strong>1,796 invites and 43 reviews, at 4.19&#9733; and a 2.39% reviews-to-invites ratio.</strong> The two aren't directly comparable to each other &mdash; only this report's August figures are on a like-for-like footing with July's.</p>
+  </div>
+
+  <h3>Recent Positive Highlights (5&#9733;, August)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Heading / Snippet</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="r5">5&#9733;</span> "Store staff in Bath were super helpful and range of products on offer was excellent. We were really pleased with the quality of the lights."</td><td>Aug 29</td></tr>
+      <tr><td><span class="r5">5&#9733;</span> "Received my new light in good time and safely packaged. Now fitted to my kitchen ceiling it casts beautiful patterns when switched on at night. Many thanks."</td><td>Aug 28</td></tr>
+      <tr><td><span class="r5">5&#9733;</span> "Excellent prompt service and delivery. High quality garden furniture. Communication with the delivery company was excellent."</td><td>Aug 28</td></tr>
+      <tr><td><span class="r5">5&#9733;</span> "Fantastic customer service from Alicia. Professional with 100% product knowledge. My lights were delivered quickly, packaged well and are very well made."</td><td>Aug 28</td></tr>
+      <tr><td><span class="r5">5&#9733;</span> "So easy to order &mdash; my lampshade arrived a few days after ordering, packaged so well as not to cause any damage. Looks even better than it did online."</td><td>Aug 22</td></tr>
+    </tbody>
+  </table>
+
+  <!-- PRODUCT REVIEWS -->
+  <h2 id="s5">5. Product Reviews</h2>
+  <p style="margin-bottom:14px;">Product-level reviews (reviews of a specific item, separate from overall order reviews) are unaffected by the order-review attribution gap noted in the Overview &mdash; every product review this period carries enough information to tie it to the campaign that generated it.</p>
+  <div class="good-box">
+    <p><strong>22 product reviews in August (avg 4.68&#9733;, 3 rated &le;3&#9733;), up from 5 in July (avg 4.20&#9733;, 1 rated &le;3&#9733;).</strong> 100% of both months' product reviews are tied to a specific campaign &mdash; none are unattributed. This is the strongest available evidence that product quality remains solid while order-level tracking has a gap this period, not a real satisfaction gap.</p>
+  </div>
+
+  <h3>Product Review Attribution by Campaign</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th style="text-align:right">Attributed &mdash; Aug</th>
+        <th style="text-align:right">Avg / Min &mdash; Aug</th>
+        <th style="text-align:right">Attributed &mdash; Jul</th>
+        <th style="text-align:right">Avg / Min &mdash; Jul</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>invite-tp</td>
+        <td style="text-align:right">21</td>
+        <td style="text-align:right">4.67 / 2</td>
+        <td style="text-align:right">5</td>
+        <td style="text-align:right">4.20 / 1</td>
+      </tr>
+      <tr>
+        <td>invite-product</td>
+        <td style="text-align:right" class="good">22</td>
+        <td style="text-align:right">4.68 / 2</td>
+        <td style="text-align:right" class="good">4</td>
+        <td style="text-align:right">4.00 / 1</td>
+      </tr>
+      <tr class="row-total">
+        <td>TOTAL (distinct reviews, all-campaign)</td>
+        <td style="text-align:right">22</td>
+        <td style="text-align:right">&mdash;</td>
+        <td style="text-align:right">5</td>
+        <td style="text-align:right">&mdash;</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="margin-top:-10px;font-size:12px;color:#888;">Per-campaign counts add up to more than the total shown, in both months, because some orders were invited by more than one campaign &mdash; each such order's review counts once per matching campaign above but once in the TOTAL row. positive-closed-tickets had 0 attributed product reviews in both months, consistent with it being an order-review-focused campaign.</p>
+
+  <h3>Product-Level Validation of invite-product's Attributed Reviews</h3>
+  <p style="margin-bottom:12px;">Each of invite-product's August-attributed reviews was checked individually against what was actually ordered, to confirm the review is for a product that campaign actually invited feedback on.</p>
+  <div class="good-box">
+    <p><strong>All 22 checks (100%) confirmed an exact match</strong> &mdash; every reviewed product was one of the items on the order that was invited. This is a stronger result than July's check, which confirmed matches for the portion of reviews it was possible to check that way.</p>
+  </div>
+
+  <!-- NEGATIVE REVIEWS -->
+  <h2 id="s6">6. Negative Review Themes</h2>
+  <p style="margin-bottom:16px;">5 order reviews rated &le;3&#9733; in August, 9 in July &mdash; both small samples, so treat percentages as indicative only. Categories overlap.</p>
+
+  <div class="theme-grid">
+    <div class="theme-card">
+      <div class="icon">&#128230;</div>
+      <div class="theme-title">Delivery &amp; Dispatch Delays</div>
+      <div class="count">Aug: 4 of 5 (80%) &middot; Jul: 8 of 9 (89%)</div>
+      <p>Still the dominant theme by far in both months, consistent with the year-to-date report's 73% baseline. Waits of weeks to months against much shorter quoted windows continue to be the throughline across nearly every negative review.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#128172;</div>
+      <div class="theme-title">Unresponsive Communication</div>
+      <div class="count">Aug: 3 of 5 (60%) &middot; Jul: 5 of 9 (56%)</div>
+      <p>Customers repeatedly chasing for updates via phone, email, and in one case social media, often with no proactive contact from Holloways throughout a multi-week or multi-month wait.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#128230;</div>
+      <div class="theme-title">Wrong, Damaged, or Missing Items</div>
+      <div class="count">Aug: 1 of 5 (20%) &middot; Jul: 2 of 9 (22%)</div>
+      <p>August's case: a missing garden stool with no proactive notice, then a wrong replacement sent after a further 5-week wait.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#128176;</div>
+      <div class="theme-title">Refunds &amp; Returns</div>
+      <div class="count">Aug: 1 of 5 (20%) &middot; Jul: 4 of 9 (44%)</div>
+      <p>Lower share in August than July, though both months' sample sizes (5 and 9) are too small to read a real trend into the drop.</p>
+    </div>
+  </div>
+
+  <h3>Representative Negative Reviews (August)</h3>
+  <div class="review-card">
+    <div class="review-card-header"><span class="rating-badge r1b">1&#9733;</span><strong>Appalling experience!</strong></div>
+    <div class="review-card-body"><p class="review-text">Order placed ~3.5 months ago for external furniture with promised white-glove delivery; the delivery company had no knowledge of that arrangement. After 3 further weeks with no action, the customer had to unpack, assemble, and dispose of packaging themselves. A "goodwill" gift turned out to be an entitlement never disclosed at sale. A garden stool went missing from the shipment with no proactive notice; after a further 5-week wait, the replacement arrived as the wrong item.</p></div>
+  </div>
+  <div class="review-card">
+    <div class="review-card-header"><span class="rating-badge r1b">1&#9733;</span><strong>Order never arrived</strong></div>
+    <div class="review-card-body"><p class="review-text">Tom Dixon garden furniture ordered without being told it was out of stock. After 6 weeks with no clear updates the customer had to cancel; a full refund was eventually secured, but summer passed without the furniture ever arriving.</p></div>
+  </div>
+  <div class="review-card">
+    <div class="review-card-header"><span class="rating-badge r1b">1&#9733;</span><strong>The standard of service</strong></div>
+    <div class="review-card-body"><p class="review-text">Order placed 3 Mar, delivered 28 Jul &mdash; a 5-month wait with repeated contact attempts and no explanation from customer service. Contrasts sharply with the customer's long-standing positive experience shopping in-store.</p></div>
+  </div>
+  <div class="review-card">
+    <div class="review-card-header"><span class="rating-badge r2b">2&#9733;</span><strong>Had a nightmare with the delivery</strong></div>
+    <div class="review-card-body"><p class="review-text">Showroom promised a callback on the day that never came; parcel arrived a day late.</p></div>
+  </div>
+  <div class="review-card">
+    <div class="review-card-header"><span class="rating-badge r3b">3&#9733;</span><strong>Very slow delivery</strong></div>
+    <div class="review-card-body"><p class="review-text">"In stock" shelving advertised as same-day dispatch instead took 10+ days, with customer service repeatedly promising imminent courier pickup that didn't happen.</p></div>
+  </div>
+
+  <!-- ACTION ITEMS -->
+  <h2 id="s7">7. Action Items</h2>
+  <ul class="action-list">
+    <li>
+      <div class="al-icon">&#128994;</div>
+      <div class="al-text"><strong>Order-level rating recovered to 4.51&#9733; in August (from July's 4.19&#9733;)</strong>, and product-level reviews jumped from 5 to 22 at a strong 4.68&#9733;, with every one tied to the campaign that generated it and a 100% match rate confirming the reviewed products against what was actually ordered. Product quality continues to look solid; delivery and dispatch delay remains the dominant theme in the (smaller) sample of negative reviews, consistent with every report to date for this account.</div>
+    </li>
+    <li>
+      <div class="al-icon">&#128993;</div>
+      <div class="al-text"><strong>invite-product's click-through rate (2.2%) and unsubscribe rate (2.0%) remain the weakest of the three campaigns</strong>, similar to July. Worth a look at the creative or targeting for that campaign if the pattern continues.</div>
+    </li>
+    <li>
+      <div class="al-icon">&#128993;</div>
+      <div class="al-text"><strong>positive-closed-tickets volume dropped month-over-month</strong> (invites fell from 45 to 28). Since this campaign is triggered by resolved support tickets, worth checking with the account on whether ticket-resolution volume itself declined this period.</div>
+    </li>
+  </ul>
+
+</div>
+</body>
+</html>
