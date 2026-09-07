@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hockerty &amp; Sumissura Campaign Performance Report — Aug 31–Sep 6, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #1a1a2e; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  .kpi-grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 20px; }
+  .kpi-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+  .split-box { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .split-box .split-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 12px; }
+  .split-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+  .split-row .slabel { color: #636e72; }
+  .split-row .sval { font-weight: 600; color: #1a1a2e; }
+  .attr-color { color: #00b894; }
+  .org-color { color: #e17055; }
+  .ho-color { color: #6c5ce7; }
+  .su-color { color: #0984e3; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .ho-row td:first-child { border-left: 3px solid #6c5ce7; }
+  .su-row td:first-child { border-left: 3px solid #0984e3; }
+  .tk-row td:first-child { border-left: 3px solid #fdcb6e; }
+  .total-row { background: #f4f4f4 !important; font-weight: 600; }
+  .total-row td { background: #f4f4f4 !important; }
+
+  .review-card { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 10px; }
+  .rc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .rc-source { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; color: #888; }
+  .rc-meta { font-size: 12px; color: #aaa; margin-left: auto; }
+  .rc-text { font-size: 13px; color: #444; line-height: 1.6; }
+  .rc-heading { font-weight: 600; color: #1a1a2e; margin-bottom: 4px; font-size: 13px; }
+
+  .rating-badge { display: inline-block; border-radius: 5px; padding: 2px 9px; font-size: 12px; font-weight: 700; }
+  .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff3e0; color: #e17055; }
+  .r3 { background: #fffde0; color: #b8860b; }
+  .r4 { background: #e8f5f0; color: #00b894; }
+  .r5 { background: #e8f8f5; color: #00b894; }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .theme-card { background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .theme-card .icon { font-size: 24px; margin-bottom: 8px; }
+  .theme-card .theme-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .theme-card .count { font-size: 11px; color: #888; margin-bottom: 8px; }
+  .theme-card p { font-size: 12px; color: #555; margin: 0; line-height: 1.5; }
+
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-ok { display: inline-block; background: #e8f8f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #00b894; }
+  .tag-warn { display: inline-block; background: #fff3e0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #e17055; font-weight: 600; }
+  .note { font-size: 12px; color: #888; margin-top: 4px; }
+  .info-box { background: #f0f4ff; border: 1.5px solid #a0b4e8; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #2c3e6e; line-height: 1.6; }
+  .warn-box { background: #fff8e1; border: 1.5px solid #ffc107; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #5d4037; line-height: 1.6; }
+  .error-box { background: #fff5f5; border: 1.5px solid #d63031; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #4a0000; line-height: 1.6; }
+  .success-box { background: #f0fff4; border: 1.5px solid #00b894; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #004d30; line-height: 1.6; }
+
+  .new-badge { display: inline-block; background: #fdcb6e; color: #5d4037; border-radius: 4px; padding: 1px 7px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-left: 6px; }
+
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Hockerty &amp; Sumissura &mdash; Weekly Campaign Performance Report</h1>
+  <div class="subtitle">Review invite analysis &nbsp;&bull;&nbsp; Aug 31&ndash;Sep 6, 2026 &nbsp;&bull;&nbsp; Generated 2026-09-07 &nbsp;&bull;&nbsp; Hockerty (ID 626&ndash;630, 705&ndash;709, 713&ndash;717) + Sumissura (ID 673&ndash;677, 711, 748)</div>
+
+  <nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #6c5ce7;font-size:14px;line-height:2;">
+    <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+    <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Executive Summary</a>
+    <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Campaign Volume</a>
+    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Tickets Campaigns</a>
+    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Review Rate by Campaign</a>
+    <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Widget Metrics</a>
+    <a href="#s6" style="color:#444;text-decoration:none;margin-right:20px;">6. Negative Reviews</a>
+    <a href="#s7" style="color:#444;text-decoration:none;margin-right:20px;">7. Complaint Themes</a>
+    <a href="#s8" style="color:#444;text-decoration:none;">8. Positive Highlights</a>
+  </nav>
+
+  <!-- 1. Executive Summary -->
+  <h2 id="s1">1. Executive Summary</h2>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="label">Total Invites Sent</div>
+      <div class="value">427</div>
+      <div class="sub">396 hockerty + 31 sumissura (main + tickets) &middot; Aug 31&ndash;Sep 6</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Total Emails Sent</div>
+      <div class="value">840</div>
+      <div class="sub">427 invites + 413 reminders</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Total Reviews</div>
+      <div class="value">71</div>
+      <div class="sub">41 attributed &middot; 30 organic</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Attributed Review Rate</div>
+      <div class="value">9.60%</div>
+      <div class="sub">41 reviews / 427 invites</div>
+    </div>
+  </div>
+
+  <div class="kpi-grid2" style="margin-top:16px;">
+    <div class="split-box">
+      <div class="split-title attr-color">&#10003; Attributed Reviews (order_id matched to invite)</div>
+      <div class="split-row"><span class="slabel">Count</span><span class="sval">41</span></div>
+      <div class="split-row"><span class="slabel">Avg Rating</span><span class="sval">4.15&#9733;</span></div>
+      <div class="split-row"><span class="slabel">Negatives (&le;3&#9733;)</span><span class="sval worst">9 &nbsp;<span style="color:#888;font-weight:400">(22.0%)</span></span></div>
+      <div style="border-top:1px solid #f0f0f0;margin:10px 0 8px;"></div>
+      <div class="split-row"><span class="slabel ho-color">&#9679; hockerty</span><span class="sval">36 reviews &nbsp;<span style="color:#888;font-weight:400">avg 4.03&#9733;</span></span></div>
+      <div class="split-row"><span class="slabel su-color">&#9679; sumissura</span><span class="sval">5 reviews &nbsp;<span style="color:#888;font-weight:400">avg 5.00&#9733;</span></span></div>
+    </div>
+    <div class="split-box">
+      <div class="split-title org-color">&#9702; Organic Reviews (no invite match)</div>
+      <div class="split-row"><span class="slabel">Count</span><span class="sval">30</span></div>
+      <div class="split-row"><span class="slabel">Avg Rating</span><span class="sval">4.53&#9733;</span></div>
+      <div class="split-row"><span class="slabel">Negatives (&le;3&#9733;)</span><span class="sval">3 &nbsp;<span style="color:#888;font-weight:400">(10.0%)</span></span></div>
+      <div style="border-top:1px solid #f0f0f0;margin:10px 0 8px;"></div>
+      <div class="split-row"><span class="slabel ho-color">&#9679; hockerty</span><span class="sval">28 reviews &nbsp;<span style="color:#888;font-weight:400">avg 4.54&#9733;</span></span></div>
+      <div class="split-row"><span class="slabel su-color">&#9679; sumissura</span><span class="sval">2 reviews &nbsp;<span style="color:#888;font-weight:400">avg 4.50&#9733;</span></span></div>
+    </div>
+  </div>
+
+  <div class="warn-box">&#9650;&nbsp; <strong>Week-on-week: lower volume, higher conversion; attributed sentiment softened as organic sentiment improved.</strong> Invites down &minus;6.8% (427 vs 458) and total emails down &minus;15.8% (840 vs 998, reminders falling faster than invites at &minus;23.5%), but attributed reviews rose slightly to 41 from 39, so the attributed rate actually <em>improved</em> to 9.60% from 8.52% (+1.08pp). The negative/positive split flipped from last week, though: attributed avg rating fell to 4.15&#9733; from 4.59&#9733; (hockerty&rsquo;s attributed avg dropped to 4.03&#9733; from 4.58&#9733;, with 9 attributed negatives vs 5 last week), while organic sentiment improved to 4.53&#9733; from 4.32&#9733; (organic negatives fell from 6 to 3). Sumissura had another clean week &mdash; all 5 attributed reviews were 5&#9733;, and its invite volume actually rose +34.8% against the account-wide decline. All 12 negative reviews this week are on the Hockerty account; Sumissura had zero negatives, matching last week.</div>
+
+  <div class="info-box">&#9432;&nbsp; <strong>No overlap with the previous report.</strong> This is a clean Mon&ndash;Sun window (Aug 31 is a Monday, Sep 6 a Sunday) immediately following the Aug 24&ndash;30 window &mdash; no shared dates, so no double-counting risk this week. Review data is complete through Sep 6 (max review timestamp = window end).</div>
+
+  <!-- 2. Campaign Volume -->
+  <h2 id="s2">2. Campaign Volume &mdash; Invite vs Reminder Breakdown</h2>
+
+  <div class="info-box">&#9432;&nbsp; Invite/reminder counts from Zeppelin (Delta Lake, exact Aug 31&ndash;Sep 6). Open/click/unsub rates from the campaign report API over the same daily range (the generation-day Sep 7 bucket is excluded). Both accounts&rsquo; open/click/unsub rates fetched successfully this week.</div>
+
+  <h3><span style="color:#6c5ce7;">&#9679;</span> Hockerty account &mdash; main campaigns</h3>
+  <table>
+    <thead>
+      <tr><th>Campaign</th><th>ID</th><th>Invites</th><th>Reminders</th><th>Total Sent</th><th>Open%</th><th>UClicks</th><th>Unsubs</th></tr>
+    </thead>
+    <tbody>
+      <tr class="ho-row"><td>invite-tp-EN</td><td>626</td><td>225</td><td>247</td><td>472</td><td class="neutral">55.4%</td><td>13</td><td class="worst">6</td></tr>
+      <tr class="ho-row"><td>invite-tp-FR</td><td>627</td><td>79</td><td>30</td><td>109</td><td class="neutral">50.5%</td><td>2</td><td>1</td></tr>
+      <tr class="ho-row"><td>invite-tp-DE</td><td>628</td><td>52</td><td>69</td><td>121</td><td class="worst">48.7%</td><td>3</td><td>1</td></tr>
+      <tr class="ho-row"><td>invite-tp-IT</td><td>630</td><td>20</td><td>22</td><td>42</td><td>43.9%</td><td>1</td><td>0</td></tr>
+      <tr class="ho-row"><td>invite-tp-ES</td><td>629</td><td>15</td><td>15</td><td>30</td><td class="worst">40.0%</td><td>0</td><td>0</td></tr>
+      <tr class="total-row"><td colspan="2">Hockerty subtotal (main)</td><td>391</td><td>383</td><td>774</td><td>52.4%</td><td>19</td><td class="best">8</td></tr>
+    </tbody>
+  </table>
+  <p class="note">&#9432; Open/click/unsub from API (daily buckets); Sent/Invites/Reminders from Zeppelin. <strong>Unsubs down: 8 this week vs 14 last week</strong> &mdash; a marked improvement, and the reverse of the elevated-unsub pattern flagged in earlier reports (that pattern was tied to delivery-failure complaints, which are a smaller share of this week&rsquo;s negatives &mdash; see Section 7).</p>
+
+  <h3 style="margin-top:16px;"><span style="color:#0984e3;">&#9679;</span> Sumissura account &mdash; main campaigns</h3>
+  <table>
+    <thead>
+      <tr><th>Campaign</th><th>ID</th><th>Invites</th><th>Reminders</th><th>Total Sent</th><th>Open%</th><th>UClicks</th><th>Unsubs</th></tr>
+    </thead>
+    <tbody>
+      <tr class="su-row"><td>invite-tp-EN</td><td>673</td><td>19</td><td>13</td><td>32</td><td class="neutral">70.0%</td><td>1</td><td>1</td></tr>
+      <tr class="su-row"><td>invite-tp-DE</td><td>675</td><td>5</td><td>6</td><td>11</td><td class="worst">36.4%&#8224;</td><td>0</td><td>0</td></tr>
+      <tr class="su-row"><td>invite-tp-FR</td><td>674</td><td>3</td><td>1</td><td>4</td><td class="best">100.0%&#8224;</td><td>0</td><td>0</td></tr>
+      <tr class="su-row"><td>invite-tp-IT</td><td>677</td><td>3</td><td>1</td><td>4</td><td class="neutral">75.0%&#8224;</td><td>0</td><td>0</td></tr>
+      <tr class="total-row"><td colspan="2">Sumissura subtotal (main)</td><td>30</td><td>21</td><td>51</td><td>65.3%</td><td>1</td><td>1</td></tr>
+    </tbody>
+  </table>
+  <p class="note">&#9432; invite-tp-ES (676) sent nothing this week. &#8224; DE, FR and IT are on tiny volumes (4&ndash;11 sends) &mdash; not directionally meaningful individually. Weighted open rate 65.3%, well above Hockerty&rsquo;s 52.4%.</p>
+
+  <div class="kpi-grid3" style="margin-top:16px;">
+    <div class="split-box">
+      <div class="split-title ho-color">Hockerty Total (main)</div>
+      <div class="split-row"><span class="slabel">Invites sent</span><span class="sval">391</span></div>
+      <div class="split-row"><span class="slabel">Reminders sent</span><span class="sval">383</span></div>
+      <div class="split-row"><span class="slabel">Total emails</span><span class="sval">774</span></div>
+      <div class="split-row"><span class="slabel">Wtd. open rate</span><span class="sval">52.4%</span></div>
+      <div class="split-row"><span class="slabel">Unsubs</span><span class="sval best">8</span></div>
+    </div>
+    <div class="split-box">
+      <div class="split-title su-color">Sumissura Total (main)</div>
+      <div class="split-row"><span class="slabel">Invites sent</span><span class="sval">30</span></div>
+      <div class="split-row"><span class="slabel">Reminders sent</span><span class="sval">21</span></div>
+      <div class="split-row"><span class="slabel">Total emails</span><span class="sval">51</span></div>
+      <div class="split-row"><span class="slabel">Wtd. open rate</span><span class="sval">65.3%</span></div>
+      <div class="split-row"><span class="slabel">Unsubs</span><span class="sval">1</span></div>
+    </div>
+    <div class="split-box">
+      <div class="split-title" style="color:#636e72;">Grand Total (incl. tickets)</div>
+      <div class="split-row"><span class="slabel">All invites</span><span class="sval">427</span></div>
+      <div class="split-row"><span class="slabel">All reminders</span><span class="sval">413</span></div>
+      <div class="split-row"><span class="slabel">Total emails</span><span class="sval" style="font-size:16px;">840</span></div>
+      <div class="split-row"><span class="slabel">Ho main open rate</span><span class="sval">52.4%</span></div>
+      <div class="split-row"><span class="slabel">Ho main unsubs</span><span class="sval best">8</span></div>
+    </div>
+  </div>
+
+  <!-- 3. Tickets Campaigns -->
+  <h2 id="s3">3. Invite-Tickets Campaigns</h2>
+
+  <div class="warn-box">&#9888;&nbsp; <strong>Tickets programme produced zero reviews this week</strong> &mdash; down from 3 last week (705, 708 and Sumissura 711 each converted a 5&#9733; last week). Invite/reminder volume was similarly thin (15 emails across all tickets campaigns combined, vs 19 last week &mdash; 12 invites + 7 reminders). The negative-tickets cohort (713&ndash;717, 748) remains essentially dormant: campaign 713 sent a single <code>response</code>-type email this week (not an invite or reminder), the only sign of activity across all six negative-tickets campaigns in either window.</div>
+
+  <table>
+    <thead>
+      <tr><th>Account</th><th>Campaign</th><th>ID</th><th>Invites</th><th>Reminders</th><th>Total</th><th>Reviews</th><th>Avg&#9733;</th></tr>
+    </thead>
+    <tbody>
+      <tr class="ho-row tk-row"><td>hockerty</td><td>invite-tickets-EN</td><td>705</td><td>4</td><td>5</td><td>9</td><td>0</td><td class="neutral">&mdash;</td></tr>
+      <tr class="ho-row tk-row"><td>hockerty</td><td>invite-tickets-DE</td><td>707</td><td>0</td><td>3</td><td>3</td><td>0</td><td class="neutral">&mdash;</td></tr>
+      <tr class="ho-row tk-row"><td>hockerty</td><td>invite-tickets-FR</td><td>706</td><td>1</td><td>0</td><td>1</td><td>0</td><td class="neutral">&mdash;</td></tr>
+      <tr class="su-row tk-row"><td>sumissura</td><td>invite-tickets-EN</td><td>711</td><td>1</td><td>1</td><td>2</td><td>0</td><td class="neutral">&mdash;</td></tr>
+      <tr class="total-row"><td colspan="3">Tickets total</td><td>6</td><td>9</td><td>15</td><td>0</td><td class="neutral">&mdash;</td></tr>
+    </tbody>
+  </table>
+  <p class="note">&#9432; invite-tickets-IT (709) and invite-tickets-ES (708) sent nothing this week. Tickets campaign weekly invite volumes are consistently small; reviews attributed to these campaigns draw from all-time invite history, not just the current week&rsquo;s sends &mdash; this week that history produced none.</p>
+
+  <!-- 4. Review Rate by Campaign -->
+  <h2 id="s4">4. Review Rate by Campaign</h2>
+
+  <h3><span style="color:#6c5ce7;">&#9679;</span> Hockerty account &mdash; 36 attributed reviews</h3>
+  <table>
+    <thead>
+      <tr><th>Campaign</th><th>ID</th><th>Wk Invites</th><th>Reviews</th><th>Rate</th><th>Avg&#9733;</th><th>Min</th><th>Negatives</th></tr>
+    </thead>
+    <tbody>
+      <tr class="ho-row"><td>invite-tp-ES</td><td>629</td><td>15</td><td>3</td><td class="best">20.00%</td><td>4.33</td><td>3</td><td>1</td></tr>
+      <tr class="ho-row"><td>invite-tp-DE</td><td>628</td><td>52</td><td>6</td><td>11.54%</td><td class="best">4.17</td><td class="worst">1</td><td>1</td></tr>
+      <tr class="ho-row"><td>invite-tp-EN</td><td>626</td><td>225</td><td>21</td><td>9.33%</td><td>4.05</td><td class="worst">1</td><td class="worst">5</td></tr>
+      <tr class="ho-row"><td>invite-tp-FR</td><td>627</td><td>79</td><td>5</td><td>6.33%</td><td class="worst">3.60</td><td class="worst">1</td><td>2</td></tr>
+      <tr class="ho-row"><td>invite-tp-IT</td><td>630</td><td>20</td><td>1</td><td>5.00%</td><td>4.00</td><td>4</td><td>0</td></tr>
+      <tr class="total-row"><td colspan="2">Hockerty total</td><td>391</td><td>36</td><td>9.21%</td><td>4.03</td><td>1</td><td>9</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:16px;"><span style="color:#0984e3;">&#9679;</span> Sumissura account &mdash; 5 attributed reviews (all 5&#9733;)</h3>
+  <table>
+    <thead>
+      <tr><th>Campaign</th><th>ID</th><th>Wk Invites</th><th>Reviews</th><th>Rate</th><th>Avg&#9733;</th><th>Min</th><th>Negatives</th></tr>
+    </thead>
+    <tbody>
+      <tr class="su-row"><td>invite-tp-FR</td><td>674</td><td>3</td><td>1</td><td class="best">33.33%&#8224;</td><td class="best">5.00</td><td>5</td><td>0</td></tr>
+      <tr class="su-row"><td>invite-tp-IT</td><td>677</td><td>3</td><td>1</td><td class="best">33.33%&#8224;</td><td class="best">5.00</td><td>5</td><td>0</td></tr>
+      <tr class="su-row"><td>invite-tp-DE</td><td>675</td><td>5</td><td>1</td><td>20.00%&#8224;</td><td class="best">5.00</td><td>5</td><td>0</td></tr>
+      <tr class="su-row"><td>invite-tp-EN</td><td>673</td><td>19</td><td>2</td><td>10.53%</td><td class="best">5.00</td><td>5</td><td>0</td></tr>
+      <tr class="su-row"><td>invite-tp-ES</td><td>676</td><td>0</td><td>0</td><td class="neutral">&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+      <tr class="total-row"><td colspan="2">Sumissura subtotal</td><td>30</td><td>5</td><td class="best">16.67%</td><td class="best">5.00</td><td>5</td><td>0</td></tr>
+    </tbody>
+  </table>
+  <p class="note">&#8224; DE, FR and IT rates are on very small samples (3&ndash;5 invites) &mdash; directionally encouraging but not statistically meaningful yet.<br>
+  Hockerty ES standout this week: 20.00% rate, 3 reviews from 15 invites. EN and FR again carry most hockerty attributed negatives (5 and 2 respectively) despite EN&rsquo;s otherwise-typical 9.33% rate. Sumissura had a flawless week for the second week running &mdash; every attributed review was 5&#9733;, and unlike the account-wide decline, Sumissura&rsquo;s invite volume grew +34.8% this week.</p>
+
+  <!-- 5. Widget Metrics -->
+  <h2 id="s5">5. Shopping Experience Widget Metrics</h2>
+
+  <div class="success-box">&#9989;&nbsp; <strong>Widget conversions holding steady at a healthy rate &mdash; the post-purchase fix is confirmed working.</strong> 26 of 84 widget clicks converted to a review this week (31.0%), essentially matching last week&rsquo;s 26 of 100 (26.0%). This is at least the fourth consecutive week of meaningful conversion, not the second: Aug 10&ndash;16 converted 15 of 84 (17.9%) and Aug 17&ndash;23 converted 31 of 90 (34.4%), both re-verified directly against this notebook's cached widget-click data. The zero-conversion streak flagged in the Jul 13&ndash;19 report had already ended by Aug 10 and conversion has held at a broadly similar rate every week since &mdash; not a one-off blip, and not a new-this-fortnight result either.</div>
+
+  <h3>Review Widget (trustpilot-collect) &mdash; Aug 31&ndash;Sep 6 (hockerty)</h3>
+  <table>
+    <thead>
+      <tr><th>Account</th><th>Widget Type</th><th>Impressions</th><th>Clicks (actions)</th><th>Click Rate</th><th>Reviews Converted</th></tr>
+    </thead>
+    <tbody>
+      <tr class="ho-row"><td>hockerty</td><td>trustpilot-collect</td><td>1,279</td><td>84</td><td>6.6%</td><td class="best">26</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:14px;">Widget Impressions &amp; Clicks by Day (hockerty)</h3>
+  <table>
+    <thead>
+      <tr><th>Date</th><th>Impressions</th><th>Clicks</th><th>Daily CTR</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Aug 31 (Mon)</td><td>201</td><td>6</td><td>3.0%</td></tr>
+      <tr><td>Sep 1 (Tue)</td><td>186</td><td class="best">14</td><td class="best">7.5%</td></tr>
+      <tr><td>Sep 2 (Wed)</td><td>181</td><td>13</td><td>7.2%</td></tr>
+      <tr><td>Sep 3 (Thu)</td><td>167</td><td>12</td><td>7.2%</td></tr>
+      <tr><td>Sep 4 (Fri)</td><td>167</td><td>11</td><td>6.6%</td></tr>
+      <tr><td>Sep 5 (Sat)</td><td>151</td><td>13</td><td class="best">8.6%</td></tr>
+      <tr><td>Sep 6 (Sun)</td><td class="best">226</td><td>15</td><td>6.6%</td></tr>
+      <tr class="total-row"><td>Week total</td><td>1,279</td><td>84</td><td>6.6%</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:14px;">Widget Clicks by Country (hockerty, Aug 31&ndash;Sep 6)</h3>
+  <table>
+    <thead>
+      <tr><th>Country</th><th>Clicks</th><th>% of total</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>US</td><td>16</td><td>19%</td></tr>
+      <tr><td>FR</td><td>15</td><td>18%</td></tr>
+      <tr><td>ES</td><td>12</td><td>14%</td></tr>
+      <tr><td>DE</td><td>10</td><td>12%</td></tr>
+      <tr><td>CH</td><td>7</td><td>8%</td></tr>
+      <tr><td>MX</td><td>4</td><td>5%</td></tr>
+      <tr><td>LU, BR, IT</td><td>3 each</td><td>4% each</td></tr>
+      <tr><td>GB, AT, SE, NG</td><td>2 each</td><td>2% each</td></tr>
+      <tr><td>BE, CA, LT</td><td>1 each</td><td>1% each</td></tr>
+      <tr class="total-row"><td>Total</td><td>84</td><td>16 countries</td></tr>
+    </tbody>
+  </table>
+
+  <p class="note" style="margin-top:10px;">&#9432; Widget clicks that converted this week span the full week (2&ndash;6 per day) and cluster tightly around the review date (same-day or next-day), consistent with a post-purchase placement rather than the old homepage placement, where clicks never converted. One converting order (99094526, 3&#9733;) is also in the negative-reviews list below &mdash; the reviewer&rsquo;s complaint is about a separate site tool (&ldquo;el probador&rdquo;, the virtual fitting/sizing tool), not the review widget itself.</p>
+
+  <!-- 6. Negative Reviews -->
+  <h2 id="s6">6. Negative Reviews (&le;3&#9733;)</h2>
+
+  <p style="font-weight:600;margin-bottom:6px;">Total negatives this week: 12 (9 attributed + 3 organic) &mdash; all on the Hockerty account; Sumissura had zero negatives.</p>
+  <p style="margin-bottom:14px;color:#888;font-size:12px;">Dominant themes this week: fit/sizing and quality-defect complaints (4 reviews), delivery/shipping failures (3 reviews), and refund refusal / CS non-response (2 reviews, one spanning nearly 3 months). One review is a compliance/opt-out complaint rather than a product issue &mdash; see the callout below.</p>
+
+  <div class="error-box">&#128680;&nbsp; <strong>Opt-out / compliance complaint &mdash; not a product issue.</strong> A 1&#9733; from <code>michaelhart@michaelhart.me</code> (invite-tp-EN, order 89619126, Sep 2) reads in full: &ldquo;Stop emailing me. Unsolicited review emails are illegal. Stop.&rdquo; This is a request to be removed from future invite/reminder sends, not feedback on the product or service. Recommend confirming this contact is suppressed from all future campaigns and checking whether existing opt-out handling covers this case &mdash; it carries more compliance risk than reputational risk, but both are relevant.</div>
+
+  <!-- 1-star reviews -->
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">invite-tp-FR &middot; hockerty</span><span class="rc-meta">arthur.delcher@gmail.com &middot; order 19646626 &middot; 2026-09-06 &middot; French</span></div>
+    <div class="rc-heading">&#9888;&#65039; &Agrave; FUIR</div>
+    <div class="rc-text">Wedding suit arrived crumpled, wrong fabric, wrong measurements &mdash; ordered with a 1.5-month lead time. First contact got no response; only after posting on Trustpilot did the brand offer a remake, which the couple couldn&rsquo;t use given the wedding was 3 weeks away. Refund requested and explicitly declined further orders. No refund, no solution, no response since June. <span class="tag-warn" style="margin-left:8px;">Wedding order + refund refused + ~3 months of silence</span></div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">invite-tp-DE &middot; hockerty</span><span class="rc-meta">hannesoehl@aol.com &middot; order 57396526 &middot; 2026-09-04 &middot; German</span></div>
+    <div class="rc-heading">Die Bestellung Nr.573 965 26</div>
+    <div class="rc-text">Package marked as delivered/attempted on Aug 26 while the customer was home; nothing left at the agreed DHL drop point. Repeated tracking-system flags with no response; asks when the item will actually arrive. <span class="tag-warn" style="margin-left:8px;">Delivery failure &mdash; carrier discrepancy</span></div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">invite-tp-EN &middot; hockerty</span><span class="rc-meta">tsgroeniger@gmail.com &middot; order 92683926 &middot; 2026-09-03</span></div>
+    <div class="rc-heading">I said I had a 40" waist</div>
+    <div class="rc-text">&ldquo;I said I had a 40&rdquo; waist. The shirt is too tight to wear.&rdquo; <span class="tag-warn" style="margin-left:8px;">Fit failure vs stated measurements</span></div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">invite-tp-EN &middot; hockerty</span><span class="rc-meta">michaelhart@michaelhart.me &middot; order 89619126 &middot; 2026-09-02</span></div>
+    <div class="rc-heading">Spam company</div>
+    <div class="rc-text">&ldquo;Stop emailing me. Unsolicited review emails are illegal. Stop.&rdquo; <span class="tag-warn" style="margin-left:8px;">Opt-out request &mdash; see compliance callout above</span></div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">organic &middot; hockerty</span><span class="rc-meta">no email on file &middot; 2026-09-02</span></div>
+    <div class="rc-heading">VERY DISAPPOINTING CUSTOMER SERVICE</div>
+    <div class="rc-text">Loafers arrived far too narrow to wear. Rather than a straightforward resolution, support repeatedly requested additional measurements, and each time more information was provided, more was requested. Warns others to be cautious ordering shoes. <span class="tag-warn" style="margin-left:8px;">Fit failure + CS request-loop, no resolution</span></div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">invite-tp-EN &middot; hockerty</span><span class="rc-meta">kirvonstei12@gmail.com &middot; order 89410126 &middot; 2026-09-02</span></div>
+    <div class="rc-heading">I was supposed to receive the suit on&hellip;</div>
+    <div class="rc-text">Delivery pushed from Aug 28 to Aug 31 to &ldquo;almost the 2nd&rdquo;, for a destination wedding on the 4th. Ordered over a month in advance; brand advertises quick turnarounds. No idea how it will fit given the timing. <span class="tag-warn" style="margin-left:8px;">Wedding-critical delivery delay, unresolved at review time</span></div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">invite-tp-EN &middot; hockerty</span><span class="rc-meta">he@kassentechnik.at &middot; order 87004926 &middot; 2026-08-31</span></div>
+    <div class="rc-heading">There is an error in the material I&hellip;</div>
+    <div class="rc-text">&ldquo;There is an error in the material I wonder how this could have passed the final control&rdquo; <span class="tag-warn" style="margin-left:8px;">Material defect + QC concern</span></div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">organic &middot; hockerty</span><span class="rc-meta">m.yavsan@gmx.ch &middot; order 93501526 &middot; 2026-08-31 &middot; German</span></div>
+    <div class="rc-heading">Lieferung und Kundenservice absolute Katastrophe</div>
+    <div class="rc-text">Ordering and measurement process worked well, but the customer repeatedly asked for express shipping under time pressure (offering to cover the extra cost) and it was shipped standard via FedEx anyway. Follow-up support replies read as automated/AI-generated and didn&rsquo;t address the request; the final two emails went unanswered entirely. Tuxedo not yet received at review time. <span class="tag-warn" style="margin-left:8px;">Express-shipping request ignored + CS/AI non-response</span></div>
+  </div>
+
+  <!-- 3-star reviews -->
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r3">3&#9733;</span><span class="rc-source">invite-tp-EN &middot; hockerty</span><span class="rc-meta">kenikuenmck87@hotmail.com &middot; order 91023426 &middot; 2026-09-06</span></div>
+    <div class="rc-heading">&hellip;</div>
+    <div class="rc-text">No usable text (dots only). <span class="tag-warn" style="margin-left:8px;">No detail provided</span></div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r3">3&#9733;</span><span class="rc-source">invite-tp-ES &middot; hockerty</span><span class="rc-meta">rikyrzm@gmail.com &middot; order 90020526 &middot; 2026-09-05 &middot; Spanish</span></div>
+    <div class="rc-heading">La chaqueta no ha sido tan perfecta&hellip;</div>
+    <div class="rc-text">Jacket wasn&rsquo;t as expected despite giving exact measurements &mdash; waist came out large and required a small alteration. Not bad overall, but not right either. <span class="tag-warn" style="margin-left:8px;">Fit failure vs exact measurements</span></div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r3">3&#9733;</span><span class="rc-source">invite-tp-FR &middot; hockerty</span><span class="rc-meta">eric.boulange@gmail.com &middot; order 84422226 &middot; 2026-09-03 &middot; French</span></div>
+    <div class="rc-heading">Exp&eacute;rience relativement moyenne</div>
+    <div class="rc-text">Second jeans order with the same measurements as a well-made first order; this one came out too long in the leg. Notes a lack of consistency, possibly from different manufacturing sites. <span class="tag-warn" style="margin-left:8px;">Inconsistent sizing across repeat orders</span></div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r3">3&#9733;</span><span class="rc-source">organic &middot; hockerty</span><span class="rc-meta">antcalcal@telefonica.net &middot; order 99094526 &middot; 2026-09-03 &middot; Spanish</span></div>
+    <div class="rc-heading">El probador no funciona bien</div>
+    <div class="rc-text">&ldquo;El probador no funciona bien&rdquo; (the virtual fitting/sizing tool doesn&rsquo;t work well). <span class="tag-warn" style="margin-left:8px;">Site tool bug, not a garment complaint &mdash; also a widget-converted review, see Section 5</span></div>
+  </div>
+
+  <!-- 7. Complaint Themes -->
+  <h2 id="s7">7. Complaint Themes</h2>
+
+  <div class="theme-grid">
+    <div class="theme-card">
+      <div class="icon">&#9986;</div>
+      <div class="theme-title">Fit, Sizing &amp; Quality Defects</div>
+      <div class="count">4 reviews this week</div>
+      <p>The largest theme this week: a shirt too tight despite a stated 40&rdquo; waist, a jacket too big despite exact measurements, a second jeans order in the same size coming out too long versus a correctly-fitting first order, and a material defect described as something that should have failed QC. The repeat-order sizing inconsistency (eric.boulange) is a concrete, checkable data point &mdash; same customer, same measurements, different result.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#128230;</div>
+      <div class="theme-title">Delivery &amp; Shipping Failures</div>
+      <div class="count">3 reviews this week</div>
+      <p>A DE order marked delivered with nothing left at the agreed drop point, a wedding-critical order slipping day by day toward a Sep 4 departure, and an express-shipping request that was acknowledged but not honoured. Smaller share of this week&rsquo;s negatives than in the Jul 13&ndash;19 report, consistent with the sharp drop in unsub counts on EN/FR this week.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">&#128172;</div>
+      <div class="theme-title">Refund Refusal &amp; CS Non-Response</div>
+      <div class="count">2 reviews this week</div>
+      <p>The most severe case (arthur.delcher) spans nearly 3 months with no refund and no response since June, only breaking silence after a public Trustpilot post. A second case describes a support loop that repeatedly asked for more information without resolving a shoe-fit issue. Both reviewers describe the resolution process, not the original product defect, as the dominant frustration.</p>
+    </div>
+  </div>
+
+  <!-- 8. Positive Highlights -->
+  <h2 id="s8">8. Positive Highlights (4&ndash;5&#9733;)</h2>
+
+  <p style="margin-bottom:14px;">59 reviews rated 4&ndash;5&#9733; out of 71 total (83.1%) &mdash; down slightly from 85.5% last week (65 of 76). Sumissura went 5-for-5 on attributed reviews again. No tickets-programme recoveries this week (0 attributed reviews from tickets campaigns, vs 3 last week). Selected highlights below.</p>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r5">5&#9733;</span><span class="rc-source">organic &middot; hockerty</span><span class="rc-meta">aurelien.fuzeau@lippi.fr &middot; 2026-09-03 &middot; French</span></div>
+    <div class="rc-heading">Exp&eacute;rience au top !</div>
+    <div class="rc-text">Site praised as clear and complete. A carrier issue (a company separate from Hockerty) was resolved after contacting them directly and reaching <strong>Jes&uacute;s Espinilla</strong>, credited with finding a solution to get the shoes delivered in time. <span class="tag-ok" style="margin-left:8px;">Named CS recovery (agent: Jes&uacute;s Espinilla)</span></div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r5">5&#9733;</span><span class="rc-source">invite-tp-DE &middot; sumissura</span><span class="rc-meta">ikoutny@protonmail.com &middot; 2026-09-06 &middot; German</span></div>
+    <div class="rc-heading">Gute Qualit&auml;t</div>
+    <div class="rc-text">Good fit and material, arrived quickly despite manufacture and delivery from China, with no additional customs charge on delivery. <span class="tag-ok" style="margin-left:8px;">China-origin transparency landing well, unlike some negative-review themes in prior reports</span></div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r5">5&#9733;</span><span class="rc-source">invite-tp-ES &middot; hockerty</span><span class="rc-meta">galamera@hotmail.com &middot; 2026-09-05 &middot; Spanish</span></div>
+    <div class="rc-heading">Excelente confecci&oacute;n, calidad, precio y atenci&oacute;n</div>
+    <div class="rc-text">Quality fabric and prompt delivery; praises the measurement guidance from the very start. Ordered for a godson&rsquo;s outfit, described as fitting perfectly. <span class="tag-ok" style="margin-left:8px;">ES &mdash; this week&rsquo;s best-performing hockerty campaign at 20.00% review rate</span></div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r5">5&#9733;</span><span class="rc-source">invite-tp-EN &middot; sumissura</span><span class="rc-meta">bethanygj@icloud.com &middot; 2026-09-01</span></div>
+    <div class="rc-heading">Excellent fit</div>
+    <div class="rc-text">&ldquo;Excellent fit, delivered on time. Genuinely thrilled with this product. It&rsquo;s lightweight, comfortable, and good quality. Great value for the cost.&rdquo;</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r5">5&#9733;</span><span class="rc-source">invite-tp-EN &middot; hockerty</span><span class="rc-meta">tankgaj1@me.com &middot; 2026-09-05</span></div>
+    <div class="rc-heading">Best experience</div>
+    <div class="rc-text">&ldquo;It took two weeks to get to me. But that was expected. But the fit and quality of the work was phenomenal. I don&rsquo;t know how you do it without me in front of you. I can&rsquo;t wait until my next suit.&rdquo;</div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r5">5&#9733;</span><span class="rc-source">organic &middot; hockerty</span><span class="rc-meta">rogarbau@gmail.com &middot; 2026-09-03 &middot; Spanish</span></div>
+    <div class="rc-heading">Experiencia brutal</div>
+    <div class="rc-text">After an extensive search for wedding shoes, only Hockerty had what was wanted; customer service was described as pleasant, attentive and quick to resolve sizing questions before ordering. <span class="tag-ok" style="margin-left:8px;">Wedding order handled well &mdash; the flip side of this week&rsquo;s wedding-delay complaints</span></div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r5">5&#9733;</span><span class="rc-source">invite-tp-DE &middot; hockerty</span><span class="rc-meta">klaus.rinck@gmx.de &middot; 2026-09-03 &middot; German</span></div>
+    <div class="rc-heading">Ausgesprochen gute Qualit&auml;t</div>
+    <div class="rc-text">&ldquo;Ausgesprochen gute Qualit&auml;t. Sehr hochwertiger Stoff, sehr gute Verarbeitung. Ma&szlig;e sind pr&auml;zise eingehalten.&rdquo; <span class="tag-ok" style="margin-left:8px;">Precise-measurements praise &mdash; direct counterpoint to this week&rsquo;s fit complaints</span></div>
+  </div>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r5">5&#9733;</span><span class="rc-source">organic &middot; hockerty</span><span class="rc-meta">todd.yager@icloud.com &middot; 2026-09-06</span></div>
+    <div class="rc-heading">Hockerty is the best!!!!!</div>
+    <div class="rc-text">&ldquo;Hockerty is the best!!!!! Bought a few suits and they are spot on!!&rdquo;</div>
+  </div>
+
+  <div class="footer">
+    Hockerty &amp; Sumissura Weekly Report &nbsp;&bull;&nbsp; Aug 31&ndash;Sep 6, 2026 &nbsp;&bull;&nbsp; Generated 2026-09-07 &nbsp;&bull;&nbsp; Data: Zeppelin Delta Lake (invite/review counts, notebook 2MQQ73Z4V) + Stacktome API (open/click rates, both accounts)
+  </div>
+
+</div>
+</body>
+</html>
