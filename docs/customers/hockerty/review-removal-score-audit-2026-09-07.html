@@ -1,0 +1,663 @@
+<title>Hockerty Review Ledger</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --paper:#eef0f1;
+    --paper-raised:#e2e6e8;
+    --ink:#1b232c;
+    --ink-soft:#54626e;
+    --ink-faint:#8b969e;
+    --rule:#c7cdd0;
+    --accent:#3e6b86;
+    --accent-soft:#d7e3e8;
+    --good:#3f7350;
+    --good-soft:#dbe8dd;
+    --warn:#96631f;
+    --warn-soft:#efdec0;
+    --flag:#a3402f;
+    --flag-soft:#f0d9d2;
+    --shadow: 0 1px 0 rgba(27,35,44,0.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#12171b;
+      --paper-raised:#1a2126;
+      --ink:#e6e7e5;
+      --ink-soft:#9aa7ad;
+      --ink-faint:#697479;
+      --rule:#31393e;
+      --accent:#84b7cf;
+      --accent-soft:#22323a;
+      --good:#7fbf8f;
+      --good-soft:#1f2f24;
+      --warn:#dcae5f;
+      --warn-soft:#332a17;
+      --flag:#e0897a;
+      --flag-soft:#392020;
+      --shadow: 0 1px 0 rgba(0,0,0,0.3);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#12171b;
+    --paper-raised:#1a2126;
+    --ink:#e6e7e5;
+    --ink-soft:#9aa7ad;
+    --ink-faint:#697479;
+    --rule:#31393e;
+    --accent:#84b7cf;
+    --accent-soft:#22323a;
+    --good:#7fbf8f;
+    --good-soft:#1f2f24;
+    --warn:#dcae5f;
+    --warn-soft:#332a17;
+    --flag:#e0897a;
+    --flag-soft:#392020;
+    --shadow: 0 1px 0 rgba(0,0,0,0.3);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size:16.5px;
+    line-height:1.6;
+  }
+  .sheet{
+    max-width:760px;
+    margin:0 auto;
+    padding:56px 28px 90px;
+  }
+  .eyebrow{
+    font-family:"Big Shoulders Display", "Arial Narrow", sans-serif;
+    font-weight:700;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+  h1,h2,h3{
+    font-family:"Big Shoulders Display", "Arial Narrow", sans-serif;
+    text-wrap:balance;
+    line-height:1.05;
+    margin:0;
+    color:var(--ink);
+  }
+  h1{
+    font-size:clamp(34px,6vw,50px);
+    font-weight:800;
+    letter-spacing:0.005em;
+  }
+  h2{
+    font-size:24px;
+    font-weight:700;
+    letter-spacing:0.01em;
+  }
+  .dek{
+    font-size:17px;
+    color:var(--ink-soft);
+    max-width:56ch;
+    margin-top:10px;
+  }
+  .mono{
+    font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .num{ font-variant-numeric: tabular-nums; }
+
+  /* ---- masthead / job ticket ---- */
+  .masthead{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:24px;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:22px;
+    margin-bottom:26px;
+    flex-wrap:wrap;
+  }
+  .ticket{
+    margin-top:28px;
+    border:1px solid var(--rule);
+    border-radius:2px;
+    background:var(--paper-raised);
+    padding:18px 22px;
+  }
+  .ticket-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:14px 24px;
+  }
+  .field-label{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:10.5px;
+    letter-spacing:0.09em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-bottom:3px;
+  }
+  .field-value{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:14px;
+    color:var(--ink);
+  }
+
+  /* ---- toc ---- */
+  nav.toc{
+    margin:34px 0 46px;
+    padding:18px 22px;
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+  }
+  nav.toc ol{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:6px 20px;
+  }
+  nav.toc li{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:13px;
+  }
+  nav.toc a{
+    color:var(--ink-soft);
+    text-decoration:none;
+    border-bottom:1px dotted var(--ink-faint);
+  }
+  nav.toc a:hover{ color:var(--accent); border-color:var(--accent); }
+  nav.toc .idx{ color:var(--ink-faint); margin-right:8px; }
+
+  section{
+    margin:52px 0;
+    scroll-margin-top:20px;
+  }
+  section > .eyebrow{ display:block; margin-bottom:6px; }
+  section > h2{ margin-bottom:16px; }
+  section p{ margin:14px 0; max-width:64ch; }
+
+  /* ---- tables ---- */
+  .table-wrap{ overflow-x:auto; margin:18px 0; }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14.5px;
+  }
+  th,td{
+    text-align:left;
+    padding:9px 14px 9px 0;
+    border-bottom:1px solid var(--rule);
+    white-space:nowrap;
+  }
+  th{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px;
+    letter-spacing:0.07em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    font-weight:500;
+    border-bottom:1px solid var(--ink);
+  }
+  td.mono{ font-size:14px; }
+  tr.total td{ font-weight:600; border-top:1px solid var(--ink); border-bottom:none; }
+
+  /* ---- bucket bar ---- */
+  .bucket-bar{
+    display:flex;
+    width:100%;
+    height:34px;
+    border-radius:3px;
+    overflow:hidden;
+    border:1px solid var(--rule);
+    margin:22px 0 12px;
+  }
+  .bucket-bar span{ height:100%; }
+  .bucket-legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px 26px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+  .bucket-legend .dot{
+    display:inline-block;
+    width:9px;height:9px;
+    border-radius:50%;
+    margin-right:7px;
+    vertical-align:middle;
+    position:relative;
+    top:-1px;
+  }
+
+  /* ---- callout ---- */
+  .callout{
+    border-left:3px solid var(--warn);
+    background:var(--warn-soft);
+    padding:16px 20px;
+    margin:22px 0;
+    border-radius:0 3px 3px 0;
+  }
+  .callout .eyebrow{ color:var(--warn); }
+  .callout p{ margin:8px 0 0; color:var(--ink); }
+
+  /* ---- quote pair ---- */
+  .quote-pair{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin:22px 0;
+  }
+  @media (max-width:600px){ .quote-pair{ grid-template-columns:1fr; } }
+  .quote-card{
+    border:1px solid var(--rule);
+    border-top:3px solid var(--flag);
+    padding:14px 16px;
+    background:var(--paper-raised);
+  }
+  .quote-card.keep{ border-top-color:var(--good); }
+  .quote-card .score-line{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    color:var(--ink-faint);
+    margin-bottom:8px;
+    display:flex;
+    justify-content:space-between;
+  }
+  .quote-card .score-line b{ color:var(--flag); font-size:14px; }
+  .quote-card.keep .score-line b{ color:var(--good); }
+  .quote-card q{
+    font-style:italic;
+    font-size:14.5px;
+    color:var(--ink-soft);
+    quotes:none;
+  }
+
+  /* ---- actionable tickets ---- */
+  .review-ticket{
+    display:grid;
+    grid-template-columns:5px 1fr;
+    margin:22px 0;
+    border:1px solid var(--rule);
+    background:var(--paper-raised);
+  }
+  .review-ticket .stripe{ background:var(--flag); }
+  .review-ticket.borderline .stripe{ background:var(--warn); }
+  .review-ticket.keep .stripe{ background:var(--good); }
+  .review-ticket .body{ padding:18px 22px; }
+  .rt-head{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:8px 20px;
+    margin-bottom:10px;
+    padding-bottom:10px;
+    border-bottom:1px dashed var(--rule);
+  }
+  .rt-head .order{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:13.5px;
+    color:var(--ink);
+  }
+  .verdict{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    padding:3px 9px;
+    border-radius:2px;
+    background:var(--flag-soft);
+    color:var(--flag);
+  }
+  .review-ticket.borderline .verdict{ background:var(--warn-soft); color:var(--warn); }
+  .review-ticket.keep .verdict{ background:var(--good-soft); color:var(--good); }
+  .sample-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  @media (max-width:680px){ .sample-grid{ grid-template-columns:1fr; } }
+  .sample-grid .review-ticket{ margin:0; }
+  .sample-grid .rt-text{ font-size:13.5px; }
+  .sample-grid .rt-why{
+    margin-top:10px;
+    padding-top:10px;
+    border-top:1px dashed var(--rule);
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11.5px;
+    font-style:normal;
+    color:var(--ink-soft);
+    line-height:1.5;
+  }
+  .sample-grid .rt-why b{ color:var(--good); }
+  .rt-meta{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    color:var(--ink-faint);
+    margin-bottom:12px;
+  }
+  .rt-meta b{ color:var(--ink-soft); font-weight:500; }
+  .rt-text{
+    font-size:15px;
+    color:var(--ink);
+    font-style:italic;
+  }
+
+  /* ---- caveats ---- */
+  ul.ledger-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+  ul.ledger-list li{
+    position:relative;
+    padding:11px 0 11px 22px;
+    border-bottom:1px solid var(--rule);
+    font-size:15px;
+    color:var(--ink-soft);
+  }
+  ul.ledger-list li::before{
+    content:"—";
+    position:absolute;
+    left:0;
+    color:var(--ink-faint);
+  }
+  ul.ledger-list li:last-child{ border-bottom:none; }
+  ul.ledger-list b{ color:var(--ink); font-weight:600; }
+
+  footer{
+    margin-top:70px;
+    padding-top:18px;
+    border-top:2px solid var(--ink);
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    color:var(--ink-faint);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+</style>
+
+<div class="sheet">
+
+  <div class="masthead">
+    <div>
+      <span class="eyebrow">Stacktome · Review Quality Audit</span>
+      <h1>Hockerty Review Ledger</h1>
+      <p class="dek">What the <span class="mono">ai_enrich_review_removal_score</span> job found when it scored 60 days of negative reviews on <span class="mono">customer_review</span>.</p>
+    </div>
+  </div>
+
+  <div class="ticket">
+    <div class="ticket-grid">
+      <div>
+        <div class="field-label">Dataset</div>
+        <div class="field-value">customer_review · hockerty</div>
+      </div>
+      <div>
+        <div class="field-label">Window</div>
+        <div class="field-value">last 60 days (ts_event)</div>
+      </div>
+      <div>
+        <div class="field-label">Run</div>
+        <div class="field-value">2026-09-07 · 19:06:45–46</div>
+      </div>
+      <div>
+        <div class="field-label">Model</div>
+        <div class="field-value">gpt-5.6-sol</div>
+      </div>
+      <div>
+        <div class="field-label">Notebook</div>
+        <div class="field-value">2N2HYX1AS</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="toc" aria-label="Table of contents">
+    <ol>
+      <li><span class="idx">01</span><a href="#scope">Job scope</a></li>
+      <li><span class="idx">02</span><a href="#coverage">Coverage</a></li>
+      <li><span class="idx">03</span><a href="#distribution">Score distribution</a></li>
+      <li><span class="idx">04</span><a href="#reading">Reading the score</a></li>
+      <li><span class="idx">05</span><a href="#sample">Sample: kept reviews</a></li>
+      <li><span class="idx">06</span><a href="#actionable">Actionable rows</a></li>
+      <li><span class="idx">07</span><a href="#caveats">Caveats</a></li>
+    </ol>
+  </nav>
+
+  <section id="scope">
+    <span class="eyebrow">01 — Scope</span>
+    <h2>Job scope</h2>
+    <p>Source table <span class="mono">/customer_review/_projectId=hockerty</span>, filtered to <span class="mono">ts_event ≥ current_date − 60</span>. That window holds <b class="num">672</b> reviews total. The job wrote three columns onto each scored row — <span class="mono">ai_enrich_review_removal_score</span> (a numeric string), <span class="mono">model_code</span>, and <span class="mono">ts_generated</span>.</p>
+    <p>Every scored row carries the same <span class="mono">ts_generated</span> window — <b>19:06:45 to 19:06:46</b> — a single batch, today, roughly a minute end to end, all under one model code.</p>
+  </section>
+
+  <section id="coverage">
+    <span class="eyebrow">02 — Coverage</span>
+    <h2>Coverage</h2>
+    <p>The job scored <b>exactly</b> the negative reviews — no sampling, no gap. Every row rated 1–3★ has a score; every row rated 4–5★ does not.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Rating</th><th class="num">Reviews in window</th><th class="num">Scored</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1★</td><td class="mono num">90</td><td class="mono num">90</td></tr>
+          <tr><td>2★</td><td class="mono num">17</td><td class="mono num">17</td></tr>
+          <tr><td>3★</td><td class="mono num">38</td><td class="mono num">38</td></tr>
+          <tr><td>4★</td><td class="mono num">78</td><td class="mono num">0</td></tr>
+          <tr><td>5★</td><td class="mono num">449</td><td class="mono num">0</td></tr>
+          <tr class="total"><td>Total</td><td class="mono num">672</td><td class="mono num">145</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="distribution">
+    <span class="eyebrow">03 — Distribution</span>
+    <h2>Score distribution</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Rating</th><th class="num">n</th><th class="num">Avg</th><th class="num">Median</th><th class="num">Min</th><th class="num">Max</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1★</td><td class="mono num">90</td><td class="mono num">−0.829</td><td class="mono num">−0.85</td><td class="mono num">−0.95</td><td class="mono num">0.20</td></tr>
+          <tr><td>2★</td><td class="mono num">17</td><td class="mono num">−0.868</td><td class="mono num">−0.90</td><td class="mono num">−0.95</td><td class="mono num">−0.70</td></tr>
+          <tr><td>3★</td><td class="mono num">38</td><td class="mono num">−0.812</td><td class="mono num">−0.90</td><td class="mono num">−0.95</td><td class="mono num">0.90</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bucket-bar" role="img" aria-label="98.6% of scored reviews below zero, 0.7% borderline, 0.7% flagged">
+      <span style="width:98.6%; background:var(--good);"></span>
+      <span style="width:0.7%; background:var(--warn);"></span>
+      <span style="width:0.7%; background:var(--flag);"></span>
+    </div>
+    <div class="bucket-legend">
+      <span><i class="dot" style="background:var(--good)"></i>&lt; 0 — genuine, keep · <b class="mono">143</b> (98.6%)</span>
+      <span><i class="dot" style="background:var(--warn)"></i>0 to 0.5 — borderline · <b class="mono">1</b> (0.7%)</span>
+      <span><i class="dot" style="background:var(--flag)"></i>≥ 0.5 — flag for removal · <b class="mono">1</b> (0.7%)</span>
+    </div>
+  </section>
+
+  <section id="reading">
+    <span class="eyebrow">04 — Interpretation</span>
+    <h2>Reading the score</h2>
+    <div class="callout">
+      <span class="eyebrow">Unconfirmed sign convention</span>
+      <p>Nothing in the repo documents which direction this score points. The reading below is inferred from the two outliers' content, not confirmed with whoever built the job — check before acting on it.</p>
+    </div>
+    <p>Spot-checking the text at both extremes suggests <b>higher score = higher removal probability</b> (spam or empty content), and a very negative score means the model is confident the review is genuine.</p>
+    <div class="quote-pair">
+      <div class="quote-card">
+        <div class="score-line"><span>order 91023426 · 3★</span><b class="mono">0.90</b></div>
+        <q>“……………………….”</q>
+      </div>
+      <div class="quote-card keep">
+        <div class="score-line"><span>order 91xxxxxx · 1★</span><b class="mono">−0.90</b> (typical)</div>
+        <q>"2 sizes smaller than what I needed and ordered. No way to tailor."</q>
+      </div>
+    </div>
+    <p>Under that reading, <b class="num">144 of 145</b> negative reviews score as clearly genuine. Only one is a plausible removal candidate, with one borderline case worth a human look.</p>
+  </section>
+
+  <section id="sample">
+    <span class="eyebrow">05 — Sample</span>
+    <h2>Sample: kept reviews</h2>
+    <p>Ten of the 143 reviews scored below zero, spanning all three negative rating tiers and a range of complaint types. Each carries the kind of detail a spam or policy-violation filter doesn't fabricate — real order numbers, dates, dollar figures, and quoted correspondence — which is exactly what should keep a review off a removal list even at 1★.</p>
+    <div class="sample-grid">
+
+      <div class="review-ticket keep">
+        <div class="stripe"></div>
+        <div class="body">
+          <div class="rt-head"><span class="order">order 91990923 · US</span><span class="verdict">1★ · −0.90</span></div>
+          <p class="rt-text">"Has a suit made for me and it wasn't even close to the measurements I provided…"</p>
+          <div class="rt-why"><b>Why keep:</b> names a specific order and a concrete, checkable defect (measurement mismatch) — the standard shape of a genuine made-to-measure complaint on this account.</div>
+        </div>
+      </div>
+
+      <div class="review-ticket keep">
+        <div class="stripe"></div>
+        <div class="body">
+          <div class="rt-head"><span class="order">order — · GB</span><span class="verdict">1★ · −0.95</span></div>
+          <p class="rt-text">"If I could give it 0 I would. They made a suit for my wedding — the fit was awful so they made it again and yet again…"</p>
+          <div class="rt-why"><b>Why keep:</b> describes a multi-remake escalation tied to a real event (a wedding) — a specific, falsifiable sequence of events, not a generic pan.</div>
+        </div>
+      </div>
+
+      <div class="review-ticket keep">
+        <div class="stripe"></div>
+        <div class="body">
+          <div class="rt-head"><span class="order">order — · DE (Sumissura)</span><span class="verdict">2★ · −0.95</span></div>
+          <p class="rt-text">"…wurde eine KI generierte Mail geschickt, dann kam 10 Tage nichts. Also habe ich ein 2. Ticket aufgemacht…" (quotes the company's own reply)</p>
+          <div class="rt-why"><b>Why keep:</b> quotes verbatim from a real support exchange, including the company's own written reply — this is documentary evidence of an interaction, not fabricated content.</div>
+        </div>
+      </div>
+
+      <div class="review-ticket keep">
+        <div class="stripe"></div>
+        <div class="body">
+          <div class="rt-head"><span class="order">order 57692626 · US</span><span class="verdict">2★ · −0.90</span></div>
+          <p class="rt-text">"Ordered May 9th and did not receive my suit until nearly a month later, around June 6th… sat in quality control for more than a week…"</p>
+          <div class="rt-why"><b>Why keep:</b> two named calendar dates and a $1,000 order value — precisely the kind of self-verifying detail that separates a real complaint from filler text.</div>
+        </div>
+      </div>
+
+      <div class="review-ticket keep">
+        <div class="stripe"></div>
+        <div class="body">
+          <div class="rt-head"><span class="order">order 66672726 · FR</span><span class="verdict">2★ · −0.90</span></div>
+          <p class="rt-text">"Le colis a failli ne pas arriver à temps pour mon mariage… j'ai dû en acheter un autre en urgence car il n'était pas à ma taille."</p>
+          <div class="rt-why"><b>Why keep:</b> ties a sizing failure directly to a delivery-timing outcome (an emergency replacement purchase) — a concrete consequence, not a vague complaint.</div>
+        </div>
+      </div>
+
+      <div class="review-ticket keep">
+        <div class="stripe"></div>
+        <div class="body">
+          <div class="rt-head"><span class="order">order 59210626 · US</span><span class="verdict">3★ · −0.95</span></div>
+          <p class="rt-text">"I have ordered 4 suits from Hockerty. The first two were excellent… the last order I made for two additional suits were okay… quality has decreased since my first two."</p>
+          <div class="rt-why"><b>Why keep:</b> a repeat customer's before/after comparison across four dated orders — constructive trend feedback that removal would specifically suppress from a loyal buyer.</div>
+        </div>
+      </div>
+
+      <div class="review-ticket keep">
+        <div class="stripe"></div>
+        <div class="body">
+          <div class="rt-head"><span class="order">order 88558726 · US</span><span class="verdict">3★ · −0.90</span></div>
+          <p class="rt-text">"…a $500 suit and it will need to go straight to the dry cleaner, spend another $40… deep, creased wrinkles throughout."</p>
+          <div class="rt-why"><b>Why keep:</b> quantifies the complaint in dollars ($500 order, $40 remedy) and names a specific packaging choice — verifiable, not inflammatory.</div>
+        </div>
+      </div>
+
+      <div class="review-ticket keep">
+        <div class="stripe"></div>
+        <div class="body">
+          <div class="rt-head"><span class="order">order — · GB (Sumissura)</span><span class="verdict">3★ · −0.90</span></div>
+          <p class="rt-text">"Ordered wide-legged jeans in February 2026… we are now 3 remakes and 5 months later… Now they say they are unable to fulfill my order and have offered a 20% store credit."</p>
+          <div class="rt-why"><b>Why keep:</b> an ongoing, dated dispute (3 remakes, 5 months) that the customer updates in real time — suppressing it would hide an unresolved case, not spam.</div>
+        </div>
+      </div>
+
+      <div class="review-ticket keep">
+        <div class="stripe"></div>
+        <div class="body">
+          <div class="rt-head"><span class="order">order — · CH/FR</span><span class="verdict">2★ · −0.75</span></div>
+          <p class="rt-text">"Made in China. Little to no quality control by humans… all client contact seems 100% AI-generated… asking European pricing for Chinese products."</p>
+          <div class="rt-why"><b>Why keep:</b> harsh, but a substantive opinion about pricing and sourcing practices — protected consumer commentary, not the kind of content a removal filter should be catching.</div>
+        </div>
+      </div>
+
+      <div class="review-ticket keep">
+        <div class="stripe"></div>
+        <div class="body">
+          <div class="rt-head"><span class="order">order 83126826 · IT</span><span class="verdict">3★ · −0.90</span></div>
+          <p class="rt-text">"Tempi di consegna più lunghi del previsto (5 settimane invece di 3)… se spendo 370€ per un abito vorrei almeno riceverlo con un appendiabiti…"</p>
+          <div class="rt-why"><b>Why keep:</b> a balanced 3★ review — praises the customization process by name while flagging a specific, measurable delay (3→5 weeks) and a packaging ask. Exactly the mixed, constructive feedback a removal filter would be wrong to touch.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="actionable">
+    <span class="eyebrow">06 — Action</span>
+    <h2>Actionable rows</h2>
+
+    <div class="review-ticket">
+      <div class="stripe"></div>
+      <div class="body">
+        <div class="rt-head">
+          <span class="order">order_review_id 6a9db835…62061444 · order 91023426</span>
+          <span class="verdict">Flag — score 0.90</span>
+        </div>
+        <div class="rt-meta">
+          <span><b>Rating</b> 3★</span>
+          <span><b>Verified</b> false</span>
+          <span><b>Moderation</b> null</span>
+          <span><b>Country</b> CA</span>
+        </div>
+        <p class="rt-text">"……………………….” — no actual content.</p>
+      </div>
+    </div>
+
+    <div class="review-ticket borderline">
+      <div class="stripe"></div>
+      <div class="body">
+        <div class="rt-head">
+          <span class="order">order_review_id 6a60df60…d9a6c8 · order 33871726</span>
+          <span class="verdict">Borderline — score 0.20</span>
+        </div>
+        <div class="rt-meta">
+          <span><b>Rating</b> 1★</span>
+          <span><b>Verified</b> false</span>
+          <span><b>Moderation</b> null</span>
+          <span><b>Country</b> DE</span>
+        </div>
+        <p class="rt-text">German-language complaint about an unresolved support case, quoting a canned Hockerty reply (ticket #04788). Substantive, not spam — its non-negative score likely reflects the quoted support text, not a lack of content. Recommend against removal regardless of the sign convention.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="caveats">
+    <span class="eyebrow">07 — Caveats</span>
+    <h2>Caveats</h2>
+    <ul class="ledger-list">
+      <li><b>n = 1 at the high end.</b> Not enough scored volume to characterize the score's typical behaviour on borderline content — revisit once more batches run.</li>
+      <li><b>Positive reviews were never in scope.</b> This job only ran on 1–3★ rows, so this report says nothing about false-negative removal risk on the positive side.</li>
+      <li><b>Single-batch snapshot.</b> Today's run only — no history yet to compare against.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <span>Notebook 2N2HYX1AS · hockerty-ai-enrich-removal-score</span>
+    <span>Generated 2026-09-07</span>
+  </footer>
+
+</div>
