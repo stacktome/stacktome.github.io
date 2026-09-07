@@ -28,6 +28,7 @@
   .split-row .slabel { color: #636e72; }
   .split-row .sval { font-weight: 600; color: #1a1a2e; }
   .attr-color { color: #00b894; }
+  .widget-color { color: #d68910; }
   .org-color { color: #e17055; }
   .ho-color { color: #6c5ce7; }
   .su-color { color: #0984e3; }
@@ -115,7 +116,7 @@
     <div class="kpi">
       <div class="label">Total Reviews</div>
       <div class="value">71</div>
-      <div class="sub">41 attributed &middot; 30 organic</div>
+      <div class="sub">41 attributed &middot; 22 widget-generated &middot; 8 organic</div>
     </div>
     <div class="kpi">
       <div class="label">Attributed Review Rate</div>
@@ -124,9 +125,9 @@
     </div>
   </div>
 
-  <div class="kpi-grid2" style="margin-top:16px;">
+  <div class="kpi-grid3" style="margin-top:16px;">
     <div class="split-box">
-      <div class="split-title attr-color">&#10003; Attributed Reviews (order_id matched to invite)</div>
+      <div class="split-title attr-color">&#10003; Attributed Reviews (matched to an email invite)</div>
       <div class="split-row"><span class="slabel">Count</span><span class="sval">41</span></div>
       <div class="split-row"><span class="slabel">Avg Rating</span><span class="sval">4.15&#9733;</span></div>
       <div class="split-row"><span class="slabel">Negatives (&le;3&#9733;)</span><span class="sval worst">9 &nbsp;<span style="color:#888;font-weight:400">(22.0%)</span></span></div>
@@ -135,17 +136,26 @@
       <div class="split-row"><span class="slabel su-color">&#9679; sumissura</span><span class="sval">5 reviews &nbsp;<span style="color:#888;font-weight:400">avg 5.00&#9733;</span></span></div>
     </div>
     <div class="split-box">
-      <div class="split-title org-color">&#9702; Organic Reviews (no invite match)</div>
-      <div class="split-row"><span class="slabel">Count</span><span class="sval">30</span></div>
-      <div class="split-row"><span class="slabel">Avg Rating</span><span class="sval">4.53&#9733;</span></div>
-      <div class="split-row"><span class="slabel">Negatives (&le;3&#9733;)</span><span class="sval">3 &nbsp;<span style="color:#888;font-weight:400">(10.0%)</span></span></div>
+      <div class="split-title widget-color">&#9733; Widget-Generated Reviews (on-site review widget, no email invite)</div>
+      <div class="split-row"><span class="slabel">Count</span><span class="sval">22</span></div>
+      <div class="split-row"><span class="slabel">Avg Rating</span><span class="sval">4.77&#9733;</span></div>
+      <div class="split-row"><span class="slabel">Negatives (&le;3&#9733;)</span><span class="sval">1 &nbsp;<span style="color:#888;font-weight:400">(4.5%)</span></span></div>
       <div style="border-top:1px solid #f0f0f0;margin:10px 0 8px;"></div>
-      <div class="split-row"><span class="slabel ho-color">&#9679; hockerty</span><span class="sval">28 reviews &nbsp;<span style="color:#888;font-weight:400">avg 4.54&#9733;</span></span></div>
+      <div class="split-row"><span class="slabel ho-color">&#9679; hockerty</span><span class="sval">22 reviews &nbsp;<span style="color:#888;font-weight:400">avg 4.77&#9733;</span></span></div>
+      <div class="split-row"><span class="slabel su-color">&#9679; sumissura</span><span class="sval">0 reviews</span></div>
+    </div>
+    <div class="split-box">
+      <div class="split-title org-color">&#9702; Organic Reviews (no invite or widget involvement)</div>
+      <div class="split-row"><span class="slabel">Count</span><span class="sval">8</span></div>
+      <div class="split-row"><span class="slabel">Avg Rating</span><span class="sval">3.88&#9733;</span></div>
+      <div class="split-row"><span class="slabel">Negatives (&le;3&#9733;)</span><span class="sval worst">2 &nbsp;<span style="color:#888;font-weight:400">(25.0%)</span></span></div>
+      <div style="border-top:1px solid #f0f0f0;margin:10px 0 8px;"></div>
+      <div class="split-row"><span class="slabel ho-color">&#9679; hockerty</span><span class="sval">6 reviews &nbsp;<span style="color:#888;font-weight:400">avg 3.67&#9733;</span></span></div>
       <div class="split-row"><span class="slabel su-color">&#9679; sumissura</span><span class="sval">2 reviews &nbsp;<span style="color:#888;font-weight:400">avg 4.50&#9733;</span></span></div>
     </div>
   </div>
 
-  <div class="warn-box">&#9650;&nbsp; <strong>Week-on-week: lower volume, higher conversion; attributed sentiment softened as organic sentiment improved.</strong> Invites down &minus;6.8% (427 vs 458) and total emails down &minus;15.8% (840 vs 998, reminders falling faster than invites at &minus;23.5%), but attributed reviews rose slightly to 41 from 39, so the attributed rate actually <em>improved</em> to 9.60% from 8.52% (+1.08pp). The negative/positive split flipped from last week, though: attributed avg rating fell to 4.15&#9733; from 4.59&#9733; (hockerty&rsquo;s attributed avg dropped to 4.03&#9733; from 4.58&#9733;, with 9 attributed negatives vs 5 last week), while organic sentiment improved to 4.53&#9733; from 4.32&#9733; (organic negatives fell from 6 to 3). Sumissura had another clean week &mdash; all 5 attributed reviews were 5&#9733;, and its invite volume actually rose +34.8% against the account-wide decline. All 12 negative reviews this week are on the Hockerty account; Sumissura had zero negatives, matching last week.</div>
+  <div class="warn-box">&#9650;&nbsp; <strong>Week-on-week: lower volume, higher conversion; reviews are now split three ways instead of two.</strong> Invites down &minus;6.8% (427 vs 458) and total emails down &minus;15.8% (840 vs 998, reminders falling faster than invites at &minus;23.5%), but attributed reviews rose slightly to 41 from 39, so the attributed rate actually <em>improved</em> to 9.60% from 8.52% (+1.08pp). Attributed avg rating fell to 4.15&#9733; from 4.59&#9733; (hockerty&rsquo;s attributed avg dropped to 4.03&#9733; from 4.58&#9733;, with 9 attributed negatives vs 5 last week). This week&rsquo;s reviews split three ways: 41 attributed, <strong>22 widget-generated</strong> (4.77&#9733;, only 1 negative), and 8 organic (3.88&#9733;, 2 negatives). Sumissura had another clean week &mdash; all 5 attributed reviews were 5&#9733;, and its invite volume actually rose +34.8% against the account-wide decline. All 12 negative reviews this week are on the Hockerty account; Sumissura had zero negatives, matching last week.</div>
 
   <div class="info-box">&#9432;&nbsp; <strong>No overlap with the previous report.</strong> This is a clean Mon&ndash;Sun window (Aug 31 is a Monday, Sep 6 a Sunday) immediately following the Aug 24&ndash;30 window &mdash; no shared dates, so no double-counting risk this week. Review data is complete through Sep 6 (max review timestamp = window end).</div>
 
@@ -269,17 +279,20 @@
   <!-- 5. Widget Metrics -->
   <h2 id="s5">5. Shopping Experience Widget Metrics</h2>
 
-  <div class="success-box">&#9989;&nbsp; <strong>Widget conversions holding steady at a healthy rate &mdash; the post-purchase fix is confirmed working.</strong> 26 of 84 widget clicks converted to a review this week (31.0%), essentially matching last week&rsquo;s 26 of 100 (26.0%). This is at least the fourth consecutive week of meaningful conversion, not the second: Aug 10&ndash;16 converted 15 of 84 (17.9%) and Aug 17&ndash;23 converted 31 of 90 (34.4%), both re-verified directly against this notebook's cached widget-click data. The zero-conversion streak flagged in the Jul 13&ndash;19 report had already ended by Aug 10 and conversion has held at a broadly similar rate every week since &mdash; not a one-off blip, and not a new-this-fortnight result either.</div>
+  <div class="success-box">&#9989;&nbsp; <strong>Widget conversions holding steady at a healthy rate &mdash; the post-purchase fix is confirmed working.</strong> 27 of this week&rsquo;s 92 widget clicks (84 hockerty + 8 sumissura) led to a review. 5 of those customers had also received an email invite and are counted under Attributed Reviews in Section 1 to avoid double-counting; the remaining <strong>22 make up this week&rsquo;s Widget-Generated total</strong> (4.77&#9733; average, only 1 negative). This is at least the fourth consecutive week of meaningful conversion: Aug 10&ndash;16 converted 15 of 84 clicks (17.9%) and Aug 17&ndash;23 converted 31 of 90 (34.4%). The zero-conversion streak flagged in the Jul 13&ndash;19 report had already ended by Aug 10 and conversion has held at a broadly similar rate every week since &mdash; not a one-off blip.</div>
 
-  <h3>Review Widget (trustpilot-collect) &mdash; Aug 31&ndash;Sep 6 (hockerty)</h3>
+  <h3>Review Widget (trustpilot-collect) &mdash; Aug 31&ndash;Sep 6</h3>
   <table>
     <thead>
       <tr><th>Account</th><th>Widget Type</th><th>Impressions</th><th>Clicks (actions)</th><th>Click Rate</th><th>Reviews Converted</th></tr>
     </thead>
     <tbody>
-      <tr class="ho-row"><td>hockerty</td><td>trustpilot-collect</td><td>1,279</td><td>84</td><td>6.6%</td><td class="best">26</td></tr>
+      <tr class="ho-row"><td>hockerty</td><td>trustpilot-collect</td><td>1,279</td><td>84</td><td>6.6%</td><td class="best">27</td></tr>
+      <tr class="su-row"><td>sumissura</td><td>trustpilot-collect</td><td>109</td><td>8</td><td>7.3%</td><td>0</td></tr>
+      <tr class="total-row"><td colspan="2">Total</td><td>1,388</td><td>92</td><td>6.6%</td><td>27</td></tr>
     </tbody>
   </table>
+  <p class="note">&#9432; Of the 27 converted reviews, 5 were from customers who had also received an email invite and are counted as Attributed in Section 1; the remaining <strong>22 are this week&rsquo;s Widget-Generated total</strong> shown there (avg 4.77&#9733;).</p>
 
   <h3 style="margin-top:14px;">Widget Impressions &amp; Clicks by Day (hockerty)</h3>
   <table>
@@ -322,7 +335,7 @@
   <!-- 6. Negative Reviews -->
   <h2 id="s6">6. Negative Reviews (&le;3&#9733;)</h2>
 
-  <p style="font-weight:600;margin-bottom:6px;">Total negatives this week: 12 (9 attributed + 3 organic) &mdash; all on the Hockerty account; Sumissura had zero negatives.</p>
+  <p style="font-weight:600;margin-bottom:6px;">Total negatives this week: 12 (9 attributed + 1 widget-generated + 2 organic) &mdash; all on the Hockerty account; Sumissura had zero negatives.</p>
   <p style="margin-bottom:14px;color:#888;font-size:12px;">Dominant themes this week: fit/sizing and quality-defect complaints (4 reviews), delivery/shipping failures (3 reviews), and refund refusal / CS non-response (2 reviews, one spanning nearly 3 months). One review is a compliance/opt-out complaint rather than a product issue &mdash; see the callout below.</p>
 
   <div class="error-box">&#128680;&nbsp; <strong>Opt-out / compliance complaint &mdash; not a product issue.</strong> A 1&#9733; from <code>michaelhart@michaelhart.me</code> (invite-tp-EN, order 89619126, Sep 2) reads in full: &ldquo;Stop emailing me. Unsolicited review emails are illegal. Stop.&rdquo; This is a request to be removed from future invite/reminder sends, not feedback on the product or service. Recommend confirming this contact is suppressed from all future campaigns and checking whether existing opt-out handling covers this case &mdash; it carries more compliance risk than reputational risk, but both are relevant.</div>
@@ -396,9 +409,9 @@
   </div>
 
   <div class="review-card">
-    <div class="rc-header"><span class="rating-badge r3">3&#9733;</span><span class="rc-source">organic &middot; hockerty</span><span class="rc-meta">antcalcal@telefonica.net &middot; order 99094526 &middot; 2026-09-03 &middot; Spanish</span></div>
+    <div class="rc-header"><span class="rating-badge r3">3&#9733;</span><span class="rc-source">widget-generated &middot; hockerty</span><span class="rc-meta">antcalcal@telefonica.net &middot; order 99094526 &middot; 2026-09-03 &middot; Spanish</span></div>
     <div class="rc-heading">El probador no funciona bien</div>
-    <div class="rc-text">&ldquo;El probador no funciona bien&rdquo; (the virtual fitting/sizing tool doesn&rsquo;t work well). <span class="tag-warn" style="margin-left:8px;">Site tool bug, not a garment complaint &mdash; also a widget-converted review, see Section 5</span></div>
+    <div class="rc-text">&ldquo;El probador no funciona bien&rdquo; (the virtual fitting/sizing tool doesn&rsquo;t work well). <span class="tag-warn" style="margin-left:8px;">Site tool bug, not a garment complaint &mdash; this is the one negative review in the Widget-Generated bucket, see Section 5</span></div>
   </div>
 
   <!-- 7. Complaint Themes -->
