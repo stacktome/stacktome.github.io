@@ -208,6 +208,8 @@ Example of a working trigger configuration:
 * **No ticket created:** confirm the trigger's subject-text condition matches the real Trustpilot login email subject (a "contains" match is safest), and that the **Brand** condition, if used, matches the ticket's brand.
 * **Ticket created but nothing forwarded:** check that the email target's address is correct and was verified in Step 1, and that the trigger's action references that same target.
 * **Testing without waiting for a real login email:** you can dry-run the trigger by manually creating a ticket with a matching subject and a description containing a dummy link.
+* **Email forwarding stops working:** Check if Trustpilot email tickets are not marked as spam. If they are marked, go to the ticket in spam folder and mark verify now, see screenshot below. This will prevent them to be marked as spam again in the future.
+![Exclude Zendesk spam filter from Trustpilot tickets:](images/zendesk-spam-filter-removal.png)
 
 If you encounter any issues or have additional questions, please reach out to **StackTome Support**.
 
