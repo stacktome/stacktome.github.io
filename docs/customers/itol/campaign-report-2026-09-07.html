@@ -98,28 +98,32 @@
     <div class="kpi">
       <div class="label">Total Invites Sent</div>
       <div class="value">141</div>
-      <div class="sub">unique invite orders &nbsp;<span class="delta-down">&minus;34.4% vs prior week (215)</span></div>
+      <div class="sub">unique invite orders &nbsp;<span class="delta-down">&minus;8.4% vs prior week (154)</span></div>
     </div>
     <div class="kpi">
       <div class="label">Reviews Attributed</div>
       <div class="value">15</div>
-      <div class="sub">campaign-attributed reviews &nbsp;<span class="delta-down">&minus;10 vs prior week (25)</span></div>
+      <div class="sub">campaign-attributed reviews &nbsp;<span class="delta-down">&minus;15 vs prior week (30)</span></div>
     </div>
     <div class="kpi">
       <div class="label">Overall Review Rate</div>
       <div class="value">10.64%</div>
-      <div class="sub">reviews / invites &nbsp;<span class="delta-down">&minus;0.99pp vs 11.63% last week</span></div>
+      <div class="sub">reviews / invites &nbsp;<span class="delta-down">&minus;8.84pp vs 19.48% last week</span></div>
     </div>
     <div class="kpi">
       <div class="label">Avg Order Rating</div>
       <div class="value">4.40</div>
-      <div class="sub">out of 5.00 &nbsp;<span class="delta-down">&minus;0.24 vs prior week (4.64)</span></div>
+      <div class="sub">out of 5.00 (attributed) &nbsp;<span class="delta-down">&minus;0.43 vs prior week (4.83)</span></div>
     </div>
   </div>
-  <p class="note" style="margin-top:8px;">&#9432; 141 unique invite orders produced 15 reviews, all campaign-attributed (0 organic &mdash; same as last week, so this is not a new pattern). Rating distribution: 8&times;5&#9733;, 5&times;4&#9733;, 2&times;3&#9733;, 0&times;2&#9733;, 0&times;1&#9733; &mdash; the first week in the reported series with no rating below 3&#9733;. Review data is complete through Sep 6 (max review timestamp = window end), so this window is fully captured. The window is contiguous with the prior report (Aug 24&ndash;30 ended Aug 30, this one starts Aug 31) &mdash; boundary checked directly against Zeppelin (1 review on Aug 30, 2 on Aug 31) and confirmed there is no overlap or gap between the two reports.</p>
+  <p class="note" style="margin-top:8px;">&#9432; 141 unique invite orders produced 15 reviews, all campaign-attributed (0 organic) &mdash; down from 30 attributed + 2 organic last week. Rating distribution: 8&times;5&#9733;, 5&times;4&#9733;, 2&times;3&#9733;, 0&times;2&#9733;, 0&times;1&#9733; &mdash; the first week in the reported series with no rating below 3&#9733;. Review data is complete through Sep 6 (max review timestamp = Sep 7, beyond window end), so this window is fully captured. The window is contiguous with the prior report (Aug 24&ndash;30 ended Aug 30, this one starts Aug 31) &mdash; boundary checked directly against Zeppelin (1 review on Aug 30, 2 on Aug 31) and confirmed there is no overlap or gap between the two reports.</p>
 
   <div class="warning">
-    &#9888;&nbsp; <strong>Invite volume down overall, but not universally &mdash; and two campaigns collapsed far more than the rest.</strong> Total unique invites fell 34.4% (215&rarr;141). Most volume campaigns declined: Hubspot Main (624) 80&rarr;31 (&minus;61%), Welcome Call/Setup (646) 75&rarr;54 (&minus;28%), General Recruitment Support (701) 9&rarr;5 (&minus;44%). But that decline isn&rsquo;t universal &mdash; Support Campaign (647) moved the opposite direction, rising 15&rarr;25 (+67%). So this is a broad account-wide dip in the aggregate, not a uniform one. Two campaigns fell much further than the aggregate: Assignment Completion (650) dropped from 17 invites to just 1 (&minus;94%), and Mock Interview (699) dropped from 4 to 1 (&minus;75%). Those two remain the clearest outliers and are worth checking independently &mdash; see Action Items.
+    &#9888;&nbsp; <strong>Invite volume is flat in aggregate (&minus;8.4%), but that hides sharp moves in both directions at the campaign level &mdash; more volatile than any prior reported week.</strong> General Recruitment Support (701) fell 30&rarr;5 (&minus;83%), by far the steepest drop and the clearest volume concern this week; Mock Interview (699) also declined, 3&rarr;1 (&minus;67%). Running the other way: Support (647) more than tripled, 8&rarr;25 (+213%); Exam Pass v1 (648) surged 1&rarr;10; Completion/Closure (651) doubled, 2&rarr;4; Job Placement (700) doubled, 1&rarr;2. The two highest-volume campaigns eased only modestly &mdash; Welcome Call/Setup (646) 57&rarr;54 (&minus;5%), Hubspot Main (624) 43&rarr;31 (&minus;28%). Worth understanding whether 701&rsquo;s drop is a genuine change in eligible orders or a trigger issue, given how far out of line it is with everything else &mdash; see Action Items.
+  </div>
+
+  <div class="info-box">
+    &#9432;&nbsp; <strong>Attribution correction applied to this window.</strong> The per-campaign review counts below join reviews against the <em>full invite history</em>, not just this window&rsquo;s invites &mdash; per the standing attribution rule, a window-only join misses customers invited in a prior week who review this week. Applying the full-history join moved 6 reviews from &ldquo;organic&rdquo; to &ldquo;attributed&rdquo; versus a naive window-only join (15 attributed / 0 organic, not 9 / 6). The same correction was applied to the prior-week baseline used for the deltas above. All figures in this report use the corrected, full-history attribution.
   </div>
 
   <!-- 2. Campaign Performance Table -->
@@ -129,7 +133,9 @@
       <tr>
         <th>Campaign</th>
         <th>ID</th>
-        <th>Sent</th>
+        <th>Invites</th>
+        <th>Reminders</th>
+        <th>Total Sent</th>
         <th>Open Rate</th>
         <th>Click Rate</th>
         <th>Unsubs</th>
@@ -143,9 +149,11 @@
         <td>Welcome Call/Setup Campaign</td>
         <td>646</td>
         <td>54</td>
-        <td>59.6%</td>
-        <td>2.8%</td>
-        <td>3</td>
+        <td class="best">262</td>
+        <td class="best">316</td>
+        <td>62.5%</td>
+        <td>2.9%</td>
+        <td class="worst">3</td>
         <td>3</td>
         <td class="neutral">5.56%</td>
         <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.33</td>
@@ -154,9 +162,11 @@
         <td>Hubspot (Main) Invite TP Campaign</td>
         <td>624</td>
         <td>31</td>
-        <td>63.2%</td>
+        <td>45</td>
+        <td>76</td>
+        <td>65.8%</td>
         <td>5.3%</td>
-        <td>0</td>
+        <td class="neutral">0</td>
         <td>1</td>
         <td class="neutral">3.23%</td>
         <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td>
@@ -165,9 +175,11 @@
         <td>Support Campaign</td>
         <td>647</td>
         <td>25</td>
-        <td>46.5%</td>
-        <td>2.0%</td>
-        <td>0</td>
+        <td>92</td>
+        <td>117</td>
+        <td>50.0%</td>
+        <td>3.0%</td>
+        <td class="neutral">0</td>
         <td>4</td>
         <td>16.00%</td>
         <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.25</td>
@@ -176,9 +188,11 @@
         <td>Exam Pass v1 Campaign</td>
         <td>648</td>
         <td>10</td>
+        <td>7</td>
+        <td>17</td>
         <td>82.4%</td>
         <td>17.6%</td>
-        <td>0</td>
+        <td class="neutral">0</td>
         <td>2</td>
         <td>20.00%</td>
         <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td>
@@ -187,9 +201,11 @@
         <td>Exam Pass v2 Campaign</td>
         <td>649</td>
         <td>8</td>
+        <td>7</td>
+        <td>15</td>
         <td>86.7%</td>
         <td class="best">20.0%</td>
-        <td>0</td>
+        <td class="neutral">0</td>
         <td>1</td>
         <td>12.50%</td>
         <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td>
@@ -197,10 +213,12 @@
       <tr>
         <td>General Recruitment Support Campaign</td>
         <td>701</td>
-        <td>5</td>
-        <td>50.0%</td>
+        <td class="worst">5</td>
+        <td>33</td>
+        <td>38</td>
+        <td>51.3%</td>
         <td>5.3%</td>
-        <td>0</td>
+        <td class="neutral">0</td>
         <td>1</td>
         <td>20.00%</td>
         <td><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 5.00</td>
@@ -209,9 +227,11 @@
         <td>Completion/Closure Campaign</td>
         <td>651</td>
         <td>4</td>
-        <td>58.6%</td>
+        <td>15</td>
+        <td>19</td>
+        <td>65.5%</td>
         <td>6.9%</td>
-        <td>1</td>
+        <td class="worst">1</td>
         <td>0</td>
         <td class="neutral">0.00%</td>
         <td class="neutral">&mdash;</td>
@@ -220,9 +240,11 @@
         <td>Job Placement / Successful Employment Campaign</td>
         <td>700</td>
         <td>2</td>
+        <td>2</td>
+        <td>4</td>
         <td>75.0%</td>
-        <td>0.0%</td>
-        <td>0</td>
+        <td class="worst">0.0%</td>
+        <td class="neutral">0</td>
         <td>0</td>
         <td class="neutral">0.00%</td>
         <td class="neutral">&mdash;</td>
@@ -231,9 +253,11 @@
         <td>Assignment Completion Campaign (HR/CIPD)</td>
         <td>650</td>
         <td>1</td>
+        <td>14</td>
+        <td>15</td>
         <td class="best">90.0%</td>
         <td>10.0%</td>
-        <td>0</td>
+        <td class="neutral">0</td>
         <td>2</td>
         <td class="best">200.00%<sup>*</sup></td>
         <td><span class="stars">&#9733;&#9733;&#9733;&#9733;</span> 4.00</td>
@@ -242,9 +266,11 @@
         <td>CV Tailoring Session Campaign</td>
         <td>698</td>
         <td>1</td>
+        <td>1</td>
+        <td>2</td>
         <td>75.0%</td>
         <td>25.0%</td>
-        <td>0</td>
+        <td class="neutral">0</td>
         <td>1</td>
         <td>100.00%<sup>*</sup></td>
         <td class="worst"><span class="stars">&#9733;&#9733;&#9733;</span> 3.00</td>
@@ -253,9 +279,11 @@
         <td>Mock Interview Campaign</td>
         <td>699</td>
         <td>1</td>
+        <td>4</td>
+        <td>5</td>
         <td>72.7%</td>
         <td>9.1%</td>
-        <td>0</td>
+        <td class="neutral">0</td>
         <td>0</td>
         <td class="neutral">0.00%</td>
         <td class="neutral">&mdash;</td>
@@ -264,8 +292,10 @@
         <td>TOTAL</td>
         <td></td>
         <td>141</td>
-        <td>58.5%</td>
-        <td>3.9%</td>
+        <td>481</td>
+        <td>622</td>
+        <td>61.3%</td>
+        <td>4.2%</td>
         <td>4</td>
         <td>15 attr &middot; 0 org</td>
         <td>10.64%</td>
@@ -273,14 +303,14 @@
       </tr>
     </tbody>
   </table>
-  <p class="note">&#9432; Invite counts are unique invite <code>order_id</code>s from Zeppelin (Delta Lake, exact Aug 31&ndash;Sep 6, <code>email_send_type = 'invite'</code> only). The per-campaign column sums to 142 while the total is 141 unique orders: one order (<code>1788334611926-9-Set-ups</code>) was invited by both Welcome Call/Setup (646) and Support Campaign (647) and is counted once in the total. Open/click rates come from the campaign report API over the same daily range, using the API&rsquo;s own sent count (invites + reminders combined) as the denominator &mdash; that figure is higher than the Zeppelin invite-only &ldquo;Sent&rdquo; column shown here, which is what the review-rate denominator uses. <sup>*</sup>Assignment Completion (650) and CV Tailoring Session (698) each sent only 1 invite this week but show review rates over 100%/near it &mdash; the numerator counts reviews attributed via <em>all-time</em> invite history (per the standard attribution rule), so a single-digit denominator makes the rate mathematically unstable; treat both as directional, not literal, until volume recovers. Campaigns 633 (2 reminder-only sends, 0 invites) and 710 (no activity at all) are excluded from this table. Campaign 607 (4-5 Start TP Review &mdash; Google Review Response) sent 12 emails at 66.7% open, but these are <code>email_send_type = 'response'</code>, not review invites, so they are excluded from all invite and review-rate figures.</p>
+  <p class="note">&#9432; <strong>Invites</strong> and <strong>Reminders</strong> are unique invite <code>order_id</code>s from Zeppelin (parquet, exact Aug 31&ndash;Sep 6, split by <code>email_send_type</code>). <strong>Total Sent</strong> is their sum. The per-campaign Invites column sums to 142 while the total is 141 (one order, <code>1788334611926-9-Set-ups</code>, invited by both 646 and 647, counted once in the total); the per-campaign Reminders column (table campaigns only) sums to 482, and the total is 481 &mdash; that gap plus campaign 633&rsquo;s 1 excluded reminder-only send (483 including 633) is fully explained by two orders reminded by both 646 and 647, counted once each in the total. Open/Click rates come from the campaign report API over the same daily range, using the API&rsquo;s own <code>sent</code> figure as the denominator. Per the standing rule, <strong>reviews and review rate always use the Zeppelin invite count as the denominator, never reminders and never the API total.</strong> Campaigns 633 (1 reminder-only send, 0 invites) and 710 (no activity at all) are excluded from this table. Campaign 607 (4-5 Start TP Review &mdash; Google Review Response) sent 12 emails at 66.7% open, but these are <code>email_send_type = 'response'</code>, not review invites, so they are excluded from every invite/reminder/review figure above. <sup>*</sup>Assignment Completion (650) and CV Tailoring Session (698) each sent only 1 invite this week but show review rates at or above 100% &mdash; the numerator counts reviews attributed via <em>all-time</em> invite history, so a single-digit denominator makes the rate mathematically unstable; treat both as directional, not literal, until volume recovers.</p>
 
   <div class="info-box" style="margin-top:12px;">
-    &#128202;&nbsp; <strong>Reminder cadence &amp; unsubscribe check (646/647/651)</strong> &mdash; restoring the diagnostic methodology from the previous weekly report. These three campaigns can send up to 4 reminder touches per order; unsubscribes are the risk being tracked.
+    &#128202;&nbsp; <strong>Reminder cadence &amp; unsubscribe check (646/647/651)</strong> &mdash; continuing the diagnostic from recent weekly reports. These three campaigns can send up to 4 reminder touches per order; unsubscribes are the risk being tracked.
     <br><br>
-    Share of reminded orders that hit the 4-touch cap: Welcome Call/Setup (646) eased from 15.2% (32 of 211 orders) to 11.8% (31 of 262); Support (647) eased from 21.8% (17 of 78) to 16.3% (15 of 92); Completion/Closure (651) rose from 0% (0 of 12) to 13.3% (2 of 15), though its sample is tiny either week.
+    Share of reminded orders that hit the 4-touch cap: Welcome Call/Setup (646) rose from 15.7% (24 of 153 orders last week) to 22.9% (60 of 262); Support (647) rose from 19.7% (14 of 71) to 22.8% (21 of 92). Completion/Closure (651) has no comparable prior-week figure, but this week 5 of its 15 reminded orders (33.3%) hit the cap &mdash; its highest share yet.
     <br><br>
-    Unsubscribes across the three campaigns: 3 last week (646: 2, 651: 1, 647: 0) &rarr; 4 this week (646: 3, 651: 1, 647: 0), against 301&rarr;369 reminded orders &mdash; a rate of &#8776;1.00% &rarr; &#8776;1.08%. <strong>Net read: roughly flat, not a clear improvement or a clear regression.</strong> The encouraging half is that the 4-touch share eased on the two highest-volume campaigns (646, 647); the less encouraging half is that 651 crossed into 4-touch reminders for the first time and the raw unsub count ticked up by one. Another week of data is needed before calling a trend either way.
+    Unsubscribes: 1 last week (all on Support, 647) &rarr; 4 this week, but the pattern has shifted &mdash; 646 logged 3 unsubs this week (its first in the reported series; it had 0 last week) and 651 logged its first ever (1), while 647 had none this week after being the sole source last week. <strong>Net read: total unsub volume is up (1&rarr;4) and has moved onto the two highest-touch-rate campaigns, worth watching alongside the 4-touch-cap increases above rather than as a separate issue.</strong>
   </div>
 
   <!-- 3. Campaign Breakdown -->
@@ -293,72 +323,72 @@
       <tr>
         <td>Support Campaign</td>
         <td class="best">16.00%</td>
-        <td>2.0%</td>
+        <td>3.0%</td>
         <td>4.25&#9733;</td>
-        <td>Volume up sharply (15&rarr;25 invites) and reviews with it (2&rarr;4), though open rate slipped to 46.5% from 60.9% &mdash; the lowest of any converting campaign this week. Three 4&#9733; and one 5&#9733;. One reviewer flags a specific tool by name: Mathew Roberts writes &ldquo;ITOL are very quick to respond. Shields are not so efficient&rdquo; &mdash; worth finding out what &ldquo;Shields&rdquo; refers to internally, since it is the only concrete negative signal in an otherwise positive campaign.</td>
+        <td>Invite volume more than tripled (8&rarr;25, the largest increase of any campaign this week) and reviews rose with it (2&rarr;4 in raw count, though last week&rsquo;s 112.50%* rate was a tiny-denominator artifact off just 8 invites &mdash; this week&rsquo;s 16.00% off 25 invites is a much more stable read). Open rate eased to 50.0% from 56.6% and CTR fell to 3.0% from 9.1%, the sharpest engagement drop of any converting campaign. Three 4&#9733; and one 5&#9733;. One reviewer flags a specific tool by name: Mathew Roberts writes &ldquo;ITOL are very quick to respond. Shields are not so efficient&rdquo; &mdash; worth finding out what &ldquo;Shields&rdquo; refers to internally, since it is the only concrete negative signal in an otherwise positive campaign.</td>
       </tr>
       <tr>
         <td>Exam Pass v1 Campaign</td>
         <td>20.00%</td>
         <td class="best">17.6%</td>
         <td class="best">5.00&#9733;</td>
-        <td>Volume doubled (5&rarr;10 invites) and reviews doubled with it (1&rarr;2), both 5&#9733;. Emmanuel Paapa Tandoh&rsquo;s review is the most detailed of the week and names two staff: Roma (Data Analyst Tutor) and Zimaso Sapho, credited with exam-prep coaching that led to a first-time pass. Second consecutive strong week for this campaign.</td>
+        <td>Invite volume surged from a single send last week to 10 this week &mdash; the largest proportional jump on the account &mdash; and converted 2 reviews, both 5&#9733;. Emmanuel Paapa Tandoh&rsquo;s review is the most detailed of the week and names two staff: Roma (Data Analyst Tutor) and Zimaso Sapho, credited with exam-prep coaching that led to a first-time pass.</td>
       </tr>
       <tr>
         <td>Exam Pass v2 Campaign</td>
         <td>12.50%</td>
         <td>20.0%</td>
         <td class="best">5.00&#9733;</td>
-        <td>First real week of volume (1&rarr;8 invites) after sitting near-idle. Converted its first review of the series this window &mdash; Jade Sheldon, 5&#9733;, brief and positive. Worth watching next week to see if the 12.50% rate holds at slightly higher volume.</td>
+        <td>Invite volume flat at 8 (identical to last week). Converted 1 review &mdash; Jade Sheldon, 5&#9733;, brief and positive. Open/click rates improved further (73.3%&rarr;86.7% open, 13.3%&rarr;20.0% click), the strongest engagement trend on the account this week.</td>
       </tr>
       <tr>
         <td>General Recruitment Support Campaign</td>
         <td>20.00%</td>
         <td>5.3%</td>
         <td class="best">5.00&#9733;</td>
-        <td>Volume and reviews both down (9&rarr;5 invites, 6&rarr;1 reviews) after last week&rsquo;s standout 66.7% rate &mdash; reverting toward this campaign&rsquo;s more typical range. The one review continues a pattern: Harry Wheately credits <strong>Sonja</strong> by name for CV and cover-letter tailoring &mdash; she was named four times in last week&rsquo;s (Aug 24&ndash;30) reviews alone and remains the account&rsquo;s most consistently praised staff member.</td>
+        <td><strong>Invite volume collapsed 30&rarr;5 (&minus;83%), the sharpest drop of any campaign this week and well beyond the account-wide &minus;8.4% average.</strong> Open rate also fell hardest here (74.2%&rarr;51.3%). The one review that did land continues a pattern: Harry Wheately credits <strong>Sonja</strong> by name for CV and cover-letter tailoring &mdash; she was named four times in the Aug 24&ndash;30 report alone and remains the account&rsquo;s most consistently praised staff member. Flagged as a setup/trigger check in Action Items.</td>
       </tr>
       <tr>
         <td>Welcome Call/Setup Campaign</td>
         <td class="neutral">5.56%</td>
-        <td>2.8%</td>
+        <td>2.9%</td>
         <td>4.33&#9733;</td>
-        <td>Highest volume again (54 invites) but volume, rate and rating all eased back from last week (75 invites, 6.67%, 4.80&#9733;). Two 5&#9733; and one 3&#9733; from Matthew Mhandu, who says he wasn&rsquo;t told hands-on experience was required before starting: &ldquo;It&rsquo;s says I need to have hands on experience in order to pass but I wasn&rsquo;t told this before I started&hellip; Honestly is not enough.&rdquo; This reads as an onboarding-expectations gap rather than a service failure &mdash; see Action Items.</td>
+        <td>Highest volume again (54 invites, a modest &minus;5% from 57) but review rate and rating both eased from last week (15.79%, 4.78&#9733;). Also the source of this week&rsquo;s only unsubscribe spike: 3 unsubs, its first in the reported series (0 last week). Two 5&#9733; and one 3&#9733; from Matthew Mhandu, who says he wasn&rsquo;t told hands-on experience was required before starting: &ldquo;It&rsquo;s says I need to have hands on experience in order to pass but I wasn&rsquo;t told this before I started&hellip; Honestly is not enough.&rdquo; This reads as an onboarding-expectations gap rather than a service failure &mdash; see Action Items.</td>
       </tr>
       <tr>
         <td>Hubspot (Main) Invite TP Campaign</td>
         <td class="neutral">3.23%</td>
         <td>5.3%</td>
         <td class="best">5.00&#9733;</td>
-        <td>Invite volume fell the most of any active campaign (80&rarr;31, &minus;61%), and open rate eased to 63.2% from 70.5%. Still converted 1 review at 5&#9733; (Nathaniel Ezekiel, praising onboarding engagement). Volume drop here is consistent with the account-wide dip flagged above rather than specific to this campaign.</td>
+        <td>Invite volume down 43&rarr;31 (&minus;28%), continuing last week&rsquo;s decline. Open rate held essentially flat (65.4%&rarr;65.8%) but CTR eased (7.4%&rarr;5.3%). Still converted 1 review at 5&#9733; (Nathaniel Ezekiel, praising onboarding engagement).</td>
       </tr>
       <tr>
         <td>Assignment Completion Campaign (HR/CIPD)</td>
         <td class="best">200.00%<sup>*</sup></td>
         <td>10.0%</td>
         <td>4.00&#9733;</td>
-        <td><strong>Invite volume collapsed from 17 to 1</strong> &mdash; by far the sharpest drop of any campaign, well beyond the account-wide 34% decline. It still produced 2 reviews this week (via all-time attribution to earlier invites), both 4&#9733; from CIPD/CMI students praising course structure and tutor access, so student experience is not the concern &mdash; the near-total drop in new sends is. Flagged as a setup/trigger check in Action Items.</td>
+        <td>Invite volume flat at 1 (unchanged from last week). Reminder volume rose sharply (0&rarr;14), and 2 reviews landed this week via all-time attribution, both 4&#9733; from CIPD/CMI students praising course structure and tutor access. The apparent 200% rate is a single-invite denominator artifact, not a real conversion rate &mdash; treat as directional only.</td>
       </tr>
       <tr>
         <td>CV Tailoring Session Campaign</td>
         <td>100.00%<sup>*</sup></td>
         <td class="best">25.0%</td>
         <td class="worst">3.00&#9733;</td>
-        <td>First-ever review for this campaign (previously 0 across the whole reported series), and it&rsquo;s a 3&#9733; with a substantive concern: Adila Mogul is positive about CV/LinkedIn help but flags the &ldquo;money back guarantee if job not found within 12 months&rdquo; wording as unclear &mdash; &ldquo;what is the difference between me obtaining my qualifications online and searching a job myself&rdquo;. This is a clarity-of-offer question, not a service complaint, and worth a direct follow-up to close the loop. Only 1 send this week, so treat the rate as anecdotal.</td>
+        <td>First-ever review for this campaign (previously 0 across the whole reported series, and it had no activity at all last week), and it&rsquo;s a 3&#9733; with a substantive concern: Adila Mogul is positive about CV/LinkedIn help but flags the &ldquo;money back guarantee if job not found within 12 months&rdquo; wording as unclear &mdash; &ldquo;what is the difference between me obtaining my qualifications online and searching a job myself&rdquo;. This is a clarity-of-offer question, not a service complaint, and worth a direct follow-up to close the loop. Only 1 send this week, so treat the rate as anecdotal.</td>
       </tr>
       <tr>
         <td>Zero-review campaigns (651, 700, 699)</td>
         <td class="neutral">0.00%</td>
         <td>&mdash;</td>
         <td class="neutral">&mdash;</td>
-        <td>Completion/Closure (651, 4 sends), Job Placement (700, 2 sends) and Mock Interview (699, 1 send) opened at reasonable rates (58.6%&ndash;75.0%) but converted no reviews this week. Completion/Closure converted 2 reviews at 5&#9733; last week from similarly small volume, so this looks like normal week-to-week variance at low N rather than a new problem &mdash; except Mock Interview, whose invite volume itself dropped from 4 to 1 (see Action Items).</td>
+        <td>Completion/Closure (651, 4 invites, up from 2) and Job Placement (700, 2 invites, up from 1) both grew but converted no reviews this week; both converted well last week from similarly small volume, so this looks like normal week-to-week variance at low N. Mock Interview (699) is different: its invite volume itself dropped 3&rarr;1 (&minus;67%), the second-sharpest decline on the account after 701 &mdash; see Action Items.</td>
       </tr>
       <tr>
         <td>Zero-send campaigns (633, 710)</td>
         <td class="neutral">&mdash;</td>
         <td>&mdash;</td>
         <td class="neutral">&mdash;</td>
-        <td>From Invite TP (633) sent only 2 reminders and no new invites. CV Redraft Session (710) sent nothing at all, as in every prior reported week &mdash; still worth confirming whether its trigger is wired up.</td>
+        <td>From Invite TP (633) sent only 1 reminder and no new invites. CV Redraft Session (710) sent nothing at all, as in every prior reported week &mdash; still worth confirming whether its trigger is wired up.</td>
       </tr>
     </tbody>
   </table>
@@ -366,7 +396,7 @@
   <!-- 4. All Reviews This Week -->
   <h2 id="s4">4. All Reviews &mdash; Aug 31&ndash;Sep 6, 2026</h2>
 
-  <div class="info-box">&#9432;&nbsp; <strong>15 total reviews this week</strong>, all campaign-attributed (0 organic), down from 25 last week. 8 reviews at 5&#9733;, 5 at 4&#9733;, 2 at 3&#9733; &mdash; the first week in the series with no rating below 3&#9733;. Three staff were named by name in attributed reviews this week &mdash; Roma, Zimaso Sapho, and Sonja &mdash; down from 7 last week.</div>
+  <div class="info-box">&#9432;&nbsp; <strong>15 total reviews this week</strong>, all campaign-attributed (0 organic), down from 32 last week (30 attributed + 2 organic). 8 reviews at 5&#9733;, 5 at 4&#9733;, 2 at 3&#9733; &mdash; the first week in the series with no rating below 3&#9733;. Three staff were named by name in attributed reviews this week &mdash; Roma, Zimaso Sapho, and Sonja &mdash; down from a much larger cast last week.</div>
 
   <!-- Support Campaign -->
   <div class="campaign-block">
@@ -591,16 +621,16 @@
   <!-- 5. Staff Mentions -->
   <h2 id="s5">5. Staff Mentions This Week</h2>
 
-  <p>Three staff named across two attributed reviews this week: Roma and Zimaso Sapho both appear in Emmanuel Paapa Tandoh&rsquo;s Exam Pass v1 review, and Sonja is named again in General Recruitment Support (701). Sonja is the account&rsquo;s most consistently praised staff member &mdash; she was named four times in last week&rsquo;s (Aug 24&ndash;30) reviews alone (Siddharth Patel, Monika Rajput, Danielle Danquah Meade, and Zia Ur Rehman, who gives her full name as Sonja Dicks), and appears again this week.</p>
+  <p>Three staff named across two attributed reviews this week: Roma and Zimaso Sapho both appear in Emmanuel Paapa Tandoh&rsquo;s Exam Pass v1 review, and Sonja is named again in General Recruitment Support (701). Sonja is the account&rsquo;s most consistently praised staff member &mdash; she was named four times in the Aug 24&ndash;30 report alone (Siddharth Patel, Monika Rajput, Danielle Danquah Meade, and Zia Ur Rehman, who gives her full name as Sonja Dicks), and appears again this week despite that campaign&rsquo;s sharp volume drop.</p>
   <div class="staff-grid" style="margin-top:12px;">
     <span class="staff-chip">Roma <span class="staff-chip-role">Data Analyst Tutor</span></span>
     <span class="staff-chip">Zimaso Sapho <span class="staff-chip-role">Exam prep</span></span>
-    <span class="staff-chip">Sonja <span class="staff-chip-role">Recruitment (named 4&times; last week)</span></span>
+    <span class="staff-chip">Sonja <span class="staff-chip-role">Recruitment (named 4&times; in Aug 24&ndash;30)</span></span>
   </div>
 
   <div class="info-box" style="margin-top:18px;">
-    &#128204;&nbsp; <strong>Sonja remains the standout.</strong> Named four times last week (Aug 24&ndash;30: Siddharth Patel, Monika Rajput, Danielle Danquah Meade, Zia Ur Rehman) and once this week, always for CV/cover-letter tailoring and job-search support &mdash; full name Sonja Dicks per one Aug 24&ndash;30 reviewer. A clear, recurring positive signal and a strong candidate for internal recognition.<br><br>
-    &#128204;&nbsp; <strong>Fewer named mentions than last week.</strong> 3 staff named this week (Roma, Zimaso Sapho, Sonja) vs 7 last week (Neville, Pearl, Matthew, Darren, Amanda, Sonja, Zoey), roughly in line with the drop in review volume (15 vs 25) and in reviews containing a staff callout (2 of 15 this week vs 9 of 25 last week).
+    &#128204;&nbsp; <strong>Sonja remains the standout.</strong> Named four times in the Aug 24&ndash;30 report (Siddharth Patel, Monika Rajput, Danielle Danquah Meade, Zia Ur Rehman) and once this week, always for CV/cover-letter tailoring and job-search support &mdash; full name Sonja Dicks per one of those reviewers. A clear, recurring positive signal and a strong candidate for internal recognition.<br><br>
+    &#128204;&nbsp; <strong>Fewer named mentions than last week.</strong> 3 staff named this week (Roma, Zimaso Sapho, Sonja) vs a larger cast in the Aug 24&ndash;30 report, roughly in line with the drop in review volume (15 vs 32).
   </div>
 
   <!-- 6. Action Items -->
@@ -612,13 +642,13 @@
     <tbody>
       <tr>
         <td>&#128309; Setup</td>
-        <td>Investigate Assignment Completion (650) invite collapse: 17 &rarr; 1</td>
-        <td>Far sharper than the account-wide 34% decline. Reviews and ratings for this campaign remain healthy (2 reviews, 4.00&#9733; avg this week), so this looks like a trigger/segment eligibility issue rather than a quality problem. Check whether the qualifying event (CIPD/CMI assignment completion) is firing normally.</td>
+        <td>Investigate General Recruitment Support (701) invite collapse: 30 &rarr; 5</td>
+        <td>By far the sharpest drop of any campaign this week (&minus;83%) and well beyond the account-wide &minus;8.4% average. The one review that landed is healthy (5&#9733;, names Sonja), so this looks like a trigger/segment eligibility issue rather than a quality problem. Check whether the qualifying event is firing normally.</td>
       </tr>
       <tr>
-        <td>&#128309; Setup</td>
-        <td>Investigate Mock Interview (699) invite collapse: 4 &rarr; 1</td>
-        <td>Second campaign with a drop well beyond the account-wide average this week. Worth checking alongside 650 in case both share a common upstream trigger or segment definition.</td>
+        <td>&#128993; Monitor</td>
+        <td>Watch Mock Interview (699) invite decline: 3 &rarr; 1</td>
+        <td>Second-largest proportional drop this week (&minus;67%) after 701. Small absolute numbers, but worth checking alongside 701 in case both share a common upstream trigger or segment definition.</td>
       </tr>
       <tr>
         <td>&#128993; Monitor</td>
@@ -636,14 +666,19 @@
         <td>Mathew Roberts (Support Campaign (647), Sep 3, 4&#9733;) writes &ldquo;Shields are not so efficient&rdquo; with no further context. Likely an internal tool or platform feature name &mdash; worth a quick internal check so the comment can be actioned rather than left ambiguous.</td>
       </tr>
       <tr>
+        <td>&#128993; Monitor</td>
+        <td>Watch the new unsubscribe pattern on 646/651</td>
+        <td>Welcome Call/Setup (646) logged 3 unsubscribes this week, its first in the reported series (0 last week); Completion/Closure (651) logged its first ever (1). Total unsub volume rose 1&rarr;4 and shifted away from Support (647, which had all of last week&rsquo;s). Both campaigns also saw their 4-touch reminder-cap share increase this week &mdash; worth tracking together rather than as separate signals.</td>
+      </tr>
+      <tr>
         <td>&#128309; Setup</td>
-        <td>Check triggers on campaigns 710 (and near-idle 633)</td>
-        <td>CV Redraft Session (710) has sent zero emails across the entire reported series to date. From Invite TP (633) sent only 2 reminder emails and no new invites this week. Both remain open questions from the Jul 13&ndash;19 report.</td>
+        <td>Check triggers on campaign 710 (and near-idle 633)</td>
+        <td>CV Redraft Session (710) has sent zero emails across the entire reported series to date. From Invite TP (633) sent only 1 reminder email and no new invites this week. Both remain open questions from prior reports.</td>
       </tr>
       <tr>
         <td>&#128994; Positive</td>
         <td>Acknowledge Roma, Zimaso Sapho and Sonja internally</td>
-        <td>Roma and Zimaso Sapho named together in a detailed exam-pass testimonial; Sonja named again after four mentions last week alone (once as &ldquo;Sonja Dicks&rdquo;), always for recruitment/CV support. All three are strong candidates for internal recognition and named case studies.</td>
+        <td>Roma and Zimaso Sapho named together in a detailed exam-pass testimonial; Sonja named again after four mentions in the Aug 24&ndash;30 report alone (once as &ldquo;Sonja Dicks&rdquo;), always for recruitment/CV support. All three are strong candidates for internal recognition and named case studies.</td>
       </tr>
     </tbody>
   </table>
