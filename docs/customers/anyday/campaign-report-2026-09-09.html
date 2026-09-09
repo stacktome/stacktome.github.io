@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anyday — Jan–Sep 2026 YTD Performance Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 1120px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 28px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 20px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  nav.toc { margin: 24px 0 32px; padding: 16px 20px; background: #f8f9fa; border-radius: 8px; border-left: 3px solid #6c5ce7; font-size: 14px; line-height: 2; }
+  nav.toc strong { display: block; margin-bottom: 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: #888; }
+  nav.toc a { color: #444; text-decoration: none; margin-right: 20px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 16px 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 5px; }
+  .kpi .value { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 10px; color: #aaa; margin-top: 3px; }
+
+  .trend-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 10px 0 20px; }
+  .trend-cell { background: #fff; border-radius: 8px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); text-align: center; }
+  .trend-cell .tc-month { font-size: 10px; text-transform: uppercase; color: #888; margin-bottom: 4px; }
+  .trend-cell .tc-avg { font-size: 20px; font-weight: 700; color: #1a1a2e; }
+  .trend-cell .tc-vol { font-size: 10px; color: #aaa; margin-top: 2px; }
+  .trend-cell.tc-low { border-top: 3px solid #d63031; }
+  .trend-cell.tc-mid { border-top: 3px solid #fdcb6e; }
+  .trend-cell.tc-high { border-top: 3px solid #00b894; }
+  .trend-cell.tc-partial { opacity: .55; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 14px; }
+  th { background: #f8f9ff; text-align: left; padding: 10px 10px; font-size: 10.5px; text-transform: uppercase; letter-spacing: .4px; color: #636e72; border-bottom: 1px solid #eee; white-space: nowrap; }
+  td { padding: 9px 10px; border-bottom: 1px solid #f0f0f0; font-size: 12.5px; vertical-align: middle; white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafbff; }
+  .month-label { font-weight: 600; color: #1a1a2e; }
+  td.warn { color: #d63031; font-weight: 600; }
+  td.good { color: #00b894; font-weight: 600; }
+  td.neutral { color: #636e72; }
+  tr.partial-row td { opacity: .6; font-style: italic; }
+
+  .mini-bar { display: flex; height: 6px; border-radius: 3px; overflow: hidden; background: #dfe6e9; width: 60px; }
+  .bar-attr { background: #6c5ce7; height: 100%; }
+
+  .insight { background: #fff; border-left: 4px solid #6c5ce7; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .insight p { margin-bottom: 4px; }
+  .insight p:last-child { margin-bottom: 0; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+  .warn-box p { margin-bottom: 4px; color: #4a4a4a; }
+  .caveat-box { background: #f5f6fa; border-left: 4px solid #b2bec3; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+  .caveat-box p { margin-bottom: 6px; color: #4a4a4a; font-size: 13px; }
+  .caveat-box p:last-child { margin-bottom: 0; }
+
+  .split-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0 20px; }
+  .split-box { border-radius: 8px; padding: 10px 14px; }
+  .split-attr { background: #f0eeff; border-left: 3px solid #6c5ce7; }
+  .split-organic { background: #f5f6fa; border-left: 3px solid #b2bec3; }
+  .split-box .sb-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 4px; }
+  .split-box .sb-count { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+  .split-box .sb-avg { font-size: 12px; color: #636e72; margin-top: 2px; }
+
+  .muted { color: #888; font-size: 12px; }
+  .flag { font-size: 10px; background: #fff3cd; color: #856404; padding: 1px 6px; border-radius: 8px; display: inline-block; }
+  footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #e0e0e0; font-size: 11px; color: #aaa; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Anyday — 2026 Year-to-Date Performance</h1>
+  <p class="subtitle">Review invite analysis &nbsp;&bull;&nbsp; Jan 1&ndash;Sep 8, 2026 &nbsp;&bull;&nbsp; Generated 2026-09-09 &nbsp;&bull;&nbsp; Campaign 447 &ldquo;Standard&rdquo; (invite + reminder, da-DK, Trustpilot) &nbsp;&bull;&nbsp; One-off report, not on the recurring cadence</p>
+
+  <nav class="toc">
+    <strong>Contents</strong>
+    <a href="#s1">1. YTD Overview</a>
+    <a href="#s2">2. Monthly Send &amp; Review Detail</a>
+    <a href="#s3">3. Email Engagement (Campaigns &rarr; Performance)</a>
+    <a href="#s4">4. Trends &amp; Findings</a>
+    <a href="#s5">5. Data Coverage &amp; Caveats</a>
+  </nav>
+
+  <h2 id="s1">1. YTD Overview (Jan 1&ndash;Sep 8, 2026)</h2>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Invites Sent</div><div class="value">24,247</div><div class="sub">9 months, incl. partial Sep</div></div>
+    <div class="kpi"><div class="label">Reminders Sent</div><div class="value">21,117</div><div class="sub">87% of invite volume</div></div>
+    <div class="kpi"><div class="label">Total Reviews</div><div class="value">279</div><div class="sub">159 attributed &middot; 120 organic</div></div>
+    <div class="kpi"><div class="label">Attributed Share</div><div class="value">57.0%</div><div class="sub">of reviews matched to an invite</div></div>
+    <div class="kpi"><div class="label">Avg Rating</div><div class="value">4.64</div><div class="sub">weighted, all 279 reviews</div></div>
+    <div class="kpi"><div class="label">Review Rate</div><div class="value">0.66%</div><div class="sub">attributed reviews / invites, YTD</div></div>
+  </div>
+
+  <div class="insight">
+    <p><strong>One-campaign account.</strong> Anyday runs a single active campaign (ID 447, "Standard") sending Danish-language invites to <code>dk.trustpilot.com/evaluate/anyday.io</code>, followed by a reminder step. There is no campaign-vs-campaign comparison to make &mdash; this report is a single-campaign month-by-month trend view instead.</p>
+  </div>
+
+  <h2 id="s2">2. Monthly Send &amp; Review Detail</h2>
+
+  <h3>Average Rating by Month</h3>
+  <div class="trend-grid">
+    <div class="trend-cell tc-high"><div class="tc-month">Jan</div><div class="tc-avg">4.37</div><div class="tc-vol">30 reviews</div></div>
+    <div class="trend-cell tc-high"><div class="tc-month">Feb</div><div class="tc-avg">4.40</div><div class="tc-vol">25 reviews</div></div>
+    <div class="trend-cell tc-high"><div class="tc-month">Mar</div><div class="tc-avg">4.68</div><div class="tc-vol">19 reviews</div></div>
+    <div class="trend-cell tc-high"><div class="tc-month">Apr</div><div class="tc-avg">4.60</div><div class="tc-vol">42 reviews</div></div>
+    <div class="trend-cell tc-high"><div class="tc-month">May</div><div class="tc-avg">4.69</div><div class="tc-vol">49 reviews</div></div>
+  </div>
+  <div class="trend-grid">
+    <div class="trend-cell tc-high"><div class="tc-month">Jun</div><div class="tc-avg">4.70</div><div class="tc-vol">33 reviews</div></div>
+    <div class="trend-cell tc-high"><div class="tc-month">Jul</div><div class="tc-avg">4.86</div><div class="tc-vol">36 reviews</div></div>
+    <div class="trend-cell tc-high"><div class="tc-month">Aug</div><div class="tc-avg">4.65</div><div class="tc-vol">40 reviews</div></div>
+    <div class="trend-cell tc-high tc-partial"><div class="tc-month">Sep (1&ndash;8)</div><div class="tc-avg">5.00</div><div class="tc-vol">5 reviews</div></div>
+    <div class="trend-cell"></div>
+  </div>
+
+  <h3>Monthly Detail</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Month</th>
+        <th>Invites</th>
+        <th>Reminders</th>
+        <th>Total Sent</th>
+        <th>Reviews</th>
+        <th>Attributed</th>
+        <th>Organic</th>
+        <th>Attr %</th>
+        <th></th>
+        <th>Avg &#9733;</th>
+        <th>1&#9733;</th>
+        <th>2&#9733;</th>
+        <th>3&#9733;</th>
+        <th>4&#9733;</th>
+        <th>5&#9733;</th>
+        <th>Negatives &le;3</th>
+        <th>Review Rate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="month-label">Jan</td>
+        <td>1,823</td><td>1,272</td><td>3,095</td>
+        <td>30</td><td>27</td><td>3</td><td>90.0%</td>
+        <td><div class="mini-bar"><div class="bar-attr" style="width:90%"></div></div></td>
+        <td class="good">4.37</td>
+        <td class="warn">2</td><td>2</td><td>1</td><td>3</td><td>22</td>
+        <td>5</td>
+        <td>1.48%</td>
+      </tr>
+      <tr>
+        <td class="month-label">Feb</td>
+        <td class="warn">0</td><td>1,807</td><td>1,807</td>
+        <td>25</td><td>13</td><td>12</td><td>52.0%</td>
+        <td><div class="mini-bar"><div class="bar-attr" style="width:52%"></div></div></td>
+        <td class="good">4.40</td>
+        <td class="warn">3</td><td>0</td><td>1</td><td>1</td><td>20</td>
+        <td>4</td>
+        <td class="neutral">n/a &mdash; 0 invites</td>
+      </tr>
+      <tr>
+        <td class="month-label">Mar</td>
+        <td>2,083</td><td class="warn">0</td><td>2,083</td>
+        <td>19</td><td>16</td><td>3</td><td>84.2%</td>
+        <td><div class="mini-bar"><div class="bar-attr" style="width:84.2%"></div></div></td>
+        <td class="good">4.68</td>
+        <td>0</td><td>1</td><td>0</td><td>3</td><td>15</td>
+        <td>1</td>
+        <td>0.77%</td>
+      </tr>
+      <tr>
+        <td class="month-label">Apr</td>
+        <td>2,025</td><td>2,062</td><td>4,087</td>
+        <td>42</td><td>26</td><td>16</td><td>61.9%</td>
+        <td><div class="mini-bar"><div class="bar-attr" style="width:61.9%"></div></div></td>
+        <td class="good">4.60</td>
+        <td class="warn">3</td><td>0</td><td>0</td><td>5</td><td>34</td>
+        <td>3</td>
+        <td>1.28%</td>
+      </tr>
+      <tr>
+        <td class="month-label">May</td>
+        <td>3,614</td><td>1,912</td><td>5,526</td>
+        <td>49</td><td>40</td><td>9</td><td>81.6%</td>
+        <td><div class="mini-bar"><div class="bar-attr" style="width:81.6%"></div></div></td>
+        <td class="good">4.69</td>
+        <td>1</td><td>1</td><td>0</td><td>8</td><td>39</td>
+        <td>2</td>
+        <td>1.11%</td>
+      </tr>
+      <tr>
+        <td class="month-label">Jun</td>
+        <td>6,545</td><td>2,459</td><td>9,004</td>
+        <td>33</td><td>17</td><td>16</td><td>51.5%</td>
+        <td><div class="mini-bar"><div class="bar-attr" style="width:51.5%"></div></div></td>
+        <td class="good">4.70</td>
+        <td>1</td><td>0</td><td>1</td><td>4</td><td>27</td>
+        <td>2</td>
+        <td class="warn">0.26%</td>
+      </tr>
+      <tr>
+        <td class="month-label">Jul</td>
+        <td>5,069</td><td>6,542</td><td>11,611</td>
+        <td>36</td><td class="warn">6</td><td>30</td><td class="warn">16.7%</td>
+        <td><div class="mini-bar"><div class="bar-attr" style="width:16.7%"></div></div></td>
+        <td class="good">4.86</td>
+        <td>0</td><td>0</td><td>1</td><td>3</td><td>32</td>
+        <td>1</td>
+        <td class="warn">0.12%</td>
+      </tr>
+      <tr>
+        <td class="month-label">Aug</td>
+        <td>3,085</td><td>5,063</td><td>8,148</td>
+        <td>40</td><td>13</td><td>27</td><td class="warn">32.5%</td>
+        <td><div class="mini-bar"><div class="bar-attr" style="width:32.5%"></div></div></td>
+        <td class="good">4.65</td>
+        <td>0</td><td>1</td><td>3</td><td>5</td><td>31</td>
+        <td>4</td>
+        <td>0.42%</td>
+      </tr>
+      <tr class="partial-row">
+        <td class="month-label">Sep (1&ndash;8)</td>
+        <td>3</td><td>0</td><td>3</td>
+        <td>5</td><td>1</td><td>4</td><td>20.0%</td>
+        <td><div class="mini-bar"><div class="bar-attr" style="width:20%"></div></div></td>
+        <td>5.00</td>
+        <td>0</td><td>0</td><td>0</td><td>0</td><td>5</td>
+        <td>0</td>
+        <td class="neutral">n/a &mdash; 8 days, n=3</td>
+      </tr>
+      <tr>
+        <td class="month-label"><strong>YTD Total</strong></td>
+        <td><strong>24,247</strong></td><td><strong>21,117</strong></td><td><strong>45,364</strong></td>
+        <td><strong>279</strong></td><td><strong>159</strong></td><td><strong>120</strong></td><td><strong>57.0%</strong></td>
+        <td></td>
+        <td><strong>4.64</strong></td>
+        <td><strong>10</strong></td><td><strong>5</strong></td><td><strong>7</strong></td><td><strong>32</strong></td><td><strong>225</strong></td>
+        <td><strong>22</strong></td>
+        <td><strong>0.66%</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="muted">Review rate = attributed reviews sent this month &divide; invites sent this same month (reminders excluded from the denominator, per standard methodology). Attribution uses Anyday's full invite history (Oct 2025&ndash;present), so a review can be attributed even if its invite was sent in an earlier month than the review itself.</p>
+
+  <h2 id="s3">3. Email Engagement (Campaigns &rarr; Performance)</h2>
+  <div class="warn-box">
+    <p><strong>Only the last ~30 days of Performance report history are available.</strong> Opens, clicks, bounces and unsubscribes can only be shown for Aug 12&ndash;Sep 8, 2026; the same metrics for Jan 1&ndash;Aug 11 are not available. Invite and reminder send volumes (Section 2) are not affected by this limit and cover the full Jan&ndash;Sep window.</p>
+  </div>
+
+  <h3>Aug 12&ndash;31, 2026</h3>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Sent</div><div class="value">7,977</div><div class="sub">invite + reminder, both templates</div></div>
+    <div class="kpi"><div class="label">Unique Open Rate</div><div class="value">47.2%</div><div class="sub">3,764 unique opens</div></div>
+    <div class="kpi"><div class="label">Unique Click Rate</div><div class="value">1.5%</div><div class="sub">117 unique clicks</div></div>
+    <div class="kpi"><div class="label">Hard Bounce Rate</div><div class="value">0.14%</div><div class="sub">11 hard bounces</div></div>
+    <div class="kpi"><div class="label">Unsubscribe Rate</div><div class="value">0.48%</div><div class="sub">38 unsubscribes</div></div>
+    <div class="kpi"><div class="label">Reviews via Email Link</div><div class="value">13</div><div class="sub">service reviews tracked to a send</div></div>
+  </div>
+
+  <h3>Sep 1&ndash;8, 2026</h3>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Sent</div><div class="value">3</div><div class="sub">invite + reminder, both templates</div></div>
+    <div class="kpi"><div class="label">Unique Opens</div><div class="value">3</div><div class="sub">rate not meaningful at this volume</div></div>
+    <div class="kpi"><div class="label">Unique Clicks</div><div class="value">2</div><div class="sub">rate not meaningful at this volume</div></div>
+    <div class="kpi"><div class="label">Hard Bounces</div><div class="value">0</div><div class="sub">&mdash;</div></div>
+    <div class="kpi"><div class="label">Unsubscribes</div><div class="value">0</div><div class="sub">&mdash;</div></div>
+    <div class="kpi"><div class="label">Reviews via Email Link</div><div class="value">1</div><div class="sub">service reviews tracked to a send</div></div>
+  </div>
+  <p class="muted">Sep 1&ndash;8 volume is too small for rates to be meaningful (only 3 emails sent) &mdash; opens and clicks recorded in this window can relate to emails sent a few days earlier, so counts are shown instead of percentages.</p>
+
+  <h2 id="s4">4. Trends &amp; Findings</h2>
+
+  <div class="insight">
+    <p><strong>Invite volume ramped up sharply through mid-year, then pulled back.</strong> Invites climbed from ~1,800&ndash;2,000/month in Q1 to a peak of 6,545 in June, then stepped back down to 5,069 (Jul) and 3,085 (Aug). September opens at just 3 invites in the first 8 days &mdash; worth confirming with the account whether this is a deliberate pause or a send-side issue, since it's a sharp drop from August's pace.</p>
+  </div>
+
+  <div class="insight">
+    <p><strong>Reminders lag their originating invite month by ~30 days &mdash; and this explains the Jan/Feb/Mar pattern.</strong> Campaign 447's workflow sends the reminder step 720 hours (30 days) after the invite. Paired months line up closely: Jan invites (1,823) &asymp; Feb reminders (1,807); Mar invites (2,083) &asymp; Apr reminders (2,062); Jun invites (6,545) &asymp; Jul reminders (6,542); Jul invites (5,069) &asymp; Aug reminders (5,063). Feb showing 0 invites / 1,807 reminders and Mar showing 2,083 invites / 0 reminders is this same lag, not a data gap &mdash; each month is dominated by a different step of the same underlying send cohort.</p>
+  </div>
+
+  <div class="warn-box">
+    <p><strong>Attribution share fell sharply as volume grew, and review rate fell with it.</strong> Jan&ndash;Mar ran 84&ndash;90% attributed with review rates of ~0.8&ndash;1.5%. From June onward, attribution dropped to 17&ndash;52% and review rate to 0.12&ndash;0.42%, even as invite volume was at its highest (Jun&ndash;Aug: 3,085&ndash;6,545/month). Organic reviews grew in absolute terms too (16 in Jun, 30 in Jul, 27 in Aug vs. 3&ndash;9/month in Q1), so this isn't purely an artifact of more invites diluting a fixed organic base.</p>
+    <p>Because attribution here uses Anyday's <em>full</em> invite history (not just the invite's own month), a genuinely late-converting customer would still show up as attributed whenever they eventually review &mdash; so the Jun&ndash;Aug dip is not simply "reviews haven't landed yet." It's worth flagging to the account: either recent invite cohorts are converting at a structurally lower rate than earlier in the year, or a growing share of Trustpilot reviews are coming from customers Anyday never invited. Both are actionable, but need the account team's input to disambiguate (e.g. wine season timing, order volume, deliverability changes).</p>
+  </div>
+
+  <div class="insight">
+    <p><strong>Ratings have been stable and strong all year</strong> &mdash; every month sits between 4.37 and 4.86, with no month below 4.3. Negative reviews (&le;3&#9733;) are consistently low (0&ndash;5/month, 22 total YTD out of 279, ~8%). Rating quality is not the story here; send volume, cadence, and attribution/conversion trends are.</p>
+  </div>
+
+  <h2 id="s5">5. Data Coverage &amp; Caveats</h2>
+  <div class="caveat-box">
+    <p><strong>Email engagement history is limited to roughly the last 30 days.</strong> Opens, clicks, bounces and unsubscribes are only available for Aug 12&ndash;Sep 8, 2026; the same metrics for Jan 1&ndash;Aug 11 cannot be shown. Invite and reminder send counts (Section 2) are not affected by this limit and cover the full Jan&ndash;Sep window.</p>
+    <p><strong>September is partial</strong> (Sep 1&ndash;8, 8 days only) &mdash; shown for completeness but not comparable to full-month figures; treat all Sep numbers as directional only.</p>
+    <p><strong>Data is current through Sep 8, 2026</strong>, matching the report window exactly &mdash; there is no data-lag caveat to flag for this period.</p>
+  </div>
+
+  <footer>
+    Anyday &mdash; 2026 YTD campaign report (one-off) &mdash; Generated 2026-09-09 &mdash; Data window: Jan 1&ndash;Sep 8, 2026
+  </footer>
+
+</div>
+</body>
+</html>
