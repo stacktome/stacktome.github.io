@@ -68,6 +68,16 @@
   .muted { color: #888; font-size: 12px; }
   .flag { font-size: 10px; background: #fff3cd; color: #856404; padding: 1px 6px; border-radius: 8px; display: inline-block; }
   footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #e0e0e0; font-size: 11px; color: #aaa; line-height: 1.6; }
+
+  .bar-pos { background: #00b894; height: 100%; }
+  .bar-neg { background: #d63031; height: 100%; }
+  .theme-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 10px 0 20px; align-items: start; }
+  .theme-cols h3 { margin-top: 0; }
+  .quote-list { list-style: none; margin: 10px 0 0; display: flex; flex-direction: column; gap: 8px; }
+  .quote-item { background: #fff; border-radius: 8px; padding: 10px 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); font-size: 12.5px; line-height: 1.5; color: #4a4a4a; }
+  .quote-item.q-pos { border-left: 3px solid #00b894; }
+  .quote-item.q-neg { border-left: 3px solid #d63031; }
+  .quote-item .q-meta { display: block; margin-top: 4px; font-size: 10.5px; color: #aaa; }
 </style>
 </head>
 <body>
@@ -82,7 +92,8 @@
     <a href="#s2">2. Monthly Send &amp; Review Detail</a>
     <a href="#s3">3. Email Engagement (Campaigns &rarr; Performance)</a>
     <a href="#s4">4. Trends &amp; Findings</a>
-    <a href="#s5">5. Data Coverage &amp; Caveats</a>
+    <a href="#s5">5. What Customers Are Saying &mdash; Review Themes</a>
+    <a href="#s6">6. Data Coverage &amp; Caveats</a>
   </nav>
 
   <h2 id="s1">1. YTD Overview (Jan 1&ndash;Sep 8, 2026)</h2>
@@ -290,7 +301,119 @@
     <p><strong>Ratings have been stable and strong all year</strong> &mdash; every month sits between 4.37 and 4.86, with no month below 4.3. Negative reviews (&le;3&#9733;) are consistently low (0&ndash;5/month, 22 total YTD out of 279, ~8%). Rating quality is not the story here; send volume, cadence, and attribution/conversion trends are.</p>
   </div>
 
-  <h2 id="s5">5. Data Coverage &amp; Caveats</h2>
+  <h2 id="s5">5. What Customers Are Saying &mdash; Review Themes (Jan 1&ndash;Sep 8, 2026)</h2>
+  <p class="muted">Themes below are drawn from the full text of all 279 reviews in the window &mdash; both the 159 attributed and 120 organic reviews &mdash; not assumptions from ratings alone. Reviews are mostly in Danish; quotes are translated to English. A review can raise more than one theme, so shares do not sum to 100%, and roughly 10 reviews (emoji-only or single-word, e.g. "OK") carried no assignable content and are excluded from the theme counts.</p>
+
+  <h3>Positive Themes</h3>
+  <table>
+    <thead>
+      <tr><th>Theme</th><th>Mentions</th><th>Share of 279</th><th></th><th>Typical Rating</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Easy &amp; fast to use (sign-up, app, day-to-day)</td>
+        <td>127</td><td class="good">45.5%</td>
+        <td><div class="mini-bar"><div class="bar-pos" style="width:45.5%"></div></div></td>
+        <td>mostly 5&#9733;</td>
+      </tr>
+      <tr>
+        <td>Trust, satisfaction &amp; willingness to recommend</td>
+        <td>47</td><td class="good">16.8%</td>
+        <td><div class="mini-bar"><div class="bar-pos" style="width:16.8%"></div></div></td>
+        <td>4&ndash;5&#9733;</td>
+      </tr>
+      <tr>
+        <td>Helpful, responsive customer service</td>
+        <td>46</td><td class="good">16.5%</td>
+        <td><div class="mini-bar"><div class="bar-pos" style="width:16.5%"></div></div></td>
+        <td>4&ndash;5&#9733; (also turns around some 1&ndash;3&#9733; starts)</td>
+      </tr>
+      <tr>
+        <td>Flexible repayment / installment options</td>
+        <td>20</td><td class="good">7.2%</td>
+        <td><div class="mini-bar"><div class="bar-pos" style="width:7.2%"></div></div></td>
+        <td>mostly 4&ndash;5&#9733;</td>
+      </tr>
+      <tr>
+        <td>No interest / no hidden fees on installments</td>
+        <td>14</td><td class="good">5.0%</td>
+        <td><div class="mini-bar"><div class="bar-pos" style="width:5.0%"></div></div></td>
+        <td>5&#9733;</td>
+      </tr>
+      <tr>
+        <td>Enables purchases otherwise unaffordable</td>
+        <td>11</td><td class="good">3.9%</td>
+        <td><div class="mini-bar"><div class="bar-pos" style="width:3.9%"></div></div></td>
+        <td>4&ndash;5&#9733;</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Negative Themes</h3>
+  <table>
+    <thead>
+      <tr><th>Theme</th><th>Mentions</th><th>Share of 279</th><th></th><th>Typical Rating</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Limited retailer/merchant network</td>
+        <td>10</td><td class="warn">3.6%</td>
+        <td><div class="mini-bar"><div class="bar-neg" style="width:3.6%"></div></div></td>
+        <td>3&ndash;5&#9733; (mostly a caveat inside otherwise good reviews)</td>
+      </tr>
+      <tr>
+        <td>Credit decisions &mdash; declines, sudden limit cuts, re-verification</td>
+        <td>9</td><td class="warn">3.2%</td>
+        <td><div class="mini-bar"><div class="bar-neg" style="width:3.2%"></div></div></td>
+        <td>mostly 1&ndash;3&#9733;</td>
+      </tr>
+      <tr>
+        <td>Confusing costs, fees, or billing/repayment mechanics</td>
+        <td>8</td><td class="warn">2.9%</td>
+        <td><div class="mini-bar"><div class="bar-neg" style="width:2.9%"></div></div></td>
+        <td>1&ndash;4&#9733;</td>
+      </tr>
+      <tr>
+        <td>Customer-service friction (AI/chatbot limits, slow/rigid support)</td>
+        <td>6</td><td class="warn">2.2%</td>
+        <td><div class="mini-bar"><div class="bar-neg" style="width:2.2%"></div></div></td>
+        <td>1&ndash;4&#9733;</td>
+      </tr>
+      <tr>
+        <td>Technical/app/login problems</td>
+        <td>3</td><td class="warn">1.1%</td>
+        <td><div class="mini-bar"><div class="bar-neg" style="width:1.1%"></div></div></td>
+        <td>1&ndash;4&#9733;</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="theme-cols">
+    <div>
+      <h3>Representative positive quotes</h3>
+      <ul class="quote-list">
+        <li class="quote-item q-pos">&ldquo;So easy and quick. I recommend it.&rdquo;<span class="q-meta">5&#9733; &middot; attributed</span></li>
+        <li class="quote-item q-pos">&ldquo;Anyday's customer service called me within an hour of my review going live to clarify a mistake &mdash; that's excellent customer service.&rdquo;<span class="q-meta">4&#9733; &middot; organic</span></li>
+        <li class="quote-item q-pos">&ldquo;I don't usually like borrowing, but you can split into 4 with no interest &mdash; worked flawlessly.&rdquo;<span class="q-meta">5&#9733; &middot; attributed</span></li>
+        <li class="quote-item q-pos">&ldquo;I'd just moved back to Denmark starting from scratch &mdash; Anyday was a huge help spreading out purchases.&rdquo;<span class="q-meta">5&#9733; &middot; organic</span></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Representative negative quotes</h3>
+      <ul class="quote-list">
+        <li class="quote-item q-neg">&ldquo;I can't be accepted as a customer because I have address protection &mdash; even though I can prove my address works fine elsewhere.&rdquo;<span class="q-meta">1&#9733; &middot; organic</span></li>
+        <li class="quote-item q-neg">&ldquo;Big stores like Power and Elgiganten aren't part of Anyday.&rdquo;<span class="q-meta">4&#9733; &middot; attributed</span></li>
+        <li class="quote-item q-neg">&ldquo;I didn't realize you pay a one-off fee every time &mdash; thought it was like Klarna.&rdquo;<span class="q-meta">2&#9733; &middot; attributed</span></li>
+        <li class="quote-item q-neg">&ldquo;I'd like a human agent &mdash; so far only AI responses that can't answer my questions.&rdquo;<span class="q-meta">1&#9733; &middot; organic</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="insight">
+    <p><strong>Overall, what customers are saying:</strong> Sentiment across all 279 reviews is strongly positive (4.64&#9733; avg). The dominant driver by a wide margin is that Anyday is simple and fast to use end-to-end &mdash; sign-up, app, and repayment &mdash; mentioned in nearly half of all reviews, reinforced by frequent praise for interest-free installments and flexible repayment and the flexibility to split larger purchases. Customer service is a clear secondary strength: several customers who started out frustrated explicitly credit a helpful, fast-responding agent with turning the experience around. The friction that does appear is narrow but consistent: credit decisions (declines, sudden limit cuts, re-verification demands) frustrate a small but vocal minority even among loyal users, a steady trickle of otherwise-happy customers wish more retailers accepted Anyday, and a handful of first-time users find the one-off fee or debit timing confusing. These three points &mdash; not product quality or ease of use &mdash; are the most likely explanations for this account's negative reviews specifically.</p>
+  </div>
+
+  <h2 id="s6">6. Data Coverage &amp; Caveats</h2>
   <div class="caveat-box">
     <p><strong>Email engagement history is limited to roughly the last 30 days.</strong> Opens, clicks, bounces and unsubscribes are only available for Aug 12&ndash;Sep 8, 2026; the same metrics for Jan 1&ndash;Aug 11 cannot be shown. Invite and reminder send counts (Section 2) are not affected by this limit and cover the full Jan&ndash;Sep window.</p>
     <p><strong>September is partial</strong> (Sep 1&ndash;8, 8 days only) &mdash; shown for completeness but not comparable to full-month figures; treat all Sep numbers as directional only.</p>
