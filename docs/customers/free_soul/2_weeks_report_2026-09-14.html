@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Soul — Rating Decline Analysis (Aug 31&ndash;Sep 13 vs Aug 17&ndash;30, 2026)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #e84393; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #1a1a2e; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+  .kpi-grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 20px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  .split-box { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .split-box .split-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 12px; }
+  .split-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+  .split-row .slabel { color: #636e72; }
+  .split-row .sval { font-weight: 600; color: #1a1a2e; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .total-row td { background: #f4f4f4 !important; font-weight: 600; }
+  .closed-row td:first-child { border-left: 3px solid #00b894; }
+  .loyal-row td:first-child { border-left: 3px solid #e84393; }
+  .skus-row td:first-child { border-left: 3px solid #fdcb6e; }
+  .tp-row td:first-child { border-left: 3px solid #6c5ce7; }
+  .organic-row td:first-child { border-left: 3px solid #b2bec3; }
+
+  .review-card { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 10px; }
+  .rc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .rc-source { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; color: #888; }
+  .rc-meta { font-size: 12px; color: #aaa; margin-left: auto; }
+  .rc-text { font-size: 13px; color: #444; line-height: 1.6; }
+  .rc-heading { font-weight: 600; color: #1a1a2e; margin-bottom: 4px; font-size: 13px; }
+
+  .rating-badge { display: inline-block; border-radius: 5px; padding: 2px 9px; font-size: 12px; font-weight: 700; }
+  .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff3e0; color: #e17055; }
+  .r3 { background: #fffde0; color: #b8860b; }
+  .r4 { background: #e8f5f0; color: #00b894; }
+  .r5 { background: #e8f5e8; color: #27ae60; }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 8px; }
+  .theme-card { background: #fff; border-radius: 10px; padding: 16px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .theme-card .theme-title { font-size: 13px; font-weight: 600; color: #1a1a2e; margin-bottom: 6px; }
+  .theme-card .theme-count { font-size: 12px; color: #888; margin-bottom: 8px; }
+  .theme-card .theme-quotes { font-size: 12px; color: #555; line-height: 1.7; }
+  .theme-card .theme-quotes em { color: #e17055; font-style: normal; }
+
+  .seg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 8px; }
+  .seg-card { background: #fff; border-radius: 10px; padding: 16px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .seg-card .seg-name { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .seg-card .seg-campaign { font-size: 11px; color: #888; margin-bottom: 10px; }
+  .seg-row { font-size: 12px; color: #555; margin-bottom: 5px; line-height: 1.5; }
+  .seg-row strong { color: #1a1a2e; }
+  .tag-ok { display: inline-block; background: #e8f5f0; color: #00b894; border-radius: 4px; padding: 1px 7px; font-size: 11px; font-weight: 600; }
+  .tag-warn { display: inline-block; background: #fff3e0; color: #e17055; border-radius: 4px; padding: 1px 7px; font-size: 11px; font-weight: 600; }
+  .tag-issue { display: inline-block; background: #ffeaea; color: #d63031; border-radius: 4px; padding: 1px 7px; font-size: 11px; font-weight: 600; }
+
+  .action-list { list-style: none; }
+  .action-list li { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; display: flex; gap: 12px; align-items: flex-start; font-size: 13px; line-height: 1.6; }
+  .action-list li .anum { background: #1a1a2e; color: #fff; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .note { font-size: 12px; color: #888; margin-top: 6px; font-style: italic; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+  .info-box { background: #f5f6fa; border-left: 4px solid #b2bec3; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<h1>Free Soul — Rating Decline Analysis</h1>
+<p class="subtitle">Aug 31&ndash;Sep 13, 2026 (current) vs Aug 17&ndash;30, 2026 (prior) &nbsp;&middot;&nbsp; Campaigns: invite-tp (237) &middot; invite-closed (240) &middot; invite-skus (310, the product/SKU-targeted review campaign) &middot; invite-loyal (424) &nbsp;&middot;&nbsp; Generated: 14 Sep 2026 &nbsp;&middot;&nbsp; Ad hoc analysis requested to explain a rating decline and test whether invite-skus (310) was the primary driver; supplements, doesn't replace, the monthly cadence (last full report: Aug vs Jul, 1 Sep 2026)</p>
+
+<nav style="background:#fff;border-radius:10px;padding:16px 20px;box-shadow:0 1px 4px rgba(0,0,0,0.07);margin-bottom:28px;font-size:13px;">
+  <div style="font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.6px;font-size:10px;margin-bottom:10px;">Contents</div>
+  <ol style="margin:0;padding-left:18px;line-height:2;">
+    <li><a href="#exec-summary" style="color:#6c5ce7;text-decoration:none;">Executive Summary</a></li>
+    <li><a href="#campaign-volume" style="color:#6c5ce7;text-decoration:none;">Campaign Volume</a></li>
+    <li><a href="#review-rate" style="color:#6c5ce7;text-decoration:none;">Review Rate &amp; Rating by Campaign</a></li>
+    <li><a href="#decomposition" style="color:#6c5ce7;text-decoration:none;">What Actually Drove the Decline &mdash; Contribution by Source</a></li>
+    <li><a href="#confounds" style="color:#6c5ce7;text-decoration:none;">Ruling Out Other Explanations</a></li>
+    <li><a href="#negative-reviews" style="color:#6c5ce7;text-decoration:none;">Negative Reviews &mdash; Themes &amp; Detail</a></li>
+    <li><a href="#validation" style="color:#6c5ce7;text-decoration:none;">Data Validation &amp; Caveats</a></li>
+    <li><a href="#conclusion" style="color:#6c5ce7;text-decoration:none;">Conclusion &mdash; Was invite-skus the Primary Driver?</a></li>
+    <li><a href="#action-items" style="color:#6c5ce7;text-decoration:none;">Action Items</a></li>
+  </ol>
+</nav>
+
+<!-- EXECUTIVE SUMMARY -->
+<h2 id="exec-summary">Executive Summary</h2>
+<div class="kpi-grid">
+  <div class="kpi"><div class="label">Avg Rating</div><div class="value worst">3.94&#9733;</div><div class="sub">Current, all reviews &middot; Prior: 4.30&#9733; (&minus;0.36)</div></div>
+  <div class="kpi"><div class="label">Total Reviews</div><div class="value">79</div><div class="sub">Current &middot; Prior: 60</div></div>
+  <div class="kpi"><div class="label">Negatives (&le;3&#9733;)</div><div class="value worst">22</div><div class="sub">27.8% of 79 &middot; Prior: 12 (20.0% of 60)</div></div>
+  <div class="kpi"><div class="label">Total Invites</div><div class="value">12,727</div><div class="sub">Current &middot; Prior: 6,872 (+85.2%)</div></div>
+</div>
+<div class="warn-box">
+  <p><strong>Short answer: invite-skus (310) is clearly the strongest identifiable campaign-side driver of the rating decline, but we cannot conclusively call it the primary driver of the total account-wide decline.</strong> Its own average fell the hardest of any campaign (4.71&#9733;&rarr;3.80&#9733;) and its negative rate jumped the most (7.1%&rarr;33.3%), and its contribution to the account-wide change (&minus;0.378 pts) is roughly equal to the entire account decline (&minus;0.363 pts). However, the "no order ID" bucket &mdash; reviews whose campaign source is unknown, not proven non-campaign &mdash; contributed a nearly identical &minus;0.384 pts and cannot be assigned to invite-skus or any other campaign. Since that unknown-source bucket is at least as large a contributor as invite-skus, the two cannot be cleanly separated, and invite-tp/invite-loyal's volume growth further offsets the campaign-attributed decline. See Section 4 for the full decomposition and Section 8 for the full answer.</p>
+</div>
+<p>Total invite volume nearly doubled account-wide (6,872&rarr;12,727 invites, +85.2%), with invite-skus growing fastest (+135.2%), invite-tp +81.4%, invite-loyal +72.6%, and invite-closed essentially flat (&minus;6.9%, trivial base). Reviews grew more slowly (60&rarr;79, +31.7%) and skewed more negative (20.0%&rarr;27.8% of reviews rated &le;3&#9733;).</p>
+
+<!-- CAMPAIGN VOLUME -->
+<h2 id="campaign-volume">Campaign Volume</h2>
+<table>
+  <tr><th>Campaign</th><th>Prior Invites</th><th>Current Invites</th><th>Invite &Delta;</th><th>Prior Reminders</th><th>Current Reminders</th><th>Prior Total</th><th>Current Total</th></tr>
+  <tr class="tp-row"><td>invite-tp (237)</td><td>1,928</td><td>3,498</td><td class="worst">+81.4%</td><td>1,811</td><td>3,741</td><td><strong>3,739</strong></td><td><strong>7,239</strong></td></tr>
+  <tr class="closed-row"><td>invite-closed (240)</td><td>29</td><td>27</td><td>&minus;6.9%</td><td>32</td><td>34</td><td><strong>61</strong></td><td><strong>61</strong></td></tr>
+  <tr class="skus-row"><td>invite-skus (310)</td><td>1,149</td><td>2,702</td><td class="worst">+135.2%</td><td>1,234</td><td>2,437</td><td><strong>2,383</strong></td><td><strong>5,139</strong></td></tr>
+  <tr class="loyal-row"><td>invite-loyal (424)</td><td>3,766</td><td>6,500</td><td>+72.6%</td><td>3,754</td><td>5,230</td><td><strong>7,520</strong></td><td><strong>11,730</strong></td></tr>
+  <tr class="total-row"><td>Total</td><td>6,872</td><td>12,727</td><td>+85.2%</td><td>6,831</td><td>11,442</td><td><strong>13,703</strong></td><td><strong>24,169</strong></td></tr>
+</table>
+<p class="note">Invite/reminder counts are raw send-event counts (deduplicated within Delta reads, verified &mdash; see Section 7). invite-skus grew the fastest of any campaign in both relative (+135.2%) and this-window-vs-last-window terms; it's now the account's second-largest campaign by volume after invite-loyal, having overtaken invite-tp. Campaigns 742 ("response"/"recovery", 11 events all-time, confirmed not to alter review ratings) and 745 (test, empty) are excluded, consistent with prior reports.</p>
+
+<!-- REVIEW RATE & RATING -->
+<h2 id="review-rate">Review Rate &amp; Rating by Campaign</h2>
+<table>
+  <tr><th>Campaign</th><th>Period</th><th>Invites</th><th>Attributed Reviews</th><th>Avg Rating</th><th>Negatives</th><th>Neg Rate</th><th>Review Rate</th></tr>
+  <tr class="tp-row"><td rowspan="2">invite-tp (237)</td><td>Prior</td><td>1,928</td><td>22</td><td>4.23&#9733;</td><td>6</td><td>27.3%</td><td>1.14%</td></tr>
+  <tr class="tp-row"><td>Current</td><td>3,498</td><td>34</td><td class="worst">3.94&#9733;</td><td>10</td><td>29.4%</td><td>0.97%</td></tr>
+  <tr class="closed-row"><td rowspan="2">invite-closed (240)</td><td>Prior</td><td>29</td><td>2</td><td class="best">5.00&#9733;</td><td>0</td><td>0.0%</td><td>6.90%</td></tr>
+  <tr class="closed-row"><td>Current</td><td>27</td><td>3</td><td>4.33&#9733;</td><td>0</td><td>0.0%</td><td class="best">11.11%</td></tr>
+  <tr class="skus-row"><td rowspan="2">invite-skus (310)</td><td>Prior</td><td>1,149</td><td>14</td><td class="best">4.71&#9733;</td><td>1</td><td>7.1%</td><td>1.22%</td></tr>
+  <tr class="skus-row"><td>Current</td><td>2,702</td><td>15</td><td class="worst">3.80&#9733;</td><td>5</td><td class="worst">33.3%</td><td>0.56%</td></tr>
+  <tr class="loyal-row"><td rowspan="2">invite-loyal (424)</td><td>Prior</td><td>3,766</td><td>4</td><td class="best">5.00&#9733;</td><td>0</td><td>0.0%</td><td>0.11%</td></tr>
+  <tr class="loyal-row"><td>Current</td><td>6,500</td><td>12</td><td>4.58&#9733;</td><td>1</td><td>8.3%</td><td>0.18%</td></tr>
+  <tr class="organic-row"><td rowspan="2">Organic (has order ID, no invite match)</td><td>Prior</td><td>&mdash;</td><td>3</td><td>3.67&#9733;</td><td>1</td><td>33.3%</td><td>&mdash;</td></tr>
+  <tr class="organic-row"><td>Current</td><td>&mdash;</td><td>2</td><td>3.00&#9733;</td><td>1</td><td>50.0%</td><td>&mdash;</td></tr>
+  <tr class="organic-row"><td rowspan="2">No order ID at all</td><td>Prior</td><td>&mdash;</td><td>15</td><td>3.87&#9733;</td><td>4</td><td>26.7%</td><td>&mdash;</td></tr>
+  <tr class="organic-row"><td>Current</td><td>&mdash;</td><td>13</td><td class="worst">3.54&#9733;</td><td>5</td><td>38.5%</td><td>&mdash;</td></tr>
+  <tr class="total-row"><td colspan="2">4-campaign total (attributed only)</td><td>6,872 / 12,727</td><td>42 / 64</td><td>4.50&#9733; / 4.05&#9733;</td><td>7 / 16</td><td>16.7% / 25.0%</td><td>0.61% / 0.50%</td></tr>
+  <tr class="total-row"><td colspan="2">All reviews (incl. organic + no-ID)</td><td>&mdash;</td><td>60 / 79</td><td>4.30&#9733; / 3.94&#9733;</td><td>12 / 22</td><td>20.0% / 27.8%</td><td>&mdash;</td></tr>
+</table>
+<p class="note">"Attributed" = matched to an invite by order ID (tie broken toward the lowest campaign ID when an order matches more than one campaign's invite history — same convention as prior reports). Review rate = attributed reviews &divide; invites sent in that same period; it understates true eventual conversion for the current period because some late invitees (sent as recently as Sep 13) have not yet had time to review &mdash; see Section 7. <strong>invite-skus shows the sharpest within-campaign deterioration of any of the four campaigns</strong>: the largest rating drop (&minus;0.91 pts) and by far the largest negative-rate jump (+26.2 points, vs +2.1 for invite-tp and +8.3 for invite-loyal).</p>
+
+<h3>Rating Distribution by Campaign</h3>
+<table>
+  <tr><th>Campaign</th><th>Period</th><th>1&#9733;</th><th>2&#9733;</th><th>3&#9733;</th><th>4&#9733;</th><th>5&#9733;</th><th>n</th></tr>
+  <tr class="tp-row"><td rowspan="2">invite-tp (237)</td><td>Prior</td><td>2</td><td>1</td><td>3</td><td>0</td><td>16</td><td>22</td></tr>
+  <tr class="tp-row"><td>Current</td><td>4</td><td>3</td><td>3</td><td>5</td><td>19</td><td>34</td></tr>
+  <tr class="skus-row"><td rowspan="2">invite-skus (310)</td><td>Prior</td><td>0</td><td>1</td><td>0</td><td>1</td><td>12</td><td>14</td></tr>
+  <tr class="skus-row"><td>Current</td><td>2</td><td>2</td><td>1</td><td>2</td><td>8</td><td>15</td></tr>
+  <tr class="loyal-row"><td rowspan="2">invite-loyal (424)</td><td>Prior</td><td>0</td><td>0</td><td>0</td><td>0</td><td>4</td><td>4</td></tr>
+  <tr class="loyal-row"><td>Current</td><td>0</td><td>1</td><td>0</td><td>2</td><td>9</td><td>12</td></tr>
+  <tr class="closed-row"><td rowspan="2">invite-closed (240)</td><td>Prior</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>2</td></tr>
+  <tr class="closed-row"><td>Current</td><td>0</td><td>0</td><td>0</td><td>2</td><td>1</td><td>3</td></tr>
+</table>
+<p class="note">invite-skus is the only campaign whose current-period distribution has meaningfully shifted mass out of 5&#9733; (80% prior &rarr; 53% current) into the 1&ndash;2&#9733; band (7% prior &rarr; 27% current) rather than just softening at the margins.</p>
+
+<!-- DECOMPOSITION -->
+<h2 id="decomposition">What Actually Drove the Decline &mdash; Contribution by Source</h2>
+<p>The account-wide average fell from <strong>4.300&#9733;</strong> (258 total rating-points / 60 reviews) to <strong>3.937&#9733;</strong> (311 / 79), a change of <strong>&minus;0.363 pts</strong>. Each source's exact contribution to that change is <code>(source's current-period rating-points &divide; 79) &minus; (source's prior-period rating-points &divide; 60)</code> &mdash; these six numbers sum exactly to &minus;0.363, so this is not an approximation.</p>
+<table>
+  <tr><th>Source</th><th>Prior (points/count)</th><th>Current (points/count)</th><th>Contribution to &Delta;</th></tr>
+  <tr class="loyal-row"><td>invite-loyal (424)</td><td>20 / 4</td><td>55 / 12</td><td class="best">+0.363</td></tr>
+  <tr class="tp-row"><td>invite-tp (237)</td><td>93 / 22</td><td>134 / 34</td><td class="best">+0.146</td></tr>
+  <tr class="closed-row"><td>invite-closed (240)</td><td>10 / 2</td><td>13 / 3</td><td class="neutral">&minus;0.002</td></tr>
+  <tr class="organic-row"><td>Organic (has order ID)</td><td>11 / 3</td><td>6 / 2</td><td class="worst">&minus;0.107</td></tr>
+  <tr class="skus-row"><td>invite-skus (310)</td><td>66 / 14</td><td>57 / 15</td><td class="worst">&minus;0.378</td></tr>
+  <tr class="organic-row"><td>No order ID</td><td>58 / 15</td><td>46 / 13</td><td class="worst">&minus;0.384</td></tr>
+  <tr class="total-row"><td>Net (all sources)</td><td>258 / 60</td><td>311 / 79</td><td class="worst">&minus;0.363</td></tr>
+</table>
+<div class="info-box">
+  <p><strong>The single largest negative contributor is the "no order ID" bucket (&minus;0.384 pts), narrowly ahead of invite-skus (&minus;0.378 pts) &mdash; but that bucket's campaign source is unknown, not proven non-campaign.</strong> These 15/13 reviews (prior/current) carry no order_id at all, so they can't be checked against invite history by any key; unlike the separate "Organic (has order ID)" row above &mdash; which genuinely was checked against full invite history and confirmed not to match &mdash; the no-order-ID group could in principle include customers invited by any of the four campaigns, invite-skus included. Combined, the two non-campaign-attributable rows (confirmed-organic + unknown-source) pulled the average down by &minus;0.491 pts &mdash; more than the entire net decline. Meanwhile the four named campaigns <em>together</em> contributed <strong>+0.129 pts</strong> (0.146 + (&minus;0.002) + (&minus;0.378) + 0.363) to the change in the <em>overall, all-review</em> average &mdash; not because their own average improved (it didn't: the 4-campaign combined average itself fell from 4.50&#9733; to 4.05&#9733;, per the Review Rate table above), but because +0.129 pts is a contribution figure computed against the full account-wide denominator (60 then 79 total reviews), and reflects the campaigns' growing share of that total pool as much as their own rating movement. In plain terms: campaign-attributed reviews got both more numerous and somewhat lower-rated, but the volume growth was large enough that their net pull on the account-wide average was still positive, even though, taken on their own terms, they declined too (just less than invite-skus alone, and much less than the account-wide figure). This does not mean invite-skus is blameless (see Section 8) &mdash; only that its role in the <em>total</em> account-wide number can't be cleanly isolated from the unknown-source bucket.</p>
+</div>
+
+<!-- CONFOUNDS -->
+<h2 id="confounds">Ruling Out Other Explanations</h2>
+<div class="seg-grid">
+  <div class="seg-card">
+    <div class="seg-name">Segment 652 purchase-count floor (the Aug fix)</div>
+    <div class="seg-campaign">&rarr; invite-skus campaign 310</div>
+    <div class="seg-row"><strong>Status:</strong> <span class="tag-ok">Still intact, not reverted</span> &mdash; live snapshot re-pulled: <code>count_purchase</code> minimum is still <strong>2</strong> across all 7,261 currently-eligible customers (2,602&rarr;3,121 at count=2, plus 1,732/1,328/1,080 at 3/4/5), up from 6,624 eligible on Sep 1. First-time buyers are still excluded from this segment, so the decline is <strong>not</strong> a reversion of the fix the Sep-1 report credited for August's turnaround.</div>
+  </div>
+  <div class="seg-card">
+    <div class="seg-name">Branded vs TP template mix on campaign 310</div>
+    <div class="seg-campaign">&rarr; invite-skus campaign 310</div>
+    <div class="seg-row"><strong>Status:</strong> <span class="tag-ok">Not the explanation</span> &mdash; mix stayed roughly 50/50 both periods (prior: 563 branded / 586 TP invites; current: 1,316 / 1,386). Both template types softened: branded 5.00&#9733;&rarr;4.00&#9733; (0&rarr;3 negatives of 11), TP 4.11&#9733;&rarr;4.00&#9733; (2&rarr;2 negatives of 8). Since both sides declined together, this isn't a template-mix artifact.</div>
+  </div>
+  <div class="seg-card">
+    <div class="seg-name">Campaign 742 ("response"/"recovery") altering ratings</div>
+    <div class="seg-campaign">&rarr; standalone workflow, not a review invite</div>
+    <div class="seg-row"><strong>Status:</strong> <span class="tag-ok">Ruled out</span> &mdash; trivial volume (11 events all-time, 4 customers). A <code>previous_rating</code> field on one event looked like it might indicate rating tampering; verified directly against <code>customer_review</code> that all 4 affected orders still carry exactly one, unmodified review row each. Confirmed inert with respect to ratings.</div>
+  </div>
+  <div class="seg-card">
+    <div class="seg-name">Campaign-list completeness</div>
+    <div class="seg-campaign">&rarr; account-wide</div>
+    <div class="seg-row"><strong>Status:</strong> <span class="tag-ok">Confirmed complete</span> &mdash; raw directory listing under the invite base path shows only 237 / 240 / 310 / 424 / 742 / 745(test) / 237(test) / 718(test); no new or undocumented live campaign exists that could be misattributed or missed.</div>
+  </div>
+</div>
+
+<!-- NEGATIVE REVIEWS -->
+<h2 id="negative-reviews">Negative Reviews (&le;3&#9733;) &mdash; Themes &amp; Detail</h2>
+<p style="font-size:12px;color:#888;">Themes below are from reading each negative review's full text (not an automated keyword tally, unlike some prior reports for this account) &mdash; treat percentages as directional given the small samples (12 prior, 22 current).</p>
+
+<h3>invite-skus (310) &mdash; the campaign under scrutiny</h3>
+<div class="warn-box">
+  <p><strong>Current period's 5 invite-skus negatives lean toward subscription/cancellation friction, not the taste complaints the segment fix targeted:</strong> 3 of 5 explicitly describe difficulty cancelling or an unwanted automatic reorder ("Impossible to cancel a subscription... money is still being taken from my account", "Automatic reorder and cancelling! ...Trying to cancel this automatic delivery system was not easy", "I feel like I was decieved into continuing to pay for my subscription"). One combines a taste complaint with the same subscription friction ("I ordered vanilla and it was awful... discovered my order was a subscription (well hidden)"), and one is a delivery-timing complaint (wanted to change flavour before shipment). <strong>The prior period had only 1 invite-skus negative</strong> (2&#9733;, also taste+subscription) &mdash; too small a sample to confirm a theme "shift," but the current period's pattern is clearly subscription-dominated, which points at checkout/subscription UX rather than product taste as the likely proximate cause, and is a different lever than the purchase-count floor fix.</p>
+</div>
+
+<h3>Complaint Themes, Both Periods (all sources)</h3>
+<div class="theme-grid">
+  <div class="theme-card">
+    <div class="theme-title">&#128535; Taste &amp; Flavour</div>
+    <div class="theme-count">Prior: 4 of 12 (33%) &middot; Current: 12 of 22 (55%) &mdash; up sharply, mostly within invite-tp</div>
+    <div class="theme-quotes"><em>"taste and texture was awful"</em> (prior, invite-tp) &middot; <em>"synthetic flavour and lingering aftertaste"</em> (current, invite-tp) &middot; <em>"extremely salty... won't be buying again"</em> (current, invite-tp)</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title">&#128260; Subscription / Cancellation</div>
+    <div class="theme-count">Prior: 1 of 12 (8%, skus) &middot; Current: 5 of 22 (23%) &mdash; concentrated in invite-skus (3) + no-ID (1) + partial overlap</div>
+    <div class="theme-quotes"><em>"Impossible to cancel a subscription"</em> (current, invite-skus) &middot; <em>"Shameful hiding of subscription cancellation"</em> (current, no order ID) &middot; <em>"the subscription was quite time consuming to work out how to cancel"</em> (prior, invite-skus)</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title">&#128230; Delivery / Non-Arrival</div>
+    <div class="theme-count">Prior: 3 of 12 (25%) &middot; Current: 4 of 22 (18%) &mdash; roughly flat as a share</div>
+    <div class="theme-quotes"><em>"I never received my order"</em> (current, invite-tp) &middot; <em>"Extremely disappointing first experience"</em> &mdash; delivery-attempt dispute (current, organic)</div>
+  </div>
+  <div class="theme-card">
+    <div class="theme-title">&#129298; Formulation / Ingredient Transparency (new)</div>
+    <div class="theme-count">0 of 12 prior &middot; 2 of 22 (9%) current &mdash; not seen in the Sep-1 report either</div>
+    <div class="theme-quotes"><em>"BUFFERED with what??? ...Full disclosure needed"</em> (current, no order ID) &middot; artificial-sweetener/GI-distress complaint (current, no order ID) &mdash; small sample, worth watching, not yet actionable.</div>
+  </div>
+</div>
+
+<h3>Selected Negative Reviews (current period)</h3>
+<div class="review-card">
+  <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">invite-skus &middot; current</span></div>
+  <div class="rc-heading">Impossible to cancel a subscription</div>
+  <div class="rc-text">Impossible to cancel a subscription. Please do not order products from this website as they will make it impossible for you to cancel your subscription. I have tried to cancel multiple times yet money is still being taken from my account.</div>
+</div>
+<div class="review-card">
+  <div class="rc-header"><span class="rating-badge r2">2&#9733;</span><span class="rc-source">invite-skus &middot; current</span></div>
+  <div class="rc-heading">Automatic reorder and cancelling</div>
+  <div class="rc-text">When I ordered some protein powder last month, I had no idea that it was going to be arriving every month. Consequently, another delivery has arrived today. Trying to cancel this automatic delivery system was not easy and I had to Google how to cancel my order.</div>
+</div>
+<div class="review-card">
+  <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">no order ID &middot; current</span></div>
+  <div class="rc-heading">BUFFERED with what??</div>
+  <div class="rc-text">Free soul magnesium 4 in 1. BUFFERED with what??? Don't understand??? Why can't you put that on the label... If you've buffered with magnesium oxide!!! It might be nearly all magnesium oxide. We don't know. You haven't declared it.</div>
+</div>
+
+<!-- VALIDATION -->
+<h2 id="validation">Data Validation &amp; Caveats</h2>
+<div class="seg-grid">
+  <div class="seg-card">
+    <div class="seg-name">Freshness</div>
+    <div class="seg-row"><strong>Reviews:</strong> min/max ts_event exactly 2026-08-17 / 2026-09-13 &mdash; full window covered, generation day (Sep 14) correctly excluded.</div>
+    <div class="seg-row"><strong>Invites:</strong> min/max _date exactly 2026-08-17 / 2026-09-13 &mdash; same.</div>
+  </div>
+  <div class="seg-card">
+    <div class="seg-name">Deduplication</div>
+    <div class="seg-row"><strong>Invites:</strong> 37,872 raw rows in-window = 37,872 distinct (campaign, order, send-type, date) &mdash; no duplicate-row artifact (unlike the pattern seen on other accounts' parquet reads; all reads here used Delta format per the account's known parquet-overcount fix).</div>
+    <div class="seg-row"><strong>Reviews:</strong> 139 raw rows = 139 distinct order_review_id.</div>
+  </div>
+  <div class="seg-card">
+    <div class="seg-name">Settling / attribution lag risk</div>
+    <div class="seg-row">The current window ends only <strong>1 day</strong> before generation vs. <strong>15 days</strong> for the prior window &mdash; late-window invitees (sent Sep 10&ndash;13) have had little time to review, so current-period review counts and review rates are provisional and will likely rise on the next report, understating true conversion for now.</div>
+    <div class="seg-row"><strong>Checked for rating bias from this:</strong> among current-period same-window attributed reviews, average invite-to-review lag is <strong>3.51 days for 4&ndash;5&#9733; reviewers (n=35)</strong> vs <strong>3.86 days for &le;3&#9733; reviewers (n=14)</strong> &mdash; no meaningful gap, so the rating comparison itself doesn't show an obvious "angry customers respond faster" skew in this window, even though total volume is still settling.</div>
+  </div>
+  <div class="seg-card">
+    <div class="seg-name">Attribution methodology</div>
+    <div class="seg-row">Same convention as prior reports: join review order_id to all-time invite history (not just in-window invites), tie-break ties toward the lowest campaign ID, classify no-match-with-order-id as "organic," no-order-id-at-all separately. ~34% of current-period reviews (27 of 79) carry no order ID &mdash; consistent with the Sep-1 report's flagged data-completeness gap for this account, unresolved as of this analysis.</div>
+  </div>
+  <div class="seg-card">
+    <div class="seg-name">Multi-campaign overlap check (tie-break validation)</div>
+    <div class="seg-row">Checked whether the lowest-campaign-ID tie-break could be materially undercounting invite-skus: <strong>2 of 42 prior attributed reviews and 4 of 64 current attributed reviews</strong> (5&ndash;6%) matched invite history from more than one campaign &mdash; in every case, the overlap was invite-tp (237) &amp; invite-skus (310) together (no overlaps found involving invite-closed or invite-loyal), and all were tie-broken to invite-tp (237) as the lower ID.</div>
+    <div class="seg-row"><strong>Directional effect:</strong> the 6 reallocated reviews skew positive (ratings 5,5,5,4 current; 1,5 prior) &mdash; if credited to invite-skus instead, its recomputed average would move from 4.71&#9733;&rarr;3.80&#9733; to a less severe 4.50&#9733;&rarr;4.00&#9733;, and its negative rate from 7.1%&rarr;33.3% to 12.5%&rarr;26.3%. So the tie-break convention is <strong>not understating</strong> invite-skus's decline &mdash; if anything the officially reported numbers are slightly more severe than an invite-skus-inclusive alternative would show. Given the small sample (&le;27% of invite-skus's own count either period) and that correcting it would soften rather than strengthen the case against invite-skus, <strong>no change was made to the primary tables</strong> &mdash; this reflects the account's existing, consistently-applied attribution convention, not an error requiring correction.</div>
+  </div>
+</div>
+
+<!-- CONCLUSION -->
+<h2 id="conclusion">Conclusion &mdash; Was invite-skus the Primary Driver?</h2>
+<div class="info-box">
+  <p><strong>invite-skus is clearly the strongest identifiable campaign-side driver of the rating decline &mdash; but we cannot conclusively say it was the primary driver of the total account-wide decline.</strong></p>
+  <p style="margin-top:8px;">What the numbers support:</p>
+  <p style="margin-top:8px;">1. <strong>invite-skus deteriorated more sharply than any other campaign</strong>: its own average fell from 4.71&#9733; to 3.80&#9733; and its negative rate rose from 7.1% to 33.3% &mdash; both the largest moves of any of the four campaigns, and its current negatives are now dominated by subscription/cancellation complaints rather than the taste complaints the August segment fix addressed (that fix remains intact and is not the cause).</p>
+  <p style="margin-top:4px;">2. <strong>Its contribution to the account-wide change (&minus;0.378 pts) is roughly equal to the entire account decline (&minus;0.363 pts)</strong> &mdash; among identifiable, campaign-attributed sources, nothing else comes close to explaining the decline on its own.</p>
+  <p style="margin-top:4px;">3. <strong>However, the "no order ID" bucket also contributed &minus;0.384 pts, and it cannot be assigned to any campaign</strong> &mdash; not because it's confirmed non-campaign (unlike the separate "Organic, has order ID" row, which was checked against full invite history and genuinely doesn't match), but because there's no order_id to check at all. Its true source, including how much of it may in fact be invite-skus traffic, is unknown.</p>
+  <p style="margin-top:4px;">4. <strong>Because that unknown-source bucket is at least as large a negative contributor as invite-skus, we cannot conclusively say invite-skus was the primary driver of the total account decline</strong> &mdash; only that it is the strongest driver we can actually identify and attribute. A materially different split between "true invite-skus" and "true no-order-id campaign source" within that unknown bucket could shift the balance either way.</p>
+  <p style="margin-top:8px;"><strong>Bottom line:</strong> invite-skus is the one campaign worth fixing based on this window's data regardless &mdash; its own trend is real, large, and specific (subscription/cancellation friction, not taste), and no plausible reallocation of the unknown-source bucket makes that go away. But "primarily responsible for the account-wide decline" is a stronger claim than the data can support, given a comparably-sized pool of reviews whose campaign origin we simply don't know.</p>
+</div>
+
+<!-- ACTION ITEMS -->
+<h2 id="action-items">Action Items</h2>
+<ul class="action-list">
+  <li>
+    <div class="anum">1</div>
+    <div><strong>Investigate subscription-cancellation UX specifically for invite-skus (310) purchasers.</strong> 3 of 5 current negatives explicitly describe difficulty cancelling or an unwanted auto-reorder ("impossible to cancel," "had to Google how to cancel," "decieved into continuing to pay"). This is a different root cause than the taste issue the Aug segment fix addressed, and the fix is confirmed still in place.</div>
+  </li>
+  <li>
+    <div class="anum">2</div>
+    <div><strong>Re-run this comparison once the current window has settled</strong> (e.g. as part of the next scheduled monthly report) &mdash; the current period had only 1 day to mature vs. the prior period's 15, so current counts/rates are provisional. The lag check found no obvious rating-direction bias so far, but volume will still grow.</div>
+  </li>
+  <li>
+    <div class="anum">3</div>
+    <div><strong>Carry forward the Sep-1 report's open item on the ~30&ndash;38% no-order-ID review share, and treat it as a blocker on this report's own conclusion, not just a data-completeness footnote.</strong> The no-order-ID bucket was the single largest negative contributor to this period's rating decline (&minus;0.384 pts, narrowly ahead of invite-skus's &minus;0.378), and its campaign source is genuinely unknown &mdash; if a Trustpilot order-reference passthrough issue disproportionately affects invite-skus traffic specifically, some of that &minus;0.384 pts may really belong to invite-skus, which would settle the primary-driver question this report could not.</div>
+  </li>
+  <li>
+    <div class="anum">4</div>
+    <div><strong>Watch the two new "formulation/ingredient transparency" complaints</strong> (magnesium-oxide buffering, artificial sweetener) &mdash; 0% share in the Sep-1 report's Jul/Aug themes, now 9% of current negatives. Still too small a sample to act on, but a new theme worth tracking.</div>
+  </li>
+</ul>
+
+<div class="note" style="margin-top:24px;">Generated 14 Sep 2026 from Zeppelin notebook <code>free_soul_data_clone</code> (2MXVMSW7A), Delta-format reads. Working file only &mdash; not yet published, committed, or pushed.</div>
+
+</div>
+</body>
+</html>
