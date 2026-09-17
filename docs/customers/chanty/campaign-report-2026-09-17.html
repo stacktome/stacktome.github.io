@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chanty — Trustpilot Setup &amp; Performance Review</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #2d8659; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .kpi.highlight { border-top: 3px solid #f0932b; }
+  .kpi.good { border-top: 3px solid #2d8659; }
+  .kpi.warn { border-top: 3px solid #e17055; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  th { background: #f3faf6; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; }
+  td { padding: 9px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafffd; }
+  .row-total td { background: #f3faf6; font-weight: 600; }
+
+  .status-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; color: #fff; }
+  .st-active { background: #2d8659; }
+  .st-stalled { background: #e17055; }
+  .st-inactive { background: #b2bec3; }
+
+  .r2 { color: #e17055; font-weight: 600; }
+  .r5 { color: #2d8659; font-weight: 600; }
+
+  .insight-box { background: #fff; border-left: 4px solid #2d8659; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .insight-box p { margin-bottom: 6px; }
+  .insight-box p:last-child { margin-bottom: 0; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .warn-box p { margin-bottom: 6px; }
+  .warn-box p:last-child { margin-bottom: 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #2d8659; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .good-box p { margin-bottom: 6px; }
+  .good-box p:last-child { margin-bottom: 0; }
+  .info-box { background: #f5f6fa; border-left: 4px solid #b2bec3; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .info-box p { margin-bottom: 6px; }
+  .info-box p:last-child { margin-bottom: 0; }
+
+  .action-list { list-style: none; margin: 0; padding: 0; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 16px; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 10px; }
+  .al-icon { font-size: 16px; flex-shrink: 0; }
+  .al-text { font-size: 13px; color: #4a4a4a; line-height: 1.5; }
+
+  nav a:hover { text-decoration: underline; }
+
+  @media (max-width: 700px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Chanty — Trustpilot Setup &amp; Performance Review</h1>
+  <p class="subtitle">Covering both storefronts: Chanty (Denmark/EU) and Chanty US &bull; Generated Sep 17, 2026 &bull; First report for this account</p>
+
+  <nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #2d8659;font-size:14px;line-height:2;">
+    <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+    <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Overview</a>
+    <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Campaign Setup</a>
+    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Sending Volume &amp; Delivery</a>
+    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Recent Activity Health Check</a>
+    <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Reviews Received</a>
+    <a href="#s6" style="color:#444;text-decoration:none;margin-right:20px;">6. Are New Orders Being Reached?</a>
+    <a href="#s7" style="color:#444;text-decoration:none;margin-right:20px;">7. Issues Found</a>
+    <a href="#s8" style="color:#444;text-decoration:none;margin-right:20px;">8. Why Review Volume Is Low</a>
+    <a href="#s9" style="color:#444;text-decoration:none;">9. Recommended Next Steps</a>
+  </nav>
+
+  <div class="info-box">
+    <p><strong>First report for this account.</strong> This is a full review of the Trustpilot review-request setup for both Chanty storefronts, plus a health check to confirm sending is currently working. Because this is the first report, every figure below is a lifetime total rather than a week-over-week comparison.</p>
+    <p><strong>A note on scope:</strong> figures are kept deliberately simple and outcome-focused (requests sent, reminders, reviews, delivery performance) rather than describing how the underlying automation is built.</p>
+  </div>
+
+  <!-- OVERVIEW -->
+  <h2 id="s1">1. Overview</h2>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Review Requests Sent</div><div class="value">124</div><div class="sub">73 Denmark/EU &middot; 51 US</div></div>
+    <div class="kpi"><div class="label">Reminder Emails Sent</div><div class="value">77</div><div class="sub">All Denmark/EU &mdash; US too new for reminders yet</div></div>
+    <div class="kpi highlight"><div class="label">Reviews Received</div><div class="value">6</div><div class="sub">4 Denmark/EU &middot; 2 US</div></div>
+    <div class="kpi"><div class="label">Avg Rating</div><div class="value">3.67★</div><div class="sub">Denmark/EU 4.0★ &middot; US 3.0★</div></div>
+    <div class="kpi warn"><div class="label">Review Rate</div><div class="value">4.8%</div><div class="sub">reviews ÷ requests sent &mdash; very small sample, see Section 5</div></div>
+  </div>
+
+  <div class="warn-box">
+    <p><strong>Both storefronts are early-stage.</strong> The Denmark/EU program has been sending for under 4 weeks (since Aug 25); the US program only sent its first email 2 days before this report (Sep 15). Low absolute volume right now is expected at this stage, but Section 7 identifies specific setup issues that will keep volume lower than it needs to be even as the programs mature.</p>
+  </div>
+
+  <!-- CAMPAIGN SETUP -->
+  <h2 id="s2">2. Campaign Setup</h2>
+  <p style="margin-bottom:14px;">What's configured on each storefront, when it started sending, and whether it's currently active.</p>
+
+  <h3>Denmark / EU (chanty.dk)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th>Status</th>
+        <th>First Sent</th>
+        <th>Last Sent</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Main Review Campaign <span style="color:#aaa;font-size:11px;">(id 750)</span></td>
+        <td><span class="status-pill st-active">Active</span></td>
+        <td>Aug 25, 2026</td>
+        <td>Sep 17, 2026 (today)</td>
+        <td>Requests a review a few days after an order ships, with two follow-up reminders (1 and 2 weeks later)</td>
+      </tr>
+      <tr>
+        <td>Support Follow-up Campaign <span style="color:#aaa;font-size:11px;">(id 751)</span></td>
+        <td><span class="status-pill st-active">Active</span></td>
+        <td>Aug 18, 2026</td>
+        <td>Aug 25, 2026 (waiting on new candidates &mdash; see Section 7)</td>
+        <td>Requests a review from customers whose support case was resolved positively</td>
+      </tr>
+      <tr>
+        <td>Incentive Campaign <span style="color:#aaa;font-size:11px;">(id 795)</span></td>
+        <td><span class="status-pill st-inactive">Off</span></td>
+        <td>Never sent</td>
+        <td>&mdash;</td>
+        <td>An incentive-style request template, currently switched off</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>US (Chanty US)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th>Status</th>
+        <th>First Sent</th>
+        <th>Last Sent</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Review Campaign <span style="color:#aaa;font-size:11px;">(id 798)</span></td>
+        <td><span class="status-pill st-active">Active</span></td>
+        <td>Sep 15, 2026</td>
+        <td>Sep 16, 2026</td>
+        <td>Main review-request flow for the US store, same structure as Denmark's Main Review Campaign</td>
+      </tr>
+      <tr>
+        <td>Support Follow-up Campaign <span style="color:#aaa;font-size:11px;">(id 799)</span></td>
+        <td><span class="status-pill st-inactive">Off</span></td>
+        <td>Never sent</td>
+        <td>&mdash;</td>
+        <td>Same purpose as Denmark's Support Follow-up Campaign; not yet turned on for the US</td>
+      </tr>
+      <tr>
+        <td>Review Response Campaign <span style="color:#aaa;font-size:11px;">(id 802)</span></td>
+        <td><span class="status-pill st-active">Active</span></td>
+        <td>Sep 15, 2026</td>
+        <td>Sep 15, 2026</td>
+        <td>Automatically thanks/responds to reviews as they come in &mdash; not a review request, excluded from volume figures below</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <p><strong>On "first sent" dates:</strong> these are the earliest requests we can currently see in the data. All of the campaigns above are new enough (under 4 weeks old) that this is a reliable read of when they actually started.</p>
+  </div>
+
+  <!-- VOLUME & DELIVERY -->
+  <h2 id="s3">3. Sending Volume &amp; Delivery Performance</h2>
+  <p style="margin-bottom:14px;">Lifetime totals for the two active review-request campaigns (excludes the Review Response Campaign, which isn't a request).</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th style="text-align:right">Requests Sent</th>
+        <th style="text-align:right">Reminders Sent</th>
+        <th style="text-align:right">Orders Reached</th>
+        <th style="text-align:right">Opened</th>
+        <th style="text-align:right">Clicked</th>
+        <th style="text-align:right">Bounced / Rejected</th>
+        <th style="text-align:right">Unsubscribed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Main Review Campaign (DK)</td>
+        <td style="text-align:right">71</td>
+        <td style="text-align:right">75</td>
+        <td style="text-align:right">71</td>
+        <td style="text-align:right">63 unique (~46%)</td>
+        <td style="text-align:right">7 unique (~5%)</td>
+        <td style="text-align:right">2 / 4</td>
+        <td style="text-align:right">2</td>
+      </tr>
+      <tr>
+        <td>Support Follow-up (DK)</td>
+        <td style="text-align:right">2</td>
+        <td style="text-align:right">2</td>
+        <td style="text-align:right">2</td>
+        <td style="text-align:right">1 unique*</td>
+        <td style="text-align:right">0*</td>
+        <td style="text-align:right">0 / 0*</td>
+        <td style="text-align:right">0*</td>
+      </tr>
+      <tr>
+        <td>Review Campaign (US)</td>
+        <td style="text-align:right">51</td>
+        <td style="text-align:right">0</td>
+        <td style="text-align:right">51</td>
+        <td style="text-align:right">15 unique (~30%)</td>
+        <td style="text-align:right">4 unique (~8%)</td>
+        <td style="text-align:right">1 / 0</td>
+        <td style="text-align:right">0</td>
+      </tr>
+      <tr class="row-total">
+        <td>TOTAL</td>
+        <td style="text-align:right">124</td>
+        <td style="text-align:right">77</td>
+        <td style="text-align:right">124</td>
+        <td style="text-align:right">&mdash;</td>
+        <td style="text-align:right">&mdash;</td>
+        <td style="text-align:right">&mdash;</td>
+        <td style="text-align:right">&mdash;</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <p><strong>*Support Follow-up (DK) has no delivery-platform data for its initial request stage.</strong> Our sending log confirms 2 requests and 2 reminders went out, but the delivery platform's report only ever shows figures for the reminder stage. See Section 7 for why this campaign has so little volume &mdash; not a delivery issue.</p>
+    <p><strong>Open/click rates above are healthy where we have full data</strong> &mdash; the Main Review Campaign's ~46% open rate and the US Review Campaign's ~30% are both reasonable for this type of email.</p>
+  </div>
+
+  <h3>Delivery Reconciliation</h3>
+  <p style="margin-bottom:14px;">The client asked specifically how many emails are actually being delivered. Our own sending log and the delivery platform's report don't quite agree on how many emails were sent in the first place, so we reconciled the two before calculating any delivery rate.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th style="text-align:right">Our Send Log</th>
+        <th style="text-align:right">Recorded by Delivery Platform</th>
+        <th style="text-align:right">Unaccounted For</th>
+        <th style="text-align:right">Delivered*</th>
+        <th style="text-align:right">Delivery Rate*</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Main Review Campaign (DK)</td>
+        <td style="text-align:right">146</td>
+        <td style="text-align:right">138</td>
+        <td style="text-align:right">8 (5.5%)</td>
+        <td style="text-align:right">132</td>
+        <td style="text-align:right">95.7%</td>
+      </tr>
+      <tr>
+        <td>Review Campaign (US)</td>
+        <td style="text-align:right">51</td>
+        <td style="text-align:right">50</td>
+        <td style="text-align:right">1 (2.0%)</td>
+        <td style="text-align:right">49</td>
+        <td style="text-align:right">98.0%</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="margin-bottom:14px;font-size:12px;color:#888;">*Delivered / Delivery Rate are calculated only against the emails the delivery platform has a confirmed record of, excluding any bounced or rejected sends. The "Unaccounted For" emails are shown separately below rather than folded into this rate.</p>
+
+  <div class="warn-box">
+    <p><strong>Most sends are confirmed: 138 of 146 Denmark/EU emails and 50 of 51 US emails are accounted for by the delivery platform</strong>, and of those, 95.7% and 98.0% respectively were successfully delivered &mdash; both healthy rates.</p>
+    <p><strong>8 Denmark/EU sends and 1 US send can't currently be reconciled</strong> &mdash; our records show these emails as sent, but the delivery platform has no matching record for them (not delivered, not bounced, not returned as undeliverable). We're flagging this rather than guessing at an outcome, and are not including these in the delivery-rate calculation above. We'll continue to monitor and follow up with our delivery provider if this persists.</p>
+  </div>
+
+  <!-- HEALTH CHECK -->
+  <h2 id="s4">4. Recent Activity Health Check (Sep 3 &ndash; 17)</h2>
+  <p style="margin-bottom:14px;">To confirm both programs are actively working right now, not just historically: daily requests and reminders sent over the last two weeks.</p>
+
+  <table>
+    <thead>
+      <tr><th>Date</th><th>Denmark/EU &mdash; Requests</th><th>Denmark/EU &mdash; Reminders</th><th>US &mdash; Requests</th><th>US &mdash; Reminders</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Sep 5</td><td style="text-align:right">3</td><td style="text-align:right">2</td><td style="text-align:right">&mdash;</td><td style="text-align:right">&mdash;</td></tr>
+      <tr><td>Sep 6</td><td style="text-align:right">0</td><td style="text-align:right">2</td><td style="text-align:right">&mdash;</td><td style="text-align:right">&mdash;</td></tr>
+      <tr><td>Sep 8</td><td style="text-align:right">1</td><td style="text-align:right">0</td><td style="text-align:right">&mdash;</td><td style="text-align:right">&mdash;</td></tr>
+      <tr><td>Sep 10</td><td style="text-align:right">1</td><td style="text-align:right">0</td><td style="text-align:right">&mdash;</td><td style="text-align:right">&mdash;</td></tr>
+      <tr><td>Sep 12</td><td style="text-align:right">2</td><td style="text-align:right">3</td><td style="text-align:right">&mdash;</td><td style="text-align:right">&mdash;</td></tr>
+      <tr><td>Sep 13</td><td style="text-align:right">6</td><td style="text-align:right">0</td><td style="text-align:right">&mdash;</td><td style="text-align:right">&mdash;</td></tr>
+      <tr><td>Sep 14</td><td style="text-align:right">10</td><td style="text-align:right">0</td><td style="text-align:right">&mdash;</td><td style="text-align:right">&mdash;</td></tr>
+      <tr><td>Sep 15</td><td style="text-align:right">4</td><td style="text-align:right">34</td><td style="text-align:right">50</td><td style="text-align:right">0</td></tr>
+      <tr><td>Sep 16</td><td style="text-align:right">6</td><td style="text-align:right">0</td><td style="text-align:right">1</td><td style="text-align:right">0</td></tr>
+      <tr><td>Sep 17 (today)</td><td style="text-align:right">0</td><td style="text-align:right">1</td><td style="text-align:right">0</td><td style="text-align:right">0</td></tr>
+    </tbody>
+  </table>
+
+  <div class="good-box">
+    <p><strong>Yes &mdash; both programs are actively sending right now.</strong> Denmark/EU sent as recently as today; the US program sent within the last 2 days. The Sep 15 spike (34 DK reminders, 50 US requests) is the two programs catching up on a backlog rather than a one-off blip &mdash; the US number in particular is the campaign's very first day of sending, reaching most of the customers who were already eligible.</p>
+    <p><strong>Day-to-day volume is naturally small and uneven</strong> at this stage &mdash; a handful of orders per day, some days with none &mdash; simply because order volume on both stores is modest and requests only go out a few days after each order ships.</p>
+  </div>
+
+  <!-- REVIEWS -->
+  <h2 id="s5">5. Reviews Received</h2>
+  <p style="margin-bottom:14px;">6 reviews received in total across both storefronts since tracking began.</p>
+
+  <table>
+    <thead>
+      <tr><th>Store</th><th>Rating</th><th>Date</th><th>Note</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Denmark/EU</td><td><span class="r5">5★</span></td><td>Aug 28, 2026</td><td>Praised product range and quality</td></tr>
+      <tr><td>Denmark/EU</td><td>4★</td><td>Aug 28, 2026</td><td>Positive overall, one caveat about buying second-hand rather than direct</td></tr>
+      <tr><td>Denmark/EU</td><td>4★</td><td>Aug 28, 2026</td><td>Repeat customer praising service, easy shopping and fast delivery</td></tr>
+      <tr><td>Denmark/EU</td><td>3★</td><td>Sep 2, 2026</td><td>Mixed &mdash; liked the product, unhappy with stock availability and a wrong item in a follow-up order</td></tr>
+      <tr><td>US</td><td>4★</td><td>Sep 4, 2026</td><td>Positive</td></tr>
+      <tr><td>US</td><td><span class="r2">2★</span></td><td>Sep 4, 2026</td><td>Liked the product but frustrated with self-assembly and slow customer service response</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn-box">
+    <p><strong>Both US reviews (Sep 4) came in before the US Review Campaign had sent a single email (first send: Sep 15).</strong> They were not prompted by this program &mdash; the customers reviewed on their own. The same is true for most of the Denmark/EU reviews: we can only confidently trace 1 of the 6 reviews back to a specific order that received a request; the other 5 don't carry enough information to link them to a request with certainty.</p>
+    <p><strong>Practical effect on the 4.8% review rate above:</strong> treat it as a rough, early-stage signal rather than a precise conversion rate &mdash; the sample is very small (6 reviews) and most of those reviews can't be confirmed as coming from the request emails at all.</p>
+  </div>
+
+  <!-- ORDER COVERAGE -->
+  <h2 id="s6">6. Are New Orders Being Reached?</h2>
+  <p style="margin-bottom:14px;">A straight last-60-days count is misleading here, since Denmark/EU only started sending Aug 25 and the US only started Sep 15 &mdash; most of that window is "before the program existed" for one or both stores. Instead, this section looks only at orders that shipped <em>after</em> each campaign went live, and old enough since shipping to have realistically had a chance to receive a request, to answer the question that actually matters: is the system keeping up with new orders right now?</p>
+
+  <h3>Denmark/EU &mdash; orders shipped since launch (Aug 25 &ndash; Sep 14)</h3>
+  <table>
+    <thead>
+      <tr><th>Shipped</th><th style="text-align:right">Eligible Orders*</th><th style="text-align:right">Received a Request</th><th style="text-align:right">Coverage</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Sep 11&ndash;14 (most recent, 3&ndash;6 days since shipping)</td><td style="text-align:right">11</td><td style="text-align:right">10</td><td style="text-align:right">91%</td></tr>
+      <tr><td>Aug 25&ndash;Sep 10 (7&ndash;23 days since shipping)</td><td style="text-align:right">48</td><td style="text-align:right">25</td><td style="text-align:right">52%</td></tr>
+      <tr class="row-total"><td>TOTAL since launch</td><td style="text-align:right">59</td><td style="text-align:right">35</td><td style="text-align:right">59%</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-bottom:14px;font-size:12px;color:#888;">*Excludes orders from customers who have ever filed a support ticket (permanently ineligible under current list rules &mdash; 10 further orders in this window fall in that category, separate from the gap below).</p>
+
+  <div class="good-box">
+    <p><strong>Yes &mdash; new Denmark/EU orders are currently being reached.</strong> Of the most recently shipped, already-matured orders (Sep 11&ndash;14), 10 of 11 (91%) have already received a request. That's the clearest read on whether the system is keeping up right now.</p>
+  </div>
+
+  <div class="warn-box">
+    <p><strong>The lower 52% figure for the Aug 25&ndash;Sep 10 orders is almost entirely one specific, now-understood cause, not a spread-out problem.</strong> 22 of the 24 unreached orders in that window are older orders (placed weeks to months earlier) whose shipping information was only added or confirmed on Sep 8, all at once, in a single batch. That batch wasn't picked up correctly: 9+ days later, 20 of those 22 orders still haven't received a review request, compared to normally-shipped orders reaching customers within days. We've flagged this specific batch so it can be corrected, and to prevent it recurring for future batches.</p>
+  </div>
+
+  <h3>US &mdash; orders shipped since launch (Sep 15 &ndash; today)</h3>
+  <div class="info-box">
+    <p><strong>Too early to measure yet.</strong> The US campaign only started sending Sep 15, two days before this report, and (as in Section 2) a shipped order needs a few days to become eligible for a request. Only 1 order has shipped since launch, and it isn't old enough yet to be due &mdash; so there isn't a meaningful sample of new post-launch orders to check. The 51 requests sent on day one were a one-time catch-up covering existing older orders that had shipped before the campaign was turned on, not new post-launch volume.</p>
+    <p><strong>Recommend re-checking this specific question in the next report</strong>, once enough new US orders have shipped and had time to mature.</p>
+  </div>
+
+  <div class="warn-box">
+    <p><strong>Separately, a data-quality gap affects both stores going forward:</strong> looking at the last 60 days overall, 25 Denmark/EU orders (15%) and 7 US orders (21%) are missing the shipment-date information the system needs to know when a customer becomes eligible for a request at all. These orders won't receive a request under the current setup, regardless of how much time passes, unless that data gap is fixed at the source &mdash; see Section 7.</p>
+  </div>
+
+  <!-- ISSUES -->
+  <h2 id="s7">7. Issues Found</h2>
+  <ul class="action-list">
+    <li>
+      <div class="al-icon">🔴</div>
+      <div class="al-text"><strong>A batch of older orders had their shipping information added later, and wasn't picked up correctly.</strong> We traced 22 Denmark/EU orders, placed weeks to months earlier, whose shipping details were only added on Sep 8. 9+ days later, 20 of those 22 still haven't received a review request, versus normally-shipped orders reaching customers within days. See Section 6 for detail &mdash; this is the most concrete, fixable issue found in this review.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>15&ndash;21% of recent orders on both stores are missing shipping-date information</strong> and can never receive a review request as a result, no matter how much time passes. Worth checking with whoever manages order data on both storefronts.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>Any customer who has ever filed a support ticket is permanently excluded from review requests</strong>, even if the issue was minor and fully resolved. This is a deliberate design choice, but it steadily shrinks the reachable customer base over time &mdash; worth revisiting if increasing review volume is a priority.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>The US Support Follow-up Campaign has never been turned on.</strong> Turning it on would add another source of review requests for the US store.</div>
+    </li>
+    <li>
+      <div class="al-icon">🔵</div>
+      <div class="al-text"><strong>Denmark/EU's Support Follow-up Campaign hasn't sent anything since Aug 25 &mdash; but we checked, and this is working as intended, not a bug.</strong> Its list only ever had 2 qualifying customers (both a positively-rated, closed support case), both were correctly requested and later cycled off the list once served. There simply haven't been any new customers matching that criteria on the Denmark/EU side since Aug 5. No action needed; it will resume automatically the next time a support case closes with a positive rating.</div>
+    </li>
+    <li>
+      <div class="al-icon">🔵</div>
+      <div class="al-text"><strong>A small number of sends can't currently be confirmed:</strong> 8 of 146 Denmark/EU sends (5.5%) and 1 of 51 US sends (2%) &mdash; see Section 3 for detail. This doesn't affect the delivery rates reported here, which are based only on confirmed sends. We're monitoring and will follow up if it continues.</div>
+    </li>
+  </ul>
+
+  <!-- WHY LOW -->
+  <h2 id="s8">8. Why Review Volume Is Currently Low</h2>
+  <div class="insight-box">
+    <p><strong>Both programs are genuinely new</strong> &mdash; Denmark/EU started less than 4 weeks ago, the US store only 2 days before this report. Reviews typically take days to weeks to arrive after a request goes out, so a small count so far is expected on timing alone.</p>
+    <p><strong>The recipient lists feeding both Main Review Campaigns are currently small</strong> (39 qualifying customers in Denmark/EU, 4 in the US) &mdash; requests can only go to whoever is on the list at a given time, and the list refills gradually as new orders age past the shipping-plus-a-few-days mark.</p>
+    <p><strong>On top of that, the issues in Section 7 are actively suppressing volume</strong>: the shipping-date backfill issue that's currently blocking 20 known Denmark/EU orders, a meaningful share of orders that can never be reached due to missing shipping data, and a permanent exclusion rule that grows over time. Fixing those would meaningfully increase how many customers are asked for a review, independent of how long the programs have been running. (Denmark/EU's Support Follow-up Campaign, by contrast, is not a factor here &mdash; it's simply waiting on a support-side event that hasn't recurred yet.)</p>
+  </div>
+
+  <!-- NEXT STEPS -->
+  <h2 id="s9">9. Recommended Next Steps</h2>
+  <ul class="action-list">
+    <li><div class="al-icon">1.</div><div class="al-text">Fix the Sep 8 batch issue and send review requests to the 20 known-affected Denmark/EU orders, and check that future batches of older orders don't hit the same gap.</div></li>
+    <li><div class="al-icon">2.</div><div class="al-text">Check why 15&ndash;21% of recent orders are missing shipping-date information, and fix at the source if possible &mdash; this is the second-biggest lever on reach.</div></li>
+    <li><div class="al-icon">3.</div><div class="al-text">Decide whether the "any past support ticket, forever" exclusion rule should be softened (e.g. only exclude recent or unresolved tickets) to keep more customers eligible over time.</div></li>
+    <li><div class="al-icon">4.</div><div class="al-text">Consider switching on the US Support Follow-up Campaign to add volume.</div></li>
+    <li><div class="al-icon">5.</div><div class="al-text">Re-check this report's numbers again in 2&ndash;4 weeks once both programs have more history &mdash; particularly the US store, which is only 2 days into sending. No action needed on the Denmark/EU Support Follow-up Campaign itself &mdash; just monitor.</div></li>
+  </ul>
+
+</div>
+</body>
+</html>
