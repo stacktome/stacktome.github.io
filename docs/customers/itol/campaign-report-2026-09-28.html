@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITOL Recruit Campaign Performance Report — Sep 21–27, 2026</title><style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #1a1a2e; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .stars { color: #fdcb6e; }
+  .delta-up { color: #00b894; font-size: 11px; }
+  .delta-flat { color: #888; font-size: 11px; }
+  .delta-down { color: #d63031; font-size: 11px; }
+
+  .total-row td { background: #f0f0f0 !important; font-weight: 600; }
+
+  .campaign-block { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 16px; overflow: hidden; }
+  .camp-header { background: #1a1a2e; color: #fff; padding: 10px 16px; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 10px; }
+  .camp-header .badge { background: #6c5ce7; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
+  .camp-header .badge-gold { background: #fdcb6e; color: #5d4037; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .camp-header .badge-blue { background: #0984e3; color: #fff; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .camp-header .badge-red { background: #d63031; color: #fff; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .review-card { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; }
+  .review-card:last-child { border-bottom: none; }
+  .review-card.urgent { background: #fff6f6; border-left: 4px solid #d63031; }
+  .review-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+  .rating-badge { font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 8px; }
+  .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff3e0; color: #e17055; }
+  .r3 { background: #fffde0; color: #b8860b; }
+  .r4 { background: #eaf4fb; color: #2980b9; }
+  .r5 { background: #e8f8f5; color: #00b894; }
+  .review-heading { font-weight: 600; color: #1a1a2e; margin-bottom: 5px; font-size: 13px; }
+  .review-text { font-style: italic; color: #555; line-height: 1.6; font-size: 13px; }
+  .review-meta-line { font-size: 11px; color: #888; margin-bottom: 6px; }
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-warn { display: inline-block; background: #fff3e0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #e17055; font-weight: 600; }
+  .tag-urgent { display: inline-block; background: #ffeaea; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #d63031; font-weight: 700; }
+  .tag-ok { display: inline-block; background: #e8f8f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #00b894; }
+  .name-tag { display: inline-block; background: #6c5ce7; color: #fff; border-radius: 4px; padding: 2px 8px; font-size: 11px; }
+
+  .all-clear { background: #e8f8f5; border: 1.5px solid #00b894; border-radius: 10px; padding: 20px 22px; color: #00b894; font-weight: 600; font-size: 14px; }
+  .success-banner { background: #e8f8f5; border: 2px solid #00b894; border-radius: 10px; padding: 18px 22px; margin-bottom: 16px; }
+  .success-banner .sb-title { color: #00b894; font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+  .warning { background: #fff9e6; border: 1.5px solid #fdcb6e; border-radius: 10px; padding: 16px 20px; color: #5d4037; font-size: 13px; line-height: 1.6; margin-bottom: 12px; }
+  .alert { background: #fff6f6; border: 2px solid #d63031; border-radius: 10px; padding: 16px 20px; color: #7a1f1f; font-size: 13px; line-height: 1.6; margin-bottom: 12px; }
+  .info-box { background: #f0f4ff; border: 1.5px solid #a0b4e8; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #2c3e6e; line-height: 1.6; }
+  .note { font-size: 12px; color: #888; margin-top: 4px; }
+
+  .staff-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .staff-chip { background: #f0edff; color: #6c5ce7; border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 600; }
+  .staff-chip-role { font-weight: 400; color: #888; font-size: 11px; margin-left: 4px; }
+  .organic-chip { background: #f0f0f0; color: #636e72; border-radius: 20px; padding: 4px 14px; font-size: 12px; }
+
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+</style></head><body><div class="wrapper">
+<h1>ITOL Recruit &mdash; Campaign Performance Report</h1>
+<div class="subtitle">Review invite analysis &nbsp;&bull;&nbsp; Sep 21&ndash;27, 2026 &nbsp;&bull;&nbsp; Generated 2026-09-28</div>
+<nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #6c5ce7;font-size:14px;line-height:2;">
+<strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+<a href="#s1">1. Executive Summary</a> &nbsp;&bull;&nbsp; <a href="#s2">2. Campaign Performance</a> &nbsp;&bull;&nbsp; <a href="#s3">3. Campaign Breakdown</a> &nbsp;&bull;&nbsp; <a href="#s4">4. All Reviews</a> &nbsp;&bull;&nbsp; <a href="#s5">5. Staff Mentions</a> &nbsp;&bull;&nbsp; <a href="#s6">6. Action Items</a></nav>
+<h2 id="s1">1. Executive Summary</h2>
+<div class="kpi-grid">
+<div class="kpi"><div class="label">Unique Invites</div><div class="value">119</div><div class="sub">down 31.2% vs Sep 14&ndash;20 (173)</div></div>
+<div class="kpi"><div class="label">Attributed Reviews</div><div class="value">13</div><div class="sub">16 total, including 3 organic; prior: 23 attributed</div></div>
+<div class="kpi"><div class="label">Review Rate</div><div class="value">10.92%</div><div class="sub">13 attributed / 119 invites; down 2.37 points</div></div>
+<div class="kpi"><div class="label">Avg Order Rating</div><div class="value">4.31★</div><div class="sub">all 16 reviews; 2 rated 1★</div></div></div>
+<p class="note">The comparison week (Sep 14&ndash;20) was recomputed from the live notebook: 173 invites, 353 unique reminders, 24 reviews (23 attributed), and a 13.29% review rate.</p>
+<div class="warning"><strong>Provisional review totals.</strong> The customer-review Delta table's newest partition and review timestamp are both Sep 26. Sep 27 has 8 reminder events but no review partition yet; Sunday reviews may arrive later. The 16 reviews, 10.92% review rate, and 4.31★ rating therefore describe data available at generation, not a confirmed complete seven-day review count. Invites have been counted through Sep 27.</div>
+<div class="alert"><strong>Two 1★ reviews need attention.</strong> One attributed reviewer reports an outstanding deposit refund after cancellation. An anonymous organic reviewer describes serious distress and dissatisfaction with course and recruitment support; the reporting data has no order ID or contact details for that review. Both should be reviewed promptly through the appropriate customer-facing channels.</div>
+<div class="info-box"><strong>Email engagement:</strong> 220 API-reported sends, 151 unique opens (68.6%), 20 unique clicks (9.1%), and no unsubscribes. Zeppelin records 119 unique invite orders plus 102 unique reminder orders = 221 deduplicated sends. The one-send difference is Exam Pass v2 (2 Zeppelin sends, 1 API send). Raw event rows are higher because some reminders and invites repeat for an order; the report does not treat duplicate rows as additional unique sends.</div>
+<h2 id="s2">2. Campaign Performance</h2>
+<table><thead><tr><th>Campaign</th><th>ID</th><th>Invites</th><th>Reminders</th><th>API Sent</th><th>Open</th><th>Click</th><th>Reviews</th><th>Review Rate</th><th>Avg</th></tr></thead><tbody>
+<tr><td>Welcome Call/Setup Campaign</td><td>646</td><td>57</td><td>54</td><td>111</td><td>72.1%</td><td>6.3%</td><td>1</td><td>1.8%</td><td>5.00★</td></tr>
+<tr><td>Hubspot (Main) Invite TP Campaign</td><td>624</td><td>32</td><td>27</td><td>59</td><td>67.8%</td><td>10.2%</td><td>5</td><td>15.6%</td><td>4.00★</td></tr>
+<tr><td>Support Campaign</td><td>647</td><td>18</td><td>14</td><td>32</td><td>62.5%</td><td>3.1%</td><td>1</td><td>5.6%</td><td>5.00★</td></tr>
+<tr><td>Completion/Closure Campaign</td><td>651</td><td>4</td><td>3</td><td>7</td><td>71.4%</td><td>42.9%</td><td>2</td><td>50.0%</td><td>5.00★</td></tr>
+<tr><td>Job Placement / Successful Employment Campaign</td><td>700</td><td>3</td><td>2</td><td>5</td><td>20.0%</td><td>20.0%</td><td>1</td><td>33.3%</td><td>5.00★</td></tr>
+<tr><td>General Recruitment Support Campaign</td><td>701</td><td>2</td><td>1</td><td>3</td><td>100.0%</td><td>0.0%</td><td>0</td><td>0.0%</td><td>&mdash;</td></tr>
+<tr><td>Exam Pass v2 Campaign</td><td>649</td><td>1</td><td>1</td><td>1</td><td>0.0%</td><td>0.0%</td><td>0</td><td>0.0%</td><td>&mdash;</td></tr>
+<tr><td>Exam Pass v1 Campaign</td><td>648</td><td>1</td><td>0</td><td>1</td><td>100.0%</td><td>100.0%</td><td>1</td><td>100.0%</td><td>4.00★</td></tr>
+<tr><td>Assignment Completion Campaign (HR/CIPD)</td><td>650</td><td>1</td><td>0</td><td>1</td><td>100.0%</td><td>100.0%</td><td>1</td><td>100.0%</td><td>5.00★</td></tr>
+<tr><td>From Invite TP Campaign</td><td>633</td><td>0</td><td>0</td><td>0</td><td>&mdash;</td><td>&mdash;</td><td>1</td><td>&mdash;</td><td>4.00★</td></tr>
+<tr class="total-row"><td>Total</td><td></td><td>119</td><td>102</td><td>220</td><td>68.6%</td><td>9.1%</td><td>13</td><td>10.92%</td><td>4.46★</td></tr></tbody></table>
+<p class="note">Invites and reminders are distinct order IDs per send type in Zeppelin; API Sent and engagement rates use the API's own daily buckets. The total-row 4.46★ is the attributed-review average; the all-review average is 4.31★. Review rate uses attributed reviews divided by this week's invites, including reviews from older invite cohorts. Campaign 633 had no sends this week but earned one review from an earlier invite, so it has no weekly rate. Campaigns 698, 699, and 710 had no sends or reviews and are omitted from the table. Campaign 607 sent 12 <code>response</code> emails and is excluded.</p>
+<h2 id="s3">3. Campaign Breakdown</h2>
+<div class="campaign-block"><div class="camp-header">Welcome Call/Setup (646)</div><div class="review-card">57 invites and 54 unique reminders produced one 5★ review this week. It remains the largest invite source (48% of all unique invites). The 1.8% weekly review rate is below the account's 10.92%, though reviews from recent invites can land in later weeks. API open rate: 72.1%; click rate: 6.3%.</div></div>
+<div class="campaign-block"><div class="camp-header">Hubspot Main Invite (624)</div><div class="review-card">32 invites, 27 reminders, and five attributed reviews (15.6% rate). Four reviews are positive or mixed; the 1★ deposit-refund complaint lowers the campaign's average to 4.00★. API open rate: 67.8%; click rate: 10.2%.</div></div>
+<div class="campaign-block"><div class="camp-header">Support (647)</div><div class="review-card">18 invites, 14 unique reminders, and one 5★ review. The API shows 32 sends, 62.5% opens, and 3.1% clicks. The raw event log contains repeated order touches, so unique-order counts are shown above.</div></div>
+<div class="campaign-block"><div class="camp-header">Other campaign activity</div><div class="review-card">Completion/Closure (651) earned two 5★ reviews from four invites; Job Placement (700), Exam Pass v1 (648), and Assignment Completion (650) each earned one review. These campaigns have small weekly invite denominators, so their rates should not be read as stable conversion benchmarks. From Invite TP (633) earned one 4★ review from an older invite despite no sends this week. Exam Pass v2 (649) and General Recruitment Support (701) sent invites but earned no review in the available data.</div></div>
+<h2 id="s4">4. All Reviews &mdash; Sep 21&ndash;27, 2026</h2>
+<p class="note">The 16 review cards below paraphrase customer text, omit customer email addresses, and reflect reviews ingested through Sep 26. Three reviews have no invite match and are shown as organic.</p>
+<h3>Campaign 624</h3>
+<div class="review-card urgent"><div class="review-meta"><span class="rating-badge r1">1★</span><strong>Shondenae Woods-Bell</strong><span class="tag">Campaign 624</span><span class="tag">Sep 22</span></div><div class="review-heading">Very misleading company</div><div class="review-text">Says a deposit refund expected within a 14-day cancellation period has not been received. This needs prompt account review and direct follow-up.</div></div>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><strong>Abdelmunim Abbas</strong><span class="tag">Campaign 624</span><span class="tag">Sep 22</span></div><div class="review-heading">Outstanding services</div><div class="review-text">Thanks ITOL for its services and facilities.</div></div>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><strong>Simone Hogg</strong><span class="tag">Campaign 624</span><span class="tag">Sep 22</span></div><div class="review-heading">Great achievement</div><div class="review-text">Expresses thanks for the support and resulting achievement.</div></div>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r4">4★</span><strong>Rulle Turay</strong><span class="tag">Campaign 624</span><span class="tag">Sep 25</span></div><div class="review-heading">My first experience</div><div class="review-text">Praises the service provided by Tracey.</div></div>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><strong>Emilia Ifrim</strong><span class="tag">Campaign 624</span><span class="tag">Sep 26</span></div><div class="review-heading">Very quick callback</div><div class="review-text">Praises the prompt callback, help, and guidance.</div></div>
+<h3>Campaign 633</h3>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r4">4★</span><strong>Amelia Theis</strong><span class="tag">Campaign 633</span><span class="tag">Sep 21</span></div><div class="review-heading">Would recommend</div><div class="review-text">Recommends the project management course for its tutor support and online learning experience. The invite tied to this review predates this week.</div></div>
+<h3>Campaign 646</h3>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><strong>Joshua Shorte</strong><span class="tag">Campaign 646</span><span class="tag">Sep 25</span></div><div class="review-heading">Excellent customer service</div><div class="review-text">Praises friendly, clear assistance.</div></div>
+<h3>Campaign 647</h3>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><strong>Daniel Grant</strong><span class="tag">Campaign 647</span><span class="tag">Sep 24</span></div><div class="review-heading">Very informative</div><div class="review-text">Describes the experience as informative.</div></div>
+<h3>Campaign 648</h3>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r4">4★</span><strong>Jamil Tchamambe</strong><span class="tag">Campaign 648</span><span class="tag">Sep 25</span></div><div class="review-heading">So far a great experience</div><div class="review-text">Praises the team and tutors, while saying the price feels high and asking about a discount on future products.</div></div>
+<h3>Campaign 650</h3>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><strong>Itseoritse Metseagharun</strong><span class="tag">Campaign 650</span><span class="tag">Sep 25</span></div><div class="review-heading">Supportive</div><div class="review-text">Praises the time and encouragement given to learners.</div></div>
+<h3>Campaign 651</h3>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><strong>Adeel Ahmed</strong><span class="tag">Campaign 651</span><span class="tag">Sep 22</span></div><div class="review-heading">A great experience in Project Management</div><div class="review-text">Thanks trainer Debbie for her help and looks forward to working with the recruitment team.</div></div>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><strong>Naresh Yadav</strong><span class="tag">Campaign 651</span><span class="tag">Sep 24</span></div><div class="review-heading">Outstanding tutor support</div><div class="review-text">Praises clear, flexible course content, regular guidance from Ryan Holzhausen, and an extension that helped while balancing work and study.</div></div>
+<h3>Campaign 700</h3>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><strong>Roberta Boateng</strong><span class="tag">Campaign 700</span><span class="tag">Sep 25</span></div><div class="review-heading">Amazing experience</div><div class="review-text">Praises tutors and mentors for support from start to finish.</div></div>
+<h3>Organic</h3>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><strong>Anonymous</strong><span class="tag">Organic</span><span class="tag">Sep 21</span></div><div class="review-heading">Highly recommended</div><div class="review-text">Praises project management teaching and names Steve Crabbe, Ryan Holzhausen, and Barbara Crabbe for support.</div></div>
+<div class="review-card urgent"><div class="review-meta"><span class="rating-badge r1">1★</span><strong>Anonymous</strong><span class="tag">Organic</span><span class="tag">Sep 23</span></div><div class="review-heading">A total joke and shambles</div><div class="review-text">Describes disappointment with course value, tutor and recruitment support, and job search outcomes, along with serious personal distress. No order ID was present, so this review cannot be linked to a campaign or customer record from the reporting data.</div></div>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><strong>Anonymous</strong><span class="tag">Organic</span><span class="tag">Sep 24</span></div><div class="review-heading">Invaluable recruitment support</div><div class="review-text">Describes a nine-month job search that ended in a role and thanks Sonja for interview practice, CV and LinkedIn advice, and reassurance.</div></div>
+<h2 id="s5">5. Staff Mentions This Week</h2>
+<div class="staff-grid"><span class="staff-chip">Debbie <span class="staff-chip-role">trainer</span></span><span class="staff-chip">Ryan Holzhausen <span class="staff-chip-role">tutor, named twice</span></span><span class="staff-chip">Tracey <span class="staff-chip-role">service</span></span><span class="staff-chip">Steve Crabbe <span class="staff-chip-role">tutor</span></span><span class="staff-chip">Barbara Crabbe <span class="staff-chip-role">tutor</span></span><span class="staff-chip">Sonja <span class="staff-chip-role">recruitment support</span></span></div>
+<p>Staff mentions were positive. The anonymous review thanking Sonja also clarifies a potential expectation gap: the reviewer initially expected the recruitment team to find a job, then understood its role as helping with applications and interviews.</p>
+<h2 id="s6">6. Action Items</h2>
+<table><thead><tr><th>Priority</th><th>Action</th></tr></thead><tbody>
+<tr><td>Immediate</td><td>Review Shondenae Woods-Bell's reported cancellation and outstanding deposit refund. Confirm the policy, payment record, and next customer response; do not assume the refund status from the review alone.</td></tr>
+<tr><td>Immediate</td><td>Route the anonymous 1★ review to the account's review-management team for a careful response and, if the platform permits, a private contact path. The Zeppelin row has no order ID or email, so this report cannot identify the customer.</td></tr>
+<tr><td>This week</td><td>Check why Welcome Call/Setup converted one review from 57 invites this week and why invite volume fell from 173 to 119 versus Sep 14&ndash;20. Avoid attributing either change to a workflow issue until campaign timing and later-arriving reviews are checked.</td></tr>
+<tr><td>Next refresh</td><td>Re-run the Sep 27 review query when that partition lands; update the total-review count, rating, and review rates if needed. Recheck the one-send Exam Pass v2 API/Zeppelin difference.</td></tr>
+</tbody></table>
+<div class="footer">ITOL Recruit campaign report &mdash; Sep 21&ndash;27, 2026 &mdash; Generated 2026-09-28<br>Sources: Zeppelin notebook 2MN9W4ABP (customer_review and invite events) and StackTome campaign report API. Review data current only through Sep 26.</div>
+</div></body></html>
