@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>47 Skin — Onboarding Review Analysis | Sep 2025–Sep 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f9fa; color: #212529; }
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 40px 48px 36px; }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; gap: 12px; flex-wrap: wrap; }
+  .brand { font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; opacity: 0.6; }
+  .period-badge { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500; }
+  .header h1 { font-size: 32px; font-weight: 700; margin-bottom: 6px; }
+  .header-sub { font-size: 14px; opacity: 0.65; }
+  .container { max-width: 1020px; margin: 0 auto; padding: 32px 24px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-top: 3px solid #0f3460; }
+  .kpi.green  { border-top-color: #28a745; }
+  .kpi.amber  { border-top-color: #fd7e14; }
+  .kpi.red    { border-top-color: #dc3545; }
+  .kpi.blue   { border-top-color: #0d6efd; }
+  .kpi.purple { border-top-color: #6f42c1; }
+  .kpi.teal   { border-top-color: #20c997; }
+  .kpi-val   { font-size: 24px; font-weight: 700; color: #1a1a2e; line-height: 1; margin-bottom: 4px; }
+  .kpi-label { font-size: 10px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: #6c757d; }
+  .kpi-note  { font-size: 11px; color: #adb5bd; margin-top: 4px; }
+
+  .section { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 24px; overflow: hidden; }
+  .section-header { padding: 18px 24px 16px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .section-title { font-size: 15px; font-weight: 700; color: #1a1a2e; }
+  .section-sub { font-size: 12px; color: #6c757d; }
+  .section-body { padding: 20px 24px; }
+  h4.sub { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
+  .note { font-size: 12px; color: #6c757d; margin-top: 8px; line-height: 1.5; }
+
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 9px 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: #6c757d; border-bottom: 2px solid #f0f0f0; background: #fafafa; }
+  td { padding: 10px 12px; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafeff; }
+  .highlight-row td { background: #fff8e1; }
+
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-green  { background: #d4edda; color: #155724; }
+  .badge-amber  { background: #fff3cd; color: #856404; }
+  .badge-red    { background: #f8d7da; color: #721c24; }
+  .badge-blue   { background: #d0e8ff; color: #004085; }
+  .badge-gray   { background: #e9ecef; color: #495057; }
+  .badge-purple { background: #e9d8fd; color: #44337a; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .two-col > *, .three-col > * { min-width: 0; }
+
+  .rating-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; }
+  .rbl { width: 22px; text-align: right; font-size: 12px; font-weight: 700; color: #6c757d; }
+  .rbw { flex: 1; height: 8px; background: #f0f0f0; border-radius: 4px; overflow: hidden; }
+  .rbf { height: 8px; border-radius: 4px; }
+  .rbc { width: 32px; text-align: right; font-size: 12px; color: #6c757d; }
+  .fill-5 { background: #28a745; }
+  .fill-4 { background: #74c69d; }
+  .fill-3 { background: #fd7e14; }
+  .fill-2 { background: #e85d04; }
+  .fill-1 { background: #dc3545; }
+
+  .warn-box { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; font-size: 13px; color: #856404; line-height: 1.55; }
+  .info-box { background: #d0e8ff; border: 1px solid #90cdf4; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; font-size: 13px; color: #004085; line-height: 1.55; }
+  .ok-box   { background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; font-size: 13px; color: #155724; line-height: 1.55; }
+  .insight-box { background: #1a1a2e; color: #fff; border-radius: 10px; padding: 16px 20px; margin-bottom: 18px; }
+  .insight-box h4 { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.6; margin-bottom: 6px; }
+  .insight-box p { font-size: 14px; line-height: 1.6; }
+
+  .progress-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
+  .progress-row:last-child { border-bottom: none; }
+  .pl { width: 210px; font-size: 12px; color: #495057; flex-shrink: 0; }
+  .pw { flex: 1; height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden; }
+  .pf { height: 10px; border-radius: 5px; }
+  .pp { width: 76px; text-align: right; font-size: 12px; font-weight: 700; }
+
+  .metric-row { display: flex; gap: 0; border: 1px solid #f0f0f0; border-radius: 10px; overflow: hidden; margin-bottom: 14px; flex-wrap: wrap; }
+  .metric-cell { flex: 1; min-width: 110px; padding: 16px; text-align: center; border-right: 1px solid #f0f0f0; }
+  .metric-cell:last-child { border-right: none; }
+  .metric-val { font-size: 22px; font-weight: 800; color: #1a1a2e; }
+  .metric-label { font-size: 10px; color: #6c757d; font-weight: 600; text-transform: uppercase; margin-top: 3px; }
+
+  .window-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .window-cell { text-align: center; border-radius: 8px; padding: 12px 6px; }
+  .window-label { font-size: 10px; font-weight: 700; color: #6c757d; margin-bottom: 4px; }
+  .window-rate { font-size: 20px; font-weight: 800; }
+  .window-n { font-size: 10px; color: #6c757d; margin-top: 2px; }
+  .cell-hot { background: #f8d7da; }
+  .cell-warm { background: #fff3cd; }
+  .cell-ok { background: #d4edda; }
+
+  .action-list { list-style: none; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f5f5f5; font-size: 13px; line-height: 1.6; }
+  .action-list li:last-child { border-bottom: none; }
+  .action-num { width: 26px; height: 26px; background: #0f3460; color: #fff; border-radius: 50%; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .action-num.red { background: #dc3545; }
+  .action-num.amber { background: #fd7e14; }
+  .action-num.green { background: #28a745; }
+
+  .toc { margin: 0 0 24px; padding: 14px 20px; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-left: 3px solid #0f3460; font-size: 13px; line-height: 2; }
+  .toc strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: #888; }
+  .toc a { color: #444; text-decoration: none; margin-right: 18px; white-space: nowrap; }
+  .toc a:hover { color: #0f3460; text-decoration: underline; }
+  .chart-title { font-size: 12px; font-weight: 700; color: #495057; margin-bottom: 6px; }
+  svg .bar:hover path { opacity: .8; }
+  .footer { text-align: center; font-size: 12px; color: #adb5bd; padding: 8px 0 32px; }
+
+  @media (max-width: 860px) {
+    .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .window-grid { grid-template-columns: repeat(3, 1fr); }
+    .header { padding: 28px 16px; }
+    .container { padding: 20px 16px; }
+    .pl { width: 140px; }
+  }
+  @media (max-width: 520px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } .header h1 { font-size: 24px; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="brand">Stacktome · 47 Skin · Onboarding Analysis</div>
+    <div class="period-badge">Sep 29, 2025 – Sep 28, 2026 · 12 Months</div>
+  </div>
+  <h1>Review Performance &amp; Segmentation Analysis</h1>
+  <div class="header-sub">47 Skin + 47 Skin USA · Trustpilot service &amp; product reviews · Shopify order history · Gorgias tickets · Pre-campaign baseline</div>
+</div>
+
+<div class="container">
+
+  <nav class="toc">
+    <strong>Contents</strong>
+    <a href="#s1">1. Executive Summary</a><a href="#s2">2. Monthly Trend</a><a href="#s3">3. Positive vs Negative Themes</a>
+    <a href="#s4">4. Purchase Count</a><a href="#s5">5. Products</a><a href="#s6">6. UK vs US</a>
+    <a href="#s7">7. Support Tickets</a><a href="#s8">8. Other Segmentation</a><a href="#s9">9. Campaign Planning Insights</a><a href="#s10">10. Data Quality &amp; Method</a>
+  </nav>
+
+  <!-- KPI Bar -->
+  <div class="kpi-grid">
+    <div class="kpi blue"><div class="kpi-val">3,718</div><div class="kpi-label">Total Reviews</div><div class="kpi-note">service + product</div></div>
+    <div class="kpi amber"><div class="kpi-val">4.43★</div><div class="kpi-label">Avg Rating (all)</div><div class="kpi-note">service 4.56 · product 4.09</div></div>
+    <div class="kpi green"><div class="kpi-val">84.8%</div><div class="kpi-label">Positive (4–5★)</div><div class="kpi-note">3,153 reviews</div></div>
+    <div class="kpi red"><div class="kpi-val">11.4%</div><div class="kpi-label">Negative (1–2★)</div><div class="kpi-note">423 reviews</div></div>
+    <div class="kpi purple"><div class="kpi-val">4.45 → 4.70</div><div class="kpi-label">1st vs Repeat Buyer</div><div class="kpi-note">service reviews</div></div>
+    <div class="kpi teal"><div class="kpi-val">3.81 → 4.53</div><div class="kpi-label">1st vs Repeat Buyer</div><div class="kpi-note">product reviews</div></div>
+  </div>
+
+  <div class="insight-box">
+    <h4>Top Finding</h4>
+    <p>
+      <strong>First-time buyers are happy on arrival but disappointed at the 30-day mark.</strong>
+      Service reviews written within 7 days of the order score the same for first-time and repeat buyers
+      (<strong>4.73★ vs 4.79★</strong>, ~4% negative). Reviews written 31+ days after a first order fall to
+      <strong>4.14★ (service)</strong> and <strong>3.82★ (product, 25% negative)</strong>, while repeat buyers stay at ~4.5★.
+      The gap is about whether the product worked, not about delivery or service. It should shape which customers are asked for a review, and when.
+    </p>
+  </div>
+
+  <!-- 1. Executive summary -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <div class="section-title">1. Executive Summary</div>
+      <div class="section-sub">3,718 Trustpilot reviews · both profiles combined</div>
+    </div>
+    <div class="section-body">
+      <div class="metric-row">
+        <div class="metric-cell"><div class="metric-val">2,688</div><div class="metric-label">Service reviews</div></div>
+        <div class="metric-cell"><div class="metric-val">4.56★</div><div class="metric-label">Service avg</div></div>
+        <div class="metric-cell"><div class="metric-val">1,030</div><div class="metric-label">Product reviews</div></div>
+        <div class="metric-cell"><div class="metric-val">4.09★</div><div class="metric-label">Product avg</div></div>
+        <div class="metric-cell"><div class="metric-val">3.8%</div><div class="metric-label">Neutral (3★)</div></div>
+      </div>
+      <div class="two-col">
+        <div>
+          <h4 class="sub">Rating distribution — all 3,718 reviews</h4>
+          <div class="rating-bar-row"><div class="rbl">5★</div><div class="rbw"><div class="rbf fill-5" style="width:78.2%"></div></div><div class="rbc" style="width:88px">2,909 · 78.2%</div></div>
+<div class="rating-bar-row"><div class="rbl">4★</div><div class="rbw"><div class="rbf fill-4" style="width:6.6%"></div></div><div class="rbc" style="width:88px">244 · 6.6%</div></div>
+<div class="rating-bar-row"><div class="rbl">3★</div><div class="rbw"><div class="rbf fill-3" style="width:3.8%"></div></div><div class="rbc" style="width:88px">142 · 3.8%</div></div>
+<div class="rating-bar-row"><div class="rbl">2★</div><div class="rbw"><div class="rbf fill-2" style="width:2.8%"></div></div><div class="rbc" style="width:88px">103 · 2.8%</div></div>
+<div class="rating-bar-row"><div class="rbl">1★</div><div class="rbw"><div class="rbf fill-1" style="width:8.6%"></div></div><div class="rbc" style="width:88px">320 · 8.6%</div></div>
+          <p class="note">Positive = 4–5★ · Neutral = 3★ · Negative = 1–2★. No unrated reviews in the window.</p>
+          <h4 class="sub" style="margin-top:18px">Service vs product</h4>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Type</th><th>Reviews</th><th>Avg</th><th>Positive</th><th>Negative</th></tr></thead>
+            <tbody>
+              <tr><td>Service (company) reviews</td><td>2,688</td><td><span class="badge badge-green">4.56★</span></td><td>88.7%</td><td><span class="badge badge-amber">8.6%</span></td></tr>
+              <tr><td>Product reviews</td><td>1,030</td><td><span class="badge badge-amber">4.09★</span></td><td>74.8%</td><td><span class="badge badge-red">18.6%</span></td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div>
+          <h4 class="sub">Key findings for campaign segmentation</h4>
+          <ul class="action-list">
+            <li><div class="action-num green">1</div><div><strong>A strong baseline.</strong> 84.8% positive, 4.43★ overall. Service reviews average 4.56★. Product reviews average 4.09★ and carry most of the negative risk (18.6% negative).</div></li>
+            <li><div class="action-num red">2</div><div><strong>Purchase history is the strongest signal.</strong> Customers on their 6th+ order: 4.78★, 2–4% negative. First purchases: 4.45★ (service) / 3.81★ (product).</div></li>
+            <li><div class="action-num amber">3</div><div><strong>Timing matters as much as the segment.</strong> Reviews written 0–7 days after the order average 4.72–4.80★. After 30 days, efficacy complaints start ("didn't work", "made my skin worse").</div></li>
+            <li><div class="action-num amber">4</div><div><strong>Subscription friction</strong> appears in 24% of negative service reviews: unexpected auto-enrolment and difficulty cancelling.</div></li>
+            <li><div class="action-num">5</div><div><strong>The Trustpilot profile doesn't tell you the market.</strong> Most reviews on the "47 Skin USA" profile come from UK-store orders. Customers of the US store rate lower (4.25★ service), but it is a small sample.</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Monthly trend -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <div class="section-title">2. Monthly Trend</div>
+      <div class="section-sub">All reviews · hover a bar for the value</div>
+    </div>
+    <div class="section-body">
+      <div class="two-col" style="margin-bottom:18px">
+        <div><div class="chart-title">Reviews per month</div><svg viewBox="0 0 460 190" width="100%" role="img" aria-label="Reviews per month" style="display:block">
+<line x1="34" x2="456" y1="164.0" y2="164.0" stroke="#f0f0f0" stroke-width="1"/>
+<text x="28" y="167.0" font-size="9" fill="#adb5bd" text-anchor="end">0</text>
+<line x1="34" x2="456" y1="88.0" y2="88.0" stroke="#f0f0f0" stroke-width="1"/>
+<text x="28" y="91.0" font-size="9" fill="#adb5bd" text-anchor="end">250</text>
+<line x1="34" x2="456" y1="12.0" y2="12.0" stroke="#f0f0f0" stroke-width="1"/>
+<text x="28" y="15.0" font-size="9" fill="#adb5bd" text-anchor="end">500</text>
+<g class="bar"><rect x="37.0" y="12" width="26.2" height="152" fill="transparent"/><path d="M37.0,164 V161.0 Q37.0,157.0 41.0,157.0 H59.2 Q63.2,157.0 63.2,161.0 V164 Z" fill="#0f3460"/><title>Sep '25: 23</title></g>
+<text x="50.1" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Sep</text>
+<g class="bar"><rect x="69.2" y="12" width="26.2" height="152" fill="transparent"/><path d="M69.2,164 V101.4 Q69.2,97.4 73.2,97.4 H91.3 Q95.3,97.4 95.3,101.4 V164 Z" fill="#0f3460"/><title>Oct '25: 219</title></g>
+<text x="82.2" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Oct</text>
+<g class="bar"><rect x="101.3" y="12" width="26.2" height="152" fill="transparent"/><path d="M101.3,164 V57.3 Q101.3,53.3 105.3,53.3 H123.5 Q127.5,53.3 127.5,57.3 V164 Z" fill="#0f3460"/><title>Nov '25: 364</title></g>
+<text x="114.4" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Nov</text>
+<g class="bar"><rect x="133.5" y="12" width="26.2" height="152" fill="transparent"/><path d="M133.5,164 V35.2 Q133.5,31.2 137.5,31.2 H155.6 Q159.6,31.2 159.6,35.2 V164 Z" fill="#0f3460"/><title>Dec '25: 437</title></g>
+<text x="146.5" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Dec</text>
+<g class="bar"><rect x="165.6" y="12" width="26.2" height="152" fill="transparent"/><path d="M165.6,164 V32.7 Q165.6,28.7 169.6,28.7 H187.8 Q191.8,28.7 191.8,32.7 V164 Z" fill="#0f3460"/><title>Jan '26: 445</title></g>
+<text x="178.7" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Jan</text>
+<g class="bar"><rect x="197.8" y="12" width="26.2" height="152" fill="transparent"/><path d="M197.8,164 V69.5 Q197.8,65.5 201.8,65.5 H219.9 Q223.9,65.5 223.9,69.5 V164 Z" fill="#0f3460"/><title>Feb '26: 324</title></g>
+<text x="210.8" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Feb</text>
+<g class="bar"><rect x="229.9" y="12" width="26.2" height="152" fill="transparent"/><path d="M229.9,164 V83.8 Q229.9,79.8 233.9,79.8 H252.1 Q256.1,79.8 256.1,83.8 V164 Z" fill="#0f3460"/><title>Mar '26: 277</title></g>
+<text x="243.0" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Mar</text>
+<g class="bar"><rect x="262.1" y="12" width="26.2" height="152" fill="transparent"/><path d="M262.1,164 V75.9 Q262.1,71.9 266.1,71.9 H284.2 Q288.2,71.9 288.2,75.9 V164 Z" fill="#0f3460"/><title>Apr '26: 303</title></g>
+<text x="275.2" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Apr</text>
+<g class="bar"><rect x="294.2" y="12" width="26.2" height="152" fill="transparent"/><path d="M294.2,164 V71.0 Q294.2,67.0 298.2,67.0 H316.4 Q320.4,67.0 320.4,71.0 V164 Z" fill="#0f3460"/><title>May '26: 319</title></g>
+<text x="307.3" y="177" font-size="9" fill="#6c757d" text-anchor="middle">May</text>
+<g class="bar"><rect x="326.4" y="12" width="26.2" height="152" fill="transparent"/><path d="M326.4,164 V88.4 Q326.4,84.4 330.4,84.4 H348.5 Q352.5,84.4 352.5,88.4 V164 Z" fill="#0f3460"/><title>Jun '26: 262</title></g>
+<text x="339.5" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Jun</text>
+<g class="bar"><rect x="358.5" y="12" width="26.2" height="152" fill="transparent"/><path d="M358.5,164 V85.0 Q358.5,81.0 362.5,81.0 H380.7 Q384.7,81.0 384.7,85.0 V164 Z" fill="#0f3460"/><title>Jul '26: 273</title></g>
+<text x="371.6" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Jul</text>
+<g class="bar"><rect x="390.7" y="12" width="26.2" height="152" fill="transparent"/><path d="M390.7,164 V86.2 Q390.7,82.2 394.7,82.2 H412.8 Q416.8,82.2 416.8,86.2 V164 Z" fill="#0f3460"/><title>Aug '26: 269</title></g>
+<text x="403.8" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Aug</text>
+<g class="bar"><rect x="422.8" y="12" width="26.2" height="152" fill="transparent"/><path d="M422.8,164 V106.3 Q422.8,102.3 426.8,102.3 H445.0 Q449.0,102.3 449.0,106.3 V164 Z" fill="#0f3460"/><title>Sep '26: 203</title></g>
+<text x="435.9" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Sep</text>
+<line x1="34" x2="456" y1="164" y2="164" stroke="#dee2e6" stroke-width="1"/>
+</svg></div>
+        <div><div class="chart-title">Negative share (1–2★) per month</div><svg viewBox="0 0 460 190" width="100%" role="img" aria-label="Negative share per month" style="display:block">
+<line x1="34" x2="456" y1="164.0" y2="164.0" stroke="#f0f0f0" stroke-width="1"/>
+<text x="28" y="167.0" font-size="9" fill="#adb5bd" text-anchor="end">0%</text>
+<line x1="34" x2="456" y1="88.0" y2="88.0" stroke="#f0f0f0" stroke-width="1"/>
+<text x="28" y="91.0" font-size="9" fill="#adb5bd" text-anchor="end">10%</text>
+<line x1="34" x2="456" y1="12.0" y2="12.0" stroke="#f0f0f0" stroke-width="1"/>
+<text x="28" y="15.0" font-size="9" fill="#adb5bd" text-anchor="end">20%</text>
+<g class="bar"><rect x="37.0" y="12" width="26.2" height="152" fill="transparent"/><path d="M37.0,164 V101.9 Q37.0,97.9 41.0,97.9 H59.2 Q63.2,97.9 63.2,101.9 V164 Z" fill="#dc3545"/><title>Sep '25: 9%</title></g>
+<text x="50.1" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Sep</text>
+<g class="bar"><rect x="69.2" y="12" width="26.2" height="152" fill="transparent"/><path d="M69.2,164 V25.7 Q69.2,21.7 73.2,21.7 H91.3 Q95.3,21.7 95.3,25.7 V164 Z" fill="#dc3545"/><title>Oct '25: 19%</title></g>
+<text x="82.2" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Oct</text>
+<g class="bar"><rect x="101.3" y="12" width="26.2" height="152" fill="transparent"/><path d="M101.3,164 V90.7 Q101.3,86.7 105.3,86.7 H123.5 Q127.5,86.7 127.5,90.7 V164 Z" fill="#dc3545"/><title>Nov '25: 10%</title></g>
+<text x="114.4" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Nov</text>
+<g class="bar"><rect x="133.5" y="12" width="26.2" height="152" fill="transparent"/><path d="M133.5,164 V89.7 Q133.5,85.7 137.5,85.7 H155.6 Q159.6,85.7 159.6,89.7 V164 Z" fill="#dc3545"/><title>Dec '25: 10%</title></g>
+<text x="146.5" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Dec</text>
+<g class="bar"><rect x="165.6" y="12" width="26.2" height="152" fill="transparent"/><path d="M165.6,164 V84.3 Q165.6,80.3 169.6,80.3 H187.8 Q191.8,80.3 191.8,84.3 V164 Z" fill="#dc3545"/><title>Jan '26: 11%</title></g>
+<text x="178.7" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Jan</text>
+<g class="bar"><rect x="197.8" y="12" width="26.2" height="152" fill="transparent"/><path d="M197.8,164 V78.9 Q197.8,74.9 201.8,74.9 H219.9 Q223.9,74.9 223.9,78.9 V164 Z" fill="#dc3545"/><title>Feb '26: 12%</title></g>
+<text x="210.8" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Feb</text>
+<g class="bar"><rect x="229.9" y="12" width="26.2" height="152" fill="transparent"/><path d="M229.9,164 V93.9 Q229.9,89.9 233.9,89.9 H252.1 Q256.1,89.9 256.1,93.9 V164 Z" fill="#dc3545"/><title>Mar '26: 10%</title></g>
+<text x="243.0" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Mar</text>
+<g class="bar"><rect x="262.1" y="12" width="26.2" height="152" fill="transparent"/><path d="M262.1,164 V87.7 Q262.1,83.7 266.1,83.7 H284.2 Q288.2,83.7 288.2,87.7 V164 Z" fill="#dc3545"/><title>Apr '26: 11%</title></g>
+<text x="275.2" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Apr</text>
+<g class="bar"><rect x="294.2" y="12" width="26.2" height="152" fill="transparent"/><path d="M294.2,164 V84.6 Q294.2,80.6 298.2,80.6 H316.4 Q320.4,80.6 320.4,84.6 V164 Z" fill="#dc3545"/><title>May '26: 11%</title></g>
+<text x="307.3" y="177" font-size="9" fill="#6c757d" text-anchor="middle">May</text>
+<g class="bar"><rect x="326.4" y="12" width="26.2" height="152" fill="transparent"/><path d="M326.4,164 V54.9 Q326.4,50.9 330.4,50.9 H348.5 Q352.5,50.9 352.5,54.9 V164 Z" fill="#dc3545"/><title>Jun '26: 15%</title></g>
+<text x="339.5" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Jun</text>
+<g class="bar"><rect x="358.5" y="12" width="26.2" height="152" fill="transparent"/><path d="M358.5,164 V87.3 Q358.5,83.3 362.5,83.3 H380.7 Q384.7,83.3 384.7,87.3 V164 Z" fill="#dc3545"/><title>Jul '26: 11%</title></g>
+<text x="371.6" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Jul</text>
+<g class="bar"><rect x="390.7" y="12" width="26.2" height="152" fill="transparent"/><path d="M390.7,164 V77.6 Q390.7,73.6 394.7,73.6 H412.8 Q416.8,73.6 416.8,77.6 V164 Z" fill="#dc3545"/><title>Aug '26: 12%</title></g>
+<text x="403.8" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Aug</text>
+<g class="bar"><rect x="422.8" y="12" width="26.2" height="152" fill="transparent"/><path d="M422.8,164 V104.4 Q422.8,100.4 426.8,100.4 H445.0 Q449.0,100.4 449.0,104.4 V164 Z" fill="#dc3545"/><title>Sep '26: 8%</title></g>
+<text x="435.9" y="177" font-size="9" fill="#6c757d" text-anchor="middle">Sep</text>
+<line x1="34" x2="456" y1="164" y2="164" stroke="#dee2e6" stroke-width="1"/>
+</svg></div>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Month</th><th>Reviews</th><th>Avg</th><th>Service · avg</th><th>Product · avg</th><th>Positive</th><th>Negative</th><th>5★/4★/3★/2★/1★</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Sep 2025*</strong></td><td>23</td><td><span class="badge badge-amber">4.43★</span></td><td>15 · 4.53★</td><td>8 · 4.25★</td><td>20 <span style="color:#6c757d">(87%)</span></td><td>2 <span style="color:#6c757d">(9%)</span></td><td style="font-size:11px;color:#6c757d;white-space:nowrap">17 / 3 / 1 / 0 / 2</td></tr><tr class="highlight-row"><td><strong>Oct 2025</strong></td><td>219</td><td><span class="badge badge-amber">4.11★</span></td><td>143 · 4.28★</td><td>76 · 3.80★</td><td>169 <span style="color:#6c757d">(77%)</span></td><td>41 <span style="color:#6c757d">(19%)</span></td><td style="font-size:11px;color:#6c757d;white-space:nowrap">150 / 19 / 9 / 7 / 34</td></tr><tr><td><strong>Nov 2025</strong></td><td>364</td><td><span class="badge badge-amber">4.46★</span></td><td>287 · 4.58★</td><td>77 · 4.00★</td><td>307 <span style="color:#6c757d">(84%)</span></td><td>37 <span style="color:#6c757d">(10%)</span></td><td style="font-size:11px;color:#6c757d;white-space:nowrap">287 / 20 / 20 / 11 / 26</td></tr><tr><td><strong>Dec 2025</strong></td><td>437</td><td><span class="badge badge-amber">4.46★</span></td><td>327 · 4.61★</td><td>110 · 3.99★</td><td>366 <span style="color:#6c757d">(84%)</span></td><td>45 <span style="color:#6c757d">(10%)</span></td><td style="font-size:11px;color:#6c757d;white-space:nowrap">350 / 16 / 26 / 10 / 35</td></tr><tr><td><strong>Jan 2026</strong></td><td>445</td><td><span class="badge badge-amber">4.46★</span></td><td>314 · 4.57★</td><td>131 · 4.18★</td><td>385 <span style="color:#6c757d">(87%)</span></td><td>49 <span style="color:#6c757d">(11%)</span></td><td style="font-size:11px;color:#6c757d;white-space:nowrap">350 / 35 / 11 / 11 / 38</td></tr><tr><td><strong>Feb 2026</strong></td><td>324</td><td><span class="badge badge-amber">4.43★</span></td><td>231 · 4.58★</td><td>93 · 4.04★</td><td>279 <span style="color:#6c757d">(86%)</span></td><td>38 <span style="color:#6c757d">(12%)</span></td><td style="font-size:11px;color:#6c757d;white-space:nowrap">255 / 24 / 7 / 5 / 33</td></tr><tr><td><strong>Mar 2026</strong></td><td>277</td><td><span class="badge badge-amber">4.50★</span></td><td>193 · 4.60★</td><td>84 · 4.27★</td><td>238 <span style="color:#6c757d">(86%)</span></td><td>27 <span style="color:#6c757d">(10%)</span></td><td style="font-size:11px;color:#6c757d;white-space:nowrap">224 / 14 / 12 / 7 / 20</td></tr><tr><td><strong>Apr 2026</strong></td><td>303</td><td><span class="badge badge-amber">4.47★</span></td><td>198 · 4.61★</td><td>105 · 4.21★</td><td>261 <span style="color:#6c757d">(86%)</span></td><td>32 <span style="color:#6c757d">(11%)</span></td><td style="font-size:11px;color:#6c757d;white-space:nowrap">241 / 20 / 10 / 8 / 24</td></tr><tr><td><strong>May 2026</strong></td><td>319</td><td><span class="badge badge-amber">4.45★</span></td><td>228 · 4.55★</td><td>91 · 4.20★</td><td>274 <span style="color:#6c757d">(86%)</span></td><td>35 <span style="color:#6c757d">(11%)</span></td><td style="font-size:11px;color:#6c757d;white-space:nowrap">252 / 22 / 10 / 7 / 28</td></tr><tr class="highlight-row"><td><strong>Jun 2026</strong></td><td>262</td><td><span class="badge badge-amber">4.32★</span></td><td>201 · 4.45★</td><td>61 · 3.90★</td><td>211 <span style="color:#6c757d">(81%)</span></td><td>39 <span style="color:#6c757d">(15%)</span></td><td style="font-size:11px;color:#6c757d;white-space:nowrap">199 / 12 / 12 / 15 / 24</td></tr><tr><td><strong>Jul 2026</strong></td><td>273</td><td><span class="badge badge-amber">4.42★</span></td><td>204 · 4.56★</td><td>69 · 3.99★</td><td>233 <span style="color:#6c757d">(85%)</span></td><td>29 <span style="color:#6c757d">(11%)</span></td><td style="font-size:11px;color:#6c757d;white-space:nowrap">203 / 30 / 11 / 9 / 20</td></tr><tr><td><strong>Aug 2026</strong></td><td>269</td><td><span class="badge badge-amber">4.46★</span></td><td>195 · 4.54★</td><td>74 · 4.24★</td><td>233 <span style="color:#6c757d">(87%)</span></td><td>32 <span style="color:#6c757d">(12%)</span></td><td style="font-size:11px;color:#6c757d;white-space:nowrap">217 / 16 / 4 / 7 / 25</td></tr><tr><td><strong>Sep 2026*</strong></td><td>203</td><td><span class="badge badge-green">4.54★</span></td><td>152 · 4.68★</td><td>51 · 4.14★</td><td>177 <span style="color:#6c757d">(87%)</span></td><td>17 <span style="color:#6c757d">(8%)</span></td><td style="font-size:11px;color:#6c757d;white-space:nowrap">164 / 13 / 9 / 6 / 11</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">* Partial months: Sep 2025 covers only Sep 29–30; Sep 2026 covers Sep 1–28. Review data is current through Sep 28, 2026.</p>
+      <div class="two-col" style="margin-top:14px">
+        <div class="warn-box" style="margin-bottom:0"><strong>Oct 2025 — weakest month (4.11★, 18.7% negative).</strong> Service reviews fell to 4.28★. Price/value complaints spiked (11 of 41 negatives, against 2–7 in other months).</div>
+        <div class="warn-box" style="margin-bottom:0"><strong>Jun 2026 — dip to 4.32★ (14.9% negative).</strong> Negatives were driven by first-time buyers (24 of 39) and had the highest US-store share (10). Jan 2026 had a separate spike in delivery complaints (15 of 49 negatives) after Christmas.</div>
+      </div>
+      <p class="note">Volume peaks Nov–Jan (Black Friday / Christmas, up to 445 reviews/month), then settles around 250–320/month. Service ratings hold at 4.45–4.68★ in every full month except Oct 2025 (4.28★).</p>
+    </div>
+  </div>
+
+  <!-- 3. Themes -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <div class="section-title">3. Positive vs Negative Review Themes</div>
+      <div class="section-sub">Keyword classification of review heading + text · a review can match several themes</div>
+    </div>
+    <div class="section-body">
+      <div class="two-col">
+        <div>
+          <h4 class="sub">1–2★ complaint themes</h4>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Theme</th><th>Service (231)</th><th>Product (192)</th></tr></thead>
+            <tbody>
+              <tr><td>Didn't work / no improvement</td><td>59 <span class="badge badge-red">26%</span></td><td>87 <span class="badge badge-red">45%</span></td></tr>
+              <tr><td>Skin got worse / breakout / reaction</td><td>68 <span class="badge badge-red">29%</span></td><td>54 <span class="badge badge-red">28%</span></td></tr>
+              <tr><td>Subscription — unwanted / can't cancel</td><td>55 <span class="badge badge-red">24%</span></td><td>4 <span class="badge badge-gray">2%</span></td></tr>
+              <tr><td>Delivery — late / lost / empty box</td><td>40 <span class="badge badge-amber">17%</span></td><td>8 <span class="badge badge-gray">4%</span></td></tr>
+              <tr><td>Price / value for money</td><td>21 <span class="badge badge-amber">9%</span></td><td>32 <span class="badge badge-amber">17%</span></td></tr>
+              <tr><td>Pump / packaging / consistency</td><td>21 <span class="badge badge-amber">9%</span></td><td>4 <span class="badge badge-gray">2%</span></td></tr>
+              <tr><td>Customer service — no reply / AI bot</td><td>20 <span class="badge badge-amber">9%</span></td><td>5 <span class="badge badge-gray">3%</span></td></tr>
+            </tbody>
+          </table></div>
+          <p class="note">Efficacy ("didn't work" + "made it worse") is the main negative driver for both review types. Subscription, delivery and customer-service complaints are almost entirely in service reviews.</p>
+        </div>
+        <div>
+          <h4 class="sub">4–5★ praise themes</h4>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Theme</th><th>Service (2,383)</th><th>Product (770)</th></tr></thead>
+            <tbody>
+              <tr><td>Results — clearer skin, acne/spots improved</td><td>995 <span class="badge badge-green">42%</span></td><td>424 <span class="badge badge-green">55%</span></td></tr>
+              <tr><td>Customer service / support praised</td><td>950 <span class="badge badge-green">40%</span></td><td>12 <span class="badge badge-gray">2%</span></td></tr>
+              <tr><td>Delivery / dispatch mentioned (mostly "quick", "on time")</td><td>979 <span class="badge badge-green">41%</span></td><td>34 <span class="badge badge-gray">4%</span></td></tr>
+              <tr><td>Long-term / repeat use</td><td>355 <span class="badge badge-blue">15%</span></td><td>74 <span class="badge badge-blue">10%</span></td></tr>
+              <tr><td>Texture, scent, how it feels</td><td>101 <span class="badge badge-blue">4%</span></td><td>86 <span class="badge badge-blue">11%</span></td></tr>
+              <tr><td>Scars / pigmentation</td><td>106 <span class="badge badge-blue">4%</span></td><td>34 <span class="badge badge-blue">4%</span></td></tr>
+            </tbody>
+          </table></div>
+          <p class="note">Positive service reviews are split between results and the buying experience (fast replies, named agents, quick delivery). Positive product reviews centre on visible results.</p>
+        </div>
+      </div>
+      <div class="info-box" style="margin-top:16px;margin-bottom:0">
+        <strong>Parents buying for teenagers:</strong> about 25% of all reviews mention a son, daughter, teen or grandchild. These reviews rate the same as the rest
+        (service 4.60★ vs 4.55★; product 4.00★ vs 4.12★), so this is useful for messaging but not a basis for segmentation.
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Purchase count -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <div class="section-title">4. Purchase Count Analysis</div>
+      <div class="section-sub">Purchase number of the reviewed order · full Shopify history since 2018, both stores</div>
+    </div>
+    <div class="section-body">
+      <div class="two-col">
+        <div>
+          <h4 class="sub">Service reviews</h4>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Purchase #</th><th>Reviews</th><th>Avg</th><th>Pos</th><th>Neg</th></tr></thead>
+            <tbody>
+              <tr class="highlight-row"><td><strong>1st purchase</strong></td><td>703</td><td><span class="badge badge-amber">4.45★</span></td><td>85.5%</td><td><span class="badge badge-amber">10.7%</span></td></tr>
+              <tr><td>2nd purchase</td><td>308</td><td><span class="badge badge-green">4.69★</span></td><td>92.5%</td><td><span class="badge badge-green">5.8%</span></td></tr>
+              <tr><td>3+ purchases</td><td>985</td><td><span class="badge badge-green">4.71★</span></td><td>92.6%</td><td><span class="badge badge-green">5.7%</span></td></tr>
+              <tr><td style="padding-left:24px;color:#6c757d">of which 3–5</td><td>480</td><td>4.63★</td><td>90.2%</td><td>7.3%</td></tr>
+              <tr><td style="padding-left:24px;color:#6c757d">of which 6+</td><td>505</td><td>4.78★</td><td>94.9%</td><td>4.2%</td></tr>
+              <tr><td style="color:#6c757d">Unknown (no customer ID)</td><td>692</td><td>4.41★</td><td>84.5%</td><td>11.8%</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div>
+          <h4 class="sub">Product reviews</h4>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Purchase #</th><th>Reviews</th><th>Avg</th><th>Pos</th><th>Neg</th></tr></thead>
+            <tbody>
+              <tr class="highlight-row"><td><strong>1st purchase</strong></td><td>481</td><td><span class="badge badge-red">3.81★</span></td><td>66.5%</td><td><span class="badge badge-red">24.7%</span></td></tr>
+              <tr><td>2nd purchase</td><td>92</td><td><span class="badge badge-amber">4.34★</span></td><td>81.5%</td><td><span class="badge badge-amber">12.0%</span></td></tr>
+              <tr><td>3+ purchases</td><td>409</td><td><span class="badge badge-green">4.58★</span></td><td>88.5%</td><td><span class="badge badge-green">7.3%</span></td></tr>
+              <tr><td style="padding-left:24px;color:#6c757d">of which 3–5</td><td>193</td><td>4.35★</td><td>81.9%</td><td>13.0%</td></tr>
+              <tr><td style="padding-left:24px;color:#6c757d">of which 6+</td><td>216</td><td>4.78★</td><td>94.4%</td><td>2.3%</td></tr>
+              <tr><td style="color:#6c757d">Unknown (no Shopify order)</td><td>48</td><td>2.29★</td><td>27.1%</td><td>66.7%</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <h4 class="sub" style="margin-top:22px">Does it depend on when the review is written? (order-matched reviews)</h4>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Review written</th><th>1st purchase</th><th>Repeat — non-subscriber</th><th>Repeat — subscriber</th></tr></thead>
+        <tbody>
+          <tr><td><strong>0–7 days</strong> after order (service)</td><td>4.73★ · 4.0% neg <span style="color:#adb5bd;font-size:11px">n=250</span></td><td>4.79★ · 3.6% neg <span style="color:#adb5bd;font-size:11px">n=247</span></td><td>4.71★ · 5.4% neg <span style="color:#adb5bd;font-size:11px">n=149</span></td></tr>
+          <tr><td>8–30 days (service)</td><td>4.18★ · 14.0% neg <span style="color:#adb5bd;font-size:11px">n=50</span></td><td>4.45★ · 10.0% neg <span style="color:#adb5bd;font-size:11px">n=40</span></td><td>4.45★ · 13.6% neg <span style="color:#adb5bd;font-size:11px">n=22</span></td></tr>
+          <tr class="highlight-row"><td><strong>31+ days</strong> (service)</td><td><strong>4.14★ · 18.0% neg</strong> <span style="color:#adb5bd;font-size:11px">n=211</span></td><td>4.59★ · 7.0% neg <span style="color:#adb5bd;font-size:11px">n=114</span></td><td>4.56★ · 9.2% neg <span style="color:#adb5bd;font-size:11px">n=98</span></td></tr>
+          <tr class="highlight-row"><td><strong>31+ days</strong> (product)</td><td><strong>3.82★ · 24.6% neg</strong> <span style="color:#adb5bd;font-size:11px">n=460</span></td><td>4.55★ · 7.4% neg <span style="color:#adb5bd;font-size:11px">n=284</span></td><td>4.48★ · 9.7% neg <span style="color:#adb5bd;font-size:11px">n=206</span></td></tr>
+        </tbody>
+      </table></div>
+      <div class="ok-box" style="margin-top:14px;margin-bottom:0">
+        <strong>Answer: yes, first-time buyers should be treated separately, but mainly for later, product/efficacy-focused asks.</strong>
+        In the first week they rate the same as loyal customers. The gap opens once they have used the product for a month.
+        Subscribers and non-subscriber repeat buyers rate almost the same (4.68★ vs 4.72★ service).
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Products -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <div class="section-title">5. Product Analysis</div>
+      <div class="section-sub">1,030 Trustpilot product reviews · product named on each review · grouped by product name</div>
+    </div>
+    <div class="section-body">
+      <div class="warn-box">
+        <strong>Two groups stand out as weak:</strong> <strong>Multi-step sets</strong> (3.43★, 37% negative, and still 3.81★ / 29% negative among repeat buyers)
+        and the <strong>trial-size Scar Repair Serum</strong> (3.79★, 26% negative). The trial size is almost entirely bought by first-timers (164 of 206 reviews);
+        repeat buyers who reviewed it rate 4.56★. The full-size serum shows the same first-time vs repeat split (3.73★ vs 4.57★).
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Product group</th><th>Reviews</th><th>Avg</th><th>Pos</th><th>Neg</th><th>1st-purchase buyers</th><th>Repeat buyers</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Scar Repair Serum — full size</strong></td><td>318</td><td><span class="badge badge-amber">4.17★</span></td><td>76%</td><td><span class="badge badge-red">17.6%</span></td><td style="font-size:12px">3.73★ · 27% neg <span style="color:#adb5bd;font-size:11px">n=111</span></td><td style="font-size:12px">4.57★ · 8% neg <span style="color:#adb5bd;font-size:11px">n=190</span></td></tr><tr class="highlight-row"><td><strong>Scar Repair Serum — trial size</strong></td><td>206</td><td><span class="badge badge-red">3.79★</span></td><td>67%</td><td><span class="badge badge-red">26.2%</span></td><td style="font-size:12px">3.72★ · 29% neg <span style="color:#adb5bd;font-size:11px">n=164</span></td><td style="font-size:12px">4.56★ · 3% neg <span style="color:#adb5bd;font-size:11px">n=32</span></td></tr><tr><td><strong>Masks (Silver / Blue Clay)</strong></td><td>79</td><td><span class="badge badge-amber">4.35★</span></td><td>82%</td><td><span class="badge badge-amber">11.4%</span></td><td style="font-size:12px">4.00★ · 18% neg <span style="color:#adb5bd;font-size:11px">n=40</span></td><td style="font-size:12px">4.76★ · 5% neg <span style="color:#adb5bd;font-size:11px">n=38</span></td></tr><tr><td><strong>2 Step Cleanse &amp; Protect — full</strong></td><td>70</td><td><span class="badge badge-amber">4.03★</span></td><td>70%</td><td><span class="badge badge-red">18.6%</span></td><td style="font-size:12px">3.97★ · 21% neg <span style="color:#adb5bd;font-size:11px">n=33</span></td><td style="font-size:12px">4.44★ · 6% neg <span style="color:#adb5bd;font-size:11px">n=32</span></td></tr><tr><td><strong>Everyday Cleanser — full size</strong></td><td>68</td><td><span class="badge badge-amber">4.25★</span></td><td>81%</td><td><span class="badge badge-amber">14.7%</span></td><td style="font-size:12px">3.45★ · 36% neg <span style="color:#adb5bd;font-size:11px">n=11</span></td><td style="font-size:12px">4.54★ · 7% neg <span style="color:#adb5bd;font-size:11px">n=54</span></td></tr><tr class="highlight-row"><td><strong>Multi-step sets (3/4/6-step, routines)</strong></td><td>60</td><td><span class="badge badge-red">3.43★</span></td><td>58%</td><td><span class="badge badge-red">36.7%</span></td><td style="font-size:12px">3.28★ · 39% neg <span style="color:#adb5bd;font-size:11px">n=36</span></td><td style="font-size:12px">3.81★ · 29% neg <span style="color:#adb5bd;font-size:11px">n=21</span></td></tr><tr><td><strong>Azelaic Acid Treatment Serum</strong></td><td>39</td><td><span class="badge badge-amber">4.31★</span></td><td>80%</td><td><span class="badge badge-amber">10.3%</span></td><td style="font-size:12px">4.38★ · 12% neg <span style="color:#adb5bd;font-size:11px">n=8</span> <span style="color:#adb5bd;font-size:11px">(n&lt;10)</span></td><td style="font-size:12px">4.40★ · 7% neg <span style="color:#adb5bd;font-size:11px">n=30</span></td></tr><tr><td><strong>Daily Moisturiser (face)</strong></td><td>35</td><td><span class="badge badge-amber">4.29★</span></td><td>83%</td><td><span class="badge badge-amber">11.4%</span></td><td style="font-size:12px">3.57★ · 14% neg <span style="color:#adb5bd;font-size:11px">n=7</span> <span style="color:#adb5bd;font-size:11px">(n&lt;10)</span></td><td style="font-size:12px">4.58★ · 8% neg <span style="color:#adb5bd;font-size:11px">n=26</span></td></tr><tr><td><strong>2 Step Cleanse &amp; Protect — trial</strong></td><td>34</td><td><span class="badge badge-amber">4.09★</span></td><td>74%</td><td><span class="badge badge-red">17.6%</span></td><td style="font-size:12px">4.29★ · 11% neg <span style="color:#adb5bd;font-size:11px">n=28</span></td><td style="font-size:12px">5.00★ · 0% neg <span style="color:#adb5bd;font-size:11px">n=3</span> <span style="color:#adb5bd;font-size:11px">(n&lt;10)</span></td></tr><tr><td><strong>Super Hydrating Elixir</strong> <span class="badge badge-gray">small n</span></td><td>28</td><td><span class="badge badge-amber">4.39★</span></td><td>86%</td><td><span class="badge badge-amber">10.7%</span></td><td style="font-size:12px">4.11★ · 22% neg <span style="color:#adb5bd;font-size:11px">n=9</span> <span style="color:#adb5bd;font-size:11px">(n&lt;10)</span></td><td style="font-size:12px">4.53★ · 5% neg <span style="color:#adb5bd;font-size:11px">n=19</span></td></tr><tr><td><strong>Daily SPF 30</strong> <span class="badge badge-gray">small n</span></td><td>25</td><td><span class="badge badge-green">4.56★</span></td><td>92%</td><td><span class="badge badge-amber">8.0%</span></td><td style="font-size:12px">4.17★ · 17% neg <span style="color:#adb5bd;font-size:11px">n=6</span> <span style="color:#adb5bd;font-size:11px">(n&lt;10)</span></td><td style="font-size:12px">4.68★ · 5% neg <span style="color:#adb5bd;font-size:11px">n=19</span></td></tr><tr><td><strong>Exfoliants (BHA / Exfoliating Treatment)</strong> <span class="badge badge-gray">small n</span></td><td>22</td><td><span class="badge badge-amber">4.18★</span></td><td>77%</td><td><span class="badge badge-red">18.2%</span></td><td style="font-size:12px">3.25★ · 25% neg <span style="color:#adb5bd;font-size:11px">n=4</span> <span style="color:#adb5bd;font-size:11px">(n&lt;10)</span></td><td style="font-size:12px">4.53★ · 12% neg <span style="color:#adb5bd;font-size:11px">n=17</span></td></tr><tr><td><strong>Body care (wash / moisturiser)</strong> <span class="badge badge-gray">small n</span></td><td>18</td><td><span class="badge badge-amber">4.17★</span></td><td>78%</td><td><span class="badge badge-red">16.7%</span></td><td style="font-size:12px">4.13★ · 12% neg <span style="color:#adb5bd;font-size:11px">n=8</span> <span style="color:#adb5bd;font-size:11px">(n&lt;10)</span></td><td style="font-size:12px">4.56★ · 11% neg <span style="color:#adb5bd;font-size:11px">n=9</span> <span style="color:#adb5bd;font-size:11px">(n&lt;10)</span></td></tr><tr><td><strong>Accessories &amp; gift bags</strong> <span class="badge badge-gray">small n</span></td><td>17</td><td><span class="badge badge-green">4.71★</span></td><td>94%</td><td><span class="badge badge-green">0.0%</span></td><td style="font-size:12px">4.69★ · 0% neg <span style="color:#adb5bd;font-size:11px">n=16</span></td><td style="font-size:12px">5.00★ · 0% neg <span style="color:#adb5bd;font-size:11px">n=1</span> <span style="color:#adb5bd;font-size:11px">(n&lt;10)</span></td></tr><tr><td><strong>Everyday Cleanser — trial size</strong> <span class="badge badge-gray">small n</span></td><td>10</td><td><span class="badge badge-amber">4.00★</span></td><td>70%</td><td><span class="badge badge-red">20.0%</span></td><td style="font-size:12px"><span style="color:#adb5bd">—</span></td><td style="font-size:12px">4.33★ · 11% neg <span style="color:#adb5bd;font-size:11px">n=9</span> <span style="color:#adb5bd;font-size:11px">(n&lt;10)</span></td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Strongest groups: Daily SPF 30 (4.56★), Masks (4.35★), Super Hydrating Elixir (4.39★, small n), Azelaic Acid Serum (4.31★).
+      Groups with fewer than 30 reviews are marked <span class="badge badge-gray">small n</span> and should be read as directional only.
+      One product review on an internal "TEST"-named listing is excluded from this table.
+      Service reviews are not split by product: most orders contain several items, so crediting a service review to one product would be unreliable.</p>
+    </div>
+  </div>
+
+  <!-- 6. Market -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <div class="section-title">6. Account / Market Comparison — 47 Skin (UK) vs 47 Skin USA</div>
+      <div class="section-sub">Market = the Shopify store the reviewed order came from</div>
+    </div>
+    <div class="section-body">
+      <div class="info-box">
+        <strong>The Trustpilot profile is not a reliable market indicator.</strong> Of 1,477 service reviews on the <em>47 Skin USA</em> profile, 1,021 match UK-store orders (GB, GBP) and only 85 match US-store orders.
+        The two profiles therefore look the same (both 4.56★ service). The comparison below uses the store each review's order was placed in.
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Store</th><th>Type</th><th>Reviews</th><th>Avg</th><th>5★</th><th>4★</th><th>3★</th><th>2★</th><th>1★</th><th>Pos</th><th>Neg</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="2"><strong>47 Skin (UK)</strong></td><td>Service</td><td>1,856</td><td><span class="badge badge-green">4.63★</span></td><td>85.0%</td><td>5.9%</td><td>2.2%</td><td>1.6%</td><td>5.4%</td><td>90.8%</td><td><span class="badge badge-green">7.0%</span></td></tr>
+          <tr><td>Product</td><td>901</td><td><span class="badge badge-amber">4.20★</span></td><td>68.8%</td><td>8.9%</td><td>6.4%</td><td>5.0%</td><td>10.9%</td><td>77.7%</td><td><span class="badge badge-red">15.9%</span></td></tr>
+          <tr><td rowspan="2"><strong>47 Skin USA</strong></td><td>Service</td><td>155</td><td><span class="badge badge-amber">4.25★</span></td><td>72.9%</td><td>5.2%</td><td>6.5%</td><td>4.5%</td><td>11.0%</td><td>78.1%</td><td><span class="badge badge-red">15.5%</span></td></tr>
+          <tr><td>Product</td><td>100</td><td><span class="badge badge-red">3.94★</span></td><td>66.0%</td><td>4.0%</td><td>8.0%</td><td>2.0%</td><td>20.0%</td><td>70.0%</td><td><span class="badge badge-red">22.0%</span></td></tr>
+          <tr><td rowspan="2" style="color:#6c757d">No order match</td><td>Service</td><td>677</td><td>4.43★</td><td>78.7%</td><td>6.4%</td><td>3.5%</td><td>1.9%</td><td>9.5%</td><td>85.1%</td><td>11.4%</td></tr>
+          <tr><td>Product</td><td>29</td><td>1.34★</td><td>0%</td><td>0%</td><td>6.9%</td><td>20.7%</td><td>72.4%</td><td>0%</td><td>93.1%</td></tr>
+        </tbody>
+      </table></div>
+      <div class="two-col" style="margin-top:18px">
+        <div>
+          <h4 class="sub">Same comparison, split by buyer type</h4>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Segment</th><th>UK store</th><th>US store</th></tr></thead>
+            <tbody>
+              <tr><td>Service · 1st purchase</td><td>4.49★ · 9.7% neg</td><td>4.08★ · 19.7% neg <span style="color:#adb5bd;font-size:11px">n=71</span></td></tr>
+              <tr><td>Service · repeat</td><td>4.72★ · 5.4% neg</td><td>4.38★ · 11.9% neg <span style="color:#adb5bd;font-size:11px">n=84</span></td></tr>
+              <tr><td>Product · 1st purchase</td><td>3.85★ · 23.6% neg</td><td>3.51★ · 33.3% neg <span style="color:#adb5bd;font-size:11px">n=57</span></td></tr>
+              <tr><td>Product · repeat</td><td>4.53★ · 8.3% neg</td><td>4.51★ · 7.0% neg <span style="color:#adb5bd;font-size:11px">n=43</span></td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div>
+          <h4 class="sub">Context: order volume in the window</h4>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Store</th><th>Orders</th><th>1st-ever orders</th><th>Matched reviews / 1,000 orders</th></tr></thead>
+            <tbody>
+              <tr><td>47 Skin (UK)</td><td>176,681</td><td>34%</td><td>15.6</td></tr>
+              <tr><td>47 Skin USA</td><td>29,578</td><td>60%</td><td>8.6</td></tr>
+            </tbody>
+          </table></div>
+          <p class="note">The US store is younger and mostly first-time buyers, which explains part of its lower rating. Among repeat buyers the US still rates lower on service reviews, but product ratings are the same.
+          "Reviews per 1,000 orders" counts organic reviews only (no invites were sent) and is <em>not</em> a review rate.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Tickets -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <div class="section-title">7. Customer Support / Ticket Analysis</div>
+      <div class="section-sub">Gorgias · matched by hashed customer email</div>
+    </div>
+    <div class="section-body">
+      <div class="warn-box">
+        <strong>This analysis can't be done reliably for the 12-month window.</strong> Gorgias ticket data is only available for
+        <strong>Jun 22 – Jul 5, 2026</strong> and <strong>Aug 17 – Sep 28, 2026</strong> (almost nothing between Jul 6 and Aug 16; nothing before June).
+        Only reviews whose 30-day lookback falls inside that coverage are compared below, so the result is directional.
+      </div>
+      <div class="metric-row">
+        <div class="metric-cell"><div class="metric-val">3,167</div><div class="metric-label">Customer-initiated tickets</div></div>
+        <div class="metric-cell"><div class="metric-val">2,395</div><div class="metric-label">Unique customers</div></div>
+        <div class="metric-cell"><div class="metric-val">281</div><div class="metric-label">Reviews in covered period</div></div>
+        <div class="metric-cell"><div class="metric-val">41</div><div class="metric-label">Had ticket 30d before review</div></div>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Group (all review types)</th><th>Reviews</th><th>Avg</th><th>Positive</th><th>Negative</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge badge-blue">Ticket in the 30 days before the review</span></td><td>41</td><td><span class="badge badge-green">4.63★</span></td><td>87.8%</td><td><span class="badge badge-green">7.3%</span></td></tr>
+          <tr><td><span class="badge badge-gray">No ticket in the 30 days before</span></td><td>240</td><td><span class="badge badge-amber">4.35★</span></td><td>83.3%</td><td><span class="badge badge-amber">13.3%</span></td></tr>
+          <tr><td style="color:#6c757d">Service reviews only: ticket / no ticket</td><td>39 / 147</td><td>4.62★ / 4.52★</td><td>87.2% / 88.4%</td><td>7.7% / 10.2%</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">In this limited sample, customers who contacted support before reviewing did <strong>not</strong> rate lower. That fits with how often positive reviews praise fast, named support agents (40% of positive service reviews).
+      Excluded from matching: agent-initiated tickets, internal notes, spam, trashed tickets and auto-replies. The Gorgias feed holds one helpdesk that serves both stores.</p>
+    </div>
+  </div>
+
+  <!-- 8. Other segmentation -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <div class="section-title">8. Other Useful Segmentation</div>
+      <div class="section-sub">Only segments with enough data to be meaningful</div>
+    </div>
+    <div class="section-body">
+      <h4 class="sub">Time from order to review — service reviews (order-matched, n=1,191)</h4>
+      <div class="window-grid" style="margin-bottom:10px">
+        <div class="window-cell cell-ok"><div class="window-label">0–3 days</div><div class="window-rate" style="color:#155724">4.80★</div><div class="window-n">225 · 3.1% neg</div></div>
+        <div class="window-cell cell-ok"><div class="window-label">4–7 days</div><div class="window-rate" style="color:#155724">4.72★</div><div class="window-n">422 · 4.7% neg</div></div>
+        <div class="window-cell cell-warm"><div class="window-label">8–14 days</div><div class="window-rate" style="color:#856404">4.38★</div><div class="window-n">55 · 12.7% neg</div></div>
+        <div class="window-cell cell-warm"><div class="window-label">15–30 days</div><div class="window-rate" style="color:#856404">4.28★</div><div class="window-n">57 · 12.3% neg</div></div>
+        <div class="window-cell cell-warm"><div class="window-label">31–60 days</div><div class="window-rate" style="color:#856404">4.39★</div><div class="window-n">388 · 12.1% neg</div></div>
+        <div class="window-cell cell-hot"><div class="window-label">61+ days</div><div class="window-rate" style="color:#721c24">3.93★</div><div class="window-n">44 · 25.0% neg</div></div>
+      </div>
+      <p class="note">Orders are dispatched 0–1 days after purchase (scheduled dispatch date). Product reviews are almost all written 31–60 days after the order (925 of 993 order-matched product reviews; 4.18★).
+      Reviews cluster at days 0–7 (service) and 31–60 (product), which suggests Trustpilot invitations may already be sent at those points. This should be confirmed in the Trustpilot account before new campaigns go live.</p>
+      <p class="note"><strong>Why n=1,191 (not the ~2,011 order-linked service reviews):</strong> timing only uses reviews whose order is identified <em>directly</em> by the order number on the review (1,174 where the email also agrees, 17 on order number alone). The other 820 service reviews are linked only by email, and their order is <em>inferred</em> as the customer's latest order on or before the review date. That order may not be the one being reviewed, and by construction it is always dated before the review, so it would distort order-to-review time. Those 820 stay in the purchase-count and market analyses but not in the timing analysis. The timing-by-buyer table in section 4 uses the same rule and also leaves out 10 order-matched reviews with no identifiable purchase number.</p>
+
+      <div class="two-col" style="margin-top:18px">
+        <div>
+          <h4 class="sub">Customers who never re-ordered</h4>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Lifetime orders (to date)</th><th>Service</th><th>Product</th></tr></thead>
+            <tbody>
+              <tr class="highlight-row"><td>1 order only</td><td>4.28★ · 14.1% neg <span style="color:#adb5bd;font-size:11px">n=370</span></td><td>3.33★ · 37.6% neg <span style="color:#adb5bd;font-size:11px">n=258</span></td></tr>
+              <tr><td>2–3 orders</td><td>4.55★ · 8.6% neg <span style="color:#adb5bd;font-size:11px">n=521</span></td><td>4.06★ · 18.0% neg <span style="color:#adb5bd;font-size:11px">n=217</span></td></tr>
+              <tr><td>4+ orders</td><td>4.75★ · 4.9% neg <span style="color:#adb5bd;font-size:11px">n=1,110</span></td><td>4.66★ · 4.7% neg <span style="color:#adb5bd;font-size:11px">n=509</span></td></tr>
+            </tbody>
+          </table></div>
+          <p class="note">Cause and effect run both ways here: unhappy customers don't re-order. Still, the difference is large enough to support a loyalty-based campaign.</p>
+        </div>
+        <div>
+          <h4 class="sub">Subscription status (repeat buyers)</h4>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Segment</th><th>Service</th><th>Product</th></tr></thead>
+            <tbody>
+              <tr><td>Repeat — non-subscriber</td><td>4.72★ · 5.1% neg <span style="color:#adb5bd;font-size:11px">n=780</span></td><td>4.57★ · 7.2% neg <span style="color:#adb5bd;font-size:11px">n=291</span></td></tr>
+              <tr><td>Repeat — subscriber</td><td>4.68★ · 6.6% neg <span style="color:#adb5bd;font-size:11px">n=513</span></td><td>4.49★ · 9.5% neg <span style="color:#adb5bd;font-size:11px">n=210</span></td></tr>
+            </tbody>
+          </table></div>
+          <p class="note">Subscriber = has a "thanks for subscribing!" (subscribe &amp; save) order on or before the reviewed order. 20% of subscriber service reviews mention the subscription, positively or negatively.
+          Of the 55 subscription-related negatives: 15 came from first-purchase customers (enrolled unexpectedly), 19 from subscribers, 7 from other repeat buyers and 14 unknown.</p>
+        </div>
+      </div>
+      <div class="info-box" style="margin-top:16px;margin-bottom:0">
+        <strong>Buyers outside Shopify:</strong> 29 product reviews come from customers with no Shopify order at all. They are almost all negative (1.34★, 93% negative).
+        Several negative reviews mention buying via Amazon, TikTok Shop or Boots. Customers who buy through these channels can't be reached by Shopify-triggered campaigns.
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. Campaign planning -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <div class="section-title">9. Campaign Planning Insights</div>
+      <div class="section-sub">What the data suggests for later campaign setup — no campaigns created</div>
+    </div>
+    <div class="section-body">
+      <ul class="action-list">
+        <li>
+          <div class="action-num green">1</div>
+          <div><strong>Recent post-dispatch campaign (~5 days after dispatch).</strong>
+          Dispatch happens 0–1 days after the order, so this lands around days 5–7, the highest-rated observed window (4–7 days: 4.72★, 4.7% negative). This is an observed pattern in organic reviews; it does not show that sending an invite at that time would produce the same rating.
+          In that window first-time buyers rate like repeat buyers (4.73★ vs 4.79★), so they <em>don't</em> need to be excluded from a service/delivery-focused invite.
+          Delivery complaints are 17% of negative service reviews and peaked in January, so consider holding invites for orders not yet delivered during peak season.
+          Before launch, check whether Trustpilot's own invitations already go out at this point (review timing suggests they may) to avoid inviting customers twice.</div>
+        </li>
+        <li>
+          <div class="action-num amber">2</div>
+          <div><strong>Post-ticket campaign.</strong>
+          There isn't enough data to size or justify this yet: ticket data covers only about 8 weeks. In that sample, the 41 customers with a recent ticket rated 4.63★ against 4.35★ for those without, so there is no sign that a ticket predicts a bad review.
+          Subscription and customer-service complaints make up about a third of negative service reviews, so a post-ticket campaign should only follow <em>resolved</em> tickets and exclude subscription-cancellation contacts.
+          Re-run this analysis after 2–3 months of continuous Gorgias data.</div>
+        </li>
+        <li>
+          <div class="action-num red">3</div>
+          <div><strong>First-time buyer campaign / exclusions.</strong>
+          First-purchase customers are the main source of negative reviews once efficacy is judged (31+ days: 4.14★ service, 3.82★ product, 25% negative), and trial-size serum buyers most of all.
+          The evidence supports excluding first-time buyers from product- or efficacy-focused asks around day 30 and later, while still including them in the early post-dispatch invite.
+          A first-time buyer campaign, if used, should be service-focused and early.</div>
+        </li>
+        <li>
+          <div class="action-num green">4</div>
+          <div><strong>Loyal / repeat-customer campaign (Free Soul-style).</strong>
+          Repeat customers are the strongest segment for product reviews: 2+ orders 4.53★ (8% negative), 6+ orders 4.78★ (2–4% negative). Subscribers perform about the same as other repeat buyers.
+          This supports a repeat-purchase product-review campaign, for example triggered on the 2nd or 3rd+ order.
+          Consider leaving out multi-step sets (3.81★ even among repeat buyers) and customers with recent subscription-cancellation contact.</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 10. Data quality -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <div class="section-title">10. Data Quality &amp; Methodology</div>
+      <div class="section-sub">How the joins were validated</div>
+    </div>
+    <div class="section-body">
+      <div class="table-wrap"><table>
+        <thead><tr><th>Area</th><th>Finding</th><th>Handling</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Reviews</strong></td><td>3,718 Trustpilot reviews (2,688 service, 1,030 product) across both profiles. No duplicate review IDs and no identical review text across the two profiles.</td><td>All reviews included in the headline KPIs.</td></tr>
+          <tr><td><strong>Review → order</strong></td><td>Reviews store the Shopify order <em>name</em> (#123456) in the reference field, sometimes an email, and 22% of service reviews have no reference. Some order numbers exist in both stores.</td><td>Matched on order name, tie-broken by customer email (email agreed on 2,148 of 2,184 order-number matches). Email-only reviews use the latest order on or before the review date. 75% of service and 97% of product reviews are linked to an order.</td></tr>
+          <tr><td><strong>Purchase count</strong></td><td>Counted by hashed email across both stores, using full history (UK store since 2018, US store since 2020). Subscription renewals count as orders.</td><td>Purchase # = orders up to and including the reviewed order. 692 service / 48 product reviews have no identifiable customer and are shown as "unknown".</td></tr>
+          <tr><td><strong>Products</strong></td><td>Product reviews carry the product name and SKU. SKUs split one product into several variants, and names differ between stores.</td><td>Grouped by product name. Trial and full sizes are kept separate. One internal "TEST" listing is excluded from the product table.</td></tr>
+          <tr><td><strong>Market</strong></td><td>The Trustpilot profile (47 Skin / 47 Skin USA) doesn't reflect where the customer bought.</td><td>Market comparison uses the Shopify store of the matched order.</td></tr>
+          <tr><td><strong>Tickets</strong></td><td>Gorgias data covers Jun 22–Jul 5 and Aug 17–Sep 28, 2026 only.</td><td>Ticket analysis limited to reviews with full lookback coverage (281). Directional only.</td></tr>
+          <tr><td><strong>Invites / review rate</strong></td><td>No review-invitation data exists for this account yet.</td><td>No review rate shown. Reviews per 1,000 orders is context only.</td></tr>
+          <tr><td><strong>Themes</strong></td><td>Keyword rules on heading + text; a review can match several themes.</td><td>Shares are approximate and are meant to rank themes, not measure them exactly.</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Definitions: positive = 4–5★, neutral = 3★, negative = 1–2★ (the Jewlr report used ≤3★ as negative, so the negative rates are not directly comparable).
+      Source: Stacktome customer_review / customer_purchase / Gorgias tickets, Zeppelin notebook <code>/support_clone/47skin_data</code>.</p>
+    </div>
+  </div>
+
+  <div class="footer">Generated 2026-09-29 — Data window: Sep 29, 2025 – Sep 28, 2026 · Local draft, not published</div>
+</div>
+</body>
+</html>
