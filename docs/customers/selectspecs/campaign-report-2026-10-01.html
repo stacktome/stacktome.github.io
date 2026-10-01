@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SelectSpecs — Monthly Report (Sep 1&ndash;30 vs Aug 1&ndash;31, 2026)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 860px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 24px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 32px; }
+  h2 { font-size: 16px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 13px; font-weight: 600; color: #4a4a4a; margin: 16px 0 8px; }
+  p { line-height: 1.65; color: #4a4a4a; margin-bottom: 10px; font-size: 13px; }
+
+  /* ToC */
+  .toc { background: #fff; border-radius: 10px; padding: 14px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 24px; }
+  .toc .box-label { margin-bottom: 8px; }
+  .toc ol { margin: 0 0 0 18px; font-size: 13px; line-height: 1.9; }
+  .toc a { color: #6c5ce7; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* KPI grid */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 16px 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-top: 3px solid #6c5ce7; }
+  .kpi.green { border-top-color: #00b894; }
+  .kpi.amber { border-top-color: #fdcb6e; }
+  .kpi.blue  { border-top-color: #0984e3; }
+  .kpi.red   { border-top-color: #d63031; }
+  .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; line-height: 1; }
+  .kpi .delta { font-size: 11px; margin-top: 5px; font-weight: 600; }
+  .kpi .delta.up { color: #00b894; }
+  .kpi .delta.down { color: #d63031; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 3px; }
+
+  /* Comparison table */
+  .cmp-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin: 14px 0 24px; }
+  .cmp-table th { background: #f8f9ff; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .4px; color: #636e72; border-bottom: 2px solid #eee; }
+  .cmp-table td { padding: 11px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+  .cmp-table tr:last-child td { border-bottom: none; }
+  .cmp-table .metric-col { color: #636e72; font-size: 12px; }
+  .period-a { color: #6c5ce7; font-weight: 700; }
+  .period-b { color: #b2bec3; font-weight: 600; }
+  .delta-col { font-weight: 700; }
+  .delta-up { color: #00b894; }
+  .delta-down { color: #d63031; }
+  .delta-neutral { color: #636e72; }
+
+  /* Star distribution */
+  .dist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0 28px; }
+  .dist-card { background: #fff; border-radius: 10px; padding: 16px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .dist-card .card-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 12px; }
+  .dist-card .card-title .period-tag { display: inline-block; padding: 2px 8px; border-radius: 8px; font-size: 10px; margin-left: 6px; }
+  .tag-a { background: #f0ecff; color: #6c5ce7; }
+  .tag-b { background: #f0f0f0; color: #636e72; }
+  .star-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .star-label { font-size: 12px; color: #636e72; width: 22px; flex-shrink: 0; text-align: right; }
+  .bar-track { flex: 1; height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 5px; }
+  .fill-5 { background: #00b894; }
+  .fill-4 { background: #55efc4; }
+  .fill-3 { background: #fdcb6e; }
+  .fill-2 { background: #e17055; }
+  .fill-1 { background: #d63031; }
+  .star-count { font-size: 11px; color: #888; width: 60px; text-align: right; flex-shrink: 0; }
+
+  /* Info / note boxes */
+  .info-box { background: #f0f8ff; border-left: 4px solid #0984e3; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; }
+  .amber-box { background: #fffbf0; border-left: 4px solid #fdcb6e; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; }
+  .red-box { background: #fff5f5; border-left: 4px solid #d63031; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; }
+  .box-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; font-weight: 700; color: #888; margin-bottom: 6px; }
+
+  /* Period label pills */
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .pill-a { background: #f0ecff; color: #6c5ce7; }
+  .pill-b { background: #f0f0f0; color: #636e72; }
+
+  /* Theme table */
+  .theme-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin: 14px 0 24px; }
+  .theme-table th { background: #f8f9ff; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .4px; color: #636e72; border-bottom: 2px solid #eee; }
+  .theme-table td { padding: 11px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: top; }
+  .theme-table tr:last-child td { border-bottom: none; }
+  .quote { font-style: italic; color: #636e72; font-size: 12px; }
+
+  /* Actions */
+  .action-list { list-style: none; padding: 0; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 16px; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 10px; font-size: 13px; line-height: 1.6; align-items: flex-start; }
+  .action-num { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: #6c5ce7; color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>SelectSpecs &mdash; Monthly Report</h1>
+  <p class="subtitle">Sep 1&ndash;30 vs Aug 1&ndash;31, 2026 &bull; Second full calendar-month comparison &bull; Succeeds the Jul 1&ndash;31 vs Aug 1&ndash;31 report (Sep 1) &bull; Generated Oct 1, 2026</p>
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="box-label">Contents</div>
+    <ol>
+      <li><a href="#comparison">Period Comparison</a></li>
+      <li><a href="#attribution">Attribution Split</a></li>
+      <li><a href="#stars">Star Distribution</a></li>
+      <li><a href="#negatives">Negative Review Themes (September)</a></li>
+      <li><a href="#findings">Key Findings</a></li>
+      <li><a href="#actions">Recommended Actions</a></li>
+    </ol>
+  </div>
+
+  <!-- TOP KPIs -->
+  <div class="kpi-grid">
+    <div class="kpi amber">
+      <div class="label">Review Rate (Total)</div>
+      <div class="value">&minus;2.3%</div>
+      <div class="delta down">5.60% &rarr; 5.47%</div>
+      <div class="sub">Attributed (same-window): 3.41% &rarr; 2.83%</div>
+    </div>
+    <div class="kpi green">
+      <div class="label">Reviews Collected</div>
+      <div class="value">+4.6%</div>
+      <div class="delta up">327 &rarr; 342</div>
+    </div>
+    <div class="kpi green">
+      <div class="label">Avg Rating</div>
+      <div class="value">+0.03&#9733;</div>
+      <div class="delta up">4.48 &rarr; 4.51</div>
+    </div>
+    <div class="kpi green">
+      <div class="label">1-Star Share</div>
+      <div class="value">&minus;0.9pp</div>
+      <div class="delta up">7.0% &rarr; 6.1% (23&rarr;21)</div>
+    </div>
+  </div>
+
+  <!-- PERIOD COMPARISON -->
+  <h2 id="comparison">Period Comparison</h2>
+
+  <div class="info-box">
+    <div class="box-label">Methodology</div>
+    <p><span class="pill pill-b">Aug 1&ndash;31</span> and <span class="pill pill-a">Sep 1&ndash;30</span> are both full calendar months. Method is unchanged from the August report: each review is matched against invite history via order_id first, falling back to email when order_id is absent, with no date restriction on the invite side of the join. Reviews split into four buckets: attributed (same-window), matched to an invite sent in the same month as the review; attributed (carryover), matched to an invite from an earlier month; organic, with an order_id or email but no matching invite; and no-join-key, with neither field, so it cannot be checked against invite history. <strong>Review Rate (Total) = all reviews received that month &divide; invites sent that month &times; 100</strong>, a raw ratio and not a verified conversion figure. Review Rate (Attributed, same-window) = same-window-attributed reviews only &divide; invites sent, kept as a secondary reference figure. A more conservative raw ratio (reviews &divide; all distinct emailed orders, invite or reminder) is also shown for continuity. <strong>August figures are the values published in the August report.</strong></p>
+    <p><strong>Data-quality note:</strong> duplicate invite records were identified and removed before analysis; all invite counts below reflect the deduplicated data. September had far more than usual: 1,001 duplicate rows, 992 of them from a doubled Sep 30 data partition (August had 1). Without the clean-up, September invite and reminder counts would be overstated by about 8%. Review rows were checked and had no duplicates in either month.</p>
+  </div>
+
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th><span class="period-b">Aug 1&ndash;31</span></th>
+        <th><span class="period-a">Sep 1&ndash;30</span></th>
+        <th>Delta</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="metric-col">Invite emails sent (initial invites)</td>
+        <td>5,844</td>
+        <td>6,253</td>
+        <td class="delta-col delta-neutral">+409 (+7.0%)</td>
+      </tr>
+      <tr>
+        <td class="metric-col">Distinct orders invited (invite-only)</td>
+        <td>5,842</td>
+        <td>6,239</td>
+        <td class="delta-col delta-neutral">+397 (+6.8%)</td>
+      </tr>
+      <tr>
+        <td class="metric-col">Reminder emails sent</td>
+        <td>5,739</td>
+        <td>5,891</td>
+        <td class="delta-col delta-neutral">+152 (+2.6%)</td>
+      </tr>
+      <tr>
+        <td class="metric-col">Reviews received</td>
+        <td>327</td>
+        <td>342</td>
+        <td class="delta-col delta-up">+15 (+4.6%)</td>
+      </tr>
+      <tr>
+        <td class="metric-col"><strong>Review Rate (Total) &mdash; all reviews &divide; invites sent</strong></td>
+        <td><strong>5.60%</strong></td>
+        <td><strong>5.47%</strong></td>
+        <td class="delta-col delta-neutral">&minus;0.13pp (&minus;2%)</td>
+      </tr>
+      <tr>
+        <td class="metric-col" style="color:#aaa;">Review Rate (Attributed, same-window)</td>
+        <td style="color:#aaa;">3.41%</td>
+        <td style="color:#aaa;">2.83%</td>
+        <td class="delta-col delta-down" style="color:#aaa;">&minus;0.58pp (&minus;17%)</td>
+      </tr>
+      <tr>
+        <td class="metric-col">Review rate, all emailed orders incl. reminder-only (raw ratio)</td>
+        <td>4.52% (7,230 orders)</td>
+        <td>4.51% (7,575 orders)</td>
+        <td class="delta-col delta-neutral">&minus;0.01pp</td>
+      </tr>
+      <tr>
+        <td class="metric-col">Average rating</td>
+        <td>4.48&#9733;</td>
+        <td>4.51&#9733;</td>
+        <td class="delta-col delta-up">+0.03&#9733;</td>
+      </tr>
+      <tr>
+        <td class="metric-col">% 5-star reviews</td>
+        <td>75.5% (247/327)</td>
+        <td>80.1% (274/342)</td>
+        <td class="delta-col delta-up">+4.6pp</td>
+      </tr>
+      <tr>
+        <td class="metric-col">% 1-star reviews</td>
+        <td>7.0% (23/327)</td>
+        <td>6.1% (21/342)</td>
+        <td class="delta-col delta-up">&minus;0.9pp</td>
+      </tr>
+      <tr>
+        <td class="metric-col">Negative reviews (1&ndash;2&#9733;)</td>
+        <td>29 (8.9%)</td>
+        <td>33 (9.6%)</td>
+        <td class="delta-col delta-neutral">+4 (+14%)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="amber-box">
+    <div class="box-label">Reading the review-rate change honestly</div>
+    <p>Invite volume rose 6.8% (5,842&rarr;6,239 distinct orders) and reviews rose 4.6%, so Review Rate (Total) is essentially flat (5.60%&rarr;5.47%). The same-window attributed rate fell more (3.41%&rarr;2.83%), but part of that is timing rather than performance: <strong>819 invites (13% of the month) were sent on Sep 29&ndash;30</strong> and cannot yet have produced a same-window review (in August only 23 invites went out on the last two days). Excluding the last two days, the same-window rate is about 3.26% on 5,434 invites, an indicative figure only. There is no unusual spike elsewhere in the month: daily invites ranged from 3 to 728, with the usual weekend lulls.</p>
+  </div>
+
+  <h3>Campaign Breakdown (invite-type sends, distinct orders)</h3>
+  <table class="cmp-table">
+    <thead>
+      <tr><th>Campaign</th><th><span class="period-b">Aug 1&ndash;31</span></th><th><span class="period-a">Sep 1&ndash;30</span></th><th>Delta</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="metric-col">invite-EN (210)</td><td>5,757</td><td>6,133</td><td class="delta-col delta-up">+376 (+6.5%)</td></tr>
+      <tr><td class="metric-col">positive-reviews (622)</td><td class="delta-col delta-down">0</td><td class="delta-col delta-down">0</td><td class="delta-col delta-down">no change (inactive)</td></tr>
+      <tr><td class="metric-col">closed-tickets (235)</td><td>86</td><td>108</td><td class="delta-col delta-up">+22 (+26%)</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:-10px;font-size:12px;color:#888;"><code>positive-reviews</code> (622) is still inactive: its last send was Jul 22, 2026 (confirmed from the invite log, which shows nothing in August or September), and the app lists the campaign as inactive. Its stoppage accounts for the whole of August's volume drop versus July; September's recovery comes from invite-EN and closed-tickets. Seven other campaigns exist (invite-DE 211, invite-FR 212, invite-ES 213, invite-EN-COPY 227, invite-positive-au 250, invite-positive 253, invite-test 696) but recorded zero sends in both months, unchanged. Reminders: invite-EN 5,811 and closed-tickets 79 distinct orders in September.</p>
+
+  <h3>Email Performance (September, campaign report API)</h3>
+  <p style="margin-bottom:12px;">Open, click and unsubscribe figures from the Stacktome campaign report API for Sep 2&ndash;30 (the earliest day is not returned). The API only retains about 30 days of history, so no August baseline is available and the August report did not include this table. API sent counts run about 4% below the deduplicated Zeppelin totals (11,682 vs 12,144), consistent with earlier cross-checks.</p>
+  <table class="cmp-table">
+    <thead>
+      <tr><th>Campaign / step</th><th>Sent</th><th>Unique Opens</th><th>Open%</th><th>Unique Clicks</th><th>Click%</th><th>Unsubs</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="metric-col">invite-EN (210) &mdash; invite</td><td>5,883</td><td>2,586</td><td>44.0%</td><td>36</td><td>0.6%</td><td>39</td></tr>
+      <tr><td class="metric-col">invite-EN (210) &mdash; reminder</td><td>5,619</td><td>2,486</td><td>44.2%</td><td>20</td><td>0.4%</td><td>64</td></tr>
+      <tr><td class="metric-col">closed-tickets (235) &mdash; invite</td><td>105</td><td>58</td><td>55.2%</td><td>2</td><td>1.9%</td><td>1</td></tr>
+      <tr><td class="metric-col">closed-tickets (235) &mdash; reminder</td><td>75</td><td>40</td><td>53.3%</td><td>1</td><td>1.3%</td><td>1</td></tr>
+      <tr><td class="metric-col"><strong>Total</strong></td><td><strong>11,682</strong></td><td><strong>5,170</strong></td><td><strong>44.3%</strong></td><td><strong>59</strong></td><td><strong>0.5%</strong></td><td><strong>105</strong></td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:-10px;font-size:12px;color:#888;">Reminders unsubscribe at a noticeably higher rate than first invites (invite-EN: 1.1% vs 0.7%).</p>
+
+  <!-- ATTRIBUTION SPLIT -->
+  <h2 id="attribution">Attribution Split</h2>
+  <p style="margin-bottom:14px;">Every review in both months was checked against full invite history per the methodology above. Counts below are of reviews, not orders; percentages are of that month's total reviews. August is the published split.</p>
+
+  <table class="cmp-table">
+    <thead>
+      <tr>
+        <th>Period</th>
+        <th>Total Reviews</th>
+        <th>Attributed &mdash; Same-Window</th>
+        <th>Attributed &mdash; Carryover</th>
+        <th>Organic</th>
+        <th>No-Join-Key</th>
+        <th>Attributed %</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="metric-col">Aug 1&ndash;31</td>
+        <td>327</td>
+        <td>199 (4.57&#9733;)</td>
+        <td>26 (4.42&#9733;)</td>
+        <td>13 (3.69&#9733;)</td>
+        <td>89 (4.43&#9733;)</td>
+        <td>68.8%</td>
+      </tr>
+      <tr>
+        <td class="metric-col">Sep 1&ndash;30</td>
+        <td>342</td>
+        <td>177 (4.68&#9733;)</td>
+        <td>40 (4.75&#9733;)</td>
+        <td>22 (3.73&#9733;)</td>
+        <td>103 (4.29&#9733;)</td>
+        <td>63.5%</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="margin-top:-10px;font-size:12px;color:#888;">Figures in parentheses are each bucket's average rating.</p>
+
+  <div class="info-box">
+    <p><strong>The no-join-key share grew to 30% of reviews</strong> (103 of 342, up from 89 of 327, 27%). These reviews carry neither an order reference nor an email on the review event itself and can never be matched to an invite by either key. This is a data-completeness gap on the review side, not an attribution-logic weakness, and it is widening: it caps the attributed share of every report. Organic reviews (has a key, matches no invite) rose from 4.0% to 6.4%; carryover attribution rose from 26 to 40 reviews.</p>
+    <p><strong>Attributed reviews again rate higher than unprompted ones</strong> (same-window 4.68&#9733; and carryover 4.75&#9733;, vs. organic 3.73&#9733;), consistent with solicited reviewers skewing more positive. No-join-key reviews sit in between (4.29&#9733;).</p>
+  </div>
+
+  <!-- STAR DISTRIBUTION -->
+  <h2 id="stars">Star Distribution</h2>
+  <div class="dist-grid">
+    <div class="dist-card">
+      <div class="card-title">Sep 1&ndash;30 <span class="period-tag tag-a">Current</span></div>
+      <div class="star-row">
+        <span class="star-label">5&#9733;</span>
+        <div class="bar-track"><div class="bar-fill fill-5" style="width:80.1%"></div></div>
+        <span class="star-count">274 (80.1%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">4&#9733;</span>
+        <div class="bar-track"><div class="bar-fill fill-4" style="width:6.4%"></div></div>
+        <span class="star-count">22 (6.4%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">3&#9733;</span>
+        <div class="bar-track"><div class="bar-fill fill-3" style="width:3.8%"></div></div>
+        <span class="star-count">13 (3.8%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">2&#9733;</span>
+        <div class="bar-track"><div class="bar-fill fill-2" style="width:3.5%"></div></div>
+        <span class="star-count">12 (3.5%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">1&#9733;</span>
+        <div class="bar-track"><div class="bar-fill fill-1" style="width:6.1%"></div></div>
+        <span class="star-count">21 (6.1%)</span>
+      </div>
+    </div>
+    <div class="dist-card">
+      <div class="card-title">Aug 1&ndash;31 <span class="period-tag tag-b">Prior</span></div>
+      <div class="star-row">
+        <span class="star-label">5&#9733;</span>
+        <div class="bar-track"><div class="bar-fill fill-5" style="width:75.5%"></div></div>
+        <span class="star-count">247 (75.5%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">4&#9733;</span>
+        <div class="bar-track"><div class="bar-fill fill-4" style="width:13.1%"></div></div>
+        <span class="star-count">43 (13.1%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">3&#9733;</span>
+        <div class="bar-track"><div class="bar-fill fill-3" style="width:2.4%"></div></div>
+        <span class="star-count">8 (2.4%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">2&#9733;</span>
+        <div class="bar-track"><div class="bar-fill fill-2" style="width:1.8%"></div></div>
+        <span class="star-count">6 (1.8%)</span>
+      </div>
+      <div class="star-row">
+        <span class="star-label">1&#9733;</span>
+        <div class="bar-track"><div class="bar-fill fill-1" style="width:7.0%"></div></div>
+        <span class="star-count">23 (7.0%)</span>
+      </div>
+    </div>
+  </div>
+  <p style="margin-top:-10px;font-size:12px;color:#888;">The 5-star share rose to 80.1% from 75.5%, while 3-star and 2-star reviews also rose (13 and 12, from 8 and 6) and 4-star fell (22, from 43), so the distribution is more polarised than August's. Review rows were checked for duplicates (distinct <code>order_review_id</code> count matches the raw row count exactly in both periods), so no dedup adjustment was needed on the review side.</p>
+
+  <!-- NEGATIVE THEMES -->
+  <h2 id="negatives">Negative Review Themes (September)</h2>
+  <p>All 33 negative reviews from September (21 one-star + 12 two-star; negatives are defined as 1&ndash;2&#9733;, as in the August report) were read and grouped into the same four operational themes, plus an &ldquo;Other&rdquo; group for complaints that fit none of them. August's published counts (29 negatives) are shown alongside. Categories overlap, a single review can name more than one theme, and the September read counted a review under customer service whenever the customer cited unanswered contact, refusals or extra charges, so treat month-on-month shares as directional.</p>
+
+  <table class="theme-table">
+    <thead>
+      <tr><th>Theme</th><th>Sep (of 33)</th><th>Aug (of 29)</th><th>Representative September quotes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Delivery failure / never received</strong></td>
+        <td><strong>16 (48%)</strong></td>
+        <td>11 (38%)</td>
+        <td class="quote">"I placed order 4158222 on 4 September, with an advertised delivery time of 10 working days. I later received an email saying the delivery was delayed due to production issues, with a new estimated delivery date of 29 September" &bull; "It would be nice if i actually had the glasses in my possession to write a review... never sent me them. I am still chasing for them to no avail 5 weeks on" &bull; "They use InPost lockers to deliver your glasses too. Went to collect glasses when notified they were delivered, and the InPost locker would not work / open the box"</td>
+      </tr>
+      <tr>
+        <td><strong>Customer service / refunds / pricing</strong></td>
+        <td><strong>16 (48%)</strong></td>
+        <td>7 (24%)</td>
+        <td class="quote">"Still waiting for a reply from customer services regarding my delivery of glasses. Emailed numerous times now and not even a confirmation" &bull; "Spoke to customer services they declined any form of responsibility" &bull; "Contacted customer service which was of course AI"</td>
+      </tr>
+      <tr>
+        <td><strong>Frame build quality</strong></td>
+        <td>9 (27%)</td>
+        <td>5 (17%)</td>
+        <td class="quote">"Didn't expect a lot for £70 but did expect my glasses to last more than 2 weeks" &bull; "Cheapest frames I've ever seen. Worse than the reading glasses from poundland. Won't last 5 mins" &bull; "The glasses supplied are all faulty"</td>
+      </tr>
+      <tr>
+        <td><strong>Wrong / unusable lenses</strong></td>
+        <td>5 (15%)</td>
+        <td><strong>12 (41%)</strong></td>
+        <td class="quote">"Think the lenses were in the wrong order. Ie left should have been right and vice versa" &bull; "...seeing double when driving..." &bull; "Ordered glasses with reactive lenses. Glasses were fine, but... they didn't go very dark"</td>
+      </tr>
+      <tr>
+        <td><strong>Other</strong> (not as described, ordering process, range)</td>
+        <td>5 (15%)</td>
+        <td>&mdash;</td>
+        <td class="quote">"Man bekommt nicht unbedingt das Brillengestell in der Farbe, die man sich ausgesucht hat" (frame colour differs from the one chosen) &bull; "The uploaded prescription with confidential information disappeared off the screen... Would not let us progress the order" &bull; "i had real trouble trying to find rectangular frames with arm lengths longer than 149"</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="amber-box">
+    <div class="box-label">Theme shift, month over month</div>
+    <p><strong>The lens/prescription spike did not repeat.</strong> August's leading theme (41% of negatives) fell to 15% in September, so it looks like a one-month cluster rather than a trend. Delivery returned to first place (48%), alongside customer-service complaints (48%), and frame durability rose (27% from 17%). One delivery detail is new: <strong>four reviews cite InPost lockers or parcel-shop collection</strong> (a locker that would not open, failed delivery to a locker, a parcel left uncollected in a locker, and a parcel shop delay).</p>
+  </div>
+
+  <h3>Support-Ticket Matching for Negative Reviews</h3>
+  <p style="margin-bottom:12px;">A ticket table for SelectSpecs is available and was matched to reviews by email. Matching is only possible for reviews that carry an email.</p>
+  <table class="cmp-table">
+    <thead>
+      <tr><th>Negative reviews (1&ndash;2&#9733;)</th><th>Aug</th><th>Sep</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="metric-col">Total</td><td>29</td><td>33</td></tr>
+      <tr><td class="metric-col">No email on the review (cannot be matched)</td><td>11 (38%)</td><td>21 (64%)</td></tr>
+      <tr><td class="metric-col">With an email: ticket on file</td><td>8</td><td>7</td></tr>
+      <tr><td class="metric-col">With an email: no ticket</td><td>10</td><td>5</td></tr>
+      <tr><td class="metric-col">Ticket in the 30 days before the review</td><td>5</td><td>5</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:-10px;font-size:12px;color:#888;">August is recomputed here for comparison (the published August report did not include ticket matching). &ldquo;Ticket on file&rdquo; means any ticket for that email address. For comparison, only 20% of September reviewers with an email who did <em>not</em> leave a negative review (42 of 215) have a ticket on file.</p>
+  <div class="info-box">
+    <p><strong>Seven of the 12 identifiable negative reviewers (58%) have a ticket on file, including 5 with a ticket in the 30 days before the review</strong>, against 20% of other reviewers having a ticket on file. A ticket on file is not necessarily one raised before the review, so this shows a link to support, not the order of events. The larger point is coverage: 64% of September negatives carry no email (against about a third of all reviews), so support status is <strong>unknown</strong> for most of them rather than &ldquo;no ticket&rdquo;.</p>
+  </div>
+
+  <div class="red-box">
+    <div class="box-label">Escalation-worthy</div>
+    <p>Several September 1&#9733; reviews describe <strong>open, unresolved cases</strong> at the time of writing: order 4150872, never sent after 5 weeks of chasing and a reply described as rude (Sep 24); order 4122509 (&pound;149), reported as delivered when nothing arrived, with no proof of delivery, paid by PayPal (Sep 7); and order 4158222, delayed from a 10-working-day estimate to Sep 29 with the customer still chasing (Sep 28). At least one more complains that a return request for scratched, apparently ex-display frames is unanswered (Sep 18). As in earlier reports, invites reaching customers whose problem is still live turn unresolved private issues into public 1&#9733; reviews.</p>
+  </div>
+
+  <!-- KEY FINDINGS -->
+  <h2 id="findings">Key Findings</h2>
+
+  <div class="good-box">
+    <div class="box-label">Quality improved again on higher volume</div>
+    <p>Invite volume rose 6.8% and reviews rose 4.6% (327&rarr;342), so the raw review-to-invite ratio (Review Rate Total) held at 5.47% (5.60% in August; 4.23% in July). Average rating edged up (4.48&#9733;&rarr;4.51&#9733;), the 5-star share rose to 80.1% and the 1-star share fell (7.0%&rarr;6.1%). The same-window attributed rate fell (3.41%&rarr;2.83%), partly because 13% of the month's invites were sent on its last two days.</p>
+  </div>
+
+  <div class="amber-box">
+    <div class="box-label">positive-reviews (622) is still switched off</div>
+    <p>The campaign sent nothing in August or September: its last send was Jul 22, about ten weeks ago, and the app shows it as inactive. Volume has nonetheless recovered (5,842&rarr;6,239 distinct orders) because invite-EN grew 6.5% and closed-tickets 26%. Whether the 622 stoppage was intentional is still unconfirmed.</p>
+  </div>
+
+  <div class="red-box">
+    <div class="box-label">Delivery and customer service now drive the negatives</div>
+    <p>Of 33 negative reviews, 16 (48%) concern delivery and 16 (48%) concern customer service; the two overlap heavily, usually as a late order followed by unanswered contact. Lens quality, August's top theme, dropped back to 15%. Support data shows that 7 of the 12 traceable negative reviewers have a ticket on file (5 of them within the 30 days before the review), and 64% of negatives cannot be traced at all because they carry no email.</p>
+  </div>
+
+  <!-- ACTIONS -->
+  <h2 id="actions">Recommended Actions</h2>
+  <ul class="action-list">
+    <li>
+      <div class="action-num">1</div>
+      <div><strong>Confirm whether the <code>positive-reviews</code> (622) stoppage on Jul 22 was intentional.</strong> It drove 1,369 invites in July and has sent nothing for ten weeks. This is unchanged since the August report; re-enabling it, if the stoppage was unintended, remains the largest single lever for review volume outside the core programme.</div>
+    </li>
+    <li>
+      <div class="action-num">2</div>
+      <div><strong>Escalate the delivery and responsiveness problems, starting with the open cases.</strong> Orders 4150872, 4122509 and 4158222 (and the unanswered return request) are visible in public reviews. Four reviews cite InPost lockers or parcel shops, which is worth raising with the courier set-up. Suppressing invites for orders that are undelivered or have an open complaint (recommended in earlier reports) remains unactioned and still relevant: 10 of the 33 negatives are customers still waiting for or chasing an order.</div>
+    </li>
+    <li>
+      <div class="action-num">3</div>
+      <div><strong>Review how customer-service contact is handled.</strong> 16 of 33 negatives cite unanswered emails, refusals, extra charges or an AI-only first line, and 7 of the 12 traceable negative reviewers have a ticket on file, including 5 with a ticket in the 30 days before the review. The fix sits upstream of the review programme.</div>
+    </li>
+    <li>
+      <div class="action-num">4</div>
+      <div><strong>Address the no-join-key gap, now 30% of reviews and 64% of negatives.</strong> These reviews carry neither an order reference nor an email, so they can never be matched to an invite or a support ticket. The share grew from 27% in August. Worth raising with data engineering as a review-event completeness issue; until it is fixed, ticket matching only covers about a third of negative reviews.</div>
+    </li>
+    <li>
+      <div class="action-num">5</div>
+      <div><strong>Keep treating the review rate as a range, not a baseline.</strong> Review Rate (Total) was 4.23% (Jul), 5.60% (Aug) and 5.47% (Sep); the same-window attributed rate was 2.32%, 3.41% and 2.83%. Month-end send timing moves the attributed figure (819 invites on Sep 29&ndash;30), so compare it on invites sent through day 28, or add a lag, before reading a trend into it.</div>
+    </li>
+    <li>
+      <div class="action-num">6</div>
+      <div><strong>Lens quality: no escalation needed now, but keep watching.</strong> August's spike (41% of negatives) reverted to 15% in September. The earlier recommendation to raise a possible glazing/QC signal with SelectSpecs can wait for a further month of data. Frame durability complaints (27% of negatives, up from 17%) are worth a look in the same conversation.</div>
+    </li>
+  </ul>
+
+  <div style="margin-top:48px;padding-top:20px;border-top:1px solid #eee;font-size:11px;color:#aaa;text-align:center;">
+    Generated Oct 1, 2026 &mdash; Stacktome Support &mdash; SelectSpecs monthly report &mdash; Data: Zeppelin notebook 2MUPD7DAS, cross-checked against the Stacktome campaign-report API
+  </div>
+</div>
+</body>
+</html>
