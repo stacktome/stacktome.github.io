@@ -102,7 +102,6 @@
     <div class="box-label">Contents</div>
     <ol>
       <li><a href="#comparison">Period Comparison</a></li>
-      <li><a href="#attribution">Attribution Split</a></li>
       <li><a href="#stars">Star Distribution</a></li>
       <li><a href="#negatives">Negative Review Themes (September)</a></li>
       <li><a href="#findings">Key Findings</a></li>
@@ -116,7 +115,6 @@
       <div class="label">Review Rate (Total)</div>
       <div class="value">&minus;2.3%</div>
       <div class="delta down">5.60% &rarr; 5.47%</div>
-      <div class="sub">Attributed (same-window): 3.41% &rarr; 2.83%</div>
     </div>
     <div class="kpi green">
       <div class="label">Reviews Collected</div>
@@ -137,12 +135,6 @@
 
   <!-- PERIOD COMPARISON -->
   <h2 id="comparison">Period Comparison</h2>
-
-  <div class="info-box">
-    <div class="box-label">Methodology</div>
-    <p><span class="pill pill-b">Aug 1&ndash;31</span> and <span class="pill pill-a">Sep 1&ndash;30</span> are both full calendar months. Method is unchanged from the August report: each review is matched against invite history via order_id first, falling back to email when order_id is absent, with no date restriction on the invite side of the join. Reviews split into four buckets: attributed (same-window), matched to an invite sent in the same month as the review; attributed (carryover), matched to an invite from an earlier month; organic, with an order_id or email but no matching invite; and no-join-key, with neither field, so it cannot be checked against invite history. <strong>Review Rate (Total) = all reviews received that month &divide; invites sent that month &times; 100</strong>, a raw ratio and not a verified conversion figure. Review Rate (Attributed, same-window) = same-window-attributed reviews only &divide; invites sent, kept as a secondary reference figure. A more conservative raw ratio (reviews &divide; all distinct emailed orders, invite or reminder) is also shown for continuity. <strong>August figures are the values published in the August report.</strong></p>
-    <p><strong>Data-quality note:</strong> duplicate invite records were identified and removed before analysis; all invite counts below reflect the deduplicated data. September had far more than usual: 1,001 duplicate rows, 992 of them from a doubled Sep 30 data partition (August had 1). Without the clean-up, September invite and reminder counts would be overstated by about 8%. Review rows were checked and had no duplicates in either month.</p>
-  </div>
 
   <table class="cmp-table">
     <thead>
@@ -185,18 +177,6 @@
         <td class="delta-col delta-neutral">&minus;0.13pp (&minus;2%)</td>
       </tr>
       <tr>
-        <td class="metric-col" style="color:#aaa;">Review Rate (Attributed, same-window)</td>
-        <td style="color:#aaa;">3.41%</td>
-        <td style="color:#aaa;">2.83%</td>
-        <td class="delta-col delta-down" style="color:#aaa;">&minus;0.58pp (&minus;17%)</td>
-      </tr>
-      <tr>
-        <td class="metric-col">Review rate, all emailed orders incl. reminder-only (raw ratio)</td>
-        <td>4.52% (7,230 orders)</td>
-        <td>4.51% (7,575 orders)</td>
-        <td class="delta-col delta-neutral">&minus;0.01pp</td>
-      </tr>
-      <tr>
         <td class="metric-col">Average rating</td>
         <td>4.48&#9733;</td>
         <td>4.51&#9733;</td>
@@ -223,11 +203,6 @@
     </tbody>
   </table>
 
-  <div class="amber-box">
-    <div class="box-label">Reading the review-rate change honestly</div>
-    <p>Invite volume rose 6.8% (5,842&rarr;6,239 distinct orders) and reviews rose 4.6%, so Review Rate (Total) is essentially flat (5.60%&rarr;5.47%). The same-window attributed rate fell more (3.41%&rarr;2.83%), but part of that is timing rather than performance: <strong>819 invites (13% of the month) were sent on Sep 29&ndash;30</strong> and cannot yet have produced a same-window review (in August only 23 invites went out on the last two days). Excluding the last two days, the same-window rate is about 3.26% on 5,434 invites, an indicative figure only. There is no unusual spike elsewhere in the month: daily invites ranged from 3 to 728, with the usual weekend lulls.</p>
-  </div>
-
   <h3>Campaign Breakdown (invite-type sends, distinct orders)</h3>
   <table class="cmp-table">
     <thead>
@@ -235,12 +210,9 @@
     </thead>
     <tbody>
       <tr><td class="metric-col">invite-EN (210)</td><td>5,757</td><td>6,133</td><td class="delta-col delta-up">+376 (+6.5%)</td></tr>
-      <tr><td class="metric-col">positive-reviews (622)</td><td class="delta-col delta-down">0</td><td class="delta-col delta-down">0</td><td class="delta-col delta-down">no change (inactive)</td></tr>
       <tr><td class="metric-col">closed-tickets (235)</td><td>86</td><td>108</td><td class="delta-col delta-up">+22 (+26%)</td></tr>
     </tbody>
   </table>
-  <p style="margin-top:-10px;font-size:12px;color:#888;"><code>positive-reviews</code> (622) is still inactive: its last send was Jul 22, 2026 (confirmed from the invite log, which shows nothing in August or September), and the app lists the campaign as inactive. Its stoppage accounts for the whole of August's volume drop versus July; September's recovery comes from invite-EN and closed-tickets. Seven other campaigns exist (invite-DE 211, invite-FR 212, invite-ES 213, invite-EN-COPY 227, invite-positive-au 250, invite-positive 253, invite-test 696) but recorded zero sends in both months, unchanged. Reminders: invite-EN 5,811 and closed-tickets 79 distinct orders in September.</p>
-
   <h3>Email Performance (September, campaign report API)</h3>
   <p style="margin-bottom:12px;">Open, click and unsubscribe figures from the Stacktome campaign report API for Sep 2&ndash;30 (the earliest day is not returned). The API only retains about 30 days of history, so no August baseline is available and the August report did not include this table. API sent counts run about 4% below the deduplicated Zeppelin totals (11,682 vs 12,144), consistent with earlier cross-checks.</p>
   <table class="cmp-table">
@@ -256,50 +228,6 @@
     </tbody>
   </table>
   <p style="margin-top:-10px;font-size:12px;color:#888;">Reminders unsubscribe at a noticeably higher rate than first invites (invite-EN: 1.1% vs 0.7%).</p>
-
-  <!-- ATTRIBUTION SPLIT -->
-  <h2 id="attribution">Attribution Split</h2>
-  <p style="margin-bottom:14px;">Every review in both months was checked against full invite history per the methodology above. Counts below are of reviews, not orders; percentages are of that month's total reviews. August is the published split.</p>
-
-  <table class="cmp-table">
-    <thead>
-      <tr>
-        <th>Period</th>
-        <th>Total Reviews</th>
-        <th>Attributed &mdash; Same-Window</th>
-        <th>Attributed &mdash; Carryover</th>
-        <th>Organic</th>
-        <th>No-Join-Key</th>
-        <th>Attributed %</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="metric-col">Aug 1&ndash;31</td>
-        <td>327</td>
-        <td>199 (4.57&#9733;)</td>
-        <td>26 (4.42&#9733;)</td>
-        <td>13 (3.69&#9733;)</td>
-        <td>89 (4.43&#9733;)</td>
-        <td>68.8%</td>
-      </tr>
-      <tr>
-        <td class="metric-col">Sep 1&ndash;30</td>
-        <td>342</td>
-        <td>177 (4.68&#9733;)</td>
-        <td>40 (4.75&#9733;)</td>
-        <td>22 (3.73&#9733;)</td>
-        <td>103 (4.29&#9733;)</td>
-        <td>63.5%</td>
-      </tr>
-    </tbody>
-  </table>
-  <p style="margin-top:-10px;font-size:12px;color:#888;">Figures in parentheses are each bucket's average rating.</p>
-
-  <div class="info-box">
-    <p><strong>The no-join-key share grew to 30% of reviews</strong> (103 of 342, up from 89 of 327, 27%). These reviews carry neither an order reference nor an email on the review event itself and can never be matched to an invite by either key. This is a data-completeness gap on the review side, not an attribution-logic weakness, and it is widening: it caps the attributed share of every report. Organic reviews (has a key, matches no invite) rose from 4.0% to 6.4%; carryover attribution rose from 26 to 40 reviews.</p>
-    <p><strong>Attributed reviews again rate higher than unprompted ones</strong> (same-window 4.68&#9733; and carryover 4.75&#9733;, vs. organic 3.73&#9733;), consistent with solicited reviewers skewing more positive. No-join-key reviews sit in between (4.29&#9733;).</p>
-  </div>
 
   <!-- STAR DISTRIBUTION -->
   <h2 id="stars">Star Distribution</h2>
@@ -361,7 +289,7 @@
       </div>
     </div>
   </div>
-  <p style="margin-top:-10px;font-size:12px;color:#888;">The 5-star share rose to 80.1% from 75.5%, while 3-star and 2-star reviews also rose (13 and 12, from 8 and 6) and 4-star fell (22, from 43), so the distribution is more polarised than August's. Review rows were checked for duplicates (distinct <code>order_review_id</code> count matches the raw row count exactly in both periods), so no dedup adjustment was needed on the review side.</p>
+  <p style="margin-top:-10px;font-size:12px;color:#888;">The 5-star share rose to 80.1% from 75.5%, while 3-star and 2-star reviews also rose (13 and 12, from 8 and 6) and 4-star fell (22, from 43), so the distribution is more polarised than August's.</p>
 
   <!-- NEGATIVE THEMES -->
   <h2 id="negatives">Negative Review Themes (September)</h2>
@@ -439,12 +367,7 @@
 
   <div class="good-box">
     <div class="box-label">Quality improved again on higher volume</div>
-    <p>Invite volume rose 6.8% and reviews rose 4.6% (327&rarr;342), so the raw review-to-invite ratio (Review Rate Total) held at 5.47% (5.60% in August; 4.23% in July). Average rating edged up (4.48&#9733;&rarr;4.51&#9733;), the 5-star share rose to 80.1% and the 1-star share fell (7.0%&rarr;6.1%). The same-window attributed rate fell (3.41%&rarr;2.83%), partly because 13% of the month's invites were sent on its last two days.</p>
-  </div>
-
-  <div class="amber-box">
-    <div class="box-label">positive-reviews (622) is still switched off</div>
-    <p>The campaign sent nothing in August or September: its last send was Jul 22, about ten weeks ago, and the app shows it as inactive. Volume has nonetheless recovered (5,842&rarr;6,239 distinct orders) because invite-EN grew 6.5% and closed-tickets 26%. Whether the 622 stoppage was intentional is still unconfirmed.</p>
+    <p>Invite volume rose 6.8% and reviews rose 4.6% (327&rarr;342). Review Rate (Total) was 5.47% vs 5.60% in August. Average rating increased (4.48&#9733;&rarr;4.51&#9733;), the 5-star share increased to 80.1% and the 1-star share decreased (7.0%&rarr;6.1%).</p>
   </div>
 
   <div class="red-box">
@@ -457,26 +380,14 @@
   <ul class="action-list">
     <li>
       <div class="action-num">1</div>
-      <div><strong>Confirm whether the <code>positive-reviews</code> (622) stoppage on Jul 22 was intentional.</strong> It drove 1,369 invites in July and has sent nothing for ten weeks. This is unchanged since the August report; re-enabling it, if the stoppage was unintended, remains the largest single lever for review volume outside the core programme.</div>
-    </li>
-    <li>
-      <div class="action-num">2</div>
       <div><strong>Escalate the delivery and responsiveness problems, starting with the open cases.</strong> Orders 4150872, 4122509 and 4158222 (and the unanswered return request) are visible in public reviews. Four reviews cite InPost lockers or parcel shops, which is worth raising with the courier set-up. Suppressing invites for orders that are undelivered or have an open complaint (recommended in earlier reports) remains unactioned and still relevant: 10 of the 33 negatives are customers still waiting for or chasing an order.</div>
     </li>
     <li>
-      <div class="action-num">3</div>
+      <div class="action-num">2</div>
       <div><strong>Review how customer-service contact is handled.</strong> 16 of 33 negatives cite unanswered emails, refusals, extra charges or an AI-only first line, and 7 of the 12 traceable negative reviewers have a ticket on file, including 5 with a ticket in the 30 days before the review. The fix sits upstream of the review programme.</div>
     </li>
     <li>
-      <div class="action-num">4</div>
-      <div><strong>Address the no-join-key gap, now 30% of reviews and 64% of negatives.</strong> These reviews carry neither an order reference nor an email, so they can never be matched to an invite or a support ticket. The share grew from 27% in August. Worth raising with data engineering as a review-event completeness issue; until it is fixed, ticket matching only covers about a third of negative reviews.</div>
-    </li>
-    <li>
-      <div class="action-num">5</div>
-      <div><strong>Keep treating the review rate as a range, not a baseline.</strong> Review Rate (Total) was 4.23% (Jul), 5.60% (Aug) and 5.47% (Sep); the same-window attributed rate was 2.32%, 3.41% and 2.83%. Month-end send timing moves the attributed figure (819 invites on Sep 29&ndash;30), so compare it on invites sent through day 28, or add a lag, before reading a trend into it.</div>
-    </li>
-    <li>
-      <div class="action-num">6</div>
+      <div class="action-num">3</div>
       <div><strong>Lens quality: no escalation needed now, but keep watching.</strong> August's spike (41% of negatives) reverted to 15% in September. The earlier recommendation to raise a possible glazing/QC signal with SelectSpecs can wait for a further month of data. Frame durability complaints (27% of negatives, up from 17%) are worth a look in the same conversation.</div>
     </li>
   </ul>
