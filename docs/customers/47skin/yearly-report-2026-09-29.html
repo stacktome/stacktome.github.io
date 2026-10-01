@@ -203,6 +203,7 @@
             <li><div class="action-num amber">3</div><div><strong>Timing matters as much as the segment.</strong> Reviews written 0–7 days after the order average 4.72–4.80★. After 30 days, efficacy complaints start ("didn't work", "made my skin worse").</div></li>
             <li><div class="action-num amber">4</div><div><strong>Subscription friction</strong> appears in 24% of negative service reviews: unexpected auto-enrolment and difficulty cancelling.</div></li>
             <li><div class="action-num">5</div><div><strong>The Trustpilot profile doesn't tell you the market.</strong> Most reviews on the "47 Skin USA" profile come from UK-store orders. Customers of the US store rate lower (4.25★ service), but it is a small sample.</div></li>
+            <li><div class="action-num amber">6</div><div><strong>Support contact is a warning sign only when it falls between order and review.</strong> Service reviews after such a ticket average 3.88★ (24.7% negative) vs 4.62★ with no ticket. Customers who contacted support earlier rate about the same as others, and resolved tickets are followed by healthy reviews (4.50★).</div></li>
           </ul>
         </div>
       </div>
@@ -486,30 +487,88 @@
   <div class="section" id="s7">
     <div class="section-header">
       <div class="section-title">7. Customer Support / Ticket Analysis</div>
-      <div class="section-sub">Gorgias · matched by hashed customer email</div>
+      <div class="section-sub">Gorgias · one shared helpdesk for both stores · matched by hashed customer email</div>
     </div>
     <div class="section-body">
-      <div class="warn-box">
-        <strong>This analysis can't be done reliably for the 12-month window.</strong> Gorgias ticket data is only available for
-        <strong>Jun 22 – Jul 5, 2026</strong> and <strong>Aug 17 – Sep 28, 2026</strong> (almost nothing between Jul 6 and Aug 16; nothing before June).
-        Only reviews whose 30-day lookback falls inside that coverage are compared below, so the result is directional.
-      </div>
       <div class="metric-row">
-        <div class="metric-cell"><div class="metric-val">3,167</div><div class="metric-label">Customer-initiated tickets</div></div>
-        <div class="metric-cell"><div class="metric-val">2,395</div><div class="metric-label">Unique customers</div></div>
-        <div class="metric-cell"><div class="metric-val">281</div><div class="metric-label">Reviews in covered period</div></div>
-        <div class="metric-cell"><div class="metric-val">41</div><div class="metric-label">Had ticket 30d before review</div></div>
+        <div class="metric-cell"><div class="metric-val">15,252</div><div class="metric-label">Customer-initiated tickets</div></div>
+        <div class="metric-cell"><div class="metric-val">10,222</div><div class="metric-label">Unique customers</div></div>
+        <div class="metric-cell"><div class="metric-val">6.2%</div><div class="metric-label">Of ordering customers contacted support</div></div>
+        <div class="metric-cell"><div class="metric-val">3,053</div><div class="metric-label">Reviews analysed</div></div>
+        <div class="metric-cell"><div class="metric-val">564</div><div class="metric-label">Had a ticket before reviewing</div></div>
       </div>
+      <h4 class="sub">Customers with vs without support contact before reviewing</h4>
       <div class="table-wrap"><table>
-        <thead><tr><th>Group (all review types)</th><th>Reviews</th><th>Avg</th><th>Positive</th><th>Negative</th></tr></thead>
+        <thead><tr><th>Group</th><th>Reviews</th><th>Avg</th><th>Positive</th><th>Negative</th></tr></thead>
         <tbody>
-          <tr><td><span class="badge badge-blue">Ticket in the 30 days before the review</span></td><td>41</td><td><span class="badge badge-green">4.63★</span></td><td>87.8%</td><td><span class="badge badge-green">7.3%</span></td></tr>
-          <tr><td><span class="badge badge-gray">No ticket in the 30 days before</span></td><td>240</td><td><span class="badge badge-amber">4.35★</span></td><td>83.3%</td><td><span class="badge badge-amber">13.3%</span></td></tr>
-          <tr><td style="color:#6c757d">Service reviews only: ticket / no ticket</td><td>39 / 147</td><td>4.62★ / 4.52★</td><td>87.2% / 88.4%</td><td>7.7% / 10.2%</td></tr>
+          <tr><td><span class="badge badge-blue">Ticket in the 30 days before the review</span></td><td>413</td><td><span class="badge badge-green">4.47★</span></td><td>85.7%</td><td><span class="badge badge-amber">10.4%</span></td></tr>
+          <tr><td><span class="badge badge-blue">Older ticket only (before the 30 days)</span></td><td>151</td><td><span class="badge badge-green">4.60★</span></td><td>91.4%</td><td><span class="badge badge-green">7.9%</span></td></tr>
+          <tr><td><span class="badge badge-gray">No ticket before the review</span></td><td>2,489</td><td><span class="badge badge-amber">4.41★</span></td><td>84.0%</td><td><span class="badge badge-amber">11.9%</span></td></tr>
+          <tr><td style="color:#6c757d">Service reviews: any ticket / none</td><td>469 / 1,625</td><td>4.55★ / 4.58★</td><td>88.5% / 88.9%</td><td>9.6% / 8.1%</td></tr>
+          <tr><td style="color:#6c757d">Product reviews: any ticket / none</td><td>95 / 864</td><td>4.31★ / 4.09★</td><td>81.1% / 74.8%</td><td>10.5% / 19.0%</td></tr>
         </tbody>
       </table></div>
-      <p class="note">In this limited sample, customers who contacted support before reviewing did <strong>not</strong> rate lower. That fits with how often positive reviews praise fast, named support agents (40% of positive service reviews).
-      Excluded from matching: agent-initiated tickets, internal notes, spam, trashed tickets and auto-replies. The Gorgias feed holds one helpdesk that serves both stores.</p>
+      <p class="note">By customer: 449 reviewers with an earlier ticket average 4.47★, against 4.37★ for 1,863 without. Negative reviewers are <strong>not</strong> more likely to have contacted support first: 15.7% of negative reviewers had a prior ticket, against 19.0% of positive reviewers.
+      The raw gap is flattered by the "no ticket" group, which includes customers who bought outside Shopify and rate very low (see section 8). The like-for-like comparison below is the fairer one.</p>
+
+      <div class="two-col" style="margin-top:18px">
+        <div>
+          <h4 class="sub">Like-for-like: service reviews by buyer type</h4>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Segment</th><th>Ticket</th><th>No ticket</th></tr></thead>
+            <tbody>
+              <tr><td>First purchase</td><td>4.32★ · 17.0% neg <span style="color:#adb5bd;font-size:11px">n=94</span></td><td>4.48★ · 9.4% neg <span style="color:#adb5bd;font-size:11px">n=563</span></td></tr>
+              <tr><td>Repeat buyer</td><td>4.63★ · 7.6% neg <span style="color:#adb5bd;font-size:11px">n=316</span></td><td>4.74★ · 4.9% neg <span style="color:#adb5bd;font-size:11px">n=924</span></td></tr>
+              <tr><td style="color:#6c757d">Product, first purchase</td><td>3.94★ · 15.6% neg <span style="color:#adb5bd;font-size:11px">n=32</span></td><td>3.85★ · 24.5% neg <span style="color:#adb5bd;font-size:11px">n=413</span></td></tr>
+              <tr><td style="color:#6c757d">Product, repeat buyer</td><td>4.48★ · 8.1% neg <span style="color:#adb5bd;font-size:11px">n=62</span></td><td>4.51★ · 8.7% neg <span style="color:#adb5bd;font-size:11px">n=413</span></td></tr>
+            </tbody>
+          </table></div>
+          <p class="note">For service reviews, contacting support goes with a slightly lower rating (about 0.1–0.15★) and more negatives. Product reviews show no difference.</p>
+        </div>
+        <div>
+          <h4 class="sub">Ticket timing relative to the order (order-matched)</h4>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Group</th><th>Service</th><th>Product</th></tr></thead>
+            <tbody>
+              <tr class="highlight-row"><td>Ticket between order and review</td><td>3.88★ · 24.7% neg <span style="color:#adb5bd;font-size:11px">n=73</span></td><td>3.98★ · 14.6% neg <span style="color:#adb5bd;font-size:11px">n=41</span></td></tr>
+              <tr><td>No ticket around the order</td><td>4.62★ · 7.0% neg <span style="color:#adb5bd;font-size:11px">n=1,019</span></td><td>4.19★ · 16.3% neg <span style="color:#adb5bd;font-size:11px">n=852</span></td></tr>
+            </tbody>
+          </table></div>
+          <p class="note">The clearest warning sign is a ticket raised <em>after</em> the order and <em>before</em> the review: service reviews in this group are about a quarter negative.</p>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-top:18px">
+        <div>
+          <h4 class="sub">Resolved or not at the time of the review</h4>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Ticket in prior 30 days</th><th>Reviews</th><th>Avg</th><th>Negative</th></tr></thead>
+            <tbody>
+              <tr><td>Closed before the review</td><td>287</td><td><span class="badge badge-green">4.50★</span></td><td>9.1%</td></tr>
+              <tr><td>Still open at the review</td><td>126</td><td><span class="badge badge-amber">4.41★</span></td><td><span class="badge badge-amber">13.5%</span></td></tr>
+            </tbody>
+          </table></div>
+          <p class="note">Almost every ticket now shows as closed (15,251 of 15,252), so resolution is judged by whether the ticket was closed before the review was written. Half of tickets close within an hour (median 0.9 h; 90% within 72 h). Unresolved issues point slightly lower, but the difference is modest.</p>
+        </div>
+        <div>
+          <h4 class="sub">By ticket topic (ticket in prior 30 days)</h4>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Topic</th><th>Reviews</th><th>Avg</th><th>Negative</th></tr></thead>
+            <tbody>
+              <tr><td>Refund / return</td><td>170</td><td><span class="badge badge-amber">4.31★</span></td><td>14.1%</td></tr>
+              <tr><td>Skin reaction (tagged)</td><td>35</td><td><span class="badge badge-red">4.03★</span></td><td><span class="badge badge-red">25.7%</span></td></tr>
+              <tr><td>Subscription / cancel</td><td>26</td><td><span class="badge badge-amber">4.00★</span></td><td>15.4%</td></tr>
+            </tbody>
+          </table></div>
+          <p class="note">Topics come from Gorgias tags and subjects, and a ticket can fall under more than one. Counts for skin reaction and subscription are small.</p>
+        </div>
+      </div>
+
+      <div class="info-box" style="margin-top:16px;margin-bottom:0">
+        <strong>What reviewers say.</strong> 66.5% of positive service reviews from customers who had contacted support praise the support team, against 28.2% of those who hadn't. Among negative service reviews with a prior ticket, 44% mention the subscription (17% without a ticket); complaints about support itself are the same in both groups (about 9%).
+        By store, UK-store reviewers with a ticket rate 4.54★ against 4.50★ without, and US-store reviewers 4.18★ against 4.10★ (n=38).
+      </div>
+      <p class="note" style="margin-top:12px">Excluded from matching: agent-initiated tickets, internal notes, spam, trashed tickets, auto-replies and the company's own addresses. Reviews are matched to tickets by hashed email; only reviews with an identifiable customer written on or after Oct 29, 2025 are used, so every review has a full 30-day lookback. These are observed associations, not proof that a ticket changes a rating.</p>
     </div>
   </div>
 
@@ -585,9 +644,9 @@
         <li>
           <div class="action-num amber">2</div>
           <div><strong>Post-ticket campaign.</strong>
-          There isn't enough data to size or justify this yet: ticket data covers only about 8 weeks. In that sample, the 41 customers with a recent ticket rated 4.63★ against 4.35★ for those without, so there is no sign that a ticket predicts a bad review.
-          Subscription and customer-service complaints make up about a third of negative service reviews, so a post-ticket campaign should only follow <em>resolved</em> tickets and exclude subscription-cancellation contacts.
-          Re-run this analysis after 2–3 months of continuous Gorgias data.</div>
+          Supported, with conditions. 10,222 customers contacted support in the period, and 8,849 of them have a closed ticket that is not about a subscription or a skin reaction (7,643 if refund and return contacts are also left out). Today only about 3% of customers leave a Trustpilot review within 30 days of a ticket closing (299 of 10,221), so there is room to grow.
+          Support is a strength: 66.5% of positive service reviews from customers who contacted support praise the team. Reviews written after a <em>resolved</em> ticket look healthy (4.50★, 9.1% negative), while tickets still open at review time (4.41★, 13.5% negative) and tickets raised between the order and the review (service 3.88★, 24.7% negative) are the at-risk cases.
+          Suggested rules: invite only once the ticket is closed, with a short delay after closure, and exclude subscription/cancellation, skin-reaction, and refund or return contacts. Keep the ask service-focused. Customers who have contacted support do not rate lower on products (first-time buyers 3.94★ vs 3.85★).</div>
         </li>
         <li>
           <div class="action-num red">3</div>
@@ -622,7 +681,7 @@
           <tr><td><strong>Purchase count</strong></td><td>Counted by hashed email across both stores, using full history (UK store since 2018, US store since 2020). Subscription renewals count as orders.</td><td>Purchase # = orders up to and including the reviewed order. 692 service / 48 product reviews have no identifiable customer and are shown as "unknown".</td></tr>
           <tr><td><strong>Products</strong></td><td>Product reviews carry the product name and SKU. SKUs split one product into several variants, and names differ between stores.</td><td>Grouped by product name. Trial and full sizes are kept separate. One internal "TEST" listing is excluded from the product table.</td></tr>
           <tr><td><strong>Market</strong></td><td>The Trustpilot profile (47 Skin / 47 Skin USA) doesn't reflect where the customer bought.</td><td>Market comparison uses the Shopify store of the matched order.</td></tr>
-          <tr><td><strong>Tickets</strong></td><td>Gorgias data covers Jun 22–Jul 5 and Aug 17–Sep 28, 2026 only.</td><td>Ticket analysis limited to reviews with full lookback coverage (281). Directional only.</td></tr>
+          <tr><td><strong>Tickets</strong></td><td>15,252 customer-initiated tickets (Sep 29, 2025 – Sep 28, 2026) from one Gorgias helpdesk shared by both stores. Spam, trashed, agent-initiated, internal-note, auto-reply and own-domain tickets are excluded. All but one ticket now show as closed.</td><td>Matched to reviews by hashed email. Analysis uses the 3,053 reviews with an identifiable customer written on or after Oct 29, 2025 (full 30-day lookback). Resolution = closed before the review. Store split comes from the matched order.</td></tr>
           <tr><td><strong>Invites / review rate</strong></td><td>No review-invitation data exists for this account yet.</td><td>No review rate shown. Reviews per 1,000 orders is context only.</td></tr>
           <tr><td><strong>Themes</strong></td><td>Keyword rules on heading + text; a review can match several themes.</td><td>Shares are approximate and are meant to rank themes, not measure them exactly.</td></tr>
         </tbody>
@@ -632,7 +691,7 @@
     </div>
   </div>
 
-  <div class="footer">Generated 2026-09-29 — Data window: Sep 29, 2025 – Sep 28, 2026 · Local draft, not published</div>
+  <div class="footer">Generated 2026-10-01 — Data window: Sep 29, 2025 – Sep 28, 2026 · Local draft, not published</div>
 </div>
 </body>
 </html>
