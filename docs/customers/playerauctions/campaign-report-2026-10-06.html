@@ -1,0 +1,343 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlayerAuctions — 2026 Review Report</title><style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .kpi.highlight { border-top: 3px solid #e17055; }
+
+  .acct-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 8px; }
+  .acct-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow: hidden; }
+  .acct-card-header { padding: 10px 16px; font-weight: 700; font-size: 13px; color: #fff; display: flex; align-items: center; gap: 10px; }
+  .acct-mammashop { background: #6c5ce7; }
+  .acct-naturebaby { background: #00b894; }
+  .acct-loukrudt { background: #0984e3; }
+  .acct-hoppekids { background: #e17055; }
+  .acct-card-body { padding: 14px 16px; }
+
+  .mini-kpi-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
+  .mini-kpi { text-align: center; }
+  .mini-kpi .mv { font-size: 20px; font-weight: 700; color: #1a1a2e; }
+  .mini-kpi .ml { font-size: 10px; text-transform: uppercase; color: #888; letter-spacing: .5px; }
+
+  /* Attribution split bar */
+  .attr-bar-wrap { margin: 8px 0 12px; }
+  .attr-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: #636e72; margin-bottom: 4px; }
+  .attr-bar { height: 10px; border-radius: 5px; background: #dfe6e9; overflow: hidden; display: flex; }
+  .attr-fill { height: 100%; background: #6c5ce7; }
+  .organic-fill { height: 100%; background: #b2bec3; }
+
+  /* Attribution breakdown side-by-side */
+  .split-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+  .split-box { border-radius: 8px; padding: 10px 14px; }
+  .split-attr { background: #f0eeff; border-left: 3px solid #6c5ce7; }
+  .split-organic { background: #f5f6fa; border-left: 3px solid #b2bec3; }
+  .split-box .sb-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 4px; }
+  .split-box .sb-count { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+  .split-box .sb-avg { font-size: 12px; color: #636e72; margin-top: 2px; }
+  .split-box .sb-note { font-size: 11px; color: #888; margin-top: 3px; }
+
+  .star-dist { display: flex; gap: 4px; margin: 10px 0; align-items: flex-end; height: 40px; }
+  .star-col { display: flex; flex-direction: column; align-items: center; flex: 1; }
+  .star-bar { width: 100%; border-radius: 3px 3px 0 0; }
+  .s5 { background: #00b894; }
+  .s4 { background: #55efc4; }
+  .s3 { background: #fdcb6e; }
+  .s2 { background: #e17055; }
+  .s1 { background: #d63031; }
+  .star-label { font-size: 9px; color: #999; margin-top: 2px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  th { background: #f8f9ff; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; }
+  td { padding: 9px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafbff; }
+
+  .brand-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; color: #fff; }
+  .bp-mammashop { background: #6c5ce7; }
+  .bp-naturebaby { background: #00b894; }
+  .bp-loukrudt { background: #0984e3; }
+  .bp-hoppekids { background: #e17055; }
+  .source-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+  .sp-attr { background: #e8f4fd; color: #0984e3; }
+  .sp-organic { background: #f0f0f0; color: #636e72; }
+
+  .r1 { color: #d63031; font-weight: 600; }
+  .r5 { color: #00b894; font-weight: 600; }
+  .review-text { font-size: 12px; color: #636e72; line-height: 1.5; max-width: 480px; }
+  .review-heading { font-weight: 600; font-size: 12px; color: #2d3436; margin-bottom: 3px; }
+  .flag { font-size: 11px; background: #fff3cd; color: #856404; padding: 2px 7px; border-radius: 8px; display: inline-block; margin-bottom: 4px; }
+
+  .insight-box { background: #fff; border-left: 4px solid #6c5ce7; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .insight-box p { margin-bottom: 6px; }
+  .insight-box p:last-child { margin-bottom: 0; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .good { color: #00b894; font-weight: 600; }
+  .warn { color: #e17055; font-weight: 600; }
+  .neutral { color: #636e72; }
+
+  /* Attribution explainer */
+  .explainer { background: #f8f9ff; border-radius: 10px; padding: 16px 20px; margin: 16px 0; }
+  .explainer h3 { margin-top: 0; color: #6c5ce7; }
+  .explainer ul { margin: 8px 0 0 18px; }
+  .explainer li { margin-bottom: 5px; font-size: 13px; color: #4a4a4a; line-height: 1.5; }
+
+  .vs-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  .vs-table th { background: #f8f9ff; }
+  .vs-table .col-attr { background: #f0eeff; }
+  .vs-table .col-organic { background: #f5f6fa; }
+  .toc { background:#fff; border-radius:10px; padding:14px 22px; box-shadow:0 1px 4px rgba(0,0,0,0.07); margin-bottom:8px; }
+  .toc ol { margin-left:18px; } .toc li { margin:4px 0; font-size:13px; } .toc a { color:#6c5ce7; text-decoration:none; }
+  td.num, th.num { text-align:right; font-variant-numeric: tabular-nums; }
+  .tfoot-row td { font-weight:700; background:#f8f9ff; }
+  .foot { font-size:12px; color:#636e72; margin:-8px 0 18px; line-height:1.5; }
+  /* Responsive report tables */
+  .table-scroll { max-width:100%; overflow-x:auto; margin-bottom:20px; }
+  .table-scroll table { margin-bottom:0; }
+  @media (max-width:600px) {
+    .wrapper { margin:20px auto; padding:0 16px 40px; }
+    .kpi-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .kpi { padding:14px 12px; }
+    .kpi .value { font-size:23px; }
+    h1 { font-size:23px; }
+    .table-scroll table { min-width:700px; }
+  }
+  .theme-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin:16px 0 24px; }
+  .theme-card { background:#fff; border-radius:10px; padding:18px; box-shadow:0 1px 4px rgba(0,0,0,.07); }
+  .theme-card .icon { font-size:24px; margin-bottom:8px; }
+  .theme-title { font-size:13px; font-weight:600; margin-bottom:4px; }
+  .theme-card .count { font-size:11px; color:#636e72; margin-bottom:8px; }
+  .theme-card p { font-size:12px; color:#555; line-height:1.5; margin:0; }
+  @media (max-width:800px) { .theme-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media (max-width:600px) { .theme-grid { grid-template-columns:minmax(0,1fr); } }
+  .rating-count { font-size:11px; color:#636e72; white-space:nowrap; }
+  .campaign-ratings { min-width:900px; }
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Report", "name": "PlayerAuctions \u2014 2026 Review Report", "dateCreated": "2026-10-06", "temporalCoverage": "2026-01-01/2026-10-05"}</script></head><body><div class="wrapper">
+<h1>PlayerAuctions — 2026 Review Report</h1><p class="subtitle">Trustpilot reviews · Jan 1 – Oct 5 2026 (October is partial*) · Recent email window: Sep 6 – Oct 5 (30 complete days) · Generated 2026-10-06 · UTC</p>
+<div class="toc"><strong>Contents</strong><ol><li><a href="#overview">Overview</a></li><li><a href="#monthly">Monthly Breakdown</a></li><li><a href="#campaign-ratings">Average Rating by Campaign &amp; Month</a></li><li><a href="#attribution">Attributed vs Organic / Unmatched Reviews</a></li><li><a href="#email">Recent Email Performance</a></li><li><a href="#themes">Review Topics — Higher- and Lower-Rated Reviews</a></li><li><a href="#notes">Definitions &amp; Data Notes</a></li></ol></div>
+<h2 id="overview">Overview</h2><div class="kpi-grid">
+<div class="kpi"><div class="label">Trustpilot reviews 2026</div><div class="value">1,903</div><div class="sub">Jan 1 – Oct 5; distinct review IDs</div></div>
+<div class="kpi"><div class="label">Average rating</div><div class="value">4.43 ★</div><div class="sub">All reviews; 1–5 scale</div></div>
+<div class="kpi"><div class="label">Campaign matched</div><div class="value">445</div><div class="sub">23.4%; one qualifying campaign</div></div>
+<div class="kpi"><div class="label">Organic / unmatched</div><div class="value">1,453</div><div class="sub">No qualifying prior send match</div></div>
+<div class="kpi"><div class="label">Last 30 days</div><div class="value">209</div><div class="sub">reviews; 4.67 ★ average</div></div>
+</div>
+<div class="insight-box"><p><strong>1,903 distinct Trustpilot reviews</strong> were recorded in the year to Oct 5, including 1,625 rated 4–5 stars and 278 rated 1–3 stars. 5 reviews have qualifying prior sends from multiple campaigns and remain separate from the campaign totals.</p><p>Buyer (131), seller (312) and tickets (427) appear in the production send logs. The logs label targets as Trustpilot or custom, but every destination host is www.trustpilot.com or us.trustpilot.com. Both target labels therefore count toward the review-to-invite ratio; they are shown separately for transparency.</p></div>
+<h2 id="monthly">Monthly Breakdown</h2>
+<div class="table-scroll"><table class=""><thead><tr>
+<th class="">Month</th>
+<th class="num">All invited orders</th>
+<th class="num">Standard TP invited orders</th>
+<th class="num">Custom TP invited orders</th>
+<th class="num">Trustpilot reviews</th>
+<th class="num">Matched</th>
+<th class="num">Ambiguous</th>
+<th class="num">Organic / unmatched</th>
+<th class="num">All-review / invite ratio</th>
+<th class="num">Avg ★</th>
+<th class="num">≤3★</th>
+</tr></thead><tbody>
+<tr><td class="">Jan 2026</td><td class="num">7,559</td><td class="num">7,559</td><td class="num">0</td><td class="num">230</td><td class="num">104</td><td class="num">1</td><td class="num">125</td><td class="num">3.0%</td><td class="num">4.29</td><td class="num">41</td></tr>
+<tr><td class="">Feb 2026</td><td class="num">5,580</td><td class="num">5,580</td><td class="num">0</td><td class="num">161</td><td class="num">64</td><td class="num">0</td><td class="num">97</td><td class="num">2.9%</td><td class="num">4.26</td><td class="num">31</td></tr>
+<tr><td class="">Mar 2026</td><td class="num">4,919</td><td class="num">4,919</td><td class="num">0</td><td class="num">150</td><td class="num">57</td><td class="num">1</td><td class="num">92</td><td class="num">3.0%</td><td class="num">4.16</td><td class="num">31</td></tr>
+<tr><td class="">Apr 2026</td><td class="num">6,383</td><td class="num">6,383</td><td class="num">0</td><td class="num">188</td><td class="num">76</td><td class="num">1</td><td class="num">111</td><td class="num">2.9%</td><td class="num">4.10</td><td class="num">43</td></tr>
+<tr><td class="">May 2026</td><td class="num">7,648</td><td class="num">7,101</td><td class="num">554</td><td class="num">192</td><td class="num">65</td><td class="num">0</td><td class="num">127</td><td class="num">2.5%</td><td class="num">4.53</td><td class="num">23</td></tr>
+<tr><td class="">Jun 2026</td><td class="num">8,790</td><td class="num">0</td><td class="num">8,790</td><td class="num">244</td><td class="num">35</td><td class="num">1</td><td class="num">208</td><td class="num">2.8%</td><td class="num">4.47</td><td class="num">33</td></tr>
+<tr><td class="">Jul 2026</td><td class="num">5,494</td><td class="num">0</td><td class="num">5,494</td><td class="num">260</td><td class="num">20</td><td class="num">0</td><td class="num">240</td><td class="num">4.7%</td><td class="num">4.56</td><td class="num">28</td></tr>
+<tr><td class="">Aug 2026</td><td class="num">4,948</td><td class="num">0</td><td class="num">4,948</td><td class="num">234</td><td class="num">15</td><td class="num">0</td><td class="num">219</td><td class="num">4.7%</td><td class="num">4.58</td><td class="num">27</td></tr>
+<tr><td class="">Sep 2026</td><td class="num">4,643</td><td class="num">0</td><td class="num">4,643</td><td class="num">204</td><td class="num">7</td><td class="num">1</td><td class="num">196</td><td class="num">4.4%</td><td class="num">4.67</td><td class="num">17</td></tr>
+<tr><td class="">Oct 1–5 2026*</td><td class="num">605</td><td class="num">0</td><td class="num">605</td><td class="num">40</td><td class="num">2</td><td class="num">0</td><td class="num">38</td><td class="num">6.6%</td><td class="num">4.65</td><td class="num">4</td></tr>
+<tr><td class="">Total Jan 1–Oct 5</td><td class="num">56,309</td><td class="num">31,494</td><td class="num">24,916</td><td class="num">1,903</td><td class="num">445</td><td class="num">5</td><td class="num">1,453</td><td class="num">3.4%</td><td class="num">4.43</td><td class="num">278</td></tr>
+</tbody></table></div>
+<p class="foot">Invited orders are distinct normalized order IDs receiving an initial invite in each period; reminders are excluded. An order can occur under both targets or in multiple months, so the distinct full-period totals need not equal the sum of monthly totals. The ratio is all Trustpilot reviews dated in the period divided by all distinct invited orders in the period (both target labels link to Trustpilot): it includes unmatched reviews and is not invite-cohort conversion. * October covers Oct 1–5 only.</p>
+<h2 id="campaign-ratings">Average Rating by Campaign &amp; Month</h2><p>Every distinct review appears once. Order IDs must match a send before the review; emails must agree when the review has an email. A review with multiple qualifying campaigns is shown as ambiguous. Association includes both Trustpilot and custom targets and does not prove which link produced the review.</p>
+<div class="table-scroll"><table class="campaign-ratings"><thead><tr>
+<th class="">Month</th>
+<th class="num">buyer (131)</th>
+<th class="num">seller (312)</th>
+<th class="num">tickets (427)</th>
+<th class="num">Multiple campaign matches</th>
+<th class="num">Organic / unmatched</th>
+</tr></thead><tbody>
+<tr><td class="">Jan 2026</td><td class="num"><strong>4.67 ★</strong><br><span class="rating-count">83 reviews</span></td><td class="num"><strong>4.57 ★</strong><br><span class="rating-count">21 reviews</span></td><td class="num">0 reviews</td><td class="num"><strong>5.00 ★</strong><br><span class="rating-count">1 reviews</span></td><td class="num"><strong>3.98 ★</strong><br><span class="rating-count">125 reviews</span></td></tr>
+<tr><td class="">Feb 2026</td><td class="num"><strong>4.67 ★</strong><br><span class="rating-count">43 reviews</span></td><td class="num"><strong>4.62 ★</strong><br><span class="rating-count">21 reviews</span></td><td class="num">0 reviews</td><td class="num">0 reviews</td><td class="num"><strong>4.00 ★</strong><br><span class="rating-count">97 reviews</span></td></tr>
+<tr><td class="">Mar 2026</td><td class="num"><strong>4.68 ★</strong><br><span class="rating-count">28 reviews</span></td><td class="num"><strong>4.21 ★</strong><br><span class="rating-count">29 reviews</span></td><td class="num">0 reviews</td><td class="num"><strong>5.00 ★</strong><br><span class="rating-count">1 reviews</span></td><td class="num"><strong>3.98 ★</strong><br><span class="rating-count">92 reviews</span></td></tr>
+<tr><td class="">Apr 2026</td><td class="num"><strong>4.48 ★</strong><br><span class="rating-count">56 reviews</span></td><td class="num"><strong>4.60 ★</strong><br><span class="rating-count">20 reviews</span></td><td class="num">0 reviews</td><td class="num"><strong>5.00 ★</strong><br><span class="rating-count">1 reviews</span></td><td class="num"><strong>3.81 ★</strong><br><span class="rating-count">111 reviews</span></td></tr>
+<tr><td class="">May 2026</td><td class="num"><strong>4.74 ★</strong><br><span class="rating-count">43 reviews</span></td><td class="num"><strong>4.73 ★</strong><br><span class="rating-count">22 reviews</span></td><td class="num">0 reviews</td><td class="num">0 reviews</td><td class="num"><strong>4.42 ★</strong><br><span class="rating-count">127 reviews</span></td></tr>
+<tr><td class="">Jun 2026</td><td class="num"><strong>4.42 ★</strong><br><span class="rating-count">26 reviews</span></td><td class="num"><strong>4.44 ★</strong><br><span class="rating-count">9 reviews</span></td><td class="num">0 reviews</td><td class="num"><strong>5.00 ★</strong><br><span class="rating-count">1 reviews</span></td><td class="num"><strong>4.48 ★</strong><br><span class="rating-count">208 reviews</span></td></tr>
+<tr><td class="">Jul 2026</td><td class="num"><strong>5.00 ★</strong><br><span class="rating-count">10 reviews</span></td><td class="num"><strong>4.10 ★</strong><br><span class="rating-count">10 reviews</span></td><td class="num">0 reviews</td><td class="num">0 reviews</td><td class="num"><strong>4.56 ★</strong><br><span class="rating-count">240 reviews</span></td></tr>
+<tr><td class="">Aug 2026</td><td class="num"><strong>4.40 ★</strong><br><span class="rating-count">5 reviews</span></td><td class="num"><strong>4.00 ★</strong><br><span class="rating-count">10 reviews</span></td><td class="num">0 reviews</td><td class="num">0 reviews</td><td class="num"><strong>4.61 ★</strong><br><span class="rating-count">219 reviews</span></td></tr>
+<tr><td class="">Sep 2026</td><td class="num"><strong>3.40 ★</strong><br><span class="rating-count">5 reviews</span></td><td class="num"><strong>5.00 ★</strong><br><span class="rating-count">2 reviews</span></td><td class="num">0 reviews</td><td class="num"><strong>5.00 ★</strong><br><span class="rating-count">1 reviews</span></td><td class="num"><strong>4.70 ★</strong><br><span class="rating-count">196 reviews</span></td></tr>
+<tr><td class="">Oct 1–5 2026*</td><td class="num"><strong>3.00 ★</strong><br><span class="rating-count">1 reviews</span></td><td class="num"><strong>5.00 ★</strong><br><span class="rating-count">1 reviews</span></td><td class="num">0 reviews</td><td class="num">0 reviews</td><td class="num"><strong>4.68 ★</strong><br><span class="rating-count">38 reviews</span></td></tr>
+<tr><td class="">Total Jan 1–Oct 5</td><td class="num"><strong>4.61 ★</strong><br><span class="rating-count">300 reviews</span></td><td class="num"><strong>4.46 ★</strong><br><span class="rating-count">145 reviews</span></td><td class="num">0 reviews</td><td class="num"><strong>5.00 ★</strong><br><span class="rating-count">5 reviews</span></td><td class="num"><strong>4.38 ★</strong><br><span class="rating-count">1,453 reviews</span></td></tr>
+</tbody></table></div>
+<p class="foot">Months use review dates. The average is the sum of stars divided by review count; total averages are weighted by reviews. Small samples can move sharply. “0 reviews” means there is no average to calculate. No email-only fallback is used.</p>
+<h2 id="attribution">Attributed vs Organic / Unmatched Reviews</h2>
+<div class="table-scroll"><table class=""><thead><tr>
+<th class="">Scope</th>
+<th class="num">Reviews</th>
+<th class="num">Share</th>
+<th class="num">Average rating</th>
+<th class="num">≤3★ reviews</th>
+<th class="num">≤3★ share</th>
+</tr></thead><tbody>
+<tr><td class="">buyer (131)</td><td class="num">300</td><td class="num">15.8%</td><td class="num"><strong>4.61 ★</strong><br><span class="rating-count">300 reviews</span></td><td class="num">31</td><td class="num">10.3%</td></tr>
+<tr><td class="">seller (312)</td><td class="num">145</td><td class="num">7.6%</td><td class="num"><strong>4.46 ★</strong><br><span class="rating-count">145 reviews</span></td><td class="num">19</td><td class="num">13.1%</td></tr>
+<tr><td class="">tickets (427)</td><td class="num">0</td><td class="num">0.0%</td><td class="num">0 reviews</td><td class="num">0</td><td class="num">0 reviews</td></tr>
+<tr><td class="">Multiple campaign matches</td><td class="num">5</td><td class="num">0.3%</td><td class="num"><strong>5.00 ★</strong><br><span class="rating-count">5 reviews</span></td><td class="num">0</td><td class="num">0.0%</td></tr>
+<tr><td class="">Organic / unmatched</td><td class="num">1,453</td><td class="num">76.4%</td><td class="num"><strong>4.38 ★</strong><br><span class="rating-count">1,453 reviews</span></td><td class="num">228</td><td class="num">15.7%</td></tr>
+</tbody></table></div>
+<div class="explainer"><h3>What the split means</h3><ul><li><strong>Matched:</strong> one campaign has a qualifying prior order-ID send, with email agreement required where available.</li><li><strong>Ambiguous:</strong> more than one campaign qualifies; the report does not choose one.</li><li><strong>Organic / unmatched:</strong> no qualifying prior-send match. This includes missing or unusable order references and email disagreements, so it does not prove the review was unsolicited.</li><li>Both initial invites and reminders can establish an association, including sends before 2026. Test-mode sends and sends after the review are excluded.</li></ul></div>
+<div class="table-scroll"><table class=""><thead><tr>
+<th class="">Campaign / classification</th>
+<th class="num">Earliest matching target</th>
+<th class="num">Reviews</th>
+</tr></thead><tbody>
+<tr><td class="">buyer (131)</td><td class="num">trustpilot</td><td class="num">263</td></tr>
+<tr><td class="">buyer (131)</td><td class="num">custom</td><td class="num">37</td></tr>
+<tr><td class="">seller (312)</td><td class="num">custom</td><td class="num">28</td></tr>
+<tr><td class="">Multiple campaign matches</td><td class="num">custom</td><td class="num">2</td></tr>
+<tr><td class="">Organic / unmatched</td><td class="num">No match</td><td class="num">1,453</td></tr>
+<tr><td class="">Multiple campaign matches</td><td class="num">trustpilot</td><td class="num">3</td></tr>
+<tr><td class="">seller (312)</td><td class="num">trustpilot</td><td class="num">117</td></tr>
+</tbody></table></div>
+<h2 id="email">Recent Email Performance</h2><h3>API engagement: Sep 7 – Oct 5 (29 complete days)</h3><p>The campaign-report API retains a rolling window. September 6 has incomplete API coverage, and October 6 is still in progress, so both dates are excluded from this engagement table. Review analysis above continues to cover Jan 1 – Oct 5.</p>
+<div class="table-scroll"><table class=""><thead><tr>
+<th class="">Campaign</th>
+<th class="num">Logged sends</th>
+<th class="num">API sent</th>
+<th class="num">Unique opens</th>
+<th class="num">Open rate</th>
+<th class="num">Unique clicks</th>
+<th class="num">Click rate</th>
+<th class="num">Hard bounces</th>
+<th class="num">Soft bounces</th>
+<th class="num">Rejects</th>
+<th class="num">Unsubscribes</th>
+<th class="num">API-attributed service reviews</th>
+</tr></thead><tbody>
+<tr><td class="">buyer (131)</td><td class="num">7,457</td><td class="num">7,391</td><td class="num">2,361</td><td class="num">31.9%</td><td class="num">52</td><td class="num">0.7%</td><td class="num">10</td><td class="num">15</td><td class="num">20</td><td class="num">22</td><td class="num">10</td></tr>
+<tr><td class="">seller (312)</td><td class="num">1,504</td><td class="num">1,480</td><td class="num">569</td><td class="num">38.4%</td><td class="num">36</td><td class="num">2.4%</td><td class="num">4</td><td class="num">2</td><td class="num">4</td><td class="num">14</td><td class="num">4</td></tr>
+<tr><td class="">tickets (427)</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">No sends</td><td class="num">0</td><td class="num">No sends</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+</tbody></table></div>
+<p class="foot">Opens and clicks sum the API’s daily template/subject unique counters; they are not distinct people across the whole window. Rates divide those counters by API sent. Bounces and rejects are separate reported event counts, not a deduplicated delivery-failure total. Service reviews come from the API conversions result and use its date field; they are separate from the conservative order/email matching above and do not establish causal conversion.</p>
+<div class="warn-box"><p><strong>Send-count reconciliation:</strong> buyer (131) has 7,457 production log rows versus 7,391 API sent; seller (312) has 1,504 versus 1,480, differences of 66 and 24 respectively. All logged template and subject IDs are covered by the API requests. The sources expose different counters; the available results do not establish the cause of the difference. API sent is the denominator for engagement rates. Tickets (427) has no logged sends and returns empty stats and conversions for this window, shown as zero activity.</p></div>
+<h3>Production send volumes: Sep 6 – Oct 5 (30 complete days)</h3><p>The following send-log table includes September 6 and therefore has a different window from the engagement table.</p>
+<div class="table-scroll"><table class=""><thead><tr>
+<th class="">Campaign</th>
+<th class="num">Email type</th>
+<th class="num">Review target</th>
+<th class="num">Send rows</th>
+<th class="num">Distinct orders</th>
+</tr></thead><tbody>
+<tr><td class="">buyer (131)</td><td class="num">invite</td><td class="num">custom</td><td class="num">3,824</td><td class="num">3,820</td></tr>
+<tr><td class="">buyer (131)</td><td class="num">reminder</td><td class="num">custom</td><td class="num">3,913</td><td class="num">3,910</td></tr>
+<tr><td class="">seller (312)</td><td class="num">invite</td><td class="num">custom</td><td class="num">721</td><td class="num">720</td></tr>
+<tr><td class="">seller (312)</td><td class="num">reminder</td><td class="num">custom</td><td class="num">783</td><td class="num">783</td></tr>
+</tbody></table></div>
+<div class="insight-box"><p>The recent window contains <strong>9,241 email sends</strong> and 4,503 distinct initially invited orders, all linking to Trustpilot. Reviews dated in the same window total 209, with 9 campaign matched, 1 ambiguous, and 199 organic / unmatched. The all-review / invite ratio is 4.6%.</p></div>
+<h2 id="themes">Review Topics — Higher- and Lower-Rated Reviews</h2>
+<p>All 1,903 distinct reviews contain nonblank text. This section screens that text using the explicit English keyword groups below; 1,282 reviews match at least one group and 621 match none. Counts are distinct reviews mentioning a group, once per group. Groups overlap.</p><p><strong>Rating bands are not topic sentiment.</strong> A 4–5-star review may criticize a specific issue, and a 1–3-star review may include praise. These tables separate higher- and lower-rated reviews that mention each topic; they do not claim manually assessed positive or negative topic counts. Keywords can miss synonyms and non-English text or include irrelevant uses.</p>
+<div class="table-scroll"><table class=""><thead><tr>
+<th class="">Topic</th>
+<th class="num">All mentions</th>
+<th class="num">In 4–5★ reviews</th>
+<th class="num">In 1–3★ reviews</th>
+</tr></thead><tbody>
+<tr><td class="">Speed and waiting</td><td class="num">755</td><td class="num">697</td><td class="num">58</td></tr>
+<tr><td class="">Customer support</td><td class="num">205</td><td class="num">108</td><td class="num">97</td></tr>
+<tr><td class="">Refunds and disputes</td><td class="num">118</td><td class="num">31</td><td class="num">87</td></tr>
+<tr><td class="">Account security and fraud</td><td class="num">164</td><td class="num">42</td><td class="num">122</td></tr>
+<tr><td class="">Prices and fees</td><td class="num">131</td><td class="num">90</td><td class="num">41</td></tr>
+<tr><td class="">Payment and verification</td><td class="num">154</td><td class="num">51</td><td class="num">103</td></tr>
+<tr><td class="">Sellers and communication</td><td class="num">456</td><td class="num">331</td><td class="num">125</td></tr>
+<tr><td class="">Ease of use</td><td class="num">269</td><td class="num">254</td><td class="num">15</td></tr>
+</tbody></table></div>
+<h3>Patterns in the validation samples</h3><div class="theme-grid">
+<article class="theme-card"><h4 class="theme-title">Delivery, ease and helpful sellers</h4><p>Higher-rated samples describe quick fulfilment, smooth transfers, helpful sellers and easy tools. Some also contain concerns about verification or costs; a high overall rating does not mean every part of the experience was positive.</p></article>
+<article class="theme-card"><h4 class="theme-title">Verification and support handling</h4><p>Lower-rated samples question requests for identity and payment-card documents, describe repeated requests for information, and raise concerns about explanations or support ownership. These are reviewers’ accounts; the samples do not establish whether a verification request was necessary or correctly handled.</p></article>
+<article class="theme-card"><h4 class="theme-title">Refunds, disputes and seller protection</h4><p>Lower-rated samples describe disagreements over refunds, cancellations, feedback appeals and delayed seller payouts. Higher-rated samples include a dispute resolved with a refund, alongside suggestions for clearer protection rules. These examples show why topic mentions must not be treated as complaint totals.</p></article>
+</div><p class="foot">Qualitative summaries use three recent higher-rated and three recent lower-rated validation samples per keyword group (or fewer where absent). Samples overlap; they are illustrative, not a full manual sentiment classification.</p>
+<h3>Topic Mentions in 4–5-Star Reviews by Month</h3>
+<div class="table-scroll"><table class=""><thead><tr>
+<th class="">Topic</th>
+<th class="num">Total</th>
+<th class="num">Jan 2026</th>
+<th class="num">Feb 2026</th>
+<th class="num">Mar 2026</th>
+<th class="num">Apr 2026</th>
+<th class="num">May 2026</th>
+<th class="num">Jun 2026</th>
+<th class="num">Jul 2026</th>
+<th class="num">Aug 2026</th>
+<th class="num">Sep 2026</th>
+<th class="num">Oct 1–5 2026*</th>
+</tr></thead><tbody>
+<tr><td class="">Speed and waiting</td><td class="num">697</td><td class="num">72</td><td class="num">52</td><td class="num">38</td><td class="num">49</td><td class="num">65</td><td class="num">81</td><td class="num">130</td><td class="num">97</td><td class="num">92</td><td class="num">21</td></tr>
+<tr><td class="">Customer support</td><td class="num">108</td><td class="num">9</td><td class="num">10</td><td class="num">9</td><td class="num">13</td><td class="num">9</td><td class="num">11</td><td class="num">16</td><td class="num">18</td><td class="num">12</td><td class="num">1</td></tr>
+<tr><td class="">Refunds and disputes</td><td class="num">31</td><td class="num">2</td><td class="num">1</td><td class="num">5</td><td class="num">1</td><td class="num">5</td><td class="num">5</td><td class="num">4</td><td class="num">5</td><td class="num">2</td><td class="num">1</td></tr>
+<tr><td class="">Account security and fraud</td><td class="num">42</td><td class="num">7</td><td class="num">2</td><td class="num">2</td><td class="num">8</td><td class="num">9</td><td class="num">3</td><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num">0</td></tr>
+<tr><td class="">Prices and fees</td><td class="num">90</td><td class="num">10</td><td class="num">4</td><td class="num">11</td><td class="num">9</td><td class="num">12</td><td class="num">11</td><td class="num">9</td><td class="num">9</td><td class="num">12</td><td class="num">3</td></tr>
+<tr><td class="">Payment and verification</td><td class="num">51</td><td class="num">9</td><td class="num">4</td><td class="num">5</td><td class="num">5</td><td class="num">6</td><td class="num">7</td><td class="num">3</td><td class="num">7</td><td class="num">4</td><td class="num">1</td></tr>
+<tr><td class="">Sellers and communication</td><td class="num">331</td><td class="num">40</td><td class="num">30</td><td class="num">26</td><td class="num">22</td><td class="num">25</td><td class="num">37</td><td class="num">58</td><td class="num">45</td><td class="num">42</td><td class="num">6</td></tr>
+<tr><td class="">Ease of use</td><td class="num">254</td><td class="num">32</td><td class="num">23</td><td class="num">20</td><td class="num">23</td><td class="num">30</td><td class="num">29</td><td class="num">38</td><td class="num">23</td><td class="num">30</td><td class="num">6</td></tr>
+</tbody></table></div>
+<h3>Topic Mentions in 1–3-Star Reviews by Month</h3>
+<div class="table-scroll"><table class=""><thead><tr>
+<th class="">Topic</th>
+<th class="num">Total</th>
+<th class="num">Jan 2026</th>
+<th class="num">Feb 2026</th>
+<th class="num">Mar 2026</th>
+<th class="num">Apr 2026</th>
+<th class="num">May 2026</th>
+<th class="num">Jun 2026</th>
+<th class="num">Jul 2026</th>
+<th class="num">Aug 2026</th>
+<th class="num">Sep 2026</th>
+<th class="num">Oct 1–5 2026*</th>
+</tr></thead><tbody>
+<tr><td class="">Speed and waiting</td><td class="num">58</td><td class="num">7</td><td class="num">5</td><td class="num">7</td><td class="num">5</td><td class="num">7</td><td class="num">6</td><td class="num">11</td><td class="num">6</td><td class="num">3</td><td class="num">1</td></tr>
+<tr><td class="">Customer support</td><td class="num">97</td><td class="num">18</td><td class="num">6</td><td class="num">13</td><td class="num">17</td><td class="num">8</td><td class="num">15</td><td class="num">11</td><td class="num">5</td><td class="num">4</td><td class="num">0</td></tr>
+<tr><td class="">Refunds and disputes</td><td class="num">87</td><td class="num">15</td><td class="num">11</td><td class="num">7</td><td class="num">11</td><td class="num">4</td><td class="num">13</td><td class="num">7</td><td class="num">11</td><td class="num">6</td><td class="num">2</td></tr>
+<tr><td class="">Account security and fraud</td><td class="num">122</td><td class="num">22</td><td class="num">19</td><td class="num">8</td><td class="num">17</td><td class="num">11</td><td class="num">15</td><td class="num">11</td><td class="num">9</td><td class="num">7</td><td class="num">3</td></tr>
+<tr><td class="">Prices and fees</td><td class="num">41</td><td class="num">5</td><td class="num">3</td><td class="num">8</td><td class="num">6</td><td class="num">3</td><td class="num">5</td><td class="num">4</td><td class="num">6</td><td class="num">1</td><td class="num">0</td></tr>
+<tr><td class="">Payment and verification</td><td class="num">103</td><td class="num">11</td><td class="num">12</td><td class="num">13</td><td class="num">17</td><td class="num">6</td><td class="num">15</td><td class="num">9</td><td class="num">10</td><td class="num">9</td><td class="num">1</td></tr>
+<tr><td class="">Sellers and communication</td><td class="num">125</td><td class="num">22</td><td class="num">17</td><td class="num">15</td><td class="num">18</td><td class="num">9</td><td class="num">16</td><td class="num">11</td><td class="num">8</td><td class="num">8</td><td class="num">1</td></tr>
+<tr><td class="">Ease of use</td><td class="num">15</td><td class="num">2</td><td class="num">4</td><td class="num">1</td><td class="num">2</td><td class="num">2</td><td class="num">3</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+</tbody></table></div>
+<h3>Keyword groups</h3>
+<div class="table-scroll"><table class=""><thead><tr>
+<th class="">Topic</th>
+<th class="num">Screening terms (word families included)</th>
+</tr></thead><tbody>
+<tr><td class="">Speed and waiting</td><td class="num">deliver, instant, fast, quick, slow, wait, speed</td></tr>
+<tr><td class="">Customer support</td><td class="num">support, customer service, customer care, ticket, response</td></tr>
+<tr><td class="">Refunds and disputes</td><td class="num">refund, dispute, chargeback, cancel</td></tr>
+<tr><td class="">Account security and fraud</td><td class="num">scam, fraud, banned, recover, reclaim, stolen, hack</td></tr>
+<tr><td class="">Prices and fees</td><td class="num">fee, price, cost, cheap, expensive, afford</td></tr>
+<tr><td class="">Payment and verification</td><td class="num">payment, verify, identity, identification, card</td></tr>
+<tr><td class="">Sellers and communication</td><td class="num">seller, vendor, communication</td></tr>
+<tr><td class="">Ease of use</td><td class="num">easy, ease, smooth, simple, convenient, interface, user-friendly</td></tr>
+</tbody></table></div>
+<h2 id="notes">Definitions &amp; Data Notes</h2><div class="explainer"><ul>
+<li>Scope: PlayerAuctions project and account (playerauctions); Trustpilot order reviews only. Reviews use event timestamps from Jan 1 00:00 through Oct 6 00:00 exclusive, UTC. No future 2026 dates are represented.</li>
+<li>Sources: materialized customer-review Delta table, per-campaign production invite Delta tables, and authenticated PlayerAuctions campaign-report API results retrieved October 6. Delta was read with its transaction log; test-mode directories were excluded.</li>
+<li>Freshness: review source latest timestamp 2026-10-06 12:26:41 UTC; buyer (131) sends through 2026-10-06 12:58:27 UTC; seller (312) through 2026-10-06 12:58:24 UTC. Tickets (427) last recorded a send on 2026-07-02 09:56:09 UTC. Generation-day records are excluded from all period figures.</li>
+<li>Deduplication: 1,904 materialized rows in the review window contained 1,903 distinct review IDs. One repeated ID had the same date, text and rating and is counted once. All retained reviews have ratings from 1 to 5.</li>
+<li>Order references are lowercased and trimmed, not guessed or parsed out of free text. The order-only audit found 462 reviews with a prior send match; 13 had multiple campaign matches and 12 available review emails had no agreeing invite email. The final conservative classification requires email agreement when present and leaves multiple-campaign cases separate.</li>
+<li>The all-review / invite ratio is a period comparison, not causal attribution or cohort conversion. Some reviews can relate to invitations sent before the period, while recent invitees may review later.</li>
+<li>No recipient names, emails, raw review text, order IDs or private analysis exports are included in this customer-facing report.</li>
+<li>API engagement covers Sep 7–Oct 5 only, owing to rolling retention. Template coverage was checked against the production logs: buyer (131) uses Invite (309) and Reminder (310); seller (312) uses Invite - Seller (567) and Reminder (310). Their subject lines are How would you rate PlayerAuctions? (274) and A reminder to review PlayerAuctions (280). Tickets (427) has no recent send activity.</li>
+</ul></div><p class="foot">PlayerAuctions · Jan 1 – Oct 5 2026 · Generated 2026-10-06</p></div></body></html>
