@@ -106,6 +106,17 @@
   td.num, th.num { text-align:right; font-variant-numeric: tabular-nums; }
   .tfoot-row td { font-weight:700; background:#f8f9ff; }
   .foot { font-size:12px; color:#636e72; margin:-8px 0 18px; line-height:1.5; }
+  /* Responsive report tables */
+  .table-scroll { max-width:100%; overflow-x:auto; margin-bottom:20px; }
+  .table-scroll table { margin-bottom:0; }
+  @media (max-width:600px) {
+    .wrapper { margin:20px auto; padding:0 16px 40px; }
+    .kpi-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .kpi { padding:14px 12px; }
+    .kpi .value { font-size:23px; }
+    h1 { font-size:23px; }
+    .table-scroll table { min-width:700px; }
+  }
 </style>
 </head>
 <body>
@@ -121,6 +132,7 @@
       <li><a href="#monthly">Monthly Breakdown</a></li>
       <li><a href="#attribution">Attributed vs Organic Reviews</a></li>
       <li><a href="#email">Email Performance — Last 30 Days</a></li>
+      <li><a href="#themes">Review Analysis — Positive &amp; Negative Topics</a></li>
       <li><a href="#notes">Definitions &amp; Data Notes</a></li>
     </ol>
   </div>
@@ -139,7 +151,7 @@
   </div>
 
   <h2 id="monthly">Monthly Breakdown</h2>
-  <table>
+  <div class="table-scroll"><table>
     <tr><th>Month</th><th class="num">Invites sent</th><th class="num">Google reviews</th><th class="num">Attributed</th><th class="num">Organic</th><th class="num">Review rate (all reviews)</th><th class="num">Attributed rate (reference)</th><th class="num">Avg ★</th><th class="num">≤3★ reviews</th></tr>
 <tr><td>Jan 2026</td><td class="num">0</td><td class="num"><strong>6</strong></td><td class="num">0</td><td class="num">6</td><td class="num"><strong>no invites sent</strong></td><td class="num">no invites sent</td><td class="num">2.50</td><td class="num">4</td></tr>
 <tr><td>Feb 2026</td><td class="num">0</td><td class="num"><strong>9</strong></td><td class="num">0</td><td class="num">9</td><td class="num"><strong>no invites sent</strong></td><td class="num">no invites sent</td><td class="num">2.33</td><td class="num">7</td></tr>
@@ -152,7 +164,7 @@
 <tr><td>Sep 2026</td><td class="num">878</td><td class="num"><strong>96</strong></td><td class="num">49</td><td class="num">47</td><td class="num"><strong>10.9%</strong></td><td class="num">5.6%</td><td class="num">4.36</td><td class="num">15</td></tr>
 <tr><td>Oct 1–4 2026*</td><td class="num">340</td><td class="num"><strong>24</strong></td><td class="num">13</td><td class="num">11</td><td class="num"><strong>7.1%</strong></td><td class="num">3.8%</td><td class="num">4.71</td><td class="num">1</td></tr>
 <tr class="tfoot-row"><td>Total 2026 (to Oct 4)</td><td class="num">6,961</td><td class="num">731</td><td class="num">383</td><td class="num">348</td><td class="num">10.5%</td><td class="num">5.5%</td><td class="num">—</td><td class="num">113</td></tr>
-  </table>
+  </table></div>
   <p class="foot">Review rate (all reviews) = all Google reviews dated in the month ÷ invites sent in the month. Attributed rate = only reviews matched to an invited order ÷ invites sent. Invites sent = distinct orders that received an invite email (reminders not counted).<br>
   † March: invites only started on March 26 (612 invites in 6 days), while the 46 reviews cover the whole month — 38 are organic reviews from before the invites began. The March rate is therefore not comparable with later months.<br>
   * October covers Oct 1–4 only (last complete day). Monthly review counts include reviews with a star rating only and reviews with text; ≤3★ = 1–3 stars.</p>
@@ -165,7 +177,7 @@
       <li><strong>Organic</strong> = every other Google review (no order link, or an order that was never sent an invite). These are included in the review rate above and shown here for reference only.</li>
     </ul>
   </div>
-  <table class="vs-table">
+  <div class="table-scroll"><table class="vs-table">
     <tr><th>Month</th><th class="num col-attr">Attributed</th><th class="num col-attr">Avg ★ attributed</th><th class="num col-attr">Share</th><th class="num col-organic">Organic</th><th class="num col-organic">Avg ★ organic</th><th class="num col-organic">Share</th></tr>
 <tr><td>Jan 2026</td><td class="num">0</td><td class="num">no attributed reviews</td><td class="num">0.0%</td><td class="num">6</td><td class="num">2.50</td><td class="num">100.0%</td></tr>
 <tr><td>Feb 2026</td><td class="num">0</td><td class="num">no attributed reviews</td><td class="num">0.0%</td><td class="num">9</td><td class="num">2.33</td><td class="num">100.0%</td></tr>
@@ -176,13 +188,13 @@
 <tr><td>Jul 2026</td><td class="num">51</td><td class="num">4.65</td><td class="num">51.0%</td><td class="num">49</td><td class="num">4.12</td><td class="num">49.0%</td></tr>
 <tr><td>Aug 2026</td><td class="num">39</td><td class="num">4.41</td><td class="num">53.4%</td><td class="num">34</td><td class="num">3.91</td><td class="num">46.6%</td></tr>
 <tr><td>Sep 2026</td><td class="num">49</td><td class="num">4.31</td><td class="num">51.0%</td><td class="num">47</td><td class="num">4.43</td><td class="num">49.0%</td></tr>
-  </table>
+  </table></div>
   <p class="foot">Rating split shown for full months Jan–Sep. October (Oct 1–4): 13 attributed, 11 organic.</p>
 
   <h2 id="email">Email Performance — Last 30 Days (Sep 6 – Oct 4)</h2>
   <p>Source: StackTome campaign reports for the six active campaigns. The campaign API keeps about 30 days of daily statistics, so the window starts Sep 6 (Sep 5 is not available) and ends Oct 4, the last complete day. Opens and clicks are unique.</p>
   <h3>Invite emails</h3>
-  <table>
+  <div class="table-scroll"><table>
     <tr><th>Campaign</th><th class="num">Sent</th><th class="num">Unique opens</th><th class="num">Open %</th><th class="num">Unique clicks</th><th class="num">Click %</th><th class="num">Bounced / rejected</th><th class="num">Unsubs</th><th class="num">Reviews via link</th></tr>
 <tr><td>invite-DE-01234 (520)</td><td class="num">94</td><td class="num">62</td><td class="num">66.0%</td><td class="num">21</td><td class="num">22.3%</td><td class="num">6</td><td class="num">0</td><td class="num">1</td></tr>
 <tr><td>invite-DE-56789 (521)</td><td class="num">331</td><td class="num">178</td><td class="num">53.8%</td><td class="num">55</td><td class="num">16.6%</td><td class="num">14</td><td class="num">2</td><td class="num">12</td></tr>
@@ -191,9 +203,9 @@
 <tr><td>invite-IT-de (524)</td><td class="num">24</td><td class="num">14</td><td class="num">58.3%</td><td class="num">3</td><td class="num">12.5%</td><td class="num">1</td><td class="num">0</td><td class="num">1</td></tr>
 <tr><td>invite-IT-it (525)</td><td class="num">134</td><td class="num">72</td><td class="num">53.7%</td><td class="num">23</td><td class="num">17.2%</td><td class="num">9</td><td class="num">0</td><td class="num">6</td></tr>
 <tr class="tfoot-row"><td>All invite emails</td><td class="num">847</td><td class="num">456</td><td class="num">53.8%</td><td class="num">143</td><td class="num">16.9%</td><td class="num">41</td><td class="num">5</td><td class="num">24</td></tr>
-  </table>
+  </table></div>
   <h3>Reminder emails</h3>
-  <table>
+  <div class="table-scroll"><table>
     <tr><th>Campaign</th><th class="num">Sent</th><th class="num">Unique opens</th><th class="num">Open %</th><th class="num">Unique clicks</th><th class="num">Click %</th><th class="num">Bounced / rejected</th><th class="num">Unsubs</th><th class="num">Reviews via link</th></tr>
 <tr><td>invite-DE-01234 (520)</td><td class="num">83</td><td class="num">43</td><td class="num">51.8%</td><td class="num">21</td><td class="num">25.3%</td><td class="num">4</td><td class="num">2</td><td class="num">2</td></tr>
 <tr><td>invite-DE-56789 (521)</td><td class="num">276</td><td class="num">137</td><td class="num">49.6%</td><td class="num">54</td><td class="num">19.6%</td><td class="num">19</td><td class="num">2</td><td class="num">9</td></tr>
@@ -202,16 +214,252 @@
 <tr><td>invite-IT-de (524)</td><td class="num">39</td><td class="num">25</td><td class="num">64.1%</td><td class="num">5</td><td class="num">12.8%</td><td class="num">2</td><td class="num">0</td><td class="num">2</td></tr>
 <tr><td>invite-IT-it (525)</td><td class="num">124</td><td class="num">73</td><td class="num">58.9%</td><td class="num">18</td><td class="num">14.5%</td><td class="num">10</td><td class="num">0</td><td class="num">4</td></tr>
 <tr class="tfoot-row"><td>All reminder emails</td><td class="num">774</td><td class="num">407</td><td class="num">52.6%</td><td class="num">137</td><td class="num">17.7%</td><td class="num">50</td><td class="num">6</td><td class="num">23</td></tr>
-  </table>
+  </table></div>
   <h3>Combined</h3>
-  <table>
+  <div class="table-scroll"><table>
     <tr><th>Scope</th><th class="num">Sent</th><th class="num">Unique opens</th><th class="num">Open %</th><th class="num">Unique clicks</th><th class="num">Click %</th><th class="num">Bounced / rejected</th><th class="num">Unsubs</th><th class="num">Reviews via link</th></tr>
 <tr class="tfoot-row"><td>All emails (invites + reminders)</td><td class="num">1621</td><td class="num">863</td><td class="num">53.2%</td><td class="num">280</td><td class="num">17.3%</td><td class="num">91</td><td class="num">11</td><td class="num">47</td></tr>
-  </table>
+  </table></div>
   <p class="foot">Open % and click % are unique opens / unique clicks ÷ sent. "Reviews via link" = reviews that the campaign report credits to the email's review link (service reviews). The 6 campaigns are active; invite-tp (445) sent nothing in this window.</p>
   <div class="insight-box">
     <p><strong>Last 30 days (Sep 5 – Oct 4, reviews dated):</strong> 97 Google reviews — 48 attributed, 49 organic — against 894 invites sent: a review rate of 10.8% on all reviews, 5.4% attributed only. Average rating 4.40, 14 reviews at ≤3★.</p>
   </div>
+
+<!-- WENATEX_THEMES_BEGIN -->
+<h2 id="themes">Review Analysis — Positive &amp; Negative Topics</h2>
+<p>Jan 1 – Oct 4 2026, matching the report period. <strong>382 of 731 Google reviews (52.3%) contain text</strong>; 349 are star-only and cannot be assigned a topic. Of the 113 reviews rated 1–3 stars, 85 have text and 28 are star-only. Every nonblank text was read; 336 name at least one of the topics below, while 46 are generic, unclear or contain no specific topic.</p>
+<p>Sentiment is assessed <strong>per topic from the text</strong>: a 5-star review can contain a complaint and a 1–3-star review can contain praise. 61 reviews contain both positive and negative topic mentions. Counts are reviews mentioning a topic, once per review per sentiment; multiple topics can occur in one review, so columns must not be added to obtain a review total. Original and Google-translated text are counted as one review.</p>
+<h3>Topics at a glance</h3>
+<div class="table-scroll"><table><thead><tr><th>Topic</th><th class="num">Positive mentions</th><th class="num">Negative / concern mentions</th></tr></thead><tbody>
+<tr><td>Sleep comfort, fit &amp; reported benefits</td><td class="num good">133</td><td class="num warn">41</td></tr>
+<tr><td>Product quality, features &amp; durability</td><td class="num good">129</td><td class="num warn">16</td></tr>
+<tr><td>Consultation, demonstrations &amp; staff</td><td class="num good">117</td><td class="num warn">25</td></tr>
+<tr><td>Delivery &amp; order handling</td><td class="num good">46</td><td class="num warn">9</td></tr>
+<tr><td>Price &amp; value for money</td><td class="num good">24</td><td class="num warn">53</td></tr>
+<tr><td>After-sales support, returns &amp; warranty</td><td class="num good">9</td><td class="num warn">13</td></tr>
+<tr><td>Unwanted marketing calls</td><td class="num good">0</td><td class="num warn">30</td></tr>
+<tr><td>Review-request frequency</td><td class="num good">0</td><td class="num warn">2</td></tr>
+</tbody></table></div>
+<p class="foot">Price concerns include explicit descriptions such as “expensive” even where the reviewer also says the purchase was worth it. Product quality includes explicit product praise, material, performance and durability comments; general satisfaction without a specific dimension is left unclassified. Sleep benefits and adverse experiences are customers’ reports, not verified medical effects. Sales, privacy and warranty complaints are reviewers’ accounts, not independently established findings.</p>
+<h3>Positive Topics by Month</h3>
+<div class="table-scroll"><table><thead><tr><th>Topic</th><th class="num">Total</th>
+<th class="num">Jan</th>
+<th class="num">Feb</th>
+<th class="num">Mar</th>
+<th class="num">Apr</th>
+<th class="num">May</th>
+<th class="num">Jun</th>
+<th class="num">Jul</th>
+<th class="num">Aug</th>
+<th class="num">Sep</th>
+<th class="num">Oct 1–4*</th>
+</tr></thead><tbody>
+<tr><td>Sleep comfort, fit &amp; reported benefits</td><td class="num"><strong>133</strong></td>
+<td class="num">2</td>
+<td class="num">1</td>
+<td class="num">9</td>
+<td class="num">18</td>
+<td class="num">28</td>
+<td class="num">23</td>
+<td class="num">19</td>
+<td class="num">10</td>
+<td class="num">17</td>
+<td class="num">6</td>
+</tr>
+<tr><td>Product quality, features &amp; durability</td><td class="num"><strong>129</strong></td>
+<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">7</td>
+<td class="num">16</td>
+<td class="num">23</td>
+<td class="num">25</td>
+<td class="num">15</td>
+<td class="num">14</td>
+<td class="num">21</td>
+<td class="num">6</td>
+</tr>
+<tr><td>Consultation, demonstrations &amp; staff</td><td class="num"><strong>117</strong></td>
+<td class="num">1</td>
+<td class="num">1</td>
+<td class="num">10</td>
+<td class="num">21</td>
+<td class="num">17</td>
+<td class="num">23</td>
+<td class="num">13</td>
+<td class="num">11</td>
+<td class="num">18</td>
+<td class="num">2</td>
+</tr>
+<tr><td>Delivery &amp; order handling</td><td class="num"><strong>46</strong></td>
+<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">3</td>
+<td class="num">9</td>
+<td class="num">9</td>
+<td class="num">5</td>
+<td class="num">7</td>
+<td class="num">8</td>
+<td class="num">3</td>
+<td class="num">1</td>
+</tr>
+<tr><td>Price &amp; value for money</td><td class="num"><strong>24</strong></td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">2</td>
+<td class="num">3</td>
+<td class="num">4</td>
+<td class="num">6</td>
+<td class="num">3</td>
+<td class="num">1</td>
+<td class="num">4</td>
+<td class="num">1</td>
+</tr>
+<tr><td>After-sales support, returns &amp; warranty</td><td class="num"><strong>9</strong></td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">1</td>
+<td class="num">4</td>
+<td class="num">0</td>
+<td class="num">1</td>
+<td class="num">2</td>
+<td class="num">1</td>
+<td class="num">0</td>
+</tr>
+</tbody></table></div>
+<h3>Negative / Concern Topics by Month</h3>
+<div class="table-scroll"><table><thead><tr><th>Topic</th><th class="num">Total</th>
+<th class="num">Jan</th>
+<th class="num">Feb</th>
+<th class="num">Mar</th>
+<th class="num">Apr</th>
+<th class="num">May</th>
+<th class="num">Jun</th>
+<th class="num">Jul</th>
+<th class="num">Aug</th>
+<th class="num">Sep</th>
+<th class="num">Oct 1–4*</th>
+</tr></thead><tbody>
+<tr><td>Sleep comfort, fit &amp; reported benefits</td><td class="num"><strong>41</strong></td>
+<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">4</td>
+<td class="num">2</td>
+<td class="num">8</td>
+<td class="num">12</td>
+<td class="num">4</td>
+<td class="num">3</td>
+<td class="num">5</td>
+<td class="num">2</td>
+</tr>
+<tr><td>Product quality, features &amp; durability</td><td class="num"><strong>16</strong></td>
+<td class="num">0</td>
+<td class="num">1</td>
+<td class="num">1</td>
+<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">4</td>
+<td class="num">0</td>
+<td class="num">3</td>
+<td class="num">5</td>
+<td class="num">0</td>
+</tr>
+<tr><td>Consultation, demonstrations &amp; staff</td><td class="num"><strong>25</strong></td>
+<td class="num">1</td>
+<td class="num">3</td>
+<td class="num">2</td>
+<td class="num">3</td>
+<td class="num">2</td>
+<td class="num">3</td>
+<td class="num">2</td>
+<td class="num">4</td>
+<td class="num">4</td>
+<td class="num">1</td>
+</tr>
+<tr><td>Delivery &amp; order handling</td><td class="num"><strong>9</strong></td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">1</td>
+<td class="num">1</td>
+<td class="num">1</td>
+<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">2</td>
+<td class="num">2</td>
+<td class="num">0</td>
+</tr>
+<tr><td>Price &amp; value for money</td><td class="num"><strong>53</strong></td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">3</td>
+<td class="num">9</td>
+<td class="num">6</td>
+<td class="num">13</td>
+<td class="num">4</td>
+<td class="num">8</td>
+<td class="num">7</td>
+<td class="num">3</td>
+</tr>
+<tr><td>After-sales support, returns &amp; warranty</td><td class="num"><strong>13</strong></td>
+<td class="num">1</td>
+<td class="num">1</td>
+<td class="num">3</td>
+<td class="num">0</td>
+<td class="num">1</td>
+<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">2</td>
+<td class="num">4</td>
+<td class="num">0</td>
+</tr>
+<tr><td>Unwanted marketing calls</td><td class="num"><strong>30</strong></td>
+<td class="num">1</td>
+<td class="num">2</td>
+<td class="num">9</td>
+<td class="num">1</td>
+<td class="num">4</td>
+<td class="num">3</td>
+<td class="num">5</td>
+<td class="num">4</td>
+<td class="num">1</td>
+<td class="num">0</td>
+</tr>
+<tr><td>Review-request frequency</td><td class="num"><strong>2</strong></td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+</tbody></table></div>
+<p class="foot">* October covers Oct 1–4 only. Zero means no mention found in the available review text, not that no customer experienced the issue. January–February inherit the Google-import completeness caveat in the data notes.</p>
+<div class="insight-box"><p><strong>What customers praise:</strong> sleep comfort and reported benefits (133 reviews), product quality/features/durability (129), and consultation or staff (117). Positive delivery/order handling appears in 46 reviews.</p><p><strong>What customers question:</strong> price/value (53 reviews) and sleep comfort or fit (41), including firmness, pillow suitability and temperature expectations. Product feature/quality concerns appear in 16 reviews, and after-sales, return or warranty concerns in 13.</p><p><strong>Contact and sales experience:</strong> 30 reviews object to marketing calls; this is separate from the two reviews that explicitly object to repeated review requests, both in April. Consultation or staff concerns appear in 25 reviews, including 4 in September. These are useful areas for checking contact preferences, consultant conduct, expectation-setting and delivery follow-through.</p></div>
+<h3>Representative Review Examples</h3>
+<p class="foot">English paraphrases, selected to illustrate the topics. Dates and stars identify the source; the internal audit records the full review IDs. Mixed feedback appears on both sides where appropriate.</p>
+<div class="table-scroll"><table><thead><tr><th>Topic / sentiment</th><th>Date · ★</th><th>What the reviewer said (paraphrased)</th></tr></thead><tbody>
+<tr><td>Sleep comfort, fit &amp; reported benefits<br><span class="good">Positive</span></td><td>2026-09-02 · 5★</td><td class="review-text">Sleeps through the night and reports no morning back pain; considers the mattress worth its high price.</td></tr>
+<tr><td>Sleep comfort, fit &amp; reported benefits<br><span class="warn">Negative</span></td><td>2026-08-28 · 1★</td><td class="review-text">Finds the mattresses too soft and unstable, and hopes for a firmer alternative.</td></tr>
+<tr><td>Product quality, features &amp; durability<br><span class="good">Positive</span></td><td>2026-06-03 · 5★</td><td class="review-text">Reports mattresses still in excellent condition after 20 years and chose Wenatex replacements.</td></tr>
+<tr><td>Product quality, features &amp; durability<br><span class="warn">Negative</span></td><td>2026-09-17 · 1★</td><td class="review-text">Reports a mattress cover tearing again after a replacement; objects to paying for another cover.</td></tr>
+<tr><td>Consultation, demonstrations &amp; staff<br><span class="good">Positive</span></td><td>2026-07-12 · 5★</td><td class="review-text">Praises competent advice and a presentation where guests were not pressured to buy.</td></tr>
+<tr><td>Consultation, demonstrations &amp; staff<br><span class="warn">Negative</span></td><td>2026-07-07 · 5★</td><td class="review-text">Rates the mattresses highly but criticizes an exhausting presentation and restrictions on questions.</td></tr>
+<tr><td>Delivery &amp; order handling<br><span class="good">Positive</span></td><td>2026-10-02 · 5★</td><td class="review-text">Praises the mattresses and delivery.</td></tr>
+<tr><td>Delivery &amp; order handling<br><span class="warn">Negative</span></td><td>2026-05-07 · 4★</td><td class="review-text">Praises product quality but reports damaged packaging left carelessly outside; products were undamaged.</td></tr>
+<tr><td>Price &amp; value for money<br><span class="good">Positive</span></td><td>2026-05-12 · 5★</td><td class="review-text">Reports a good night’s sleep and says the investment was worthwhile.</td></tr>
+<tr><td>Price &amp; value for money<br><span class="warn">Negative</span></td><td>2026-08-01 · 3★</td><td class="review-text">Praises quality but calls the price enormous.</td></tr>
+<tr><td>After-sales support, returns &amp; warranty<br><span class="good">Positive</span></td><td>2026-05-15 · 3★</td><td class="review-text">The mattress did not justify the price for this customer, but return, collection and refund were handled without problems.</td></tr>
+<tr><td>After-sales support, returns &amp; warranty<br><span class="warn">Negative</span></td><td>2026-08-10 · 1★</td><td class="review-text">Reports unconfirmed warranty promises and unanswered emails.</td></tr>
+<tr><td>Unwanted marketing calls<br><span class="warn">Negative</span></td><td>2026-07-09 · 1★</td><td class="review-text">Reports repeated unsolicited calls continuing after explanations that the contact details were incorrect.</td></tr>
+<tr><td>Review-request frequency<br><span class="warn">Negative</span></td><td>2026-04-07 · 3★</td><td class="review-text">Mentions reminders on April 4, 6 and 7; delivery was fine but value remained uncertain.</td></tr>
+<tr><td>Review-request frequency<br><span class="warn">Negative</span></td><td>2026-04-07 · 5★</td><td class="review-text">Praises the product and presentation but asks how many more review requests will arrive.</td></tr>
+</tbody></table></div>
+<p class="foot">Analysis added 2026-10-06. Source: Wenatex <code>customer_review</code> Delta table, Google events by <code>ts_event</code>; 731 distinct <code>order_review_id</code> values. Read-only source queries are in <strong>/support_clone/wenatex_data (2N5H33RZT)</strong>. Manual topic labels and exact review IDs are retained in the internal analysis audit.</p>
+<!-- WENATEX_THEMES_END -->
 
   <h2 id="notes">Definitions &amp; Data Notes</h2>
   <ul style="margin-left:20px;line-height:1.7">
