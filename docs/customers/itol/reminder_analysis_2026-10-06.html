@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITOL Recruit Reminder Analysis — Sep 6–Oct 5, 2026</title><style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #1a1a2e; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .stars { color: #fdcb6e; }
+  .delta-up { color: #00b894; font-size: 11px; }
+  .delta-flat { color: #888; font-size: 11px; }
+  .delta-down { color: #d63031; font-size: 11px; }
+
+  .total-row td { background: #f0f0f0 !important; font-weight: 600; }
+
+  .campaign-block { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 16px; overflow: hidden; }
+  .camp-header { background: #1a1a2e; color: #fff; padding: 10px 16px; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 10px; }
+  .camp-header .badge { background: #6c5ce7; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
+  .camp-header .badge-gold { background: #fdcb6e; color: #5d4037; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .camp-header .badge-blue { background: #0984e3; color: #fff; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .camp-header .badge-red { background: #d63031; color: #fff; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .review-card { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; }
+  .review-card:last-child { border-bottom: none; }
+  .review-card.urgent { background: #fff6f6; border-left: 4px solid #d63031; }
+  .review-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+  .rating-badge { font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 8px; }
+  .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff3e0; color: #e17055; }
+  .r3 { background: #fffde0; color: #b8860b; }
+  .r4 { background: #eaf4fb; color: #2980b9; }
+  .r5 { background: #e8f8f5; color: #00b894; }
+  .review-heading { font-weight: 600; color: #1a1a2e; margin-bottom: 5px; font-size: 13px; }
+  .review-text { font-style: italic; color: #555; line-height: 1.6; font-size: 13px; }
+  .review-meta-line { font-size: 11px; color: #888; margin-bottom: 6px; }
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-warn { display: inline-block; background: #fff3e0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #e17055; font-weight: 600; }
+  .tag-urgent { display: inline-block; background: #ffeaea; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #d63031; font-weight: 700; }
+  .tag-ok { display: inline-block; background: #e8f8f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #00b894; }
+  .name-tag { display: inline-block; background: #6c5ce7; color: #fff; border-radius: 4px; padding: 2px 8px; font-size: 11px; }
+
+  .all-clear { background: #e8f8f5; border: 1.5px solid #00b894; border-radius: 10px; padding: 20px 22px; color: #00b894; font-weight: 600; font-size: 14px; }
+  .success-banner { background: #e8f8f5; border: 2px solid #00b894; border-radius: 10px; padding: 18px 22px; margin-bottom: 16px; }
+  .success-banner .sb-title { color: #00b894; font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+  .warning { background: #fff9e6; border: 1.5px solid #fdcb6e; border-radius: 10px; padding: 16px 20px; color: #5d4037; font-size: 13px; line-height: 1.6; margin-bottom: 12px; }
+  .alert { background: #fff6f6; border: 2px solid #d63031; border-radius: 10px; padding: 16px 20px; color: #7a1f1f; font-size: 13px; line-height: 1.6; margin-bottom: 12px; }
+  .info-box { background: #f0f4ff; border: 1.5px solid #a0b4e8; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #2c3e6e; line-height: 1.6; }
+  .note { font-size: 12px; color: #888; margin-top: 4px; }
+
+  .staff-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .staff-chip { background: #f0edff; color: #6c5ce7; border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 600; }
+  .staff-chip-role { font-weight: 400; color: #888; font-size: 11px; margin-left: 4px; }
+  .organic-chip { background: #f0f0f0; color: #636e72; border-radius: 20px; padding: 4px 14px; font-size: 12px; }
+
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+
+  .bar-row{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:13px}
+  .bar-label{width:70px;color:#636e72}
+  .bar{height:18px;background:#6c5ce7;border-radius:4px;min-width:2px}
+  .bar-val{color:#2d3436;font-weight:600}
+  .tag-keep{display:inline-block;background:#e8f8f5;border-radius:4px;padding:2px 8px;font-size:11px;color:#00b894;font-weight:700}
+  .tag-delay{display:inline-block;background:#fff3e0;border-radius:4px;padding:2px 8px;font-size:11px;color:#e17055;font-weight:700}
+  .tag-mon{display:inline-block;background:#eaf4fb;border-radius:4px;padding:2px 8px;font-size:11px;color:#2980b9;font-weight:700}
+  .tag-small{display:inline-block;background:#f0f0f0;border-radius:4px;padding:2px 8px;font-size:11px;color:#636e72;font-weight:700}
+  td.num,th.num{text-align:right}
+</style></head><body><div class="wrapper">
+<h1>ITOL Recruit &mdash; Reminder Effectiveness &amp; Email Frequency Analysis</h1>
+<div class="subtitle">Last 30 completed days: Sep 6&ndash;Oct 5, 2026 &nbsp;&bull;&nbsp; Generated 2026-10-06 &nbsp;&bull;&nbsp; Analysis only &mdash; no campaign changes made</div>
+<nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #6c5ce7;font-size:14px;line-height:2;">
+<strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+<a href="#s1">1. Executive Summary</a> &nbsp;&bull;&nbsp; <a href="#s2">2. Reminder Effectiveness by Campaign</a> &nbsp;&bull;&nbsp; <a href="#s3">3. Early-Stage Campaigns</a> &nbsp;&bull;&nbsp; <a href="#s4">4. Review Emails per Contact</a> &nbsp;&bull;&nbsp; <a href="#s5">5. Unsubscribes</a> &nbsp;&bull;&nbsp; <a href="#s6">6. Recommendations</a> &nbsp;&bull;&nbsp; <a href="#s7">7. Reading Notes</a></nav>
+
+<h2 id="s1">1. Executive Summary</h2>
+<div class="kpi-grid">
+<div class="kpi"><div class="label">Initial Invites</div><div class="value">647</div><div class="sub">across 11 invite campaigns</div></div>
+<div class="kpi"><div class="label">Reviews Before Reminder</div><div class="value">36</div><div class="sub">5.6% of invites; avg 4.86&#9733;</div></div>
+<div class="kpi"><div class="label">Reviews After Reminder</div><div class="value">16</div><div class="sub">2.8% of 566 reminded; avg 4.00&#9733;</div></div>
+<div class="kpi"><div class="label">Emails per Contact</div><div class="value">2.4</div><div class="sub">median 2, most 6 (522 contacts)</div></div></div>
+<p class="note">Reviews are counted once each. Customers who reviewed before their reminder was due were not reminded. &ldquo;After reminder&rdquo; means received after the first reminder was sent; it does not show the reminder caused the review.</p>
+<div class="info-box"><strong>Main findings.</strong>
+<ul style="margin:8px 0 0 18px;line-height:1.8">
+<li><strong>16 reviews were received after the first reminder, alongside 36 received before it</strong> (31% of the 52 reviews from this window&rsquo;s invites). The post-reminder yield is 2.8% of the customers reminded.</li>
+<li><strong>Support (647) has the strongest post-reminder result:</strong> 5 reviews were received after the reminder against 3 before it, a 6.5% post-reminder yield, averaging 4.6&#9733;.</li>
+<li><strong>Welcome Call/Setup (646) has the lowest post-reminder yield of the three larger campaigns:</strong> 248 customers reminded, 4 reviews received afterwards (1.6%, and 0.6% once only reminders with a full week to respond are counted). It also has the largest email volume of the campaigns.</li>
+<li><strong>Post-reminder reviews are rated lower:</strong> 4 of 16 were 3&#9733; or below (avg 4.00&#9733;), against none of the 36 received before the reminder (avg 4.86&#9733;).</li>
+<li><strong>New students are often asked by two campaigns at once.</strong> 125 of the 272 Welcome Call/Setup invites (46%) went to a contact who also received a Hubspot Main invite within 7 days; 112 contacts received emails from two campaigns on the same day.</li>
+<li><strong>Typical load is 2 review emails per contact, but 1 in 4 receives 4 or more</strong> (124 contacts had 4, 12 had 5 or more), which typically means an invite and reminder from each of two campaigns.</li>
+<li><strong>Unsubscribes are low:</strong> 11 across all ITOL review campaigns in the 30 days (5 from Welcome Call/Setup). These are campaign-level counts and are not tied to a specific email.</li></ul></div>
+
+<h2 id="s2">2. Reminder Effectiveness by Campaign</h2>
+<p>Each row follows the customers invited between Sep 6 and Oct 5, and splits their reviews by whether they arrived before or after the first reminder.</p>
+<table><thead><tr><th>Campaign</th><th>ID</th><th class="num">Initial invites</th><th class="num">First reminders sent</th><th class="num">Reviews before reminder</th><th class="num">Invite-stage rate</th><th class="num">Reviews after reminder</th><th class="num">After-reminder yield</th><th class="num">Yield with 7+ days to respond</th><th class="num">Avg rating before / after</th><th>Assessment</th></tr></thead><tbody>
+<tr><td>Hubspot (Main) Invite TP Campaign</td><td>624</td><td class='num'>180</td><td class='num'>162</td><td class='num'>14</td><td class='num'>7.8%</td><td class='num'>3</td><td class='num'>1.9%</td><td class='num'>2 / 102 (2.0%)</td><td class='num'>4.79 / 3.33</td><td><span class='tag-mon'>Monitor</span></td></tr>
+<tr><td>Welcome Call/Setup Campaign</td><td>646</td><td class='num'>272</td><td class='num'>248</td><td class='num'>3</td><td class='num'>1.1%</td><td class='num'>4</td><td class='num'>1.6%</td><td class='num'>1 / 179 (0.6%)</td><td class='num'>5.00 / 3.75</td><td><span class='tag-delay'>Delay / de-duplicate</span></td></tr>
+<tr><td>Support Campaign</td><td>647</td><td class='num'>92</td><td class='num'>77</td><td class='num'>3</td><td class='num'>3.3%</td><td class='num'>5</td><td class='num'>6.5%</td><td class='num'>4 / 63 (6.3%)</td><td class='num'>5.00 / 4.60</td><td><span class='tag-keep'>Keep</span></td></tr>
+<tr><td>Exam Pass v1 Campaign</td><td>648</td><td class='num'>37</td><td class='num'>29</td><td class='num'>5</td><td class='num'>13.5%</td><td class='num'>1</td><td class='num'>3.4%</td><td class='num'>1 / 22 (4.5%)</td><td class='num'>4.60 / 4.00</td><td><span class='tag-mon'>Monitor</span></td></tr>
+<tr><td>Exam Pass v2 Campaign</td><td>649</td><td class='num'>27</td><td class='num'>18</td><td class='num'>5</td><td class='num'>18.5%</td><td class='num'>0</td><td class='num'>0.0%</td><td class='num'>0 / 12 (0.0%)</td><td class='num'>5.00 / &mdash;</td><td><span class='tag-mon'>Monitor (low yield)</span></td></tr>
+<tr><td>General Recruitment Support Campaign</td><td>701</td><td class='num'>15</td><td class='num'>15</td><td class='num'>0</td><td class='num'>0.0%</td><td class='num'>2</td><td class='num'>13.3%</td><td class='num'>2 / 14 (14.3%)</td><td class='num'>&mdash; / 4.00</td><td><span class='tag-keep'>Keep (small base)</span></td></tr>
+<tr><td>Completion/Closure Campaign</td><td>651</td><td class='num'>11</td><td class='num'>7</td><td class='num'>4</td><td class='num'>36.4%</td><td class='num'>0</td><td class='num'>0.0%</td><td class='num'>0 / 6 (0.0%)</td><td class='num'>5.00 / &mdash;</td><td><span class='tag-mon'>Monitor</span></td></tr>
+<tr><td>Job Placement / Successful Employment Campaign</td><td>700</td><td class='num'>6</td><td class='num'>4</td><td class='num'>1</td><td class='num'>16.7%</td><td class='num'>0</td><td class='num'>0.0%</td><td class='num'>0 / 2 (0.0%)</td><td class='num'>5.00 / &mdash;</td><td><span class='tag-small'>Too small</span></td></tr>
+<tr><td>Assignment Completion Campaign (HR/CIPD)</td><td>650</td><td class='num'>3</td><td class='num'>2</td><td class='num'>1</td><td class='num'>33.3%</td><td class='num'>0</td><td class='num'>0.0%</td><td class='num'>0 / 0 (&mdash;)</td><td class='num'>5.00 / &mdash;</td><td><span class='tag-small'>Too small</span></td></tr>
+<tr><td>From Invite TP Campaign</td><td>633</td><td class='num'>2</td><td class='num'>2</td><td class='num'>0</td><td class='num'>0.0%</td><td class='num'>1</td><td class='num'>50.0%</td><td class='num'>1 / 2 (50.0%)</td><td class='num'>&mdash; / 4.00</td><td><span class='tag-small'>Too small</span></td></tr>
+<tr><td>Mock Interview Campaign</td><td>699</td><td class='num'>2</td><td class='num'>2</td><td class='num'>0</td><td class='num'>0.0%</td><td class='num'>0</td><td class='num'>0.0%</td><td class='num'>0 / 2 (0.0%)</td><td class='num'>&mdash; / &mdash;</td><td><span class='tag-small'>Too small</span></td></tr>
+<tr class='total-row'><td>Total</td><td></td><td class='num'>647</td><td class='num'>566</td><td class='num'>36</td><td class='num'>5.6%</td><td class='num'>16</td><td class='num'>2.8%</td><td class='num'>11 / 404 (2.7%)</td><td class='num'>4.86 / 4.00</td><td></td></tr></tbody></table>
+<p class="note">Invite-stage rate = reviews before the reminder &divide; initial invites. After-reminder yield = reviews after the first reminder &divide; customers reminded. The &ldquo;7+ days&rdquo; column only counts reminders sent on or before Sep 28, so every customer had at least a week to respond (recent reminders are still collecting reviews). Customers who had not yet reached their reminder date are counted in invites but not in reminders sent. Campaigns with fewer than 20 invites are too small to read rates from.</p>
+<div class="info-box"><strong>Reading the table.</strong> Where the invite-stage rate is already high (Exam Pass v1 and v2, Completion/Closure), few reviews were received after the reminder: 1 review from the 54 customers reminded across the three campaigns. Where the invite-stage rate is low (Support, General Recruitment Support, Welcome Call/Setup), post-reminder reviews equal or exceed the number received before the reminder, but only Support does so at a notable post-reminder yield. Reviews received after the reminder typically arrived about 3 hours after it was sent (median), while reviews before the reminder arrived about 6 hours after the invite.</div>
+
+<h2 id="s3">3. Early-Stage Campaigns: Enrolment, Setup and Welcome Call</h2>
+<table><thead><tr><th>Campaign</th><th class="num">Initial invites</th><th class="num">Before reminder</th><th class="num">After reminder</th><th class="num">Contacts also reached by another campaign within 7 days</th></tr></thead><tbody>
+<tr><td>Hubspot (Main) Invite TP (624) &mdash; enrolment</td><td class="num">180</td><td class="num">14 (7.8%)</td><td class="num">3 (1.9%)</td><td class="num">115 of 196 contacts (59%)</td></tr>
+<tr><td>Welcome Call/Setup (646)</td><td class="num">272</td><td class="num">3 (1.1%)</td><td class="num">4 (1.6%)</td><td class="num">147 of 295 contacts (50%)</td></tr>
+<tr><td>Support (647)</td><td class="num">92</td><td class="num">3 (3.3%)</td><td class="num">5 (6.5%)</td><td class="num">21 of 103 contacts (20%)</td></tr></tbody></table>
+<p class="note">The last column counts every contact who received a review email from the campaign in the window and another campaign&rsquo;s review email within 7 days of one of its emails.</p>
+<div class="warning"><strong>The same new student is frequently asked twice.</strong> Of the 180 Hubspot Main invites, 122 (68%) also had a Welcome Call/Setup invite within 7 days; of the 272 Welcome Call/Setup invites, 125 (46%) had a Hubspot Main invite within 7 days and 18 had a Support invite. In total, 136 contacts received a Hubspot Main email followed by a Welcome Call/Setup email, and 111 received them in the opposite order. These students are asked for a review early in their journey, by two campaigns, each with its own reminder.</div>
+<p>Welcome Call/Setup is the campaign where this matters most: its invite-stage rate is only 1.1%, 4 reviews were received after its reminder (averaging 3.75&#9733;), and half its audience is also being asked by Hubspot Main. Hubspot Main collects most of the reviews at invite stage (14 reviews, 4.79&#9733;), so fewer were received after the reminder (3 reviews, 3.33&#9733;). The remaining campaigns rarely overlap with these two (3 contacts or fewer each).</p>
+
+<h2 id="s4">4. Review Emails per Contact</h2>
+<p>These figures are intentionally de-duplicated. For the same contact/order and campaign, only the initial invite and the first reminder are counted; later repeated reminder events are excluded. On that basis, 522 contacts received at least one review-related email between Sep 6 and Oct 5. The distribution:</p>
+<div class='bar-row'><div class='bar-label'>1 email</div><div class='bar' style='width:87px'></div><div class='bar-val'>76 <span class='neutral'>(14.6%)</span></div></div><div class='bar-row'><div class='bar-label'>2 emails</div><div class='bar' style='width:340px'></div><div class='bar-val'>297 <span class='neutral'>(56.9%)</span></div></div><div class='bar-row'><div class='bar-label'>3 emails</div><div class='bar' style='width:15px'></div><div class='bar-val'>13 <span class='neutral'>(2.5%)</span></div></div><div class='bar-row'><div class='bar-label'>4 emails</div><div class='bar' style='width:142px'></div><div class='bar-val'>124 <span class='neutral'>(23.8%)</span></div></div><div class='bar-row'><div class='bar-label'>5 emails</div><div class='bar' style='width:6px'></div><div class='bar-val'>5 <span class='neutral'>(1.0%)</span></div></div><div class='bar-row'><div class='bar-label'>6+ emails</div><div class='bar' style='width:8px'></div><div class='bar-val'>7 <span class='neutral'>(1.3%)</span></div></div>
+<div class="kpi-grid" style="margin-top:18px">
+<div class="kpi"><div class="label">Total emails</div><div class="value">1,272</div><div class="sub">across 522 contacts</div></div>
+<div class="kpi"><div class="label">Average / Median</div><div class="value">2.44 / 2</div><div class="sub">90th percentile: 4</div></div>
+<div class="kpi"><div class="label">Maximum</div><div class="value">6</div><div class="sub">7 contacts received 6 or more</div></div>
+<div class="kpi"><div class="label">Several campaigns</div><div class="value">171</div><div class="sub">33% were in 2+ campaigns</div></div></div>
+<h3>Short-interval exposure</h3>
+<table><thead><tr><th>Measure</th><th class="num">Contacts</th><th class="num">Share of 522</th></tr></thead><tbody>
+<tr><td>Emails from two different campaigns within 3 days</td><td class="num">150</td><td class="num">28.7%</td></tr>
+<tr><td>Emails from two different campaigns within 7 days</td><td class="num">155</td><td class="num">29.7%</td></tr>
+<tr><td>Emails from two different campaigns on the same day</td><td class="num">112</td><td class="num">21.5%</td></tr>
+<tr><td>3 or more review emails within 7 days</td><td class="num">131</td><td class="num">25.1%</td></tr>
+<tr><td>4 or more review emails within 7 days</td><td class="num">125</td><td class="num">23.9%</td></tr></tbody></table>
+<p class="note">An invite followed by its own first reminder three days later is the designed rhythm of a single campaign, so the cross-campaign rows are the better indicator of excess frequency. Four emails typically means an invite and a first reminder from each of two campaigns.</p>
+
+<h2 id="s5">5. Unsubscribes</h2>
+<table><thead><tr><th>Campaign</th><th>ID</th><th class="num">Unsubscribes (Sep 6&ndash;Oct 5)</th></tr></thead><tbody>
+<tr><td>Welcome Call/Setup Campaign</td><td>646</td><td class='num'>5</td></tr>
+<tr><td>Support Campaign</td><td>647</td><td class='num'>2</td></tr>
+<tr><td>Exam Pass v2 Campaign</td><td>649</td><td class='num'>2</td></tr>
+<tr><td>General Recruitment Support Campaign</td><td>701</td><td class='num'>1</td></tr>
+<tr><td>Mock Interview Campaign</td><td>699</td><td class='num'>1</td></tr>
+<tr><td>Hubspot (Main) Invite TP Campaign</td><td>624</td><td class='num'>0</td></tr>
+<tr><td>Exam Pass v1 Campaign</td><td>648</td><td class='num'>0</td></tr>
+<tr><td>Completion/Closure Campaign</td><td>651</td><td class='num'>0</td></tr>
+<tr><td>Assignment Completion Campaign (HR/CIPD)</td><td>650</td><td class='num'>0</td></tr>
+<tr><td>Job Placement / Successful Employment Campaign</td><td>700</td><td class='num'>0</td></tr>
+<tr><td>From Invite TP Campaign</td><td>633</td><td class='num'>0</td></tr>
+<tr><td>CV Tailoring Session Campaign</td><td>698</td><td class='num'>0</td></tr>
+<tr class="total-row"><td>Total</td><td></td><td class="num">11</td></tr></tbody></table>
+<p class="note">Unsubscribe counts come from the email platform at campaign level for the whole period. They cannot be tied to an invite or reminder email, so they are shown as context only and are not compared with the de-duplicated first-reminder figures above. The Google review response campaign (607) is not a review invite and is excluded.</p>
+<div class="info-box"><strong>Unsubscribes are low in absolute terms.</strong> 11 unsubscribes were recorded across the review campaigns, 5 of them from Welcome Call/Setup, the campaign with the largest email volume. Exam Pass v2 (2) and Mock Interview (1) have very small audiences, so single unsubscribes carry little weight. This analysis does not test whether reminders influence unsubscribes.</div>
+
+<h2 id="s6">6. Recommendations</h2>
+<p>For discussion only. Nothing has been changed, paused or rescheduled.</p>
+<table><thead><tr><th>Campaign</th><th>Recommendation</th><th>Reasoning</th></tr></thead><tbody>
+<tr><td>Support (647)</td><td><span class="tag-keep">Keep</span></td><td>Highest post-reminder yield (6.5%; 6.3% with a full week to respond) and the best-rated post-reminder reviews (4.6&#9733;). Few contacts are also in other campaigns.</td></tr>
+<tr><td>General Recruitment Support (701)</td><td><span class="tag-keep">Keep</span> &amp; watch</td><td>Both of its reviews were received after the first reminder (2 of 15 reminded), but the base is small.</td></tr>
+<tr><td>Welcome Call/Setup (646)</td><td><span class="tag-delay">Delay / de-duplicate</span></td><td>Low post-reminder yield (1.6%, 0.6% with a week to respond), the largest email volume of the campaigns, and 46% of its invites reach contacts already invited by Hubspot Main in the same week. Consider delaying the invite or reminder, or skipping contacts invited by Hubspot Main in the previous 7 days.</td></tr>
+<tr><td>Hubspot Main (624)</td><td><span class="tag-mon">Monitor</span></td><td>Most reviews were received before the reminder (14 at 4.79&#9733;); 3 were received after it (3.33&#9733;). If Welcome Call/Setup is re-timed, check whether the Hubspot Main post-reminder yield changes.</td></tr>
+<tr><td>Exam Pass v1 &amp; v2 (648, 649)</td><td><span class="tag-mon">Monitor</span></td><td>Invite stage is strong (13.5% and 18.5%). Only 1 review was received after the reminder from the 47 customers reminded. Candidates for removal if the pattern holds over another month.</td></tr>
+<tr><td>Completion/Closure (651)</td><td><span class="tag-mon">Monitor</span></td><td>Strong invite-stage rate (4 of 11), no reviews received after the 7 reminders sent; volume is too small to decide.</td></tr>
+<tr><td>650, 699, 700, 633</td><td><span class="tag-small">Too small</span></td><td>Fewer than 10 invites each. No conclusion possible.</td></tr>
+</tbody></table>
+
+<h2 id="s7">7. Reading Notes</h2>
+<div class="info-box"><ul style="margin:0 0 0 18px;line-height:1.8">
+<li>Results are observational: reviews are described as received before or after a reminder, not caused by it.</li>
+<li>Samples are small. Only Welcome Call/Setup, Hubspot Main and Support have more than 50 invites. Treat differences between campaigns as indications, not proof.</li>
+<li>Reminders sent in the last week have not had a full week to collect reviews, so after-reminder figures will rise slightly. The &ldquo;7+ days&rdquo; column removes this effect.</li>
+<li>Reviews that cannot be linked to an invited customer are not part of this analysis. Review data runs to Oct 5.</li>
+<li>Contact-level figures count each contact once per email address across all review campaigns, using the initial invite and first reminder only.</li></ul></div>
+<div class="footer">Generated 2026-10-06 &mdash; Data window: Sep 6&ndash;Oct 5, 2026</div>
+</div></body></html>
