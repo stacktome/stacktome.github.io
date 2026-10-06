@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wenatex — 2026 Review Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .kpi.highlight { border-top: 3px solid #e17055; }
+
+  .acct-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 8px; }
+  .acct-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow: hidden; }
+  .acct-card-header { padding: 10px 16px; font-weight: 700; font-size: 13px; color: #fff; display: flex; align-items: center; gap: 10px; }
+  .acct-mammashop { background: #6c5ce7; }
+  .acct-naturebaby { background: #00b894; }
+  .acct-loukrudt { background: #0984e3; }
+  .acct-hoppekids { background: #e17055; }
+  .acct-card-body { padding: 14px 16px; }
+
+  .mini-kpi-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
+  .mini-kpi { text-align: center; }
+  .mini-kpi .mv { font-size: 20px; font-weight: 700; color: #1a1a2e; }
+  .mini-kpi .ml { font-size: 10px; text-transform: uppercase; color: #888; letter-spacing: .5px; }
+
+  /* Attribution split bar */
+  .attr-bar-wrap { margin: 8px 0 12px; }
+  .attr-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: #636e72; margin-bottom: 4px; }
+  .attr-bar { height: 10px; border-radius: 5px; background: #dfe6e9; overflow: hidden; display: flex; }
+  .attr-fill { height: 100%; background: #6c5ce7; }
+  .organic-fill { height: 100%; background: #b2bec3; }
+
+  /* Attribution breakdown side-by-side */
+  .split-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+  .split-box { border-radius: 8px; padding: 10px 14px; }
+  .split-attr { background: #f0eeff; border-left: 3px solid #6c5ce7; }
+  .split-organic { background: #f5f6fa; border-left: 3px solid #b2bec3; }
+  .split-box .sb-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 4px; }
+  .split-box .sb-count { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+  .split-box .sb-avg { font-size: 12px; color: #636e72; margin-top: 2px; }
+  .split-box .sb-note { font-size: 11px; color: #888; margin-top: 3px; }
+
+  .star-dist { display: flex; gap: 4px; margin: 10px 0; align-items: flex-end; height: 40px; }
+  .star-col { display: flex; flex-direction: column; align-items: center; flex: 1; }
+  .star-bar { width: 100%; border-radius: 3px 3px 0 0; }
+  .s5 { background: #00b894; }
+  .s4 { background: #55efc4; }
+  .s3 { background: #fdcb6e; }
+  .s2 { background: #e17055; }
+  .s1 { background: #d63031; }
+  .star-label { font-size: 9px; color: #999; margin-top: 2px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  th { background: #f8f9ff; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; }
+  td { padding: 9px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafbff; }
+
+  .brand-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; color: #fff; }
+  .bp-mammashop { background: #6c5ce7; }
+  .bp-naturebaby { background: #00b894; }
+  .bp-loukrudt { background: #0984e3; }
+  .bp-hoppekids { background: #e17055; }
+  .source-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+  .sp-attr { background: #e8f4fd; color: #0984e3; }
+  .sp-organic { background: #f0f0f0; color: #636e72; }
+
+  .r1 { color: #d63031; font-weight: 600; }
+  .r5 { color: #00b894; font-weight: 600; }
+  .review-text { font-size: 12px; color: #636e72; line-height: 1.5; max-width: 480px; }
+  .review-heading { font-weight: 600; font-size: 12px; color: #2d3436; margin-bottom: 3px; }
+  .flag { font-size: 11px; background: #fff3cd; color: #856404; padding: 2px 7px; border-radius: 8px; display: inline-block; margin-bottom: 4px; }
+
+  .insight-box { background: #fff; border-left: 4px solid #6c5ce7; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .insight-box p { margin-bottom: 6px; }
+  .insight-box p:last-child { margin-bottom: 0; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .good { color: #00b894; font-weight: 600; }
+  .warn { color: #e17055; font-weight: 600; }
+  .neutral { color: #636e72; }
+
+  /* Attribution explainer */
+  .explainer { background: #f8f9ff; border-radius: 10px; padding: 16px 20px; margin: 16px 0; }
+  .explainer h3 { margin-top: 0; color: #6c5ce7; }
+  .explainer ul { margin: 8px 0 0 18px; }
+  .explainer li { margin-bottom: 5px; font-size: 13px; color: #4a4a4a; line-height: 1.5; }
+
+  .vs-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  .vs-table th { background: #f8f9ff; }
+  .vs-table .col-attr { background: #f0eeff; }
+  .vs-table .col-organic { background: #f5f6fa; }
+  .toc { background:#fff; border-radius:10px; padding:14px 22px; box-shadow:0 1px 4px rgba(0,0,0,0.07); margin-bottom:8px; }
+  .toc ol { margin-left:18px; } .toc li { margin:4px 0; font-size:13px; } .toc a { color:#6c5ce7; text-decoration:none; }
+  td.num, th.num { text-align:right; font-variant-numeric: tabular-nums; }
+  .tfoot-row td { font-weight:700; background:#f8f9ff; }
+  .foot { font-size:12px; color:#636e72; margin:-8px 0 18px; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Wenatex — 2026 Review Report</h1>
+  <p class="subtitle">Google reviews, month by month · Jan 1 – Oct 4 2026 (Oct is partial*) · Review rate counts all Google reviews, attributed and organic shown separately · Email performance: last 30 days (Sep 6 – Oct 4) · Generated 2026-10-05</p>
+
+  <div class="toc">
+    <strong>Contents</strong>
+    <ol>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#monthly">Monthly Breakdown</a></li>
+      <li><a href="#attribution">Attributed vs Organic Reviews</a></li>
+      <li><a href="#email">Email Performance — Last 30 Days</a></li>
+      <li><a href="#notes">Definitions &amp; Data Notes</a></li>
+    </ol>
+  </div>
+
+  <h2 id="overview">Overview</h2>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Google Reviews 2026</div><div class="value">731</div><div class="sub">Jan 1 – Oct 4</div></div>
+    <div class="kpi"><div class="label">Review Rate (all)</div><div class="value">10.5%</div><div class="sub">all reviews ÷ 6,961 invites (since Mar 26)</div></div>
+    <div class="kpi highlight"><div class="label">Attributed</div><div class="value">383</div><div class="sub">52.4% matched to an invite order</div></div>
+    <div class="kpi"><div class="label">Organic</div><div class="value">348</div><div class="sub">47.6% no invite match</div></div>
+    <div class="kpi"><div class="label">Last 30 Days</div><div class="value">97</div><div class="sub">reviews · 10.8% of 894 invites</div></div>
+  </div>
+  <div class="insight-box">
+    <p><strong>Invite campaigns started on March 26 2026</strong> (invite-DE-01234 (520), invite-DE-56789 (521), invite-AT (522), invite-CH (523), invite-IT-de (524), invite-IT-it (525)). No invites were sent in January or February; Google reviews in those months (6 and 9) are all organic.</p>
+    <p>Since April the account has collected 73–155 Google reviews a month. The all-reviews review rate has stayed between 9% and 13% in every full month from April to September; the attributed-only rate is 5–7%.</p>
+  </div>
+
+  <h2 id="monthly">Monthly Breakdown</h2>
+  <table>
+    <tr><th>Month</th><th class="num">Invites sent</th><th class="num">Google reviews</th><th class="num">Attributed</th><th class="num">Organic</th><th class="num">Review rate (all reviews)</th><th class="num">Attributed rate (reference)</th><th class="num">Avg ★</th><th class="num">≤3★ reviews</th></tr>
+<tr><td>Jan 2026</td><td class="num">0</td><td class="num"><strong>6</strong></td><td class="num">0</td><td class="num">6</td><td class="num"><strong>no invites sent</strong></td><td class="num">no invites sent</td><td class="num">2.50</td><td class="num">4</td></tr>
+<tr><td>Feb 2026</td><td class="num">0</td><td class="num"><strong>9</strong></td><td class="num">0</td><td class="num">9</td><td class="num"><strong>no invites sent</strong></td><td class="num">no invites sent</td><td class="num">2.33</td><td class="num">7</td></tr>
+<tr><td>Mar 2026</td><td class="num">612</td><td class="num"><strong>46</strong></td><td class="num">8</td><td class="num">38</td><td class="num"><strong>7.5%&nbsp;†</strong></td><td class="num">1.3%</td><td class="num">3.57</td><td class="num">15</td></tr>
+<tr><td>Apr 2026</td><td class="num">893</td><td class="num"><strong>93</strong></td><td class="num">56</td><td class="num">37</td><td class="num"><strong>10.4%</strong></td><td class="num">6.3%</td><td class="num">4.53</td><td class="num">9</td></tr>
+<tr><td>May 2026</td><td class="num">1,667</td><td class="num"><strong>155</strong></td><td class="num">96</td><td class="num">59</td><td class="num"><strong>9.3%</strong></td><td class="num">5.8%</td><td class="num">4.55</td><td class="num">17</td></tr>
+<tr><td>Jun 2026</td><td class="num">988</td><td class="num"><strong>129</strong></td><td class="num">71</td><td class="num">58</td><td class="num"><strong>13.1%</strong></td><td class="num">7.2%</td><td class="num">4.47</td><td class="num">16</td></tr>
+<tr><td>Jul 2026</td><td class="num">1,020</td><td class="num"><strong>100</strong></td><td class="num">51</td><td class="num">49</td><td class="num"><strong>9.8%</strong></td><td class="num">5.0%</td><td class="num">4.39</td><td class="num">15</td></tr>
+<tr><td>Aug 2026</td><td class="num">563</td><td class="num"><strong>73</strong></td><td class="num">39</td><td class="num">34</td><td class="num"><strong>13.0%</strong></td><td class="num">6.9%</td><td class="num">4.18</td><td class="num">14</td></tr>
+<tr><td>Sep 2026</td><td class="num">878</td><td class="num"><strong>96</strong></td><td class="num">49</td><td class="num">47</td><td class="num"><strong>10.9%</strong></td><td class="num">5.6%</td><td class="num">4.36</td><td class="num">15</td></tr>
+<tr><td>Oct 1–4 2026*</td><td class="num">340</td><td class="num"><strong>24</strong></td><td class="num">13</td><td class="num">11</td><td class="num"><strong>7.1%</strong></td><td class="num">3.8%</td><td class="num">4.71</td><td class="num">1</td></tr>
+<tr class="tfoot-row"><td>Total 2026 (to Oct 4)</td><td class="num">6,961</td><td class="num">731</td><td class="num">383</td><td class="num">348</td><td class="num">10.5%</td><td class="num">5.5%</td><td class="num">—</td><td class="num">113</td></tr>
+  </table>
+  <p class="foot">Review rate (all reviews) = all Google reviews dated in the month ÷ invites sent in the month. Attributed rate = only reviews matched to an invited order ÷ invites sent. Invites sent = distinct orders that received an invite email (reminders not counted).<br>
+  † March: invites only started on March 26 (612 invites in 6 days), while the 46 reviews cover the whole month — 38 are organic reviews from before the invites began. The March rate is therefore not comparable with later months.<br>
+  * October covers Oct 1–4 only (last complete day). Monthly review counts include reviews with a star rating only and reviews with text; ≤3★ = 1–3 stars.</p>
+
+  <h2 id="attribution">Attributed vs Organic Reviews</h2>
+  <div class="explainer">
+    <h3>How reviews are split</h3>
+    <ul>
+      <li><strong>Attributed</strong> = the review's <code>order_id</code> matches the order of an invite or reminder email sent by an invite campaign (any date, all campaigns incl. the earlier invite-tp (445)).</li>
+      <li><strong>Organic</strong> = every other Google review (no order link, or an order that was never sent an invite). These are included in the review rate above and shown here for reference only.</li>
+    </ul>
+  </div>
+  <table class="vs-table">
+    <tr><th>Month</th><th class="num col-attr">Attributed</th><th class="num col-attr">Avg ★ attributed</th><th class="num col-attr">Share</th><th class="num col-organic">Organic</th><th class="num col-organic">Avg ★ organic</th><th class="num col-organic">Share</th></tr>
+<tr><td>Jan 2026</td><td class="num">0</td><td class="num">no attributed reviews</td><td class="num">0.0%</td><td class="num">6</td><td class="num">2.50</td><td class="num">100.0%</td></tr>
+<tr><td>Feb 2026</td><td class="num">0</td><td class="num">no attributed reviews</td><td class="num">0.0%</td><td class="num">9</td><td class="num">2.33</td><td class="num">100.0%</td></tr>
+<tr><td>Mar 2026</td><td class="num">8</td><td class="num">4.63</td><td class="num">17.4%</td><td class="num">38</td><td class="num">3.34</td><td class="num">82.6%</td></tr>
+<tr><td>Apr 2026</td><td class="num">56</td><td class="num">4.61</td><td class="num">60.2%</td><td class="num">37</td><td class="num">4.41</td><td class="num">39.8%</td></tr>
+<tr><td>May 2026</td><td class="num">96</td><td class="num">4.58</td><td class="num">61.9%</td><td class="num">59</td><td class="num">4.51</td><td class="num">38.1%</td></tr>
+<tr><td>Jun 2026</td><td class="num">71</td><td class="num">4.54</td><td class="num">55.0%</td><td class="num">58</td><td class="num">4.38</td><td class="num">45.0%</td></tr>
+<tr><td>Jul 2026</td><td class="num">51</td><td class="num">4.65</td><td class="num">51.0%</td><td class="num">49</td><td class="num">4.12</td><td class="num">49.0%</td></tr>
+<tr><td>Aug 2026</td><td class="num">39</td><td class="num">4.41</td><td class="num">53.4%</td><td class="num">34</td><td class="num">3.91</td><td class="num">46.6%</td></tr>
+<tr><td>Sep 2026</td><td class="num">49</td><td class="num">4.31</td><td class="num">51.0%</td><td class="num">47</td><td class="num">4.43</td><td class="num">49.0%</td></tr>
+  </table>
+  <p class="foot">Rating split shown for full months Jan–Sep. October (Oct 1–4): 13 attributed, 11 organic.</p>
+
+  <h2 id="email">Email Performance — Last 30 Days (Sep 6 – Oct 4)</h2>
+  <p>Source: StackTome campaign reports for the six active campaigns. The campaign API keeps about 30 days of daily statistics, so the window starts Sep 6 (Sep 5 is not available) and ends Oct 4, the last complete day. Opens and clicks are unique.</p>
+  <h3>Invite emails</h3>
+  <table>
+    <tr><th>Campaign</th><th class="num">Sent</th><th class="num">Unique opens</th><th class="num">Open %</th><th class="num">Unique clicks</th><th class="num">Click %</th><th class="num">Bounced / rejected</th><th class="num">Unsubs</th><th class="num">Reviews via link</th></tr>
+<tr><td>invite-DE-01234 (520)</td><td class="num">94</td><td class="num">62</td><td class="num">66.0%</td><td class="num">21</td><td class="num">22.3%</td><td class="num">6</td><td class="num">0</td><td class="num">1</td></tr>
+<tr><td>invite-DE-56789 (521)</td><td class="num">331</td><td class="num">178</td><td class="num">53.8%</td><td class="num">55</td><td class="num">16.6%</td><td class="num">14</td><td class="num">2</td><td class="num">12</td></tr>
+<tr><td>invite-AT (522)</td><td class="num">228</td><td class="num">115</td><td class="num">50.4%</td><td class="num">34</td><td class="num">14.9%</td><td class="num">9</td><td class="num">3</td><td class="num">3</td></tr>
+<tr><td>invite-CH (523)</td><td class="num">36</td><td class="num">15</td><td class="num">41.7%</td><td class="num">7</td><td class="num">19.4%</td><td class="num">2</td><td class="num">0</td><td class="num">1</td></tr>
+<tr><td>invite-IT-de (524)</td><td class="num">24</td><td class="num">14</td><td class="num">58.3%</td><td class="num">3</td><td class="num">12.5%</td><td class="num">1</td><td class="num">0</td><td class="num">1</td></tr>
+<tr><td>invite-IT-it (525)</td><td class="num">134</td><td class="num">72</td><td class="num">53.7%</td><td class="num">23</td><td class="num">17.2%</td><td class="num">9</td><td class="num">0</td><td class="num">6</td></tr>
+<tr class="tfoot-row"><td>All invite emails</td><td class="num">847</td><td class="num">456</td><td class="num">53.8%</td><td class="num">143</td><td class="num">16.9%</td><td class="num">41</td><td class="num">5</td><td class="num">24</td></tr>
+  </table>
+  <h3>Reminder emails</h3>
+  <table>
+    <tr><th>Campaign</th><th class="num">Sent</th><th class="num">Unique opens</th><th class="num">Open %</th><th class="num">Unique clicks</th><th class="num">Click %</th><th class="num">Bounced / rejected</th><th class="num">Unsubs</th><th class="num">Reviews via link</th></tr>
+<tr><td>invite-DE-01234 (520)</td><td class="num">83</td><td class="num">43</td><td class="num">51.8%</td><td class="num">21</td><td class="num">25.3%</td><td class="num">4</td><td class="num">2</td><td class="num">2</td></tr>
+<tr><td>invite-DE-56789 (521)</td><td class="num">276</td><td class="num">137</td><td class="num">49.6%</td><td class="num">54</td><td class="num">19.6%</td><td class="num">19</td><td class="num">2</td><td class="num">9</td></tr>
+<tr><td>invite-AT (522)</td><td class="num">216</td><td class="num">112</td><td class="num">51.9%</td><td class="num">33</td><td class="num">15.3%</td><td class="num">14</td><td class="num">2</td><td class="num">5</td></tr>
+<tr><td>invite-CH (523)</td><td class="num">36</td><td class="num">17</td><td class="num">47.2%</td><td class="num">6</td><td class="num">16.7%</td><td class="num">1</td><td class="num">0</td><td class="num">1</td></tr>
+<tr><td>invite-IT-de (524)</td><td class="num">39</td><td class="num">25</td><td class="num">64.1%</td><td class="num">5</td><td class="num">12.8%</td><td class="num">2</td><td class="num">0</td><td class="num">2</td></tr>
+<tr><td>invite-IT-it (525)</td><td class="num">124</td><td class="num">73</td><td class="num">58.9%</td><td class="num">18</td><td class="num">14.5%</td><td class="num">10</td><td class="num">0</td><td class="num">4</td></tr>
+<tr class="tfoot-row"><td>All reminder emails</td><td class="num">774</td><td class="num">407</td><td class="num">52.6%</td><td class="num">137</td><td class="num">17.7%</td><td class="num">50</td><td class="num">6</td><td class="num">23</td></tr>
+  </table>
+  <h3>Combined</h3>
+  <table>
+    <tr><th>Scope</th><th class="num">Sent</th><th class="num">Unique opens</th><th class="num">Open %</th><th class="num">Unique clicks</th><th class="num">Click %</th><th class="num">Bounced / rejected</th><th class="num">Unsubs</th><th class="num">Reviews via link</th></tr>
+<tr class="tfoot-row"><td>All emails (invites + reminders)</td><td class="num">1621</td><td class="num">863</td><td class="num">53.2%</td><td class="num">280</td><td class="num">17.3%</td><td class="num">91</td><td class="num">11</td><td class="num">47</td></tr>
+  </table>
+  <p class="foot">Open % and click % are unique opens / unique clicks ÷ sent. "Reviews via link" = reviews that the campaign report credits to the email's review link (service reviews). The 6 campaigns are active; invite-tp (445) sent nothing in this window.</p>
+  <div class="insight-box">
+    <p><strong>Last 30 days (Sep 5 – Oct 4, reviews dated):</strong> 97 Google reviews — 48 attributed, 49 organic — against 894 invites sent: a review rate of 10.8% on all reviews, 5.4% attributed only. Average rating 4.40, 14 reviews at ≤3★.</p>
+  </div>
+
+  <h2 id="notes">Definitions &amp; Data Notes</h2>
+  <ul style="margin-left:20px;line-height:1.7">
+    <li><strong>Reviews:</strong> Wenatex Google reviews (<code>customer_review</code>, event source google), counted by review date, 2026-01-01 to 2026-10-04. Notebook: wenatex_data (2N5H33RZT).</li>
+    <li><strong>Invites:</strong> distinct <code>order_id</code> with an invite email sent in the period; test-mode sends excluded. Duplicate event rows (e.g. repeated rows on Oct 3–4, and repeated April reminders) are removed by counting distinct orders.</li>
+    <li><strong>Email statistics vs invite logs:</strong> sends reported by the campaign API are 5–8% lower than distinct orders in the invite log for the same window (1,621 vs 1,743). Email performance uses the API figures; the review rate uses the invite log.</li>
+    <li><strong>Google import:</strong> the raw Google import differs from the review table by 0–1 review in some months (September: 95 raw vs 96 here; the review table was used).</li>
+    <li><strong>January–February:</strong> only 6 and 9 reviews were recorded. This report does not establish whether that is real volume or an incomplete import.</li>
+  </ul>
+
+</div>
+</body>
+</html>
