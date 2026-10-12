@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beautycos Group Campaign Performance Report — Oct 5–11, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 1000px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #1a1a2e; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .delta-up { color: #00b894; font-size: 11px; }
+  .delta-flat { color: #888; font-size: 11px; }
+  .delta-down { color: #d63031; font-size: 11px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .total-row td { background: #f0f0f0 !important; font-weight: 600; }
+  .inactive-row td { background: #fdf2f2 !important; color: #aaa; font-style: italic; }
+
+  .review-card { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 10px; }
+  .rc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .rc-source { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; color: #888; }
+  .rc-meta { font-size: 12px; color: #aaa; margin-left: auto; }
+  .rc-text { font-size: 13px; color: #444; line-height: 1.6; }
+  .rc-heading { font-weight: 600; color: #1a1a2e; margin-bottom: 4px; font-size: 13px; }
+
+  .rating-badge { display: inline-block; border-radius: 5px; padding: 2px 9px; font-size: 12px; font-weight: 700; }
+  .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff3e0; color: #e17055; }
+  .r3 { background: #fffde0; color: #b8860b; }
+
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-ok { display: inline-block; background: #e8f8f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #00b894; }
+  .tag-warn { display: inline-block; background: #fff3e0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #e17055; font-weight: 600; }
+  .tag-legal { display: inline-block; background: #ffeaea; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #d63031; font-weight: 700; }
+  .note { font-size: 12px; color: #888; margin-top: 4px; }
+  .info-box { background: #f0f4ff; border: 1.5px solid #a0b4e8; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #2c3e6e; line-height: 1.6; }
+  .warn-box { background: #fff8e1; border: 1.5px solid #ffc107; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #5d4037; line-height: 1.6; }
+  .error-box { background: #fff5f5; border: 1.5px solid #d63031; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #4a0000; line-height: 1.6; }
+  .success-box { background: #f0fff4; border: 1.5px solid #00b894; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #004d30; line-height: 1.6; }
+
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Beautycos Group &mdash; Weekly Campaign Performance Report</h1>
+  <div class="subtitle">Review invite analysis &nbsp;&bull;&nbsp; Oct 5&ndash;11, 2026 &nbsp;&bull;&nbsp; Generated 2026-10-12 &nbsp;&bull;&nbsp; 26 markets (13 established + 11 launched Sep 21 + 2 inactive)</div>
+
+  <nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #6c5ce7;font-size:14px;line-height:2;">
+    <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+    <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Executive Summary</a>
+    <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Market Performance</a>
+    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Week-over-Week Comparison</a>
+    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Negative Reviews</a>
+    <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Email Performance</a>
+    <a href="#s6" style="color:#444;text-decoration:none;margin-right:20px;">6. Campaign Status</a>
+    <a href="#s7" style="color:#444;text-decoration:none;">7. Action Items</a>
+  </nav>
+
+  <h2 id="s1">1. Executive Summary</h2>
+  <div class="kpi-grid" style="grid-template-columns:repeat(5,1fr);">
+    <div class="kpi"><div class="label">Overall Average Rating</div><div class="value">4.82&#9733;</div><div class="sub">All 38 reviews &nbsp;<span class="delta-up">+0.24 vs 4.58&#9733; previous week (40 reviews)</span></div></div>
+    <div class="kpi"><div class="label">Total Reviews</div><div class="value">38</div><div class="sub">4 attributed &middot; 34 organic &nbsp;<span class="delta-down">&minus;2 vs prior week (40)</span></div></div>
+    <div class="kpi"><div class="label">Total Invites Sent</div><div class="value">3,458</div><div class="sub">13 established markets: 3,416 <span class="delta-up">+13.3% vs 3,015</span> &middot; 11 new markets: 42 (41 last week)</div></div>
+    <div class="kpi"><div class="label">Total Reminders Sent</div><div class="value">3,455</div><div class="sub">3,416 established + 39 new markets &nbsp;<span class="delta-up">+9.5% vs prior week (3,154)</span></div></div>
+    <div class="kpi"><div class="label">Group Review Rate</div><div class="value">1.10%</div><div class="sub">all reviews / invites (38 / 3,458) &nbsp;<span class="delta-down">&minus;0.21pp vs 1.31% last week (40 / 3,056)</span></div></div>
+  </div>
+  <p class="note" style="margin-top:8px;">&#9432; The average rating across all reviews rose to <strong>4.82&#9733;</strong> from 4.58&#9733;, with 35 of 38 reviews (92%) at 5&#9733; (vs 34 of 40, 85%). Negative reviews (&le;2&#9733;) fell from 3 to 1 (an organic Denmark review), and there was one 3&#9733; review. The review rate eased because invites rose 13.3% while reviews slipped from 40 to 38. Denmark sent 2,450 invites (about 71% of group volume) and produced 26 of the 38 reviews.</p>
+
+  <div class="success-box">&#10004;&nbsp; <strong>Denmark&rsquo;s invites returned to a steady 350 a day.</strong> Denmark sent 2,450 invites (up 21.8% from 2,012), 350 on every day of the week, so last week&rsquo;s Sep 29&ndash;30 shortfall did not recur. Its reviews rose from 22 to 26 at 4.77&#9733; (4.86&#9733; last week), with one 1&#9733; and one 3&#9733; review; the four attributed Denmark reviews were all 5&#9733;.</div>
+
+  <div class="warn-box">&#9888;&nbsp; <strong>The only low ratings came from Denmark and concern a refund and a damaged parcel.</strong> The single 1&#9733; review is a customer who cancelled an order after a missed delivery date and had not received a refund three days later. The 3&#9733; review reports a parcel that arrived crushed with a hole in it. Both were organic and dated Oct 9; see Sections 4 and 7. The Netherlands and Sweden had no negative reviews this week (one each last week).</div>
+
+  <div class="info-box">&#9432;&nbsp; <strong>New markets: no new reviews this week.</strong> The 11 new markets sent 42 invites and 39 reminders and received no reviews this week. Since the Sep 21 launch they have received 4 post-launch reviews from 157 invites (Hungary 3, Portugal 1). Volumes are still very small. See Section 2.</div>
+
+  <div class="info-box">&#9432;&nbsp; <strong>Campaign status unchanged.</strong> Austria (734) and Germany (727) remain inactive; Germany&rsquo;s sender address is still not set up with the email platform. See Section 6.</div>
+
+  <h2 id="s2">2. Market Performance &mdash; Oct 5&ndash;11, 2026</h2>
+  <h3>Established markets</h3>
+  <table>
+    <thead><tr><th>Market</th><th>Campaign</th><th>Invites</th><th>Reminders</th><th>Attributed</th><th>Organic</th><th>Review Rate</th><th>Avg&#9733; (all reviews)</th></tr></thead>
+    <tbody>
+<tr><td>Denmark</td><td>721</td><td>2,450</td><td>2,419</td><td>4</td><td>22</td><td>1.06%</td><td>4.77</td></tr>
+<tr><td>Norway</td><td>725</td><td>272</td><td>285</td><td>0</td><td>6</td><td>2.21%</td><td>4.83</td></tr>
+<tr><td>Sweden</td><td>724</td><td>252</td><td>245</td><td>0</td><td>2</td><td>0.79%</td><td>5.00</td></tr>
+<tr><td>Netherlands</td><td>722</td><td>183</td><td>192</td><td>0</td><td>3</td><td>1.64%</td><td>5.00</td></tr>
+<tr><td>United Kingdom</td><td>729</td><td>84</td><td>84</td><td>0</td><td>1</td><td>1.19%</td><td>5.00</td></tr>
+<tr><td>France</td><td>731</td><td>38</td><td>40</td><td>0</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td></tr>
+<tr><td>Italy</td><td>733</td><td>31</td><td>35</td><td>0</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td></tr>
+<tr><td>Poland</td><td>732</td><td>20</td><td>28</td><td>0</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td></tr>
+<tr><td>Spain</td><td>723</td><td>21</td><td>21</td><td>0</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td></tr>
+<tr><td>Finland</td><td>720</td><td>21</td><td>21</td><td>0</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td></tr>
+<tr><td>Czechia</td><td>728</td><td>15</td><td>10</td><td>0</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td></tr>
+<tr><td>Ireland</td><td>726</td><td>17</td><td>22</td><td>0</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td></tr>
+<tr><td>Belgium</td><td>730</td><td>12</td><td>14</td><td>0</td><td>0</td><td class="neutral">0.00%</td><td class="neutral">&mdash;</td></tr>
+<tr class="inactive-row"><td>Austria</td><td>734 <span class="tag">inactive</span></td><td>&mdash;</td><td>&mdash;</td><td>0</td><td>0</td><td>&mdash;</td><td>&mdash;</td></tr>
+<tr class="inactive-row"><td>Germany</td><td>727 <span class="tag">inactive, sender not set up</span></td><td>&mdash;</td><td>&mdash;</td><td>0</td><td>0</td><td>&mdash;</td><td>&mdash;</td></tr>
+<tr class="total-row"><td colspan="2">Total (13 established markets)</td><td>3,416</td><td>3,416</td><td>4</td><td>34</td><td>1.11%</td><td>4.82</td></tr>
+    </tbody>
+  </table>
+  <p class="note">&#9432; Review Rate = all reviews (attributed + organic) &divide; invites sent in the week; reminders are excluded from the denominator. The Attributed and Organic columns break down the review count only. Attributed reviews averaged 5.00&#9733; (4 reviews, all Denmark) against 4.79&#9733; for the 34 organic reviews. Rates for markets with few invites (UK 1 review on 84 invites) rest on very small numbers.</p>
+
+  <h3>Focus markets &mdash; Denmark, Netherlands, Sweden</h3>
+  <table>
+    <thead><tr><th>Market</th><th>Invites (prev &rarr; now)</th><th>Reviews (prev &rarr; now)</th><th>Avg&#9733; (prev &rarr; now)</th><th>Negatives &le;2&#9733; (prev &rarr; now)</th><th>Unsubs (prev &rarr; now)</th></tr></thead>
+    <tbody>
+      <tr><td>Denmark</td><td>2,012 &rarr; 2,450</td><td>22 &rarr; 26</td><td class="worst">4.86 &rarr; 4.77</td><td class="worst">0 &rarr; 1</td><td>76 &rarr; 78</td></tr>
+      <tr><td>Netherlands</td><td>193 &rarr; 183</td><td>1 &rarr; 3</td><td class="best">1.00 &rarr; 5.00</td><td class="best">1 &rarr; 0</td><td class="best">11 &rarr; 5</td></tr>
+      <tr><td>Sweden</td><td>247 &rarr; 252</td><td>5 &rarr; 2</td><td class="best">4.20 &rarr; 5.00</td><td class="best">1 &rarr; 0</td><td class="best">8 &rarr; 5</td></tr>
+    </tbody>
+  </table>
+  <p class="note">&#9432; Denmark received 26 reviews on 21.8% more invites, with one 1&#9733; (refund wait) and one 3&#9733; (damaged parcel); unsubscribes held at 78 (76 last week). The Netherlands received three 5&#9733; reviews after a single 1&#9733; the week before, and Sweden two 5&#9733; reviews after five last week; neither market had a negative review. Unsubscribes fell in both (11 to 5, 8 to 5).</p>
+
+  <h3>New markets &mdash; third week live</h3>
+  <table>
+    <thead><tr><th>Market</th><th>Campaign</th><th>Invites (Sep 28&ndash;Oct 4)</th><th>Invites (Oct 5&ndash;11)</th><th>Reminders (Oct 5&ndash;11)</th><th>Reviews (Oct 5&ndash;11)</th></tr></thead>
+    <tbody>
+<tr><td>Hungary</td><td>752</td><td>9</td><td>7</td><td>8</td><td>0</td></tr>
+<tr><td>Croatia</td><td>755</td><td>3</td><td>5</td><td>3</td><td>0</td></tr>
+<tr><td>Portugal</td><td>754</td><td>10</td><td>9</td><td>9</td><td>0</td></tr>
+<tr><td>Slovakia</td><td>753</td><td>7</td><td>5</td><td>7</td><td>0</td></tr>
+<tr><td>Bulgaria</td><td>762</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+<tr><td>Lithuania</td><td>756</td><td>4</td><td>4</td><td>4</td><td>0</td></tr>
+<tr><td>Romania</td><td>759</td><td>2</td><td>4</td><td>2</td><td>0</td></tr>
+<tr><td>Greece</td><td>758</td><td>1</td><td>1</td><td>1</td><td>0</td></tr>
+<tr><td>Slovenia</td><td>757</td><td>2</td><td>4</td><td>2</td><td>0</td></tr>
+<tr><td>Estonia</td><td>761</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+<tr><td>Latvia</td><td>760</td><td>3</td><td>1</td><td>3</td><td>0</td></tr>
+<tr class="total-row"><td colspan="2">Total (11 new markets)</td><td>41</td><td>42</td><td>39</td><td>0</td></tr>
+    </tbody>
+  </table>
+  <p class="note">&#9432; Reminders follow seven days after an invite, so this week&rsquo;s 39 reminders reflect last week&rsquo;s 41 invites. New-market invites were steady at 42 (41 last week). No reviews were received this week; across all time the new markets have 5 reviews (Hungary 3, Portugal 2, one of them dated before launch), which is 4 post-launch reviews from 157 invites since launch. Review rate for the group of new markets was 0.0% this week (0 / 42), on very small numbers.</p>
+
+  <h2 id="s3">3. Week-over-Week Comparison &mdash; Sep 28&ndash;Oct 4 vs Oct 5&ndash;11</h2>
+  <table>
+    <thead><tr><th>Market</th><th>Invites (Sep 28&ndash;Oct 4)</th><th>Invites (Oct 5&ndash;11)</th><th>&Delta;</th><th>Reviews (Sep 28&ndash;Oct 4)</th><th>Reviews (Oct 5&ndash;11)</th><th>&Delta;</th></tr></thead>
+    <tbody>
+<tr><td>Denmark</td><td>2,012</td><td>2,450</td><td class="best">+438</td><td>22</td><td>26</td><td class="best">+4</td></tr>
+<tr><td>Norway</td><td>286</td><td>272</td><td class="worst">&minus;14</td><td>4</td><td>6</td><td class="best">+2</td></tr>
+<tr><td>Sweden</td><td>247</td><td>252</td><td class="best">+5</td><td>5</td><td>2</td><td class="worst">&minus;3</td></tr>
+<tr><td>Netherlands</td><td>193</td><td>183</td><td class="worst">&minus;10</td><td>1</td><td>3</td><td class="best">+2</td></tr>
+<tr><td>United Kingdom</td><td>84</td><td>84</td><td class="neutral">0</td><td>4</td><td>1</td><td class="worst">&minus;3</td></tr>
+<tr><td>France</td><td>42</td><td>38</td><td class="worst">&minus;4</td><td>1</td><td>0</td><td class="worst">&minus;1</td></tr>
+<tr><td>Italy</td><td>35</td><td>31</td><td class="worst">&minus;4</td><td>0</td><td>0</td><td class="neutral">0</td></tr>
+<tr><td>Poland</td><td>28</td><td>20</td><td class="worst">&minus;8</td><td>0</td><td>0</td><td class="neutral">0</td></tr>
+<tr><td>Spain</td><td>21</td><td>21</td><td class="neutral">0</td><td>0</td><td>0</td><td class="neutral">0</td></tr>
+<tr><td>Finland</td><td>21</td><td>21</td><td class="neutral">0</td><td>0</td><td>0</td><td class="neutral">0</td></tr>
+<tr><td>Czechia</td><td>10</td><td>15</td><td class="best">+5</td><td>0</td><td>0</td><td class="neutral">0</td></tr>
+<tr><td>Ireland</td><td>22</td><td>17</td><td class="worst">&minus;5</td><td>0</td><td>0</td><td class="neutral">0</td></tr>
+<tr><td>Belgium</td><td>14</td><td>12</td><td class="worst">&minus;2</td><td>1</td><td>0</td><td class="worst">&minus;1</td></tr>
+<tr class="total-row"><td>Total (13 established markets)</td><td>3,015</td><td>3,416</td><td class="best">+13.3%</td><td>38</td><td>38</td><td class="neutral">0</td></tr>
+    </tbody>
+  </table>
+  <p class="note">&#9432; Sep 28&ndash;Oct 4 figures are as published. Austria and Germany had no reviews in either week. The 11 new markets are shown separately in Section 2 (2 reviews last week, none this week).</p>
+
+  <table style="margin-top:14px;">
+    <thead><tr><th>Rating metric</th><th>Sep 28&ndash;Oct 4 (published)</th><th>Oct 5&ndash;11</th><th>&Delta;</th></tr></thead>
+    <tbody>
+      <tr class="total-row"><td>Overall average &mdash; all reviews</td><td>4.58&#9733; (N=40)</td><td>4.82&#9733; (N=38)</td><td class="best">+0.24</td></tr>
+      <tr><td>Organic average</td><td>4.85&#9733; (N=34)</td><td>4.79&#9733; (N=34)</td><td class="worst">&minus;0.06</td></tr>
+      <tr><td>Attributed average</td><td>3.00&#9733; (N=6)</td><td>5.00&#9733; (N=4)</td><td class="best">+2.00</td></tr>
+      <tr><td>5&#9733; share</td><td>85% (34)</td><td>92% (35)</td><td class="best">+7pp</td></tr>
+      <tr><td>Negative (&le;2&#9733;)</td><td>3</td><td>1</td><td class="best">&minus;2</td></tr>
+      <tr><td>Group review rate</td><td>1.31%</td><td>1.10%</td><td class="worst">&minus;0.21pp</td></tr>
+    </tbody>
+  </table>
+  <p class="note">&#9432; Attributed averages rest on 6 and 4 reviews, so that row is directional only. The one 1&#9733; review this week came from an organic customer waiting for a refund, whereas last week all three 1&#9733; reviews came from invited customers with open delivery or product problems.</p>
+
+  <h2 id="s4">4. Negative Reviews &mdash; Oct 5&ndash;11, 2026</h2>
+  <p style="font-weight:600;margin-bottom:6px;">1 review rated &le;2&#9733; this week (a 1&#9733;, organic), down from 3 last week: Denmark (1). There was also one 3&#9733; review (Denmark).</p>
+  <p style="margin-bottom:14px;color:#888;font-size:12px;">Themes: refund and cancellation delay (1) and damaged or opened parcel (1). Both reviews are from Denmark and dated Oct 9; the Netherlands and Sweden had no review below 4&#9733;.</p>
+
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r1">1&#9733;</span><span class="rc-source">organic &middot; Denmark</span><span class="rc-meta">2026-10-09 &middot; Danish</span></div>
+    <div class="rc-heading">Jeg annullere en ordre sa leveringen&hellip;</div>
+    <div class="rc-text">The customer cancelled an order because the delivery date was not kept and was told the order would be locked if they changed their mind. They repeated that the order must be cancelled and refunded and were told it would be cancelled as soon as possible; three days after first contacting the shop they still had no refund, and they call it a scam. <span class="tag-warn" style="margin-left:8px;">Cancellation refund delay</span></div>
+  </div>
+
+  <h3 style="margin-top:18px;">Also rated 3&#9733;</h3>
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r3">3&#9733;</span><span class="rc-source">organic &middot; Denmark</span><span class="rc-meta">2026-10-09 &middot; Danish</span></div>
+    <div class="rc-heading">Der var sle&aring;t hul i min pakke</div>
+    <div class="rc-text">The parcel arrived with a hole in it, crushed and opened; the customer finds it poor delivery, although the order was complete. <span class="tag-warn" style="margin-left:8px;">Damaged parcel</span></div>
+  </div>
+
+  <h3 style="margin-top:18px;">Attributed reviews this week (all 5&#9733;, Denmark)</h3>
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r5">5&#9733;</span><span class="rc-source">attributed &middot; Denmark</span><span class="rc-meta">2026-10-06 &middot; Danish</span></div>
+    <div class="rc-heading">Glad og tilfreds</div>
+    <div class="rc-text">Expected the best and says that is what they got.</div>
+  </div>
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r5">5&#9733;</span><span class="rc-source">attributed &middot; Denmark</span><span class="rc-meta">2026-10-06 &middot; Danish</span></div>
+    <div class="rc-heading">Nemt at bestille</div>
+    <div class="rc-text">Easy to order, fast delivery and good prices.</div>
+  </div>
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r5">5&#9733;</span><span class="rc-source">attributed &middot; Denmark</span><span class="rc-meta">2026-10-07 &middot; Danish</span></div>
+    <div class="rc-heading">Super sted at handle, b&aelig;de net og butik</div>
+    <div class="rc-text">Cheap, with good and smiling service in the Aalborg store, plus free shipping to the store.</div>
+  </div>
+  <div class="review-card">
+    <div class="rc-header"><span class="rating-badge r5">5&#9733;</span><span class="rc-source">attributed &middot; Denmark</span><span class="rc-meta">2026-10-09 &middot; Danish</span></div>
+    <div class="rc-heading">Det funger fint og personalet er meget&hellip;</div>
+    <div class="rc-text">Works well and the staff are very friendly when collecting the parcel in the store.</div>
+  </div>
+
+  <h2 id="s5">5. Email Performance &mdash; Oct 5&ndash;11, 2026</h2>
+  <div class="info-box">&#9432;&nbsp; <strong>Email engagement is shown for the 13 established markets.</strong> &ldquo;Tracked Sends&rdquo; are the emails covered by the email platform&rsquo;s engagement reporting, so they differ slightly from invites + reminders in Section 2; open and click rates are based on them. Opens, clicks and unsubscribes for the latest days continue to accrue, so this week is provisional. The 11 new markets are not included because we do not yet have access to their email statistics.</div>
+
+  <table>
+    <thead><tr><th>Market</th><th>Tracked Sends</th><th>Unique Opens</th><th>Open%</th><th>Unique Clicks</th><th>Click%</th><th>Unsubs</th></tr></thead>
+    <tbody>
+<tr><td>Denmark</td><td>4,655</td><td>2,700</td><td>58.0%</td><td>125</td><td>2.7%</td><td class="worst">78</td></tr>
+<tr><td>Norway</td><td>535</td><td>278</td><td>52.0%</td><td>30</td><td>5.6%</td><td>7</td></tr>
+<tr><td>Sweden</td><td>478</td><td>263</td><td>55.0%</td><td>30</td><td>6.3%</td><td>5</td></tr>
+<tr><td>Netherlands</td><td>357</td><td>205</td><td>57.4%</td><td>18</td><td>5.0%</td><td>5</td></tr>
+<tr><td>United Kingdom</td><td>160</td><td>88</td><td>55.0%</td><td>4</td><td>2.5%</td><td>2</td></tr>
+<tr><td>France</td><td>74</td><td>36</td><td>48.6%</td><td>6</td><td>8.1%</td><td>1</td></tr>
+<tr><td>Italy</td><td>63</td><td>36</td><td>57.1%</td><td>5</td><td>7.9%</td><td>0</td></tr>
+<tr><td>Poland</td><td>47</td><td>30</td><td>63.8%</td><td>6</td><td>12.8%</td><td>0</td></tr>
+<tr><td>Spain</td><td>40</td><td>19</td><td>47.5%</td><td>2</td><td>5.0%</td><td>0</td></tr>
+<tr><td>Finland</td><td>42</td><td>18</td><td>42.9%</td><td>4</td><td>9.5%</td><td>0</td></tr>
+<tr><td>Czechia</td><td>24</td><td>12</td><td>50.0%</td><td>2</td><td>8.3%</td><td>0</td></tr>
+<tr><td>Belgium</td><td>25</td><td>20</td><td>80.0%</td><td>2</td><td>8.0%</td><td>1</td></tr>
+<tr><td>Ireland</td><td>39</td><td>21</td><td>53.8%</td><td>0</td><td>0.0%</td><td>0</td></tr>
+<tr class="total-row"><td>Total (13 established markets)</td><td>6,539</td><td>3,726</td><td>56.98%</td><td>234</td><td>3.58%</td><td>99</td></tr>
+    </tbody>
+  </table>
+  <p class="note">&#9432; Vs the published Sep 28&ndash;Oct 4 report (5,869 tracked sends, 57.01% open rate, 3.82% click rate, 111 unsubscribes): open rate 56.98% (&minus;0.03pp), click rate 3.58% (&minus;0.24pp), unsubscribes 99 (&minus;12). Denmark&rsquo;s open rate was 58.0% (58.8%) and its click rate 2.7% (3.1%), with unsubscribes at 78 (76). Norway&rsquo;s unsubscribes fell from 11 to 7, the Netherlands from 11 to 5 and Sweden from 8 to 5. Small markets swing widely on a handful of opens or clicks.</p>
+
+  <h2 id="s6">6. Campaign Status</h2>
+  <div class="info-box">&#9432;&nbsp; <strong>Campaign status checked this week:</strong>
+    <table style="margin-top:10px;">
+      <thead><tr><th>Market</th><th>Campaign</th><th>Status</th><th>Change vs last week</th></tr></thead>
+      <tbody>
+        <tr><td>Austria</td><td>734</td><td class="worst">inactive</td><td>none</td></tr>
+        <tr><td>Germany</td><td>727</td><td class="worst">inactive (sender not set up)</td><td>none</td></tr>
+        <tr><td>13 established markets</td><td>one each</td><td class="best">active</td><td>none</td></tr>
+        <tr><td>11 new markets (BG, EE, GR, HR, HU, LT, LV, PT, RO, SI, SK)</td><td>752&ndash;762</td><td class="best">sending invites and reminders</td><td>none</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin-top:8px;">Germany&rsquo;s sender address (noreply.invitations@beautycos.de) is still not set up with the email platform, the same issue as in earlier reports. Austria has not been launched.</p>
+  </div>
+
+  <h2 id="s7">7. Action Items</h2>
+  <table>
+    <thead><tr><th>Priority</th><th>Item</th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr><td>&#128308; Urgent</td><td>Denmark: refund wait after cancellation</td><td>1&#9733; (Oct 9): a customer cancelled an order after a missed delivery date and had no refund three days later. Identify the order through the review platform, confirm the cancellation was processed, release the refund and reply to the customer.</td></tr>
+      <tr><td>&#128993; Monitor</td><td>Denmark: damaged parcel</td><td>3&#9733; (Oct 9): a parcel arrived crushed with a hole in it. Packaging damage was also a theme last week (France 1&#9733;, Hungary 3&#9733;), so a carrier-handling and packing spot-check is still worthwhile.</td></tr>
+      <tr><td>&#128993; Monitor</td><td>Review rate vs invite volume</td><td>The group review rate eased to 1.10% (1.31%) because invites rose 13.3% (Denmark back to 350 a day) while reviews slipped from 40 to 38. Reviews often arrive a week or more after an invite, so watch whether volume follows over the next one to two weeks.</td></tr>
+      <tr><td>&#128993; Monitor</td><td>Denmark: unsubscribes</td><td>Denmark unsubscribes held at 78 (76 last week) on 21.8% more invites, with 125 unique clicks. Keep watching the trend as volume stays at 350 a day.</td></tr>
+      <tr><td>&#128993; Monitor</td><td>New markets</td><td>All 11 new markets are sending invites and reminders but volumes are very low (42 invites this week) and no reviews arrived. Keep watching invite volume and review conversion over the next few weeks.</td></tr>
+      <tr><td>&#128309; Setup</td><td>Email access for the 11 new markets</td><td>Provide logins for the new market accounts so opens, clicks and unsubscribes can be reported for them.</td></tr>
+      <tr><td>&#128309; Setup</td><td>Germany sender / Austria launch</td><td>Germany remains inactive with the same sender-address issue since the Aug 10 report (now 9 weeks); Austria remains unlaunched. Confirm whether either is planned alongside the new-market rollout.</td></tr>
+      <tr><td>&#128994; Positive</td><td>Strong ratings across the largest markets</td><td>35 of 38 reviews (92%) were 5&#9733;. Denmark produced 26 reviews at 4.77&#9733; and Norway six at 4.83&#9733;; the four attributed Denmark reviews were all 5&#9733;, praising easy ordering, fast delivery and friendly store pickup.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    Beautycos Group campaign report &mdash; Oct 5&ndash;11, 2026 &mdash; Generated 2026-10-12<br>
+    13 established + 11 new markets; email performance for the 13 established markets; Sep 28&ndash;Oct 4 comparison figures as published
+  </div>
+
+</div>
+</body>
+</html>
