@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hockerty &amp; Sumissura Campaign Performance Report — Oct 5–11, 2026</title><style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #1a1a2e; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  .kpi-grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 20px; }
+  .kpi-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+  .split-box { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .split-box .split-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 12px; }
+  .split-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+  .split-row .slabel { color: #636e72; }
+  .split-row .sval { font-weight: 600; color: #1a1a2e; }
+  .attr-color { color: #00b894; }
+  .widget-color { color: #d68910; }
+  .org-color { color: #e17055; }
+  .ho-color { color: #6c5ce7; }
+  .su-color { color: #0984e3; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .ho-row td:first-child { border-left: 3px solid #6c5ce7; }
+  .su-row td:first-child { border-left: 3px solid #0984e3; }
+  .tk-row td:first-child { border-left: 3px solid #fdcb6e; }
+  .total-row { background: #f4f4f4 !important; font-weight: 600; }
+  .total-row td { background: #f4f4f4 !important; }
+
+  .review-card { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 10px; }
+  .rc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .rc-source { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; color: #888; }
+  .rc-meta { font-size: 12px; color: #aaa; margin-left: auto; }
+  .rc-text { font-size: 13px; color: #444; line-height: 1.6; }
+  .rc-heading { font-weight: 600; color: #1a1a2e; margin-bottom: 4px; font-size: 13px; }
+
+  .rating-badge { display: inline-block; border-radius: 5px; padding: 2px 9px; font-size: 12px; font-weight: 700; }
+  .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff3e0; color: #e17055; }
+  .r3 { background: #fffde0; color: #b8860b; }
+  .r4 { background: #e8f5f0; color: #00b894; }
+  .r5 { background: #e8f8f5; color: #00b894; }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .theme-card { background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .theme-card .icon { font-size: 24px; margin-bottom: 8px; }
+  .theme-card .theme-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .theme-card .count { font-size: 11px; color: #888; margin-bottom: 8px; }
+  .theme-card p { font-size: 12px; color: #555; margin: 0; line-height: 1.5; }
+
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-ok { display: inline-block; background: #e8f8f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #00b894; }
+  .tag-warn { display: inline-block; background: #fff3e0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #e17055; font-weight: 600; }
+  .note { font-size: 12px; color: #888; margin-top: 4px; }
+  .info-box { background: #f0f4ff; border: 1.5px solid #a0b4e8; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #2c3e6e; line-height: 1.6; }
+  .warn-box { background: #fff8e1; border: 1.5px solid #ffc107; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #5d4037; line-height: 1.6; }
+  .error-box { background: #fff5f5; border: 1.5px solid #d63031; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #4a0000; line-height: 1.6; }
+  .success-box { background: #f0fff4; border: 1.5px solid #00b894; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #004d30; line-height: 1.6; }
+
+  .new-badge { display: inline-block; background: #fdcb6e; color: #5d4037; border-radius: 4px; padding: 1px 7px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-left: 6px; }
+
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+  @media (max-width: 760px) { .kpi-grid, .kpi-grid3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 520px) { .kpi-grid, .kpi-grid3 { grid-template-columns: 1fr; } }
+</style></head><body><div class="wrapper">
+<h1>Hockerty &amp; Sumissura &mdash; Weekly Campaign Performance Report</h1>
+<div class="subtitle">Review invite analysis &nbsp;&bull;&nbsp; Oct 5&ndash;11, 2026 &nbsp;&bull;&nbsp; Generated 2026-10-12</div>
+<nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #6c5ce7;font-size:14px;line-height:2;">
+<strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+<a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Executive Summary</a>
+<a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Campaign Volume</a>
+<a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Tickets Campaigns</a>
+<a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Review Rate by Campaign</a>
+<a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Widget Metrics</a>
+<a href="#s6" style="color:#444;text-decoration:none;margin-right:20px;">6. Negative Reviews</a>
+<a href="#s7" style="color:#444;text-decoration:none;margin-right:20px;">7. Complaint Themes</a>
+<a href="#s8" style="color:#444;text-decoration:none;margin-right:20px;">8. Positive Highlights</a>
+<a href="#s9" style="color:#444;text-decoration:none;margin-right:20px;">9. Actions</a>
+</nav>
+<h2 id="s1">1. Executive Summary</h2><div class="kpi-grid">
+<div class="kpi"><div class="label">Total Invites Sent</div><div class="value">230</div><div class="sub">210 Hockerty + 20 Sumissura; +25.0% vs 184</div></div>
+<div class="kpi"><div class="label">Total Emails Sent</div><div class="value">391</div><div class="sub">230 invites + 161 reminders; &minus;17.5% vs 474</div></div>
+<div class="kpi"><div class="label">Total Reviews</div><div class="value">53</div><div class="sub">18 invite-linked · 23 widget · 12 organic; &minus;16 vs 69</div></div>
+<div class="kpi"><div class="label">Review Rate</div><div class="value">7.83%</div><div class="sub">18 invite-linked reviews / 230 invites; down 3.58 points vs 11.41% (21 / 184)</div></div>
+<div class="kpi"><div class="label">Average Rating — All Reviews</div><div class="value">4.32★</div><div class="sub">53 reviews · Hockerty 4.46★ · Sumissura 3.43★; up from 4.19★</div></div></div>
+<p class="note">Review Rate measures invite-campaign performance: invite-linked reviews &divide; invites sent in the week. Widget-generated and organic reviews are shown separately and are not part of the rate.</p>
+<div class="kpi-grid3" style="margin-top:16px;">
+<div class="split-box"><div class="split-title attr-color">Invite-Linked Reviews (matched to an email invite)</div><div class="split-row"><span class="slabel">Count</span><span class="sval">18 <span class="neutral">(21 last week)</span></span></div><div class="split-row"><span class="slabel">Avg Rating</span><span class="sval">4.33★</span></div><div class="split-row"><span class="slabel">Negatives (&le;3★)</span><span class="sval">3</span></div><div style="border-top:1px solid #f0f0f0;margin:10px 0 8px;"></div><div class="split-row"><span class="slabel ho-color">● Hockerty</span><span class="sval">17 reviews <span class="neutral">avg 4.29★</span></span></div><div class="split-row"><span class="slabel su-color">● Sumissura</span><span class="sval">1 review <span class="neutral">avg 5.00★</span></span></div></div>
+<div class="split-box"><div class="split-title widget-color">Widget-Generated Reviews (no email invite)</div><div class="split-row"><span class="slabel">Count</span><span class="sval">23 <span class="neutral">(30 last week)</span></span></div><div class="split-row"><span class="slabel">Avg Rating</span><span class="sval">4.70★</span></div><div class="split-row"><span class="slabel">Negatives (&le;3★)</span><span class="sval">1</span></div><div style="border-top:1px solid #f0f0f0;margin:10px 0 8px;"></div><div class="split-row"><span class="slabel ho-color">● Hockerty</span><span class="sval">20 reviews <span class="neutral">avg 4.80★</span></span></div><div class="split-row"><span class="slabel su-color">● Sumissura</span><span class="sval">3 reviews <span class="neutral">avg 4.00★</span></span></div></div>
+<div class="split-box"><div class="split-title org-color">Organic Reviews (no invite or widget)</div><div class="split-row"><span class="slabel">Count</span><span class="sval">12 <span class="neutral">(18 last week)</span></span></div><div class="split-row"><span class="slabel">Avg Rating</span><span class="sval">3.58★</span></div><div class="split-row"><span class="slabel">Negatives (&le;3★)</span><span class="sval">5</span></div><div style="border-top:1px solid #f0f0f0;margin:10px 0 8px;"></div><div class="split-row"><span class="slabel ho-color">● Hockerty</span><span class="sval">9 reviews <span class="neutral">avg 4.00★</span></span></div><div class="split-row"><span class="slabel su-color">● Sumissura</span><span class="sval">3 reviews <span class="neutral">avg 2.33★</span></span></div></div></div>
+<h3>Rating Breakdown by Account — all review sources</h3>
+<table><thead><tr><th>Account</th><th>Reviews</th><th>1★</th><th>2★</th><th>3★</th><th>4★</th><th>5★</th><th>Avg★</th><th>Negatives</th></tr></thead><tbody>
+<tr class="ho-row"><td>Hockerty</td><td>46</td><td class="worst">2</td><td class="worst">3</td><td class="worst">1</td><td>6</td><td class="best">34</td><td>4.46</td><td>6 (13.0%)</td></tr>
+<tr class="su-row"><td>Sumissura</td><td>7</td><td class="worst">1</td><td class="worst">2</td><td>0</td><td>1</td><td class="best">3</td><td>3.43</td><td>3 (42.9%)</td></tr>
+<tr class="total-row"><td>Total</td><td>53</td><td>3</td><td>5</td><td>1</td><td>7</td><td>37</td><td>4.32</td><td>9 (17.0%)</td></tr></tbody></table>
+<p class="note">Includes invite-linked, widget-generated and organic reviews. A negative is a review rated 1&ndash;3★. Last week: 69 reviews, 4.19★, 17 negatives (24.6%).</p>
+<div class="success-box"><strong>Ratings recovered and negative reviews roughly halved.</strong> The average rose from 4.19★ to 4.32★ and negatives fell from 17 to 9 (17.0% of reviews, from 24.6%); 44 of 53 reviews (83.0%) were 4&ndash;5★ versus 52 of 69 (75.4%). The negatives are spread across sources &mdash; 5 organic, 3 invite-linked and 1 widget-generated &mdash; and 3 of 7 Sumissura reviews were negative. Fit and sizing, alteration follow-up and website-versus-product expectations recur (section 7).</div>
+<div class="warning"><strong>Invite sending was uneven and reminders fell sharply.</strong> Daily invites were 40&ndash;49 on Oct 5&ndash;7 and again on Oct 11, but only 12&ndash;19 per day on Oct 8&ndash;10. Weekly invites rose 25.0% (184 to 230), driven by the main Hockerty campaigns (118 to 153), while reminders fell 44.5% (290 to 161), mostly in the main Hockerty campaigns (200 to 103), so total emails fell 17.5%. Please confirm whether the Oct 8&ndash;10 dip and the lower reminder volume reflect order volume or a change in sending.</div>
+<div class="info-box"><strong>Review volume fell and the Review Rate eased.</strong> 53 reviews were received (69 last week) and 18 were invite-linked (21 last week). With 25.0% more invites, the Review Rate fell to 7.83% from 11.41%. Widget-generated reviews were 23 (30), alongside 83 widget actions versus 100.</div>
+<h2 id="s2">2. Campaign Volume &mdash; Invite vs Reminder</h2>
+<p class="note">Invites and reminders are counted for the exact Monday&ndash;Sunday week. &ldquo;Tracked Sends&rdquo;, Open%, clicks and unsubscribes come from the email platform&rsquo;s engagement reporting and can differ slightly from Invites + Reminders (&ldquo;Emails Sent&rdquo;).</p>
+<h3><span class="ho-color">●</span> Hockerty account — main campaigns</h3><table><thead><tr><th>Campaign</th><th>ID</th><th>Invites</th><th>Reminders</th><th>Emails Sent</th><th>Tracked Sends</th><th>Open%</th><th>UClicks</th><th>Unsubs</th></tr></thead><tbody><tr><td>invite-tp-EN</td><td>626</td><td>53</td><td>48</td><td>101</td><td>99</td><td>63.6%</td><td>4</td><td>1</td></tr><tr><td>invite-tp-FR</td><td>627</td><td>31</td><td>20</td><td>51</td><td>51</td><td>39.2%</td><td>0</td><td>0</td></tr><tr><td>invite-tp-DE</td><td>628</td><td>41</td><td>17</td><td>58</td><td>57</td><td>56.1%</td><td>0</td><td>1</td></tr><tr><td>invite-tp-ES</td><td>629</td><td>6</td><td>9</td><td>15</td><td>15</td><td>46.7%</td><td>1</td><td>0</td></tr><tr><td>invite-tp-IT</td><td>630</td><td>22</td><td>9</td><td>31</td><td>31</td><td>51.6%</td><td>0</td><td>0</td></tr><tr class="total-row"><td>Subtotal</td><td></td><td>153</td><td>103</td><td>256</td><td>253</td><td>54.5%</td><td>5</td><td>2</td></tr></tbody></table>
+<p class="note">Main-account invites rose 118&rarr;153 while reminders fell 200&rarr;103; main email volume moved 318&rarr;256. Weighted open rate was 54.5% (138 opens / 253 tracked sends), versus 55.8% last week. FR (627) had the lowest open rate at 39.2%.</p>
+<h3><span class="su-color">●</span> Sumissura account — main campaigns</h3><table><thead><tr><th>Campaign</th><th>ID</th><th>Invites</th><th>Reminders</th><th>Emails Sent</th><th>Tracked Sends</th><th>Open%</th><th>UClicks</th><th>Unsubs</th></tr></thead><tbody><tr><td>invite-tp-EN</td><td>673</td><td>2</td><td>1</td><td>3</td><td>3</td><td>66.7%</td><td>0</td><td>0</td></tr><tr><td>invite-tp-FR</td><td>674</td><td>3</td><td>1</td><td>4</td><td>4</td><td>75.0%</td><td>0</td><td>0</td></tr><tr><td>invite-tp-DE</td><td>675</td><td>3</td><td>0</td><td>3</td><td>3</td><td>66.7%</td><td>0</td><td>0</td></tr><tr><td>invite-tp-ES</td><td>676</td><td>0</td><td>0</td><td>0</td><td>0</td><td>&mdash;</td><td>0</td><td>0</td></tr><tr><td>invite-tp-IT</td><td>677</td><td>0</td><td>0</td><td>0</td><td>0</td><td>&mdash;</td><td>0</td><td>0</td></tr><tr class="total-row"><td>Subtotal</td><td></td><td>8</td><td>2</td><td>10</td><td>10</td><td>70.0%</td><td>0</td><td>0</td></tr></tbody></table>
+<p class="note">Main Sumissura invitations rose 2&rarr;8 and reminders fell 7&rarr;2. Weighted open rate was 70.0% (7 / 10) versus 77.8% last week; the sample is very small.</p>
+<h2 id="s3">3. Invite-Tickets Campaigns</h2>
+<div class="info-box">Hockerty ticket-campaign invites were 57 (52 last week) and reminders 48 (66 last week); 4 reviews were linked to these campaigns (11 last week), including one of the three invite-linked negatives. Sumissura tickets campaign 711 sent 12 invites and 8 reminders (12 and 17 last week) and earned one invite-linked review. Negative-ticket campaigns remain outside the review-invite totals and sent nothing this week, and the new pre-sales invite campaign (820) was active but sent nothing.</div>
+<table><thead><tr><th>Account</th><th>Campaign</th><th>ID</th><th>Invites</th><th>Reminders</th><th>Emails Sent</th><th>Tracked Sends</th><th>Open%</th><th>UClicks</th><th>Unsubs</th><th>Reviews</th><th>Rate</th></tr></thead><tbody><tr class="ho-row"><td>Hockerty</td><td>invite-tickets-EN</td><td>705</td><td>34</td><td>31</td><td>65</td><td>65</td><td>61.5%</td><td>0</td><td>0</td><td>2</td><td>5.9%</td></tr><tr class="ho-row"><td>Hockerty</td><td>invite-tickets-FR</td><td>706</td><td>13</td><td>4</td><td>17</td><td>17</td><td>70.6%</td><td>0</td><td>0</td><td>1</td><td>7.7%</td></tr><tr class="ho-row"><td>Hockerty</td><td>invite-tickets-DE</td><td>707</td><td>4</td><td>2</td><td>6</td><td>5</td><td>80.0%</td><td>0</td><td>0</td><td>0</td><td>0.0%</td></tr><tr class="ho-row"><td>Hockerty</td><td>invite-tickets-ES</td><td>708</td><td>4</td><td>5</td><td>9</td><td>9</td><td>88.9%</td><td>0</td><td>0</td><td>1</td><td>25.0%</td></tr><tr class="ho-row"><td>Hockerty</td><td>invite-tickets-IT</td><td>709</td><td>2</td><td>6</td><td>8</td><td>10</td><td>70.0%</td><td>0</td><td>0</td><td>0</td><td>0.0%</td></tr><tr class="su-row"><td>Sumissura</td><td>invite-tickets-EN</td><td>711</td><td>12</td><td>8</td><td>20</td><td>18</td><td>66.7%</td><td>1</td><td>1</td><td>1</td><td>8.3%</td></tr><tr class="total-row"><td colspan="2">Total</td><td></td><td>69</td><td>56</td><td>125</td><td>124</td><td>66.9%</td><td>1</td><td>1</td><td>5</td><td>7.2%</td></tr></tbody></table>
+<p class="note">Reviews are those linked to each campaign&rsquo;s invites during the week, including customers invited earlier; the total rate is 5 reviews &divide; 69 invites (7.2%), versus 18.8% last week. Hockerty EN (705) had two reviews, one of them the 1★ about the partner alteration arrangement (see sections 6&ndash;7).</p>
+<h2 id="s4">4. Review Rate by Campaign</h2>
+<p class="note">Review Rate uses invite-linked reviews only. Widget-generated and organic reviews are shown below for completeness and are not part of the rate.</p>
+<h3><span class="ho-color">●</span> Hockerty account — 46 reviews (17 invite-linked)</h3>
+<table><thead><tr><th>Campaign</th><th>ID</th><th>Wk Invites</th><th>Reviews</th><th>Rate</th><th>Avg★</th><th>Min</th><th>Negatives</th></tr></thead><tbody>
+<tr class="ho-row"><td>invite-tp-EN</td><td>626</td><td>53</td><td>3</td><td>5.66%</td><td>4.00</td><td>2</td><td>1</td></tr>
+<tr class="ho-row"><td>invite-tp-FR</td><td>627</td><td>31</td><td>4</td><td>12.90%</td><td>5.00</td><td>5</td><td>0</td></tr>
+<tr class="ho-row"><td>invite-tp-DE</td><td>628</td><td>41</td><td>5</td><td>12.20%</td><td>4.40</td><td>2</td><td>1</td></tr>
+<tr class="ho-row"><td>invite-tp-ES</td><td>629</td><td>6</td><td>0</td><td>0.00%</td><td>&mdash;</td><td>&mdash;</td><td>0</td></tr>
+<tr class="ho-row"><td>invite-tp-IT</td><td>630</td><td>22</td><td>0</td><td>0.00%</td><td>&mdash;</td><td>&mdash;</td><td>0</td></tr>
+<tr class="ho-row"><td>invite-tp-DE-historical</td><td>638</td><td>0</td><td>1</td><td>n/m*</td><td>5.00</td><td>5</td><td>0</td></tr>
+<tr class="ho-row"><td>invite-tickets-EN</td><td>705</td><td>34</td><td>2</td><td>5.88%</td><td>3.00</td><td>1</td><td>1</td></tr>
+<tr class="ho-row"><td>invite-tickets-FR</td><td>706</td><td>13</td><td>1</td><td>7.69%</td><td>4.00</td><td>4</td><td>0</td></tr>
+<tr class="ho-row"><td>invite-tickets-DE</td><td>707</td><td>4</td><td>0</td><td>0.00%</td><td>&mdash;</td><td>&mdash;</td><td>0</td></tr>
+<tr class="ho-row"><td>invite-tickets-ES</td><td>708</td><td>4</td><td>1</td><td>25.00%</td><td>4.00</td><td>4</td><td>0</td></tr>
+<tr class="ho-row"><td>invite-tickets-IT</td><td>709</td><td>2</td><td>0</td><td>0.00%</td><td>&mdash;</td><td>&mdash;</td><td>0</td></tr>
+<tr class="ho-row"><td colspan="2"><em>Invite-linked subtotal</em></td><td>210</td><td>17</td><td>8.10%</td><td>4.29</td><td>1</td><td>3</td></tr>
+<tr class="ho-row"><td colspan="2"><em>Widget-generated (no invite)</em></td><td>&mdash;</td><td>20</td><td>&mdash;</td><td>4.80</td><td>4</td><td>0</td></tr>
+<tr class="ho-row"><td colspan="2"><em>Organic (no invite or widget)</em></td><td>&mdash;</td><td>9</td><td>&mdash;</td><td>4.00</td><td>1</td><td>3</td></tr>
+<tr class="total-row"><td colspan="2">Hockerty total &mdash; all review sources</td><td>&mdash;</td><td>46</td><td>&mdash;</td><td>4.46</td><td>1</td><td>6</td></tr></tbody></table>
+<h3><span class="su-color">●</span> Sumissura account — 7 reviews (1 invite-linked)</h3>
+<table><thead><tr><th>Campaign</th><th>ID</th><th>Wk Invites</th><th>Reviews</th><th>Rate</th><th>Avg★</th><th>Min</th><th>Negatives</th></tr></thead><tbody>
+<tr class="su-row"><td>invite-tp-EN</td><td>673</td><td>2</td><td>0</td><td>0.00%</td><td>&mdash;</td><td>&mdash;</td><td>0</td></tr>
+<tr class="su-row"><td>invite-tp-FR</td><td>674</td><td>3</td><td>0</td><td>0.00%</td><td>&mdash;</td><td>&mdash;</td><td>0</td></tr>
+<tr class="su-row"><td>invite-tp-DE</td><td>675</td><td>3</td><td>0</td><td>0.00%</td><td>&mdash;</td><td>&mdash;</td><td>0</td></tr>
+<tr class="su-row"><td>invite-tp-ES</td><td>676</td><td>0</td><td>0</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>0</td></tr>
+<tr class="su-row"><td>invite-tp-IT</td><td>677</td><td>0</td><td>0</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>0</td></tr>
+<tr class="su-row"><td>invite-tickets-EN</td><td>711</td><td>12</td><td>1</td><td>8.33%</td><td>5.00</td><td>5</td><td>0</td></tr>
+<tr class="su-row"><td colspan="2"><em>Invite-linked subtotal</em></td><td>20</td><td>1</td><td>5.00%</td><td>5.00</td><td>5</td><td>0</td></tr>
+<tr class="su-row"><td colspan="2"><em>Widget-generated (no invite)</em></td><td>&mdash;</td><td>3</td><td>&mdash;</td><td>4.00</td><td>2</td><td>1</td></tr>
+<tr class="su-row"><td colspan="2"><em>Organic (no invite or widget)</em></td><td>&mdash;</td><td>3</td><td>&mdash;</td><td>2.33</td><td>1</td><td>2</td></tr>
+<tr class="total-row"><td colspan="2">Sumissura total &mdash; all review sources</td><td>&mdash;</td><td>7</td><td>&mdash;</td><td>3.43</td><td>1</td><td>3</td></tr></tbody></table>
+<p class="note">A campaign can earn a review from an older invite even with few or no sends this week. Rates compare reviews submitted this week with invites sent this week and should be read as a weekly indicator, not a cohort conversion rate. *n/m: reviews exceed this week&rsquo;s invites. Last week&rsquo;s invite Review Rate was 11.41% overall.</p>
+<h2 id="s5">5. Shopping Experience Widget Metrics</h2>
+<div class="success-box">The widgets recorded 1,420 impressions (&minus;6.4%) and 83 actions (&minus;17.0%) across both accounts. Twenty-three reviews matched a widget action (27.7% of actions, versus 34% last week): 20 Hockerty and 3 Sumissura, all classified as widget-generated; none also matched an email invite.</div>
+<h3>Review Widget (trustpilot-collect) — Oct 5&ndash;11</h3>
+<table><thead><tr><th>Account</th><th>Impressions</th><th>Actions</th><th>Action rate</th><th>Reviews matched</th></tr></thead><tbody>
+<tr><td>Hockerty</td><td>1,264</td><td>74</td><td>5.9%</td><td>20</td></tr>
+<tr><td>Sumissura</td><td>156</td><td>9</td><td>5.8%</td><td>3</td></tr>
+<tr class="total-row"><td>Total</td><td>1,420</td><td>83</td><td>5.8%</td><td>23</td></tr></tbody></table>
+<p class="note">Last week: 1,517 impressions, 100 actions (6.6%), 34 reviews matched.</p>
+<h3>Hockerty daily widget activity</h3><table><thead><tr><th>Date</th><th>Impressions</th><th>Actions</th><th>Action rate</th></tr></thead><tbody>
+<tr><td>Oct 5</td><td>194</td><td>8</td><td>4.1%</td></tr>
+<tr><td>Oct 6</td><td>145</td><td>7</td><td>4.8%</td></tr>
+<tr><td>Oct 7</td><td>164</td><td>7</td><td>4.3%</td></tr>
+<tr><td>Oct 8</td><td>152</td><td>13</td><td>8.6%</td></tr>
+<tr><td>Oct 9</td><td>186</td><td>8</td><td>4.3%</td></tr>
+<tr><td>Oct 10</td><td>153</td><td>14</td><td>9.2%</td></tr>
+<tr><td>Oct 11</td><td>270</td><td>17</td><td>6.3%</td></tr>
+<tr class="total-row"><td>Week</td><td>1,264</td><td>74</td><td>5.9%</td></tr></tbody></table>
+<h3>Widget Actions by Country (Hockerty, Oct 5&ndash;11)</h3>
+<table><thead><tr><th>Country</th><th>Actions</th><th>% of Hockerty total</th></tr></thead><tbody>
+<tr><td>US</td><td>12</td><td>16.2%</td></tr><tr><td>DE</td><td>11</td><td>14.9%</td></tr><tr><td>FR</td><td>10</td><td>13.5%</td></tr><tr><td>GB</td><td>9</td><td>12.2%</td></tr><tr><td>IT</td><td>7</td><td>9.5%</td></tr><tr><td>ES</td><td>5</td><td>6.8%</td></tr><tr><td>CH</td><td>4</td><td>5.4%</td></tr><tr><td>MX</td><td>3</td><td>4.1%</td></tr><tr><td>Other countries</td><td>13</td><td>17.6%</td></tr>
+<tr class="total-row"><td>Total</td><td>74</td><td>100%</td></tr></tbody></table>
+<p class="note">These are clickstream actions, not email clicks. Percentages are rounded. Germany rose from 3 actions to 11, while the US fell from 24 to 12.</p>
+<h2 id="s6">6. Negative Reviews (&le;3★)</h2>
+<p>Nine reviews were rated &le;3★ (three 1★, five 2★, one 3★), down from seventeen last week. Six concerned Hockerty and three Sumissura; five were organic, one widget-generated and three invite-linked (Hockerty EN tickets 705, DE 628 and EN 626). Ticket matching is by email and cannot identify anonymous reviewers.</p>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r1">1★</span><span class="rc-source">hockerty · organic</span><span class="rc-meta">Oct 7 · no contact or order ID</span></div><div class="rc-heading">Wedding suit too big and cheap-looking</div><div class="rc-text">A customer who bought a suit for their wedding says it was too big, the fabric was frayed and it looked cheap and not like the photos on the website (&ldquo;a 1970s leisure suit&rdquo;). They call it a waste of over $400, say they are starting over, and that support was no help. <span class="tag-warn">Quality and website representation</span></div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r1">1★</span><span class="rc-source">hockerty · invite-tickets-EN (705)</span><span class="rc-meta">Oct 7 · order 99692726 · 3 tickets (latest Oct 6)</span></div><div class="rc-heading">Hockerty partner arrangements</div><div class="rc-text">Customer was told to go to a partner to have a shirt altered at no extra cost; the partner (Glasgow) had not been contacted by Hockerty and said the customer would have to pay. The partner measured the collar at 20 inches against the ordered 18.75&ndash;19 and could not reduce it to 18, so the shirt may need to be remade. The customer also notes there appears to be no written agreement with the partner on how alterations are handled. <span class="tag-warn">Alteration partner process and shirt remake</span></div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r1">1★</span><span class="rc-source">sumissura · organic</span><span class="rc-meta">Oct 9 · order 11698726 · no ticket match</span></div><div class="rc-heading">&ldquo;Garbage&rdquo;</div><div class="rc-text">A customer gives 1★ with a two-word comment calling the purchase a waste of money, with no detail on the cause. <span class="tag-warn">No detail given</span></div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r2">2★</span><span class="rc-source">hockerty · organic</span><span class="rc-meta">Oct 6 · no contact or order ID</span></div><div class="rc-heading">Lack of feedback from Customer Experience</div><div class="rc-text">A customer with a $500 suit says they were asked to remeasure and send photos, then received only a local tailor&rsquo;s address without feedback on the jacket fit. They say the updated measurements overwrote their original body profile, that promised alteration costs were not yet covered when the ticket closed after a week, and that their representative ignored their concerns. They add that customer service later replied that the receipt can still be uploaded. <span class="tag-warn">Support process and alteration cost</span></div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r2">2★</span><span class="rc-source">hockerty · invite-tp-DE (628)</span><span class="rc-meta">Oct 9 · order 103481626 · no ticket match</span></div><div class="rc-heading">Chino cut and fabric</div><div class="rc-text">A German-speaking customer was not satisfied with either the cut or the fabric quality of a chino. <span class="tag-warn">Cut and fabric quality</span></div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r2">2★</span><span class="rc-source">sumissura · organic</span><span class="rc-meta">Oct 10 · no contact or order ID</span></div><div class="rc-heading">Suit did not fit as advertised</div><div class="rc-text">A German-speaking customer ordered a relaxed fit but received a standard cut that did not fit exactly. After several requests to re-enter measurements and example photos, the remade suit was even tighter, and the slightly shiny material seemed less premium than the website photos suggested. They would not currently recommend the shop, but note that customer service was very helpful, which softened the rating. <span class="tag-warn">Fit and material versus website</span></div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r2">2★</span><span class="rc-source">sumissura · widget</span><span class="rc-meta">Oct 10 · order 114738026 · no ticket match</span></div><div class="rc-heading">Might be for you, just not really for me</div><div class="rc-text">A customer who received the order as a gift finds the site hard to use for people unfamiliar with textures, cuts and shapes, and could not easily find where to enter the gift card number at checkout; suggests labelling the field &ldquo;Promo Code/Gift Card Number&rdquo;. They are still interested in receiving the finished product. <span class="tag-warn">Website usability</span></div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r2">2★</span><span class="rc-source">hockerty · invite-tp-EN (626)</span><span class="rc-meta">Oct 11 · order 103716926 · no ticket match</span></div><div class="rc-heading">All the garments are too small</div><div class="rc-text">A customer says the shirt is tight with short sleeves, the trench coat is tight across shoulders, chest and back with short sleeves, and the trousers are tight around the thighs. They add that the materials are great and the fit is a shame. <span class="tag-warn">Fit and sizing</span></div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r3">3★</span><span class="rc-source">hockerty · organic</span><span class="rc-meta">Oct 9 · no contact or order ID</span></div><div class="rc-heading">Updated rating on Hockerty (3.5 stars)</div><div class="rc-text">After completing the support process, a customer says the original order arrived a couple of days late so the garments could not be used for the event, and the first jacket and trousers had fit and construction problems; the trousers could not be corrected by local tailoring. The finished jacket now fits very well with great build quality, and the customer credits Jonathan Blasco from customer service for staying engaged. They advise expecting a few extra days of delivery and a week of local tailoring. <span class="tag-warn">Delivery, fit and remake</span></div></div>
+<h2 id="s7">7. Complaint Themes</h2>
+<div class="theme-grid"><div class="theme-card"><div class="icon">✂</div><div class="theme-title">Fit, sizing and accuracy</div><div class="count">7 of 9 negatives</div><p>Garments that were too small or too large, a collar measured larger than ordered, a relaxed fit that arrived as a standard cut, and trousers that local tailoring could not correct.</p></div>
+<div class="theme-card"><div class="icon">↩</div><div class="theme-title">Alterations and remakes</div><div class="count">4 of 9 negatives</div><p>A partner alteration arrangement the partner knew nothing about, a remeasure-and-photos process that ended in a tailor referral, a remade suit that fitted worse, and a ticket closed before an alteration receipt was uploaded. The 705 reviewer had already contacted support three times.</p></div>
+<div class="theme-card"><div class="icon">🚚</div><div class="theme-title">Delivery timing and event deadlines</div><div class="count">1 of 9 negatives</div><p>One reviewer received the order a couple of days after the committed date and missed the event; they advise others to expect a few extra days.</p></div>
+<div class="theme-card"><div class="icon">✔</div><div class="theme-title">Quality and fabric</div><div class="count">3 of 9 negatives</div><p>Frayed, cheap-looking fabric, a chino fabric judged poor, and a shiny material that looked less premium than the website photos. One 5★ reviewer also warns that non-premium shirt fabrics shrank despite hand washing.</p></div>
+<div class="theme-card"><div class="icon">🖥</div><div class="theme-title">Website and ordering</div><div class="count">4 of 9 negatives</div><p>Website photos that did not match the delivered product (two reviews), an unclear gift-card field at checkout, and a body-measurement profile overwritten by a support-requested remeasure.</p></div></div>
+<p class="note">Themes overlap, so counts do not add to 9. Confirm each case history before drawing conclusions from review text alone.</p>
+<h2 id="s8">8. Positive Highlights (4–5★)</h2>
+<p>Forty-four reviews were positive (37 at 5★, seven at 4★), 83.0% of the week&rsquo;s reviews. Customer service recovery, quality and fit, and named staff stand out.</p>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r5">5★</span><span class="rc-source">hockerty · invite-tp-DE (628)</span><span class="rc-meta"></span></div><div class="rc-heading">You are now my number 1</div><div class="rc-text">A customer who was sceptical before ordering says the quality and workmanship were more than top and all their wishes were taken into account; would recommend.</div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r5">5★</span><span class="rc-source">hockerty · organic</span><span class="rc-meta"></span></div><div class="rc-heading">Customer since 2013</div><div class="rc-text">A French customer with two requests the site cannot capture (high-waisted trousers and jacket sleeves showing a centimetre of shirt cuff) wrote to customer service before ordering and mentions Alice from the team.</div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r5">5★</span><span class="rc-source">hockerty · organic</span><span class="rc-meta"></span></div><div class="rc-heading">Hockerty has been great to work with</div><div class="rc-text">Says the tailored approach to customer service and product makes them want to be a customer for life, and that everyone they dealt with was accommodating while getting the jacket to fit perfectly.</div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r5">5★</span><span class="rc-source">hockerty · organic</span><span class="rc-meta"></span></div><div class="rc-heading">Problem? Solved!</div><div class="rc-text">A German customer whose first jacket had a visible weaving flaw sent two photos; the team apologised without discussion, asked whether the fit was right, and sent a new jacket days later, only somewhat creased by the packaging.</div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r5">5★</span><span class="rc-source">sumissura · invite-tickets-EN (711)</span><span class="rc-meta"></span></div><div class="rc-heading">Best to have measurements taken by a tailor</div><div class="rc-text">The suit did not fit perfectly at first (self-taken measurements), but the tailor fixed it and the receipt upload was easy, with up to a quarter of the purchase price reimbursed.</div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r5">5★</span><span class="rc-source">hockerty · organic</span><span class="rc-meta"></span></div><div class="rc-heading">Excellent customer service</div><div class="rc-text">An Italian customer whose first shipment was wrong says customer service resolved it quickly and the product met expectations.</div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r5">5★</span><span class="rc-source">hockerty · invite-tp-FR (627)</span><span class="rc-meta"></span></div><div class="rc-heading">Wedding suit</div><div class="rc-text">A groomsman says he was well advised on fabric choice and the suit fitted like a glove.</div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r5">5★</span><span class="rc-source">hockerty · invite-tp-FR (627)</span><span class="rc-meta"></span></div><div class="rc-heading">Renewing my trust in Hockerty</div><div class="rc-text">A repeat buyer of made-to-measure shirts says the cut fits perfectly and the fabric quality is once again faultless.</div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r5">5★</span><span class="rc-source">sumissura · widget</span><span class="rc-meta"></span></div><div class="rc-heading">Great website, easy to use</div><div class="rc-text">Found the website easy to use, the body-measurement videos helpful and liked seeing the chosen fabric modelled in different coats.</div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r5">5★</span><span class="rc-source">hockerty · organic</span><span class="rc-meta"></span></div><div class="rc-heading">Well advised</div><div class="rc-text">A German customer says Carolina Lima advised very well.</div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r5">5★</span><span class="rc-source">hockerty · invite-tickets-EN (705)</span><span class="rc-meta"></span></div><div class="rc-heading">Trustworthy + good product</div><div class="rc-text">Praises timely responses, helpful feedback and a very cooperative team.</div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r4">4★</span><span class="rc-source">hockerty · invite-tickets-ES (708)</span><span class="rc-meta"></span></div><div class="rc-heading">The suit configurator is a marvel</div><div class="rc-text">A first-time suit buyer says the configurator lets you feel the suit before it arrives and guides you throughout; delivery was fast and after-sales service correct.</div></div>
+<div class="review-card"><div class="rc-header"><span class="rating-badge r5">5★</span><span class="rc-source">hockerty · widget</span><span class="rc-meta"></span></div><div class="rc-heading">Very satisfied overall</div><div class="rc-text">A German customer is very happy with shirts and delivery but warns that non-premium fabrics shrink despite hand washing, so made-to-measure shirts no longer fit.</div></div>
+<h2 id="s9">9. Action Items</h2><table><thead><tr><th>Priority</th><th>Action</th></tr></thead><tbody>
+<tr><td>Immediate</td><td>Follow up the Hockerty EN tickets (705) 1★ reviewer on order 99692726, who already contacted support three times: confirm whether the shirt will be remade, who pays for any alteration, and that the Glasgow partner has been briefed.</td></tr>
+<tr><td>Immediate</td><td>Review the two Hockerty cases with no contact details (the Oct 7 wedding-suit 1★ and the Oct 6 2★ about the remeasure process) through customer support and the review platform. For the second, confirm the receipt upload is possible and that the customer&rsquo;s original measurement profile can be restored.</td></tr>
+<tr><td>Immediate</td><td>Check Sumissura order 11698726 (1★ &ldquo;Garbage&rdquo;, no detail given) and consider outreach; review the relaxed-fit suit complaint (remade suit even tighter) and the gift-card field feedback.</td></tr>
+<tr><td>This week</td><td>Check the measurement entries on orders 103716926 (626, every garment too small) and 103481626 (628, chino cut and fabric), neither of which has a ticket, and offer remake or alteration guidance where appropriate.</td></tr>
+<tr><td>This week</td><td>Confirm why invites dipped to 12&ndash;19 per day on Oct 8&ndash;10 (40&ndash;49 on Oct 5&ndash;7 and Oct 11) and why reminders fell from 290 to 161, so next week&rsquo;s invite and review-rate comparison is on a like-for-like basis.</td></tr>
+<tr><td>This month</td><td>Put the partner-alteration process in writing and brief partners before sending customers to them, and make clear when reimbursement is capped (a quarter of the price in one 5★ review).</td></tr>
+<tr><td>This month</td><td>Review the gift card/promo code field label at checkout, whether website photos match the fabrics delivered, and care guidance for non-premium shirt fabrics, each raised in this week&rsquo;s reviews.</td></tr>
+<tr><td>Next report</td><td>Watch whether the Review Rate (7.83% versus 11.41% last week) recovers as invite and reminder volumes settle, and keep reading it alongside invite volume; invites rose 25.0% while invite-linked reviews fell from 21 to 18. Also watch whether the rating gain (4.32★ versus 4.19★) holds.</td></tr>
+</tbody></table>
+<div class="footer">Hockerty &amp; Sumissura Weekly Report  &bull;  Oct 5&ndash;11, 2026  &bull;  Generated 2026-10-12</div>
+</div></body></html>
