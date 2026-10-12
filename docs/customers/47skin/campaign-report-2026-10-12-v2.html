@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>47skin Campaign Performance Report — Oct 5–11, 2026</title><style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #1a1a2e; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .stars { color: #fdcb6e; }
+  .delta-up { color: #00b894; font-size: 11px; }
+  .delta-flat { color: #888; font-size: 11px; }
+  .delta-down { color: #d63031; font-size: 11px; }
+  .total-row td { background: #f0f0f0 !important; font-weight: 600; }
+  .campaign-block { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 16px; overflow: hidden; }
+  .camp-header { background: #1a1a2e; color: #fff; padding: 10px 16px; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 10px; }
+  .camp-header .badge { background: #6c5ce7; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
+  .camp-header .badge-gold { background: #fdcb6e; color: #5d4037; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .camp-header .badge-blue { background: #0984e3; color: #fff; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .camp-header .badge-red { background: #d63031; color: #fff; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .review-card { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; }
+  .review-card:last-child { border-bottom: none; }
+  .review-card.urgent { background: #fff6f6; border-left: 4px solid #d63031; }
+  .review-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+  .rating-badge { font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 8px; }
+  .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff3e0; color: #e17055; }
+  .r3 { background: #fffde0; color: #b8860b; }
+  .r4 { background: #eaf4fb; color: #2980b9; }
+  .r5 { background: #e8f8f5; color: #00b894; }
+  .review-heading { font-weight: 600; color: #1a1a2e; margin-bottom: 5px; font-size: 13px; }
+  .review-text { font-style: italic; color: #555; line-height: 1.6; font-size: 13px; }
+  .review-meta-line { font-size: 11px; color: #888; margin-bottom: 6px; }
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-warn { display: inline-block; background: #fff3e0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #e17055; font-weight: 600; }
+  .tag-urgent { display: inline-block; background: #ffeaea; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #d63031; font-weight: 700; }
+  .tag-ok { display: inline-block; background: #e8f8f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #00b894; }
+  .name-tag { display: inline-block; background: #6c5ce7; color: #fff; border-radius: 4px; padding: 2px 8px; font-size: 11px; }
+  .all-clear { background: #e8f8f5; border: 1.5px solid #00b894; border-radius: 10px; padding: 20px 22px; color: #00b894; font-weight: 600; font-size: 14px; }
+  .success-banner { background: #e8f8f5; border: 2px solid #00b894; border-radius: 10px; padding: 18px 22px; margin-bottom: 16px; }
+  .success-banner .sb-title { color: #00b894; font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+  .warning { background: #fff9e6; border: 1.5px solid #fdcb6e; border-radius: 10px; padding: 16px 20px; color: #5d4037; font-size: 13px; line-height: 1.6; margin-bottom: 12px; }
+  .alert { background: #fff6f6; border: 2px solid #d63031; border-radius: 10px; padding: 16px 20px; color: #7a1f1f; font-size: 13px; line-height: 1.6; margin-bottom: 12px; }
+  .info-box { background: #f0f4ff; border: 1.5px solid #a0b4e8; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #2c3e6e; line-height: 1.6; }
+  .note { font-size: 12px; color: #888; margin-top: 4px; }
+  .staff-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .staff-chip { background: #f0edff; color: #6c5ce7; border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 600; }
+  .staff-chip-role { font-weight: 400; color: #888; font-size: 11px; margin-left: 4px; }
+  .organic-chip { background: #f0f0f0; color: #636e72; border-radius: 20px; padding: 4px 14px; font-size: 12px; }
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+</style></head><body><div class="wrapper">
+<h1>47skin &mdash; Campaign Performance Report</h1>
+<div class="subtitle">Review invite analysis &nbsp;&bull;&nbsp; Oct 5&ndash;11, 2026 &nbsp;&bull;&nbsp; Generated 2026-10-12 &nbsp;&bull;&nbsp; Main 47skin account (excludes 47skin USA)</div>
+<nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #6c5ce7;font-size:14px;line-height:2;">
+<strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+<a href="#s1">1. Executive Summary</a> &nbsp;&bull;&nbsp; <a href="#s2">2. Campaign Performance</a> &nbsp;&bull;&nbsp; <a href="#s3">3. Campaign Breakdown</a> &nbsp;&bull;&nbsp; <a href="#s4">4. Negative Feedback</a> &nbsp;&bull;&nbsp; <a href="#s5">5. All Reviews</a> &nbsp;&bull;&nbsp; <a href="#s6">6. Action Items</a></nav>
+<h2 id="s1">1. Executive Summary</h2>
+<div class="info-box"><strong>Launch week.</strong> The three review campaigns (Recent Purchases 811, Loyal Purchases 812, Positive Closed Tickets 813) started sending on Oct 5 at about 14:00 UTC, so Sep 28&ndash;Oct 4 had no invites, reminders or campaign reviews. Comparisons with the previous week are therefore not available. <strong>This report counts only reviews attributed to these three campaigns</strong> (see the method note below); all other reviews on the shared Trustpilot profile are excluded from every figure and list. Reviews often arrive days after an invite, so this week&rsquo;s Review Rate will rise as later invites convert.</div>
+<div class="kpi-grid">
+<div class="kpi"><div class="label">Unique Invites</div><div class="value">1,965</div><div class="sub">campaigns launched Oct 5; 0 the week before</div></div>
+<div class="kpi"><div class="label">Attributed Reviews</div><div class="value">14</div><div class="sub">811: 1 &bull; 812: 3 &bull; 813: 10; prior week: 0 (no campaigns)</div></div>
+<div class="kpi"><div class="label">Review Rate</div><div class="value">0.71%</div><div class="sub">14 attributed reviews / 1,965 invites; first week, no prior rate</div></div>
+<div class="kpi"><div class="label">Avg Rating (attributed)</div><div class="value">4.50★</div><div class="sub">11 of 14 reviews are 5★; no prior-week comparison</div></div></div>
+<p class="note"><strong>How reviews are attributed.</strong> A review counts only if its order reference is the same order that campaign 811, 812 or 813 emailed (invite or reminder), and the review was written after that email. Matching on the customer alone (same email address, no matching order) is <em>not</em> accepted: one review matched only that way and is excluded. Review Rate = attributed reviews &divide; invites sent in the week. The invitation link cannot be traced to the review, so this shows the order was emailed before it was reviewed (2&ndash;47 hours earlier), not that the email caused the review. Reviews without an order reference, reviews of other orders and product reviews are excluded.</p>
+<h3>Week over week</h3>
+<table><thead><tr><th>Metric</th><th>Sep 28&ndash;Oct 4</th><th>Oct 5&ndash;11</th><th>Change</th></tr></thead><tbody>
+<tr><td>Invites sent</td><td>0 (no campaigns)</td><td>1,965</td><td><span class="delta-flat">launch week</span></td></tr>
+<tr><td>Reminders sent</td><td>0</td><td>350</td><td><span class="delta-flat">launch week</span></td></tr>
+<tr><td>Emails sent (invites + reminders)</td><td>0</td><td>2,315</td><td><span class="delta-flat">launch week</span></td></tr>
+<tr><td>Reviews attributed to campaigns</td><td>0 (no campaigns)</td><td>14</td><td><span class="delta-flat">launch week</span></td></tr>
+<tr><td>&nbsp;&nbsp;after an invite / after a reminder</td><td>0</td><td>12 / 2</td><td><span class="delta-flat">launch week</span></td></tr>
+<tr><td>Review rate</td><td>n/a</td><td>0.71%</td><td><span class="delta-flat">first week</span></td></tr>
+<tr><td>Average rating (attributed reviews)</td><td>n/a</td><td>4.50★</td><td><span class="delta-flat">first week</span></td></tr>
+<tr><td>Reviews rated 4&ndash;5★</td><td>n/a</td><td>12 (85.7%)</td><td><span class="delta-flat">first week</span></td></tr>
+<tr><td>Reviews rated 3★</td><td>n/a</td><td>1</td><td><span class="delta-flat">first week</span></td></tr>
+<tr><td>Reviews rated 1&ndash;2★</td><td>n/a</td><td>1</td><td><span class="delta-flat">first week</span></td></tr>
+<tr><td>Email open rate</td><td>n/a</td><td>58.1%</td><td><span class="delta-flat">first week</span></td></tr>
+<tr><td>Email click rate</td><td>n/a</td><td>3.7%</td><td><span class="delta-flat">first week</span></td></tr>
+<tr><td>Unsubscribes</td><td>n/a</td><td>16</td><td><span class="delta-flat">first week</span></td></tr>
+</tbody></table>
+<div class="info-box"><strong>What changed.</strong> The campaigns sent 1,965 invites in their first 7 days, led by Recent Purchases (734), Closed Tickets (670) and Loyal Purchases (561), plus 350 reminders. Fourteen reviews are attributed to the campaigns (0.71% of invites): 10 from Closed Tickets (813), 3 from Loyal Purchases (812) and 1 from Recent Purchases (811). Twelve are 4&ndash;5&#9733; and the average is 4.50&#9733;. Closed Tickets produced the only two low ratings (1&#9733; and 3&#9733;), both about problems that were still open.</div>
+<div class="alert"><strong>Two invited customers had unresolved problems.</strong> A customer with a ~&pound;200 express order that DPD returned to sender (1&#9733;) and a customer still waiting for a subscription refund (3&#9733;) both reviewed within hours of receiving a Positive Closed Tickets (813) invite. Both reviews say the issue was still open. See Section 4.</div>
+<div class="info-box"><strong>Email engagement:</strong> 2,291 tracked sends (emails covered by the email platform&rsquo;s engagement reporting), 1,332 unique opens (58.1%), 85 unique clicks (3.7%) and 16 unsubscribes (0.7%). The latest days of the week continue to collect opens and clicks, so these figures are provisional. Reviews are included through Oct 11; later ones are in next week&rsquo;s report.</div>
+<h2 id="s2">2. Campaign Performance</h2>
+<table><thead><tr><th>Campaign</th><th>ID</th><th>Invites</th><th>Reminders</th><th>Tracked Sends</th><th>Open</th><th>Click</th><th>Unsubs</th><th>Attributed Reviews</th><th>Review Rate</th><th>Avg</th></tr></thead><tbody>
+<tr><td>Recent Purchases</td><td>811</td><td>734</td><td>39</td><td>768</td><td>60.0%</td><td>2.3%</td><td>5</td><td>1</td><td>0.14%</td><td>5.00★</td></tr>
+<tr><td>Positive Closed Tickets</td><td>813</td><td>670</td><td>311</td><td>958</td><td>58.5%</td><td>5.8%</td><td>9</td><td>10</td><td>1.49%</td><td>4.30★</td></tr>
+<tr><td>Loyal Purchases</td><td>812</td><td>561</td><td>0</td><td>565</td><td>55.0%</td><td>1.9%</td><td>2</td><td>3</td><td>0.53%</td><td>5.00★</td></tr>
+<tr class="total-row"><td>Total</td><td></td><td>1,965</td><td>350</td><td>2,291</td><td>58.1%</td><td>3.7%</td><td>16</td><td>14</td><td>0.71%</td><td>4.50★</td></tr></tbody></table>
+<p class="note">Review rate per campaign = attributed reviews &divide; invites sent this week; a review is attributed to the most recent email (invite or reminder) of that campaign for the same order, sent before the review. Reviews that cannot be tied to a campaign order are not counted anywhere in this report. Tracked Sends, Open, Click and Unsubs come from the email platform&rsquo;s engagement reporting and can differ slightly from Invites + Reminders. 1,961 different customers were invited; four were invited by two campaigns in the week (Recent or Loyal Purchases together with Closed Tickets).</p>
+<h3>Daily volume</h3>
+<table><thead><tr><th>Day</th><th>Mon 5*</th><th>Tue 6</th><th>Wed 7</th><th>Thu 8</th><th>Fri 9</th><th>Sat 10</th><th>Sun 11</th><th>Total</th></tr></thead><tbody>
+<tr><td>Recent Purchases (811) invites</td><td>90</td><td>100</td><td>150</td><td>150</td><td>83</td><td>101</td><td>60</td><td>734</td></tr>
+<tr><td>Loyal Purchases (812) invites</td><td>100</td><td>100</td><td>150</td><td>94</td><td>40</td><td>44</td><td>33</td><td>561</td></tr>
+<tr><td>Closed Tickets (813) invites</td><td>90</td><td>61</td><td>90</td><td>73</td><td>282</td><td>38</td><td>36</td><td>670</td></tr>
+<tr class="total-row"><td>Total invites</td><td>280</td><td>261</td><td>390</td><td>317</td><td>405</td><td>183</td><td>129</td><td>1,965</td></tr>
+<tr><td>Reminders</td><td>0</td><td>0</td><td>0</td><td>90</td><td>90</td><td>89</td><td>81</td><td>350</td></tr>
+<tr><td>Attributed reviews</td><td>0</td><td>1</td><td>2</td><td>2</td><td>5</td><td>3</td><td>1</td><td>14</td></tr>
+</tbody></table>
+<p class="note">* Launch day: sending began at about 14:00 UTC. Reminders start three days after the first invites for Closed Tickets and, for Recent Purchases, reached customers 3&ndash;5 days after their invite. Reviews are counted on the day they were written.</p>
+<h2 id="s3">3. Campaign Breakdown</h2>
+<div class="campaign-block"><div class="camp-header">Recent Purchases (811)</div><div class="review-card">Largest campaign: 734 invites and 39 reminders. It hit its 150-a-day sending limit on Oct 7 and Oct 8, then ran at 60&ndash;101 a day. One attributed review (0.14% review rate), 5&#9733;, written on Oct 11 about four hours after its invite. Opens 60.0%, clicks 2.3% (the lowest click rate of the three), 5 unsubscribes. Two invite templates are being tested: the brand-style invite and the Trustpilot-style invite (details below).</div></div>
+<div class="campaign-block"><div class="camp-header">Positive Closed Tickets (813)</div><div class="review-card">670 invites and 311 reminders (72 hours after the invite), with the best engagement: 58.5% opens, 5.8% clicks. Ten attributed reviews (1.49% review rate, avg 4.30&#9733;): eight after the invite and two after the reminder. Eight are 4&ndash;5&#9733; and praise quick, helpful customer service. Two are low (1&#9733; and 3&#9733;), both from customers whose issue was still open. Invites were 36&ndash;90 a day apart from Oct 9, when 282 went out, mostly in two bursts around 10:00&ndash;12:00 and 15:00&ndash;17:00 UTC; the cause was not checked. 9 of the week&rsquo;s 16 unsubscribes.</div></div>
+<div class="campaign-block"><div class="camp-header">Loyal Purchases (812)</div><div class="review-card">561 invites and no reminders yet (its reminders are set for seven days after the invite, so they begin on Oct 12). It hit its 150-a-day limit on Oct 7, then fell to 33&ndash;94 a day. Three attributed reviews (0.53%), all 5&#9733;. Opens 55.0%, clicks 1.9%, 2 unsubscribes.</div></div>
+<div class="campaign-block"><div class="camp-header">Invite template test (811 and 812)</div><div class="review-card">The brand-style invite (about 639 sent) had 54.4% opens and 2.8% clicks; the Trustpilot-style invite (about 656 sent) had 61.0% opens and 1.5% clicks. Opens favour the Trustpilot style and clicks the brand style. With only 4 attributed reviews between the two campaigns, review results cannot yet separate them.</div></div>
+<h3>A/B test results by variation</h3>
+<p class="note">Each variation is the actual template and subject line recorded on the sent email. <strong>Sent</strong> counts emails sent (invites or reminders); <strong>Tracked</strong>, <strong>Open</strong>, <strong>Click</strong> and <strong>Unsubs</strong> come from the email platform&rsquo;s engagement reporting for Oct 5&ndash;11 (unique opens and clicks &divide; tracked sends), so Tracked can differ slightly from Sent. <strong>Attributed Reviews</strong> are the 14 order-matched reviews, assigned to the email that was the last one sent for that order before the review; <strong>Review Rate</strong> = attributed reviews &divide; invites sent for that variation (shown for invites only). Recent days are still collecting opens and clicks.</p>
+<div class="campaign-block"><div class="camp-header">Recent Purchases (811) &mdash; invites: 2 templates &times; 2 subject lines <span class="badge">50/50 split</span></div><div class="review-card" style="padding:0"><table><thead><tr><th>Template</th><th>Subject line</th><th>Sent</th><th>Tracked</th><th>Open</th><th>Click</th><th>Unsubs</th><th>Attributed Reviews</th><th>Review Rate</th></tr></thead><tbody>
+<tr><td>invite-brand-v1</td><td>How did we do?</td><td>200</td><td>199</td><td>57.3%</td><td>3.0%</td><td>1</td><td>1</td><td>0.50%</td></tr>
+<tr><td>invite-brand-v1</td><td>We'd love to hear about your experience, {{first_name}}</td><td>168</td><td>167</td><td>57.5%</td><td>3.6%</td><td>1</td><td>0</td><td>0.00%</td></tr>
+<tr><td>invite-tp</td><td>How did we do?</td><td>196</td><td>195</td><td>63.6%</td><td>1.5%</td><td>1</td><td>0</td><td>0.00%</td></tr>
+<tr><td>invite-tp</td><td>We'd love to hear about your experience, {{first_name}}</td><td>170</td><td>168</td><td>60.7%</td><td>1.2%</td><td>2</td><td>0</td><td>0.00%</td></tr>
+</tbody></table></div></div>
+<div class="campaign-block"><div class="camp-header">Recent Purchases (811) &mdash; reminders (sent 3&ndash;5 days after the invite)</div><div class="review-card" style="padding:0"><table><thead><tr><th>Template</th><th>Subject line</th><th>Sent</th><th>Tracked</th><th>Open</th><th>Click</th><th>Unsubs</th><th>Attributed Reviews</th><th>Review Rate</th></tr></thead><tbody>
+<tr><td>reminder-brand-v1</td><td>Regarding your recent order</td><td>9</td><td>9</td><td>88.9%</td><td>0.0%</td><td>0</td><td>0</td><td>&ndash;</td></tr>
+<tr><td>reminder-brand-v1</td><td>30 seconds to tell us how we did?</td><td>10</td><td>10</td><td>50.0%</td><td>0.0%</td><td>0</td><td>0</td><td>&ndash;</td></tr>
+<tr><td>reminder-tp</td><td>Regarding your recent order</td><td>5</td><td>5</td><td>40.0%</td><td>0.0%</td><td>0</td><td>0</td><td>&ndash;</td></tr>
+<tr><td>reminder-tp</td><td>30 seconds to tell us how we did?</td><td>15</td><td>15</td><td>66.7%</td><td>6.7%</td><td>0</td><td>0</td><td>&ndash;</td></tr>
+</tbody></table></div></div>
+<div class="campaign-block"><div class="camp-header">Loyal Purchases (812) &mdash; invites: 2 templates &times; 2 subject lines <span class="badge">50/50 split</span></div><div class="review-card" style="padding:0"><table><thead><tr><th>Template</th><th>Subject line</th><th>Sent</th><th>Tracked</th><th>Open</th><th>Click</th><th>Unsubs</th><th>Attributed Reviews</th><th>Review Rate</th></tr></thead><tbody>
+<tr><td>invite-brand-v1</td><td>How did we do?</td><td>130</td><td>131</td><td>55.0%</td><td>3.1%</td><td>0</td><td>0</td><td>0.00%</td></tr>
+<tr><td>invite-brand-v1</td><td>We'd love to hear about your experience, {{first_name}}</td><td>141</td><td>143</td><td>46.2%</td><td>1.4%</td><td>0</td><td>2</td><td>1.42%</td></tr>
+<tr><td>invite-tp</td><td>How did we do?</td><td>144</td><td>146</td><td>56.8%</td><td>1.4%</td><td>1</td><td>0</td><td>0.00%</td></tr>
+<tr><td>invite-tp</td><td>We'd love to hear about your experience, {{first_name}}</td><td>146</td><td>145</td><td>62.1%</td><td>2.1%</td><td>1</td><td>1</td><td>0.68%</td></tr>
+</tbody></table></div></div>
+<div class="campaign-block"><div class="camp-header">Loyal Purchases (812) &mdash; reminders</div><div class="review-card">No reminders sent yet (reminders are set for seven days after the invite). The same two templates and two subject lines are configured, so there is no reminder data to compare.</div></div>
+<div class="campaign-block"><div class="camp-header">Positive Closed Tickets (813) &mdash; invites: 1 template, 2 subject lines</div><div class="review-card" style="padding:0"><table><thead><tr><th>Template</th><th>Subject line</th><th>Sent</th><th>Tracked</th><th>Open</th><th>Click</th><th>Unsubs</th><th>Attributed Reviews</th><th>Review Rate</th></tr></thead><tbody>
+<tr><td>invite-closed-tickets</td><td>How was your most recent experience with our support team, {{first_name}}?</td><td>366</td><td>358</td><td>61.2%</td><td>5.0%</td><td>3</td><td>1</td><td>0.27%</td></tr>
+<tr><td>invite-closed-tickets</td><td>How did we do with your recent enquiry?</td><td>304</td><td>299</td><td>58.9%</td><td>8.4%</td><td>4</td><td>7</td><td>2.30%</td></tr>
+</tbody></table></div></div>
+<div class="campaign-block"><div class="camp-header">Positive Closed Tickets (813) &mdash; reminders (72 hours after the invite): 1 template, 2 subject lines</div><div class="review-card" style="padding:0"><table><thead><tr><th>Template</th><th>Subject line</th><th>Sent</th><th>Tracked</th><th>Open</th><th>Click</th><th>Unsubs</th><th>Attributed Reviews</th><th>Review Rate</th></tr></thead><tbody>
+<tr><td>reminder-closed-tickets</td><td>30 seconds to tell us how we did?</td><td>150</td><td>147</td><td>51.7%</td><td>4.8%</td><td>1</td><td>1</td><td>&ndash;</td></tr>
+<tr><td>reminder-closed-tickets</td><td>Regarding your recent enquiry</td><td>161</td><td>154</td><td>57.8%</td><td>3.9%</td><td>1</td><td>1</td><td>&ndash;</td></tr>
+</tbody></table></div></div>
+<div class="campaign-block"><div class="camp-header">Roll-up: template and subject-line tests across 811 and 812 (invites only)</div><div class="review-card" style="padding:0"><table><thead><tr><th>Test</th><th>Variant</th><th>Sent</th><th>Tracked</th><th>Open</th><th>Click</th><th>Unsubs</th><th>Attributed Reviews</th><th>Review Rate</th></tr></thead><tbody>
+<tr><td>Template (811 + 812 invites)</td><td>invite-brand-v1</td><td>639</td><td>640</td><td>54.4%</td><td>2.8%</td><td>2</td><td>3</td><td>0.47%</td></tr>
+<tr><td>Template (811 + 812 invites)</td><td>invite-tp</td><td>656</td><td>654</td><td>61.0%</td><td>1.5%</td><td>5</td><td>1</td><td>0.15%</td></tr>
+<tr><td>Subject (811 + 812 invites)</td><td>How did we do?</td><td>670</td><td>671</td><td>58.6%</td><td>2.2%</td><td>3</td><td>1</td><td>0.15%</td></tr>
+<tr><td>Subject (811 + 812 invites)</td><td>We&rsquo;d love to hear about your experience, {{first_name}}</td><td>625</td><td>623</td><td>56.8%</td><td>2.1%</td><td>4</td><td>3</td><td>0.48%</td></tr>
+</tbody></table></div></div>
+<div class="info-box"><strong>Reading the A/B results.</strong> The Trustpilot-style template (invite-tp) is opened more (61.0% vs 54.4%) while the brand template gets more clicks (2.8% vs 1.5%); the two subject lines on 811/812 are close on opens and clicks (58.6% vs 56.8% opens). In 813, the &ldquo;recent enquiry&rdquo; subject line has more clicks (8.4% vs 5.0%) but slightly fewer opens (58.9% vs 61.2%), and 7 of its 8 attributed reviews sit under it, including the 3&#9733; and 1&#9733; reviews. <strong>Sample sizes are very small:</strong> each variation has 130&ndash;366 invites and 0&ndash;7 attributed reviews, reminder variations have 5&ndash;161 sends, and gaps of a few percentage points are within normal variation. No variation can be declared a winner yet; review rates are not yet reliable for choosing between them. Reminders are not given a review rate because they follow invites already counted.</div>
+
+<h2 id="s4">4. Negative Feedback &mdash; Oct 5&ndash;11, 2026</h2>
+<p>Two attributed reviews were rated 3&#9733; or below (one 1&#9733;, one 3&#9733;), both from customers who had been emailed by the Closed Tickets campaign (813). No campaign reviews existed the week before, so there is no prior-week comparison; non-campaign reviews are outside this report.</p>
+<div class="review-card urgent"><div class="review-meta"><span class="rating-badge r1">1★</span><span class="tag">Closed Tickets (813) · invited Oct 9</span><span class="tag">Oct 10</span></div><div class="review-heading">No delivery 2 weeks later with express delivery!</div><div class="review-text">A customer who spent nearly &pound;200 on products for a birthday with express delivery says that over two weeks later, and after DPD confirmed the driver had not attempted delivery, they have neither the products nor a refund. DPD returned the parcel to sender, and when they contacted 47skin they received a generic reply to check the tracking. Needs a prompt, personal response.</div></div>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r3">3★</span><span class="tag">Closed Tickets (813) · invited Oct 10</span><span class="tag">Oct 10</span></div><div class="review-heading">I am happy with the delivery of the product</div><div class="review-text">Happy with delivery and customer service, but says the subscription was not handled properly and a requested refund has not yet been processed.</div></div>
+<p class="note">Themes: delivery failure with an unresolved refund (1), subscription refund still pending (1). Both customers reviewed hours after the 813 email, while their issues were still open.</p>
+<h2 id="s5">5. All Reviews &mdash; Oct 5&ndash;11, 2026</h2>
+<p class="note">Only the 14 reviews attributed to campaigns 811, 812 and 813 are listed, paraphrased and without customer details, grouped by campaign. Reviews that cannot be tied to a campaign order are excluded from this report.</p>
+<h3>Linked to Recent Purchases (811)</h3>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><span class="tag">Recent Purchases (811)</span><span class="tag">Oct 11</span></div><div class="review-heading">Highly recommend</div><div class="review-text">Bought for a teenage grandson with acne and has seen a vast improvement within four weeks.</div></div>
+<h3>Linked to Loyal Purchases (812)</h3>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><span class="tag">Loyal Purchases (812)</span><span class="tag">Oct 7</span></div><div class="review-heading">This is such a great product</div><div class="review-text">A grandson has used it for nearly two years and it has helped a lot.</div></div>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><span class="tag">Loyal Purchases (812)</span><span class="tag">Oct 7</span></div><div class="review-heading">Great products</div><div class="review-text">Worth every penny.</div></div>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><span class="tag">Loyal Purchases (812)</span><span class="tag">Oct 6</span></div><div class="review-heading">Really easy to order and sort subscription</div><div class="review-text">Easy to order and set up a subscription; a 15-year-old daughter loves the product.</div></div>
+<h3>Linked to Positive Closed Tickets (813)</h3>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><span class="tag">813 · invite</span><span class="tag">Oct 9</span></div><div class="review-heading">Prompt reply to my email and my issue was resolved within an hour</div><div class="review-text">Praises the live chat and a very prompt email reply, with the refund for an unwanted product paid within an hour.</div></div>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><span class="tag">813 · invite</span><span class="tag">Oct 9</span></div><div class="review-heading">Our order was damaged in transit</div><div class="review-text">Customer service was second to none after a damaged order; thanks Abi and Mildred.</div></div>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><span class="tag">813 · invite</span><span class="tag">Oct 9</span></div><div class="review-heading">Perfect</div><div class="review-text">Orders for a daughter at university; fast delivery on schedule.</div></div>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><span class="tag">813 · invite</span><span class="tag">Oct 9</span></div><div class="review-heading">They helped with my enquiry</div><div class="review-text">Enquiry sorted out promptly.</div></div>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><span class="tag">813 · invite</span><span class="tag">Oct 10</span></div><div class="review-heading">Quick response</div><div class="review-text">Quick response and great customer service.</div></div>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><span class="tag">813 · invite</span><span class="tag">Oct 9</span></div><div class="review-heading">Delivery on time</div><div class="review-text">Delivery arrived on time.</div></div>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r5">5★</span><span class="tag">813 · reminder</span><span class="tag">Oct 8</span></div><div class="review-heading">Super fast and down-to-earth response</div><div class="review-text">Only one or two emails were needed; everyone was helpful.</div></div>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r4">4★</span><span class="tag">813 · reminder</span><span class="tag">Oct 8</span></div><div class="review-heading">I bought 47 Skin</div><div class="review-text">Bought for a son with acne; since using the cleanser his face has started to clear and his confidence has grown. Notes it may not work for everyone.</div></div>
+<div class="review-card"><div class="review-meta"><span class="rating-badge r3">3★</span><span class="tag">813 · invite</span><span class="tag">Oct 10</span></div><div class="review-heading">Delivery fine, subscription not dealt with properly</div><div class="review-text">See Section 4.</div></div>
+<div class="review-card urgent"><div class="review-meta"><span class="rating-badge r1">1★</span><span class="tag">813 · invite</span><span class="tag">Oct 10</span></div><div class="review-heading">No delivery 2 weeks later with express delivery!</div><div class="review-text">See Section 4.</div></div>
+<h3>Staff mentioned</h3>
+<div class="staff-grid"><span class="staff-chip">Abi <span class="staff-chip-role">damaged order</span></span><span class="staff-chip">Mildred <span class="staff-chip-role">damaged order</span></span></div>
+<p>All staff mentions were positive, and the customer-service reviews from Closed Tickets (813) customers praise fast, helpful replies, including refunds paid within an hour.</p>
+<h2 id="s6">6. Action Items</h2>
+<table><thead><tr><th>Priority</th><th>Action</th></tr></thead><tbody>
+<tr><td>Immediate</td><td>Respond personally to the Oct 10 1&#9733; delivery review (~&pound;200 express order returned to sender by DPD, no refund or re-ship). Identify the order through the review platform, confirm the parcel status with DPD and arrange a re-ship or refund; the customer reports receiving only a generic reply.</td></tr>
+<tr><td>Immediate</td><td>Check the Oct 10 3&#9733; reviewer&rsquo;s subscription and refund request, which they say has not been processed.</td></tr>
+<tr><td>This week</td><td>Review how Positive Closed Tickets (813) judges that a customer&rsquo;s issue is resolved. Both low-rated 813 reviews came from customers who said their problem was still open when they reviewed, within a day of receiving the invite, and 813 had 9 of the week&rsquo;s 16 unsubscribes. Check these two customers&rsquo; tickets before drawing a conclusion from two cases.</td></tr>
+<tr><td>This week</td><td>Confirm the intended reminder timing for Recent Purchases (811). The campaign is set to remind after seven days, but its 39 reminders went out 3&ndash;5 days after the invite, while Loyal Purchases (812, same setting) has sent none yet.</td></tr>
+<tr><td>This week</td><td>Re-run this report next week: reviews arrive days after an invite and Loyal Purchases reminders begin on Oct 12, so the 0.71% first-week Review Rate will be understated. Compare then against this launch week rather than the pre-launch week.</td></tr>
+<tr><td>This month</td><td>Keep the invite template test running (brand-style invite: 54.4% opens, 2.8% clicks; Trustpilot-style invite: 61.0% opens, 1.5% clicks) until there are enough attributed reviews to compare review results.</td></tr>
+<tr><td>This month</td><td>Watch unsubscribes (16, 0.7% of tracked sends) as sending continues at the 150-a-day limits, and confirm why Closed Tickets sent 282 invites on Oct 9 when other days were 36&ndash;90.</td></tr>
+<tr><td>Note</td><td>Only reviews whose order was emailed by campaign 811, 812 or 813 before the review are counted (14). One further review matched a campaign customer by email address only and is excluded. The shared Trustpilot profile also carries 47skin USA reviews; they cannot enter this report because every counted review matches an order emailed by the main account&rsquo;s campaigns.</td></tr>
+</tbody></table>
+<div class="footer">47skin campaign report &mdash; Oct 5&ndash;11, 2026 &mdash; Generated 2026-10-12 &mdash; Main 47skin account</div>
+</div></body></html>
