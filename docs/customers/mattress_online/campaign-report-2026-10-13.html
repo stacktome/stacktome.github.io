@@ -1,0 +1,417 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Mattress Online — August–September 2026 Campaign Report</title>
+<style>
+  :root {
+    --bg:       #F4F3F0;
+    --surface:  #FFFFFF;
+    --text:     #18160F;
+    --muted:    #5C5851;
+    --faint:    #9A958F;
+    --border:   #E0DDD8;
+    --accent:   #1A4F96;
+    --accent-l: #EAF0FB;
+    --green:    #1E6B47;
+    --green-l:  #E6F4EC;
+    --amber:    #9A6200;
+    --amber-l:  #FEF3DC;
+    --red:      #B93232;
+    --red-l:    #FDEAEA;
+    --radius:   4px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:      #141210;
+      --surface: #1E1C18;
+      --text:    #EDE9E2;
+      --muted:   #9A948C;
+      --faint:   #5C5851;
+      --border:  #2A2822;
+      --accent:  #4A82D4;
+      --accent-l:#1A2540;
+      --green:   #3BAD72;
+      --green-l: #0F2A1C;
+      --amber:   #D4A040;
+      --amber-l: #2A1E06;
+      --red:     #E05454;
+      --red-l:   #2C0F0F;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg:#F4F3F0;--surface:#FFFFFF;--text:#18160F;--muted:#5C5851;
+    --faint:#9A958F;--border:#E0DDD8;--accent:#1A4F96;--accent-l:#EAF0FB;
+    --green:#1E6B47;--green-l:#E6F4EC;--amber:#9A6200;--amber-l:#FEF3DC;
+    --red:#B93232;--red-l:#FDEAEA;
+  }
+  :root[data-theme="dark"] {
+    --bg:#141210;--surface:#1E1C18;--text:#EDE9E2;--muted:#9A948C;
+    --faint:#5C5851;--border:#2A2822;--accent:#4A82D4;--accent-l:#1A2540;
+    --green:#3BAD72;--green-l:#0F2A1C;--amber:#D4A040;--amber-l:#2A1E06;
+    --red:#E05454;--red-l:#2C0F0F;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 15px; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, sans-serif;
+    line-height: 1.5;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; }
+
+  .report-header {
+    border-bottom: 2px solid var(--text);
+    padding-bottom: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  .report-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+  .report-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.75rem;
+    font-weight: normal;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .report-meta {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 2.25rem;
+  }
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.9rem 1rem;
+  }
+  .kpi-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 0.35rem;
+  }
+  .kpi-value {
+    font-size: 1.7rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+    line-height: 1;
+  }
+  .kpi-value.accent { color: var(--accent); }
+  .kpi-value.green  { color: var(--green); }
+  .kpi-sub {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+
+  .section-title {
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    font-weight: normal;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section { margin-bottom: 2.25rem; }
+
+  .chart-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.25rem 1rem;
+  }
+  .toc { font-size:.82rem; margin-bottom:2rem; display:flex; gap:1rem; flex-wrap:wrap; } .toc a { color:var(--accent); } .method { font-size:.82rem; color:var(--muted); } .method p { margin-bottom:.75rem; }
+  canvas { display: block; width: 100%; }
+  .chart-legend {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 0.75rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+    flex-wrap: wrap;
+  }
+  .legend-dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    margin-right: 0.3rem;
+    vertical-align: middle;
+  }
+
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  thead th {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--faint);
+    padding: 0.55rem 0.75rem;
+    text-align: right;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  thead th:first-child,
+  thead th:nth-child(2) { text-align: left; }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody td {
+    padding: 0.5rem 0.75rem;
+    color: var(--text);
+    text-align: right;
+    vertical-align: middle;
+  }
+  tbody td:first-child { text-align: left; }
+  tbody td:nth-child(2) { text-align: left; color: var(--muted); }
+  .month-header td {
+    background: var(--accent-l);
+    color: var(--accent);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.75rem;
+    text-align: left !important;
+  }
+  .month-total td {
+    background: var(--bg);
+    font-weight: 600;
+    font-size: 0.79rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+  .month-total td:first-child { color: var(--muted); }
+  .rate-pill {
+    display: inline-block;
+    padding: 0.15rem 0.45rem;
+    border-radius: 3px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .rate-good { background: var(--green-l); color: var(--green); }
+  .rate-mid  { background: var(--amber-l); color: var(--amber); }
+  .rate-zero { background: var(--border);  color: var(--faint); }
+
+  .review-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  .review-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.9rem 1rem;
+  }
+  .review-stars { color: var(--amber); font-size: 0.8rem; margin-bottom: 0.35rem; }
+  .review-text {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .review-meta {
+    font-size: 0.68rem;
+    color: var(--faint);
+    display: flex;
+    gap: 0.75rem;
+  }
+  .review-campaign { font-weight: 600; color: var(--accent); }
+
+  .camp-chip {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-right: 0.35rem;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+  .dash { color: var(--faint); }
+  .stars { color: var(--amber); }
+
+  @media (max-width: 600px) {
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .review-grid { grid-template-columns: 1fr; }
+    .kpi-value { font-size: 1.4rem; }
+  }
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Report", "headline": "Mattress Online \u2014 August\u2013September 2026 Campaign Report", "datePublished": "2026-10-13", "description": "Campaign sends and attributed product reviews, compared with June\u2013July 2026."}</script></head><body><div class="wrap">
+<header class="report-header"><div class="report-eyebrow">Campaign Attribution Report</div><h1 class="report-title">Mattress Online — Product Reviews</h1><div class="report-meta"><span>1 August – 30 September 2026</span><span>Compared with 1 June – 31 July 2026</span><span>Generated 13 Oct 2026</span></div></header>
+<nav class="toc" aria-label="Contents"><a href="#comparison">Period comparison</a><a href="#trend">Monthly trend</a><a href="#campaigns">Campaign comparison</a><a href="#monthly">Monthly breakdown</a><a href="#reviews">Selected reviews</a><a href="#methodology">Methodology</a></nav>
+<div class="kpi-row">
+<div class="kpi-card"><div class="kpi-label">Total Sends</div><div class="kpi-value">638</div><div class="kpi-sub">174 invites · 464 reminders</div></div>
+<div class="kpi-card"><div class="kpi-label">Attributed Reviews</div><div class="kpi-value">11</div><div class="kpi-sub">11 reviewed orders · 11 product reviews</div></div>
+<div class="kpi-card"><div class="kpi-label">Review Rate</div><div class="kpi-value">6.32%</div><div class="kpi-sub">reviewed orders / invite sends</div></div>
+<div class="kpi-card"><div class="kpi-label">Avg Product Rating</div><div class="kpi-value">4.55★</div><div class="kpi-sub">across 11 attributed product reviews</div></div>
+</div><div class="section"><h2 class="section-title" id="comparison">Period Comparison</h2><p class="method" style="margin-bottom:.75rem">Sends decreased 13.0%, while attributed reviews decreased from 13 to 11. The review rate was broadly steady at 6.32% versus 6.40%. Both periods span 61 days.</p><div class="table-wrap"><table><thead><tr><th>Metric</th><th>Jun–Jul 2026</th><th>Aug–Sep 2026</th><th>Change</th></tr></thead><tbody>
+<tr><td>Total sends</td><td>733</td><td>638</td><td>−95 (−13.0%)</td></tr>
+<tr><td>Invite sends</td><td>203</td><td>174</td><td>−29 (−14.3%)</td></tr>
+<tr><td>Reminder sends</td><td>530</td><td>464</td><td>−66 (−12.5%)</td></tr>
+<tr><td>Attributed reviewed orders</td><td>13</td><td>11</td><td>−2 (−15.4%)</td></tr>
+<tr><td>Attributed product reviews</td><td>13</td><td>11</td><td>−2 (−15.4%)</td></tr>
+<tr><td>Review rate</td><td>6.40%</td><td>6.32%</td><td>−0.08 percentage points</td></tr>
+<tr><td>Avg attributed product rating</td><td>5.00★</td><td>4.55★</td><td>−0.45★</td></tr>
+<tr><td>Attributed product reviews ≤2★</td><td>0</td><td>1</td><td>+1</td></tr>
+<tr><td>All received product reviews</td><td>442</td><td>448</td><td>+6 (+1.4%)</td></tr>
+<tr><td>Product reviews unmatched to campaigns</td><td>429</td><td>437</td><td>+8 (+1.9%)</td></tr>
+</tbody></table></div><p class="method" style="margin-top:.75rem">Nine of the 11 attributed reviews were 5★, one was 4★ and one was 1★. The 1★ review arrived on 30 September for MO Store (479). Unmatched reviews are account-wide context; they are not assumed to be organic or evidence of a sending failure.</p></div>
+<div class="section"><h2 class="section-title" id="trend">Monthly Trend — Sends vs Attributed Product Reviews</h2><div class="chart-wrap"><canvas id="trendChart" height="180" role="img" aria-label="Monthly sends: June 354, July 379, August 313, September 325. Attributed product reviews: June 4, July 9, August 5, September 6."></canvas><div class="chart-legend"><span><span class="legend-dot" style="background:var(--accent);opacity:.25"></span>Total sends</span><span><span class="legend-dot" style="background:var(--accent)"></span>Invite sends</span><span><span class="legend-dot" style="background:var(--green)"></span>Attributed product reviews</span></div><p class="method" style="margin-top:.75rem">Send bars use the left axis. Review bars are scaled separately; labels show the exact review counts.</p></div></div>
+<div class="section"><h2 class="section-title" id="campaigns">Campaign Comparison</h2><div class="table-wrap"><table><thead><tr><th>Campaign</th><th>Period</th><th>Invites</th><th>Reminders</th><th>Total</th><th>Reviews</th><th>Rate</th><th>Avg ★</th></tr></thead><tbody>
+<tr><td>Skipton Store (473)</td><td>Jun–Jul</td><td>15</td><td>35</td><td>50</td><td>1</td><td>6.67%</td><td>5.00★</td></tr>
+<tr><td>Skipton Store (473)</td><td>Aug–Sep</td><td>5</td><td>24</td><td>29</td><td>0</td><td>0.00%</td><td>No reviews</td></tr>
+<tr><td>MO Sheffield Outlet Store (474)</td><td>Jun–Jul</td><td>61</td><td>130</td><td>191</td><td>6</td><td>9.84%</td><td>5.00★</td></tr>
+<tr><td>MO Sheffield Outlet Store (474)</td><td>Aug–Sep</td><td>61</td><td>179</td><td>240</td><td>4</td><td>6.56%</td><td>5.00★</td></tr>
+<tr><td>The Bed Shop Store (477)</td><td>Jun–Jul</td><td>64</td><td>196</td><td>260</td><td>1</td><td>1.56%</td><td>5.00★</td></tr>
+<tr><td>The Bed Shop Store (477)</td><td>Aug–Sep</td><td>51</td><td>120</td><td>171</td><td>1</td><td>1.96%</td><td>5.00★</td></tr>
+<tr><td>MO Store (479)</td><td>Jun–Jul</td><td>63</td><td>169</td><td>232</td><td>5</td><td>7.94%</td><td>5.00★</td></tr>
+<tr><td>MO Store (479)</td><td>Aug–Sep</td><td>57</td><td>141</td><td>198</td><td>6</td><td>10.53%</td><td>4.17★</td></tr>
+</tbody></table></div><p class="method" style="margin-top:.75rem">These four campaigns account for every production send and attributed review in both periods. MO Sheffield Outlet Store (474) contributed four reviews in each period; MO Store (479) increased from five to six. The Bed Shop Store (477) had one in each period, and Skipton Store (473) had one then zero.</p></div>
+<div class="section"><h2 class="section-title" id="monthly">Monthly Breakdown by Campaign</h2><div class="table-wrap"><table><thead><tr><th></th><th>Campaign</th><th>Invites</th><th>Reminders</th><th>Total</th><th>Reviews</th><th>Rate</th><th>Avg ★</th></tr></thead><tbody>
+<tr class="month-header"><td colspan="8">June 2026</td></tr>
+<tr><td></td><td>Skipton Store (473)</td><td>7</td><td>11</td><td>18</td><td>0</td><td>0.00%</td><td>No reviews</td></tr>
+<tr><td></td><td>MO Sheffield Outlet Store (474)</td><td>22</td><td>46</td><td>68</td><td>2</td><td>9.09%</td><td>5.00★</td></tr>
+<tr><td></td><td>The Bed Shop Store (477)</td><td>39</td><td>108</td><td>147</td><td>0</td><td>0.00%</td><td>No reviews</td></tr>
+<tr><td></td><td>MO Store (479)</td><td>42</td><td>79</td><td>121</td><td>2</td><td>4.76%</td><td>5.00★</td></tr>
+<tr class="month-total"><td></td><td>Month total</td><td>110</td><td>244</td><td>354</td><td>4</td><td>3.64%</td><td>5.00★</td></tr>
+<tr class="month-header"><td colspan="8">July 2026</td></tr>
+<tr><td></td><td>Skipton Store (473)</td><td>8</td><td>24</td><td>32</td><td>1</td><td>12.50%</td><td>5.00★</td></tr>
+<tr><td></td><td>MO Sheffield Outlet Store (474)</td><td>39</td><td>84</td><td>123</td><td>4</td><td>10.26%</td><td>5.00★</td></tr>
+<tr><td></td><td>The Bed Shop Store (477)</td><td>25</td><td>88</td><td>113</td><td>1</td><td>4.00%</td><td>5.00★</td></tr>
+<tr><td></td><td>MO Store (479)</td><td>21</td><td>90</td><td>111</td><td>3</td><td>14.29%</td><td>5.00★</td></tr>
+<tr class="month-total"><td></td><td>Month total</td><td>93</td><td>286</td><td>379</td><td>9</td><td>9.68%</td><td>5.00★</td></tr>
+<tr class="month-header"><td colspan="8">August 2026</td></tr>
+<tr><td></td><td>Skipton Store (473)</td><td>4</td><td>17</td><td>21</td><td>0</td><td>0.00%</td><td>No reviews</td></tr>
+<tr><td></td><td>MO Sheffield Outlet Store (474)</td><td>30</td><td>108</td><td>138</td><td>2</td><td>6.67%</td><td>5.00★</td></tr>
+<tr><td></td><td>The Bed Shop Store (477)</td><td>17</td><td>49</td><td>66</td><td>1</td><td>5.88%</td><td>5.00★</td></tr>
+<tr><td></td><td>MO Store (479)</td><td>25</td><td>63</td><td>88</td><td>2</td><td>8.00%</td><td>4.50★</td></tr>
+<tr class="month-total"><td></td><td>Month total</td><td>76</td><td>237</td><td>313</td><td>5</td><td>6.58%</td><td>4.80★</td></tr>
+<tr class="month-header"><td colspan="8">September 2026</td></tr>
+<tr><td></td><td>Skipton Store (473)</td><td>1</td><td>7</td><td>8</td><td>0</td><td>0.00%</td><td>No reviews</td></tr>
+<tr><td></td><td>MO Sheffield Outlet Store (474)</td><td>31</td><td>71</td><td>102</td><td>2</td><td>6.45%</td><td>5.00★</td></tr>
+<tr><td></td><td>The Bed Shop Store (477)</td><td>34</td><td>71</td><td>105</td><td>0</td><td>0.00%</td><td>No reviews</td></tr>
+<tr><td></td><td>MO Store (479)</td><td>32</td><td>78</td><td>110</td><td>4</td><td>12.50%</td><td>4.00★</td></tr>
+<tr class="month-total"><td></td><td>Month total</td><td>98</td><td>227</td><td>325</td><td>6</td><td>6.12%</td><td>4.33★</td></tr>
+</tbody></table></div></div><div class="section"><h2 class="section-title" id="reviews">Selected Product Reviews</h2><div class="review-grid">
+<div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">“The Luna Gel Memory Pillow is comfortable and supports the head and neck perfectly - a great nights sleep is pretty much guaranteed.”</div><div class="review-meta"><span class="review-campaign">MO Store (479)</span><span>2026-09-29</span></div></div>
+<div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">“After the old mattress I threw away this one is so comfortable. The thickness of it helps but it is a joy to sleep on. Found the staff at mattress online really helpful and would shop there again everything.”</div><div class="review-meta"><span class="review-campaign">MO Sheffield Outlet Store (474)</span><span>2026-09-18</span></div></div>
+<div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">“It is very well madeand very comfortable”</div><div class="review-meta"><span class="review-campaign">MO Sheffield Outlet Store (474)</span><span>2026-09-03</span></div></div>
+<div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">“Great mattress , fantastic advice from the staff !”</div><div class="review-meta"><span class="review-campaign">MO Sheffield Outlet Store (474)</span><span>2026-08-31</span></div></div>
+</div></div><div class="section method"><h2 class="section-title" id="methodology">Methodology and Data Coverage</h2>
+<p>Source: Mattress Online invite-event parquet and product-review Delta tables, refreshed on 13 October 2026. Invite history covers through 12 October and product-review events through 13 October, beyond the requested 30 September end date. No partial October data is included in either period.</p>
+<p>Sends are production invite and reminder events partitioned by send date (<code>_date</code>); test-mode campaigns are excluded. All 638 current-period and 733 previous-period send events were unique on campaign, timestamp, send type, order and email.</p>
+<p>Reviews use <code>event_subtype = review_product</code>, a populated <code>product_rating</code>, and review event date (<code>ts_event</code>). Attribution matches case-insensitive, trimmed order IDs against all-time production invite/reminder history, requiring a send on or before the review. No order mapped to multiple campaigns. Each of the 890 rated product-review records across June–September has a distinct product-review ID.</p>
+<p>“Reviews” in campaign tables counts distinct reviewed orders, retaining the previous report’s convention. Each attributed order has exactly one product review in these periods, so reviewed-order and product-review totals coincide. Average ratings and rating distributions use product reviews once each, avoiding multiplication by reminder sends.</p>
+<p>Review rate = reviewed orders attributed in the period ÷ invite sends in the period. Reminders are excluded from the denominator. Reviews can relate to earlier sends, so this is a period activity ratio rather than a conversion rate for the same send cohort. Unmatched product reviews may come from other channels or lack a matching order; no email fallback is used. No reviews means there is no average to calculate.</p>
+</div></div><script>
+const chartData = [{"mo": "Jun", "sends": 354, "invites": 110, "reviews": 4}, {"mo": "Jul", "sends": 379, "invites": 93, "reviews": 9}, {"mo": "Aug", "sends": 313, "invites": 76, "reviews": 5}, {"mo": "Sep", "sends": 325, "invites": 98, "reviews": 6}];
+function drawChart() {
+  const canvas = document.getElementById('trendChart');
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.parentElement.clientWidth - 40;
+  const H = 180;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  canvas.width  = W * dpr;
+  canvas.height = H * dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const sts = getComputedStyle(document.documentElement);
+  const accent = sts.getPropertyValue('--accent').trim();
+  const green  = sts.getPropertyValue('--green').trim();
+  const border = sts.getPropertyValue('--border').trim();
+  const muted  = sts.getPropertyValue('--muted').trim();
+  const faint  = sts.getPropertyValue('--faint').trim();
+
+  const data = chartData;
+
+  const PAD = {t:16, r:12, b:32, l:48};
+  const cw = W - PAD.l - PAD.r;
+  const ch = H - PAD.t - PAD.b;
+  const maxS = Math.max(...data.map(d => d.sends));
+  const maxR = Math.max(...data.map(d => d.reviews));
+  const n = data.length;
+
+  // Grid
+  ctx.strokeStyle = border;
+  ctx.lineWidth = 1;
+  [0, 0.25, 0.5, 0.75, 1].forEach(f => {
+    const y = PAD.t + ch*(1-f);
+    ctx.beginPath(); ctx.moveTo(PAD.l, y); ctx.lineTo(PAD.l+cw, y); ctx.stroke();
+    if (f > 0) {
+      ctx.fillStyle = faint;
+      ctx.font = '10px system-ui';
+      ctx.textAlign = 'right';
+      ctx.fillText(Math.round(f*maxS), PAD.l-6, y+4);
+    }
+  });
+
+  const bw = cw / n;
+  const bW = bw * 0.34;
+
+  data.forEach((d, i) => {
+    const cx = PAD.l + bw*i + bw/2;
+
+    const sh = (d.sends/maxS)*ch;
+    ctx.fillStyle = accent + '28';
+    ctx.fillRect(cx-bW-1, PAD.t+ch-sh, bW, sh);
+
+    const ih = (d.invites/maxS)*ch;
+    ctx.fillStyle = accent + '99';
+    ctx.fillRect(cx-bW-1, PAD.t+ch-ih, bW, ih);
+
+    const rh = maxR > 0 ? (d.reviews/maxR)*ch*0.65 : 0;
+    ctx.fillStyle = green;
+    ctx.fillRect(cx+1, PAD.t+ch-rh, bW, rh);
+
+    ctx.fillStyle = green;
+    ctx.font = 'bold 10px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText(d.reviews, cx+1+bW/2, PAD.t+ch-rh-4);
+
+    ctx.fillStyle = muted;
+    ctx.font = '11px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText(d.mo, cx, PAD.t+ch+18);
+  });
+}
+
+requestAnimationFrame(drawChart);
+window.addEventListener('resize', drawChart);
+new MutationObserver(drawChart).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+</script></body></html>
