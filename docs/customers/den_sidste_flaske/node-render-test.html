@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Den Sidste Flaske Reviews — Live Render Test</title>
+  <style>
+    body{margin:0;font-family:system-ui,sans-serif;background:#fff;color:#30232a}
+    .test-bar{padding:16px 24px;background:#43212b;color:#fff}
+    .test-bar h1{margin:0 0 8px;font-size:20px}
+    .test-bar p{margin:6px 0;font-size:14px}
+    .test-controls{display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin:12px 0}
+    .test-controls label{display:grid;gap:4px;font-size:13px}
+    .test-controls input{box-sizing:border-box;width:min(360px,80vw);padding:9px;border:1px solid #c6bbc0;border-radius:5px;font:inherit}
+    .test-controls button{padding:9px 16px;border:1px solid #fff;border-radius:5px;background:#fff;color:#43212b;font:inherit;cursor:pointer}
+    .test-controls button:disabled{opacity:.6;cursor:wait}
+    #status{min-height:20px}
+    #app:empty::before{content:'Indtast backend-nøglen ovenfor for at hente den aktuelle anmeldelsesside.';display:block;padding:32px 24px;color:#666}
+  </style>
+</head>
+<body>
+  <header class="test-bar">
+    <h1>Den Sidste Flaske — live render test</h1>
+    <p>Production · widget 768 · henter det aktuelle HTML-fragment fra review-service.</p>
+    <form id="render-form" class="test-controls">
+      <label for="backend-key">Backend API key — kun til denne test
+        <input id="backend-key" type="password" autocomplete="off" spellcheck="false" required>
+      </label>
+      <button id="load-button" type="submit">Hent anmeldelser</button>
+    </form>
+    <p id="status" role="status" aria-live="polite">Klar. Nøglen gemmes kun i denne fanes hukommelse.</p>
+  </header>
+  <main id="app"></main>
+  <script>
+  // Internal live-render test, matching the SelectSpecs loader. Enter the backend key at
+  // runtime; it is never committed or saved to browser storage. Real storefronts fetch the
+  // fragment server-side, with only the public API key in the storefront markup.
+  (function(){
+    var API_BASE = 'https://services.stacktome.com/api/reviews';
+    var renderKey = '';
+    var TEMPLATE_ID = '768';
+    var ROOT_ID = 'dsf-reviews';
+    var form = document.getElementById('render-form');
+    var keyInput = document.getElementById('backend-key');
+    var button = document.getElementById('load-button');
+    var status = document.getElementById('status');
+    var app = document.getElementById('app');
+
+    async function loadRender(event){
+      event.preventDefault();
+      if (button.disabled) return;
+      renderKey = keyInput.value.trim() || renderKey;
+      if (!renderKey) { keyInput.focus(); return; }
+      keyInput.value = '';
+      keyInput.required = false;
+      button.disabled = true;
+      status.textContent = 'Henter anmeldelsessiden…';
+      try {
+        var response = await fetch(API_BASE + '/v1/templates/' + TEMPLATE_ID + '/page', {
+          method: 'POST',
+          headers: { apikey: renderKey, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ rootId: ROOT_ID }),
+          signal: AbortSignal.timeout(60000),
+        });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        var html = await response.text();
+        if (html.indexOf('Den Sidste Flaske') === -1 || html.indexOf(renderKey) !== -1)
+          throw new Error('Render-fragmentet bestod ikke konto-/nøglekontrollen.');
+        app.innerHTML = html;
+        // HTML insertion alone does not execute the fragment's enhancement script. Recreate
+        // scripts in their existing positions, preserving the root used by initialization.
+        app.querySelectorAll('script').forEach(function(oldScript){
+          var newScript = document.createElement('script');
+          Array.prototype.forEach.call(oldScript.attributes, function(attr){
+            newScript.setAttribute(attr.name, attr.value);
+          });
+          newScript.textContent = oldScript.textContent;
+          oldScript.parentNode.replaceChild(newScript, oldScript);
+        });
+        status.textContent = 'Live render hentet ' + new Date().toLocaleString('da-DK') +
+          '. Indholdet følger widget 768 og review-service\'s render-cache.';
+        button.textContent = 'Genindlæs anmeldelser';
+      } catch (error) {
+        status.textContent = 'Render kunne ikke hentes: ' + error.message;
+      } finally {
+        button.disabled = false;
+      }
+    }
+    form.addEventListener('submit', loadRender);
+  })();
+  </script>
+</body>
+</html>
