@@ -1,94 +1,1193 @@
 <!doctype html>
 <html lang="da">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow">
-  <title>Den Sidste Flaske Reviews — Live Render Test</title>
-  <style>
-    body{margin:0;font-family:system-ui,sans-serif;background:#fff;color:#30232a}
-    .test-bar{padding:16px 24px;background:#43212b;color:#fff}
-    .test-bar h1{margin:0 0 8px;font-size:20px}
-    .test-bar p{margin:6px 0;font-size:14px}
-    .test-controls{display:flex;align-items:end;gap:12px;flex-wrap:wrap;margin:12px 0}
-    .test-controls label{display:grid;gap:4px;font-size:13px}
-    .test-controls input{box-sizing:border-box;width:min(360px,80vw);padding:9px;border:1px solid #c6bbc0;border-radius:5px;font:inherit}
-    .test-controls button{padding:9px 16px;border:1px solid #fff;border-radius:5px;background:#fff;color:#43212b;font:inherit;cursor:pointer}
-    .test-controls button:disabled{opacity:.6;cursor:wait}
-    #status{min-height:20px}
-    #app:empty::before{content:'Indtast backend-nøglen ovenfor for at hente den aktuelle anmeldelsesside.';display:block;padding:32px 24px;color:#666}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Den Sidste Flaske — Node Render Test</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Læs kundernes anmeldelser af Den Sidste Flaske: levering, priser, vinens smag, kundeservice og retur.">
+<link rel="canonical" href="https://densidsteflaske.dk/pages/anmeldelser">
+<style>body{margin:0;font-family:system-ui,sans-serif}.host-nav{padding:16px 24px;background:#43212b;color:#fff}.host-nav a{color:inherit;text-decoration:none}</style>
 </head>
 <body>
-  <header class="test-bar">
-    <h1>Den Sidste Flaske — live render test</h1>
-    <p>Production · widget 768 · henter det aktuelle HTML-fragment fra review-service.</p>
-    <form id="render-form" class="test-controls">
-      <label for="backend-key">Backend API key — kun til denne test
-        <input id="backend-key" type="password" autocomplete="off" spellcheck="false" required>
-      </label>
-      <button id="load-button" type="submit">Hent anmeldelser</button>
-    </form>
-    <p id="status" role="status" aria-live="polite">Klar. Nøglen gemmes kun i denne fanes hukommelse.</p>
-  </header>
-  <main id="app"></main>
-  <script>
-  // Internal live-render test, matching the SelectSpecs loader. Enter the backend key at
-  // runtime; it is never committed or saved to browser storage. Real storefronts fetch the
-  // fragment server-side, with only the public API key in the storefront markup.
-  (function(){
-    var API_BASE = 'https://services.stacktome.com/api/reviews';
-    var renderKey = '';
-    var TEMPLATE_ID = '768';
-    var ROOT_ID = 'dsf-reviews';
-    var form = document.getElementById('render-form');
-    var keyInput = document.getElementById('backend-key');
-    var button = document.getElementById('load-button');
-    var status = document.getElementById('status');
-    var app = document.getElementById('app');
+<nav class="host-nav">Den Sidste Flaske — Node render test · production widget 768</nav>
+<main><div id="dsf-reviews" data-st-updated="2026-10-14T13:48:51.702Z" data-st-api="https://services.stacktome.com/api/reviews" data-st-auth-header="apikey" data-st-auth-value="IwFq7B5aVAo8e5b0oVD44jiACzlkgkb5" lang="da" data-st-i18n="{&quot;locale&quot;:&quot;da-DK&quot;,&quot;strings&quot;:{&quot;aiError&quot;:&quot;Der opstod en fejl. Prøv igen senere.&quot;,&quot;aiLoading&quot;:&quot;Gennemgår kundernes anmeldelser…&quot;,&quot;aiMatchingReviews&quot;:&quot;Svaret bygger på de relevante kundeanmeldelser.&quot;,&quot;aiOverallReviews&quot;:&quot;Baseret på vores samlede anmeldelser.&quot;,&quot;aiUnavailable&quot;:&quot;Vi kan ikke besvare spørgsmål lige nu — prøv anmeldelserne nedenfor.&quot;,&quot;allCountries&quot;:&quot;Alle lande&quot;,&quot;allLanguages&quot;:&quot;Alle sprog&quot;,&quot;allRatings&quot;:&quot;Alle bedømmelser&quot;,&quot;allReviews&quot;:&quot;Alle anmeldelser&quot;,&quot;allSentiment&quot;:&quot;Alle holdninger&quot;,&quot;allSources&quot;:&quot;Alle kilder&quot;,&quot;alsoRatedOn&quot;:&quot;Også anmeldt på&quot;,&quot;anonymous&quot;:&quot;Anonym&quot;,&quot;answeredByAi&quot;:&quot;Besvaret af AI&quot;,&quot;apply&quot;:&quot;Anvend&quot;,&quot;clearFilters&quot;:&quot;Nulstil filtre&quot;,&quot;clearProductFilter&quot;:&quot;Fjern produktfilter&quot;,&quot;close&quot;:&quot;Luk&quot;,&quot;configuredRatings&quot;:&quot;Valgte bedømmelser&quot;,&quot;country.au&quot;:&quot;Australien&quot;,&quot;country.de&quot;:&quot;Tyskland&quot;,&quot;country.dk&quot;:&quot;Danmark&quot;,&quot;country.fr&quot;:&quot;Frankrig&quot;,&quot;country.gb&quot;:&quot;Storbritannien&quot;,&quot;country.nl&quot;:&quot;Nederlandene&quot;,&quot;country.no&quot;:&quot;Norge&quot;,&quot;country.pt&quot;:&quot;Portugal&quot;,&quot;country.ru&quot;:&quot;Rusland&quot;,&quot;country.se&quot;:&quot;Sverige&quot;,&quot;country.tr&quot;:&quot;Tyrkiet&quot;,&quot;country.us&quot;:&quot;USA&quot;,&quot;customerPhoto&quot;:&quot;Kundebillede&quot;,&quot;distributionDescription&quot;:&quot;Fordeling af {count} kundeanmeldelser af {store} efter bedømmelse fra 1 til 5 stjerner.&quot;,&quot;distributionName&quot;:&quot;Fordeling af bedømmelser for {store}&quot;,&quot;faqIntro&quot;:&quot;Kan du ikke finde dit spørgsmål? Spørg nedenfor, så svarer vi ud fra kundernes anmeldelser.&quot;,&quot;faqSearchAria&quot;:&quot;Søg i anmeldelser og spørgsmål&quot;,&quot;faqSearchPlaceholder&quot;:&quot;Søg i anmeldelser og spørgsmål…&quot;,&quot;faqTitle&quot;:&quot;Spørgsmål fra kunder&quot;,&quot;filterCountry&quot;:&quot;Filtrer efter land&quot;,&quot;filterLanguage&quot;:&quot;Filtrer efter sprog&quot;,&quot;filterRating&quot;:&quot;Filtrer efter bedømmelse&quot;,&quot;filterReviews&quot;:&quot;Filtrer anmeldelser →&quot;,&quot;filterSentiment&quot;:&quot;Filtrer efter holdning&quot;,&quot;filterSource&quot;:&quot;Filtrer efter anmeldelseskilde&quot;,&quot;filterType&quot;:&quot;Filtrer efter anmeldelsestype&quot;,&quot;heroTitle&quot;:&quot;Det synes vores kunder&quot;,&quot;highestRated&quot;:&quot;Højeste bedømmelse&quot;,&quot;home&quot;:&quot;Forside&quot;,&quot;language.da&quot;:&quot;Dansk&quot;,&quot;language.de&quot;:&quot;Tysk&quot;,&quot;language.en&quot;:&quot;Engelsk&quot;,&quot;language.es&quot;:&quot;Spansk&quot;,&quot;language.fr&quot;:&quot;Fransk&quot;,&quot;language.nl&quot;:&quot;Nederlandsk&quot;,&quot;language.no&quot;:&quot;Norsk&quot;,&quot;language.pt&quot;:&quot;Portugisisk&quot;,&quot;language.ru&quot;:&quot;Russisk&quot;,&quot;language.sv&quot;:&quot;Svensk&quot;,&quot;language.tr&quot;:&quot;Tyrkisk&quot;,&quot;loadReviewsError&quot;:&quot;Anmeldelserne kunne ikke indlæses. Prøv igen senere.&quot;,&quot;lowestRated&quot;:&quot;Laveste bedømmelse&quot;,&quot;methodTitle&quot;:&quot;Sådan indsamler vi anmeldelser&quot;,&quot;methodologyText&quot;:&quot;Efter hver gennemført ordre inviterer vi automatisk kunden til at anmelde købsoplevelsen. Anmeldelserne offentliggøres uredigeret og organiseres efter emne, så du nemt kan finde det, der betyder noget for dig.&quot;,&quot;mostRecent&quot;:&quot;Nyeste først&quot;,&quot;negative&quot;:&quot;Negativ&quot;,&quot;next&quot;:&quot;Næste ›&quot;,&quot;noMatchingQuestions&quot;:&quot;Ingen matchende spørgsmål —&quot;,&quot;noTrend.product&quot;:&quot;Der er ikke nok produktanmeldelser fra de seneste 12 måneder til at vise en udvikling.&quot;,&quot;noTrend.service&quot;:&quot;Der er ikke nok anmeldelser af købsoplevelsen fra de seneste 12 måneder til at vise en udvikling.&quot;,&quot;openPhoto&quot;:&quot;Åbn kundens billede i fuld størrelse&quot;,&quot;overall&quot;:&quot;Samlet&quot;,&quot;pageInfo&quot;:&quot;Side {page} af {pages} ({count} anmeldelser)&quot;,&quot;pageInfoUnknown&quot;:&quot;Side {page}+&quot;,&quot;pageName&quot;:&quot;Anmeldelser af {store}&quot;,&quot;positive&quot;:&quot;Positiv&quot;,&quot;previous&quot;:&quot;‹ Forrige&quot;,&quot;productReviews&quot;:&quot;Produktanmeldelser&quot;,&quot;ratingsUpdate&quot;:&quot;Bedømmelserne opdateres automatisk, når der kommer nye anmeldelser.&quot;,&quot;readReviews&quot;:&quot;Læs anmeldelserne&quot;,&quot;replyFromUs&quot;:&quot;Svar fra os&quot;,&quot;reviewCount.product&quot;:&quot;{count} produktanmeldelser&quot;,&quot;reviewCount.service&quot;:&quot;{count} anmeldelser af købsoplevelsen&quot;,&quot;reviews&quot;:&quot;Anmeldelser&quot;,&quot;reviewsCount&quot;:&quot;{count} anmeldelser&quot;,&quot;search&quot;:&quot;Søg&quot;,&quot;searchAllReviews&quot;:&quot;søg i alle anmeldelser i stedet →&quot;,&quot;searchReviewsAria&quot;:&quot;Søg i anmeldelser&quot;,&quot;searchReviewsPlaceholder&quot;:&quot;Søg i anmeldelser…&quot;,&quot;serviceReviews&quot;:&quot;Anmeldelser af købsoplevelsen&quot;,&quot;showProductReviews&quot;:&quot;Vis alle anmeldelser af dette produkt&quot;,&quot;showingProduct&quot;:&quot;Viser anmeldelser af: {product}&quot;,&quot;shownReviews&quot;:&quot;Viser {count} anmeldelser på denne side&quot;,&quot;sortReviews&quot;:&quot;Sorter anmeldelser&quot;,&quot;starOne&quot;:&quot;1 stjerne&quot;,&quot;starReviews&quot;:&quot;{star}-stjernede anmeldelser&quot;,&quot;stars&quot;:&quot;{count} stjerner&quot;,&quot;summaryTitle&quot;:&quot;Den korte version&quot;,&quot;topic.delivery&quot;:&quot;Levering&quot;,&quot;topic.other&quot;:&quot;Pris og hjemmeside&quot;,&quot;topic.packaging&quot;:&quot;Emballage&quot;,&quot;topic.quality&quot;:&quot;Kvalitet&quot;,&quot;topic.returns&quot;:&quot;Retur&quot;,&quot;topic.service&quot;:&quot;Kundeservice&quot;,&quot;topicDatasetDescription&quot;:&quot;Gennemsnitlig bedømmelse og antal anmeldelser for hvert emne, som kunderne omtaler i {type}anmeldelser af {store}.&quot;,&quot;topicDatasetName&quot;:&quot;Fordeling af {type}anmeldelser af {store} efter emne&quot;,&quot;topicDatasetValue&quot;:&quot;{positive}% af {count} anmeldelser, der nævner {topic}, giver 4 stjerner eller derover&quot;,&quot;topicQuestion&quot;:&quot;Hvordan bedømmer kunderne {topic} hos {store}?&quot;,&quot;topicVerdict&quot;:&quot;fra {count} anmeldelser — {positive}% giver 4★ eller derover&quot;,&quot;topicsSubtitle&quot;:&quot;Klik på et emne for at se de tilhørende anmeldelser.&quot;,&quot;topicsTitle&quot;:&quot;Det taler kunderne om&quot;,&quot;trendAria&quot;:&quot;Linjediagram med gennemsnitlig bedømmelse pr. måned og emne i de seneste 12 måneder&quot;,&quot;trendDescription.product&quot;:&quot;Gennemsnitlig bedømmelse pr. måned i de seneste 12 måneder — produktanmeldelser.&quot;,&quot;trendDescription.service&quot;:&quot;Gennemsnitlig bedømmelse pr. måned i de seneste 12 måneder — anmeldelser af købsoplevelsen.&quot;,&quot;trendTitle&quot;:&quot;Udvikling over tid&quot;,&quot;type.product&quot;:&quot;produkt&quot;,&quot;type.service&quot;:&quot;service&quot;,&quot;verificationText&quot;:&quot;Alle anmeldelser kommer fra en rigtig ordre&quot;,&quot;verifiedOrder&quot;:&quot;Verificeret ordre&quot;,&quot;viaSource&quot;:&quot;via {source}&quot;,&quot;viewProduct&quot;:&quot;Se produkt ↗&quot;}}" data-st-filters="{&quot;reviewType&quot;:&quot;service&quot;,&quot;source&quot;:&quot;trustpilot&quot;,&quot;country&quot;:&quot;dk&quot;,&quot;language&quot;:&quot;da&quot;,&quot;sorting&quot;:[{&quot;field&quot;:&quot;createdAt&quot;,&quot;direction&quot;:&quot;desc&quot;}],&quot;timeout&quot;:{&quot;timeoutMillis&quot;:1000}}"><style>
+#dsf-reviews{--st-navy:#16324f;--st-blue:#2563eb;--st-star:#f59e0b;--st-star-empty:#e2e2e2;--st-ink:#26303a;--st-muted:#67737f;--st-line:#e8eaee;--st-paper:#ffffff;--st-wash:#f7f8fa;--st-soft:#eef3f9;--st-good:#2f8f5b;--st-bad:#c4453c;--st-radius:14px;--st-max:880px;}
+#dsf-reviews *{box-sizing:border-box}
+#dsf-reviews{margin:0;font-family:Georgia,"Times New Roman",serif;color:var(--st-ink);background:var(--st-paper);line-height:1.65;font-size:17px}
+#dsf-reviews h1{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+#dsf-reviews h2{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+#dsf-reviews h3{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+#dsf-reviews .st-sans{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+#dsf-reviews a{color:var(--st-blue);text-decoration:none}
+#dsf-reviews a:hover{text-decoration:underline}
+#dsf-reviews .st-wrap{max-width:var(--st-max);margin:0 auto;padding:0 20px}
+#dsf-reviews .st-tstars{display:inline-flex;gap:4px;line-height:0}
+#dsf-reviews .st-tstars svg{width:36px;height:36px}
+#dsf-reviews .st-tstars.st-sm svg{width:22px;height:22px}
+#dsf-reviews .st-tstars.st-sm{gap:3px}
+#dsf-reviews .st-tstars.st-xs svg{width:16px;height:16px}
+#dsf-reviews .st-tstars.st-xs{gap:2px}
+#dsf-reviews .st-hero{padding:48px 0 36px;background:linear-gradient(180deg,var(--st-soft),var(--st-paper) 85%)}
+/* The sidebar now carries two score+breakdown blocks, so it needs more width and top alignment —
+   vertical centering left the intro text floating against a much taller panel. */
+#dsf-reviews .st-hero .st-wrap{display:grid;grid-template-columns:1.25fr 1fr;gap:40px;align-items:start}
+@media(max-width:760px){#dsf-reviews .st-hero .st-wrap{grid-template-columns:1fr;gap:28px}
+#dsf-reviews .st-hero h1{font-size:27px}
+#dsf-reviews .st-hero .st-score{font-size:28px}}
+#dsf-reviews .st-hero h1{margin:0 0 14px;font-size:34px;line-height:1.15;color:var(--st-navy);letter-spacing:-.5px}
+#dsf-reviews .st-hero .st-scoreline{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+#dsf-reviews .st-hero .st-score{font-family:system-ui,sans-serif;font-size:34px;font-weight:700;color:var(--st-navy)}
+#dsf-reviews .st-hero .st-of{font-size:14px;color:var(--st-muted);font-family:system-ui,sans-serif}
+#dsf-reviews .st-verified{display:inline-flex;align-items:center;gap:6px;font-family:system-ui,sans-serif;font-size:13px;font-weight:600;color:var(--st-good);background:#fff;border:1px solid #d6e8de;border-radius:999px;padding:5px 14px}
+#dsf-reviews .st-hero p.st-tldr{margin:0;font-size:18px;color:#3b4754}
+#dsf-reviews .st-hero .st-updated{font-family:system-ui,sans-serif;font-size:13px;color:var(--st-muted);margin-top:14px}
+#dsf-reviews .st-hero p.st-description{margin:0 0 10px;font-size:15px;color:var(--st-muted);font-family:system-ui,sans-serif}
+#dsf-reviews .st-hero p.st-description:empty{display:none}
+#dsf-reviews .st-snapshot{background:#fff;border:1px solid var(--st-line);border-radius:var(--st-radius);padding:22px 24px;box-shadow:0 8px 28px rgba(22,50,79,.06)}
+#dsf-reviews .st-snapshot h2{margin:0 0 12px;font-size:14px;text-transform:uppercase;letter-spacing:.8px;color:var(--st-muted);font-weight:600}
+#dsf-reviews .st-snapshot .st-row{display:grid;grid-template-columns:38px 1fr 86px;gap:10px;align-items:center;font-family:system-ui,sans-serif;font-size:13px;color:var(--st-ink);padding:4px 0;cursor:pointer}
+#dsf-reviews .st-snapshot .st-row:hover{color:var(--st-blue)}
+#dsf-reviews .st-snapshot .st-bar{height:9px;background:var(--st-wash);border-radius:6px;overflow:hidden}
+#dsf-reviews .st-snapshot .st-bar b{display:block;height:100%;background:var(--st-star);border-radius:6px}
+#dsf-reviews .st-snapshot .st-row span:last-child{text-align:right;color:var(--st-muted)}
+#dsf-reviews .st-platforms{border-bottom:1px solid var(--st-line);background:var(--st-paper)}
+#dsf-reviews .st-platforms .st-wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-top:16px;padding-bottom:16px;font-family:system-ui,sans-serif}
+#dsf-reviews .st-plabel{font-size:13px;color:var(--st-muted);text-transform:uppercase;letter-spacing:.6px;font-weight:600}
+#dsf-reviews .st-platform{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--st-line);border-radius:999px;padding:7px 16px;color:var(--st-ink);font-size:14px}
+#dsf-reviews .st-platform b{color:var(--st-navy)}
+#dsf-reviews .st-platform .st-pnum{color:var(--st-muted);font-size:13px}
+#dsf-reviews section.st-block{padding:40px 0 8px}
+#dsf-reviews section.st-block .st-wrap>h2{font-size:26px;color:var(--st-navy);margin:0 0 6px;letter-spacing:-.3px}
+#dsf-reviews .st-kicker{font-family:system-ui,sans-serif;font-size:13px;color:var(--st-muted);margin:0 0 20px}
+#dsf-reviews .st-topics{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:680px){#dsf-reviews .st-topics{grid-template-columns:1fr}}
+#dsf-reviews .st-topic{border:1px solid var(--st-line);border-radius:var(--st-radius);padding:20px 22px;background:#fff;transition:border-color .15s;cursor:pointer}
+#dsf-reviews .st-topic:hover{border-color:#bcd0e8}
+#dsf-reviews .st-topic h3{margin:0 0 6px;font-size:17px;color:var(--st-navy)}
+#dsf-reviews .st-topic .st-verdict{font-family:system-ui,sans-serif;font-size:14px;margin:0 0 10px}
+#dsf-reviews .st-topic .st-verdict b{color:var(--st-good)}
+#dsf-reviews .st-topic .st-verdict.st-negative b{color:var(--st-bad)}
+#dsf-reviews .st-topic blockquote{margin:0 0 12px;font-style:italic;color:#4a5560;font-size:15px}
+#dsf-reviews .st-topic blockquote::before{content:"“"}
+#dsf-reviews .st-topic blockquote::after{content:"”"}
+#dsf-reviews .st-topic .st-more{font-family:system-ui,sans-serif;font-size:13px;color:var(--st-blue)}
+#dsf-reviews .st-topic p.st-overview{margin:0 0 12px;font-size:14.5px;color:#3b4754}
+#dsf-reviews .st-filterbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 22px;font-family:system-ui,sans-serif}
+#dsf-reviews .st-filterbar select{padding:8px 12px;border:1px solid var(--st-line);border-radius:999px;font-size:14px;background:#fff;color:var(--st-ink)}
+#dsf-reviews .st-filterbar input{padding:8px 12px;border:1px solid var(--st-line);border-radius:999px;font-size:14px;background:#fff;color:var(--st-ink)}
+#dsf-reviews .st-filterbar input{min-width:180px}
+#dsf-reviews .st-chip{border:1px solid var(--st-line);background:#fff;border-radius:999px;padding:7px 15px;font-size:14px;cursor:pointer;color:var(--st-ink);font-family:system-ui,sans-serif}
+#dsf-reviews .st-chip:hover{border-color:#bcd0e8}
+#dsf-reviews .st-chip.st-on{background:var(--st-navy);color:#fff;border-color:var(--st-navy)}
+#dsf-reviews article.st-review{padding:26px 0;border-top:1px solid var(--st-line)}
+#dsf-reviews article.st-review .st-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-family:system-ui,sans-serif}
+#dsf-reviews article.st-review .st-who{font-size:14px}
+#dsf-reviews article.st-review .st-who b{display:block;color:var(--st-navy)}
+#dsf-reviews article.st-review .st-who span{color:var(--st-muted);font-size:13px}
+#dsf-reviews article.st-review .st-rate{margin-left:auto;display:flex;align-items:center;gap:10px}
+#dsf-reviews .st-source-badge{font-size:12px;color:var(--st-muted);background:var(--st-wash);border-radius:999px;padding:3px 11px;font-family:system-ui,sans-serif}
+#dsf-reviews .st-vcheck{font-size:12px;color:var(--st-good);font-weight:600}
+#dsf-reviews .st-stars-tip{position:relative;display:inline-flex;cursor:default}
+#dsf-reviews .st-stars-tip::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1c2733;color:#fff;font-family:system-ui,sans-serif;font-size:12px;padding:5px 11px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .12s;box-shadow:0 6px 16px rgba(0,0,0,.18);z-index:2}
+#dsf-reviews .st-stars-tip:hover::after{opacity:1}
+#dsf-reviews .st-stars-tip:focus-within::after{opacity:1}
+#dsf-reviews .st-snappanel + .st-snappanel{margin-top:24px;padding-top:22px;border-top:1px solid #e2e7ec}
+/* The score now sits inside the sidebar directly above the bars it describes, so it is scaled
+   down from the old hero-headline size and the stars are shrunk to match. */
+#dsf-reviews .st-snapshot .st-scoreline{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin:0 0 14px}
+#dsf-reviews .st-snapshot .st-score{font-family:system-ui,sans-serif;font-size:26px;font-weight:700;color:var(--st-navy);line-height:1}
+#dsf-reviews .st-snapshot .st-of{font-size:13px;color:var(--st-muted);font-family:system-ui,sans-serif}
+#dsf-reviews .st-snapshot .st-scoreline .st-tstars{align-self:center}
+#dsf-reviews .st-tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid #e2e7ec;margin:0 0 22px}
+#dsf-reviews .st-tab{background:none;border:0;border-bottom:3px solid transparent;padding:10px 16px;margin-bottom:-1px;font:inherit;font-size:15px;font-weight:600;color:var(--st-muted);cursor:pointer;font-family:system-ui,sans-serif}
+#dsf-reviews .st-tab:hover{color:var(--st-navy)}
+#dsf-reviews .st-tab.st-on{color:var(--st-navy);border-bottom-color:var(--st-navy)}
+#dsf-reviews .st-panel{display:none}
+#dsf-reviews .st-panel.st-active{display:block}
+#dsf-reviews .st-trendhead{margin:34px 0 2px;font-size:20px;color:var(--st-navy)}
+#dsf-reviews .st-nochart{margin:28px 0 0;font-size:14px;color:var(--st-muted);font-family:system-ui,sans-serif}
+#dsf-reviews .st-topic.st-on{outline:2px solid var(--st-navy);outline-offset:2px}
+#dsf-reviews article.st-review .st-product{margin:12px 0 0;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;font-family:system-ui,sans-serif}
+#dsf-reviews .st-prodname{background:none;border:0;padding:0;font:inherit;font-size:13px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:var(--st-navy);cursor:pointer;text-align:left;border-bottom:1px dotted var(--st-muted)}
+#dsf-reviews .st-prodname:hover{color:var(--st-blue);border-bottom-color:var(--st-blue)}
+#dsf-reviews .st-prodname.st-plain{cursor:default;border-bottom:0;color:var(--st-muted)}
+#dsf-reviews .st-prodlink{font-size:12px;color:var(--st-muted);text-decoration:none;white-space:nowrap}
+#dsf-reviews .st-prodlink:hover{color:var(--st-blue);text-decoration:underline}
+#dsf-reviews .st-media{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
+#dsf-reviews .st-media img,#dsf-reviews .st-media video{display:block;width:74px;height:74px;object-fit:cover;border-radius:8px;border:1px solid var(--st-line);background:var(--st-wash)}
+#dsf-reviews .st-mediaitem{display:block;line-height:0;cursor:pointer}
+#dsf-reviews .st-mediaitem:hover img,#dsf-reviews video.st-mediaitem:hover{opacity:.85}
+/* Lightbox — fixed to the viewport, so it escapes the fragment's own layout while every
+   selector stays scoped under the root id (§4). */
+#dsf-reviews .st-lightbox{display:none;position:fixed;inset:0;z-index:2147483000;background:rgba(0,0,0,.9);align-items:center;justify-content:center;padding:48px 16px}
+#dsf-reviews .st-lightbox.st-open{display:flex}
+#dsf-reviews .st-lb-content{margin:auto;max-width:92%;max-height:88vh;object-fit:contain;border-radius:6px;display:none}
+#dsf-reviews .st-lb-content.st-show{display:block}
+#dsf-reviews .st-lb-close{position:absolute;top:14px;right:26px;background:none;border:0;color:#f1f1f1;font-size:42px;line-height:1;font-weight:700;cursor:pointer;padding:0 8px}
+#dsf-reviews .st-lb-close:hover{color:#bbb}
+#dsf-reviews .st-prodfilter{display:none;align-items:center;gap:10px;margin:0 0 14px;font-family:system-ui,sans-serif;font-size:13px;color:var(--st-navy);background:var(--st-wash);border-radius:999px;padding:7px 8px 7px 16px;width:fit-content}
+#dsf-reviews .st-prodfilter.st-show{display:flex}
+#dsf-reviews .st-prodfilter button{background:none;border:0;font:inherit;cursor:pointer;color:var(--st-muted);padding:0 6px}
+#dsf-reviews .st-prodfilter button:hover{color:var(--st-navy)}
+#dsf-reviews article.st-review h3{margin:14px 0 6px;font-size:18px;color:var(--st-navy)}
+#dsf-reviews article.st-review .st-body{margin:0 0 12px;max-width:70ch}
+#dsf-reviews .st-reply{background:var(--st-wash);border-radius:10px;padding:14px 18px;margin-top:14px;font-size:15px;max-width:70ch}
+#dsf-reviews .st-reply b{font-family:system-ui,sans-serif;font-size:13px;display:block;margin-bottom:4px;color:var(--st-navy)}
+#dsf-reviews .st-pager{display:flex;gap:8px;justify-content:center;padding:30px 0;font-family:system-ui,sans-serif}
+#dsf-reviews .st-pager a{border:1px solid var(--st-line);border-radius:8px;padding:7px 13px;font-size:14px;color:var(--st-ink);cursor:pointer}
+#dsf-reviews .st-pager a.st-cur{background:var(--st-navy);color:#fff;border-color:var(--st-navy)}
+#dsf-reviews .st-pager span{align-self:center;color:var(--st-muted)}
+#dsf-reviews .st-method{background:var(--st-wash);border-radius:var(--st-radius);padding:26px 28px;margin:30px 0 50px}
+#dsf-reviews .st-method h2{margin:0 0 8px;font-size:19px;color:var(--st-navy)}
+#dsf-reviews .st-method p{margin:0;max-width:70ch;font-size:15px}
+#dsf-reviews .st-note{background:#fff;border:1px solid var(--st-line);border-radius:var(--st-radius);padding:16px 18px;margin-top:20px;font-size:14px}
+#dsf-reviews .st-legend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px;font-family:system-ui,sans-serif}
+#dsf-reviews .st-lkey{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--st-line);background:#fff;border-radius:999px;padding:6px 14px;font-size:13px;cursor:pointer;color:var(--st-ink)}
+#dsf-reviews .st-lkey i{width:12px;height:12px;border-radius:50%;display:inline-block}
+#dsf-reviews .st-lkey.st-off{opacity:.35}
+#dsf-reviews .st-chart-wrap{position:relative;margin-bottom:18px}
+#dsf-reviews .st-trendchart{width:100%;height:auto;display:block}
+#dsf-reviews .st-crosshair{stroke:#9aa7b4;stroke-width:1;stroke-dasharray:3,3;pointer-events:none;opacity:0}
+#dsf-reviews .st-ttip{position:absolute;top:0;left:0;pointer-events:none;background:#1c2733;color:#fff;
+    border-radius:8px;padding:10px 12px;font-family:system-ui,sans-serif;font-size:13px;
+    box-shadow:0 8px 20px rgba(0,0,0,.18);opacity:0;transition:opacity .1s;z-index:5;min-width:150px}
+#dsf-reviews .st-ttip.st-show{opacity:1}
+#dsf-reviews .st-ttip .st-ttip-month{font-weight:600;margin-bottom:6px;font-size:12px;color:#cfd8e3}
+#dsf-reviews .st-ttip-row{display:flex;align-items:center;gap:8px;justify-content:space-between;padding:2px 0}
+#dsf-reviews .st-ttip-key{width:14px;height:2px;border-radius:2px;flex:none}
+#dsf-reviews .st-ttip-name{color:#b7c0cc;flex:1;margin-right:10px}
+#dsf-reviews .st-ttip-val{font-weight:700;color:#fff}
+#dsf-reviews .st-faq-search{display:flex;gap:0;margin:0 0 14px;max-width:680px;font-family:system-ui,sans-serif}
+#dsf-reviews .st-faq-search input{flex:1;padding:11px 18px;border:1px solid #b9c4d0;border-right:0;border-radius:999px 0 0 999px;font-size:15px;outline-offset:0}
+#dsf-reviews .st-faq-search input:focus{border-color:var(--st-blue);outline:none}
+#dsf-reviews .st-faq-search button{border:1px solid var(--st-blue);background:var(--st-blue);color:#fff;border-radius:0 999px 999px 0;padding:0 18px;font-size:17px;cursor:pointer}
+#dsf-reviews .st-faq-pills{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 22px;font-family:system-ui,sans-serif}
+#dsf-reviews .st-qpill{border:0;background:#e8f0fb;color:#0f3e75;border-radius:999px;padding:8px 16px;font-size:14px;cursor:pointer}
+#dsf-reviews .st-qpill:hover{background:#d9e7f8}
+#dsf-reviews .st-qpill.st-on{background:var(--st-navy);color:#fff}
+#dsf-reviews .st-faq-noresult{display:none;font-family:system-ui,sans-serif;font-size:14px;color:var(--st-muted);margin:0 0 18px}
+#dsf-reviews .st-faq-noresult.st-show{display:block}
+#dsf-reviews .st-faq details{border-bottom:1px solid var(--st-line)}
+#dsf-reviews .st-faq details:first-of-type{border-top:1px solid var(--st-line)}
+#dsf-reviews .st-faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 2px;font-family:system-ui,sans-serif;font-size:17px;font-weight:600;color:var(--st-navy)}
+#dsf-reviews .st-faq summary::-webkit-details-marker{display:none}
+#dsf-reviews .st-faq summary::after{content:"+";font-size:22px;font-weight:400;color:var(--st-muted);flex:none;transition:transform .15s}
+#dsf-reviews .st-faq details[open] summary::after{transform:rotate(45deg)}
+#dsf-reviews .st-faq details p{margin:0 0 20px;max-width:66ch;color:#3b4754}
+#dsf-reviews .st-ai-answer{display:none;background:var(--st-soft);border:1px solid #cfe0f2;border-radius:var(--st-radius);padding:18px 20px;margin:0 0 22px}
+#dsf-reviews .st-ai-answer.st-show{display:block}
+#dsf-reviews .st-ai-answer .st-ai-label{font-family:system-ui,sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--st-blue);margin:0 0 8px}
+#dsf-reviews .st-ai-text{max-width:66ch}
+#dsf-reviews .st-ai-text p{margin:0 0 10px}
+#dsf-reviews .st-ai-text p:last-child{margin-bottom:0}
+#dsf-reviews .st-ai-text ul{margin:0 0 10px;padding-left:1.3em}
+#dsf-reviews .st-ai-text li{margin:0 0 4px}
+#dsf-reviews .st-ai-answer .st-ai-meta{font-family:system-ui,sans-serif;font-size:12px;color:var(--st-muted);margin-top:10px}
+#dsf-reviews .st-ai-answer.st-loading .st-ai-text{color:var(--st-muted);font-style:italic}
+#dsf-reviews .st-apply-btn{padding:8px 14px;border-radius:999px;background:var(--st-navy);color:#fff;border:0;cursor:pointer;font-size:13px}
+#dsf-reviews .st-clear-btn{padding:8px 14px;border-radius:999px;background:#eee;color:#333;border:1px solid #ccc;cursor:pointer;font-size:13px;margin-left:4px}
+</style>
+<section class="st-hero"><div class="st-wrap"><div>
+  <h1>Det synes vores kunder</h1>
 
-    async function loadRender(event){
-      event.preventDefault();
-      if (button.disabled) return;
-      renderKey = keyInput.value.trim() || renderKey;
-      if (!renderKey) { keyInput.focus(); return; }
-      keyInput.value = '';
-      keyInput.required = false;
-      button.disabled = true;
-      status.textContent = 'Henter anmeldelsessiden…';
-      try {
-        var response = await fetch(API_BASE + '/v1/templates/' + TEMPLATE_ID + '/page', {
-          method: 'POST',
-          headers: { apikey: renderKey, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ rootId: ROOT_ID }),
-          signal: AbortSignal.timeout(60000),
-        });
-        if (!response.ok) throw new Error('HTTP ' + response.status);
-        var html = await response.text();
-        if (html.indexOf('Den Sidste Flaske') === -1 || html.indexOf(renderKey) !== -1)
-          throw new Error('Render-fragmentet bestod ikke konto-/nøglekontrollen.');
-        app.innerHTML = html;
-        // HTML insertion alone does not execute the fragment's enhancement script. Recreate
-        // scripts in their existing positions, preserving the root used by initialization.
-        app.querySelectorAll('script').forEach(function(oldScript){
-          var newScript = document.createElement('script');
-          Array.prototype.forEach.call(oldScript.attributes, function(attr){
-            newScript.setAttribute(attr.name, attr.value);
-          });
-          newScript.textContent = oldScript.textContent;
-          oldScript.parentNode.replaceChild(newScript, oldScript);
-        });
-        status.textContent = 'Live render hentet ' + new Date().toLocaleString('da-DK') +
-          '. Indholdet følger widget 768 og review-service\'s render-cache.';
-        button.textContent = 'Genindlæs anmeldelser';
-      } catch (error) {
-        status.textContent = 'Render kunne ikke hentes: ' + error.message;
-      } finally {
-        button.disabled = false;
-      }
+  <p class="st-description">Den Sidste Flaske er en dansk webshop med vin. Her kan du læse kundernes anmeldelser af købsoplevelsen fra Trustpilot og se, hvad de fortæller om levering, priser, kundeservice og vinens smag.</p>
+  <p class="st-updated">Bedømmelserne opdateres automatisk, når der kommer nye anmeldelser.</p>
+</div>
+<div class="st-snapshot"><div class="st-snappanel" data-section="det-siger-kunderne-om-at-handle-hos-os">
+        <div class="st-scoreline">
+          <span class="st-tstars st-sm"><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#dcdce6" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg></span>
+          <span class="st-score">4,66</span>
+          <span class="st-of">18.608 anmeldelser af købsoplevelsen</span>
+        </div>
+        <a class="st-row" href="#st-review-browser" data-star="5" data-review-type="service"><span>5 ★</span><span class="st-bar"><b style="width:81%"></b></span><span>81% · 15.152</span></a><a class="st-row" href="#st-review-browser" data-star="4" data-review-type="service"><span>4 ★</span><span class="st-bar"><b style="width:11%"></b></span><span>11% · 2.032</span></a><a class="st-row" href="#st-review-browser" data-star="3" data-review-type="service"><span>3 ★</span><span class="st-bar"><b style="width:3%"></b></span><span>3% · 548</span></a><a class="st-row" href="#st-review-browser" data-star="2" data-review-type="service"><span>2 ★</span><span class="st-bar"><b style="width:2%"></b></span><span>2% · 344</span></a><a class="st-row" href="#st-review-browser" data-star="1" data-review-type="service"><span>1 ★</span><span class="st-bar"><b style="width:3%"></b></span><span>3% · 532</span></a>
+      </div></div>
+</div></section>
+<section class="st-platforms"><div class="st-wrap"><span class="st-plabel">Også anmeldt på</span><span class="st-platform"><b>Trustpilot</b> <span class="st-tstars st-sm"><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#dcdce6" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg></span> <span class="st-pnum">4,7 · 18.608 anmeldelser</span></span></div></section>
+<section class="st-block"><div class="st-wrap"><h2>Den korte version</h2><p>Den Sidste Flaske har en gennemsnitlig bedømmelse på 4,66 ud af 5 fra 18.608 anmeldelser af købsoplevelsen på Trustpilot i datagrundlaget pr. 14. oktober 2026. Kunder fremhæver især hurtig levering, fornuftige priser og god service. Kritiske anmeldelser beskriver blandt andet forsinkelser, vine der ikke lever op til forventningerne, og problemer med retur eller tilgodebeviser. Emneoversigten nedenfor bygger på 16.412 dansksprogede anmeldelser fra Danmark; en anmeldelse kan omtale flere emner.</p></div></section><section class="st-block st-topicsec"><div class="st-wrap">
+
+      <div class="st-panel st-active" role="tabpanel" data-section="det-siger-kunderne-om-at-handle-hos-os" data-review-type="service">
+        <h2>Det siger kunderne om at handle hos os</h2><p class="st-kicker">Emner fra dansksprogede anmeldelser fra Danmark. Klik på et emne for at se de tilhørende anmeldelser. Andelen med 4 eller 5 stjerner gælder den samlede købsoplevelse.</p>
+        <div class="st-topics"><div class="st-topic" data-topic="delivery" data-section="det-siger-kunderne-om-at-handle-hos-os" data-review-type="service" data-keywords="lever">
+          <h3>Levering</h3>
+          <p class="st-verdict"><b>4,78 ★</b> fra 8.900 anmeldelser — 96% giver 4★ eller derover</p>
+          <p class="st-overview">Levering omtales i 8.900 dansksprogede anmeldelser fra Danmark med en gennemsnitlig bedømmelse på 4,78 ud af 5; 96 % giver 4 eller 5 stjerner. Kunder fremhæver hurtig levering og levering som aftalt. Kritiske anmeldelser beskriver blandt andet forsinkelser og ordrer, hvor alle kasser ikke kom frem samtidig.</p><blockquote>Levering kommer som lovet. God kommunikation herom til kunden.
+Bestilte Bar Royale.
+Varen lever helt op til forventning. Smager &quot;desværre&quot; alt for godt. </blockquote>
+          <a class="st-more" href="#st-review-browser">Filtrer anmeldelser →</a>
+        </div><div class="st-topic" data-topic="service" data-section="det-siger-kunderne-om-at-handle-hos-os" data-review-type="service" data-keywords="service">
+          <h3>Kundeservice</h3>
+          <p class="st-verdict"><b>4,80 ★</b> fra 2.622 anmeldelser — 96% giver 4★ eller derover</p>
+          <p class="st-overview">Kundeservice omtales i 2.622 dansksprogede anmeldelser fra Danmark med en gennemsnitlig bedømmelse på 4,80 ud af 5; 96 % giver 4 eller 5 stjerner. Kunder beskriver god hjælp, også når en leveringsfejl skal rettes. Nogle kritiske anmeldelser fortæller dog om manglende svar eller problemer, som ikke blev løst som forventet.</p><blockquote>Bare en god og omhyggelig service, hvor alt fungerede!</blockquote>
+          <a class="st-more" href="#st-review-browser">Filtrer anmeldelser →</a>
+        </div><div class="st-topic" data-topic="quality" data-section="det-siger-kunderne-om-at-handle-hos-os" data-review-type="service" data-keywords="smag">
+          <h3>Vinens smag</h3>
+          <p class="st-verdict"><b>4,52 ★</b> fra 1.025 anmeldelser — 88% giver 4★ eller derover</p>
+          <p class="st-overview">Smag omtales i 1.025 dansksprogede anmeldelser fra Danmark med en gennemsnitlig bedømmelse på 4,52 ud af 5; 88 % giver 4 eller 5 stjerner. Kunder beskriver gode smagsoplevelser, mens andre oplever, at en bestemt vin eller smagekasse ikke lever op til forventningerne. Tallene er bedømmelser af den samlede købsoplevelse i anmeldelser, der nævner smag.</p><blockquote>Handlen var nem, men vinen var ikke god efter min smag.</blockquote>
+          <a class="st-more" href="#st-review-browser">Filtrer anmeldelser →</a>
+        </div><div class="st-topic" data-topic="pricing" data-section="det-siger-kunderne-om-at-handle-hos-os" data-review-type="service" data-keywords="pris">
+          <h3>Pris og værdi</h3>
+          <p class="st-verdict"><b>4,79 ★</b> fra 3.853 anmeldelser — 96% giver 4★ eller derover</p>
+          <p class="st-overview">Pris omtales i 3.853 dansksprogede anmeldelser fra Danmark med en gennemsnitlig bedømmelse på 4,79 ud af 5; 96 % giver 4 eller 5 stjerner. Mange kunder fremhæver god vin til fornuftige priser. Kritiske anmeldelser vurderer blandt andet prisen i forhold til vinens smag og stiller spørgsmål ved førpriser.</p><blockquote>Det er let at bestille, og levering fungerer godt.
+Fik en stor blandede rødvin til god pris. Dejlig vin til prisen😊</blockquote>
+          <a class="st-more" href="#st-review-browser">Filtrer anmeldelser →</a>
+        </div><div class="st-topic" data-topic="selection" data-section="det-siger-kunderne-om-at-handle-hos-os" data-review-type="service" data-keywords="udvalg">
+          <h3>Vinudvalg</h3>
+          <p class="st-verdict"><b>4,82 ★</b> fra 453 anmeldelser — 98% giver 4★ eller derover</p>
+          <p class="st-overview">Vinudvalg omtales i 453 dansksprogede anmeldelser fra Danmark med en gennemsnitlig bedømmelse på 4,82 ud af 5; 98 % giver 4 eller 5 stjerner. Kunder fremhæver et spændende udvalg og muligheden for at finde gode vine til en passende pris. Et godt samlet udvalg er ikke en garanti for, at hver enkelt vin passer til den enkelte kundes smag.</p><blockquote>Super udvalg og fri fragt priser helt i bund men høj kvalitet </blockquote>
+          <a class="st-more" href="#st-review-browser">Filtrer anmeldelser →</a>
+        </div><div class="st-topic" data-topic="ordering" data-section="det-siger-kunderne-om-at-handle-hos-os" data-review-type="service" data-keywords="bestill">
+          <h3>Bestilling</h3>
+          <p class="st-verdict"><b>4,68 ★</b> fra 1.013 anmeldelser — 92% giver 4★ eller derover</p>
+          <p class="st-overview">Bestilling omtales i 1.013 dansksprogede anmeldelser fra Danmark med en gennemsnitlig bedømmelse på 4,68 ud af 5; 92 % giver 4 eller 5 stjerner. Kunder beskriver bestillingen som nem. Blandt de kritiske erfaringer er problemer med at bruge et tilgodebevis eller få en lovet rabat med i en ny ordre.</p><blockquote>Nemt at bestill, hurtig levering lige til døren, god vin til god pris</blockquote>
+          <a class="st-more" href="#st-review-browser">Filtrer anmeldelser →</a>
+        </div><div class="st-topic" data-topic="returns" data-section="det-siger-kunderne-om-at-handle-hos-os" data-review-type="service" data-keywords="retur">
+          <h3>Retur og tilbagebetaling</h3>
+          <p class="st-verdict st-negative"><b>2,91 ★</b> fra 54 anmeldelser — 41% giver 4★ eller derover</p>
+          <p class="st-overview">Retur omtales i 54 dansksprogede anmeldelser fra Danmark med en gennemsnitlig bedømmelse på 2,91 ud af 5; 41 % giver 4 eller 5 stjerner. Det er det lavest bedømte emne i denne oversigt, men også et lille datagrundlag. Kritiske anmeldelser beskriver blandt andet problemer med returforsendelser, tilbagebetaling og tilgodebeviser.</p><blockquote>Ved returnering går kasser og flasker  på mærkelig vis altid itu og pengene er spildt. </blockquote>
+          <a class="st-more" href="#st-review-browser">Filtrer anmeldelser →</a>
+        </div><div class="st-topic" data-topic="packaging" data-section="det-siger-kunderne-om-at-handle-hos-os" data-review-type="service" data-keywords="emball">
+          <h3>Emballage</h3>
+          <p class="st-verdict"><b>4,61 ★</b> fra 41 anmeldelser — 90% giver 4★ eller derover</p>
+          <p class="st-overview">Emballage omtales i 41 dansksprogede anmeldelser fra Danmark med en gennemsnitlig bedømmelse på 4,61 ud af 5; 90 % giver 4 eller 5 stjerner. I de læste anmeldelser fremhæves blandt andet god emballage ved levering. Datagrundlaget er lille og omfatter kun anmeldelser, der nævner emballage direkte.</p>
+          <a class="st-more" href="#st-review-browser">Filtrer anmeldelser →</a>
+        </div></div>
+        <h3 class="st-trendhead">Udvikling over tid</h3>
+<p class="st-kicker">Gennemsnitlig bedømmelse pr. måned i de seneste 12 måneder — anmeldelser af købsoplevelsen.</p>
+<div class="st-legend"><button class="st-lkey" type="button"><i style="background:#16324f"></i>Samlet</button><button class="st-lkey" type="button"><i style="background:#00B67A"></i>Levering</button><button class="st-lkey" type="button"><i style="background:#2563eb"></i>Kundeservice</button><button class="st-lkey" type="button"><i style="background:#f59e0b"></i>Vinens smag</button><button class="st-lkey" type="button"><i style="background:#D64545"></i>Pris og værdi</button><button class="st-lkey" type="button"><i style="background:#7c3aed"></i>Vinudvalg</button></div>
+      <div class="st-chart-wrap">
+        <svg class="st-trendchart" viewBox="0 0 760 280" role="img" aria-label="Linjediagram med gennemsnitlig bedømmelse pr. måned og emne i de seneste 12 måneder"><line x1="40" y1="250.0" x2="746" y2="250.0" stroke="#edf0f3" stroke-width="1"/><text x="32" y="254.0" text-anchor="end" font-size="11" fill="#67737f">3,0</text><line x1="40" y1="191.0" x2="746" y2="191.0" stroke="#edf0f3" stroke-width="1"/><text x="32" y="195.0" text-anchor="end" font-size="11" fill="#67737f">3,5</text><line x1="40" y1="132.0" x2="746" y2="132.0" stroke="#edf0f3" stroke-width="1"/><text x="32" y="136.0" text-anchor="end" font-size="11" fill="#67737f">4,0</text><line x1="40" y1="73.0" x2="746" y2="73.0" stroke="#edf0f3" stroke-width="1"/><text x="32" y="77.0" text-anchor="end" font-size="11" fill="#67737f">4,5</text><line x1="40" y1="14.0" x2="746" y2="14.0" stroke="#edf0f3" stroke-width="1"/><text x="32" y="18.0" text-anchor="end" font-size="11" fill="#67737f">5,0</text><text x="40.0" y="272" text-anchor="middle" font-size="11" fill="#67737f">nov.</text><text x="168.36363636363637" y="272" text-anchor="middle" font-size="11" fill="#67737f">jan.</text><text x="296.72727272727275" y="272" text-anchor="middle" font-size="11" fill="#67737f">mar.</text><text x="425.09090909090907" y="272" text-anchor="middle" font-size="11" fill="#67737f">maj</text><text x="553.4545454545455" y="272" text-anchor="middle" font-size="11" fill="#67737f">jul.</text><text x="681.8181818181819" y="272" text-anchor="middle" font-size="11" fill="#67737f">sep.</text><g data-line="0" data-color="#16324f" data-name="Samlet"><polyline points="40.0,51.76000000000003 104.18181818181819,65.92000000000004 168.36363636363637,65.92000000000004 232.54545454545453,48.220000000000006 296.72727272727275,61.200000000000045 360.90909090909093,84.79999999999995 425.09090909090907,78.89999999999998 489.27272727272725,123.73999999999997 553.4545454545455,74.17999999999998 617.6363636363636,103.67999999999998 681.8181818181819,60.01999999999996 746.0,64.73999999999997" fill="none" stroke="#16324f" stroke-width="2.5" stroke-linejoin="round"/><circle data-month="0" data-val="4,68★ (487)" data-monthyear="nov. 2025" cx="40.0" cy="51.76000000000003" r="0" fill="transparent"/><circle data-month="1" data-val="4,56★ (309)" data-monthyear="dec. 2025" cx="104.18181818181819" cy="65.92000000000004" r="0" fill="transparent"/><circle data-month="2" data-val="4,56★ (298)" data-monthyear="jan. 2026" cx="168.36363636363637" cy="65.92000000000004" r="0" fill="transparent"/><circle data-month="3" data-val="4,71★ (322)" data-monthyear="feb. 2026" cx="232.54545454545453" cy="48.220000000000006" r="0" fill="transparent"/><circle data-month="4" data-val="4,60★ (392)" data-monthyear="mar. 2026" cx="296.72727272727275" cy="61.200000000000045" r="0" fill="transparent"/><circle data-month="5" data-val="4,40★ (430)" data-monthyear="apr. 2026" cx="360.90909090909093" cy="84.79999999999995" r="0" fill="transparent"/><circle data-month="6" data-val="4,45★ (374)" data-monthyear="maj 2026" cx="425.09090909090907" cy="78.89999999999998" r="0" fill="transparent"/><circle data-month="7" data-val="4,07★ (230)" data-monthyear="jun. 2026" cx="489.27272727272725" cy="123.73999999999997" r="0" fill="transparent"/><circle data-month="8" data-val="4,49★ (245)" data-monthyear="jul. 2026" cx="553.4545454545455" cy="74.17999999999998" r="0" fill="transparent"/><circle data-month="9" data-val="4,24★ (145)" data-monthyear="aug. 2026" cx="617.6363636363636" cy="103.67999999999998" r="0" fill="transparent"/><circle data-month="10" data-val="4,61★ (250)" data-monthyear="sep. 2026" cx="681.8181818181819" cy="60.01999999999996" r="0" fill="transparent"/><circle data-month="11" data-val="4,57★ (184)" data-monthyear="okt. 2026" cx="746.0" cy="64.73999999999997" r="0" fill="transparent"/></g><g data-line="1" data-color="#00B67A" data-name="Levering"><polyline points="40.0,42.32000000000002 104.18181818181819,43.5 168.36363636363637,60.01999999999996 232.54545454545453,44.67999999999998 296.72727272727275,58.83999999999999 360.90909090909093,88.33999999999999 425.09090909090907,96.60000000000002 489.27272727272725,127.28 553.4545454545455,62.38000000000002 617.6363636363636,103.67999999999998 681.8181818181819,54.11999999999998 746.0,51.76000000000003" fill="none" stroke="#00B67A" stroke-width="2.5" stroke-linejoin="round"/><circle data-month="0" data-val="4,76★ (262)" data-monthyear="nov. 2025" cx="40.0" cy="42.32000000000002" r="0" fill="transparent"/><circle data-month="1" data-val="4,75★ (153)" data-monthyear="dec. 2025" cx="104.18181818181819" cy="43.5" r="0" fill="transparent"/><circle data-month="2" data-val="4,61★ (158)" data-monthyear="jan. 2026" cx="168.36363636363637" cy="60.01999999999996" r="0" fill="transparent"/><circle data-month="3" data-val="4,74★ (190)" data-monthyear="feb. 2026" cx="232.54545454545453" cy="44.67999999999998" r="0" fill="transparent"/><circle data-month="4" data-val="4,62★ (243)" data-monthyear="mar. 2026" cx="296.72727272727275" cy="58.83999999999999" r="0" fill="transparent"/><circle data-month="5" data-val="4,37★ (266)" data-monthyear="apr. 2026" cx="360.90909090909093" cy="88.33999999999999" r="0" fill="transparent"/><circle data-month="6" data-val="4,30★ (227)" data-monthyear="maj 2026" cx="425.09090909090907" cy="96.60000000000002" r="0" fill="transparent"/><circle data-month="7" data-val="4,04★ (137)" data-monthyear="jun. 2026" cx="489.27272727272725" cy="127.28" r="0" fill="transparent"/><circle data-month="8" data-val="4,59★ (158)" data-monthyear="jul. 2026" cx="553.4545454545455" cy="62.38000000000002" r="0" fill="transparent"/><circle data-month="9" data-val="4,24★ (84)" data-monthyear="aug. 2026" cx="617.6363636363636" cy="103.67999999999998" r="0" fill="transparent"/><circle data-month="10" data-val="4,66★ (157)" data-monthyear="sep. 2026" cx="681.8181818181819" cy="54.11999999999998" r="0" fill="transparent"/><circle data-month="11" data-val="4,68★ (106)" data-monthyear="okt. 2026" cx="746.0" cy="51.76000000000003" r="0" fill="transparent"/></g><g data-line="2" data-color="#2563eb" data-name="Kundeservice"><polyline points="40.0,25.799999999999958 104.18181818181819,60.01999999999996 168.36363636363637,67.10000000000002 232.54545454545453,48.220000000000006 296.72727272727275,95.42000000000004 360.90909090909093,132.0 425.09090909090907,93.05999999999999 489.27272727272725,193.36 553.4545454545455,102.5 617.6363636363636,120.20000000000005 681.8181818181819,23.44000000000001 746.0,36.420000000000044" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/><circle data-month="0" data-val="4,90★ (63)" data-monthyear="nov. 2025" cx="40.0" cy="25.799999999999958" r="0" fill="transparent"/><circle data-month="1" data-val="4,61★ (41)" data-monthyear="dec. 2025" cx="104.18181818181819" cy="60.01999999999996" r="0" fill="transparent"/><circle data-month="2" data-val="4,55★ (42)" data-monthyear="jan. 2026" cx="168.36363636363637" cy="67.10000000000002" r="0" fill="transparent"/><circle data-month="3" data-val="4,71★ (28)" data-monthyear="feb. 2026" cx="232.54545454545453" cy="48.220000000000006" r="0" fill="transparent"/><circle data-month="4" data-val="4,31★ (42)" data-monthyear="mar. 2026" cx="296.72727272727275" cy="95.42000000000004" r="0" fill="transparent"/><circle data-month="5" data-val="4,00★ (60)" data-monthyear="apr. 2026" cx="360.90909090909093" cy="132.0" r="0" fill="transparent"/><circle data-month="6" data-val="4,33★ (43)" data-monthyear="maj 2026" cx="425.09090909090907" cy="93.05999999999999" r="0" fill="transparent"/><circle data-month="7" data-val="3,48★ (40)" data-monthyear="jun. 2026" cx="489.27272727272725" cy="193.36" r="0" fill="transparent"/><circle data-month="8" data-val="4,25★ (24)" data-monthyear="jul. 2026" cx="553.4545454545455" cy="102.5" r="0" fill="transparent"/><circle data-month="9" data-val="4,10★ (29)" data-monthyear="aug. 2026" cx="617.6363636363636" cy="120.20000000000005" r="0" fill="transparent"/><circle data-month="10" data-val="4,92★ (24)" data-monthyear="sep. 2026" cx="681.8181818181819" cy="23.44000000000001" r="0" fill="transparent"/><circle data-month="11" data-val="4,81★ (21)" data-monthyear="okt. 2026" cx="746.0" cy="36.420000000000044" r="0" fill="transparent"/></g><g data-line="3" data-color="#f59e0b" data-name="Vinens smag"><polyline points="40.0,89.51999999999997 104.18181818181819,106.04000000000003 168.36363636363637,132.0 232.54545454545453,119.01999999999997 296.72727272727275,94.23999999999997 360.90909090909093,84.79999999999995 425.09090909090907,62.38000000000002 489.27272727272725,179.2 553.4545454545455,132.0 617.6363636363636,108.39999999999998 681.8181818181819,122.55999999999999 746.0,80.07999999999996" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linejoin="round"/><circle data-month="0" data-val="4,36★ (28)" data-monthyear="nov. 2025" cx="40.0" cy="89.51999999999997" r="0" fill="transparent"/><circle data-month="1" data-val="4,22★ (18)" data-monthyear="dec. 2025" cx="104.18181818181819" cy="106.04000000000003" r="0" fill="transparent"/><circle data-month="2" data-val="4,00★ (23)" data-monthyear="jan. 2026" cx="168.36363636363637" cy="132.0" r="0" fill="transparent"/><circle data-month="3" data-val="4,11★ (18)" data-monthyear="feb. 2026" cx="232.54545454545453" cy="119.01999999999997" r="0" fill="transparent"/><circle data-month="4" data-val="4,32★ (22)" data-monthyear="mar. 2026" cx="296.72727272727275" cy="94.23999999999997" r="0" fill="transparent"/><circle data-month="5" data-val="4,40★ (20)" data-monthyear="apr. 2026" cx="360.90909090909093" cy="84.79999999999995" r="0" fill="transparent"/><circle data-month="6" data-val="4,59★ (22)" data-monthyear="maj 2026" cx="425.09090909090907" cy="62.38000000000002" r="0" fill="transparent"/><circle data-month="7" data-val="3,60★ (20)" data-monthyear="jun. 2026" cx="489.27272727272725" cy="179.2" r="0" fill="transparent"/><circle data-month="8" data-val="4,00★ (16)" data-monthyear="jul. 2026" cx="553.4545454545455" cy="132.0" r="0" fill="transparent"/><circle data-month="9" data-val="4,20★ (5)" data-monthyear="aug. 2026" cx="617.6363636363636" cy="108.39999999999998" r="0" fill="transparent"/><circle data-month="10" data-val="4,08★ (12)" data-monthyear="sep. 2026" cx="681.8181818181819" cy="122.55999999999999" r="0" fill="transparent"/><circle data-month="11" data-val="4,44★ (9)" data-monthyear="okt. 2026" cx="746.0" cy="80.07999999999996" r="0" fill="transparent"/></g><g data-line="4" data-color="#D64545" data-name="Pris og værdi"><polyline points="40.0,51.76000000000003 104.18181818181819,43.5 168.36363636363637,51.76000000000003 232.54545454545453,41.14000000000005 296.72727272727275,35.23999999999997 360.90909090909093,42.32000000000002 425.09090909090907,60.01999999999996 489.27272727272725,68.28 553.4545454545455,38.779999999999994 617.6363636363636,88.33999999999999 681.8181818181819,32.88000000000002 746.0,58.83999999999999" fill="none" stroke="#D64545" stroke-width="2.5" stroke-linejoin="round"/><circle data-month="0" data-val="4,68★ (99)" data-monthyear="nov. 2025" cx="40.0" cy="51.76000000000003" r="0" fill="transparent"/><circle data-month="1" data-val="4,75★ (65)" data-monthyear="dec. 2025" cx="104.18181818181819" cy="43.5" r="0" fill="transparent"/><circle data-month="2" data-val="4,68★ (62)" data-monthyear="jan. 2026" cx="168.36363636363637" cy="51.76000000000003" r="0" fill="transparent"/><circle data-month="3" data-val="4,77★ (70)" data-monthyear="feb. 2026" cx="232.54545454545453" cy="41.14000000000005" r="0" fill="transparent"/><circle data-month="4" data-val="4,82★ (107)" data-monthyear="mar. 2026" cx="296.72727272727275" cy="35.23999999999997" r="0" fill="transparent"/><circle data-month="5" data-val="4,76★ (85)" data-monthyear="apr. 2026" cx="360.90909090909093" cy="42.32000000000002" r="0" fill="transparent"/><circle data-month="6" data-val="4,61★ (70)" data-monthyear="maj 2026" cx="425.09090909090907" cy="60.01999999999996" r="0" fill="transparent"/><circle data-month="7" data-val="4,54★ (41)" data-monthyear="jun. 2026" cx="489.27272727272725" cy="68.28" r="0" fill="transparent"/><circle data-month="8" data-val="4,79★ (62)" data-monthyear="jul. 2026" cx="553.4545454545455" cy="38.779999999999994" r="0" fill="transparent"/><circle data-month="9" data-val="4,37★ (43)" data-monthyear="aug. 2026" cx="617.6363636363636" cy="88.33999999999999" r="0" fill="transparent"/><circle data-month="10" data-val="4,84★ (58)" data-monthyear="sep. 2026" cx="681.8181818181819" cy="32.88000000000002" r="0" fill="transparent"/><circle data-month="11" data-val="4,62★ (45)" data-monthyear="okt. 2026" cx="746.0" cy="58.83999999999999" r="0" fill="transparent"/></g><g data-line="5" data-color="#7c3aed" data-name="Vinudvalg"><polyline points="40.0,37.60000000000002 104.18181818181819,73.0 168.36363636363637,61.200000000000045 232.54545454545453,80.07999999999996 296.72727272727275,64.73999999999997 360.90909090909093,73.0 425.09090909090907,52.94000000000001 489.27272727272725,14.0 553.4545454545455,14.0 617.6363636363636,43.5 681.8181818181819,14.0 746.0,14.0" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-linejoin="round"/><circle data-month="0" data-val="4,80★ (10)" data-monthyear="nov. 2025" cx="40.0" cy="37.60000000000002" r="0" fill="transparent"/><circle data-month="1" data-val="4,50★ (6)" data-monthyear="dec. 2025" cx="104.18181818181819" cy="73.0" r="0" fill="transparent"/><circle data-month="2" data-val="4,60★ (5)" data-monthyear="jan. 2026" cx="168.36363636363637" cy="61.200000000000045" r="0" fill="transparent"/><circle data-month="3" data-val="4,44★ (9)" data-monthyear="feb. 2026" cx="232.54545454545453" cy="80.07999999999996" r="0" fill="transparent"/><circle data-month="4" data-val="4,57★ (7)" data-monthyear="mar. 2026" cx="296.72727272727275" cy="64.73999999999997" r="0" fill="transparent"/><circle data-month="5" data-val="4,50★ (4)" data-monthyear="apr. 2026" cx="360.90909090909093" cy="73.0" r="0" fill="transparent"/><circle data-month="6" data-val="4,67★ (3)" data-monthyear="maj 2026" cx="425.09090909090907" cy="52.94000000000001" r="0" fill="transparent"/><circle data-month="7" data-val="5,00★ (1)" data-monthyear="jun. 2026" cx="489.27272727272725" cy="14.0" r="0" fill="transparent"/><circle data-month="8" data-val="5,00★ (9)" data-monthyear="jul. 2026" cx="553.4545454545455" cy="14.0" r="0" fill="transparent"/><circle data-month="9" data-val="4,75★ (4)" data-monthyear="aug. 2026" cx="617.6363636363636" cy="43.5" r="0" fill="transparent"/><circle data-month="10" data-val="5,00★ (6)" data-monthyear="sep. 2026" cx="681.8181818181819" cy="14.0" r="0" fill="transparent"/><circle data-month="11" data-val="5,00★ (4)" data-monthyear="okt. 2026" cx="746.0" cy="14.0" r="0" fill="transparent"/></g><line class="st-crosshair" x1="40" y1="14" x2="40" y2="250"/><rect class="st-hitcol" data-i="0" tabindex="0" x="7.9090909090909065" y="0" width="64.18181818181819" height="280" fill="transparent"/><rect class="st-hitcol" data-i="1" tabindex="0" x="72.0909090909091" y="0" width="64.18181818181819" height="280" fill="transparent"/><rect class="st-hitcol" data-i="2" tabindex="0" x="136.27272727272728" y="0" width="64.18181818181819" height="280" fill="transparent"/><rect class="st-hitcol" data-i="3" tabindex="0" x="200.45454545454544" y="0" width="64.18181818181819" height="280" fill="transparent"/><rect class="st-hitcol" data-i="4" tabindex="0" x="264.6363636363636" y="0" width="64.18181818181819" height="280" fill="transparent"/><rect class="st-hitcol" data-i="5" tabindex="0" x="328.81818181818187" y="0" width="64.18181818181819" height="280" fill="transparent"/><rect class="st-hitcol" data-i="6" tabindex="0" x="393.0" y="0" width="64.18181818181819" height="280" fill="transparent"/><rect class="st-hitcol" data-i="7" tabindex="0" x="457.18181818181813" y="0" width="64.18181818181819" height="280" fill="transparent"/><rect class="st-hitcol" data-i="8" tabindex="0" x="521.3636363636364" y="0" width="64.18181818181819" height="280" fill="transparent"/><rect class="st-hitcol" data-i="9" tabindex="0" x="585.5454545454545" y="0" width="64.18181818181819" height="280" fill="transparent"/><rect class="st-hitcol" data-i="10" tabindex="0" x="649.7272727272727" y="0" width="64.18181818181819" height="280" fill="transparent"/><rect class="st-hitcol" data-i="11" tabindex="0" x="713.9090909090909" y="0" width="64.18181818181819" height="280" fill="transparent"/></svg>
+        <div class="st-ttip" role="status" aria-live="polite"></div>
+      </div>
+      </div>
+    </div></section><section class="st-block st-faq"><div class="st-wrap">
+      <h2>Spørgsmål fra kunder</h2>
+      <p class="st-kicker">Kan du ikke finde dit spørgsmål? Spørg nedenfor, så svarer vi ud fra kundernes anmeldelser.</p>
+      <div class="st-faq-search"><input type="search" placeholder="Søg i anmeldelser og spørgsmål…" aria-label="Søg i anmeldelser og spørgsmål"><button type="button" aria-label="Søg">→</button></div>
+      <div class="st-faq-pills"><button type="button" class="st-qpill">Kan man stole på Den Sidste Flaske?</button><button type="button" class="st-qpill">Hvor hurtigt leverer Den Sidste Flaske?</button><button type="button" class="st-qpill">Er vinen fra Den Sidste Flaske god?</button><button type="button" class="st-qpill">Er Den Sidste Flaske god værdi for pengene?</button><button type="button" class="st-qpill">Hvad siger kunderne om vinudvalget?</button><button type="button" class="st-qpill">Hvordan er kundeservice hos Den Sidste Flaske?</button><button type="button" class="st-qpill">Hvad siger kunderne om retur og tilbagebetaling?</button><button type="button" class="st-qpill">Er vinflaskerne godt emballeret?</button></div>
+      <p class="st-faq-noresult">Ingen matchende spørgsmål — <a href="#st-review-browser" class="st-faq-to-reviews">søg i alle anmeldelser i stedet →</a></p>
+      <div class="st-ai-answer" role="status" aria-live="polite"><p class="st-ai-label">Besvaret af AI</p><div class="st-ai-text"></div><p class="st-ai-meta"></p></div>
+      <div><details open><summary>Kan man stole på Den Sidste Flaske?</summary><p>Den Sidste Flaske har en gennemsnitlig bedømmelse på 4,66 ud af 5 fra 18.608 anmeldelser af købsoplevelsen på Trustpilot i datagrundlaget pr. 14. oktober 2026. Levering, priser og kundeservice er tilbagevendende positive temaer. Der er også kritiske erfaringer, særligt om retur, forsinkelser og vine, som ikke lever op til forventningerne.</p></details><details><summary>Hvor hurtigt leverer Den Sidste Flaske?</summary><p>Mange kunder beskriver hurtig levering og levering som aftalt. Blandt 8.900 dansksprogede anmeldelser fra Danmark, der omtaler levering, giver 96 % 4 eller 5 stjerner. Der er også anmeldelser om forsinkelser og manglende kasser. Anmeldelserne giver ikke en fast leveringstid for alle ordrer; se den aktuelle leveringstid, når du bestiller.</p></details><details><summary>Er vinen fra Den Sidste Flaske god?</summary><p>Anmeldelserne rummer både gode smagsoplevelser og skuffelser over enkelte vine og smagekasser. Blandt 1.025 dansksprogede anmeldelser fra Danmark, der nævner smag, giver 88 % 4 eller 5 stjerner. Det er stjerner for den samlede købsoplevelse, ikke særskilte produktbedømmelser af hver vin, og smag afhænger af den enkelte vin og kunde.</p></details><details><summary>Er Den Sidste Flaske god værdi for pengene?</summary><p>God vin til fornuftige priser er et tilbagevendende tema. Pris omtales i 3.853 dansksprogede anmeldelser fra Danmark, og 96 % giver 4 eller 5 stjerner. Nogle kritiske anmeldelser oplever, at vinens smag ikke svarer til prisen, eller stiller spørgsmål ved førpriser. Vurder derfor den konkrete vin og pris frem for kun den annoncerede besparelse.</p></details><details><summary>Hvad siger kunderne om vinudvalget?</summary><p>Kunder fremhæver et spændende udvalg og gode priser. Blandt 453 dansksprogede anmeldelser fra Danmark, der omtaler udvalg, giver 98 % 4 eller 5 stjerner. Anmeldelser af smag viser samtidig, at en enkelt vin eller smagekasse kan skuffe, selv når den samlede oplevelse er god.</p></details><details><summary>Hvordan er kundeservice hos Den Sidste Flaske?</summary><p>Kundeservice omtales i 2.622 dansksprogede anmeldelser fra Danmark, og 96 % giver 4 eller 5 stjerner. Kunder beskriver god hjælp og leveringsfejl, som bliver rettet. Der findes også kritiske anmeldelser om manglende svar og problemer med tilgodebeviser eller reklamationer.</p></details><details><summary>Hvad siger kunderne om retur og tilbagebetaling?</summary><p>Retur er det lavest bedømte emne i oversigten: 2,91 ud af 5 på tværs af 54 dansksprogede anmeldelser fra Danmark, med 41 % på 4 eller 5 stjerner. Kritiske erfaringer handler blandt andet om returforsendelser, tilbagebetaling og tilgodebeviser. Datagrundlaget er lille, og anmeldelserne erstatter ikke de aktuelle handels- og returvilkår.</p></details><details><summary>Er vinflaskerne godt emballeret?</summary><p>Emballage omtales direkte i 41 dansksprogede anmeldelser fra Danmark, og 90 % giver 4 eller 5 stjerner. I de læste anmeldelser fremhæves blandt andet god emballage ved levering. Det lille antal anmeldelser giver et begrænset grundlag for at vurdere emballagen på tværs af alle ordrer.</p></details></div>
+    </div></section><section class="st-block" id="st-review-browser"><div class="st-wrap">
+      <h2>Læs anmeldelserne</h2>
+      <div class="st-filterbar">
+        <select class="st-star-sel" aria-label="Filtrer efter bedømmelse">
+          <option value="">Alle bedømmelser</option>
+          <option value="5">5 stjerner</option><option value="4">4 stjerner</option><option value="3">3 stjerner</option><option value="2">2 stjerner</option><option value="1">1 stjerne</option>
+        </select>
+        <button type="button" class="st-chip" data-topic="quality">Kvalitet</button>
+        <button type="button" class="st-chip" data-topic="delivery">Levering</button>
+        <button type="button" class="st-chip" data-topic="service">Kundeservice</button>
+        <button type="button" class="st-chip" data-topic="returns">Retur</button>
+        <button type="button" class="st-chip" data-topic="other">Pris og hjemmeside</button>
+        <select class="st-type-sel" aria-label="Filtrer efter anmeldelsestype">
+          <option value="">Alle anmeldelser</option><option value="service" selected>Anmeldelser af købsoplevelsen</option><option value="product">Produktanmeldelser</option>
+        </select>
+        <select class="st-sent-sel" aria-label="Filtrer efter holdning">
+          <option value="">Alle holdninger</option><option value="positive">Positiv</option><option value="negative">Negativ</option>
+        </select>
+
+        <select class="st-country-sel" aria-label="Filtrer efter land"><option value="">Alle lande</option><option value="au">Australien</option><option value="dk" selected>Danmark</option><option value="fr">Frankrig</option><option value="de">Tyskland</option><option value="nl">Nederlandene</option><option value="no">Norge</option><option value="pt">Portugal</option><option value="ru">Rusland</option><option value="se">Sverige</option><option value="tr">Tyrkiet</option><option value="gb">Storbritannien</option><option value="us">USA</option></select>
+        <select class="st-lang-sel" aria-label="Filtrer efter sprog"><option value="">Alle sprog</option><option value="da" selected>Dansk</option><option value="nl">Nederlandsk</option><option value="en">Engelsk</option><option value="fr">Fransk</option><option value="de">Tysk</option><option value="no">Norsk</option><option value="pt">Portugisisk</option><option value="ru">Russisk</option><option value="es">Spansk</option><option value="sv">Svensk</option><option value="tr">Tyrkisk</option></select>
+        <input class="st-q" type="search" placeholder="Søg i anmeldelser…" aria-label="Søg i anmeldelser">
+        <select class="st-sort-sel" aria-label="Sorter anmeldelser">
+          <option value="recent">Nyeste først</option><option value="high">Højeste bedømmelse</option><option value="low">Laveste bedømmelse</option>
+        </select>
+        <button type="button" class="st-apply-btn">Anvend</button>
+        <button type="button" class="st-clear-btn">Nulstil filtre</button>
+      </div>
+      <p class="st-prodfilter"><span class="st-prodfilter-label"></span><button type="button" aria-label="Fjern produktfilter">✕</button></p>
+      <p class="st-count-note"><span class="st-shown">Viser 10 anmeldelser på denne side</span></p>
+      <div class="st-reviews-list"><article class="st-review">
+      <div class="st-head">
+        <span class="st-stars-tip" data-tip="via Trustpilot" tabindex="0"><span class="st-tstars st-sm"><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#A4C639" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#A4C639" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#A4C639" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#A4C639" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#A4C639" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#A4C639" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#A4C639" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#A4C639" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#dcdce6" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#dcdce6" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg></span></span>
+
+        <span class="st-rate"><span class="st-who"><b>Torben Rughave</b><span>14 okt. 2026</span></span></span>
+      </div>
+
+      <h3>Fin vin</h3>
+      <p class="st-body">Fin vin, og det kommer kvikt. Men måden leveringerne kommer på er udfordrende. Kan ikke forstå at det er bedre/billigere at én person kører rundt med én pakke istedet for at aflevere pakken/vinen hos en pakkeshop</p>
+
+
+    </article><article class="st-review">
+      <div class="st-head">
+        <span class="st-stars-tip" data-tip="via Trustpilot" tabindex="0"><span class="st-tstars st-sm"><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#FF9800" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#FF9800" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#FF9800" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#FF9800" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#dcdce6" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#dcdce6" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#dcdce6" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#dcdce6" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#dcdce6" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#dcdce6" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg></span></span>
+
+        <span class="st-rate"><span class="st-who"><b>Christina</b><span>14 okt. 2026</span></span></span>
+      </div>
+
+      <h3>prop</h3>
+      <p class="st-body">Fin leverings tid, nem betaling
+Desværre har forløbig tre ud af 6 flasker prop</p>
+
+      <div class="st-reply"><b>Svar fra os</b>Hej Christina,
+
+Tak for en behagelig samtale 😊
+
+Jeg beklager endnu en gang, at du oplevede problemer med dine flasker.
+Det er bestemt ikke den oplevelse, vi ønsker at tilbyde vores kunder!
+
+Men hvor er det dejligt at høre, at leveringen gik godt, og at det var nemt at bestille hos os.
+
+Jeg er glad for, at du havde lyst til at tale med mig, og at vi sammen fandt en god løsning.
+
+De bedste hilsner
+Diana, DSF kundeservice 🍷</div>
+    </article><article class="st-review">
+      <div class="st-head">
+        <span class="st-stars-tip" data-tip="via Trustpilot" tabindex="0"><span class="st-tstars st-sm"><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg></span></span>
+
+        <span class="st-rate"><span class="st-who"><b>Tom Philipsen</b><span>14 okt. 2026</span></span></span>
+      </div>
+
+      <h3>gode billige tilbud</h3>
+      <p class="st-body">gode billige tilbud, og hurtig levering</p>
+
+      <div class="st-reply"><b>Svar fra os</b>Hej Tom
+
+Herligt, at du fik glæde af tilbuddene og ikke skulle vente længe på pakken 😊 Mange tak for at sende os en anmeldelse!
+
+De bedste hilsner, Den Sidste Flaske</div>
+    </article><article class="st-review">
+      <div class="st-head">
+        <span class="st-stars-tip" data-tip="via Trustpilot" tabindex="0"><span class="st-tstars st-sm"><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg></span></span>
+
+        <span class="st-rate"><span class="st-who"><b>Svend Skov</b><span>14 okt. 2026</span></span></span>
+      </div>
+
+      <h3>Bare en god og omhyggelig service</h3>
+      <p class="st-body">Bare en god og omhyggelig service, hvor alt fungerede!</p>
+
+      <div class="st-reply"><b>Svar fra os</b>Hej Svend Erik
+
+Din ros for omhyggeligheden varmer 😊 Vi gør os umage, så det er rigtig rart at høre, at alt fungerede for dig. Mange tak!
+
+De bedste hilsner, Den Sidste Flaske</div>
+    </article><article class="st-review">
+      <div class="st-head">
+        <span class="st-stars-tip" data-tip="via Trustpilot" tabindex="0"><span class="st-tstars st-sm"><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg></span></span>
+
+        <span class="st-rate"><span class="st-who"><b>Kirsten Kjær</b><span>13 okt. 2026</span></span></span>
+      </div>
+
+      <h3>Hurtig levering </h3>
+      <p class="st-body">Vi er yderst tilfredse med både vinen og den hurtige levering </p>
+
+
+    </article><article class="st-review">
+      <div class="st-head">
+        <span class="st-stars-tip" data-tip="via Trustpilot" tabindex="0"><span class="st-tstars st-sm"><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg></span></span>
+
+        <span class="st-rate"><span class="st-who"><b>Gitte Rune</b><span>13 okt. 2026</span></span></span>
+      </div>
+
+      <h3>Gode priser</h3>
+      <p class="st-body">Gode priser, levering til tiden. Har handlet meget og gør det helt sikkert igen </p>
+
+
+    </article><article class="st-review">
+      <div class="st-head">
+        <span class="st-stars-tip" data-tip="via Trustpilot" tabindex="0"><span class="st-tstars st-sm"><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#A4C639" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#A4C639" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#A4C639" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#A4C639" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#A4C639" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#A4C639" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#A4C639" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#A4C639" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#dcdce6" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#dcdce6" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg></span></span>
+
+        <span class="st-rate"><span class="st-who"><b>Birgitte Melgaard Nielsen</b><span>13 okt. 2026</span></span></span>
+      </div>
+
+      <h3>God vin til prisen.</h3>
+      <p class="st-body">Det er let at bestille, og levering fungerer godt.
+Fik en stor blandede rødvin til god pris. Dejlig vin til prisen😊</p>
+
+
+    </article><article class="st-review">
+      <div class="st-head">
+        <span class="st-stars-tip" data-tip="via Trustpilot" tabindex="0"><span class="st-tstars st-sm"><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#00B67A" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#00B67A" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg></span></span>
+
+        <span class="st-rate"><span class="st-who"><b>Palle Ulriksen</b><span>13 okt. 2026</span></span></span>
+      </div>
+
+      <h3>Alt spillede bare 👍</h3>
+      <p class="st-body">Alt spillede bare 👍</p>
+
+
+    </article><article class="st-review">
+      <div class="st-head">
+        <span class="st-stars-tip" data-tip="via Trustpilot" tabindex="0"><span class="st-tstars st-sm"><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#FFC107" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#FFC107" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#FFC107" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#FFC107" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#FFC107" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#FFC107" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#dcdce6" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#dcdce6" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#dcdce6" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#dcdce6" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg></span></span>
+
+        <span class="st-rate"><span class="st-who"><b>Torben Engelbreth</b><span>13 okt. 2026</span></span></span>
+      </div>
+
+      <h3>Handlen var nem</h3>
+      <p class="st-body">Handlen var nem, men vinen var ikke god efter min smag.</p>
+
+
+    </article><article class="st-review">
+      <div class="st-head">
+        <span class="st-stars-tip" data-tip="via Trustpilot" tabindex="0"><span class="st-tstars st-sm"><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#A4C639" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#A4C639" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#A4C639" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#A4C639" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#A4C639" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#A4C639" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#A4C639" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#A4C639" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path fill="#dcdce6" d="M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z"/><path fill="#dcdce6" d="M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z"/></svg></span></span>
+
+        <span class="st-rate"><span class="st-who"><b>Søren Rekly</b><span>13 okt. 2026</span></span></span>
+      </div>
+
+      <h3>Gode vine hurtig levering</h3>
+      <p class="st-body">Gode vine hurtig levering </p>
+
+
+    </article></div>
+      <nav class="st-pager"><a href="#" class="st-prev">‹ Forrige</a><span class="st-page-info">Side 1 af 1.642 (16.412 anmeldelser)</span><a href="#" class="st-next">Næste ›</a></nav>
+    </div></section><div class="st-wrap"><div class="st-method"><h2>Sådan indsamler vi anmeldelser</h2><p>Her kan du læse kundeanmeldelser fra Trustpilot. Emnerne findes ved at søge efter ord i anmeldelserne.</p></div></div><div class="st-lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+<button type="button" class="st-lb-close" aria-label="Luk">&times;</button>
+<img class="st-lb-content" alt="Kundebillede"><video class="st-lb-content" controls playsinline></video>
+</div><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"OnlineStore","@id":"https://densidsteflaske.dk/pages/anmeldelser#store","name":"Den Sidste Flaske","url":"https://densidsteflaske.dk","aggregateRating":{"@type":"AggregateRating","ratingValue":4.66,"reviewCount":18608,"bestRating":5,"worstRating":1}},{"@type":"WebPage","@id":"https://densidsteflaske.dk/pages/anmeldelser","name":"Anmeldelser af Den Sidste Flaske","url":"https://densidsteflaske.dk/pages/anmeldelser","mainEntity":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"},"dateModified":"2026-10-14T13:48:51.702Z","inLanguage":"da"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Forside","item":"https://densidsteflaske.dk"},{"@type":"ListItem","position":2,"name":"Anmeldelser","item":"https://densidsteflaske.dk/pages/anmeldelser"}]},{"@type":"Dataset","name":"Fordeling af bedømmelser for Den Sidste Flaske","description":"Fordeling af 18.608 kundeanmeldelser af Den Sidste Flaske efter bedømmelse fra 1 til 5 stjerner.","about":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"},"creator":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"},"variableMeasured":[{"@type":"PropertyValue","name":"1-stjernede anmeldelser","value":532},{"@type":"PropertyValue","name":"2-stjernede anmeldelser","value":344},{"@type":"PropertyValue","name":"3-stjernede anmeldelser","value":548},{"@type":"PropertyValue","name":"4-stjernede anmeldelser","value":2032},{"@type":"PropertyValue","name":"5-stjernede anmeldelser","value":15152}]},{"@type":"Dataset","name":"Fordeling af serviceanmeldelser af Den Sidste Flaske efter emne","description":"Gennemsnitlig bedømmelse og antal anmeldelser for hvert emne, som kunderne omtaler i serviceanmeldelser af Den Sidste Flaske.","about":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"},"creator":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"},"variableMeasured":[{"@type":"PropertyValue","name":"Levering","value":4.78,"description":"96% af 8.900 anmeldelser, der nævner Levering, giver 4 stjerner eller derover"},{"@type":"PropertyValue","name":"Kundeservice","value":4.8,"description":"96% af 2.622 anmeldelser, der nævner Kundeservice, giver 4 stjerner eller derover"},{"@type":"PropertyValue","name":"Vinens smag","value":4.52,"description":"88% af 1.025 anmeldelser, der nævner Vinens smag, giver 4 stjerner eller derover"},{"@type":"PropertyValue","name":"Pris og værdi","value":4.79,"description":"96% af 3.853 anmeldelser, der nævner Pris og værdi, giver 4 stjerner eller derover"},{"@type":"PropertyValue","name":"Vinudvalg","value":4.82,"description":"98% af 453 anmeldelser, der nævner Vinudvalg, giver 4 stjerner eller derover"},{"@type":"PropertyValue","name":"Bestilling","value":4.68,"description":"92% af 1.013 anmeldelser, der nævner Bestilling, giver 4 stjerner eller derover"},{"@type":"PropertyValue","name":"Retur og tilbagebetaling","value":2.91,"description":"41% af 54 anmeldelser, der nævner Retur og tilbagebetaling, giver 4 stjerner eller derover"},{"@type":"PropertyValue","name":"Emballage","value":4.61,"description":"90% af 41 anmeldelser, der nævner Emballage, giver 4 stjerner eller derover"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Kan man stole på Den Sidste Flaske?","acceptedAnswer":{"@type":"Answer","text":"Den Sidste Flaske har en gennemsnitlig bedømmelse på 4,66 ud af 5 fra 18.608 anmeldelser af købsoplevelsen på Trustpilot i datagrundlaget pr. 14. oktober 2026. Levering, priser og kundeservice er tilbagevendende positive temaer. Der er også kritiske erfaringer, særligt om retur, forsinkelser og vine, som ikke lever op til forventningerne."}},{"@type":"Question","name":"Hvor hurtigt leverer Den Sidste Flaske?","acceptedAnswer":{"@type":"Answer","text":"Mange kunder beskriver hurtig levering og levering som aftalt. Blandt 8.900 dansksprogede anmeldelser fra Danmark, der omtaler levering, giver 96 % 4 eller 5 stjerner. Der er også anmeldelser om forsinkelser og manglende kasser. Anmeldelserne giver ikke en fast leveringstid for alle ordrer; se den aktuelle leveringstid, når du bestiller."}},{"@type":"Question","name":"Er vinen fra Den Sidste Flaske god?","acceptedAnswer":{"@type":"Answer","text":"Anmeldelserne rummer både gode smagsoplevelser og skuffelser over enkelte vine og smagekasser. Blandt 1.025 dansksprogede anmeldelser fra Danmark, der nævner smag, giver 88 % 4 eller 5 stjerner. Det er stjerner for den samlede købsoplevelse, ikke særskilte produktbedømmelser af hver vin, og smag afhænger af den enkelte vin og kunde."}},{"@type":"Question","name":"Er Den Sidste Flaske god værdi for pengene?","acceptedAnswer":{"@type":"Answer","text":"God vin til fornuftige priser er et tilbagevendende tema. Pris omtales i 3.853 dansksprogede anmeldelser fra Danmark, og 96 % giver 4 eller 5 stjerner. Nogle kritiske anmeldelser oplever, at vinens smag ikke svarer til prisen, eller stiller spørgsmål ved førpriser. Vurder derfor den konkrete vin og pris frem for kun den annoncerede besparelse."}},{"@type":"Question","name":"Hvad siger kunderne om vinudvalget?","acceptedAnswer":{"@type":"Answer","text":"Kunder fremhæver et spændende udvalg og gode priser. Blandt 453 dansksprogede anmeldelser fra Danmark, der omtaler udvalg, giver 98 % 4 eller 5 stjerner. Anmeldelser af smag viser samtidig, at en enkelt vin eller smagekasse kan skuffe, selv når den samlede oplevelse er god."}},{"@type":"Question","name":"Hvordan er kundeservice hos Den Sidste Flaske?","acceptedAnswer":{"@type":"Answer","text":"Kundeservice omtales i 2.622 dansksprogede anmeldelser fra Danmark, og 96 % giver 4 eller 5 stjerner. Kunder beskriver god hjælp og leveringsfejl, som bliver rettet. Der findes også kritiske anmeldelser om manglende svar og problemer med tilgodebeviser eller reklamationer."}},{"@type":"Question","name":"Hvad siger kunderne om retur og tilbagebetaling?","acceptedAnswer":{"@type":"Answer","text":"Retur er det lavest bedømte emne i oversigten: 2,91 ud af 5 på tværs af 54 dansksprogede anmeldelser fra Danmark, med 41 % på 4 eller 5 stjerner. Kritiske erfaringer handler blandt andet om returforsendelser, tilbagebetaling og tilgodebeviser. Datagrundlaget er lille, og anmeldelserne erstatter ikke de aktuelle handels- og returvilkår."}},{"@type":"Question","name":"Er vinflaskerne godt emballeret?","acceptedAnswer":{"@type":"Answer","text":"Emballage omtales direkte i 41 dansksprogede anmeldelser fra Danmark, og 90 % giver 4 eller 5 stjerner. I de læste anmeldelser fremhæves blandt andet god emballage ved levering. Det lille antal anmeldelser giver et begrænset grundlag for at vurdere emballagen på tværs af alle ordrer."}},{"@type":"Question","name":"Hvordan bedømmer kunderne Levering hos Den Sidste Flaske?","acceptedAnswer":{"@type":"Answer","text":"Levering omtales i 8.900 dansksprogede anmeldelser fra Danmark med en gennemsnitlig bedømmelse på 4,78 ud af 5; 96 % giver 4 eller 5 stjerner. Kunder fremhæver hurtig levering og levering som aftalt. Kritiske anmeldelser beskriver blandt andet forsinkelser og ordrer, hvor alle kasser ikke kom frem samtidig."}},{"@type":"Question","name":"Hvordan bedømmer kunderne Kundeservice hos Den Sidste Flaske?","acceptedAnswer":{"@type":"Answer","text":"Kundeservice omtales i 2.622 dansksprogede anmeldelser fra Danmark med en gennemsnitlig bedømmelse på 4,80 ud af 5; 96 % giver 4 eller 5 stjerner. Kunder beskriver god hjælp, også når en leveringsfejl skal rettes. Nogle kritiske anmeldelser fortæller dog om manglende svar eller problemer, som ikke blev løst som forventet."}},{"@type":"Question","name":"Hvordan bedømmer kunderne Vinens smag hos Den Sidste Flaske?","acceptedAnswer":{"@type":"Answer","text":"Smag omtales i 1.025 dansksprogede anmeldelser fra Danmark med en gennemsnitlig bedømmelse på 4,52 ud af 5; 88 % giver 4 eller 5 stjerner. Kunder beskriver gode smagsoplevelser, mens andre oplever, at en bestemt vin eller smagekasse ikke lever op til forventningerne. Tallene er bedømmelser af den samlede købsoplevelse i anmeldelser, der nævner smag."}},{"@type":"Question","name":"Hvordan bedømmer kunderne Pris og værdi hos Den Sidste Flaske?","acceptedAnswer":{"@type":"Answer","text":"Pris omtales i 3.853 dansksprogede anmeldelser fra Danmark med en gennemsnitlig bedømmelse på 4,79 ud af 5; 96 % giver 4 eller 5 stjerner. Mange kunder fremhæver god vin til fornuftige priser. Kritiske anmeldelser vurderer blandt andet prisen i forhold til vinens smag og stiller spørgsmål ved førpriser."}},{"@type":"Question","name":"Hvordan bedømmer kunderne Vinudvalg hos Den Sidste Flaske?","acceptedAnswer":{"@type":"Answer","text":"Vinudvalg omtales i 453 dansksprogede anmeldelser fra Danmark med en gennemsnitlig bedømmelse på 4,82 ud af 5; 98 % giver 4 eller 5 stjerner. Kunder fremhæver et spændende udvalg og muligheden for at finde gode vine til en passende pris. Et godt samlet udvalg er ikke en garanti for, at hver enkelt vin passer til den enkelte kundes smag."}},{"@type":"Question","name":"Hvordan bedømmer kunderne Bestilling hos Den Sidste Flaske?","acceptedAnswer":{"@type":"Answer","text":"Bestilling omtales i 1.013 dansksprogede anmeldelser fra Danmark med en gennemsnitlig bedømmelse på 4,68 ud af 5; 92 % giver 4 eller 5 stjerner. Kunder beskriver bestillingen som nem. Blandt de kritiske erfaringer er problemer med at bruge et tilgodebevis eller få en lovet rabat med i en ny ordre."}},{"@type":"Question","name":"Hvordan bedømmer kunderne Retur og tilbagebetaling hos Den Sidste Flaske?","acceptedAnswer":{"@type":"Answer","text":"Retur omtales i 54 dansksprogede anmeldelser fra Danmark med en gennemsnitlig bedømmelse på 2,91 ud af 5; 41 % giver 4 eller 5 stjerner. Det er det lavest bedømte emne i denne oversigt, men også et lille datagrundlag. Kritiske anmeldelser beskriver blandt andet problemer med returforsendelser, tilbagebetaling og tilgodebeviser."}},{"@type":"Question","name":"Hvordan bedømmer kunderne Emballage hos Den Sidste Flaske?","acceptedAnswer":{"@type":"Answer","text":"Emballage omtales i 41 dansksprogede anmeldelser fra Danmark med en gennemsnitlig bedømmelse på 4,61 ud af 5; 90 % giver 4 eller 5 stjerner. I de læste anmeldelser fremhæves blandt andet god emballage ved levering. Datagrundlaget er lille og omfatter kun anmeldelser, der nævner emballage direkte."}}]},{"@type":"Review","@id":"https://densidsteflaske.dk/pages/anmeldelser#review-0","itemReviewed":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"},"author":{"@type":"Person","name":"Torben Rughave"},"datePublished":"2026-10-14T11:59:32.000Z","headline":"Fin vin","reviewBody":"Fin vin, og det kommer kvikt. Men måden leveringerne kommer på er udfordrende. Kan ikke forstå at det er bedre/billigere at én person kører rundt med én pakke istedet for at aflevere pakken/vinen hos en pakkeshop","reviewRating":{"@type":"Rating","ratingValue":4,"bestRating":5,"worstRating":1},"publisher":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"}},{"@type":"Review","@id":"https://densidsteflaske.dk/pages/anmeldelser#review-1","itemReviewed":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"},"author":{"@type":"Person","name":"Christina"},"datePublished":"2026-10-14T10:16:25.000Z","headline":"prop","reviewBody":"Fin leverings tid, nem betaling\nDesværre har forløbig tre ud af 6 flasker prop","reviewRating":{"@type":"Rating","ratingValue":2,"bestRating":5,"worstRating":1},"publisher":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"}},{"@type":"Review","@id":"https://densidsteflaske.dk/pages/anmeldelser#review-2","itemReviewed":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"},"author":{"@type":"Person","name":"Tom Philipsen"},"datePublished":"2026-10-14T08:27:18.000Z","headline":"gode billige tilbud","reviewBody":"gode billige tilbud, og hurtig levering","reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"publisher":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"}},{"@type":"Review","@id":"https://densidsteflaske.dk/pages/anmeldelser#review-3","itemReviewed":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"},"author":{"@type":"Person","name":"Svend Skov"},"datePublished":"2026-10-14T08:24:07.000Z","headline":"Bare en god og omhyggelig service","reviewBody":"Bare en god og omhyggelig service, hvor alt fungerede!","reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"publisher":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"}},{"@type":"Review","@id":"https://densidsteflaske.dk/pages/anmeldelser#review-4","itemReviewed":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"},"author":{"@type":"Person","name":"Kirsten Kjær"},"datePublished":"2026-10-13T21:08:40.000Z","headline":"Hurtig levering ","reviewBody":"Vi er yderst tilfredse med både vinen og den hurtige levering ","reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"publisher":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"}},{"@type":"Review","@id":"https://densidsteflaske.dk/pages/anmeldelser#review-5","itemReviewed":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"},"author":{"@type":"Person","name":"Gitte Rune"},"datePublished":"2026-10-13T20:39:19.000Z","headline":"Gode priser","reviewBody":"Gode priser, levering til tiden. Har handlet meget og gør det helt sikkert igen ","reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"publisher":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"}},{"@type":"Review","@id":"https://densidsteflaske.dk/pages/anmeldelser#review-6","itemReviewed":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"},"author":{"@type":"Person","name":"Birgitte Melgaard Nielsen"},"datePublished":"2026-10-13T20:33:58.000Z","headline":"God vin til prisen.","reviewBody":"Det er let at bestille, og levering fungerer godt.\nFik en stor blandede rødvin til god pris. Dejlig vin til prisen😊","reviewRating":{"@type":"Rating","ratingValue":4,"bestRating":5,"worstRating":1},"publisher":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"}},{"@type":"Review","@id":"https://densidsteflaske.dk/pages/anmeldelser#review-7","itemReviewed":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"},"author":{"@type":"Person","name":"Palle Ulriksen"},"datePublished":"2026-10-13T19:46:03.000Z","headline":"Alt spillede bare 👍","reviewBody":"Alt spillede bare 👍","reviewRating":{"@type":"Rating","ratingValue":5,"bestRating":5,"worstRating":1},"publisher":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"}},{"@type":"Review","@id":"https://densidsteflaske.dk/pages/anmeldelser#review-8","itemReviewed":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"},"author":{"@type":"Person","name":"Torben Engelbreth"},"datePublished":"2026-10-13T18:41:57.000Z","headline":"Handlen var nem","reviewBody":"Handlen var nem, men vinen var ikke god efter min smag.","reviewRating":{"@type":"Rating","ratingValue":3,"bestRating":5,"worstRating":1},"publisher":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"}},{"@type":"Review","@id":"https://densidsteflaske.dk/pages/anmeldelser#review-9","itemReviewed":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"},"author":{"@type":"Person","name":"Søren Rekly"},"datePublished":"2026-10-13T18:14:50.000Z","headline":"Gode vine hurtig levering","reviewBody":"Gode vine hurtig levering ","reviewRating":{"@type":"Rating","ratingValue":4,"bestRating":5,"worstRating":1},"publisher":{"@id":"https://densidsteflaske.dk/pages/anmeldelser#store"}}]}</script><script>
+(function(){
+  window.__stReviews = window.__stReviews || {};
+  var SELF = document.currentScript;
+  // Resolve our own root from this <script>, not by id. The script is emitted as the last child
+  // of the root div, so currentScript.parentElement identifies it unambiguously. getElementById
+  // does not: a host page is free to wrap the fragment in its own element carrying the same id
+  // (SelectSpecs' Nuxt component did exactly that), and being first in document order that
+  // wrapper wins the lookup. It carries none of the data-st-* config, so apiBase and
+  // authHeaderValue came back null, the interactive block below was skipped entirely, and every
+  // control except the lightbox silently did nothing.
+  function findRoot(){
+    var r = SELF && SELF.parentElement;
+    // document.contains matters on re-entry: once a host has replaced this subtree, SELF is the
+    // detached original and its parent is the discarded root, which still carries data-st-api.
+    if (r && r.hasAttribute('data-st-api') && document.contains(r)) return r;
+    // currentScript is null if this ever runs deferred rather than during parse.
+    // Prefer whichever element with our id actually carries the config over document order.
+    var candidates = document.querySelectorAll('[id="dsf-reviews"]');
+    for (var ci = 0; ci < candidates.length; ci++) {
+      if (candidates[ci].hasAttribute('data-st-api')) return candidates[ci];
     }
-    form.addEventListener('submit', loadRender);
-  })();
-  </script>
+    return document.getElementById('dsf-reviews');
+  }
+  function bind(root){
+  if (!root) return;
+  // Re-entry guard keyed on the element rather than the id. Storing `true` latched the id for the
+  // lifetime of the page, so if a host SPA replaced this subtree the fresh nodes could never be
+  // bound again. Comparing the element also still prevents double-binding the same root.
+  if (window.__stReviews['dsf-reviews'] === root) return;
+  window.__stReviews['dsf-reviews'] = root;
+  var apiBase = root.getAttribute('data-st-api');
+  var authHeaderName = root.getAttribute('data-st-auth-header');
+  var authHeaderValue = root.getAttribute('data-st-auth-value');
+  // The widget's configFilterParams, already in POST /v1/reviews/public body shape. Every live
+  // call starts from a copy of this, so a template scoped to (say) source-filtered 4-5* product
+  // reviews stays scoped no matter what the visitor filters, pages or searches for.
+  var FILTER_DEFAULTS = {};
+  try { FILTER_DEFAULTS = JSON.parse(root.getAttribute('data-st-filters') || '{}') || {}; }
+  catch (e) { console.warn('[stacktome-reviews] could not parse data-st-filters, falling back to no defaults', e); }
+  var I18N = {};
+  try { I18N = JSON.parse(root.getAttribute('data-st-i18n') || '{}') || {}; } catch (e) {}
+  var LOCALE = I18N.locale || 'en-GB', STRINGS = I18N.strings || {};
+  function t(key, values){
+    var message = STRINGS[key] || key;
+    return message.replace(/\{([A-Za-z][A-Za-z0-9]*)\}/g, function(token, name){
+      return values && Object.prototype.hasOwnProperty.call(values, name) ? String(values[name]) : token;
+    });
+  }
+  function count(value){ return Number(value).toLocaleString(LOCALE, {maximumFractionDigits:0}); }
+  // Mutable, not a constant: selecting a topic from the service section switches the live corpus,
+  // and the response then carries review.service instead of review.products.
+  var ACTIVE_REVIEW_TYPE = FILTER_DEFAULTS.reviewType || 'all';
+  function baseBody(){
+    var b = {};
+    for (var k in FILTER_DEFAULTS) if (Object.prototype.hasOwnProperty.call(FILTER_DEFAULTS, k)) b[k] = FILTER_DEFAULTS[k];
+    return b;
+  }
+  // A topic chip or a search term narrows *within* the configured keywords, it does not replace
+  // them — mirrors ReviewPageRenderRepository.withTopicKeywords on the server side.
+  function withDefaultKeywords(kw){
+    var merged = (FILTER_DEFAULTS.keywords || []).concat(kw || []);
+    return merged.filter(function(v, i){ return merged.indexOf(v) === i; });
+  }
+  // Product reviews live under review.products (one entry per row — the API flattens each review
+  // to a single product), service reviews under review.service.
+  function reviewItemOf(item){
+    var data = item && item.review;
+    if (!data) return null;
+    var product = (data.products && data.products[0]) || null;
+    if (ACTIVE_REVIEW_TYPE === 'product') return product;
+    // 'all' returns a mixed list, so take whichever the row actually carries rather than
+    // assuming — a product-only row has no review.service and would render blank.
+    if (ACTIVE_REVIEW_TYPE === 'all') return data.service || product;
+    return data.service || null;
+  }
+  // Mirrors ReviewPageRenderRepository.isProductItem: whether the item reviewItemOf just picked
+  // came from the product side. On a service-scoped page the answer is always no, even for a row
+  // that also carries a product item — the card is rendered from review.service, so labelling it
+  // a product review would put product controls and a service link on the same card.
+  function isProductItemOf(item){
+    var data = item && item.review;
+    if (!data) return false;
+    if (ACTIVE_REVIEW_TYPE === 'product') return true;
+    if (ACTIVE_REVIEW_TYPE !== 'all') return false;
+    return !data.service && !!(data.products && data.products[0]);
+  }
+  function apiHeaders(){
+    var h = { 'Content-Type': 'application/json' };
+    h[authHeaderName] = authHeaderValue;
+    return h;
+  }
+  function escapeHtml(s){ var d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+  // Mirrors ReviewPageRenderer.mediaStrip: only the _360pxWide/_thumb renditions are inlined —
+  // the other URLs are full-size originals and far too heavy for a thumbnail strip.
+  function mediaStripHtml(images, videos){
+    function isVideo(u){ return String(u).toLowerCase().indexOf('.mp4') > -1; }
+    function isThumb(u){ return u.indexOf('_360pxWide') > -1 || u.indexOf('_thumb') > -1; }
+    // Last resort only: the thumbnail is always written as _thumb.jpg while the original keeps
+    // the uploader's extension, so this guesses .jpg for a .png upload. The real original comes
+    // off the same entry below.
+    function toOriginal(u){ return u.replace('_360pxWide', '_original').replace('_thumb', '_original'); }
+    // One entry packs every rendition of ONE asset separated by ';' ("…_thumb.jpg;…_original.png"),
+    // so split before using anything as a src, and pair the thumbnail with the original beside it.
+    var entries = (images || []).concat(videos || [])
+      .map(function(e){ return String(e).trim(); })
+      .filter(function(e, i, a){ return e && a.indexOf(e) === i; })
+      .map(function(e){ return e.split(';').map(function(u){ return u.trim(); }).filter(Boolean); });
+    var imgs = entries.map(function(parts){
+      var photos = parts.filter(function(u){ return !isVideo(u); });
+      var thumb = photos.filter(isThumb)[0];
+      if (!thumb) return null;
+      var original = photos.filter(function(u){ return !isThumb(u); })[0] || toOriginal(thumb);
+      return '<a class="st-mediaitem" href="' + escapeHtml(original) + '" target="_blank" rel="noopener" aria-label="' + escapeHtml(t('openPhoto')) + '">' +
+        '<img src="' + escapeHtml(thumb) + '" loading="lazy" alt="' + escapeHtml(t('customerPhoto')) + '"></a>';
+    }).filter(Boolean);
+    var vids = entries.reduce(function(acc, parts){ return acc.concat(parts); }, [])
+      .filter(function(u, i, a){ return a.indexOf(u) === i; })
+      .filter(isVideo)
+      .map(function(u){ return '<video class="st-mediaitem" data-full="' + escapeHtml(u) + '" src="' + escapeHtml(u) +
+        '#t=0.1" preload="metadata" muted loop playsinline></video>'; });
+    var all = imgs.concat(vids);
+    return all.length ? '<div class="st-media">' + all.join('') + '</div>' : '';
+  }
+  function renderStarsHtml(rating){
+    // mirrors the server-side star renderer (ReviewPageRenderer.starsSvg) for reviews fetched live
+    var COLORS = {1:'#D64545',2:'#FF9800',3:'#FFC107',4:'#A4C639',5:'#00B67A'}, EMPTY='#dcdce6';
+    var r = parseFloat(rating) || 0;
+    var displayR = (r >= 4.3 && r < 4.5) ? 4.5 : r;
+    var c = COLORS[Math.round(displayR)] || COLORS[5];
+    var LEFT='M0 4C0 1.79086 1.79086 0 4 0H10V20H4C1.79086 20 0 18.2091 0 16V4Z';
+    var RIGHT='M20 4C20 1.79086 18.2091 0 16 0H10V20H16C18.2091 20 20 18.2091 20 16V4Z';
+    var STAR='M10 13.3736L12.5949 14.7111C12.7378 14.7848 12.9006 14.8106 13.0593 14.7847C13.4681 14.718 13.7454 14.3325 13.6787 13.9237L13.2085 11.0425L15.2824 8.98796C15.3967 8.8748 15.4715 8.72792 15.4959 8.569C15.5588 8.15958 15.2779 7.77672 14.8685 7.71384L11.983 7.2707L10.6699 4.66338C10.5975 4.51978 10.481 4.40322 10.3374 4.33089C9.96742 4.14458 9.51648 4.29344 9.33017 4.66338L8.01705 7.2707L5.13157 7.71384C4.97265 7.73825 4.82577 7.81309 4.71261 7.92731C4.42109 8.22158 4.42332 8.69645 4.71759 8.98796L6.79152 11.0425L6.32131 13.9237C6.29541 14.0824 6.3212 14.2452 6.39486 14.3881C6.58464 14.7563 7.03696 14.9009 7.40514 14.7111L10 13.3736Z';
+    function tile(lc, rc){ return '<svg viewBox="0 0 20 20" aria-hidden="true"><path fill="'+lc+'" d="'+LEFT+'"/><path fill="'+rc+'" d="'+RIGHT+'"/><path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="'+STAR+'"/></svg>'; }
+    var html = '';
+    for (var i=1;i<=5;i++){ if (displayR>=i) html+=tile(c,c); else if (displayR>=i-0.5) html+=tile(c,EMPTY); else html+=tile(EMPTY,EMPTY); }
+    return html;
+  }
+  // Topic keywords are read off each card's data-keywords, written by the server from the
+  // template's own topicSections — no hardcoded per-account vocabulary in this script.
+  function topicKeywordsOf(el){
+    var raw = el && el.getAttribute('data-keywords');
+    return raw ? raw.split('|').filter(Boolean) : [];
+  }
+
+  // Lightbox. Deliberately outside the apiBase/authHeaderValue guard below: the SSR review cards
+  // carry media whether or not a public key exists, so viewing a photo must not depend on the
+  // interactive API being available. Delegated on the root, so it covers cards that client-side
+  // pagination replaces later.
+  var lb = root.querySelector('.st-lightbox');
+  if (lb) {
+    var lbImg = lb.querySelector('img.st-lb-content');
+    var lbVid = lb.querySelector('video.st-lb-content');
+    var closeLb = function(){
+      lb.classList.remove('st-open');
+      lb.setAttribute('aria-hidden', 'true');
+      lbVid.pause(); lbVid.removeAttribute('src'); lbVid.load();
+      lbImg.classList.remove('st-show'); lbVid.classList.remove('st-show');
+    };
+    var openLb = function(src, isVideo){
+      if (!src) return;
+      if (isVideo) {
+        lbImg.classList.remove('st-show');
+        lbVid.src = src; lbVid.classList.add('st-show');
+        var p = lbVid.play(); if (p && p.catch) p.catch(function(){});
+      } else {
+        lbVid.pause(); lbVid.classList.remove('st-show');
+        lbImg.src = src; lbImg.classList.add('st-show');
+      }
+      lb.classList.add('st-open');
+      lb.setAttribute('aria-hidden', 'false');
+    };
+    root.addEventListener('click', function(e){
+      if (!e.target.closest) return;
+      var vid = e.target.closest('video.st-mediaitem');
+      if (vid) { e.preventDefault(); openLb(vid.getAttribute('data-full') || vid.getAttribute('src'), true); return; }
+      // The thumbnail stays a real <a href> to the full-size image so it still works without JS
+      // and remains crawlable; the handler just intercepts it.
+      var link = e.target.closest('a.st-mediaitem');
+      if (link) { e.preventDefault(); openLb(link.getAttribute('href'), false); }
+    });
+    lb.addEventListener('click', function(e){
+      if (e.target === lb || (e.target.closest && e.target.closest('.st-lb-close'))) closeLb();
+    });
+    // Registered once on document and re-pointed at whichever root is current, rather than added
+    // per bind: on a host that re-renders us, a per-bind listener would stack up, each one closing
+    // over a lightbox that is no longer in the page.
+    window.__stReviews['dsf-reviews:closeLb'] = function(){ if (lb.classList.contains('st-open')) closeLb(); };
+    if (!window.__stReviews['dsf-reviews:esc']) {
+      window.__stReviews['dsf-reviews:esc'] = true;
+      document.addEventListener('keydown', function(e){
+        var close = window.__stReviews['dsf-reviews:closeLb'];
+        if (e.key === 'Escape' && close) close();
+      });
+    }
+  }
+
+  // Video thumbnails preview on hover (muted, looping) — they carry no controls, since those
+  // would swallow the click that opens the lightbox.
+  root.addEventListener('mouseover', function(e){
+    var v = e.target.closest && e.target.closest('video.st-mediaitem');
+    if (v) { var p = v.play(); if (p && p.catch) p.catch(function(){}); }
+  });
+  root.addEventListener('mouseout', function(e){
+    var v = e.target.closest && e.target.closest('video.st-mediaitem');
+    if (v) v.pause();
+  });
+
+  // Switching tabs swaps the topic grid, its chart and the rating breakdown to that corpus. All
+  // panels are already server-rendered, so this is pure show/hide — no refetch, and the hidden
+  // panel stays in the markup for crawlers.
+  function activateSection(id){
+    if (!id) return;
+    root.querySelectorAll('.st-panel').forEach(function(p){
+      p.classList.toggle('st-active', p.getAttribute('data-section') === id);
+    });
+    root.querySelectorAll('.st-snappanel').forEach(function(p){
+      p.classList.toggle('st-active', p.getAttribute('data-section') === id);
+    });
+    root.querySelectorAll('.st-tab').forEach(function(t){
+      var on = t.getAttribute('data-section') === id;
+      t.classList.toggle('st-on', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+  }
+
+  // Trend chart hover (no API — pure DOM math over already-rendered SVG).
+  // Bound per chart: with one tab panel per corpus there are several charts on the page, and a
+  // single root.querySelector would wire only the first — leaving the service chart's tooltip
+  // dead and its legend buttons toggling lines in the product chart.
+  root.querySelectorAll('.st-chart-wrap').forEach(function(wrap){
+    var svg = wrap.querySelector('.st-trendchart');
+    var tooltip = wrap.querySelector('.st-ttip');
+    var crosshair = svg ? svg.querySelector('.st-crosshair') : null;
+    if (!svg || !tooltip || !crosshair) return;
+    // Legend lives beside the chart, inside the same panel.
+    var scope = wrap.closest('.st-panel') || root;
+    var W = 760, L = 40, R = 14;
+    function hide(){ tooltip.classList.remove('st-show'); crosshair.style.opacity = '0'; }
+    var cols = svg.querySelectorAll('.st-hitcol');
+    cols.forEach(function(rect){
+      var i = parseInt(rect.getAttribute('data-i'), 10);
+      rect.addEventListener('pointerenter', function(){ showAt(i); });
+      rect.addEventListener('focus', function(){ showAt(i); });
+    });
+    wrap.addEventListener('pointerleave', hide);
+    scope.querySelectorAll('.st-lkey').forEach(function(btn, si){
+      btn.addEventListener('click', function(){
+        btn.classList.toggle('st-off');
+        var line = svg.querySelector('[data-line="' + si + '"]');
+        if (line) line.style.display = btn.classList.contains('st-off') ? 'none' : '';
+      });
+    });
+    function showAt(i) {
+      var lines = svg.querySelectorAll('[data-line]');
+      var rows = [];
+      lines.forEach(function(g){
+        if (g.style.display === 'none') return;
+        var pt = g.querySelectorAll('[data-month="' + i + '"]')[0];
+        if (pt) rows.push({ color: g.getAttribute('data-color'), name: g.getAttribute('data-name'),
+          val: pt.getAttribute('data-val'), month: pt.getAttribute('data-monthyear') });
+      });
+      if (!rows.length) { hide(); return; }
+      tooltip.innerHTML = '';
+      var monthEl = document.createElement('div'); monthEl.className = 'st-ttip-month';
+      monthEl.textContent = rows[0].month; tooltip.appendChild(monthEl);
+      rows.forEach(function(r){
+        var row = document.createElement('div'); row.className = 'st-ttip-row';
+        var key = document.createElement('span'); key.className = 'st-ttip-key'; key.style.background = r.color;
+        var name = document.createElement('span'); name.className = 'st-ttip-name'; name.textContent = r.name;
+        var val = document.createElement('span'); val.className = 'st-ttip-val'; val.textContent = r.val;
+        row.appendChild(key); row.appendChild(name); row.appendChild(val); tooltip.appendChild(row);
+      });
+      var colWidth = cols.length > 1 ? (W - L - R) / (cols.length - 1) : W - L - R;
+      var cxViewBox = L + i * colWidth;
+      var svgRect = svg.getBoundingClientRect();
+      var scale = svgRect.width / W;
+      var cxPx = cxViewBox * scale;
+      crosshair.setAttribute('x1', cxViewBox); crosshair.setAttribute('x2', cxViewBox);
+      crosshair.style.opacity = '1'; tooltip.classList.add('st-show');
+      var wrapRect = wrap.getBoundingClientRect(); var tw = tooltip.offsetWidth;
+      var left = cxPx + 12; if (left + tw > wrapRect.width) left = cxPx - tw - 12;
+      tooltip.style.left = Math.max(0, left) + 'px'; tooltip.style.top = '8px';
+    }
+  });
+
+  // Everything below calls the live API (pagination/filter/search/sort, topic/rating
+  // click-to-filter, FAQ live search + AI agent) — needs apiBase + an auth value. Degrades to
+  // the SSR page-1 content (still fully readable/crawlable) if either is absent
+  // (render-service-implementation.md §5/§7) — e.g. before a real public apikey is issued.
+  if (!apiBase || !authHeaderValue) {
+    console.info('[stacktome-reviews] client-side interactions disabled: apiBase=', apiBase, 'authHeaderValue present=', !!authHeaderValue,
+      '— pagination/filter/AI-box will not respond to clicks. This is expected until a public apikey is issued (render-service-implementation.md §7); if one should already be configured, check review-page-render.public-api-key on the deployed service.');
+  }
+  if (apiBase && authHeaderValue) {
+    var reviewsEl = root.querySelector('.st-reviews-list');
+    var pagerInfo = root.querySelector('.st-page-info');
+    var prevBtn = root.querySelector('.st-prev'), nextBtn = root.querySelector('.st-next');
+    var shownEl = root.querySelector('.st-shown');
+    var starSel = root.querySelector('.st-star-sel'), sentSel = root.querySelector('.st-sent-sel');
+    var sourceSel = root.querySelector('.st-source-sel'), qInput = root.querySelector('.st-q');
+    var typeSel = root.querySelector('.st-type-sel');
+    var countrySel = root.querySelector('.st-country-sel'), langSel = root.querySelector('.st-lang-sel');
+    var sortSel = root.querySelector('.st-sort-sel');
+    var chips = Array.prototype.slice.call(root.querySelectorAll('.st-chip'));
+    var applyBtn = root.querySelector('.st-apply-btn'), clearBtn = root.querySelector('.st-clear-btn');
+
+    // Defaults define the configured scope and its timeout. A changed scope gets a fresh total.
+    var DEFAULT_COUNTRY = FILTER_DEFAULTS.country || '';
+    var DEFAULT_LANGUAGE = FILTER_DEFAULTS.language || '';
+    var DEFAULT_SOURCE = FILTER_DEFAULTS.source || null;
+    var DEFAULT_RATINGS = FILTER_DEFAULTS.ratings || null;
+    // null reviewType is a real value for the LIST — "all reviews", both corpora — so it is seeded
+    // from the config rather than left undefined, and cleared explicitly when the visitor picks
+    // "All reviews". The tabs above always name a concrete type; only this select can mean all.
+    var DEFAULT_REVIEW_TYPE = FILTER_DEFAULTS.reviewType || null;
+    // productSku is matched against product.baseSku server-side, so a widget pinned to one
+    // product stays pinned and "clear" returns to it rather than to the whole catalogue.
+    var DEFAULT_PRODUCT_SKU = FILTER_DEFAULTS.productSku || null;
+    var prodFilterEl = root.querySelector('.st-prodfilter');
+    var prodFilterLabel = root.querySelector('.st-prodfilter-label');
+    function freshState(){
+      return { page: 1, ratings: DEFAULT_RATINGS, keywords: null, sentiment: null, reviewType: DEFAULT_REVIEW_TYPE,
+        productSku: DEFAULT_PRODUCT_SKU, source: DEFAULT_SOURCE, country: DEFAULT_COUNTRY, language: DEFAULT_LANGUAGE, search: '' };
+    }
+    var state = freshState();
+    var reviewsTotal = null;
+    var reviewsLoading = false;
+    var reviewRequestSequence = 0;
+    var lastPageSize = reviewsEl ? reviewsEl.querySelectorAll('.st-review').length : 0;
+
+    function sameRatings(a, b){
+      if (!a || !b) return !a && !b;
+      return a.length === b.length && a.every(function(v, i){ return String(v) === String(b[i]); });
+    }
+    function hasActiveFilters(){
+      return !!(state.keywords || state.sentiment ||
+        (state.reviewType || null) !== DEFAULT_REVIEW_TYPE ||
+        (state.productSku || null) !== DEFAULT_PRODUCT_SKU ||
+        !sameRatings(state.ratings, DEFAULT_RATINGS) ||
+        (state.source || null) !== DEFAULT_SOURCE ||
+        state.country !== DEFAULT_COUNTRY || state.language !== DEFAULT_LANGUAGE ||
+        state.search);
+    }
+
+    function fetchReviews(opts){
+      var body = baseBody();
+      body.paging = { pageSize: 10, page: state.page, includeTotal: !!(opts && opts.includeTotal) };
+      // Honor widget sorting; otherwise use date order so pagination stays stable.
+      body.sorting = FILTER_DEFAULTS.sorting || [{ field: 'createdAt', direction: 'desc' }];
+      if (!FILTER_DEFAULTS.timeout) body.timeout = { timeoutMillis: 10000 };
+      if (hasActiveFilters()) {
+        body.timeout = Object.assign({}, body.timeout, {
+          timeoutMillis: Math.max(3000, (body.timeout && body.timeout.timeoutMillis) || 0)
+        });
+      }
+      if (state.country) body.country = state.country; else delete body.country;
+      if (state.language) body.language = state.language; else delete body.language;
+      if (state.ratings) body.ratings = state.ratings; else delete body.ratings;
+      if (state.reviewType) body.reviewType = state.reviewType; else delete body.reviewType;
+      if (state.productSku) body.productSku = state.productSku; else delete body.productSku;
+      if (state.keywords) body.keywords = withDefaultKeywords(state.keywords);
+      if (state.sentiment === 'positive') body.fromSentimentScore = 0.1;
+      if (state.sentiment === 'negative') body.fromSentimentScore = -0.9;
+      if (state.source) body.source = state.source; else delete body.source;
+      var q = state.search;
+      if (q) body.keywords = (body.keywords || []).concat([q]);
+      return fetch(apiBase + '/v1/reviews/public', { method: 'POST', headers: apiHeaders(), body: JSON.stringify(body) })
+        .then(function(r){
+          if (r.ok === false) throw new Error('Review request failed');
+          return r.json();
+        });
+    }
+
+    // Refresh cached server-rendered cards and their total together. On failure keep those cards.
+    function refreshReviewsOnLoad(){
+      loadReviews(false, true);
+    }
+
+    function reviewPageCount(){
+      return reviewsTotal !== null ? Math.max(1, Math.ceil(reviewsTotal / 10)) : null;
+    }
+
+    function canGoNext(){
+      var pageCount = reviewPageCount();
+      return !reviewsLoading && (pageCount !== null ? state.page < pageCount : lastPageSize === 10);
+    }
+
+    function setPagerEnabled(button, enabled){
+      if (!button) return;
+      button.style.opacity = enabled ? '1' : '0.5';
+      button.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+      button.setAttribute('tabindex', enabled ? '0' : '-1');
+    }
+
+    function updatePageInfo(){
+      var pageCount = reviewPageCount();
+      if (pagerInfo) pagerInfo.textContent = pageCount !== null
+        ? t('pageInfo', {page:count(state.page), pages:count(pageCount), count:count(reviewsTotal)})
+        : t('pageInfoUnknown', {page:count(state.page)});
+      setPagerEnabled(prevBtn, !reviewsLoading && state.page > 1);
+      setPagerEnabled(nextBtn, canGoNext());
+    }
+
+    // Let each page take its natural height. After paging, start reading at its first card
+    // rather than holding the pager in place with blank space beneath shorter pages.
+    function scrollToFirstReview(){
+      if (!reviewsEl) return;
+      var firstReview = reviewsEl.querySelector('.st-review') || reviewsEl;
+      firstReview.scrollIntoView({ behavior: 'auto', block: 'start' });
+    }
+
+    function renderReviews(data){
+      if (!reviewsEl) return;
+      renderReviewsInner(data);
+    }
+
+    function renderReviewsInner(data){
+      reviewsEl.innerHTML = '';
+      var items = (data.items || []).slice();
+      function ratingOf(x){ var it = reviewItemOf(x); return (it && it.rating) || 0; }
+      var sort = sortSel ? sortSel.value : 'recent';
+      if (sort === 'low') items.sort(function(a,b){ return ratingOf(a) - ratingOf(b); });
+      else if (sort === 'high') items.sort(function(a,b){ return ratingOf(b) - ratingOf(a); });
+      items.forEach(function(item){
+        var svc = reviewItemOf(item) || {};
+        var author = (item.customer && item.customer.customerName || '').trim();
+        var verified = item.isVerified ? '<span class="st-vcheck">✓ ' + escapeHtml(t('verifiedOrder')) + '</span>' : '';
+        var sourceLabel = item.source ? (item.source.charAt(0).toUpperCase() + item.source.slice(1)) : 'Trustpilot';
+        var reply = svc.reply ? '<div class="st-reply"><b>' + escapeHtml(t('replyFromUs')) + '</b>' + escapeHtml(svc.reply) + '</div>' : '';
+        var isProd = isProductItemOf(item);
+        var prod = isProd && item.products && item.products[0] ? item.products[0] : null;
+        var product = '';
+        if (prod && prod.name) {
+          var nameEl = prod.baseSku
+            ? '<button type="button" class="st-prodname" data-basesku="' + escapeHtml(prod.baseSku) + '" title="' + escapeHtml(t('showProductReviews')) + '">' + escapeHtml(prod.name) + '</button>'
+            : '<span class="st-prodname st-plain">' + escapeHtml(prod.name) + '</span>';
+          var linkEl = svc.link ? '<a class="st-prodlink" href="' + escapeHtml(svc.link) + '" rel="nofollow noopener" target="_blank">' + escapeHtml(t('viewProduct')) + '</a>' : '';
+          product = '<p class="st-product">' + nameEl + linkEl + '</p>';
+        }
+        var media = mediaStripHtml(svc.images, svc.videos);
+        var div = document.createElement('article'); div.className = 'st-review';
+        div.innerHTML =
+          '<div class="st-head">' +
+          '<span class="st-stars-tip" data-tip="' + escapeHtml(t('viaSource', {source:sourceLabel})) + '" tabindex="0"><span class="st-tstars st-sm">' + renderStarsHtml(svc.rating) + '</span></span>' +
+          verified +
+          '<span class="st-rate"><span class="st-who"><b>' + escapeHtml(author || t('anonymous')) + '</b><span>' +
+          (item.createdAt ? new Date(item.createdAt).toLocaleDateString(LOCALE, {day:'numeric', month:'short', year:'numeric', timeZone:'UTC'}) : '') + '</span></span></span></div>' +
+          product +
+          '<h3>' + escapeHtml(svc.heading || '') + '</h3><p class="st-body">' + escapeHtml(svc.text || '') + '</p>' + media + reply;
+        reviewsEl.appendChild(div);
+      });
+      if (shownEl) shownEl.textContent = t('shownReviews', {count:count(items.length)});
+      updatePageInfo();
+    }
+
+    function loadReviews(paging, preserveOnFailure, previousPage){
+      // Every filter action resets to page 1 and requests its own count. Pagination keeps that
+      // count even though its responses use total=-1. Initial refresh also requests a count.
+      var includeTotal = !paging;
+      var requestSequence = ++reviewRequestSequence;
+      // Paging uses the submitted search, so merely typing cannot change the scope under its count.
+      if (!paging && !preserveOnFailure) state.search = qInput ? qInput.value.trim() : '';
+      if (includeTotal) reviewsTotal = null;
+      reviewsLoading = true;
+      updatePageInfo();
+      fetchReviews({ includeTotal: includeTotal }).then(function(data){
+        // Filter changes can supersede both initial refresh and another filter request.
+        if (requestSequence !== reviewRequestSequence) return;
+        var total = data.meta && data.meta.paging && data.meta.paging.total;
+        if (includeTotal && typeof total === 'number' && total >= 0) reviewsTotal = total;
+        lastPageSize = (data.items || []).length;
+        reviewsLoading = false;
+        renderReviews(data);
+        updatePageInfo();
+        // The automatic cache refresh must not move a visitor who is already reading.
+        if (paging) scrollToFirstReview();
+      }).catch(function(){
+        if (requestSequence !== reviewRequestSequence) return;
+        reviewsLoading = false;
+        if (typeof previousPage === 'number') state.page = previousPage;
+        if (!preserveOnFailure) {
+          lastPageSize = 0;
+          if (reviewsEl) reviewsEl.innerHTML = '<p>' + escapeHtml(t('loadReviewsError')) + '</p>';
+        }
+        updatePageInfo();
+      });
+    }
+
+    // Delegated: review cards are replaced wholesale on every fetch, so per-element listeners
+    // bound at render time would be lost on the next page.
+    function applyProductFilter(sku, label){
+      state.productSku = sku;
+      state.page = 1;
+      if (prodFilterEl) prodFilterEl.classList.toggle('st-show', !!sku && sku !== DEFAULT_PRODUCT_SKU);
+      if (prodFilterLabel) prodFilterLabel.textContent = label ? t('showingProduct', {product:label}) : '';
+      loadReviews();
+    }
+    if (reviewsEl) reviewsEl.addEventListener('click', function(e){
+      var btn = e.target.closest && e.target.closest('.st-prodname[data-basesku]');
+      if (!btn) return;
+      applyProductFilter(btn.getAttribute('data-basesku'), btn.textContent.trim());
+      var browser = document.getElementById('st-review-browser');
+      if (browser) browser.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+    if (prodFilterEl) {
+      var clearProd = prodFilterEl.querySelector('button');
+      if (clearProd) clearProd.addEventListener('click', function(){ applyProductFilter(DEFAULT_PRODUCT_SKU, null); });
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      if (!reviewsLoading && state.page > 1) { var previousPage = state.page; state.page--; loadReviews(true, false, previousPage); }
+    });
+    if (nextBtn) nextBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      if (canGoNext()) { var previousPage = state.page; state.page++; loadReviews(true, false, previousPage); }
+    });
+
+    if (applyBtn) applyBtn.addEventListener('click', function(){
+      var s = starSel ? starSel.value : '';
+      // An empty rating select means "whatever the widget is configured for", not "all ratings" —
+      // a page scoped to 4-5* must not widen to 1* just because the visitor cleared the dropdown.
+      state.ratings = s ? [parseInt(s, 10)] : DEFAULT_RATINGS;
+      // Empty means "all reviews" here — the list endpoint returns both corpora when reviewType
+      // is absent. Only the stats-backed tabs above need a concrete type.
+      state.reviewType = (typeSel ? typeSel.value : '') || null;
+      ACTIVE_REVIEW_TYPE = state.reviewType || 'all';
+      state.sentiment = (sentSel ? sentSel.value : '') || null;
+      // A source-pinned page renders no source dropdown at all (see sourceSelect below), so an
+      // absent control means "keep the configured source", not "all sources" — same reasoning as
+      // the rating default above. Falling back to null here dropped the pin from every request
+      // the moment a visitor applied any other filter.
+      state.source = (sourceSel ? sourceSel.value : DEFAULT_SOURCE) || null;
+      state.country = countrySel ? countrySel.value : DEFAULT_COUNTRY;
+      state.language = langSel ? langSel.value : DEFAULT_LANGUAGE;
+      state.page = 1;
+      loadReviews();
+    });
+
+    // Selecting a tab scopes the browser to that corpus without any topic filter — the tab is a
+    // corpus switch, the cards inside it are topic filters.
+    root.querySelectorAll('.st-tab').forEach(function(tab){
+      tab.addEventListener('click', function(){
+        var rt = tab.getAttribute('data-review-type') || null;
+        activateSection(tab.getAttribute('data-section'));
+        root.querySelectorAll('.st-topic').forEach(function(x){ x.classList.remove('st-on'); });
+        state.keywords = null;
+        state.reviewType = rt;
+        ACTIVE_REVIEW_TYPE = rt || 'all';
+        if (typeSel) typeSel.value = rt || '';
+        state.page = 1;
+        loadReviews();
+      });
+    });
+
+    // Topic cards are the primary control now that keywords and corpus both live on them.
+    var topicCards = Array.prototype.slice.call(root.querySelectorAll('.st-topic'));
+    function selectTopic(el){
+      var kws = topicKeywordsOf(el);
+      state.keywords = kws.length ? kws : [el.getAttribute('data-topic')];
+      state.reviewType = el.getAttribute('data-review-type') || null;
+      ACTIVE_REVIEW_TYPE = state.reviewType || 'all';
+      if (typeSel) typeSel.value = state.reviewType || '';
+      state.page = 1;
+      topicCards.forEach(function(x){ x.classList.remove('st-on'); });
+      chips.forEach(function(x){ x.classList.remove('st-on'); });
+      el.classList.add('st-on');
+      activateSection(el.getAttribute('data-section'));
+      loadReviews();
+    }
+    topicCards.forEach(function(card){
+      // The whole card is clickable, but the "Filter reviews →" link keeps its own handler so
+      // the href still scrolls to the browser for keyboard/no-JS users.
+      card.addEventListener('click', function(e){
+        if (e.target.closest && e.target.closest('.st-more')) return;
+        selectTopic(card);
+      });
+      var more = card.querySelector('.st-more');
+      if (more) more.addEventListener('click', function(){ selectTopic(card); });
+    });
+
+    chips.forEach(function(c){
+      c.addEventListener('click', function(){
+        var topic = c.getAttribute('data-topic');
+        var card = root.querySelector('.st-topic[data-topic="' + topic + '"]');
+        if (card) { selectTopic(card); c.classList.add('st-on'); return; }
+        state.keywords = [topic];
+        state.page = 1;
+        chips.forEach(function(x){ x.classList.remove('st-on'); });
+        c.classList.add('st-on');
+        loadReviews();
+      });
+    });
+
+    if (qInput) qInput.addEventListener('keydown', function(e){ if (e.key === 'Enter') { state.page = 1; loadReviews(); } });
+
+    // "Clear filters" returns to the widget's configured scope, not to the whole account.
+    if (clearBtn) clearBtn.addEventListener('click', function(){
+      if (starSel) starSel.value = ''; if (sentSel) sentSel.value = ''; if (qInput) qInput.value = '';
+      if (sourceSel) sourceSel.value = DEFAULT_SOURCE || '';
+      if (countrySel) countrySel.value = DEFAULT_COUNTRY; if (langSel) langSel.value = DEFAULT_LANGUAGE;
+      chips.forEach(function(x){ x.classList.remove('st-on'); });
+      root.querySelectorAll('.st-topic').forEach(function(x){ x.classList.remove('st-on'); });
+      state = freshState();
+      ACTIVE_REVIEW_TYPE = DEFAULT_REVIEW_TYPE || 'all';
+      if (typeSel) typeSel.value = DEFAULT_REVIEW_TYPE || '';
+      if (prodFilterEl) prodFilterEl.classList.remove('st-show');
+      // Back to the primary (first) tab's grid, chart and breakdown.
+      var first = root.querySelector('.st-panel');
+      if (first) activateSection(first.getAttribute('data-section'));
+      loadReviews();
+    });
+
+    // Snapshot rating-bar rows and topic-card "Filter reviews" links reload with the matching
+    // filter — href already gives a plain, working #st-review-browser jump with no JS.
+    root.querySelectorAll('.st-snapshot .st-row').forEach(function(row){
+      row.addEventListener('click', function(e){
+        e.preventDefault();
+        var star = parseInt(row.getAttribute('data-star'), 10);
+        state.ratings = [star]; state.page = 1; loadReviews();
+        row.closest ? document.getElementById('st-review-browser').scrollIntoView({behavior:'smooth', block:'start'}) : null;
+      });
+    });
+
+    refreshReviewsOnLoad();
+
+    // FAQ: pills toggle the matching accordion; typing filters live; Enter/click with zero
+    // matches falls through to the live AI agent.
+    var faqInput = root.querySelector('.st-faq-search input');
+    var faqGoBtn = root.querySelector('.st-faq-search button');
+    var faqPills = Array.prototype.slice.call(root.querySelectorAll('.st-qpill'));
+    var faqDetails = Array.prototype.slice.call(root.querySelectorAll('.st-faq details'));
+    var noResult = root.querySelector('.st-faq-noresult');
+    var aiBox = root.querySelector('.st-ai-answer');
+    var aiText = aiBox ? aiBox.querySelector('.st-ai-text') : null;
+    var aiMeta = aiBox ? aiBox.querySelector('.st-ai-meta') : null;
+
+    function hideAi(){ if (aiBox) aiBox.classList.remove('st-show', 'st-loading'); }
+
+    faqPills.forEach(function(pill, i){
+      pill.addEventListener('click', function(){
+        var d = faqDetails[i];
+        var opening = !d.open || !pill.classList.contains('st-on');
+        faqPills.forEach(function(p){ p.classList.remove('st-on'); });
+        faqDetails.forEach(function(x){ x.open = false; x.style.display = ''; });
+        if (faqInput) faqInput.value = '';
+        if (noResult) noResult.classList.remove('st-show');
+        hideAi();
+        if (opening) { pill.classList.add('st-on'); d.open = true; d.scrollIntoView({behavior:'smooth', block:'center'}); }
+      });
+    });
+
+    function filterFaq(){
+      var q = faqInput ? faqInput.value.trim().toLowerCase() : '';
+      faqPills.forEach(function(p){ p.classList.remove('st-on'); });
+      var hits = 0;
+      faqDetails.forEach(function(d){
+        var match = !q || d.textContent.toLowerCase().indexOf(q) > -1;
+        d.style.display = match ? '' : 'none';
+        d.open = !!q && match;
+        if (match) hits++;
+      });
+      if (noResult) noResult.classList.toggle('st-show', !!q && hits === 0);
+      if (hits > 0 || !q) hideAi();
+      return hits;
+    }
+    if (faqInput) faqInput.addEventListener('input', filterFaq);
+
+    function renderMarkdownLite(text){
+      var wrap = document.createElement('div'); wrap.textContent = text; var escaped = wrap.innerHTML;
+      var lines = escaped.split(/\n+/).map(function(l){ return l.trim(); }).filter(Boolean);
+      var html = ''; var inList = false;
+      lines.forEach(function(line){
+        var bullet = line.match(/^[-*]\s+(.*)/);
+        if (bullet) { if (!inList) { html += '<ul>'; inList = true; } html += '<li>' + bullet[1] + '</li>'; }
+        else { if (inList) { html += '</ul>'; inList = false; } html += '<p>' + line + '</p>'; }
+      });
+      if (inList) html += '</ul>';
+      return html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    }
+
+    function askAgent(){
+      if (!faqInput) return;
+      var q = faqInput.value.trim(); if (!q) return;
+      if (filterFaq() > 0) return;
+      if (!aiBox || !aiText) return;
+      aiBox.classList.add('st-show', 'st-loading');
+      aiText.textContent = t('aiLoading');
+      if (aiMeta) aiMeta.textContent = '';
+      var reqUrl = apiBase + '/v1/summaries/page/answer';
+      fetch(reqUrl, { method: 'POST', headers: apiHeaders(), body: JSON.stringify({ question: q }) })
+        .then(function(r){
+          return r.text().then(function(bodyText){
+            var data = null;
+            try { data = JSON.parse(bodyText); } catch (parseErr) { /* fall through, data stays null */ }
+            if (!r.ok) {
+              console.error('[stacktome-reviews] AI answer request failed:', r.status, reqUrl, 'body:', bodyText.slice(0, 500));
+            } else if (!data) {
+              console.error('[stacktome-reviews] AI answer response was not valid JSON:', bodyText.slice(0, 500));
+            }
+            return data;
+          });
+        }).then(function(data){
+          aiBox.classList.remove('st-loading');
+          if (data && data.answer) {
+            aiText.innerHTML = renderMarkdownLite(data.answer);
+            if (aiMeta) aiMeta.textContent = data.usedReviews ? t('aiMatchingReviews') : t('aiOverallReviews');
+          } else {
+            aiText.textContent = t('aiUnavailable');
+          }
+        }).catch(function(err){
+          console.error('[stacktome-reviews] AI answer fetch threw (network error, CORS block, etc.):', err);
+          aiBox.classList.remove('st-loading');
+          aiText.textContent = t('aiError');
+        });
+    }
+    if (faqGoBtn) faqGoBtn.addEventListener('click', askAgent);
+    if (faqInput) faqInput.addEventListener('keydown', function(e){ if (e.key === 'Enter') askAgent(); });
+    var toReviews = root.querySelector('.st-faq-to-reviews');
+    if (toReviews) toReviews.addEventListener('click', hideAi);
+  }
+  }
+
+  bind(findRoot());
+
+  // A host may replace this subtree after we have bound to it, and a <script> that arrives via
+  // innerHTML never executes, so nothing would re-run us. Vue 2 does exactly this to every
+  // server-rendered v-html: at hydration updateDOMProps compares against an empty old vnode, so
+  // `cur === oldProps[key]` never short-circuits and elm.innerHTML is re-applied unconditionally,
+  // discarding the parsed nodes we bound to. Observing document, outside whatever gets replaced,
+  // is what survives that.
+  //
+  // Deliberately inert everywhere else: the callback only reads document.contains on the root we
+  // already hold and returns. It never queries and never re-binds while our root is still in the
+  // page, so a plain static embed pays one boolean per mutation batch and nothing more.
+  if (window.MutationObserver) {
+    var stale = function(){
+      var cur = window.__stReviews['dsf-reviews'];
+      return !cur || !document.contains(cur);
+    };
+    var pending = false;
+    var defer = window.requestAnimationFrame
+      ? function(fn){ window.requestAnimationFrame(fn); }
+      : function(fn){ setTimeout(fn, 0); };
+    var recheck = function(){ pending = false; if (stale()) bind(findRoot()); };
+    new window.MutationObserver(function(){
+      if (pending || !stale()) return;
+      pending = true;
+      defer(recheck);
+    }).observe(document.documentElement, { childList: true, subtree: true });
+  }
+})();
+</script></div></main>
 </body>
 </html>
