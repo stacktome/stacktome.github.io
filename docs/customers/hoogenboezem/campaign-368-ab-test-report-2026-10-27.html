@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoogenboezem Trustpilot A/B Test Report — Sep 29 – Oct 26, 2026</title><style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #1a1a2e; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+  ul.plain { margin: 0 0 10px 18px; line-height: 1.7; color: #4a4a4a; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  .kpi-grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 20px; }
+  .split-box { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .split-box .split-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 12px; }
+  .split-row { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; margin-bottom: 6px; }
+  .split-row .slabel { color: #636e72; }
+  .split-row .sval { font-weight: 600; color: #1a1a2e; text-align: right; }
+  .orig-color { color: #6c5ce7; }
+  .tp-color { color: #00a67e; }
+
+  .bar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; margin: 6px 0 12px; background: #eee; }
+  .bar .b-orig { background: #6c5ce7; }
+  .bar .b-tp { background: #00b894; }
+
+  .table-wrap { overflow-x: auto; margin-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; white-space: nowrap; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  td.num, th.num { text-align: right; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .orig-row td:first-child { border-left: 3px solid #6c5ce7; }
+  .tp-row td:first-child { border-left: 3px solid #00b894; }
+  .total-row td { background: #f4f4f4 !important; font-weight: 600; }
+
+  .rating-badge { display: inline-block; border-radius: 5px; padding: 2px 9px; font-size: 12px; font-weight: 700; }
+  .r5 { background: #e8f8f5; color: #00b894; }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 8px; }
+  .theme-card { background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .theme-card .theme-title { font-weight: 600; font-size: 13px; margin-bottom: 6px; color: #1a1a2e; }
+  .theme-card p, .theme-card li { font-size: 12.5px; color: #555; line-height: 1.55; }
+  .theme-card ul { margin-left: 16px; }
+
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-ok { display: inline-block; background: #e8f8f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #00b894; font-weight: 600; }
+  .tag-warn { display: inline-block; background: #fff3e0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #e17055; font-weight: 600; }
+  .note { font-size: 12px; color: #888; margin-top: 6px; line-height: 1.5; }
+  .info-box { background: #f0f4ff; border: 1.5px solid #a0b4e8; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #2c3e6e; line-height: 1.6; }
+  .warn-box { background: #fff8e1; border: 1.5px solid #ffc107; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #5d4037; line-height: 1.6; }
+  .success-box { background: #f0fff4; border: 1.5px solid #00b894; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #004d30; line-height: 1.6; }
+
+  .rec { background: #fff; border-radius: 10px; padding: 16px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 10px; border-left: 4px solid #6c5ce7; }
+  .rec .rec-title { font-weight: 600; color: #1a1a2e; margin-bottom: 4px; }
+  .rec p { margin: 0; font-size: 13px; }
+
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+  @media (max-width: 760px) { .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .kpi-grid2, .theme-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 520px) { .kpi-grid { grid-template-columns: 1fr; } .wrapper { padding: 0 16px 60px; } }
+</style></head><body><div class="wrapper">
+
+<h1>Trustpilot Invitation A/B Test — Hoogenboezem</h1>
+<div class="subtitle">Campaign: Trustpilot review invitations (invite-tp) &bull; Test period: Sep 29 – Oct 26, 2026 &bull; Generated 2026-10-27</div>
+
+<nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #6c5ce7;font-size:14px;line-height:2;">
+  <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+  <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Executive Summary</a>
+  <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Test Setup</a>
+  <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Invitation Results</a>
+  <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Reminder Results</a>
+  <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Subject Lines</a>
+  <a href="#s6" style="color:#444;text-decoration:none;margin-right:20px;">6. Trustpilot Reviews</a>
+  <a href="#s7" style="color:#444;text-decoration:none;margin-right:20px;">7. How Reliable Are the Results?</a>
+  <a href="#s8" style="color:#444;text-decoration:none;margin-right:20px;">8. Recommendations</a>
+</nav>
+
+<h2 id="s1">1. Executive Summary</h2>
+
+<div class="kpi-grid">
+  <div class="kpi"><div class="label">Invitations sent</div><div class="value">105</div><div class="sub">57 original &middot; 48 Trustpilot-style</div></div>
+  <div class="kpi"><div class="label">Reminders sent</div><div class="value">111</div><div class="sub">52 original &middot; 59 Trustpilot-style</div></div>
+  <div class="kpi"><div class="label">Open rate (all emails)</div><div class="value">46.3%</div><div class="sub">99 unique opens / 214 tracked sends</div></div>
+  <div class="kpi"><div class="label">Trustpilot reviews from campaign</div><div class="value">4</div><div class="sub">all rated 5&#9733;</div></div>
+</div>
+
+<div class="success-box">
+  <strong>Clear result: the original reminder outperforms the Trustpilot-style reminder.</strong> 26.9% of recipients clicked through from the original reminder, against 6.9% for the Trustpilot-style reminder. The original came out ahead in every one of the three reminder send days. This is the only difference in the test that is large enough to be reliable at the current volume.
+</div>
+
+<div class="info-box">
+  <strong>Invitations: no clear winner yet.</strong> Both invitation versions were opened equally often (42.1% vs 42.6%). The original invitation had a higher click rate (19.3% vs 10.6%), but with about 50 sends per version this difference could still be due to chance.
+  <br><br>
+  <strong>Reviews: too few to compare.</strong> The test produced 4 linked Trustpilot reviews (1–2 per version). That is too few to say which version generates more reviews.
+</div>
+
+<h2 id="s2">2. Test Setup</h2>
+<p>From September 29, both steps of the Trustpilot campaign each ran two template versions side by side, with a 50/50 target split. The invitation test and the reminder test are independent. Each invitation recipient was randomly assigned an invitation version, and each reminder recipient was separately assigned a reminder version.</p>
+
+<div class="table-wrap"><table>
+  <tr><th>Step</th><th>Version</th><th>Template</th><th>Style</th><th>Subject line</th></tr>
+  <tr class="orig-row"><td>Invitation</td><td><strong class="orig-color">Original</strong></td><td>Trustpilot Uitnodiging</td><td>Formal (&ldquo;Beste meneer/mevrouw&rdquo;), refers to the order number, signed by Doris (Webcare Manager), mentions the monthly &euro;100 wooncheque draw</td><td>Hoe hebben we het gedaan?</td></tr>
+  <tr class="tp-row"><td>Invitation</td><td><strong class="tp-color">Trustpilot-style</strong></td><td>invite-tp</td><td>Informal (&ldquo;Hoi {voornaam}&rdquo;), Trustpilot invitation format with standard Trustpilot footer, asks to mention the order number in the review, no prize-draw mention</td><td>Hoe hebben we het gedaan?</td></tr>
+  <tr class="orig-row"><td>Reminder</td><td><strong class="orig-color">Original</strong></td><td>Trustpilot Uitnodiging - Reminder</td><td>Formal, short (&ldquo;uw review is écht heel waardevol&rdquo;), &ldquo;takes max. 1 minute&rdquo;, signed by Doris, mentions the &euro;100 wooncheque draw</td><td>Met betrekking tot uw recente bestelling</td></tr>
+  <tr class="tp-row"><td>Reminder</td><td><strong class="tp-color">Trustpilot-style</strong></td><td>reminder-tp</td><td>Informal, Trustpilot reminder format (&ldquo;Je hebt nog tijd&hellip;&rdquo;), standard Trustpilot footer, no prize-draw mention</td><td>Met betrekking tot uw recente bestelling</td></tr>
+</table></div>
+<p class="note">The two versions differ in several elements at once: tone, salutation, personal sign-off, the prize-draw incentive, and length/footer. The test shows which version performs better overall. It cannot show which individual element causes the difference.</p>
+
+<h3>All four versions were used</h3>
+<p>Every version was sent on every send day in the period. Invitations went out on October 3, 18 and 24, and reminders on October 1, 6 and 21. No other templates or subject lines were sent from this campaign during the test.</p>
+
+<div class="kpi-grid2">
+  <div class="split-box">
+    <div class="split-title">Invitation split (target 50/50)</div>
+    <div class="bar"><div class="b-orig" style="width:54.3%"></div><div class="b-tp" style="width:45.7%"></div></div>
+    <div class="split-row"><span class="slabel orig-color">Original</span><span class="sval">57 sends &middot; 54.3%</span></div>
+    <div class="split-row"><span class="slabel tp-color">Trustpilot-style</span><span class="sval">48 sends &middot; 45.7%</span></div>
+    <p class="note">Within normal random variation for 105 sends.</p>
+  </div>
+  <div class="split-box">
+    <div class="split-title">Reminder split (target 50/50)</div>
+    <div class="bar"><div class="b-orig" style="width:46.8%"></div><div class="b-tp" style="width:53.2%"></div></div>
+    <div class="split-row"><span class="slabel orig-color">Original</span><span class="sval">52 sends &middot; 46.8%</span></div>
+    <div class="split-row"><span class="slabel tp-color">Trustpilot-style</span><span class="sval">59 sends &middot; 53.2%</span></div>
+    <p class="note">Within normal random variation for 111 sends. Both reminder groups had a similar mix of earlier invitation versions (about 69% had received the original invitation), so the reminder result is not skewed by the invitation test.</p>
+  </div>
+</div>
+
+<h2 id="s3">3. Invitation Results</h2>
+<div class="table-wrap"><table>
+  <tr><th>Version</th><th class="num">Actual sends</th><th class="num">Share</th><th class="num">Tracked sends</th><th class="num">Unique opens</th><th class="num">Open rate</th><th class="num">Unique clicks</th><th class="num">Click rate</th><th class="num">Click-to-open</th><th class="num">Unsubs</th><th class="num">Reviews*</th><th class="num">Review rate*</th></tr>
+  <tr class="orig-row"><td><strong class="orig-color">Original</strong></td><td class="num">57</td><td class="num">54.3%</td><td class="num">57</td><td class="num">24</td><td class="num">42.1%</td><td class="num">11</td><td class="num best">19.3%</td><td class="num best">45.8%</td><td class="num">0</td><td class="num">1</td><td class="num">1.8%</td></tr>
+  <tr class="tp-row"><td><strong class="tp-color">Trustpilot-style</strong></td><td class="num">48</td><td class="num">45.7%</td><td class="num">47</td><td class="num">20</td><td class="num">42.6%</td><td class="num">5</td><td class="num">10.6%</td><td class="num">25.0%</td><td class="num">1</td><td class="num">0</td><td class="num">0.0%</td></tr>
+  <tr class="total-row"><td>Total</td><td class="num">105</td><td class="num">100%</td><td class="num">104</td><td class="num">44</td><td class="num">42.3%</td><td class="num">16</td><td class="num">15.4%</td><td class="num">36.4%</td><td class="num">1</td><td class="num">1</td><td class="num">1.0%</td></tr>
+</table></div>
+<p class="note">Open, click and unsubscribe rates are calculated on tracked sends (sends with email engagement tracking). Review rate is calculated on actual sends. *Reviews credited to the last campaign email the customer received before reviewing; see section 6.</p>
+
+<h3>Click rate per send day</h3>
+<div class="table-wrap"><table>
+  <tr><th>Send day</th><th class="num">Original: clicks / sends</th><th class="num">Trustpilot-style: clicks / sends</th></tr>
+  <tr><td>Oct 3</td><td class="num">5 / 19 (26%)</td><td class="num">2 / 16 (13%)</td></tr>
+  <tr><td>Oct 18</td><td class="num">1 / 22 (5%)</td><td class="num">2 / 19 (11%)</td></tr>
+  <tr><td>Oct 24</td><td class="num">5 / 16 (31%)</td><td class="num">1 / 12 (8%)</td></tr>
+</table></div>
+
+<p><strong>Reading:</strong> open rates are effectively identical, which is expected because both versions use the same subject line. The original invitation drove more clicks on two of the three send days. The overall gap (19.3% vs 10.6%) is <strong>not statistically significant</strong>: there is roughly a 28% chance of seeing a gap this large by chance alone. The original is the current leader, not a proven winner.</p>
+
+<h2 id="s4">4. Reminder Results</h2>
+<div class="table-wrap"><table>
+  <tr><th>Version</th><th class="num">Actual sends</th><th class="num">Share</th><th class="num">Tracked sends</th><th class="num">Unique opens</th><th class="num">Open rate</th><th class="num">Unique clicks</th><th class="num">Click rate</th><th class="num">Click-to-open</th><th class="num">Unsubs</th><th class="num">Reviews*</th><th class="num">Review rate*</th></tr>
+  <tr class="orig-row"><td><strong class="orig-color">Original</strong> <span class="tag-ok">Winner</span></td><td class="num">52</td><td class="num">46.8%</td><td class="num">52</td><td class="num">29</td><td class="num best">55.8%</td><td class="num">14</td><td class="num best">26.9%</td><td class="num best">48.3%</td><td class="num">0</td><td class="num">1</td><td class="num">1.9%</td></tr>
+  <tr class="tp-row"><td><strong class="tp-color">Trustpilot-style</strong></td><td class="num">59</td><td class="num">53.2%</td><td class="num">58</td><td class="num">26</td><td class="num">44.8%</td><td class="num">4</td><td class="num worst">6.9%</td><td class="num worst">15.4%</td><td class="num">1</td><td class="num">2</td><td class="num">3.4%</td></tr>
+  <tr class="total-row"><td>Total</td><td class="num">111</td><td class="num">100%</td><td class="num">110</td><td class="num">55</td><td class="num">50.0%</td><td class="num">18</td><td class="num">16.4%</td><td class="num">32.7%</td><td class="num">1</td><td class="num">3</td><td class="num">2.7%</td></tr>
+</table></div>
+<p class="note">Same calculation basis as the invitation table. *Last-touch attribution; see section 6.</p>
+
+<h3>Click rate per send day</h3>
+<div class="table-wrap"><table>
+  <tr><th>Send day</th><th class="num">Original: clicks / sends</th><th class="num">Trustpilot-style: clicks / sends</th></tr>
+  <tr><td>Oct 1</td><td class="num">4 / 14 (29%)</td><td class="num">1 / 21 (5%)</td></tr>
+  <tr><td>Oct 6</td><td class="num">9 / 17 (53%)</td><td class="num">3 / 17 (18%)</td></tr>
+  <tr><td>Oct 21</td><td class="num">1 / 21 (5%)</td><td class="num">0 / 20 (0%)</td></tr>
+</table></div>
+
+<p><strong>Reading:</strong> the original reminder got almost four times the click rate of the Trustpilot-style reminder (26.9% vs 6.9%). Of those who opened it, nearly half clicked (48.3% vs 15.4%). This difference <strong>is statistically significant</strong> (well under a 1% chance of occurring by chance), and the original led on every send day. The open-rate gap (55.8% vs 44.8%) leans the same way but is not significant on its own.</p>
+<p>The Trustpilot-style reminder did produce two linked reviews against one for the original. At these volumes, one review either way is not a meaningful difference. Click-through is the more reliable signal for now.</p>
+
+<h2 id="s5">5. Subject Lines</h2>
+<p>Each step used a single subject line for both versions, so subject lines were <strong>not</strong> part of this test. Their results reflect the step as a whole:</p>
+<div class="table-wrap"><table>
+  <tr><th>Step</th><th>Subject line</th><th class="num">Tracked sends</th><th class="num">Unique opens</th><th class="num">Open rate</th><th class="num">Click rate</th></tr>
+  <tr><td>Invitation</td><td>Hoe hebben we het gedaan?</td><td class="num">104</td><td class="num">44</td><td class="num">42.3%</td><td class="num">15.4%</td></tr>
+  <tr><td>Reminder</td><td>Met betrekking tot uw recente bestelling</td><td class="num">110</td><td class="num">55</td><td class="num">50.0%</td><td class="num">16.4%</td></tr>
+</table></div>
+<p class="note">Because both versions share a subject line, open rates are mainly driven by the subject line and sender, not the template. Opens can also be overstated by email privacy features that pre-load messages, so clicks are the better measure of template performance.</p>
+
+<h2 id="s6">6. Trustpilot Reviews</h2>
+<p>Four Trustpilot reviews received during the test period can be linked to an order that received an email from this campaign. Each review is credited to the last campaign email the customer received before reviewing:</p>
+<div class="table-wrap"><table>
+  <tr><th>Review date</th><th>Rating</th><th>Emails received</th><th>Credited to</th></tr>
+  <tr><td>Oct 2</td><td><span class="rating-badge r5">5</span></td><td>Invitation (Sep 28, before the test) &rarr; Trustpilot-style reminder (Oct 1)</td><td class="tp-color">Reminder &middot; Trustpilot-style</td></tr>
+  <tr><td>Oct 6</td><td><span class="rating-badge r5">5</span></td><td>Trustpilot-style invitation (Oct 3) &rarr; original reminder (Oct 6)</td><td class="orig-color">Reminder &middot; Original</td></tr>
+  <tr><td>Oct 8</td><td><span class="rating-badge r5">5</span></td><td>Original invitation (Oct 3) &rarr; Trustpilot-style reminder (Oct 6)</td><td class="tp-color">Reminder &middot; Trustpilot-style</td></tr>
+  <tr><td>Oct 24</td><td><span class="rating-badge r5">5</span></td><td>Original invitation (Oct 24)</td><td class="orig-color">Invitation &middot; Original</td></tr>
+</table></div>
+<p>Counting every email a reviewer received rather than only the last one gives the same picture: original invitation 2, Trustpilot-style invitation 1, original reminder 1, Trustpilot-style reminder 2. All four reviews were rated 5 stars.</p>
+
+<div class="warn-box">
+  13 Trustpilot reviews arrived in total during the period. Of the 9 not shown above, 6 carried no usable order reference and 3 were for orders that did not receive an email from this campaign, so none of them is credited to a version. Review rates in this report are therefore minimum figures. Trustpilot reviews are currently available up to October 24, and the most recent sends (Oct 21 reminders, Oct 24 invitations) have had little time to convert yet.
+</div>
+
+<h2 id="s7">7. How Reliable Are the Results?</h2>
+<div class="table-wrap"><table>
+  <tr><th>Comparison</th><th class="num">Original</th><th class="num">Trustpilot-style</th><th>Conclusion</th></tr>
+  <tr><td>Invitation open rate</td><td class="num">42.1%</td><td class="num">42.6%</td><td><span class="tag">No difference</span></td></tr>
+  <tr><td>Invitation click rate</td><td class="num">19.3%</td><td class="num">10.6%</td><td><span class="tag-warn">Original leads — not yet conclusive</span></td></tr>
+  <tr><td>Invitation review rate</td><td class="num">1.8% (1)</td><td class="num">0.0% (0)</td><td><span class="tag">Too few reviews</span></td></tr>
+  <tr><td>Reminder open rate</td><td class="num">55.8%</td><td class="num">44.8%</td><td><span class="tag">Original leads — not conclusive</span></td></tr>
+  <tr><td>Reminder click rate</td><td class="num">26.9%</td><td class="num">6.9%</td><td><span class="tag-ok">Original wins — significant</span></td></tr>
+  <tr><td>Reminder review rate</td><td class="num">1.9% (1)</td><td class="num">3.4% (2)</td><td><span class="tag">Too few reviews</span></td></tr>
+  <tr><td>Unsubscribes</td><td class="num">0 + 0</td><td class="num">1 + 1</td><td><span class="tag">Negligible either way</span></td></tr>
+</table></div>
+<p class="note">Significance is assessed with a standard test for small samples (Fisher&rsquo;s exact test, 95% confidence). With about 50 sends per version, only large gaps can be confirmed. To confirm a click-rate gap like the one seen in the invitations (about 19% vs 11%), roughly 250–270 sends per version would be needed, which is about 5 months at the current sending volume. Confirming differences in review rate would need considerably more.</p>
+
+<h2 id="s8">8. Recommendations</h2>
+
+<div class="rec"><div class="rec-title">1. Use the original reminder as the standard reminder</div>
+<p>Its click-through advantage is large, consistent across every send day, and statistically reliable. Consider sending it to 100% of reminder recipients, or shift to an 80/20 split in its favour if you would like to keep monitoring the Trustpilot-style version.</p></div>
+
+<div class="rec"><div class="rec-title">2. Keep the invitation test running, leaning towards the original</div>
+<p>The original invitation is ahead on clicks but not yet proven. Either keep the 50/50 split and review again in a few months, or move to a 70/30 split favouring the original. That keeps most traffic on the better-performing version while still collecting comparison data.</p></div>
+
+<div class="rec"><div class="rec-title">3. Test one element at a time next</div>
+<p>The original versions combine a personal, formal tone, a named sender (Doris) and the &euro;100 wooncheque draw. The Trustpilot-style versions have none of these. A follow-up test changing a single element, for example adding the prize-draw line to the Trustpilot-style email, would show which element is driving the extra clicks.</p></div>
+
+<div class="rec"><div class="rec-title">4. Judge future tests on reviews once volume allows</div>
+<p>Clicks are the best available signal today, but reviews are the real goal. 6 of the 13 Trustpilot reviews received this period carried no usable order reference, so they could not be linked to any email. Making sure reviews carry an order reference would allow future tests to compare review rates directly, not just clicks.</p></div>
+
+<div class="rec"><div class="rec-title">5. Consider a subject-line test after the template decision</div>
+<p>Both steps currently use one subject line each. Once the template choice is settled, testing a second subject line, particularly for the invitation (42.3% open rate), is a low-effort way to lift opens.</p></div>
+
+<div class="footer">Generated 2026-10-27 &mdash; Data window: Sep 29 – Oct 26, 2026 &mdash; Hoogenboezem &middot; Trustpilot invitation campaign</div>
+</div></body></html>
