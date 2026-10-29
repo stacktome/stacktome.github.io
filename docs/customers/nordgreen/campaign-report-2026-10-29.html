@@ -99,8 +99,8 @@
 
   <div class="info-box">
     <p><strong>Scope.</strong> Nordgreen (Danish watch brand; <code>_projectId=nordgreen</code>, <code>_accountId=newnordgreen</code>), four invite campaigns: invite-de (456), invite-dk (457), invite-jp (458), invite-en (459). Window is the 60 days ending Oct 28 (generation day excluded); the comparison period is Jul 1 – Aug 29. Zeppelin notebook <code>support_clone/nordgreen_data</code>.</p>
-    <p><strong>Attribution (differs from the July YTD report).</strong> The July report attributed reviews to campaigns for Jan–May only and showed June onward as organic. This report is a campaign-performance view of Sept/Oct, so reviews posted in the window are attributed to the <em>last invite or reminder sent for the same order before the review</em> (order_id match). Review rate = attributed reviews &divide; invites sent in the window (reminders excluded from the denominator).</p>
-    <p><strong>Coverage.</strong> Of the 27 reviews in the window, 14 match an invite, 4 carry an order_id with no invite on record, and 9 carry no order_id at all (organic Trustpilot reviews that cannot be tied to an order). There is still no ticket data source for this account (<code>/customer_ticket/_projectId=nordgreen</code> has no path), so negative reviews cannot be cross-checked against support tickets.</p>
+    <p><strong>Review rate (differs from the July YTD report).</strong> Review rate = <em>all</em> reviews in the window &divide; invites sent in the window (reminders excluded from the denominator), because not every customer who reviews uses the order reference from the invite. The per-campaign split uses the reviews that can be matched to a campaign by order_id (last invite or reminder sent for that order before the review); the rest cannot be assigned to a campaign.</p>
+    <p><strong>Coverage.</strong> Of the 27 reviews in the window, 14 match an invite by order_id, 4 carry an order_id with no invite on record, and 9 carry no order_id at all, so 13 cannot be assigned to a campaign. There is still no ticket data source for this account (<code>/customer_ticket/_projectId=nordgreen</code> has no path), so negative reviews cannot be cross-checked against support tickets.</p>
   </div>
 
   <!-- OVERVIEW -->
@@ -109,19 +109,19 @@
     <div class="kpi"><div class="label">Reviews (60d)</div><div class="value">27</div><div class="sub">prior 60d: 33 (&minus;18%)</div></div>
     <div class="kpi highlight"><div class="label">Avg Rating</div><div class="value">3.85★</div><div class="sub">prior 60d: 3.88★</div></div>
     <div class="kpi"><div class="label">Emails Sent</div><div class="value">1,938</div><div class="sub">1,026 invites &middot; 912 reminders<br>prior 60d: 2,669 (&minus;27%)</div></div>
-    <div class="kpi good"><div class="label">Invite Response Rate</div><div class="value">1.27%</div><div class="sub">13 of 1,026 invited orders reviewed<br>prior 60d: 0.76%</div></div>
+    <div class="kpi good"><div class="label">Review Rate</div><div class="value">2.63%</div><div class="sub">27 reviews &divide; 1,026 invites<br>prior 60d: 2.29% (33 &divide; 1,444)</div></div>
     <div class="kpi warn"><div class="label">Negative (&le;2★)</div><div class="value">6</div><div class="sub">22% of 27 &middot; prior 60d: 8 (24%)</div></div>
   </div>
 
   <div class="insight-box">
     <p><strong>Rating is flat at 3.85★, but the mix behind it has changed.</strong> The year-to-date average was 4.16★ in July; the last four months (Jul–Oct) have run 3.65–4.20★ month to month. Reviews are driven down by volume: order volume has fallen from an August peak (1,043 orders) to 818 in September and 609 in October to date, and invites have followed (1,026 in the window vs 1,444 in the prior 60 days).</p>
-    <p><strong>All 6 negative reviews in the window are from UK customers, and 4 of the 6 are about unexpected post-purchase charges</strong> (import duty / courier fees on orders shipped from Denmark, and return deductions) &mdash; not product quality. Only 1 of the 6 negatives came through an invite; the invite flow itself is producing healthy ratings (4.43★ vs 3.23★ for everything else). See Negative Review Themes and Action Items.</p>
+    <p><strong>All 6 negative reviews in the window are from UK customers, and 4 of the 6 are about unexpected post-purchase charges</strong> (import duty / courier fees on orders shipped from Denmark, and return deductions) &mdash; not product quality. See Negative Review Themes and Action Items.</p>
     <p><strong>The invite-de (456) campaign has almost stopped sending</strong> &mdash; 257 invites in June, 41 in August, 16 in October &mdash; while Germany-shipped orders held at roughly 150&ndash;245 a month. That is a pipeline issue, not a demand issue (details in Campaign Performance).</p>
   </div>
 
   <!-- CAMPAIGN PERFORMANCE -->
   <h2 id="s2">Campaign Performance — Aug 30 – Oct 28, 2026</h2>
-  <p style="margin-bottom:14px;">Email volume and attributed reviews per campaign for the 60-day window. Reviews are attributed by last touch (see the Scope note). Source: <code>nord_invites</code> / <code>nord_review</code> in <code>support_clone/nordgreen_data</code>.</p>
+  <p style="margin-bottom:14px;">Email volume and reviews per campaign for the 60-day window. Per-campaign reviews are the ones matched by order_id (a floor, since not every reviewer uses the reference); the account review rate uses all reviews. Source: <code>nord_invites</code> / <code>nord_review</code> in <code>support_clone/nordgreen_data</code>.</p>
 
   <table>
     <thead>
@@ -130,8 +130,8 @@
         <th style="text-align:right">Invites</th>
         <th style="text-align:right">Reminders</th>
         <th style="text-align:right">Total Sends</th>
-        <th style="text-align:right">Attributed Reviews</th>
-        <th style="text-align:right">Review Rate</th>
+        <th style="text-align:right">Matched Reviews</th>
+        <th style="text-align:right">Matched Rate</th>
         <th style="text-align:right">Avg Rating</th>
       </tr>
     </thead>
@@ -172,8 +172,8 @@
         <td style="text-align:right">1.60%</td>
         <td style="text-align:right">4.11</td>
       </tr>
-      <tr class="row-total">
-        <td>TOTAL — 4 campaigns</td>
+      <tr>
+        <td>Subtotal — matched to a campaign</td>
         <td style="text-align:right">1,026</td>
         <td style="text-align:right">912</td>
         <td style="text-align:right">1,938</td>
@@ -181,12 +181,30 @@
         <td style="text-align:right">1.36%</td>
         <td style="text-align:right">4.43</td>
       </tr>
+      <tr>
+        <td>Not matched (no order_id, or no invite on record)</td>
+        <td style="text-align:right">—</td>
+        <td style="text-align:right">—</td>
+        <td style="text-align:right">—</td>
+        <td style="text-align:right">13</td>
+        <td style="text-align:right">—</td>
+        <td style="text-align:right">3.23</td>
+      </tr>
+      <tr class="row-total">
+        <td>TOTAL — all reviews</td>
+        <td style="text-align:right">1,026</td>
+        <td style="text-align:right">912</td>
+        <td style="text-align:right">1,938</td>
+        <td style="text-align:right">27</td>
+        <td style="text-align:right">2.63%</td>
+        <td style="text-align:right">3.85</td>
+      </tr>
     </tbody>
   </table>
 
   <div class="info-box">
-    <p><strong>invite-en (459) carries the account</strong>: 55% of invites (564) and 9 of the 14 attributed reviews at 4.11★ and a 1.60% rate. It also holds the only attributed negative. <strong>invite-jp (458)</strong> sends steadily (374 invites) but converts weakly (0.53%, 2 reviews, both 5★). <strong>invite-de (456)</strong> shows an 8.33% rate and three 5★ reviews, but on just 36 invites &mdash; too small a sample to read as a trend. <strong>invite-dk (457)</strong> produced no reviews from 52 invites.</p>
-    <p><strong>Cohort view (cross-check).</strong> Counting the orders invited in the window that went on to review at any later point: 13 of 1,026 (1.27%) &mdash; invite-en 8/564, invite-de 3/36, invite-jp 2/374, invite-dk 0/52. The same measure for the prior 60 days is 11 of 1,444 (0.76%). Invites sent in the last two weeks may still convert, so 1.27% is a floor.</p>
+    <p><strong>invite-en (459) carries the account</strong>: 55% of invites (564) and 9 of the 14 matched reviews at 4.11★ (1.60% matched rate). It also holds the only matched negative. <strong>invite-jp (458)</strong> sends steadily (374 invites) but has the fewest matched reviews for its volume (0.53%, 2 reviews, both 5★), possibly because Japanese reviewers less often carry the order reference. <strong>invite-de (456)</strong> shows an 8.33% rate and three 5★ reviews, but on just 36 invites &mdash; too small a sample to read as a trend. <strong>invite-dk (457)</strong> has no matched reviews from 52 invites.</p>
+    <p><strong>Account review rate: 2.63% (27 reviews &divide; 1,026 invites), up from 2.29% in the prior 60 days (33 &divide; 1,444).</strong> Volume fell but each invite is converting slightly better.</p>
   </div>
 
   <h3>Monthly Invites by Campaign vs Orders Shipped (Jun – Oct)</h3>
@@ -232,7 +250,7 @@
     <div class="star-col"><div class="star-bar s1" style="height:20px;"></div><div class="star-label">1★ &times;5</div></div>
   </div>
 
-  <h3>Invited vs Non-Invited Reviews</h3>
+  <h3>Matched vs Unmatched Reviews</h3>
   <table>
     <thead>
       <tr>
@@ -244,14 +262,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr><td>Attributed to an invite / reminder</td><td style="text-align:right">14</td><td style="text-align:right" class="good">4.43★</td><td style="text-align:right">1</td><td style="text-align:right">6</td></tr>
+      <tr><td>Matched to an invite / reminder (order_id)</td><td style="text-align:right">14</td><td style="text-align:right" class="good">4.43★</td><td style="text-align:right">1</td><td style="text-align:right">6</td></tr>
       <tr><td>Order on record, no invite sent</td><td style="text-align:right">4</td><td style="text-align:right">3.50★</td><td style="text-align:right">1</td><td style="text-align:right">3</td></tr>
-      <tr><td>No order_id (organic Trustpilot)</td><td style="text-align:right">9</td><td style="text-align:right" class="warn">3.11★</td><td style="text-align:right">4</td><td style="text-align:right">8</td></tr>
+      <tr><td>No order_id</td><td style="text-align:right">9</td><td style="text-align:right" class="warn">3.11★</td><td style="text-align:right">4</td><td style="text-align:right">8</td></tr>
       <tr class="row-total"><td>All reviews in window</td><td style="text-align:right">27</td><td style="text-align:right">3.85★</td><td style="text-align:right">6</td><td style="text-align:right">17</td></tr>
     </tbody>
   </table>
   <div class="info-box" style="margin-top:-8px;">
-    <p><strong>The invite flow is not where the negativity comes from.</strong> Invite-driven reviews average 4.43★ with 1 negative out of 14 (7%); the 13 reviews outside the flow average 3.23★ with 5 negatives (38%). Organic reviews skew heavily UK (11 of 13) &mdash; customers who went to Trustpilot on their own, typically after a problem.</p>
+    <p><strong>Unmatched reviews are harsher and more UK-heavy</strong> &mdash; 3.23★ with 5 of 13 negative (38%) and 11 of 13 from the UK, against 4.43★ with 1 of 14 negative (7%) for matched reviews. We cannot tell from the data whether these reviewers were invited without the order reference or reviewed on their own; either way they are part of the account's review rate above.</p>
   </div>
 
   <h3>Avg Rating &amp; Review Rate by Month (Jun – Oct)</h3>
@@ -420,7 +438,7 @@
   <ul class="action-list">
     <li>
       <div class="al-icon">🔴</div>
-      <div class="al-text"><strong>UK customers are being surprised by post-purchase charges: import duty/courier fees (3 negatives) and return deductions (1), so 4 of the 6 negatives; all 6 negatives are UK.</strong> UK is the largest review market (17 of 27 reviews) and the source of every negative in the window. Options: disclose &ldquo;ships from Denmark, import duty may apply&rdquo; at checkout and in the free-shipping banner, or move UK orders to a duty-paid (DDP) service. Because these reviews are posted without an invite, invites will not dilute them.</div>
+      <div class="al-text"><strong>UK customers are being surprised by post-purchase charges: import duty/courier fees (3 negatives) and return deductions (1), so 4 of the 6 negatives; all 6 negatives are UK.</strong> UK is the largest review market (17 of 27 reviews) and the source of every negative in the window. Options: disclose &ldquo;ships from Denmark, import duty may apply&rdquo; at checkout and in the free-shipping banner, or move UK orders to a duty-paid (DDP) service. </div>
     </li>
     <li>
       <div class="al-icon">🔴</div>
@@ -432,7 +450,7 @@
     </li>
     <li>
       <div class="al-icon">🟡</div>
-      <div class="al-text"><strong>9 of 27 reviews have no order_id (8 of them UK, average 3.11★).</strong> These are organic Trustpilot reviews that cannot be matched to an order, so they cannot be followed up with the customer or attributed. If customers can be nudged to review through the invite link, the ratings should improve (invite-driven reviews average 4.43★).</div>
+      <div class="al-text"><strong>13 of 27 reviews cannot be matched to a campaign (9 with no order_id, 4 with no invite on record), and they average 3.23★ vs 4.43★ for matched reviews.</strong> Because they are unmatched they cannot be followed up with the customer or credited to a campaign, and per-campaign figures understate every campaign's true review rate. Worth checking whether the review link could carry the order reference automatically.</div>
     </li>
     <li>
       <div class="al-icon">🟡</div>
