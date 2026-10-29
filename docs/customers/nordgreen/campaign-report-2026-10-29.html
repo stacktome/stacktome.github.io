@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nordgreen — 60-Day Performance Report (Aug 30 – Oct 28, 2026)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #00b894; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .kpi.highlight { border-top: 3px solid #f0932b; }
+  .kpi.good { border-top: 3px solid #00b894; }
+  .kpi.warn { border-top: 3px solid #e17055; }
+
+  .star-dist { display: flex; gap: 4px; margin: 10px 0; align-items: flex-end; height: 60px; }
+  .star-col { display: flex; flex-direction: column; align-items: center; flex: 1; justify-content: flex-end; }
+  .star-bar { width: 100%; border-radius: 3px 3px 0 0; }
+  .s5 { background: #00b894; } .s4 { background: #55efc4; } .s3 { background: #fdcb6e; }
+  .s2 { background: #e17055; } .s1 { background: #d63031; }
+  .star-label { font-size: 9px; color: #999; margin-top: 2px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  th { background: #f4fffb; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; }
+  td { padding: 9px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafffd; }
+  .row-total td { background: #f4fffb; font-weight: 600; }
+
+  .r2 { color: #e17055; font-weight: 600; }
+  .r5 { color: #00b894; font-weight: 600; }
+  .review-text { font-size: 12px; color: #636e72; line-height: 1.5; max-width: 460px; }
+
+  .insight-box { background: #fff; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .insight-box p { margin-bottom: 6px; }
+  .insight-box p:last-child { margin-bottom: 0; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .warn-box p { margin-bottom: 6px; }
+  .warn-box p:last-child { margin-bottom: 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .good-box p { margin-bottom: 6px; }
+  .good-box p:last-child { margin-bottom: 0; }
+  .info-box { background: #f5f6fa; border-left: 4px solid #b2bec3; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .info-box p { margin-bottom: 6px; }
+  .info-box p:last-child { margin-bottom: 0; }
+  .good { color: #00b894; font-weight: 600; }
+  .warn { color: #e17055; font-weight: 600; }
+  .neutral { color: #636e72; }
+
+  .rating-badge { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; font-size: 13px; font-weight: 700; color: #fff; }
+  .r1b { background: #d63031; }
+  .r2b { background: #e17055; }
+  .r3b { background: #fdcb6e; color: #333; }
+  .r4b { background: #55efc4; color: #333; }
+  .r5b { background: #00b894; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #fdecec; color: #d63031; }
+  .tag-ok { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #eafff6; color: #00997a; }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 20px; }
+  .theme-card { background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .theme-card .icon { font-size: 24px; margin-bottom: 8px; }
+  .theme-card .theme-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .theme-card .count { font-size: 11px; color: #888; margin-bottom: 8px; }
+  .theme-card p { font-size: 12px; color: #555; margin: 0; line-height: 1.5; }
+
+  .action-list { list-style: none; margin: 0; padding: 0; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 16px; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 10px; }
+  .al-icon { font-size: 16px; flex-shrink: 0; }
+  .al-text { font-size: 13px; color: #4a4a4a; line-height: 1.5; }
+
+  nav a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <h1>Nordgreen — 60-Day Performance Report</h1>
+  <p class="subtitle">Aug 30 – Oct 28, 2026 (Sept/Oct) &bull; Generated Oct 29, 2026 &bull; Compared with the prior 60 days (Jul 1 – Aug 29)</p>
+
+  <nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #00b894;font-size:14px;line-height:2;">
+    <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+    <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Overview</a>
+    <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Campaign Performance</a>
+    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Reviews &amp; Rating Distribution</a>
+    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Email Performance (Last 30 Days)</a>
+    <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Negative Review Themes</a>
+    <a href="#s6" style="color:#444;text-decoration:none;">6. Action Items</a>
+  </nav>
+
+  <div class="info-box">
+    <p><strong>Scope.</strong> Nordgreen (Danish watch brand; <code>_projectId=nordgreen</code>, <code>_accountId=newnordgreen</code>), four invite campaigns: invite-de (456), invite-dk (457), invite-jp (458), invite-en (459). Window is the 60 days ending Oct 28 (generation day excluded); the comparison period is Jul 1 – Aug 29. Zeppelin notebook <code>support_clone/nordgreen_data</code>.</p>
+    <p><strong>Attribution (differs from the July YTD report).</strong> The July report attributed reviews to campaigns for Jan–May only and showed June onward as organic. This report is a campaign-performance view of Sept/Oct, so reviews posted in the window are attributed to the <em>last invite or reminder sent for the same order before the review</em> (order_id match). Review rate = attributed reviews &divide; invites sent in the window (reminders excluded from the denominator).</p>
+    <p><strong>Coverage.</strong> Of the 27 reviews in the window, 14 match an invite, 4 carry an order_id with no invite on record, and 9 carry no order_id at all (organic Trustpilot reviews that cannot be tied to an order). There is still no ticket data source for this account (<code>/customer_ticket/_projectId=nordgreen</code> has no path), so negative reviews cannot be cross-checked against support tickets.</p>
+  </div>
+
+  <!-- OVERVIEW -->
+  <h2 id="s1">Overview</h2>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Reviews (60d)</div><div class="value">27</div><div class="sub">prior 60d: 33 (&minus;18%)</div></div>
+    <div class="kpi highlight"><div class="label">Avg Rating</div><div class="value">3.85★</div><div class="sub">prior 60d: 3.88★</div></div>
+    <div class="kpi"><div class="label">Emails Sent</div><div class="value">1,938</div><div class="sub">1,026 invites &middot; 912 reminders<br>prior 60d: 2,669 (&minus;27%)</div></div>
+    <div class="kpi good"><div class="label">Invite Response Rate</div><div class="value">1.27%</div><div class="sub">13 of 1,026 invited orders reviewed<br>prior 60d: 0.76%</div></div>
+    <div class="kpi warn"><div class="label">Negative (&le;2★)</div><div class="value">6</div><div class="sub">22% of 27 &middot; prior 60d: 8 (24%)</div></div>
+  </div>
+
+  <div class="insight-box">
+    <p><strong>Rating is flat at 3.85★, but the mix behind it has changed.</strong> The year-to-date average was 4.16★ in July; the last four months (Jul–Oct) have run 3.65–4.20★ month to month. Reviews are driven down by volume: order volume has fallen from an August peak (1,043 orders) to 818 in September and 609 in October to date, and invites have followed (1,026 in the window vs 1,444 in the prior 60 days).</p>
+    <p><strong>All 6 negative reviews in the window are from UK customers, and 4 of the 6 are about unexpected post-purchase charges</strong> (import duty / courier fees on orders shipped from Denmark, and return deductions) &mdash; not product quality. Only 1 of the 6 negatives came through an invite; the invite flow itself is producing healthy ratings (4.43★ vs 3.23★ for everything else). See Negative Review Themes and Action Items.</p>
+    <p><strong>The invite-de (456) campaign has almost stopped sending</strong> &mdash; 257 invites in June, 41 in August, 16 in October &mdash; while Germany-shipped orders held at roughly 150&ndash;245 a month. That is a pipeline issue, not a demand issue (details in Campaign Performance).</p>
+  </div>
+
+  <!-- CAMPAIGN PERFORMANCE -->
+  <h2 id="s2">Campaign Performance — Aug 30 – Oct 28, 2026</h2>
+  <p style="margin-bottom:14px;">Email volume and attributed reviews per campaign for the 60-day window. Reviews are attributed by last touch (see the Scope note). Source: <code>nord_invites</code> / <code>nord_review</code> in <code>support_clone/nordgreen_data</code>.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th style="text-align:right">Invites</th>
+        <th style="text-align:right">Reminders</th>
+        <th style="text-align:right">Total Sends</th>
+        <th style="text-align:right">Attributed Reviews</th>
+        <th style="text-align:right">Review Rate</th>
+        <th style="text-align:right">Avg Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>invite-de (456)</td>
+        <td style="text-align:right">36</td>
+        <td style="text-align:right">32</td>
+        <td style="text-align:right">68</td>
+        <td style="text-align:right">3</td>
+        <td style="text-align:right">8.33%</td>
+        <td style="text-align:right">5.00</td>
+      </tr>
+      <tr>
+        <td>invite-dk (457)</td>
+        <td style="text-align:right">52</td>
+        <td style="text-align:right">56</td>
+        <td style="text-align:right">108</td>
+        <td style="text-align:right">0</td>
+        <td style="text-align:right">0.00%</td>
+        <td style="text-align:right">—</td>
+      </tr>
+      <tr>
+        <td>invite-jp (458)</td>
+        <td style="text-align:right">374</td>
+        <td style="text-align:right">334</td>
+        <td style="text-align:right">708</td>
+        <td style="text-align:right">2</td>
+        <td style="text-align:right">0.53%</td>
+        <td style="text-align:right">5.00</td>
+      </tr>
+      <tr>
+        <td>invite-en (459)</td>
+        <td style="text-align:right">564</td>
+        <td style="text-align:right">490</td>
+        <td style="text-align:right">1,054</td>
+        <td style="text-align:right">9</td>
+        <td style="text-align:right">1.60%</td>
+        <td style="text-align:right">4.11</td>
+      </tr>
+      <tr class="row-total">
+        <td>TOTAL — 4 campaigns</td>
+        <td style="text-align:right">1,026</td>
+        <td style="text-align:right">912</td>
+        <td style="text-align:right">1,938</td>
+        <td style="text-align:right">14</td>
+        <td style="text-align:right">1.36%</td>
+        <td style="text-align:right">4.43</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <p><strong>invite-en (459) carries the account</strong>: 55% of invites (564) and 9 of the 14 attributed reviews at 4.11★ and a 1.60% rate. It also holds the only attributed negative. <strong>invite-jp (458)</strong> sends steadily (374 invites) but converts weakly (0.53%, 2 reviews, both 5★). <strong>invite-de (456)</strong> shows an 8.33% rate and three 5★ reviews, but on just 36 invites &mdash; too small a sample to read as a trend. <strong>invite-dk (457)</strong> produced no reviews from 52 invites.</p>
+    <p><strong>Cohort view (cross-check).</strong> Counting the orders invited in the window that went on to review at any later point: 13 of 1,026 (1.27%) &mdash; invite-en 8/564, invite-de 3/36, invite-jp 2/374, invite-dk 0/52. The same measure for the prior 60 days is 11 of 1,444 (0.76%). Invites sent in the last two weeks may still convert, so 1.27% is a floor.</p>
+  </div>
+
+  <h3>Monthly Invites by Campaign vs Orders Shipped (Jun – Oct)</h3>
+  <p style="margin-bottom:12px;">Invites sent per month (reminders excluded) next to orders by delivery country, to test whether declining invite volume is demand-driven. October is partial (invites through the Oct 29 data cut-off; orders through the end of data).</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th style="text-align:right">Jun</th>
+        <th style="text-align:right">Jul</th>
+        <th style="text-align:right">Aug</th>
+        <th style="text-align:right">Sep</th>
+        <th style="text-align:right">Oct*</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>invite-de (456) invites</td><td style="text-align:right">257</td><td style="text-align:right">202</td><td style="text-align:right">41</td><td style="text-align:right" class="warn">18</td><td style="text-align:right" class="warn">16</td></tr>
+      <tr><td>&nbsp;&nbsp;DE-shipped orders</td><td style="text-align:right">213</td><td style="text-align:right">180</td><td style="text-align:right">244</td><td style="text-align:right">166</td><td style="text-align:right">150</td></tr>
+      <tr><td>invite-dk (457) invites</td><td style="text-align:right">32</td><td style="text-align:right">21</td><td style="text-align:right">45</td><td style="text-align:right">28</td><td style="text-align:right">22</td></tr>
+      <tr><td>&nbsp;&nbsp;DK-shipped orders</td><td style="text-align:right">29</td><td style="text-align:right">30</td><td style="text-align:right">35</td><td style="text-align:right">35</td><td style="text-align:right">21</td></tr>
+      <tr><td>invite-jp (458) invites</td><td style="text-align:right">214</td><td style="text-align:right">179</td><td style="text-align:right">202</td><td style="text-align:right">175</td><td style="text-align:right">199</td></tr>
+      <tr><td>&nbsp;&nbsp;JP-shipped orders</td><td style="text-align:right">229</td><td style="text-align:right">198</td><td style="text-align:right">256</td><td style="text-align:right">229</td><td style="text-align:right">146</td></tr>
+      <tr><td>invite-en (459) invites</td><td style="text-align:right">414</td><td style="text-align:right">342</td><td style="text-align:right">427</td><td style="text-align:right">329</td><td style="text-align:right">232</td></tr>
+      <tr><td>&nbsp;&nbsp;GB-shipped orders</td><td style="text-align:right">175</td><td style="text-align:right">160</td><td style="text-align:right">209</td><td style="text-align:right">145</td><td style="text-align:right">116</td></tr>
+      <tr class="row-total"><td>Total invites</td><td style="text-align:right">917</td><td style="text-align:right">744</td><td style="text-align:right">715</td><td style="text-align:right">550</td><td style="text-align:right">469</td></tr>
+      <tr class="row-total"><td>Total orders (all countries)</td><td style="text-align:right">949</td><td style="text-align:right">807</td><td style="text-align:right">1,043</td><td style="text-align:right">818</td><td style="text-align:right">609</td></tr>
+    </tbody>
+  </table>
+  <div class="info-box" style="margin-top:-8px;">
+    <p><strong>invite-de is the outlier.</strong> German orders in September (166) and October (150) are in line with June&ndash;July (180&ndash;213), but invites fell from 257 (June) to 18 and 16. invite-jp and invite-dk track their order volume closely. invite-en (the UK-led English campaign) falls with GB orders.</p>
+    <p><strong>This revises the July finding on invite-dk.</strong> The July report flagged invite-dk's fall from 1,200 invites (January) to 15 as a possible breakage. With order data alongside, invite-dk now sends roughly one invite per DK-shipped order (21&ndash;45 invites a month vs 21&ndash;35 orders), so its current volume is demand-driven; the January figure looks like a one-off backlog.</p>
+  </div>
+
+  <!-- REVIEWS & RATING DISTRIBUTION -->
+  <h2 id="s3">Reviews &amp; Rating Distribution (Aug 30 – Oct 28)</h2>
+  <p style="margin-bottom:16px;">27 reviews, avg 3.85★. Star distribution: 15×5★, 4×4★, 2×3★, 1×2★, 5×1★ &mdash; a polarised split, with 70% at 4&ndash;5★ and 22% at 1&ndash;2★. The prior 60 days showed the same polarisation (20×5★, 5×4★, 8×1★, no 2&ndash;3★).</p>
+
+  <div class="star-dist">
+    <div class="star-col"><div class="star-bar s5" style="height:60px;"></div><div class="star-label">5★ &times;15</div></div>
+    <div class="star-col"><div class="star-bar s4" style="height:16px;"></div><div class="star-label">4★ &times;4</div></div>
+    <div class="star-col"><div class="star-bar s3" style="height:8px;"></div><div class="star-label">3★ &times;2</div></div>
+    <div class="star-col"><div class="star-bar s2" style="height:4px;"></div><div class="star-label">2★ &times;1</div></div>
+    <div class="star-col"><div class="star-bar s1" style="height:20px;"></div><div class="star-label">1★ &times;5</div></div>
+  </div>
+
+  <h3>Invited vs Non-Invited Reviews</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Group</th>
+        <th style="text-align:right">Reviews</th>
+        <th style="text-align:right">Avg Rating</th>
+        <th style="text-align:right">Negative (&le;2★)</th>
+        <th style="text-align:right">UK</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Attributed to an invite / reminder</td><td style="text-align:right">14</td><td style="text-align:right" class="good">4.43★</td><td style="text-align:right">1</td><td style="text-align:right">6</td></tr>
+      <tr><td>Order on record, no invite sent</td><td style="text-align:right">4</td><td style="text-align:right">3.50★</td><td style="text-align:right">1</td><td style="text-align:right">3</td></tr>
+      <tr><td>No order_id (organic Trustpilot)</td><td style="text-align:right">9</td><td style="text-align:right" class="warn">3.11★</td><td style="text-align:right">4</td><td style="text-align:right">8</td></tr>
+      <tr class="row-total"><td>All reviews in window</td><td style="text-align:right">27</td><td style="text-align:right">3.85★</td><td style="text-align:right">6</td><td style="text-align:right">17</td></tr>
+    </tbody>
+  </table>
+  <div class="info-box" style="margin-top:-8px;">
+    <p><strong>The invite flow is not where the negativity comes from.</strong> Invite-driven reviews average 4.43★ with 1 negative out of 14 (7%); the 13 reviews outside the flow average 3.23★ with 5 negatives (38%). Organic reviews skew heavily UK (11 of 13) &mdash; customers who went to Trustpilot on their own, typically after a problem.</p>
+  </div>
+
+  <h3>Avg Rating &amp; Review Rate by Month (Jun – Oct)</h3>
+  <p style="margin-bottom:12px;">Review rate = all reviews that month &divide; invites sent that month (reminders excluded). October is partial (reviews through Oct 28).</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th style="text-align:right">Jun</th>
+        <th style="text-align:right">Jul</th>
+        <th style="text-align:right">Aug</th>
+        <th style="text-align:right">Sep</th>
+        <th style="text-align:right">Oct*</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Reviews</td><td style="text-align:right">31</td><td style="text-align:right">16</td><td style="text-align:right">17</td><td style="text-align:right">17</td><td style="text-align:right">10</td></tr>
+      <tr><td>Avg rating</td><td style="text-align:right">4.48★</td><td style="text-align:right">3.69★</td><td style="text-align:right">4.06★</td><td style="text-align:right">3.65★</td><td style="text-align:right">4.20★</td></tr>
+      <tr><td>Negative (&le;2★)</td><td style="text-align:right">2</td><td style="text-align:right">5</td><td style="text-align:right">3</td><td style="text-align:right">5</td><td style="text-align:right">1</td></tr>
+      <tr><td>Invites sent</td><td style="text-align:right">917</td><td style="text-align:right">744</td><td style="text-align:right">715</td><td style="text-align:right">550</td><td style="text-align:right">469</td></tr>
+      <tr><td>Review rate</td><td style="text-align:right">3.38%</td><td style="text-align:right">2.15%</td><td style="text-align:right">2.38%</td><td style="text-align:right">3.09%</td><td style="text-align:right">2.13%</td></tr>
+    </tbody>
+  </table>
+  <div class="info-box" style="margin-top:-8px;">
+    <p>September was the weakest month for rating (3.65★, 5 negatives out of 17 reviews) and October is recovering (4.20★, 1 negative). The September negatives are the cluster of UK duty/fee complaints described below. Review rate has held in a 2&ndash;3.4% band even as invite volume fell, which means each invite is working about as hard as before &mdash; fewer invites simply means fewer reviews.</p>
+  </div>
+
+  <h3>Recent Positive Highlights (5★)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Heading / Snippet</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="r5">5★</span> "Unkomplizierter Garantiefall — Meine bestellte Uhr war nach weniger als zwei Jahren kaputt ... dann wurde mir eine neue Uhr geschickt. Danke!" (warranty claim on a watch under two years old, replaced without fuss)</td><td>Oct 23</td></tr>
+      <tr><td><span class="r5">5★</span> "Beautiful watch &amp; great sustainability ethos — I had a small problem with the watch that was sorted out super quickly and helpfully ... so can vouch for great customer service too."</td><td>Oct 23</td></tr>
+      <tr><td><span class="r5">5★</span> "Hervorragender Kundenservice — Leider war die Uhr jetzt kaputt, aber ich habe anstandslos Ersatz bekommen, auf Garantie! Der Kontakt lief sehr freundlich und schnell ab."</td><td>Oct 5</td></tr>
+      <tr><td><span class="r5">5★</span> "Excellent customer service — I had issues with my initial order having a minor fault. The customer service was flawless ... they otherwise offered alternatives."</td><td>Sep 27</td></tr>
+      <tr><td><span class="r5">5★</span> "Excellent customer service and fantastic watches and watch straps. Delivery was also very fast ... Also great warranty handling process."</td><td>Sep 23</td></tr>
+    </tbody>
+  </table>
+
+  <!-- EMAIL PERFORMANCE (LAST 30 DAYS, API-SOURCED) -->
+  <h2 id="s4">Email Performance (Last 30 Days)</h2>
+  <p style="margin-bottom:14px;">Open/click/unsub stats from the Stacktome campaign report API, Sep 29 – Oct 28, 2026. The report API only retains a trailing ~30 days for this account (a request for Aug 30 – Oct 28 returns identical totals), so these figures cover the last 30 days rather than the full 60-day window and are not comparable to the 60-day send counts above.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Campaign</th>
+        <th style="text-align:right">Sent</th>
+        <th style="text-align:right">Unique Opens</th>
+        <th style="text-align:right">Open%</th>
+        <th style="text-align:right">Unique Clicks</th>
+        <th style="text-align:right">Click%</th>
+        <th style="text-align:right">Unsubs</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>invite-de (456)</td>
+        <td style="text-align:right">23</td>
+        <td style="text-align:right">15</td>
+        <td style="text-align:right">65.2%</td>
+        <td style="text-align:right">5</td>
+        <td style="text-align:right">21.7%</td>
+        <td style="text-align:right">3</td>
+      </tr>
+      <tr>
+        <td>invite-dk (457)</td>
+        <td style="text-align:right">37</td>
+        <td style="text-align:right">27</td>
+        <td style="text-align:right">73.0%</td>
+        <td style="text-align:right">3</td>
+        <td style="text-align:right">8.1%</td>
+        <td style="text-align:right">3</td>
+      </tr>
+      <tr>
+        <td>invite-jp (458)</td>
+        <td style="text-align:right">325</td>
+        <td style="text-align:right">229</td>
+        <td style="text-align:right">70.5%</td>
+        <td style="text-align:right">8</td>
+        <td style="text-align:right">2.5%</td>
+        <td style="text-align:right">7</td>
+      </tr>
+      <tr>
+        <td>invite-en (459)</td>
+        <td style="text-align:right">429</td>
+        <td style="text-align:right">277</td>
+        <td style="text-align:right">64.6%</td>
+        <td style="text-align:right">16</td>
+        <td style="text-align:right">3.7%</td>
+        <td style="text-align:right">16</td>
+      </tr>
+      <tr class="row-total">
+        <td>TOTAL — last 30 days</td>
+        <td style="text-align:right">814</td>
+        <td style="text-align:right">548</td>
+        <td style="text-align:right">67.3%</td>
+        <td style="text-align:right">32</td>
+        <td style="text-align:right">3.9%</td>
+        <td style="text-align:right">29</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="good-box">
+    <p><strong>Open rate is 67.3% blended over the last 30 days, up from 58.7% in the July report</strong>, with click-through also up (3.9% vs 3.5%). invite-jp leads on volume and open rate (70.5% on 325 sends); invite-en, the largest sender (429), opens at 64.6% with 3.7% clicks. invite-de and invite-dk click rates (21.7%, 8.1%) look high but sit on 23 and 37 sends. Unsubscribes are 29 of 814 sends (3.6%), about level with July (3.7%), concentrated in invite-en (16).</p>
+  </div>
+
+  <!-- NEGATIVE REVIEWS -->
+  <h2 id="s5">Negative Review Themes</h2>
+  <p style="margin-bottom:16px;">6 reviews rated &le;2★ in the window (1×2★, 5×1★), all read individually. All 6 are from UK (<code>gb</code>) delivery addresses. This window is small, so themes are counted by hand rather than by keyword match; they are mutually exclusive here.</p>
+
+  <div class="theme-grid">
+    <div class="theme-card">
+      <div class="icon">💷</div>
+      <div class="theme-title">Unexpected UK Duty &amp; Fees</div>
+      <div class="count">3 of 6 negative reviews (50%)</div>
+      <p>Customers charged import duty and courier handling fees after delivery &mdash; &pound;56 (FedEx, billed a week after receipt, too late to return), &pound;43.23 (billed three weeks after a return), &pound;47.88 (&ldquo;misleading advertising&rdquo;: free shipping advertised, not stated that goods ship from Denmark with import taxes due). Two reviewers say the charge wasn't disclosed at checkout.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">↩️</div>
+      <div class="theme-title">Return Costs</div>
+      <div class="count">1 of 6 negative reviews (17%)</div>
+      <p>A customer objects to ~&pound;10 being deducted from the refund on top of paying return postage. Combined with the duty reviews, 4 of 6 negatives are about money charged after the purchase decision.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">💬</div>
+      <div class="theme-title">Customer Service Unresponsive</div>
+      <div class="count">1 of 6 negative reviews (17%)</div>
+      <p>A customer trying to cancel an order over 3&ndash;4 days got no reply by email or Instagram, then had a failed delivery with no help. Notes the support address listed on the India site does not exist.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">⌚</div>
+      <div class="theme-title">Product Quality</div>
+      <div class="count">1 of 6 negative reviews (17%)</div>
+      <p>&ldquo;Good design but very poor quality, you can send the watch back almost every year.&rdquo; Durability and defects were the dominant theme in the July YTD report (39% of negatives), but now account for one of six.</p>
+    </div>
+  </div>
+
+  <h3>Negative Reviews in the Window</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:50px"></th>
+        <th>Review</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="rating-badge r1b">1</span></td><td class="review-text"><strong>Misleading advertising.</strong> Free shipping advertised; not stated that the watch ships from Denmark; &pound;47.88 import taxes charged. Watch itself is fine.</td><td>Oct 28</td></tr>
+      <tr><td><span class="rating-badge r2b">2</span></td><td class="review-text"><strong>Good design but very poor quality.</strong> &ldquo;You can send the watch back almost every year&rdquo;.</td><td>Sep 21</td></tr>
+      <tr><td><span class="rating-badge r1b">1</span></td><td class="review-text"><strong>Stay clear.</strong> Hidden duty on top of delivery fee. Returned the watch at own cost (&pound;12), then billed &pound;43.23 duty and taxes by FedEx three weeks later.</td><td>Sep 20</td></tr>
+      <tr><td><span class="rating-badge r1b">1</span></td><td class="review-text"><strong>Deducts near &pound;10 and makes you pay for the postage.</strong> Return refund deduction plus return postage.</td><td>Sep 13</td></tr>
+      <tr><td><span class="rating-badge r1b">1</span></td><td class="review-text"><strong>Unresponsive customer support.</strong> Could not cancel the order; failed delivery; no reply by email or Instagram over several days.</td><td>Sep 11</td></tr>
+      <tr><td><span class="rating-badge r1b">1</span></td><td class="review-text"><strong>Don't order from Nordgreen if you're in the UK.</strong> &pound;230 watch, then &pound;56 charged by FedEx a week after delivery; too late to return.</td><td>Sep 8</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ACTION ITEMS -->
+  <h2 id="s6">Action Items</h2>
+  <ul class="action-list">
+    <li>
+      <div class="al-icon">🔴</div>
+      <div class="al-text"><strong>UK customers are being surprised by post-purchase charges: import duty/courier fees (3 negatives) and return deductions (1), so 4 of the 6 negatives; all 6 negatives are UK.</strong> UK is the largest review market (17 of 27 reviews) and the source of every negative in the window. Options: disclose &ldquo;ships from Denmark, import duty may apply&rdquo; at checkout and in the free-shipping banner, or move UK orders to a duty-paid (DDP) service. Because these reviews are posted without an invite, invites will not dilute them.</div>
+    </li>
+    <li>
+      <div class="al-icon">🔴</div>
+      <div class="al-text"><strong>invite-de (456) volume is down ~94% since June (257 invites to 16 in October) while German orders are steady at ~150&ndash;245 a month.</strong> This is not demand. Check the campaign's segment/filters and send schedule for a change since July; its few recent invites converted well (3 reviews, all 5★, from 36 invites), so restoring volume has upside. Related to the earlier invite-dk concern, which now looks demand-driven (see Campaign Performance).</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>Order volume is declining from the August peak (1,043 &rarr; 818 &rarr; 609 in October to date).</strong> Reviews follow invite volume, so expect fewer reviews unless orders recover. Worth confirming with the client whether this is seasonal or a marketing/traffic change.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>9 of 27 reviews have no order_id (8 of them UK, average 3.11★).</strong> These are organic Trustpilot reviews that cannot be matched to an order, so they cannot be followed up with the customer or attributed. If customers can be nudged to review through the invite link, the ratings should improve (invite-driven reviews average 4.43★).</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>Customer-service responsiveness appears in one negative review</strong> (unanswered cancellation request, support address on the India site not working). One review is an anecdote, but the July report also flagged slow/AI-routed support. Worth checking the India-site contact address.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>Still no support-ticket data source for this account.</strong> The negative reviews above cannot be checked for whether the customer had contacted support first. Confirm whether ticket data can be piped into the pipeline for the next report.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟢</div>
+      <div class="al-text"><strong>Email performance improved: 67.3% open rate (58.7% in July) and 3.9% click rate over the last 30 days</strong>, with unsubscribes steady at 3.6%.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟢</div>
+      <div class="al-text"><strong>Warranty and customer service are now praised in 5★ reviews</strong> (all five highlights above cite fast warranty replacements or helpful support), a change from the July report where warranty policy was a leading negative theme. Durability complaints fell from 39% of negatives YTD to 1 of 6 in this window.</div>
+    </li>
+  </ul>
+
+</div>
+</body>
+</html>
