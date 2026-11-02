@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lvanguard Group — October 2026 Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 980px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #00b894; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 26px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .kpi.highlight { border-top: 3px solid #f0932b; }
+  .kpi.good { border-top: 3px solid #00b894; }
+  .kpi.warn { border-top: 3px solid #e17055; }
+
+  .acct-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 8px; }
+  .acct-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow: hidden; }
+  .acct-card-header { padding: 10px 16px; font-weight: 700; font-size: 13px; color: #fff; display: flex; align-items: center; gap: 10px; }
+  .acct-carethy { background: #00b894; }
+  .acct-bulevip { background: #00cec9; }
+  .acct-card-body { padding: 14px 16px; }
+
+  .mini-kpi-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
+  .mini-kpi { text-align: center; }
+  .mini-kpi .mv { font-size: 20px; font-weight: 700; color: #1a1a2e; }
+  .mini-kpi .ml { font-size: 10px; text-transform: uppercase; color: #888; letter-spacing: .5px; }
+
+  .attr-bar-wrap { margin: 8px 0 12px; }
+  .attr-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: #636e72; margin-bottom: 4px; }
+  .attr-bar { height: 10px; border-radius: 5px; background: #dfe6e9; overflow: hidden; display: flex; }
+  .attr-fill { height: 100%; background: #00b894; }
+  .organic-fill { height: 100%; background: #b2bec3; }
+
+  .split-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+  .split-box { border-radius: 8px; padding: 10px 14px; }
+  .split-attr { background: #eafff6; border-left: 3px solid #00b894; }
+  .split-organic { background: #f5f6fa; border-left: 3px solid #b2bec3; }
+  .split-box .sb-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 4px; }
+  .split-box .sb-count { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+  .split-box .sb-avg { font-size: 12px; color: #636e72; margin-top: 2px; }
+  .split-box .sb-note { font-size: 11px; color: #888; margin-top: 3px; }
+
+  .star-dist { display: flex; gap: 4px; margin: 10px 0; align-items: flex-end; height: 60px; }
+  .star-col { display: flex; flex-direction: column; align-items: center; flex: 1; justify-content: flex-end; }
+  .star-bar { width: 100%; border-radius: 3px 3px 0 0; }
+  .s5 { background: #00b894; } .s4 { background: #55efc4; } .s3 { background: #fdcb6e; }
+  .s2 { background: #e17055; } .s1 { background: #d63031; }
+  .star-label { font-size: 9px; color: #999; margin-top: 2px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 20px; }
+  th { background: #f4fffb; text-align: left; padding: 10px 14px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; }
+  td { padding: 9px 14px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafffd; }
+  .row-total td { background: #f4fffb; font-weight: 600; }
+
+  .brand-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; color: #fff; }
+  .bp-carethy { background: #00b894; }
+  .bp-bulevip { background: #00cec9; }
+
+  .r2 { color: #e17055; font-weight: 600; }
+  .r5 { color: #00b894; font-weight: 600; }
+  .review-text { font-size: 12px; color: #636e72; line-height: 1.5; max-width: 460px; }
+
+  .insight-box { background: #fff; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .insight-box p { margin-bottom: 6px; }
+  .insight-box p:last-child { margin-bottom: 0; }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .warn-box p { margin-bottom: 6px; }
+  .warn-box p:last-child { margin-bottom: 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .good-box p { margin-bottom: 6px; }
+  .good-box p:last-child { margin-bottom: 0; }
+  .info-box { background: #f5f6fa; border-left: 4px solid #b2bec3; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0; }
+  .info-box p { margin-bottom: 6px; }
+  .info-box p:last-child { margin-bottom: 0; }
+  .good { color: #00b894; font-weight: 600; }
+  .warn { color: #e17055; font-weight: 600; }
+  .neutral { color: #636e72; }
+
+  .review-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 14px; overflow: hidden; }
+  .review-card-header { padding: 10px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #f0f0f0; }
+  .review-card-body { padding: 12px 16px; }
+  .rating-badge { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; font-size: 13px; font-weight: 700; color: #fff; }
+  .r1b { background: #d63031; }
+  .r2b { background: #e17055; }
+  .r3b { background: #fdcb6e; color: #333; }
+  .r4b { background: #55efc4; color: #333; }
+  .r5b { background: #00b894; }
+  .source-pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+  .sp-attr { background: #e6fbf6; color: #00997a; }
+  .sp-organic { background: #f0f0f0; color: #636e72; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #fdecec; color: #d63031; }
+  .tag-ok { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; background: #eafff6; color: #00997a; }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 20px; }
+  .theme-card { background: #fff; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .theme-card .icon { font-size: 24px; margin-bottom: 8px; }
+  .theme-card .theme-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .theme-card .count { font-size: 11px; color: #888; margin-bottom: 8px; }
+  .theme-card p { font-size: 12px; color: #555; margin: 0; line-height: 1.5; }
+
+  .action-list { list-style: none; margin: 0; padding: 0; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 16px; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 10px; }
+  .al-icon { font-size: 16px; flex-shrink: 0; }
+  .al-text { font-size: 13px; color: #4a4a4a; line-height: 1.5; }
+
+  nav a:hover { text-decoration: underline; }
+  .delta-up { color:#00b894; font-weight:600; } .delta-down { color:#e17055; font-weight:600; } .muted { color:#aaa; font-size:11px; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <h1>Lvanguard Group — October 2026 Report</h1>
+  <p class="subtitle">Carethy &amp; Bulevip &bull; Oct 1 – 31, 2026 &bull; Generated Nov 2, 2026 &bull; Compared with the September 2026 report (published Oct 1)</p>
+  <nav style="margin:24px 0 32px;padding:16px 20px;background:#f8f9fa;border-radius:8px;border-left:3px solid #00b894;font-size:14px;line-height:2;">
+    <strong style="display:block;margin-bottom:6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#888;">Contents</strong>
+    <a href="#s1" style="color:#444;text-decoration:none;margin-right:20px;">1. Group Overview</a>
+    <a href="#s2" style="color:#444;text-decoration:none;margin-right:20px;">2. Campaign Performance</a>
+    <a href="#s3" style="color:#444;text-decoration:none;margin-right:20px;">3. Email Performance</a>
+    <a href="#s4" style="color:#444;text-decoration:none;margin-right:20px;">4. Per-Brand Breakdown</a>
+    <a href="#s5" style="color:#444;text-decoration:none;margin-right:20px;">5. Reviews &amp; Rating Distribution</a>
+    <a href="#s6" style="color:#444;text-decoration:none;margin-right:20px;">6. Negative Review Themes</a>
+    <a href="#s7" style="color:#444;text-decoration:none;">7. Action Items</a>
+  </nav>
+  <div class="info-box">
+    <p><strong>Scope and baseline.</strong> Carethy (<code>lvanguard</code>) and Bulevip (<code>lvanguard_bulevip</code>); <code>lvanguard_biuky</code> remains excluded. All September figures are taken as published in the September report (Oct 1); re-running September on current data reproduces its invites, reminders, reviews and attributed reviews exactly. October reviews, invites and tickets are complete through Oct 31.</p>
+    <p><strong>Review rate = all reviews &divide; invites sent &times; 100</strong> (reminders excluded), shown at brand and group level. <strong>Attribution rate = reviews attributed to a review-invitation campaign &divide; all reviews received in the month &times; 100.</strong> A review is attributed when its order reference matches an order that any invitation campaign has emailed (full invitation history); the same method was used for September and October. These are different measures: the review rate is about volume against invites sent, the attribution rate is about how many of the reviews received can be traced back to a campaign.</p>
+  </div>
+  <!-- GROUP OVERVIEW -->
+  <h2 id="s1">Group Overview</h2>
+  <div class="kpi-grid">
+    <div class="kpi"><div class="label">Total Reviews</div><div class="value">103</div><div class="sub">Carethy 54 &middot; Bulevip 49 &middot; Sep 108</div></div>
+    <div class="kpi highlight"><div class="label">Group Avg Rating</div><div class="value">4.45★</div><div class="sub">Carethy 4.30★ &middot; Bulevip 4.61★ &middot; Sep 4.24★</div></div>
+    <div class="kpi"><div class="label">Review Rate</div><div class="value">2.15%</div><div class="sub">103 reviews / 4,782 invites &middot; Sep 3.08%</div></div>
+    <div class="kpi"><div class="label">Total Emails Sent</div><div class="value">12,170</div><div class="sub">4,782 invites &middot; 7,388 reminders &middot; Sep 10,384</div></div>
+    <div class="kpi"><div class="label">Total Invites Sent</div><div class="value">4,782</div><div class="sub">Carethy 1,934 &middot; Bulevip 2,848 &middot; Sep 3,504</div></div>
+    <div class="kpi warn"><div class="label">Negative, Support Unknown</div><div class="value">10</div><div class="sub">of 11 reviews rated &le;2★ have no email, so can't be matched to a support ticket (Sep 12 of 18)</div></div>
+  </div>
+  <h3>October vs September</h3>
+  <table>
+    <thead><tr><th>Metric</th><th style="text-align:right">Carethy Sep</th><th style="text-align:right">Carethy Oct</th><th style="text-align:right">Bulevip Sep</th><th style="text-align:right">Bulevip Oct</th><th style="text-align:right">Group Sep</th><th style="text-align:right">Group Oct</th></tr></thead>
+    <tbody>
+      <tr><td>Invites sent</td><td style="text-align:right">1,547</td><td style="text-align:right">1,934</td><td style="text-align:right">1,957</td><td style="text-align:right">2,848</td><td style="text-align:right">3,504</td><td style="text-align:right">4,782</td></tr>
+      <tr><td>Reminders sent</td><td style="text-align:right">3,162</td><td style="text-align:right">3,348</td><td style="text-align:right">3,718</td><td style="text-align:right">4,040</td><td style="text-align:right">6,880</td><td style="text-align:right">7,388</td></tr>
+      <tr><td>Total sends</td><td style="text-align:right">4,709</td><td style="text-align:right">5,282</td><td style="text-align:right">5,675</td><td style="text-align:right">6,888</td><td style="text-align:right">10,384</td><td style="text-align:right">12,170</td></tr>
+      <tr><td>Reviews</td><td style="text-align:right">49</td><td style="text-align:right">54</td><td style="text-align:right">59</td><td style="text-align:right">49</td><td style="text-align:right">108</td><td style="text-align:right">103</td></tr>
+      <tr><td>Avg rating</td><td style="text-align:right">4.08★</td><td style="text-align:right">4.30★</td><td style="text-align:right">4.37★</td><td style="text-align:right">4.61★</td><td style="text-align:right">4.24★</td><td style="text-align:right">4.45★</td></tr>
+      <tr><td>Negative (&le;2★)</td><td style="text-align:right">10 (20.4%)</td><td style="text-align:right">8 (14.8%)</td><td style="text-align:right">8 (13.6%)</td><td style="text-align:right">3 (6.1%)</td><td style="text-align:right">18 (16.7%)</td><td style="text-align:right">11 (10.7%)</td></tr>
+      <tr class="row-total"><td><strong>Review rate</strong></td><td style="text-align:right">3.17%</td><td style="text-align:right">2.79%</td><td style="text-align:right">3.01%</td><td style="text-align:right">1.72%</td><td style="text-align:right">3.08%</td><td style="text-align:right">2.15%</td></tr>
+      <tr class="row-total"><td><strong>Attribution rate</strong></td><td style="text-align:right">24.5%</td><td style="text-align:right">7.4%</td><td style="text-align:right">37.3%</td><td style="text-align:right">0.0%</td><td style="text-align:right">31.5%</td><td style="text-align:right">3.9%</td></tr>
+    </tbody>
+  </table>
+  <div class="good-box">
+    <p><strong>Ratings improved on both brands.</strong> Group rating rose to 4.45★ from 4.24★ (Carethy 4.30★ from 4.08★, Bulevip 4.61★ from 4.37★) and the share of negative reviews eased to 10.7% from 16.7%. 80 of 103 reviews (77.7%) were 5★. Invite volume rose 36.5% (3,504 to 4,782), with Carethy up 25.0% and Bulevip up 45.5%.</p>
+  </div>
+  <div class="warn-box">
+    <p><strong>Reviews traceable to a campaign fell sharply: 4 of 103 reviews (3.9%) were attributed, against 34 of 108 (31.5%) in September</strong> (standard exact-order-ID method; a broader verified match gives 9 of 103, 8.7%, against 45 of 108, 41.7%). Total reviews were broadly steady (103 vs 108) while invites rose 36.5%, so the review rate fell to 2.15% from 3.08%. See the attribution comparison below.</p>
+    <p><strong>Delivery complaints are 9 of 14 reviews rated &le;3★ (64%, from 55% in September)</strong>, with 6 of 14 about damaged, spilled or incorrect items. See Negative Review Themes and Action Items.</p>
+    <p><strong>Ticket matching is limited by missing emails:</strong> all 11 negative (&le;2★) reviews show no ticket match and 10 of them have no email on the review, so support status is unknown for them.</p>
+  </div>
+  <h3>Review attribution — September vs October</h3>
+  <p style="margin-bottom:12px;">Attribution rate = reviews attributed to a review-invitation campaign &divide; total reviews received in the month &times; 100. Reviews with no matching invitation are shown as &ldquo;no match&rdquo;. A no-match review is not proof that the customer was not invited: it includes reviews whose order reference is missing, in a different format or otherwise cannot be linked to an invitation. September figures are as published (standard method: exact order ID).</p>
+  <table>
+    <thead><tr><th>Brand</th><th style="text-align:right">Sep Reviews</th><th style="text-align:right">Sep Attributed</th><th style="text-align:right">Sep No Match</th><th style="text-align:right">Sep Attribution Rate</th><th style="text-align:right">Oct Reviews</th><th style="text-align:right">Oct Attributed</th><th style="text-align:right">Oct No Match</th><th style="text-align:right">Oct Attribution Rate</th><th style="text-align:right">Change</th><th style="text-align:right">Oct No-Match Share</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Carethy</strong></td><td style="text-align:right">49</td><td style="text-align:right">12</td><td style="text-align:right">37</td><td style="text-align:right">24.5%</td><td style="text-align:right">54</td><td style="text-align:right">4</td><td style="text-align:right">50</td><td style="text-align:right">7.4%</td><td style="text-align:right"><span class="delta-down">&minus;17.1 pp</span></td><td style="text-align:right">92.6%</td></tr>
+      <tr><td><strong>Bulevip</strong></td><td style="text-align:right">59</td><td style="text-align:right">22</td><td style="text-align:right">37</td><td style="text-align:right">37.3%</td><td style="text-align:right">49</td><td style="text-align:right">0</td><td style="text-align:right">49</td><td style="text-align:right">0.0%</td><td style="text-align:right"><span class="delta-down">&minus;37.3 pp</span></td><td style="text-align:right">100.0%</td></tr>
+      <tr class="row-total"><td><strong>Combined group</strong></td><td style="text-align:right">108</td><td style="text-align:right">34</td><td style="text-align:right">74</td><td style="text-align:right">31.5%</td><td style="text-align:right">103</td><td style="text-align:right">4</td><td style="text-align:right">99</td><td style="text-align:right">3.9%</td><td style="text-align:right"><span class="delta-down">&minus;27.6 pp</span></td><td style="text-align:right">96.1%</td></tr>
+    </tbody>
+  </table>
+  <p class="muted" style="margin:-2px 0 14px;">September no-match share: Carethy 75.5%, Bulevip 62.7%, group 68.5%.</p>
+  <div class="kpi-grid">
+    <div class="kpi warn"><div class="label">Carethy Attribution</div><div class="value">7.4%</div><div class="sub">4 of 54 reviews &middot; Sep 24.5% (12 of 49) &middot; &minus;17.1 pp</div></div>
+    <div class="kpi warn"><div class="label">Bulevip Attribution</div><div class="value">0.0%</div><div class="sub">0 of 49 reviews (standard method) &middot; Sep 37.3% (22 of 59) &middot; &minus;37.3 pp</div></div>
+    <div class="kpi warn"><div class="label">Group Attribution</div><div class="value">3.9%</div><div class="sub">4 of 103 reviews &middot; Sep 31.5% (34 of 108) &middot; &minus;27.6 pp</div></div>
+  </div>
+  <div class="insight-box">
+    <p><strong>Attribution declined for both brands.</strong> Carethy fell from 24.5% to 7.4% (12 to 4 attributed reviews) and Bulevip from 37.3% to 0.0% (22 to 0), so the combined rate fell 27.6 percentage points to 3.9%. Reviews with no matched invitation are now 96.1% of the group total (68.5% in September); this is a limit on what can be traced, not a count of reviews that were not prompted by an invitation.</p>
+    <p><strong>Which campaigns contributed.</strong> In September Bulevip invite-tp-ES supplied 15 of the 34 attributed reviews (44%) and Carethy invite-tp-EU 7 (21%); the rest were spread across eight smaller campaigns. In October all 4 attributed reviews came from Carethy invite-tp-EU (960 invites, 3.50★ average); no Bulevip campaign and none of the other five Carethy campaigns had a review matched by the standard method. Attributed reviews per 1,000 invites fell from 9.7 to 0.8.</p>
+    <p><strong>Confirmed.</strong> Invitation volume rose 36.5%, so the fall is not a drop in sending. Fewer reviews now arrive with an order reference: 20 of 103 (19.4%) in October against 51 of 108 (47.2%) in September (Carethy 25.9% from 42.9%, Bulevip 12.2% from 50.8%). Only 4 of the 20 October references match an emailed order by the standard method (34 of 51 in September). For Bulevip, none of its 49 October reviews carries a customer record or order number that links to an invitation, so no alternative field changes its 0.0% under the standard method.</p>
+    <p><strong>Not confirmed.</strong> Why fewer reviews carry a usable reference. Carethy&rsquo;s attributed share was 76&ndash;91% of reviews in January&ndash;May, stepped down in June and again in October (table below), which looks more like a change in how reviews are linked to orders than a change in customer behaviour, but the review data alone cannot establish that. Email click rate also fell, from 4.7% to 1.6%, which may be related. The October attribution rate is therefore best read as a floor on campaign influence, not a measure of it, and it would be worth confirming with the review integration that every invitation link passes the order reference for every campaign and market.</p>
+    <p><strong>Consistency check.</strong> The same definition and full invitation history were applied in both months. Re-running September on current data returns 12 of 49 (Carethy), 22 of 59 (Bulevip) and 34 of 108 (group), identical to the published figures. Widening the invitation history through Oct 31 changes neither month, adding the closed-ticket invitation campaigns adds no October matches (one September Bulevip review), and every standard match in both months was written after an email to that order (4 of 4 in October, 34 of 34 in September).</p>
+  </div>
+  <h3>Attribution sensitivity — broader verified match, both months</h3>
+  <p style="margin-bottom:12px;">The standard method matches on the exact order ID. Two kinds of genuine link are missed by it: order references with stray spaces, and references in the shop&rsquo;s own order-name format (for example PHA-&hellip; or BLV-&hellip;) that resolve, through the order record, to an order that was emailed. The table adds both to the standard result for September and October, counting a review only if the email to that order was sent before the review was written. No review is attributed on email address or customer alone.</p>
+  <table>
+    <thead><tr><th>Brand</th><th style="text-align:right">Sep Standard</th><th style="text-align:right">Sep Broader</th><th style="text-align:right">Sep Broader Rate</th><th style="text-align:right">Oct Standard</th><th style="text-align:right">Oct Broader</th><th style="text-align:right">Oct Broader Rate</th><th style="text-align:right">Change</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Carethy</strong></td><td style="text-align:right">12 / 49</td><td style="text-align:right">18 / 49</td><td style="text-align:right">36.7%</td><td style="text-align:right">4 / 54</td><td style="text-align:right">7 / 54</td><td style="text-align:right">13.0%</td><td style="text-align:right"><span class="delta-down">&minus;23.8 pp</span></td></tr>
+      <tr><td><strong>Bulevip</strong></td><td style="text-align:right">22 / 59</td><td style="text-align:right">27 / 59</td><td style="text-align:right">45.8%</td><td style="text-align:right">0 / 49</td><td style="text-align:right">2 / 49</td><td style="text-align:right">4.1%</td><td style="text-align:right"><span class="delta-down">&minus;41.7 pp</span></td></tr>
+      <tr class="row-total"><td><strong>Combined group</strong></td><td style="text-align:right">34 / 108</td><td style="text-align:right">45 / 108</td><td style="text-align:right">41.7%</td><td style="text-align:right">4 / 103</td><td style="text-align:right">9 / 103</td><td style="text-align:right">8.7%</td><td style="text-align:right"><span class="delta-down">&minus;32.9 pp</span></td></tr>
+    </tbody>
+  </table>
+  <p class="muted" style="margin:-2px 0 14px;">The standard-method headline above is kept for consistency with the published September report. One further October Carethy review referred to an order that was emailed only after the review, so it is not counted. The October broader matches: Carethy 6 from invite-tp-EU and 1 from invite-tp-NL; Bulevip 1 from invite-tp-ES and 1 from invite-tp-IT.</p>
+  <div class="info-box">
+    <p><strong>Reading the sensitivity.</strong> The decline is real under either method (group 41.7% to 8.7%), but it is less extreme than the standard method shows, and Bulevip had two traceable reviews in October rather than none. Even on the broader match, 94 of 103 October reviews (91%) cannot be tied to an invitation, against 63 of 108 (58%) in September.</p>
+  </div>
+  <h3>Attribution trend by month (standard method, recomputed on current data)</h3>
+  <table>
+    <thead><tr><th>Brand</th><th>Metric</th><th style="text-align:right">Apr</th><th style="text-align:right">May</th><th style="text-align:right">Jun</th><th style="text-align:right">Jul</th><th style="text-align:right">Aug</th><th style="text-align:right">Sep</th><th style="text-align:right">Oct</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="2"><span class="brand-pill bp-carethy">carethy</span></td><td>Attribution rate</td><td style="text-align:right">83.2%</td><td style="text-align:right">89.8%</td><td style="text-align:right">32.8%</td><td style="text-align:right">19.5%</td><td style="text-align:right">20.5%</td><td style="text-align:right">24.5%</td><td style="text-align:right">7.4%</td></tr>
+      <tr><td>Reviews with order reference</td><td style="text-align:right">87.9%</td><td style="text-align:right">91.8%</td><td style="text-align:right">47.8%</td><td style="text-align:right">41.5%</td><td style="text-align:right">40.9%</td><td style="text-align:right">42.9%</td><td style="text-align:right">25.9%</td></tr>
+      <tr><td rowspan="2"><span class="brand-pill bp-bulevip">bulevip</span></td><td>Attribution rate</td><td style="text-align:right">92.9%</td><td style="text-align:right">88.6%</td><td style="text-align:right">23.7%</td><td style="text-align:right">29.4%</td><td style="text-align:right">36.4%</td><td style="text-align:right">37.3%</td><td style="text-align:right">0.0%</td></tr>
+      <tr><td>Reviews with order reference</td><td style="text-align:right">94.3%</td><td style="text-align:right">97.5%</td><td style="text-align:right">39.0%</td><td style="text-align:right">45.1%</td><td style="text-align:right">42.4%</td><td style="text-align:right">50.8%</td><td style="text-align:right">12.2%</td></tr>
+    </tbody>
+  </table>
+  <p class="muted" style="margin:-2px 0 14px;">Earlier months are recomputed with the same standard method and current data, so they can differ from earlier published reports. The September baseline of 31.5% was already well below the April&ndash;May level of roughly 83&ndash;93%.</p>
+  <!-- CAMPAIGN PERFORMANCE -->
+  <h2 id="s2">Campaign Performance — October 2026</h2>
+  <p style="margin-bottom:14px;">Full email volume (invites + reminders) per campaign, Oct 1–31, 2026, with September invites and attributed reviews from the published report for comparison. Reviews are those attributed to a campaign through full invite history (all-time). Review rate is reported at brand and group level (all reviews &divide; invites) in the table above.</p>
+  <table>
+    <thead><tr><th>Brand</th><th>Campaign</th><th style="text-align:right">Invites</th><th style="text-align:right">Sep Invites</th><th style="text-align:right">Change</th><th style="text-align:right">Reminders</th><th style="text-align:right">Total Sends</th><th style="text-align:right">Sep Attributed</th><th style="text-align:right">Attributed Reviews</th><th style="text-align:right">Avg Rating</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="6"><span class="brand-pill bp-carethy">carethy</span></td><td>invite-tp-EU</td><td style="text-align:right">960</td><td style="text-align:right">658</td><td style="text-align:right"><span class="delta-up">+45.9%</span></td><td style="text-align:right">1,618</td><td style="text-align:right">2,578</td><td style="text-align:right">7</td><td style="text-align:right">4</td><td style="text-align:right">3.50</td></tr>
+      <tr><td>invite-tp-DE</td><td style="text-align:right">614</td><td style="text-align:right">551</td><td style="text-align:right"><span class="delta-up">+11.4%</span></td><td style="text-align:right">1,117</td><td style="text-align:right">1,731</td><td style="text-align:right">1</td><td style="text-align:right">0</td><td style="text-align:right">—</td></tr>
+      <tr><td>invite-tp-ES</td><td style="text-align:right">137</td><td style="text-align:right">168</td><td style="text-align:right"><span class="delta-down">&minus;18.5%</span></td><td style="text-align:right">245</td><td style="text-align:right">382</td><td style="text-align:right">2</td><td style="text-align:right">0</td><td style="text-align:right">—</td></tr>
+      <tr><td>invite-tp-NL</td><td style="text-align:right">107</td><td style="text-align:right">80</td><td style="text-align:right"><span class="delta-up">+33.8%</span></td><td style="text-align:right">167</td><td style="text-align:right">274</td><td style="text-align:right">1</td><td style="text-align:right">0</td><td style="text-align:right">—</td></tr>
+      <tr><td>invite-tp-FR</td><td style="text-align:right">73</td><td style="text-align:right">49</td><td style="text-align:right"><span class="delta-up">+49.0%</span></td><td style="text-align:right">111</td><td style="text-align:right">184</td><td style="text-align:right">1</td><td style="text-align:right">0</td><td style="text-align:right">—</td></tr>
+      <tr><td>invite-tp-IT</td><td style="text-align:right">43</td><td style="text-align:right">41</td><td style="text-align:right"><span class="delta-up">+4.9%</span></td><td style="text-align:right">90</td><td style="text-align:right">133</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">—</td></tr>
+      <tr><td rowspan="6"><span class="brand-pill bp-bulevip">bulevip</span></td><td>invite-tp-ES</td><td style="text-align:right">2,314</td><td style="text-align:right">1,531</td><td style="text-align:right"><span class="delta-up">+51.1%</span></td><td style="text-align:right">3,093</td><td style="text-align:right">5,407</td><td style="text-align:right">15</td><td style="text-align:right">0</td><td style="text-align:right">—</td></tr>
+      <tr><td>invite-tp-PT</td><td style="text-align:right">102</td><td style="text-align:right">129</td><td style="text-align:right"><span class="delta-down">&minus;20.9%</span></td><td style="text-align:right">226</td><td style="text-align:right">328</td><td style="text-align:right">3</td><td style="text-align:right">0</td><td style="text-align:right">—</td></tr>
+      <tr><td>invite-tp-NL</td><td style="text-align:right">107</td><td style="text-align:right">94</td><td style="text-align:right"><span class="delta-up">+13.8%</span></td><td style="text-align:right">181</td><td style="text-align:right">288</td><td style="text-align:right">1</td><td style="text-align:right">0</td><td style="text-align:right">—</td></tr>
+      <tr><td>invite-tp-DE</td><td style="text-align:right">105</td><td style="text-align:right">76</td><td style="text-align:right"><span class="delta-up">+38.2%</span></td><td style="text-align:right">163</td><td style="text-align:right">268</td><td style="text-align:right">1</td><td style="text-align:right">0</td><td style="text-align:right">—</td></tr>
+      <tr><td>invite-tp-FR</td><td style="text-align:right">144</td><td style="text-align:right">70</td><td style="text-align:right"><span class="delta-up">+105.7%</span></td><td style="text-align:right">225</td><td style="text-align:right">369</td><td style="text-align:right">0</td><td style="text-align:right">0</td><td style="text-align:right">—</td></tr>
+      <tr><td>invite-tp-IT</td><td style="text-align:right">76</td><td style="text-align:right">57</td><td style="text-align:right"><span class="delta-up">+33.3%</span></td><td style="text-align:right">152</td><td style="text-align:right">228</td><td style="text-align:right">2</td><td style="text-align:right">0</td><td style="text-align:right">—</td></tr>
+      <tr class="row-total"><td colspan="2">TOTAL — October 2026</td><td style="text-align:right">4,782</td><td style="text-align:right">3,504</td><td style="text-align:right"><span class="delta-up">+36.5%</span></td><td style="text-align:right">7,388</td><td style="text-align:right">12,170</td><td style="text-align:right">34</td><td style="text-align:right">4</td><td style="text-align:right">—</td></tr>
+    </tbody>
+  </table>
+  <div class="insight-box">
+    <p><strong>4 of 103 October reviews (3.9%) are attributed to a specific campaign</strong> (September: 34 of 108, 31.5%); the other 99 (Carethy 50 of 54, Bulevip 49 of 49) have no matching invite on record (they may include customers who were invited but whose reviews cannot be linked).</p>
+    <p>Carethy invites rose 25% on September, led by invite-tp-EU (+46%) and invite-tp-FR (+49%); only ES (&minus;18%) fell. Bulevip invites rose 46%, driven by invite-tp-ES (+51%, 2,314 invites) and invite-tp-FR (+106%); PT fell 21%.</p>
+  </div>
+  <!-- EMAIL PERFORMANCE -->
+  <h2 id="s3">Email Performance</h2>
+  <p style="margin-bottom:14px;">Open/click/unsubscribe statistics from the Stacktome campaign report (daily figures summed). The platform's engagement reporting currently covers Oct 4–31 (the first three days of the month are no longer available), and its sent counts run about 15% below the full-month totals in the volume tables (10,393 vs 12,170), so treat this section as engagement rates rather than an exact send count. September figures are as published (Sep 1–30).</p>
+  <table>
+    <thead><tr><th>Brand</th><th>Campaign</th><th style="text-align:right">Sent</th><th style="text-align:right">Unique Opens</th><th style="text-align:right">Open%</th><th style="text-align:right">Sep Open%</th><th style="text-align:right">Unique Clicks</th><th style="text-align:right">Click%</th><th style="text-align:right">Sep Click%</th><th style="text-align:right">Unsubs</th><th style="text-align:right">Sep Unsubs</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="6"><span class="brand-pill bp-carethy">carethy</span></td><td>invite-tp-EU</td><td style="text-align:right">2,193</td><td style="text-align:right">1,170</td><td style="text-align:right">53.4%</td><td style="text-align:right">52.7%</td><td style="text-align:right">35</td><td style="text-align:right">1.6%</td><td style="text-align:right">4.1%</td><td style="text-align:right">53</td><td style="text-align:right">36</td></tr>
+      <tr><td>invite-tp-DE</td><td style="text-align:right">1,466</td><td style="text-align:right">832</td><td style="text-align:right">56.8%</td><td style="text-align:right">54.7%</td><td style="text-align:right">24</td><td style="text-align:right">1.6%</td><td style="text-align:right">4.0%</td><td style="text-align:right">44</td><td style="text-align:right">27</td></tr>
+      <tr><td>invite-tp-ES</td><td style="text-align:right">340</td><td style="text-align:right">136</td><td style="text-align:right">40.0%</td><td style="text-align:right">47.2%</td><td style="text-align:right">4</td><td style="text-align:right">1.2%</td><td style="text-align:right">5.6%</td><td style="text-align:right">4</td><td style="text-align:right">8</td></tr>
+      <tr><td>invite-tp-NL</td><td style="text-align:right">237</td><td style="text-align:right">136</td><td style="text-align:right">57.4%</td><td style="text-align:right">53.2%</td><td style="text-align:right">0</td><td style="text-align:right">0.0%</td><td style="text-align:right">3.7%</td><td style="text-align:right">6</td><td style="text-align:right">4</td></tr>
+      <tr><td>invite-tp-FR</td><td style="text-align:right">175</td><td style="text-align:right">97</td><td style="text-align:right">55.4%</td><td style="text-align:right">45.8%</td><td style="text-align:right">1</td><td style="text-align:right">0.6%</td><td style="text-align:right">2.6%</td><td style="text-align:right">1</td><td style="text-align:right">3</td></tr>
+      <tr><td>invite-tp-IT</td><td style="text-align:right">112</td><td style="text-align:right">60</td><td style="text-align:right">53.6%</td><td style="text-align:right">46.3%</td><td style="text-align:right">4</td><td style="text-align:right">3.6%</td><td style="text-align:right">4.2%</td><td style="text-align:right">3</td><td style="text-align:right">0</td></tr>
+      <tr><td rowspan="6"><span class="brand-pill bp-bulevip">bulevip</span></td><td>invite-tp-ES</td><td style="text-align:right">4,587</td><td style="text-align:right">1,787</td><td style="text-align:right">39.0%</td><td style="text-align:right">45.9%</td><td style="text-align:right">66</td><td style="text-align:right">1.4%</td><td style="text-align:right">4.8%</td><td style="text-align:right">54</td><td style="text-align:right">30</td></tr>
+      <tr><td>invite-tp-PT</td><td style="text-align:right">274</td><td style="text-align:right">139</td><td style="text-align:right">50.7%</td><td style="text-align:right">46.6%</td><td style="text-align:right">6</td><td style="text-align:right">2.2%</td><td style="text-align:right">7.3%</td><td style="text-align:right">6</td><td style="text-align:right">9</td></tr>
+      <tr><td>invite-tp-NL</td><td style="text-align:right">245</td><td style="text-align:right">119</td><td style="text-align:right">48.6%</td><td style="text-align:right">52.5%</td><td style="text-align:right">4</td><td style="text-align:right">1.6%</td><td style="text-align:right">3.9%</td><td style="text-align:right">6</td><td style="text-align:right">4</td></tr>
+      <tr><td>invite-tp-DE</td><td style="text-align:right">238</td><td style="text-align:right">134</td><td style="text-align:right">56.3%</td><td style="text-align:right">61.4%</td><td style="text-align:right">6</td><td style="text-align:right">2.5%</td><td style="text-align:right">9.0%</td><td style="text-align:right">6</td><td style="text-align:right">9</td></tr>
+      <tr><td>invite-tp-FR</td><td style="text-align:right">330</td><td style="text-align:right">213</td><td style="text-align:right">64.5%</td><td style="text-align:right">62.2%</td><td style="text-align:right">8</td><td style="text-align:right">2.4%</td><td style="text-align:right">3.8%</td><td style="text-align:right">4</td><td style="text-align:right">2</td></tr>
+      <tr><td>invite-tp-IT</td><td style="text-align:right">196</td><td style="text-align:right">121</td><td style="text-align:right">61.7%</td><td style="text-align:right">59.7%</td><td style="text-align:right">6</td><td style="text-align:right">3.1%</td><td style="text-align:right">5.8%</td><td style="text-align:right">4</td><td style="text-align:right">2</td></tr>
+      <tr class="row-total"><td colspan="2">TOTAL — API window (Oct 4–31)</td><td style="text-align:right">10,393</td><td style="text-align:right">4,944</td><td style="text-align:right">47.6%</td><td style="text-align:right">49.9%</td><td style="text-align:right">164</td><td style="text-align:right">1.6%</td><td style="text-align:right">4.7%</td><td style="text-align:right">191</td><td style="text-align:right">134</td></tr>
+    </tbody>
+  </table>
+  <div class="warn-box">
+    <p><strong>Click rate fell to 1.6% from 4.7%, while open rate eased to 47.6% from 49.9%</strong> (10,393 emails tracked; September 9,541). Click rate was lower on all 12 campaigns. Carethy: 4,523 sent, 53.7% open, 1.5% CTR, 111 unsubs (Sep 4,249 sent, 52.3%, 4.2%, 78). Bulevip: 5,870 sent, 42.8% open, 1.6% CTR, 80 unsubs (Sep 5,292 sent, 47.9%, 5.1%, 56). Unsubscribes were 191 against 134 in September, 1.84% of tracked sends (September 1.40%); Carethy&rsquo;s rate rose to 2.45% (1.84%) and Bulevip&rsquo;s to 1.36% (1.06%).</p>
+  </div>
+  <!-- PER-BRAND BREAKDOWN -->
+  <h2 id="s4">Per-Brand Breakdown</h2>
+  <div class="acct-grid">
+    <div class="acct-card">
+      <div class="acct-card-header acct-carethy">
+        <span>Carethy</span>
+        <span style="margin-left:auto;font-size:11px;opacity:0.85;">54 reviews · 4.30★ (Sep 4.08★)</span>
+      </div>
+      <div class="acct-card-body">
+        <div class="mini-kpi-row">
+          <div class="mini-kpi"><div class="mv">1,934</div><div class="ml">Invites (Oct)</div></div>
+          <div class="mini-kpi"><div class="mv">54</div><div class="ml">Reviews (Oct)</div></div>
+          <div class="mini-kpi"><div class="mv">2.79%</div><div class="ml">Review rate</div></div>
+          <div class="mini-kpi"><div class="mv">7.4%</div><div class="ml">Attribution rate</div></div>
+          <div class="mini-kpi"><div class="mv">8</div><div class="ml">Negative &le;2★</div></div>
+        </div>
+        <div class="star-dist">
+          <div class="star-col"><div class="star-bar s5" style="height:60px;background:#00b894;"></div><div class="star-label">5★ ×40</div></div>
+          <div class="star-col"><div class="star-bar s4" style="height:8px;background:#55efc4;"></div><div class="star-label">4★ ×5</div></div>
+          <div class="star-col"><div class="star-bar s3" style="height:2px;background:#fdcb6e;"></div><div class="star-label">3★ ×1</div></div>
+          <div class="star-col"><div class="star-bar s2" style="height:2px;background:#e17055;"></div><div class="star-label">2★ ×1</div></div>
+          <div class="star-col"><div class="star-bar s1" style="height:11px;background:#d63031;"></div><div class="star-label">1★ ×7</div></div>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:6px;">Largest campaign: invite-tp-EU (960 invites, 2,578 total sends, 4 attributed reviews). Review rate 2.79% (Sep 3.17%) on 25% more invites; attribution 4 of 54 (Sep 12 of 49). All 8 negative reviews show no ticket match; 7 of them have no email on the review. Rating recovered after a weak first week: 3.58★ (Oct 1–7), then 4.44★–4.62★.</div>
+      </div>
+    </div>
+    <div class="acct-card">
+      <div class="acct-card-header acct-bulevip">
+        <span>Bulevip</span>
+        <span style="margin-left:auto;font-size:11px;opacity:0.85;">49 reviews · 4.61★ (Sep 4.37★)</span>
+      </div>
+      <div class="acct-card-body">
+        <div class="mini-kpi-row">
+          <div class="mini-kpi"><div class="mv">2,848</div><div class="ml">Invites (Oct)</div></div>
+          <div class="mini-kpi"><div class="mv">49</div><div class="ml">Reviews (Oct)</div></div>
+          <div class="mini-kpi"><div class="mv">1.72%</div><div class="ml">Review rate</div></div>
+          <div class="mini-kpi"><div class="mv">0.0%</div><div class="ml">Attribution rate</div></div>
+          <div class="mini-kpi"><div class="mv">3</div><div class="ml">Negative &le;2★</div></div>
+        </div>
+        <div class="star-dist">
+          <div class="star-col"><div class="star-bar s5" style="height:60px;background:#00b894;"></div><div class="star-label">5★ ×40</div></div>
+          <div class="star-col"><div class="star-bar s4" style="height:6px;background:#55efc4;"></div><div class="star-label">4★ ×4</div></div>
+          <div class="star-col"><div class="star-bar s3" style="height:3px;background:#fdcb6e;"></div><div class="star-label">3★ ×2</div></div>
+          <div class="star-col"><div class="star-bar s2" style="height:2px;background:#e17055;"></div><div class="star-label">2★ ×1</div></div>
+          <div class="star-col"><div class="star-bar s1" style="height:3px;background:#d63031;"></div><div class="star-label">1★ ×2</div></div>
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:6px;">Largest campaign: invite-tp-ES (2,314 invites, 5,407 total sends, 0 attributed reviews; September 15). Review rate 1.72% (Sep 3.01%) on 46% more invites, with 49 reviews against 59. All 3 negative reviews have no email on the review. Negatives are non-delivery and spilled or open jars (5 of 49 reviews rated &le;3★).</div>
+      </div>
+    </div>
+  </div>
+  <!-- REVIEWS & RATING DISTRIBUTION -->
+  <h2 id="s5">Reviews &amp; Rating Distribution (October 2026)</h2>
+  <p style="margin-bottom:16px;">103 total reviews: Carethy 54 (avg 4.30★), Bulevip 49 (avg 4.61★). Bulevip continues to run higher than Carethy; the gap is 0.31★ (0.29★ in September).</p>
+  <h3>Rating Distribution — Group</h3>
+  <table>
+    <thead><tr><th>Rating</th><th style="text-align:right">Sep</th><th style="text-align:right">Sep %</th><th style="text-align:right">Oct</th><th style="text-align:right">Oct %</th><th style="text-align:right">Carethy Oct</th><th style="text-align:right">Bulevip Oct</th></tr></thead>
+    <tbody>
+      <tr><td>5★</td><td style="text-align:right">81</td><td style="text-align:right">75.0%</td><td style="text-align:right">80</td><td style="text-align:right">77.7%</td><td style="text-align:right">40</td><td style="text-align:right">40</td></tr>
+      <tr><td>4★</td><td style="text-align:right">5</td><td style="text-align:right">4.6%</td><td style="text-align:right">9</td><td style="text-align:right">8.7%</td><td style="text-align:right">5</td><td style="text-align:right">4</td></tr>
+      <tr><td>3★</td><td style="text-align:right">4</td><td style="text-align:right">3.7%</td><td style="text-align:right">3</td><td style="text-align:right">2.9%</td><td style="text-align:right">1</td><td style="text-align:right">2</td></tr>
+      <tr><td>2★</td><td style="text-align:right">3</td><td style="text-align:right">2.8%</td><td style="text-align:right">2</td><td style="text-align:right">1.9%</td><td style="text-align:right">1</td><td style="text-align:right">1</td></tr>
+      <tr><td>1★</td><td style="text-align:right">15</td><td style="text-align:right">13.9%</td><td style="text-align:right">9</td><td style="text-align:right">8.7%</td><td style="text-align:right">7</td><td style="text-align:right">2</td></tr>
+      <tr class="row-total"><td>Total</td><td style="text-align:right">108</td><td style="text-align:right">100%</td><td style="text-align:right">103</td><td style="text-align:right">100%</td><td style="text-align:right">54</td><td style="text-align:right">49</td></tr>
+    </tbody>
+  </table>
+  <h3>Avg Rating &amp; Review Rate by Week, Per Brand</h3>
+  <p style="margin-bottom:12px;">Review rate = reviews landing that week &divide; invites sent that week. Invite sending was uneven within weeks (see Action Items), which moves the weekly rates a little.</p>
+  <table>
+    <thead><tr><th>Brand</th><th>Metric</th><th>Oct 1–7</th><th>Oct 8–14</th><th>Oct 15–21</th><th>Oct 22–31</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="2"><span class="brand-pill bp-carethy">carethy</span></td><td>Avg rating</td><td>3.58★ <span style="color:#aaa;font-size:11px;">(12)</span></td><td>4.46★ <span style="color:#aaa;font-size:11px;">(13)</span></td><td>4.62★ <span style="color:#aaa;font-size:11px;">(13)</span></td><td>4.44★ <span style="color:#aaa;font-size:11px;">(16)</span></td></tr>
+      <tr><td>Review rate</td><td>2.74%</td><td>2.88%</td><td>3.36%</td><td>2.44%</td></tr>
+      <tr><td rowspan="2"><span class="brand-pill bp-bulevip">bulevip</span></td><td>Avg rating</td><td>5.00★ <span style="color:#aaa;font-size:11px;">(13)</span></td><td>4.25★ <span style="color:#aaa;font-size:11px;">(12)</span></td><td>4.50★ <span style="color:#aaa;font-size:11px;">(10)</span></td><td>4.64★ <span style="color:#aaa;font-size:11px;">(14)</span></td></tr>
+      <tr><td>Review rate</td><td>1.77%</td><td>1.49%</td><td>1.74%</td><td>1.90%</td></tr>
+    </tbody>
+  </table>
+  <div class="info-box" style="margin-top:-8px;">
+    <p><strong>Carethy's rating recovered after the first week</strong> (3.58★ in Oct 1–7, then 4.44★–4.62★); the early-week low holds four of its eight negative reviews, all delivery or packing complaints (Oct 3&ndash;7). September ended at 3.67★ in the last week.</p>
+    <p><strong>Bulevip stayed high</strong> (4.25★–5.00★), but its review rate sat at 1.49%–1.90% every week, below any weekly rate in September (2.08%–4.06%).</p>
+  </div>
+  <h3>Recent Positive Highlights (5★, late October)</h3>
+  <table>
+    <thead><tr><th>Brand</th><th>Heading / Snippet</th><th>Date</th></tr></thead>
+    <tbody>
+      <tr><td><span class="r5">5★</span> <span class="brand-pill bp-carethy">carethy</span></td><td>"I couldn't find the product I needed — they had it, it wasn't over priced, it arrived promptly and well packaged. I would definitely buy from Carethy again"</td><td>Oct 31</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="brand-pill bp-carethy">carethy</span></td><td>"Buen precio y envío rápido."</td><td>Oct 30</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="brand-pill bp-carethy">carethy</span></td><td>"My reorder — Good product, easy to reorder. Well packed and fast delivery. Top site"</td><td>Oct 30</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="brand-pill bp-carethy">carethy</span></td><td>"Mega Somnio — Very quick delivery and good communication. Great products."</td><td>Oct 27</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="brand-pill bp-bulevip">bulevip</span></td><td>"Rápido y eficaz — Hice un pedido de suplementación para nutrir los ojos, y estaba de oferta. El envío fue rápido"</td><td>Oct 29</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="brand-pill bp-bulevip">bulevip</span></td><td>"Everything worked as promised. The communication was spot on and the delivery on time."</td><td>Oct 27</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="brand-pill bp-bulevip">bulevip</span></td><td>"La empresa ha sido muy rápida y el producto cumple calidad-precio."</td><td>Oct 26</td></tr>
+      <tr><td><span class="r5">5★</span> <span class="brand-pill bp-bulevip">bulevip</span></td><td>"Rapidez y buena comunicación"</td><td>Oct 25</td></tr>
+    </tbody>
+  </table>
+  <!-- NEGATIVE REVIEWS -->
+  <h2 id="s6">Negative Review Themes</h2>
+  <p style="margin-bottom:16px;">14 reviews rated &le;3★ in October (Carethy 9, Bulevip 5; September 22) were each read and assigned to themes across EN/ES/FR/DE/IT. A review can sit in more than one theme. Pools of this size are small: read the shares as direction, not precision.</p>
+  <table>
+    <thead><tr><th>Theme</th><th style="text-align:right">Sep (of 22)</th><th style="text-align:right">Oct (of 14)</th><th style="text-align:right">Carethy Oct</th><th style="text-align:right">Bulevip Oct</th></tr></thead>
+    <tbody>
+      <tr><td>Delivery &amp; carrier failures</td><td style="text-align:right">12 (55%)</td><td style="text-align:right">9 (64%)</td><td style="text-align:right">7</td><td style="text-align:right">2</td></tr>
+      <tr><td>Damaged / wrong / missing / poor-quality items</td><td style="text-align:right">5 (23%)</td><td style="text-align:right">6 (43%)</td><td style="text-align:right">3</td><td style="text-align:right">3</td></tr>
+      <tr><td>Refund delays &amp; unresponsive support</td><td style="text-align:right">5 (23%)</td><td style="text-align:right">2 (14%)</td><td style="text-align:right">2</td><td style="text-align:right">0</td></tr>
+      <tr><td>Import duty / customs charges on delivery</td><td style="text-align:right">3 (14%)</td><td style="text-align:right">1 (7%)</td><td style="text-align:right">1</td><td style="text-align:right">0</td></tr>
+      <tr><td>Missing order confirmation</td><td style="text-align:right">0 (0%)</td><td style="text-align:right">0 (0%)</td><td style="text-align:right">0</td><td style="text-align:right">0</td></tr>
+    </tbody>
+  </table>
+  <div class="theme-grid">
+    <div class="theme-card">
+      <div class="icon">📦</div>
+      <div class="theme-title">Delivery &amp; Carrier Failures</div>
+      <div class="count">9 of 14 reviews (64%) &middot; Carethy 7, Bulevip 2 &middot; Sep 55%</div>
+      <p>Still the dominant theme. Carethy: an Australian order placed on Aug 13 and still not received on Oct 3 with tracking static since Aug 17; an order nine days old with no tracking; a parcel more than two weeks late; a courier whose help service kept returning an error; a UK parcel that took three failed delivery attempts and a collection trip; a Swiss customer who could not track the parcel and was billed at the border; and a Swedish order that took 12 days against 3&ndash;5 working days quoted. Bulevip: a parcel signed for by someone else, and a tracking number for an order that never arrived.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">🔧</div>
+      <div class="theme-title">Damaged / Wrong / Missing Items</div>
+      <div class="count">6 of 14 reviews (43%) &middot; Carethy 3, Bulevip 3 &middot; Sep 23%</div>
+      <p>Carethy: most of an order missing with jars barely packed and smashed in an oversized box, a different product from the one ordered, and a customer who says the item received did not match the one advertised. Bulevip: four of five tahini jars arriving open or unsealed with oil spread over the packaging, a protein pack that burst in transit, and a jar that arrived open and partly spilled.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">💬</div>
+      <div class="theme-title">Refund Delays &amp; Unresponsive Support</div>
+      <div class="count">2 of 14 reviews (14%) &middot; Carethy 2 &middot; Sep 23%</div>
+      <p>Two Carethy reviewers (1★, Oct 21 and Oct 25) say they could not reach customer support about a parcel that had not arrived after nine days and more than two weeks; one adds that an email failed to deliver. No refund-delay complaints appeared on Bulevip.</p>
+    </div>
+    <div class="theme-card">
+      <div class="icon">🧾</div>
+      <div class="theme-title">Import Duty / Customs Charges</div>
+      <div class="count">1 of 14 reviews (7%) &middot; Carethy 1 &middot; Sep 14%</div>
+      <p>One Carethy reviewer in Switzerland was also asked to pay a border fee of 22 francs on a parcel they could not track. The German-language duty/VAT complaints seen in September did not recur.</p>
+    </div>
+  </div>
+  <div class="warn-box">
+    <p><strong>All 11 reviews rated &le;2★ have no matching support ticket</strong> — Carethy 8 of 8, Bulevip 3 of 3; September (published): 12 of 18. Tickets are matched by email. 10 of the 11 carry no email at all (the review isn&rsquo;t linked to an order), so "no ticket" mostly means "support status unknown", not "ignored by support". The one exception is an attributed Carethy 1★ (Oct 25, parcel not delivered after more than two weeks) that has an email and no ticket.</p>
+  </div>
+  <!-- ACTION ITEMS -->
+  <h2 id="s7">Action Items</h2>
+  <ul class="action-list">
+    <li>
+      <div class="al-icon">🔴</div>
+      <div class="al-text"><strong>Attribution fell to 3.9% (4 of 103) from 31.5% (34 of 108) on the standard method, and to 8.7% from 41.7% on a broader verified match; Bulevip had no standard-method matches.</strong> Only 19.4% of reviews carried an order reference (September 47.2%; Apr&ndash;May roughly 88&ndash;98%), and email click rate fell from 4.7% to 1.6%. Reviews with no match are not necessarily unprompted. Confirm that the review links in the Carethy and Bulevip invitation and reminder emails pass the order reference for every campaign and market, so reviews can be tied back to a campaign; until then the review rate and rating are the more reliable indicators.</div>
+    </li>
+    <li>
+      <div class="al-icon">🔴</div>
+      <div class="al-text"><strong>Delivery complaints are 64% of &le;3★ reviews (9 of 14) vs 55% in September.</strong> Cases include an Australian order placed Aug 13 and still undelivered on Oct 3, orders with no usable tracking, a 12-day delivery to Sweden against 3&ndash;5 working days quoted, and a Bulevip parcel signed for by someone else. Review the carriers on the Australia, Sweden, Switzerland, UK and Spain routes and consider holding the invite until delivery is confirmed.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>Contact the Oct 25 Carethy 1★ reviewer (parcel not delivered after more than two weeks, no way to reach support).</strong> This is the only negative review with an email and no ticket; a second Carethy reviewer (Oct 21) reports the same inability to reach support. Both need individual follow-up.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>Opened or spilled jars drove 3 of Bulevip&rsquo;s 5 reviews rated &le;3★</strong> (tahini and other jars, Oct 11&ndash;31) and a smashed, under-packed order on Carethy. Check inner packaging for jars and powders and the seal checks before dispatch.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>Click rate dropped on every campaign (group 1.6% from 4.7%) and unsubscribes rose to 191 from 134</strong> (Carethy 2.45% of tracked sends, from 1.84%). Open rate held at 47.6%. Review the invitation and reminder content and links, starting with Carethy invite-tp-EU and invite-tp-DE (53 and 44 unsubscribes).</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>Invite sending was uneven within the month.</strong> Carethy sent 10, 2, 6, 3, 1 and 5 invites on Oct 15&ndash;16, 23&ndash;24 and 29&ndash;30, followed by 147, 191 and 182 on Oct 17, 25 and 31; Bulevip sent 3 invites on Oct 16, 17 and 22 and caught up the following days. Reminders ran every day. Confirm this batching is intended; it moves weekly review rates and delays invites for some customers.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟡</div>
+      <div class="al-text"><strong>Ticket matching is only possible for reviews with an email.</strong> 10 of 11 negative reviews have none, so the "no ticket" count (11) shows missing identity, not missing support follow-up. Linking reviews to orders would also lift the attribution rate.</div>
+    </li>
+    <li>
+      <div class="al-icon">🟢</div>
+      <div class="al-text"><strong>Ratings improved:</strong> group 4.24★ to 4.45★, Carethy 4.08★ to 4.30★, Bulevip 4.37★ to 4.61★, with negatives at 10.7% (September 16.7%) and 77.7% of reviews at 5★. Review rate is 2.15% (September 3.08%): invites grew 36.5% while reviews slipped from 108 to 103.</div>
+    </li>
+    <li>
+      <div class="al-icon">🔵</div>
+      <div class="al-text"><strong>Housekeeping:</strong> <code>lvanguard_biuky</code> remains out of scope. The September baseline is kept as published and was reproduced exactly on current data; the broader verified match is shown as a sensitivity only.</div>
+    </li>
+  </ul>
+</div>
+</body>
+</html>
