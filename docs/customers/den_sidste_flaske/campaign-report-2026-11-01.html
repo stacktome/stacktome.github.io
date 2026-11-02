@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Den Sidste Flaske — October 2026 Group Report</title>
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 1040px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 28px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 20px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+  p.note { font-size: 12px; color: #888; margin-top: 8px; }
+
+  nav.toc { background: #fff; border-radius: 10px; padding: 16px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 28px; font-size: 13px; }
+  nav.toc .toc-label { font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: .6px; font-size: 10px; margin-bottom: 10px; }
+  nav.toc ol { margin: 0; padding-left: 18px; line-height: 2; }
+  nav.toc a { color: #6c5ce7; text-decoration: none; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 16px; }
+  .kpi-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 16px 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 5px; }
+  .kpi .value { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 10px; color: #aaa; margin-top: 3px; }
+  .kpi.warn .value { color: #e17055; }
+  .kpi.danger .value { color: #d63031; }
+  .kpi.good .value { color: #00b894; }
+
+  .market-badge { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: #fff; margin-right: 8px; }
+  .mb-dk { background: #6c5ce7; }
+  .mb-de { background: #0984e3; }
+  .mb-se { background: #e17055; }
+
+  .market-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+  .market-card { background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .market-card .mc-name { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 10px; }
+  .market-card .mc-avg { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .market-card .mc-sub { font-size: 11px; color: #888; margin-top: 2px; margin-bottom: 10px; }
+  .mc-row { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; border-top: 1px solid #f0f0f0; color: #636e72; }
+  .mc-row strong { color: #2d3436; }
+
+  .split-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+  .split-box { border-radius: 8px; padding: 10px 14px; }
+  .split-attr { background: #f0eeff; border-left: 3px solid #6c5ce7; }
+  .split-organic { background: #f5f6fa; border-left: 3px solid #b2bec3; }
+  .split-box .sb-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 4px; }
+  .split-box .sb-count { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+  .split-box .sb-avg { font-size: 12px; color: #636e72; margin-top: 2px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 14px; }
+  th { background: #f8f9ff; text-align: left; padding: 10px 12px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; white-space: nowrap; }
+  td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr.total-row td { font-weight: 600; background: #f8f9ff; border-top: 2px solid #eee; }
+  td.warn { color: #e17055; font-weight: 600; }
+  td.danger { color: #d63031; font-weight: 600; }
+  td.good { color: #00b894; font-weight: 600; }
+
+  .insight { background: #fff; border-left: 4px solid #6c5ce7; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+  .danger-box { background: #fff0f0; border-left: 4px solid #d63031; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 14px 0; }
+  .theme-card { background: #fff; border-radius: 8px; padding: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .theme-card .th-label { font-size: 12px; font-weight: 600; color: #1a1a2e; margin-bottom: 4px; }
+  .theme-card .th-count { font-size: 22px; font-weight: 700; }
+  .theme-card .th-note { font-size: 11px; color: #888; margin-top: 3px; line-height: 1.5; }
+  .tc-delivery .th-count { color: #e17055; }
+  .tc-stock .th-count { color: #d63031; }
+  .tc-quality .th-count { color: #fdcb6e; }
+  .tc-misc .th-count { color: #6c5ce7; }
+
+  .review-card { background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 12px; }
+  .rc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .rating-badge { font-weight: 700; font-size: 13px; }
+  .r1 { color: #d63031; }
+  .r2 { color: #e17055; }
+  .r3 { color: #fdcb6e; }
+  .rc-market { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+  .rc-dk { background: #f0eeff; color: #6c5ce7; }
+  .rc-de { background: #e8f4fd; color: #0984e3; }
+  .rc-se { background: #fff0ec; color: #e17055; }
+  .sp-attr { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; background: #f0eeff; color: #6c5ce7; }
+  .sp-organic { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; background: #f0f0f0; color: #636e72; }
+  .rc-meta { font-size: 11px; color: #aaa; }
+  .rc-text { font-size: 13px; color: #4a4a4a; line-height: 1.55; }
+  .rc-gloss { font-size: 12px; color: #888; font-style: italic; margin-top: 6px; }
+
+  .action-list { list-style: none; padding: 0; }
+  .action-list li { display: flex; gap: 14px; background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 12px; }
+  .anum { width: 28px; height: 28px; border-radius: 50%; background: #6c5ce7; color: #fff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+  .prev-compare { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0; }
+  .pc-card { background: #fff; border-radius: 8px; padding: 12px 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .pc-card .pc-market { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 8px; }
+  .pc-row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; }
+  .pc-row .pc-label { color: #888; }
+  .arrow-up { color: #d63031; } .arrow-dn { color: #00b894; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+<h1>Den Sidste Flaske — October 2026 Group Report</h1>
+<p class="subtitle">All markets (DK · DE · SE) &nbsp;·&nbsp; Campaign period: October 2026 &nbsp;·&nbsp; Generated: 2 Nov 2026 &nbsp;·&nbsp; Compared with the September 2026 report</p>
+<nav class="toc">
+  <div class="toc-label">Contents</div>
+  <ol>
+    <li><a href="#exec-summary">Executive Summary</a></li>
+    <li><a href="#oct-volume">October Volume — Invites &amp; Sends</a></li>
+    <li><a href="#email-performance">Email Performance</a></li>
+    <li><a href="#market-performance">Market Performance</a></li>
+    <li><a href="#attribution">Attribution Split</a></li>
+    <li><a href="#negative-reviews">Negative Reviews</a></li>
+    <li><a href="#mom-comparison">Month-on-Month Comparison</a></li>
+    <li><a href="#action-items">Action Items</a></li>
+  </ol>
+</nav>
+<!-- EXECUTIVE SUMMARY -->
+<h2 id="exec-summary">Executive Summary</h2>
+<div class="kpi-grid">
+  <div class="kpi"><div class="label">Group Avg Rating</div><div class="value">4.58★</div><div class="sub">vs 4.63★ September (all markets)</div></div>
+  <div class="kpi good"><div class="label">Total Reviews</div><div class="value">673</div><div class="sub">DK 420 · DE 115 · SE 138 &bull; Sep 348</div></div>
+  <div class="kpi warn"><div class="label">Negatives ≤3★</div><div class="value">67</div><div class="sub">10.0% of total — DK 40 · DE 7 · SE 20 &bull; Sep 8.3% (29)</div></div>
+  <div class="kpi good"><div class="label">Total Invites Sent</div><div class="value">8,919</div><div class="sub">DK 6,200 · DE 1,396 · SE 1,323 &bull; Sep 6,727</div></div>
+  <div class="kpi"><div class="label">Campaign Avg (Attributed)</div><div class="value">4.64★</div><div class="sub">614 attributed reviews &bull; Sep 4.73★ (201, restated)</div></div>
+  <div class="kpi good"><div class="label">Review Rate (Total)</div><div class="value">7.55%</div><div class="sub">673 reviews / 8,919 invites &bull; attributed-only 6.88% &bull; Sep 5.17%</div></div>
+</div>
+<p class="note">Review Rate (Total) = all reviews (attributed + organic) / invites sent × 100. Attributed-only rate is shown as a secondary figure. Definitions are the same as in the September report.</p>
+<div class="good-box">
+  <p><strong>Review volume nearly doubled on a larger sending programme.</strong> Reviews rose from 348 in September to 673 (DK 420 · DE 115 · SE 138) as invites grew 32.6% to 8,919 and reminders 57.8% to 9,210. The review rate rose to 7.55% from 5.17%, with the biggest gains in Sweden (10.43%, from 5.25%) and Denmark (6.77%, from 4.65%). DE and SE invite volumes roughly doubled (DE 608 &rarr; 1,396; SE 724 &rarr; 1,323), while DK sent 200 invites and 200 reminders every day of the month.</p>
+  <p>Ratings stayed high: the group average was 4.58★ (September 4.63★) and 79% of reviews were 5★. 614 of 673 reviews (91.2%) are linked to an order that received an invite, up from 57.8% in September (restated on the same rule, see Attribution Split).</p>
+</div>
+<div class="warn-box">
+  <p><strong>Negative reviews rose in number, from 29 to 67, and slightly in share (10.0% from 8.3%).</strong> Delivery is again the largest theme (32 of 67, 48%), followed by wine quality (17, 25%) and refund, credit and contact handling (12, 18%). Sweden had the highest negative share (20 of 138, 14.5%) and Germany's rose to 7 of 115 (6.1%) from 1 of 59. Four of the 67 are low ratings attached to positive comments. See Negative Reviews and Action Items.</p>
+  <p><strong>Unsubscribes more than doubled</strong> to 339 (2.19% of tracked sends, from 142 or 1.19%), with Denmark at 262 (2.48%, from 1.31%). Click rates also fell to 3.0% from 7.6%. See Email Performance.</p>
+</div>
+<!-- OCTOBER VOLUME -->
+<h2 id="oct-volume">October Volume — Invites &amp; Sends</h2>
+<table>
+  <tr><th>Market</th><th>Campaign</th><th>Campaign ID</th><th>Invites</th><th>Reminders</th><th>Total Sends</th><th>Sep Invites</th><th>Sep Total Sends</th></tr>
+  <tr>
+    <td><span class="market-badge mb-dk">DK</span></td>
+    <td>invite-tp</td><td>391</td>
+    <td>6,200</td><td>6,200</td><td>12,400</td><td>5,395</td><td>9,955</td>
+  </tr>
+  <tr>
+    <td><span class="market-badge mb-de">DE</span></td>
+    <td>invite-recent</td><td>585</td>
+    <td>1,393</td><td>1,473</td><td>2,866</td><td>602</td><td>1,186</td>
+  </tr>
+  <tr>
+    <td><span class="market-badge mb-de">DE</span></td>
+    <td>invite-tp <span class="note" style="font-size:10px;">(pilot volume)</span></td><td>518</td>
+    <td>3</td><td>3</td><td>6</td><td>6</td><td>22</td>
+  </tr>
+  <tr>
+    <td><span class="market-badge mb-se">SE</span></td>
+    <td>invite-recent</td><td>576</td>
+    <td>1,322</td><td>1,532</td><td>2,854</td><td>718</td><td>1,383</td>
+  </tr>
+  <tr>
+    <td><span class="market-badge mb-se">SE</span></td>
+    <td>invite-tp <span class="note" style="font-size:10px;">(pilot volume)</span></td><td>519</td>
+    <td>1</td><td>2</td><td>3</td><td>6</td><td>19</td>
+  </tr>
+  <tr class="total-row">
+    <td colspan="3">Group Total</td>
+    <td>8,919</td><td>9,210</td><td>18,129</td><td>6,727</td><td>12,565</td>
+  </tr>
+</table>
+<p class="note">Month on month: invites +32.6% (6,727 &rarr; 8,919), reminders +57.8% (5,838 &rarr; 9,210), total sends +44.3% (12,565 &rarr; 18,129). By market, invites: DK +14.9% (5,395 &rarr; 6,200), DE +129.6% (608 &rarr; 1,396), SE +82.7% (724 &rarr; 1,323). DK sent exactly 200 invites and 200 reminders on every day of October.</p>
+<p class="note">Campaigns are unchanged from September: DK's invite-tp (391), DE's invite-recent (585) plus the invite-tp pilot (518), and SE's invite-recent (576) plus the invite-tp pilot (519). The pilots stayed at trivial volume (3 and 1 invites). The inactive DK campaigns (invite-tp-old 414, response-dk 392, closed-tickets 419 and the test campaign) sent nothing in October.</p>
+<!-- EMAIL PERFORMANCE -->
+<h2 id="email-performance">Email Performance</h2>
+<p>Fetched from the Stacktome campaign report for each market's own account (DK, DE and SE reported separately), split by workflow step using each campaign's own template metadata. The platform's engagement reporting currently covers Oct 3&ndash;31 (the first two days of the month are no longer available), so the figures below describe 29 of October's 31 days, while September covered the full month. Send counts in this section are therefore lower than the full-month volumes above; open, click and unsubscribe rates are comparable.</p>
+<table>
+  <tr><th>Market</th><th>Campaign step</th><th>Sent</th><th>Unique Opens</th><th>Open Rate</th><th>Unique Clicks</th><th>Click Rate</th><th>Unsubs</th></tr>
+  <tr>
+    <td rowspan="3"><span class="market-badge mb-dk">DK</span></td>
+    <td>Invite</td>
+    <td>5,345</td><td>3,162</td><td>59.2%</td><td>182</td><td>3.4%</td><td>157</td>
+  </tr>
+  <tr>
+    <td>Reminder</td>
+    <td>5,211</td><td>3,544</td><td>68.0%</td><td>142</td><td>2.7%</td><td>105</td>
+  </tr>
+  <tr class="total-row">
+    <td>Total (391)</td>
+    <td>10,556</td><td>6,706</td><td>63.5%</td><td>324</td><td>3.1%</td><td>262</td>
+  </tr>
+  <tr>
+    <td rowspan="3"><span class="market-badge mb-de">DE</span></td>
+    <td>Invite</td>
+    <td>1,205</td><td>565</td><td>46.9%</td><td>25</td><td>2.1%</td><td>21</td>
+  </tr>
+  <tr>
+    <td>Reminder</td>
+    <td>1,291</td><td>644</td><td>49.9%</td><td>30</td><td>2.3%</td><td>25</td>
+  </tr>
+  <tr class="total-row">
+    <td>Total (585 + 518)</td>
+    <td>2,496</td><td>1,209</td><td>48.4%</td><td>55</td><td>2.2%</td><td>46</td>
+  </tr>
+  <tr>
+    <td rowspan="3"><span class="market-badge mb-se">SE</span></td>
+    <td>Invite</td>
+    <td>1,124</td><td>670</td><td>59.6%</td><td>48</td><td>4.3%</td><td>15</td>
+  </tr>
+  <tr>
+    <td>Reminder</td>
+    <td>1,325</td><td>829</td><td>62.6%</td><td>45</td><td>3.4%</td><td>16</td>
+  </tr>
+  <tr class="total-row">
+    <td>Total (576 + 519)</td>
+    <td>2,449</td><td>1,499</td><td>61.2%</td><td>93</td><td>3.8%</td><td>31</td>
+  </tr>
+  <tr class="total-row">
+    <td colspan="2">Group Total (DK + DE + SE)</td>
+    <td>15,501</td><td>9,414</td><td>60.7%</td><td>472</td><td>3.0%</td><td>339</td>
+  </tr>
+</table>
+<p>September comparison (published): group 11,920 sent, 58.7% open, 7.6% click, 142 unsubs. October: open rate rose to 60.7%, but click rate fell to 3.0% and unsubscribes more than doubled to 339 (2.19% of tracked sends, from 1.19%). By step: DK invites 59.2% open / 3.4% click (Sep 54.4% / 5.5%) and reminders 68.0% / 2.7% (Sep 65.4% / 10.1%); DE invites 46.9% / 2.1% (Sep 45.1% / 6.0%) and reminders 49.9% / 2.3% (Sep 54.4% / 10.0%); SE invites 59.6% / 4.3% (Sep 59.9% / 5.4%) and reminders 62.6% / 3.4% (Sep 61.3% / 8.5%). Unsubscribe rates: DK 2.48% (Sep 1.31%), DE 1.84% (Sep 0.53%), SE 1.27% (Sep 0.92%).</p>
+<!-- MARKET PERFORMANCE -->
+<h2 id="market-performance">Market Performance</h2>
+<div class="market-grid">
+<div class="market-card">
+    <div class="mc-name"><span class="market-badge mb-dk">DK</span> den_sidste_flaske</div>
+    <div class="mc-avg" style="color:#00b894;">4.60★</div>
+    <div class="mc-sub">420 reviews — Oct 2026</div>
+    <div class="mc-row"><span>5★</span><strong>334 (79.5%)</strong></div>
+    <div class="mc-row"><span>4★</span><strong>46 (11.0%)</strong></div>
+    <div class="mc-row" style="color:#fdcb6e;"><span>3★</span><strong>13 (3.1%)</strong></div>
+    <div class="mc-row"><span style="color:#e17055;">2★</span><strong>10 (2.4%)</strong></div>
+    <div class="mc-row"><span style="color:#d63031;">1★</span><strong>17 (4.0%)</strong></div>
+    <div class="mc-row" style="margin-top:6px;border-top:2px solid #eee;"><span>Attributed avg</span><strong style="color:#00b894;">4.71★</strong></div>
+    <div class="mc-row"><span>Organic avg</span><strong>3.86★</strong></div>
+    <div class="mc-row" style="margin-top:6px;border-top:2px solid #eee;"><span><strong>Review rate (total)</strong></span><strong style="color:#6c5ce7;">6.77% (420/6,200)</strong></div>
+    <div class="mc-row"><span style="font-size:11px;color:#aaa;">Review rate (attributed)</span><strong style="font-size:11px;color:#aaa;">5.85% (363/6,200)</strong></div>
+  </div>
+<div class="market-card">
+    <div class="mc-name"><span class="market-badge mb-de">DE</span> den_sidste_flaske_de</div>
+    <div class="mc-avg" style="color:#00b894;">4.74★</div>
+    <div class="mc-sub">115 reviews — Oct 2026</div>
+    <div class="mc-row"><span>5★</span><strong>101 (87.8%)</strong></div>
+    <div class="mc-row"><span>4★</span><strong>7 (6.1%)</strong></div>
+    <div class="mc-row" style="color:#fdcb6e;"><span>3★</span><strong>2 (1.7%)</strong></div>
+    <div class="mc-row"><span style="color:#e17055;">2★</span><strong>1 (0.9%)</strong></div>
+    <div class="mc-row"><span style="color:#d63031;">1★</span><strong>4 (3.5%)</strong></div>
+    <div class="mc-row" style="margin-top:6px;border-top:2px solid #eee;"><span>Attributed avg</span><strong style="color:#00b894;">4.74★</strong></div>
+    <div class="mc-row"><span>Organic avg</span><strong>4.50★ <span style="font-size:10px;color:#aaa;">(2)</span></strong></div>
+    <div class="mc-row" style="margin-top:6px;border-top:2px solid #eee;"><span><strong>Review rate (total)</strong></span><strong style="color:#6c5ce7;">8.24% (115/1,396)</strong></div>
+    <div class="mc-row"><span style="font-size:11px;color:#aaa;">Review rate (attributed)</span><strong style="font-size:11px;color:#aaa;">8.09% (113/1,396)</strong></div>
+  </div>
+<div class="market-card">
+    <div class="mc-name"><span class="market-badge mb-se">SE</span> den_sidste_flaske_se</div>
+    <div class="mc-avg" style="color:#00b894;">4.38★</div>
+    <div class="mc-sub">138 reviews — Oct 2026</div>
+    <div class="mc-row"><span>5★</span><strong>97 (70.3%)</strong></div>
+    <div class="mc-row"><span>4★</span><strong>21 (15.2%)</strong></div>
+    <div class="mc-row" style="color:#fdcb6e;"><span>3★</span><strong>6 (4.3%)</strong></div>
+    <div class="mc-row"><span style="color:#e17055;">2★</span><strong>4 (2.9%)</strong></div>
+    <div class="mc-row"><span style="color:#d63031;">1★</span><strong>10 (7.2%)</strong></div>
+    <div class="mc-row" style="margin-top:6px;border-top:2px solid #eee;"><span>Attributed avg</span><strong style="color:#00b894;">4.38★</strong></div>
+    <div class="mc-row"><span>Organic avg</span><strong>&ndash; <span style="font-size:10px;color:#aaa;">(0)</span></strong></div>
+    <div class="mc-row" style="margin-top:6px;border-top:2px solid #eee;"><span><strong>Review rate (total)</strong></span><strong style="color:#6c5ce7;">10.43% (138/1,323)</strong></div>
+    <div class="mc-row"><span style="font-size:11px;color:#aaa;">Review rate (attributed)</span><strong style="font-size:11px;color:#aaa;">10.43% (138/1,323)</strong></div>
+  </div>
+</div>
+<!-- ATTRIBUTION SPLIT -->
+<h2 id="attribution">Attribution Split</h2>
+<table>
+  <tr><th>Market</th><th>Total Reviews</th><th>Attributed</th><th>Organic</th><th>Att %</th><th>Avg (Attributed)</th><th>Avg (Organic)</th><th>Review Rate (Total)</th><th>Review Rate (Attr.)</th></tr>
+  <tr>
+    <td><span class="market-badge mb-dk">DK</span></td>
+    <td>420</td><td>363</td><td>57</td><td>86.4%</td>
+    <td class="good">4.71★</td><td>3.86★</td><td><strong>6.77%</strong></td><td style="color:#aaa;">5.85%</td>
+  </tr>
+  <tr>
+    <td><span class="market-badge mb-de">DE</span></td>
+    <td>115</td><td>113</td><td>2</td><td>98.3%</td>
+    <td class="good">4.74★</td><td>4.50★</td><td><strong>8.24%</strong></td><td style="color:#aaa;">8.09%</td>
+  </tr>
+  <tr>
+    <td><span class="market-badge mb-se">SE</span></td>
+    <td>138</td><td>138</td><td>0</td><td>100.0%</td>
+    <td class="good">4.38★</td><td>&ndash;</td><td><strong>10.43%</strong></td><td style="color:#aaa;">10.43%</td>
+  </tr>
+  <tr class="total-row">
+    <td>Group</td>
+    <td>673</td><td>614</td><td>59</td><td>91.2%</td>
+    <td>~4.64★</td><td>~3.88★</td><td><strong>7.55%</strong></td><td style="color:#aaa;">6.88%</td>
+  </tr>
+</table>
+<p class="note"><strong>Review Rate (Total)</strong> = all reviews (attributed + organic) / invites sent × 100. <strong>Review Rate (Attr.)</strong> = attributed reviews / invites sent, kept as a secondary reference figure.</p>
+<p><strong>Attribution rule (identical in both months):</strong> a review is attributed only when the order it reviews itself received a review invite from one of the DSF campaigns (full invite history, same market), and that invite was sent before the review was written. A customer who was invited about a different order is not counted. Under this rule the group attribution rate rose from 57.8% in September to 91.2% in October (DK 50.2% &rarr; 86.4%, DE 76.3% &rarr; 98.3%, SE 78.9% &rarr; 100.0%), and every attributed review follows an invite to the same order. October reviews more often carry their order reference, which allows them to be matched. &ldquo;Organic&rdquo; means no invite was found for the reviewed order; it can include customers who were invited about another order. DE and SE organic counts (2 and 0) are very small, so organic averages for those markets are not meaningful.</p>
+<p class="note"><strong>September restated.</strong> The September report counted 229 of 348 reviews (65.8%) as attributed because it also matched on the customer&rsquo;s email address. 28 of those reviews were about an order that had not itself been invited. Re-applying the stricter same-order rule to both months gives September 201 of 348 (57.8%; DK 126, DE 45, SE 30) and October 614 of 673 (91.2%). Review counts, ratings, invites and review rates are unaffected; only the attributed/organic split and the attributed-only figures change. The 14 October reviews matched only by email address (all DK) are counted as organic. The organic average is 3.88★ on 59 reviews against 4.64★ attributed (September restated: 4.49★ against 4.73★).</p>
+<!-- NEGATIVE REVIEWS -->
+<h2 id="negative-reviews">Negative Reviews (≤3★) — 67 Total</h2>
+<p class="note">Negative = rated 3★ or below. 67 of 673 reviews (10.0%): DK 40, DE 7, SE 20. September: 29 of 348 (8.3%). Rated 1&ndash;2★: 46 (6.8%; September 22, 6.3%). Themes were assigned by reading every negative review; a review can belong to more than one theme. Four of the 67 (DK 3, SE 1) are 1★ ratings attached to positive comments, which may be rating errors; they stay in all counts.</p>
+<h3>Complaint Themes</h3>
+<div class="theme-grid">
+  <div class="theme-card tc-delivery">
+    <div class="th-label">🚚 Delivery Failure — still the largest theme</div>
+    <div class="th-count">32 reviews (48%)</div>
+    <div class="th-note">Parcels arriving a week or more late (DK 16, DE 5, SE 11 reviews), deliveries that never arrived (DE: 12 bottles with four unanswered complaints), cases left on the public road and stolen (DK), a courier who kept missing the promised dates (SE), a late-evening attempt at 22:45 (SE, twice), and a refused address correction (SE). September: 13 of 29 (45%).</div>
+  </div>
+  <div class="theme-card tc-stock">
+    <div class="th-label">📦 Stock &amp; Fulfilment Errors</div>
+    <div class="th-count">6 reviews (9%)</div>
+    <div class="th-note">Short deliveries (30 bottles paid for, 24 arrived in DE; 2 cases ordered, 1 delivered in DK; an order halved on delivery), a 24-bottle order held back because some wines were out of stock without notice, and a wooden gift box that did not fit the bottles. September: 2.</div>
+  </div>
+  <div class="theme-card tc-quality">
+    <div class="th-label">🍷 Wine Quality</div>
+    <div class="th-count">17 reviews (25%)</div>
+    <div class="th-note">Corks that crumbled or broke on opening (SE 3, DK 1), wines described as undrinkable, mouldy-tasting or flavourless, 24 cava rosé bottles produced more than five years earlier, and a box of reds the SE customer says tasted poor and could not be returned. Spans all three markets. September: 12 of 29 (41%).</div>
+  </div>
+  <div class="theme-card tc-misc">
+    <div class="th-label">⚙️ Other</div>
+    <div class="th-count">25 reviews (37%)</div>
+    <div class="th-note">Refund, credit and contact handling (12): vouchers of 150&ndash;250 DKK that could not be applied, a refund kept as credit, unanswered emails, a return refused. Low ratings attached to positive comments (4). Website, email and value points (9): a broken feedback link, Danish offers sent to Swedish customers, and a box description that did not match its contents. Categories overlap with the themes above, so counts add to more than 67.</div>
+  </div>
+</div>
+<h3>Selected Reviews — DK</h3>
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r1">1★</span>
+    <span class="rc-market rc-dk">DK</span>
+    <span class="sp-organic">organic</span>
+    <span class="rc-meta">Oct 14</span>
+  </div>
+  <div class="rc-text">"Jeg havde bestilt fire kasser vin hos Den Sidste Flaske. En kasse gik i stykker under leveringen, og de tre resterende kasser blev efterladt på offentlig vej, hvor de blev stjålet... Jeg skrev adskillige mails uden at få svar."</div>
+  <div class="rc-gloss">(One of four cases broke in delivery and the other three were left on the public road and stolen; the customer says their many emails went unanswered until repeated chasers.)</div>
+</div>
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r1">1★</span>
+    <span class="rc-market rc-dk">DK</span>
+    <span class="sp-organic">organic</span>
+    <span class="rc-meta">#517587DSF · Oct 29</span>
+  </div>
+  <div class="rc-text">"Fragtmanden opstod han havde været hos os for aflever og vi ikke var hjemme, men jo både min kone og jeg var hjemme... forsendelsen er endelig kommet frem i dag en uge for sent"</div>
+  <div class="rc-gloss">(The carrier claimed nobody was home when the customer says both were in; the order arrived a week late and the customer had to buy drinks locally for a party.)</div>
+</div>
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r2">2★</span>
+    <span class="rc-market rc-dk">DK</span>
+    <span class="sp-organic">organic</span>
+    <span class="rc-meta">387514DSF · Oct 22</span>
+  </div>
+  <div class="rc-text">"Jeg har modtaget 24 flasker cava rosé, som er produceret for mere end 5 år siden, hvilket desværre gør at kvaliteten er virkelig dårlig. Jeg er blevet tilbud et gavekort på 150,- i kompensation."</div>
+  <div class="rc-gloss">(24 bottles of cava rosé produced more than five years ago and of poor quality; a 150 DKK gift card was offered and the customer will not buy again.)</div>
+</div>
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r1">1★</span>
+    <span class="rc-market rc-dk">DK</span>
+    <span class="sp-organic">organic</span>
+    <span class="rc-meta">Oct 4</span>
+  </div>
+  <div class="rc-text">"Jeg fik en dårlig vin... Jeg får at vide at jeg får et tilgodebevis på 250 kr. Så prøver jeg at bestille 12 flasker vin til 660 k. men finder ingen tilgodebevis... der bliver bare oprettet et sagsnummer."</div>
+  <div class="rc-gloss">(A 250 DKK credit promised after a bad bottle could not be applied to a new 12-bottle order; the customer wrote many times and only received case numbers.)</div>
+</div>
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r3">3★</span>
+    <span class="rc-market rc-dk">DK</span>
+    <span class="sp-attr">attributed</span>
+    <span class="rc-meta">Oct 24</span>
+  </div>
+  <div class="rc-text">"sidste gang var den ene kasse ikke særlig god, så den blev returneret. Desværre fik jeg ikke pengene retur, som jeg havde forventet, men beløbet blev indefrosset til at bruge på nye køb."</div>
+  <div class="rc-gloss">(A returned case was refunded as store credit rather than money back, which the customer dislikes.)</div>
+</div>
+<h3>Selected Reviews — DE &amp; SE</h3>
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r1">1★</span>
+    <span class="rc-market rc-de">DE</span>
+    <span class="sp-attr">attributed</span>
+    <span class="rc-meta">Oct 27</span>
+  </div>
+  <div class="rc-text">"Sehr schlecht 12 Flaschen Wein nicht erhalten und keiner will was wissen von 4xschriftlich reklamiert und bis heute keine Reaktion 1x angerufen und auch keine Rückmeldung"</div>
+  <div class="rc-gloss">(12 bottles not received; four written complaints and a phone call have had no response.)</div>
+</div>
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r1">1★</span>
+    <span class="rc-market rc-de">DE</span>
+    <span class="sp-attr">attributed</span>
+    <span class="rc-meta">Oct 14</span>
+  </div>
+  <div class="rc-text">"Ich bezahle für 30 Flaschen aber nur 24Flaschen ankommen?"</div>
+  <div class="rc-gloss">(Paid for 30 bottles but only 24 arrived.)</div>
+</div>
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r1">1★</span>
+    <span class="rc-market rc-se">SE</span>
+    <span class="sp-attr">attributed</span>
+    <span class="rc-meta">Oct 9</span>
+  </div>
+  <div class="rc-text">"Nu är jag lite su. Jag har fortfarande inte fått leveransen. Blev lovad leverans 6/10 sedan 8/10 sen 9/10 och nu igen: nej ny leverans datum, när??"</div>
+  <div class="rc-gloss">(Promised delivery on Oct 6, then Oct 8, then Oct 9, and still no delivery or new date; the customer blames the courier rather than the shop.)</div>
+</div>
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r2">2★</span>
+    <span class="rc-market rc-se">SE</span>
+    <span class="sp-attr">attributed</span>
+    <span class="rc-meta">Oct 27</span>
+  </div>
+  <div class="rc-text">"Tre flaskor från Italien med korkskruv gick korken sönder på alla tre flaskorna... Tyvär gör det att jag väljer en annan leverantör i fortsättningen"</div>
+  <div class="rc-gloss">(The corks broke on all three Italian bottles with screw-type closures, so the wine had to be strained; the customer will choose another supplier.)</div>
+</div>
+<div class="review-card">
+  <div class="rc-header">
+    <span class="rating-badge r1">1★</span>
+    <span class="rc-market rc-se">SE</span>
+    <span class="sp-attr">attributed</span>
+    <span class="rc-meta">Oct 27</span>
+  </div>
+  <div class="rc-text">"jag köpte låda med olika röda viner. Jag testade några av de med de var inte alls goda trots det marknadsföring de gör för att sälja lådan. när jag kontakta de för att lämna tillbaka lådan vägrade de ta tillbaka de."</div>
+  <div class="rc-gloss">(A mixed case of red wines tasted poor against the marketing, and the shop refused to take the case back.)</div>
+</div>
+<!-- MOM COMPARISON -->
+<h2 id="mom-comparison">Month-on-Month Comparison (September → October)</h2>
+<div class="prev-compare">
+  <div class="pc-card">
+    <div class="pc-market"><span class="market-badge mb-dk">DK</span> den_sidste_flaske</div>
+    <div class="pc-row"><span class="pc-label">Avg rating</span><span>4.60 → <strong>4.60★</strong> (flat)</span></div>
+    <div class="pc-row"><span class="pc-label">Total reviews</span><span>251 → 420</span></div>
+    <div class="pc-row"><span class="pc-label">Invites sent</span><span>5,395 → 6,200</span></div>
+    <div class="pc-row"><span class="pc-label">Attributed</span><span>126 → 363 (50.2% → 86.4%)</span></div>
+    <div class="pc-row"><span class="pc-label">Neg rate</span><span>9.2% → <strong class="arrow-up">9.5%</strong> ▲ (23 → 40)</span></div>
+    <div class="pc-row"><span class="pc-label">Attributed avg</span><span>4.71 → <strong>4.71★</strong> (flat)</span></div>
+    <div class="pc-row" style="border-top:1px solid #f0f0f0;padding-top:6px;margin-top:2px;"><span class="pc-label"><strong>Review rate (Sep → Oct)</strong></span><span><strong>4.65% → 6.77%</strong></span></div>
+  </div>
+  <div class="pc-card">
+    <div class="pc-market"><span class="market-badge mb-de">DE</span> den_sidste_flaske_de</div>
+    <div class="pc-row"><span class="pc-label">Avg rating</span><span>4.90 → <strong class="arrow-up">4.74★</strong> ▼</span></div>
+    <div class="pc-row"><span class="pc-label">Total reviews</span><span>59 → 115</span></div>
+    <div class="pc-row"><span class="pc-label">Invites sent</span><span>608 → 1,396</span></div>
+    <div class="pc-row"><span class="pc-label">Attributed</span><span>45 → 113 (76.3% → 98.3%)</span></div>
+    <div class="pc-row"><span class="pc-label">Neg rate</span><span>1.7% → <strong class="arrow-up">6.1%</strong> ▲ (1 → 7)</span></div>
+    <div class="pc-row"><span class="pc-label">Attributed avg</span><span>4.91 → <strong class="arrow-up">4.74★</strong> ▼</span></div>
+    <div class="pc-row" style="border-top:1px solid #f0f0f0;padding-top:6px;margin-top:2px;"><span class="pc-label"><strong>Review rate (Sep → Oct)</strong></span><span><strong>9.70% → 8.24%</strong></span></div>
+  </div>
+  <div class="pc-card">
+    <div class="pc-market"><span class="market-badge mb-se">SE</span> den_sidste_flaske_se</div>
+    <div class="pc-row"><span class="pc-label">Avg rating</span><span>4.42 → <strong>4.38★</strong> ▼ (~flat)</span></div>
+    <div class="pc-row"><span class="pc-label">Total reviews</span><span>38 → 138</span></div>
+    <div class="pc-row"><span class="pc-label">Invites sent</span><span>724 → 1,323</span></div>
+    <div class="pc-row"><span class="pc-label">Attributed</span><span>30 → 138 (78.9% → 100.0%)</span></div>
+    <div class="pc-row"><span class="pc-label">Neg rate</span><span>13.2% → <strong class="arrow-up">14.5%</strong> ▲ (5 → 20)</span></div>
+    <div class="pc-row"><span class="pc-label">Attributed avg</span><span>4.57 → <strong class="arrow-up">4.38★</strong> ▼</span></div>
+    <div class="pc-row" style="border-top:1px solid #f0f0f0;padding-top:6px;margin-top:2px;"><span class="pc-label"><strong>Review rate (Sep → Oct)</strong></span><span><strong>5.25% → 10.43%</strong></span></div>
+  </div>
+</div>
+<p>Denmark held its rating (4.60★) while review volume rose 67% (251 &rarr; 420) on 14.9% more invites. Germany's average slipped from 4.90★ to 4.74★ and its negative reviews rose from 1 to 7, mostly non-delivery and missing bottles, on twice the review volume (59 &rarr; 115). Sweden's reviews more than tripled (38 &rarr; 138) with a stable average (4.38★) but a negative share of 14.5% driven by late deliveries and corks. DE and SE bases are small (115 and 138 reviews), so treat their deltas as indicative.</p>
+<p class="note"><strong>Review rate row is September &rarr; October.</strong> Both months were measured on normal sending volume, using the same definition (all reviews / invites sent). Group: 5.17% &rarr; 7.55%. The attributed counts, attribution rates and attributed averages use September restated on the same-order rule (see Attribution Split); all other rows compare October with the values published in the September report.</p>
+<!-- ACTION ITEMS -->
+<h2 id="action-items">Action Items</h2>
+<ul class="action-list">
+  <li>
+    <div class="anum">1</div>
+    <div><strong>Delivery/logistics is still the top complaint driver (32 of 67, 48%) — keep the carrier review open and widen it.</strong> The pattern is late or missed delivery slots (DK, SE), parcels left on the street (DK), late-evening attempts and drivers unable to use door codes (SE), and non-delivery in DE (12 bottles, plus 24 of 30 arriving). Check promised delivery windows against real carrier performance in each market, and how address corrections are passed to the courier (two SE reviews).</div>
+  </li>
+  <li>
+    <div class="anum">2</div>
+    <div><strong>Wine quality: 17 reviews (25%) — check cork closures and stock age.</strong> Corks that crumbled or broke on opening feature in 4 reviews (SE 3, DK 1), and one DK customer received 24 cava rosé bottles produced more than five years ago. Review the supplier lots and storage behind the affected products and the descriptions used in mixed boxes (one SE reviewer noted the box description named wines the box did not contain).</div>
+  </li>
+  <li>
+    <div class="anum">3</div>
+    <div><strong>Follow up individually on refund, credit and contact cases (12 reviews).</strong> Examples: a 250 DKK credit that could not be applied (DK, Oct 4), a promised secret gift missing from a new order (DK, Oct 16), a returned case refunded as credit only (DK, Oct 24), 12 DE bottles not received after four written complaints (DE, Oct 27) and a mixed case SE refused to take back (SE, Oct 27). Visible, fast responses would likely convert some of these.</div>
+  </li>
+  <li>
+    <div class="anum">4</div>
+    <div><strong>Watch email frequency and engagement.</strong> Unsubscribes more than doubled to 339 (2.19% of tracked sends against 1.19%), DK reaching 262 (2.48%). Click rates fell from 7.6% to 3.0% overall. DK now sends 200 invites and 200 reminders daily; consider reviewing reminder timing and content for DK and DE, where reminder engagement fell most (DK reminder clicks 2.7% against 10.1%).</div>
+  </li>
+  <li>
+    <div class="anum">5</div>
+    <div><strong>Four low ratings sit on positive comments.</strong> DK (3) and SE (1) reviewers gave 1★ while praising delivery, wine or the service; they may have chosen the wrong star count. They remain in the figures; consider replying publicly to invite those customers to update their rating.</div>
+  </li>
+  <li>
+    <div class="anum">6</div>
+    <div><strong>Sending and review growth are strong — protect the base.</strong> Reviews are up 93% and the review rate is 7.55%, with 91% of reviews linked to an invite for the same order. Keep DE and SE at their October sending levels (invites roughly doubled), and keep watching the negative share, which edged up to 10.0% as volume grew.</div>
+  </li>
+</ul>
+</div>
+</body>
+</html>
