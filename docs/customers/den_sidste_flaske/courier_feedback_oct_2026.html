@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Den Sidste Flaske — October 2026 Delivery Feedback by Courier</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 1040px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 28px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #4a4a4a; margin: 20px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+  p.note { font-size: 12px; color: #888; margin-top: 8px; }
+
+  nav.toc { background: #fff; border-radius: 10px; padding: 16px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 28px; font-size: 13px; }
+  nav.toc .toc-label { font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: .6px; font-size: 10px; margin-bottom: 10px; }
+  nav.toc ol { margin: 0; padding-left: 18px; line-height: 2; }
+  nav.toc a { color: #6c5ce7; text-decoration: none; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 16px; }
+  .kpi-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 16px 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 5px; }
+  .kpi .value { font-size: 22px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 10px; color: #aaa; margin-top: 3px; }
+  .kpi.warn .value { color: #e17055; }
+  .kpi.danger .value { color: #d63031; }
+  .kpi.good .value { color: #00b894; }
+
+  .market-badge { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; color: #fff; margin-right: 8px; }
+  .mb-dk { background: #6c5ce7; }
+  .mb-de { background: #0984e3; }
+  .mb-se { background: #e17055; }
+
+  .market-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+  .market-card { background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .market-card .mc-name { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 10px; }
+  .market-card .mc-avg { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .market-card .mc-sub { font-size: 11px; color: #888; margin-top: 2px; margin-bottom: 10px; }
+  .mc-row { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; border-top: 1px solid #f0f0f0; color: #636e72; }
+  .mc-row strong { color: #2d3436; }
+
+  .split-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+  .split-box { border-radius: 8px; padding: 10px 14px; }
+  .split-attr { background: #f0eeff; border-left: 3px solid #6c5ce7; }
+  .split-organic { background: #f5f6fa; border-left: 3px solid #b2bec3; }
+  .split-box .sb-label { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 4px; }
+  .split-box .sb-count { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+  .split-box .sb-avg { font-size: 12px; color: #636e72; margin-top: 2px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 14px; }
+  th { background: #f8f9ff; text-align: left; padding: 10px 12px; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #636e72; border-bottom: 1px solid #eee; white-space: nowrap; }
+  td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; font-size: 13px; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr.total-row td { font-weight: 600; background: #f8f9ff; border-top: 2px solid #eee; }
+  td.warn { color: #e17055; font-weight: 600; }
+  td.danger { color: #d63031; font-weight: 600; }
+  td.good { color: #00b894; font-weight: 600; }
+
+  .insight { background: #fff; border-left: 4px solid #6c5ce7; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .warn-box { background: #fff8f0; border-left: 4px solid #e17055; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+  .danger-box { background: #fff0f0; border-left: 4px solid #d63031; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+  .good-box { background: #f0fff8; border-left: 4px solid #00b894; border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 14px 0; }
+
+  .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 14px 0; }
+  .theme-card { background: #fff; border-radius: 8px; padding: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .theme-card .th-label { font-size: 12px; font-weight: 600; color: #1a1a2e; margin-bottom: 4px; }
+  .theme-card .th-count { font-size: 22px; font-weight: 700; }
+  .theme-card .th-note { font-size: 11px; color: #888; margin-top: 3px; line-height: 1.5; }
+  .tc-delivery .th-count { color: #e17055; }
+  .tc-stock .th-count { color: #d63031; }
+  .tc-quality .th-count { color: #fdcb6e; }
+  .tc-misc .th-count { color: #6c5ce7; }
+
+  .review-card { background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 12px; }
+  .rc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .rating-badge { font-weight: 700; font-size: 13px; }
+  .r1 { color: #d63031; }
+  .r2 { color: #e17055; }
+  .r3 { color: #fdcb6e; }
+  .rc-market { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+  .rc-dk { background: #f0eeff; color: #6c5ce7; }
+  .rc-de { background: #e8f4fd; color: #0984e3; }
+  .rc-se { background: #fff0ec; color: #e17055; }
+  .sp-attr { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; background: #f0eeff; color: #6c5ce7; }
+  .sp-organic { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; background: #f0f0f0; color: #636e72; }
+  .rc-meta { font-size: 11px; color: #aaa; }
+  .rc-text { font-size: 13px; color: #4a4a4a; line-height: 1.55; }
+  .rc-gloss { font-size: 12px; color: #888; font-style: italic; margin-top: 6px; }
+
+  .action-list { list-style: none; padding: 0; }
+  .action-list li { display: flex; gap: 14px; background: #fff; border-radius: 10px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 12px; }
+  .anum { width: 28px; height: 28px; border-radius: 50%; background: #6c5ce7; color: #fff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+  .prev-compare { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0; }
+  .pc-card { background: #fff; border-radius: 8px; padding: 12px 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .pc-card .pc-market { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 8px; }
+  .pc-row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; }
+  .pc-row .pc-label { color: #888; }
+  .arrow-up { color: #d63031; } .arrow-dn { color: #00b894; }
+
+  .pill { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:600; }
+  .t-R { background:#ffeaa7; color:#8a6d00; } .t-P { background:#dff9fb; color:#0a6c74; } .t-U { background:#f0f0f0; color:#636e72; }
+  td.small, .small { font-size:12px; color:#4a4a4a; line-height:1.5; }
+  td.num, th.num { text-align:right; white-space:nowrap; }
+  .later { display:block; color:#888; font-size:11px; margin-top:4px; }
+  sup.flag { color:#e17055; font-weight:700; }
+  ul.tight { margin:6px 0 10px 20px; line-height:1.65; color:#4a4a4a; }
+  .cname { font-size:12px; color:#888; font-weight:400; }
+  .t-X { background:#e8e6f9; color:#4a3fa0; } .t-Q { background:#dff9fb; color:#0a6c74; font-style:italic; }
+  .table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  @media (max-width: 760px) { .table-scroll > table { min-width:720px; } .table-scroll > table.narrow { min-width:560px; } }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<h1>Den Sidste Flaske — October 2026 Delivery Feedback by Courier</h1>
+<p class="subtitle">DK · DE · SE &nbsp;·&nbsp; 1–31 October 2026 &nbsp;·&nbsp; Prepared for Tobias and the DSF team &nbsp;·&nbsp; Generated: 3 Nov 2026</p>
+
+<h2>Executive summary</h2>
+<div class="kpi-grid-3">
+ <div class="kpi"><div class="label">October reviews analysed</div><div class="value">673</div><div class="sub">DK 420 · DE 115 · SE 138</div></div>
+ <div class="kpi warn"><div class="label">Delivery-related complaints</div><div class="value">47</div><div class="sub">DK 27 · DE 8 · SE 12</div></div>
+ <div class="kpi"><div class="label">Verified to an order and delivery method</div><div class="value">38</div><div class="sub">9 could not be verified</div></div>
+</div>
+<p>Each complaint was matched to its Shopify order where possible. The table shows how the 47 complaints reconcile.</p>
+<div class="table-scroll"><table class="narrow"><tr><th>Complaint group</th><th class="num">Complaints</th><th>Note</th></tr>
+<tr><td><strong>Verified to an order and a courier</strong></td><td class="num">34</td><td class="small">WebrinQ 13 · Burd 2 · DHL 8 · Airmee 11. Shown in the courier sections below.</td></tr>
+<tr><td>Verified to an order, courier not confirmed</td><td class="num">2</td><td class="small">492734DSF and 497944DSF: the customer ordered with more than one courier before reviewing, so the review cannot be tied to one courier.</td></tr>
+<tr><td>Verified to an order, return shipping (courier not confirmed)</td><td class="num">1</td><td class="small">488049DSF: the complaint concerns a return shipment, not the outbound delivery, and the return courier is not known.</td></tr>
+<tr><td>Verified to an order, store pick-up</td><td class="num">1</td><td class="small">Collection from the Aabenraa wine store; outside the courier comparison.</td></tr>
+<tr><td><em>Subtotal verified to an order and delivery method</em></td><td class="num">38</td><td class="small"></td></tr>
+<tr><td>Order found, delivery method not verified</td><td class="num">1</td><td class="small">11792-SE: no shipping or fulfilment record could be retrieved, so it is not assigned to any courier.</td></tr>
+<tr><td>No usable order reference</td><td class="num">8</td><td class="small">Reviews that give no order number, or one that cannot be found.</td></tr>
+<tr class="total-row"><td>Total</td><td class="num">47</td><td></td></tr></table></div>
+
+<h2>Courier comparison</h2>
+<div class="table-scroll"><table><tr><th>Courier</th><th>Market</th><th class="num">Complaints</th><th class="num">Reviewer describes courier handling</th><th class="num">Arose before shipment (or probably)</th><th class="num">Cause not determinable</th><th>Main issues</th></tr>
+<tr><td><strong>WebrinQ</strong></td><td><span class='market-badge mb-dk'>DK</span></td><td class='num'>13</td><td class='num'>4</td><td class='num'>1</td><td class='num'>8</td><td class='small'>late delivery (7), driver conduct (2), delivered to wrong place (1), failed attempt (1), damaged (1), missing items (1)</td></tr><tr><td><strong>Burd</strong></td><td><span class='market-badge mb-dk'>DK</span></td><td class='num'>2</td><td class='num'>1</td><td class='num'>1</td><td class='num'>0</td><td class='small'>not delivered (1), damaged (1)</td></tr><tr><td><strong>DHL</strong></td><td><span class='market-badge mb-de'>DE</span></td><td class='num'>8</td><td class='num'>3</td><td class='num'>1</td><td class='num'>4</td><td class='small'>not received (3), late delivery (1), missing items (1), damaged (1), service set-up (age check) (1), unspecified (1)</td></tr><tr><td><strong>Airmee</strong></td><td><span class='market-badge mb-se'>SE</span></td><td class='num'>11</td><td class='num'>5</td><td class='num'>4</td><td class='num'>2</td><td class='small'>late delivery (5), driver conduct (2), address data (2), not received (1), failed attempt (1)</td></tr>
+<tr class="total-row"><td>Total</td><td></td><td class="num">34</td><td class="num">13</td><td class="num">7</td><td class="num">14</td><td></td></tr></table></div>
+<div class="warn-box"><p><strong>How to read this.</strong> A complaint count is not a count of courier faults. Each case is classed by what the review says and what the shipping record shows. <em>Reviewer describes courier handling</em> is the customer's own account and has not been confirmed with the courier. <em>Arose before shipment</em> means the problem happened before the parcel reached the courier (late shipment, hand-over or address data); where the evidence is indirect, the report says <em>probably</em>. <em>Cause not determinable</em> means the parcel was shipped promptly and only the courier's delivery scans can show what happened. Markets are not compared: customers in each market review at different rates and use different couriers.</p></div>
+<p class="note">Cases marked * are explained in the methodology note: the customer had placed another order before writing the review, so the review may describe that order.</p>
+
+<h2>Problems that arose before the courier</h2>
+<p>These cases appear to be DSF-side (late shipment, hand-over or address data) and are better followed up inside DSF than raised with a courier:</p>
+<ul class="tight"><li><strong>12363-SE</strong> — shipment recorded 19 days after the order; the three-week delay appears to have arisen before the courier.</li>
+<li><strong>13559-SE</strong> — shipment recorded 13 days after the order, with an incomplete delivery address after an earlier return.</li>
+<li><strong>12729-SE</strong> — old street address entered by the customer; the reviewer says the corrected address was not passed on.</li>
+<li><strong>511951DSF</strong> and <strong>513644DSF</strong> — no shipment record was found for either order; for the latter the reviewer says the parcel missed the hand-over to Burd. This indicates, but does not prove, that neither had been shipped.</li>
+<li><strong>11039-DE</strong> and <strong>12585-SE</strong> — probably refer to later orders that were shipped 16 and 7 days after they were placed.</li></ul>
+
+<h2>Cases not attributed to a courier</h2>
+<p>These four complaints are not counted under any courier: two outbound deliveries where the customer used more than one courier, one return shipment, and one order without a shipping or fulfilment record.</p>
+<div class="table-scroll"><table><tr><th>Order</th><th>Review</th><th>Rating</th><th>Issue</th><th>What was reported</th><th>Shipping record</th><th>Assessment</th></tr><tr><td><strong>488049DSF</strong><sup class="flag">*</sup></td><td>2 Oct</td><td>★</td><td>Damaged (return shipment)</td><td class='small'>Reviewer says boxes and bottles break when sent back. This concerns a return, not the outbound delivery. The outbound order went with WebrinQ, but that does not show who carried the return, so the case is not counted under any courier.<span class="later">Other orders by this customer before the review: 501413 (20 Sep, shipped 21 Sep)</span></td><td class='small'>Ordered 29 Aug<br>Shipment recorded 31 Aug</td><td><span class='pill t-X'>Return shipping, courier not confirmed</span></td></tr><tr><td><strong>492734DSF</strong><sup class="flag">*</sup></td><td>5 Oct</td><td>★★★★★</td><td>Damaged</td><td class='small'>One box was damaged by the driver; a replacement arrived within two days. The linked order went with WebrinQ, but the customer placed three Burd orders (500785, 502589, 503282, 19-23 Sep) before reviewing, so the courier cannot be confirmed.<span class="later">Other orders by this customer before the review: three later Burd orders: 500785, 502589, 503282 (19-23 Sep)</span></td><td class='small'>Ordered 6 Sep<br>Shipment recorded 7 Sep</td><td><span class='pill t-X'>Courier not confirmed</span></td></tr><tr><td><strong>497944DSF</strong><sup class="flag">*</sup></td><td>6 Oct</td><td>★</td><td>General dissatisfaction</td><td class='small'>Delivery rated one star with no detail (the wine itself was rated five stars). The linked order went with Burd, but a later order (506142, placed 30 Sep) went with WebrinQ, so the courier cannot be confirmed.<span class="later">Other orders by this customer before the review: 506142 (30 Sep, shipped 1 Oct), a WebrinQ order</span></td><td class='small'>Ordered 15 Sep<br>Shipment recorded 15 Sep</td><td><span class='pill t-X'>Courier not confirmed</span></td></tr><tr><td><strong>11792-SE</strong></td><td>11 Oct</td><td>★</td><td>Late delivery</td><td class='small'>Says DSF ships very slowly. The order was found, but no Shopify shipping or fulfilment record could be retrieved for it. Its shipping service code points to Airmee, but without a shipment record this is not confirmed, so the case is not counted under any courier.</td><td class='small'>Order found; no shipping or fulfilment record</td><td><span class='pill t-X'>Courier not confirmed</span></td></tr></table></div>
+
+<h2>Courier detail</h2>
+<h3><span class="market-badge mb-dk">DK</span>WebrinQ <span class="cname">&mdash; 13 complaints &middot; 4 reviewer describes courier handling &middot; 1 arose before shipment (or probably) &middot; 8 not determinable</span></h3>
+<p><strong>Main issues:</strong> late delivery (7), driver conduct (2), delivered to wrong place (1), failed attempt (1), damaged (1), missing items (1).</p>
+<div class="table-scroll"><table><tr><th>Order</th><th>Review</th><th>Rating</th><th>Issue</th><th>What was reported</th><th>Shipping record</th><th>Assessment</th></tr><tr><td><strong>486855DSF</strong><sup class="flag">*</sup></td><td>1 Oct</td><td>★★★★★</td><td>Delivered to wrong place</td><td class='small'>Parcel went to the wrong door because the label showed "20a" instead of "20a1"; the customer collected it. Otherwise satisfied.<span class="later">Other orders by this customer before the review: 503393 (23 Sep, shipped 24 Sep)</span></td><td class='small'>Ordered 26 Aug<br>Shipment recorded 27 Aug</td><td><span class='pill t-U'>Cause not determinable</span></td></tr><tr><td><strong>494538DSF</strong></td><td>1 Oct</td><td>★★★★★</td><td>Late delivery</td><td class='small'>Delivery took a little longer than expected.</td><td class='small'>Ordered 9 Sep<br>Shipment recorded 10 Sep</td><td><span class='pill t-U'>Cause not determinable</span></td></tr><tr><td><strong>494726DSF</strong><sup class="flag">*</sup></td><td>1 Oct</td><td>★★</td><td>Late delivery</td><td class='small'>Arrived about a week late, only after the customer chased.<span class="later">Other orders by this customer before the review: 501885 (21 Sep, shipped 21 Sep)</span></td><td class='small'>Ordered 10 Sep<br>Shipment recorded 10 Sep</td><td><span class='pill t-U'>Cause not determinable</span></td></tr><tr><td><strong>501355DSF</strong></td><td>11 Oct</td><td>★★★★★</td><td>Failed attempt</td><td class='small'>Driver could not find the address; delivered on the second attempt.</td><td class='small'>Ordered 20 Sep<br>Shipment recorded 20 Sep</td><td><span class='pill t-R'>Reviewer describes courier handling</span></td></tr><tr><td><strong>511951DSF</strong></td><td>15 Oct</td><td>★★</td><td>Late delivery</td><td class='small'>Delivery expected on 13 Oct had not arrived on 14 Oct; DSF said the order would be prioritised. No shipment record was found for this order, which indicates it had not been shipped by then.</td><td class='small'>Ordered 11 Oct<br>No shipment recorded</td><td><span class='pill t-Q'>Probably arose before shipment</span></td></tr><tr><td><strong>505963DSF</strong></td><td>24 Oct</td><td>★★★★</td><td>Late delivery</td><td class='small'>Delivered one day later than promised.</td><td class='small'>Ordered 29 Sep<br>Shipment recorded 30 Sep</td><td><span class='pill t-U'>Cause not determinable</span></td></tr><tr><td><strong>506111DSF</strong><sup class="flag">*</sup></td><td>28 Oct</td><td>★★★</td><td>Late delivery</td><td class='small'>Delivered three days after the time stated.<span class="later">Other orders by this customer before the review: 515792 (20 Oct, shipped 20 Oct)</span></td><td class='small'>Ordered 30 Sep<br>Shipment recorded 30 Sep</td><td><span class='pill t-U'>Cause not determinable</span></td></tr><tr><td><strong>517587DSF</strong></td><td>29 Oct</td><td>★</td><td>Driver conduct</td><td class='small'>Driver reported the customer as not home; the customer says they were. The wine was needed for an event. Shipment was recorded four days after ordering.</td><td class='small'>Ordered 23 Oct<br>Shipment recorded 27 Oct</td><td><span class='pill t-R'>Reviewer describes courier handling</span></td></tr><tr><td><strong>507343DSF</strong><sup class="flag">*</sup></td><td>30 Oct</td><td>★</td><td>Driver conduct</td><td class='small'>Reviewer says the drivers cannot read, which suggests trouble locating the address; no further detail.<span class="later">Other orders by this customer before the review: 517706 (23 Oct, shipped 27 Oct)</span></td><td class='small'>Ordered 2 Oct<br>Shipment recorded 2 Oct</td><td><span class='pill t-R'>Reviewer describes courier handling</span></td></tr><tr><td><strong>508721DSF</strong></td><td>30 Oct</td><td>★</td><td>Late delivery</td><td class='small'>Delivery took a couple of days longer than stated at checkout.</td><td class='small'>Ordered 5 Oct<br>Shipment recorded 5 Oct</td><td><span class='pill t-U'>Cause not determinable</span></td></tr><tr><td><strong>509154DSF</strong><sup class="flag">*</sup></td><td>31 Oct</td><td>★★★★</td><td>Damaged</td><td class='small'>One of three boxes broke in transit; a replacement was delivered quickly.<span class="later">Other orders by this customer before the review: 512258 (12 Oct, shipped 14 Oct)</span></td><td class='small'>Ordered 5 Oct<br>Shipment recorded 7 Oct</td><td><span class='pill t-R'>Reviewer describes courier handling</span></td></tr><tr><td><strong>509935DSF</strong></td><td>31 Oct</td><td>★★★★★</td><td>Late delivery</td><td class='small'>Slightly delayed, which the reviewer puts down to a busy period.</td><td class='small'>Ordered 7 Oct<br>Shipment recorded 9 Oct</td><td><span class='pill t-U'>Cause not determinable</span></td></tr><tr><td><strong>501809DSF</strong></td><td>31 Oct</td><td>★★★</td><td>Missing items</td><td class='small'>Only half the order arrived; DSF fixed it after contact.</td><td class='small'>Ordered 21 Sep<br>Shipment recorded 21 Sep</td><td><span class='pill t-U'>Cause not determinable</span></td></tr></table></div>
+<ul class="tight"><li><strong>Worth raising with WebrinQ:</strong> the driver notes and delivery scans for 517587DSF (driver reported nobody home), 501355DSF and 507343DSF (trouble finding the address), and the transit damage in 509154DSF. These rest on the customers' accounts and are not confirmed.</li>
+<li><strong>Most common:</strong> late delivery is the largest group, but almost all of these orders were shipped on the day of ordering or the next, and the delay cannot be placed without delivery scans.</li>
+<li><strong>Not for WebrinQ:</strong> 511951DSF (probably not shipped when the review was written) and 488049DSF (a return shipment). 488049DSF and 492734DSF are shown separately because the courier cannot be confirmed.</li></ul>
+<h3><span class="market-badge mb-dk">DK</span>Burd <span class="cname">&mdash; 2 complaints &middot; 1 reviewer describes courier handling &middot; 1 arose before shipment (or probably) &middot; 0 not determinable</span></h3>
+<p><strong>Main issues:</strong> not delivered (1), damaged (1).</p>
+<div class="table-scroll"><table><tr><th>Order</th><th>Review</th><th>Rating</th><th>Issue</th><th>What was reported</th><th>Shipping record</th><th>Assessment</th></tr><tr><td><strong>513644DSF</strong></td><td>16 Oct</td><td>★★</td><td>Not delivered</td><td class='small'>Same-day order placed the day before, never delivered. The reviewer says DSF support told them the parcel had not been included in the hand-over to Burd. No shipment record was found for this order, which is consistent with that account.</td><td class='small'>Ordered 15 Oct<br>No shipment recorded</td><td><span class='pill t-Q'>Probably arose before shipment</span></td></tr><tr><td><strong>509133DSF</strong></td><td>30 Oct</td><td>★★★★</td><td>Damaged</td><td class='small'>Reviewer asks that Burd drivers not lift a six-bottle box by a single handle, because boxes break that way.</td><td class='small'>Ordered 5 Oct<br>Shipment recorded 6 Oct</td><td><span class='pill t-R'>Reviewer describes courier handling</span></td></tr></table></div>
+<ul class="tight"><li><strong>Worth sharing with Burd:</strong> the handling comment in 509133DSF (six-bottle boxes lifted by one handle). This is the customer's observation and has not been confirmed.</li>
+<li><strong>Not a Burd delivery failure on the evidence:</strong> 513644DSF has no shipment record and the reviewer says the parcel missed the hand-over; this should be followed up inside DSF. 497944DSF is shown separately because its courier cannot be confirmed.</li></ul>
+<h3><span class="market-badge mb-de">DE</span>DHL <span class="cname">&mdash; 8 complaints &middot; 3 reviewer describes courier handling &middot; 1 arose before shipment (or probably) &middot; 4 not determinable</span></h3>
+<p><strong>Main issues:</strong> not received (3), late delivery (1), missing items (1), damaged (1), service set-up (age check) (1), unspecified (1).</p>
+<div class="table-scroll"><table><tr><th>Order</th><th>Review</th><th>Rating</th><th>Issue</th><th>What was reported</th><th>Shipping record</th><th>Assessment</th></tr><tr><td><strong>10696-DE</strong></td><td>7 Oct</td><td>★</td><td>Not received</td><td class='small'>No goods received.</td><td class='small'>Ordered 15 Sep<br>Shipment recorded 16 Sep</td><td><span class='pill t-U'>Cause not determinable</span></td></tr><tr><td><strong>10708-DE</strong></td><td>7 Oct</td><td>★★★</td><td>Late delivery</td><td class='small'>Late delivery; the reviewer says DSF support attributed it to DHL.</td><td class='small'>Ordered 15 Sep<br>Shipment recorded 16 Sep</td><td><span class='pill t-R'>Reviewer describes courier handling</span></td></tr><tr><td><strong>10370-DE</strong><sup class="flag">*</sup></td><td>14 Oct</td><td>★</td><td>Missing items</td><td class='small'>Paid for 30 bottles, 24 arrived.<span class="later">Other orders by this customer before the review: 10523 (12 Sep) and 10987 (21 Sep)</span></td><td class='small'>Ordered 9 Sep<br>Shipment recorded 9 Sep</td><td><span class='pill t-U'>Cause not determinable</span></td></tr><tr><td><strong>11039-DE</strong><sup class="flag">*</sup></td><td>20 Oct</td><td>★★</td><td>Not received</td><td class='small'>Order still not arrived. The linked order shipped on the day it was placed, but a later order (11776, placed 3 Oct) was only shipped on 19 Oct, which fits the review date better.<span class="later">Other orders by this customer before the review: 11776 (3 Oct, shipped 19 Oct)</span></td><td class='small'>Ordered 22 Sep<br>Shipment recorded 22 Sep</td><td><span class='pill t-Q'>Probably arose before shipment</span></td></tr><tr><td><strong>11677-DE</strong></td><td>23 Oct</td><td>★</td><td>Damaged</td><td class='small'>Late; the reviewer says DHL did not deliver because one bottle was broken.</td><td class='small'>Ordered 2 Oct<br>Shipment recorded 2 Oct</td><td><span class='pill t-R'>Reviewer describes courier handling</span></td></tr><tr><td><strong>10063-DE</strong></td><td>27 Oct</td><td>★</td><td>Not received</td><td class='small'>Twelve bottles not received; four written complaints went unanswered. Shipment was recorded three days after ordering.</td><td class='small'>Ordered 4 Sep<br>Shipment recorded 7 Sep</td><td><span class='pill t-U'>Cause not determinable</span></td></tr><tr><td><strong>11158-DE</strong><sup class="flag">*</sup></td><td>29 Oct</td><td>★★★★</td><td>Service set-up (age check)</td><td class='small'>Reviewer has a DHL drop-off permission, but an age check meant collecting the parcel from a pick-up point about 5 km away. Age verification is likely required for alcohol.<span class="later">Other orders by this customer before the review: 12895 (25 Oct, shipped 27 Oct)</span></td><td class='small'>Ordered 23 Sep<br>Shipment recorded 24 Sep</td><td><span class='pill t-U'>Cause not determinable</span></td></tr><tr><td><strong>12051-DE</strong></td><td>30 Oct</td><td>★★★★★</td><td>Unspecified</td><td class='small'>Reviewer attributes an unspecified mishap during delivery to DHL; no detail.</td><td class='small'>Ordered 8 Oct<br>Shipment recorded 9 Oct</td><td><span class='pill t-R'>Reviewer describes courier handling</span></td></tr></table></div>
+<ul class="tight"><li><strong>Worth checking with DHL:</strong> 10708-DE and 11677-DE (late delivery, and non-delivery because of a broken bottle: what is the procedure when a bottle breaks in transit?). Both are customer accounts.</li>
+<li><strong>Service set-up:</strong> 11158-DE concerns an age-verification requirement that sends the customer to a pick-up point; DSF may want to review how this is explained at checkout.</li>
+<li><strong>Not determinable:</strong> several "not received" or missing-item cases were shipped promptly and need DHL tracking data. 11039-DE probably refers to a later order that was shipped 16 days after it was placed.</li></ul>
+<h3><span class="market-badge mb-se">SE</span>Airmee <span class="cname">&mdash; 11 complaints &middot; 5 reviewer describes courier handling &middot; 4 arose before shipment (or probably) &middot; 2 not determinable</span></h3>
+<p><strong>Main issues:</strong> late delivery (5), driver conduct (2), address data (2), not received (1), failed attempt (1).</p>
+<div class="table-scroll"><table><tr><th>Order</th><th>Review</th><th>Rating</th><th>Issue</th><th>What was reported</th><th>Shipping record</th><th>Assessment</th></tr><tr><td><strong>12226-SE</strong></td><td>2 Oct</td><td>★★★★★</td><td>Driver conduct</td><td class='small'>Courier did not explain that "to the door" meant the street door of an apartment block.</td><td class='small'>Ordered 11 Sep<br>Shipment recorded 11 Sep</td><td><span class='pill t-R'>Reviewer describes courier handling</span></td></tr><tr><td><strong>11971-SE</strong><sup class="flag">*</sup></td><td>9 Oct</td><td>★</td><td>Late delivery</td><td class='small'>Airmee reportedly promised delivery on 6, 8 and 9 Oct and missed each date. The dates fit a later order better (13237, shipped 1 Oct).<span class="later">Other orders by this customer before the review: 13237 (30 Sep, shipped 1 Oct)</span></td><td class='small'>Ordered 7 Sep<br>Shipment recorded 8 Sep</td><td><span class='pill t-R'>Reviewer describes courier handling</span></td></tr><tr><td><strong>12585-SE</strong><sup class="flag">*</sup></td><td>13 Oct</td><td>★★★</td><td>Late delivery</td><td class='small'>Waiting more than a week for the latest order. A later order (13540, placed 5 Oct) was shipped seven days after ordering, which fits better than the linked order.<span class="later">Other orders by this customer before the review: 13540 (5 Oct, shipped 12 Oct)</span></td><td class='small'>Ordered 16 Sep<br>Shipment recorded 16 Sep</td><td><span class='pill t-Q'>Probably arose before shipment</span></td></tr><tr><td><strong>12729-SE</strong></td><td>20 Oct</td><td>★</td><td>Address data</td><td class='small'>Reviewer entered an old street address by mistake, told DSF straight away, and says (per their account) that the corrected address was not passed on to the courier; the order was cancelled.</td><td class='small'>Ordered 19 Sep<br>Shipment recorded 21 Sep</td><td><span class='pill t-P'>Arose before shipment</span></td></tr><tr><td><strong>13559-SE</strong></td><td>20 Oct</td><td>★★</td><td>Address data</td><td class='small'>Delivery address still shown incomplete after an earlier delivery was returned to DSF; a new shipment was sent. Shipment was recorded 13 days after ordering. This points to an address-data and fulfilment issue rather than the courier.</td><td class='small'>Ordered 6 Oct<br>Shipment recorded 19 Oct</td><td><span class='pill t-P'>Arose before shipment</span></td></tr><tr><td><strong>13235-SE</strong><sup class="flag">*</sup></td><td>22 Oct</td><td>★</td><td>Late delivery</td><td class='small'>No delivery after seven days.<span class="later">Other orders by this customer before the review: 14093 (18 Oct, shipped 20 Oct)</span></td><td class='small'>Ordered 30 Sep<br>Shipment recorded 1 Oct</td><td><span class='pill t-U'>Cause not determinable</span></td></tr><tr><td><strong>13328-SE</strong></td><td>23 Oct</td><td>★</td><td>Not received</td><td class='small'>Delivery did not arrive; DSF resolved it.</td><td class='small'>Ordered 2 Oct<br>Shipment recorded 2 Oct</td><td><span class='pill t-U'>Cause not determinable</span></td></tr><tr><td><strong>12363-SE</strong></td><td>23 Oct</td><td>★</td><td>Late delivery</td><td class='small'>Delivery took about three weeks. Shipment was recorded 19 days after ordering, so the delay appears to have arisen before the courier. The reviewer also says the courier arrived at 22:45 and knocked.</td><td class='small'>Ordered 13 Sep<br>Shipment recorded 2 Oct</td><td><span class='pill t-P'>Arose before shipment</span></td></tr><tr><td><strong>11025-SE</strong><sup class="flag">*</sup></td><td>23 Oct</td><td>★★★</td><td>Driver conduct</td><td class='small'>Tracking never updated and a driver arrived at the door at 22:45. The linked order has no shipment record; a later order (13982) fits the timing.<span class="later">Other orders by this customer before the review: 13982 (16 Oct, shipped 19 Oct)</span></td><td class='small'>Ordered 23 Aug<br>No shipment recorded</td><td><span class='pill t-R'>Reviewer describes courier handling</span></td></tr><tr><td><strong>12907-SE</strong><sup class="flag">*</sup></td><td>26 Oct</td><td>★</td><td>Late delivery</td><td class='small'>Extreme delay compared with other suppliers; the reviewer had to contact DSF and Airmee. The dates fit a later order (13655, shipped 9 Oct) better.<span class="later">Other orders by this customer before the review: 13655 (8 Oct, shipped 9 Oct)</span></td><td class='small'>Ordered 23 Sep<br>Shipment recorded 23 Sep</td><td><span class='pill t-R'>Reviewer describes courier handling</span></td></tr><tr><td><strong>12804-SE</strong><sup class="flag">*</sup></td><td>28 Oct</td><td>★★★</td><td>Failed attempt</td><td class='small'>Courier could not use the door code and left without delivering; the reviewer says this has happened before.<span class="later">Other orders by this customer before the review: 14365 (23 Oct, shipped 23 Oct)</span></td><td class='small'>Ordered 21 Sep<br>Shipment recorded 21 Sep</td><td><span class='pill t-R'>Reviewer describes courier handling</span></td></tr></table></div>
+<ul class="tight"><li><strong>Worth checking with Airmee:</strong> two reviews (12363-SE and 11025-SE) mention a courier arriving at about 22:45; missed promised dates in 11971-SE and 12907-SE; the door-code failure in 12804-SE; and the building-entrance instruction in 12226-SE. These are customer accounts and are not confirmed.</li>
+<li><strong>Not for Airmee on the evidence:</strong> 12363-SE (the three-week delay appears to have arisen before shipment), 13559-SE and 12729-SE (address data), and 12585-SE (probably a later order shipped seven days after ordering).</li></ul>
+
+<h2>Methodology</h2>
+<ul class="tight">
+<li><strong>Complaints.</strong> All 673 October reviews (Trustpilot and Google) were screened. Every review rated 3★ or below was read in full; 4–5★ reviews were keyword-screened for delivery problems. A complaint is a review describing a problem with transport, hand-over or delivery; product quality, vouchers and refunds are excluded. Quotes are paraphrased and customer details omitted.</li>
+<li><strong>Couriers.</strong> Identified from each order's Shopify shipping line (the "Delivery method" shown in Shopify Orders) and, where a fulfilment record exists, its tracking company. Complaints were matched to orders through the order reference on the review. A courier is assigned only where the order record identifies it; it is never assumed from the market. Return shipments are not attributed to the outbound courier.</li>
+<li><strong>Verification.</strong> Order and shipment dates come from the Shopify order and fulfilment records. "Shipment recorded" is the date the fulfilment was registered, not a delivery date. Delivery dates and scans are not available to us and would need to come from the couriers.</li>
+<li><strong>Later orders (*).</strong> Reviews arrive about four weeks after ordering (median 28 days), and for 17 of the 37 cases verified to an order (store pick-up excluded) the customer had placed another order before reviewing. The review may then describe that order, which is listed under the case. Where the other order used a different courier (492734DSF, 497944DSF), the case is shown as courier not confirmed.</li>
+<li><strong>Not included.</strong> Store pick-up, couriers with no complaints, and complaint rates: reviews cover only a small share of orders, so counts per courier and market are not comparable.</li></ul>
+
+</div>
+</body>
+</html>
