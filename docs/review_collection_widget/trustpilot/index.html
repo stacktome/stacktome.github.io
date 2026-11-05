@@ -286,7 +286,8 @@
 
   document.getElementById('btn-clear-gate').addEventListener('click', () => {
     const wid = document.getElementById('widgetId').value.trim() || 'tp-review';
-    localStorage.removeItem(`st-tp-prefilter-${wid}`);
+    Object.keys(localStorage).filter(k => k === `st-tp-prefilter-${wid}` || k.startsWith(`st-tp-prefilter-${wid}-`))
+      .forEach(k => localStorage.removeItem(k));
     Object.keys(localStorage).filter(k => k.startsWith(`st-tp-ticket-${wid}-`)).forEach(k => localStorage.removeItem(k));
     setStatus('Gate + ticket state cleared — re-render to see the gate again.');
   });
