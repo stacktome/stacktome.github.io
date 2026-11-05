@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brand X — Review Growth Analysis (Sample Report)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f9fa; color: #212529; }
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 40px 48px 36px; }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .brand { font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; opacity: 0.6; }
+  .period-badge { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500; }
+  .header h1 { font-size: 32px; font-weight: 700; margin-bottom: 6px; }
+  .header-sub { font-size: 14px; opacity: 0.65; }
+  .container { max-width: 1020px; margin: 0 auto; padding: 32px 24px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-top: 3px solid #0f3460; }
+  .kpi.green  { border-top-color: #28a745; }
+  .kpi.amber  { border-top-color: #fd7e14; }
+  .kpi.red    { border-top-color: #dc3545; }
+  .kpi.blue   { border-top-color: #0d6efd; }
+  .kpi.purple { border-top-color: #6f42c1; }
+  .kpi.teal   { border-top-color: #20c997; }
+  .kpi-val   { font-size: 24px; font-weight: 700; color: #1a1a2e; line-height: 1; margin-bottom: 4px; }
+  .kpi-label { font-size: 10px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: #6c757d; }
+
+  .section { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 24px; overflow: hidden; }
+  .section-header { padding: 18px 24px 16px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
+  .section-title { font-size: 15px; font-weight: 700; color: #1a1a2e; }
+  .section-sub { font-size: 12px; color: #6c757d; }
+  .section-body { padding: 20px 24px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 9px 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: #6c757d; border-bottom: 2px solid #f0f0f0; background: #fafafa; }
+  td { padding: 10px 12px; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafeff; }
+  .highlight-row td { background: #fff8e1; }
+
+  .stars { color: #ffc107; font-size: 12px; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-green  { background: #d4edda; color: #155724; }
+  .badge-amber  { background: #fff3cd; color: #856404; }
+  .badge-red    { background: #f8d7da; color: #721c24; }
+  .badge-blue   { background: #d0e8ff; color: #004085; }
+  .badge-gray   { background: #e9ecef; color: #495057; }
+  .badge-purple { background: #e9d8fd; color: #44337a; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  .rating-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; }
+  .rbl { width: 22px; text-align: right; font-size: 12px; font-weight: 700; color: #6c757d; }
+  .rbw { flex: 1; height: 8px; background: #f0f0f0; border-radius: 4px; overflow: hidden; }
+  .rbf { height: 8px; border-radius: 4px; }
+  .rbc { width: 32px; text-align: right; font-size: 12px; color: #6c757d; }
+  .fill-5 { background: #28a745; }
+  .fill-4 { background: #74c69d; }
+  .fill-3 { background: #fd7e14; }
+  .fill-2 { background: #e85d04; }
+  .fill-1 { background: #dc3545; }
+
+  .warn-box { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; font-size: 13px; color: #856404; }
+  .info-box { background: #d0e8ff; border: 1px solid #90cdf4; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; font-size: 13px; color: #004085; }
+  .ok-box   { background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; font-size: 13px; color: #155724; }
+  .insight-box { background: #1a1a2e; color: #fff; border-radius: 10px; padding: 16px 20px; margin-bottom: 18px; }
+  .insight-box h4 { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.6; margin-bottom: 6px; }
+  .insight-box p { font-size: 14px; line-height: 1.6; }
+
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: #dee2e6; }
+  .tl-item { position: relative; margin-bottom: 14px; }
+  .tl-dot { position: absolute; left: -24px; top: 3px; width: 12px; height: 12px; border-radius: 50%; background: #0f3460; border: 2px solid #fff; box-shadow: 0 0 0 2px #0f3460; }
+  .tl-dot.red { background: #dc3545; box-shadow: 0 0 0 2px #dc3545; }
+  .tl-dot.green { background: #28a745; box-shadow: 0 0 0 2px #28a745; }
+  .tl-dot.amber { background: #fd7e14; box-shadow: 0 0 0 2px #fd7e14; }
+  .tl-label { font-size: 11px; font-weight: 700; color: #6c757d; text-transform: uppercase; letter-spacing: 0.6px; }
+  .tl-text { font-size: 13px; color: #212529; margin-top: 2px; }
+
+  .progress-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
+  .progress-row:last-child { border-bottom: none; }
+  .pl { width: 180px; font-size: 12px; color: #495057; flex-shrink: 0; }
+  .pw { flex: 1; height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden; }
+  .pf { height: 10px; border-radius: 5px; }
+  .pp { width: 40px; text-align: right; font-size: 12px; font-weight: 700; }
+
+  .metric-row { display: flex; gap: 0; border: 1px solid #f0f0f0; border-radius: 10px; overflow: hidden; margin-bottom: 14px; }
+  .metric-cell { flex: 1; padding: 16px; text-align: center; border-right: 1px solid #f0f0f0; }
+  .metric-cell:last-child { border-right: none; }
+  .metric-val { font-size: 22px; font-weight: 800; color: #1a1a2e; }
+  .metric-label { font-size: 10px; color: #6c757d; font-weight: 600; text-transform: uppercase; margin-top: 3px; }
+
+  .sku-bar { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid #f5f5f5; }
+  .sku-bar:last-child { border-bottom: none; }
+  .sku-name { width: 140px; font-size: 12px; font-weight: 700; color: #1a1a2e; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sku-wrap { flex: 1; height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden; }
+  .sku-fill { height: 10px; border-radius: 5px; background: #dc3545; }
+  .sku-meta { width: 140px; text-align: right; font-size: 11px; color: #6c757d; flex-shrink: 0; }
+
+  .window-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+  .window-cell { text-align: center; border-radius: 8px; padding: 12px 6px; }
+  .window-label { font-size: 10px; font-weight: 700; color: #6c757d; margin-bottom: 4px; }
+  .window-rate { font-size: 20px; font-weight: 800; }
+  .window-n { font-size: 10px; color: #adb5bd; margin-top: 2px; }
+  .cell-hot { background: #f8d7da; }
+  .cell-warm { background: #fff3cd; }
+  .cell-ok { background: #d4edda; }
+
+  .action-list { list-style: none; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f5f5f5; font-size: 13px; line-height: 1.6; }
+  .action-list li:last-child { border-bottom: none; }
+  .action-num { width: 26px; height: 26px; background: #0f3460; color: #fff; border-radius: 50%; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .action-num.red { background: #dc3545; }
+  .action-num.amber { background: #fd7e14; }
+  .action-num.green { background: #28a745; }
+
+  .funnel { display: flex; flex-direction: column; gap: 0; }
+  .funnel-step { padding: 10px 16px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
+  .funnel-step:nth-child(odd) { background: #f8f9fa; }
+  .funnel-val { font-weight: 700; font-size: 16px; color: #1a1a2e; }
+  .funnel-label { color: #6c757d; }
+  .funnel-pct { font-size: 11px; color: #adb5bd; margin-left: 8px; }
+  html { scroll-behavior: smooth; }
+  .sample-banner { background: #fff3cd; border-bottom: 1px solid #ffc107; color: #856404; font-size: 12px; text-align: center; padding: 8px 16px; }
+  .section-title { font-size: 15px; font-weight: 700; color: #1a1a2e; margin: 0; }
+  h2.section-title { scroll-margin-top: 16px; }
+  .toc { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); padding: 18px 24px; margin-bottom: 24px; }
+  .toc h3 { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: #6c757d; margin-bottom: 8px; }
+  .toc ol { columns: 2; column-gap: 32px; padding-left: 18px; font-size: 13px; line-height: 1.9; }
+  .toc a { color: #0f3460; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .sub-h { font-size: 13px; font-weight: 700; color: #1a1a2e; margin: 0 0 12px; }
+  .note { font-size: 12px; color: #6c757d; margin-top: 8px; line-height: 1.5; }
+  code { background: #f1f3f5; padding: 1px 5px; border-radius: 4px; font-size: 12px; }
+  pre.code { background: #1a1a2e; color: #e9ecef; border-radius: 10px; padding: 14px 18px; font-size: 12px; line-height: 1.6; overflow-x: auto; margin: 10px 0 14px; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .cmp-card { border: 1px solid #f0f0f0; border-radius: 10px; padding: 14px 16px; }
+  .cmp-card .big { font-size: 26px; font-weight: 800; color: #1a1a2e; }
+  .cmp-card .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #6c757d; font-weight: 600; }
+  .phase { border-left: 4px solid #0f3460; background: #f8f9fa; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-bottom: 10px; font-size: 13px; line-height: 1.6; }
+  .phase.p2 { border-left-color: #fd7e14; }
+  .phase.p3 { border-left-color: #28a745; }
+  @media (max-width: 760px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col, .three-col, .compare { grid-template-columns: 1fr; }
+    .window-grid { grid-template-columns: repeat(4, 1fr); }
+    .metric-row { flex-wrap: wrap; }
+    .metric-cell { flex: 1 1 33%; border-bottom: 1px solid #f0f0f0; }
+    .toc ol { columns: 1; }
+    .header { padding: 28px 20px; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .sku-name, .sku-meta { width: auto; }
+    .sku-bar { flex-wrap: wrap; }
+    .pl { width: 120px; }
+    table { display: block; overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="sample-banner">
+  <strong>Sample report.</strong> Based on a real 12-month engagement with a custom-jewelry e-commerce brand. Brand, product codes and customer details are removed and absolute volumes are rescaled; rates, patterns and recommendations are preserved.
+</div>
+
+<div class="header">
+  <div class="header-top">
+    <div class="brand">Stacktome · Brand X · Review Growth Analysis</div>
+    <div class="period-badge">12 Months · Sample Report</div>
+  </div>
+  <h1>Invite, Review &amp; Support-Ticket Deep Analysis</h1>
+  <div class="header-sub">Trustpilot · Product reviews · Helpdesk tickets · Prevention strategy · Rollout &amp; early results</div>
+</div>
+
+<div class="container">
+
+  <nav class="toc" aria-label="Table of contents">
+    <h3>Contents</h3>
+    <ol>
+      <li><a href="#exec-summary">Executive summary</a></li>
+      <li><a href="#invite-performance">Invite performance</a></li>
+      <li><a href="#ratings">Trustpilot ratings &amp; complaint themes</a></li>
+      <li><a href="#product-reviews">Product reviews &amp; problem SKUs</a></li>
+      <li><a href="#tickets">Support tickets vs. negative reviews</a></li>
+      <li><a href="#timing">Optimal invite timing</a></li>
+      <li><a href="#prevention">Prevention: how many negatives can we avoid?</a></li>
+      <li><a href="#strategy">Recommended strategy (ranked levers)</a></li>
+      <li><a href="#setup">How it is configured in Stacktome</a></li>
+      <li><a href="#rollout">Rollout plan &amp; 90-day targets</a></li>
+      <li><a href="#early-results">Early results after launch</a></li>
+      <li><a href="#actions">Action items</a></li>
+      <li><a href="#method">Data &amp; method</a></li>
+    </ol>
+  </nav>
+
+  <!-- KPI Bar -->
+  <div class="kpi-grid">
+    <div class="kpi blue"><div class="kpi-val">25,000</div><div class="kpi-label">Invites Sent</div></div>
+    <div class="kpi green"><div class="kpi-val">465</div><div class="kpi-label">TP Reviews</div></div>
+    <div class="kpi amber"><div class="kpi-val">4.29★</div><div class="kpi-label">Avg TP Rating</div></div>
+    <div class="kpi purple"><div class="kpi-val">557</div><div class="kpi-label">Product Reviews</div></div>
+    <div class="kpi red"><div class="kpi-val">97</div><div class="kpi-label">TP Neg Reviews</div></div>
+    <div class="kpi teal"><div class="kpi-val">195K</div><div class="kpi-label">Tickets (12m)</div></div>
+  </div>
+
+  <!-- Executive summary -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title" id="exec-summary">Executive Summary</h2>
+      <div class="section-sub">What we found, what we recommend</div>
+    </div>
+    <div class="section-body">
+      <div class="insight-box">
+        <h4>Top Finding</h4>
+        <p>
+          <strong>62% of invite-triggered negative reviews were submitted within 24 hours of the invite</strong> —
+          the customer was already unhappy before opening the email. Moving the invite from the current 11–14 days
+          after order to <strong>22–30 days</strong> is associated with a negative-review rate of <strong>11%</strong> instead of ~19%
+          (a 42% reduction). On top of that, <strong>21% of negative reviewers had a support ticket before their invite was sent</strong> —
+          a detectable signal that can suppress those invites automatically.
+        </p>
+      </div>
+      <div class="three-col">
+        <div style="background:#f8f9fa;border-radius:10px;padding:14px 16px;">
+          <div class="sub-h" style="margin-bottom:6px;">1 · Diagnosis</div>
+          <p class="note" style="margin:0;color:#495057;">Invites go out when problems are at their peak: the 11–14-day window has an 18.8% negative rate. Complaints concentrate on size expectations, customer-service silence, refund friction and one product family.</p>
+        </div>
+        <div style="background:#f8f9fa;border-radius:10px;padding:14px 16px;">
+          <div class="sub-h" style="margin-bottom:6px;">2 · Recommendation</div>
+          <p class="note" style="margin:0;color:#495057;">Ticket-gated, later-window invites + exclusion of high-risk SKUs + template/subject split-tests. Recovery outreach to existing ≤3★ reviewers as a second phase.</p>
+        </div>
+        <div style="background:#f8f9fa;border-radius:10px;padding:14px 16px;">
+          <div class="sub-h" style="margin-bottom:6px;">3 · Expected impact</div>
+          <p class="note" style="margin:0;color:#495057;">~36 fewer negatives per year (−37%), moving the Trustpilot average from 4.29★ towards ~4.45★ with the first two levers alone — with a small, accepted dip in review volume.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Invite Performance -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title" id="invite-performance">Invite Performance — 12 Months</h2>
+      <div class="section-sub">Review-request campaigns · invite + reminder</div>
+    </div>
+    <div class="section-body">
+      <div class="metric-row">
+        <div class="metric-cell"><div class="metric-val">25,000</div><div class="metric-label">Total Sent</div></div>
+        <div class="metric-cell"><div class="metric-val">12,840</div><div class="metric-label">Initial Invites</div></div>
+        <div class="metric-cell"><div class="metric-val">12,160</div><div class="metric-label">Reminders</div></div>
+        <div class="metric-cell"><div class="metric-val">465</div><div class="metric-label">TP Reviews</div></div>
+        <div class="metric-cell"><div class="metric-val">1.9%</div><div class="metric-label">Conversion</div></div>
+        <div class="metric-cell"><div class="metric-val">4.29★</div><div class="metric-label">Avg Rating</div></div>
+      </div>
+      <div class="info-box">
+        Of 97 negative reviews (≤3★): <strong>53 (55%) were invite-triggered</strong> and <strong>44 (45%) were organic</strong> (customer went to Trustpilot independently).
+        Of the invite-triggered negatives, <strong>43 came via the initial invite</strong> and 10 via the reminder — reminders are the smaller risk but still account for ~19%.
+      </div>
+      <p class="note">Why this matters: the 55% invite-triggered share is the part we can influence directly through timing and targeting. The organic 45% can only be moved by fixing the underlying product / service issues or by recovering the reviewer afterwards.</p>
+    </div>
+  </div>
+
+  <!-- TP Rating Distribution -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title" id="ratings">Trustpilot Rating Distribution &amp; Complaint Themes</h2>
+      <div class="section-sub">465 reviews · 12 months</div>
+    </div>
+    <div class="section-body two-col">
+      <div>
+        <div class="rating-bar-row"><div class="rbl">5★</div><div class="rbw"><div class="rbf fill-5" style="width:62.3%"></div></div><div class="rbc">290</div></div>
+        <div class="rating-bar-row"><div class="rbl">4★</div><div class="rbw"><div class="rbf fill-4" style="width:8.2%"></div></div><div class="rbc">38</div></div>
+        <div class="rating-bar-row"><div class="rbl">3★</div><div class="rbw"><div class="rbf fill-3" style="width:6.9%"></div></div><div class="rbc">32</div></div>
+        <div class="rating-bar-row"><div class="rbl">2★</div><div class="rbw"><div class="rbf fill-2" style="width:5.2%"></div></div><div class="rbc">24</div></div>
+        <div class="rating-bar-row"><div class="rbl">1★</div><div class="rbw"><div class="rbf fill-1" style="width:8.8%"></div></div><div class="rbc">41</div></div>
+        <p class="note">40 reviews carry no star rating (excluded from sentiment analysis). 1★ alone is 8.8% of reviews — the single most valuable bucket to shrink.</p>
+      </div>
+      <div>
+        <div class="sub-h">Complaint themes (97 negative reviews)</div>
+        <table>
+          <thead><tr><th>Theme</th><th>Reviews</th><th>%</th></tr></thead>
+          <tbody>
+            <tr><td>Size smaller than expected</td><td>13</td><td><span class="badge badge-red">13%</span></td></tr>
+            <tr><td>Customer service / no response</td><td>11</td><td><span class="badge badge-red">11%</span></td></tr>
+            <tr><td>General quality (broke, bent)</td><td>10</td><td><span class="badge badge-red">10%</span></td></tr>
+            <tr><td>Return / refund refused</td><td>10</td><td><span class="badge badge-red">10%</span></td></tr>
+            <tr><td>Metal quality / tarnish / discolor</td><td>10</td><td><span class="badge badge-amber">10%</span></td></tr>
+            <tr><td>Delivery / never arrived</td><td>7</td><td><span class="badge badge-amber">7%</span></td></tr>
+            <tr><td>Stone fell out</td><td>5</td><td><span class="badge badge-amber">5%</span></td></tr>
+          </tbody>
+        </table>
+        <p class="note">Themes are assigned by an AI categoriser (quality, personalization, delivery, service, returns, packaging, other) that only tags specific, attributable mentions — vague praise or criticism is left untagged.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Reviews -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title" id="product-reviews">Product Reviews &amp; Problem SKUs — 12 Months</h2>
+      <div class="section-sub">557 reviews · 400-day history loaded</div>
+    </div>
+    <div class="section-body">
+      <div class="metric-row">
+        <div class="metric-cell"><div class="metric-val">557</div><div class="metric-label">Total Reviews</div></div>
+        <div class="metric-cell"><div class="metric-val" style="color:#28a745">390</div><div class="metric-label">5★ Reviews</div></div>
+        <div class="metric-cell"><div class="metric-val" style="color:#dc3545">130</div><div class="metric-label">≤3★ Negative</div></div>
+        <div class="metric-cell"><div class="metric-val" style="color:#dc3545">23.3%</div><div class="metric-label">Negative Rate</div></div>
+        <div class="metric-cell"><div class="metric-val">67</div><div class="metric-label">1★ Reviews</div></div>
+      </div>
+
+      <div class="warn-box">
+        <strong>One product family is the single biggest quality risk — NECK-001 (personalized name necklace):</strong> 23 negative reviews out of 103 total (22.3% negative rate), average negative rating 2.0★.
+        Recurring complaints: chain too thin / fragile, “doesn't match the pictures”, “smaller than expected”, chain breaks. This is both a product and a listing-expectation problem.
+      </div>
+
+      <div class="sub-h">Problem SKUs (≥2 negative reviews)</div>
+      <div class="sku-bar"><div class="sku-name">NECK-001</div><div class="sku-wrap"><div class="sku-fill" style="width:100%"></div></div><div class="sku-meta">23 neg · 22.3% rate · 2.0★ avg</div></div>
+      <div class="sku-bar"><div class="sku-name">RING-063</div><div class="sku-wrap"><div class="sku-fill" style="width:9%"></div></div><div class="sku-meta">2 neg · highest rate in set</div></div>
+      <div class="sku-bar"><div class="sku-name">RING-124</div><div class="sku-wrap"><div class="sku-fill" style="width:9%"></div></div><div class="sku-meta">2 neg · size complaints</div></div>
+      <div class="sku-bar"><div class="sku-name">PEND-018</div><div class="sku-wrap"><div class="sku-fill" style="width:9%"></div></div><div class="sku-meta">2 neg · incl. “finger green”</div></div>
+      <div class="sku-bar"><div class="sku-name">BRAC-205</div><div class="sku-wrap"><div class="sku-fill" style="width:9%"></div></div><div class="sku-meta">2 neg · size complaints</div></div>
+      <div class="sku-bar"><div class="sku-name">RING-491</div><div class="sku-wrap"><div class="sku-fill" style="width:9%"></div></div><div class="sku-meta">2 neg · 40% rate</div></div>
+      <div class="sku-bar"><div class="sku-name">PEND-515</div><div class="sku-wrap"><div class="sku-fill" style="width:9%"></div></div><div class="sku-meta">2 neg · 1.0★ · “poor quality”</div></div>
+      <div class="sku-bar"><div class="sku-name">RING-770</div><div class="sku-wrap"><div class="sku-fill" style="width:9%"></div></div><div class="sku-meta">2 neg · “didn't hold up 2 weeks”</div></div>
+      <div class="sku-bar"><div class="sku-name">BRAC-013</div><div class="sku-wrap"><div class="sku-fill" style="width:9%"></div></div><div class="sku-meta">2 neg · 1.0★ · “stone fell off”</div></div>
+
+      <div style="margin-top:20px;" class="two-col">
+        <div>
+          <div class="sub-h">Product-review rating distribution</div>
+          <div class="rating-bar-row"><div class="rbl">5★</div><div class="rbw"><div class="rbf fill-5" style="width:70%"></div></div><div class="rbc">390</div></div>
+          <div class="rating-bar-row"><div class="rbl">4★</div><div class="rbw"><div class="rbf fill-4" style="width:6.6%"></div></div><div class="rbc">37</div></div>
+          <div class="rating-bar-row"><div class="rbl">3★</div><div class="rbw"><div class="rbf fill-3" style="width:6.5%"></div></div><div class="rbc">36</div></div>
+          <div class="rating-bar-row"><div class="rbl">2★</div><div class="rbw"><div class="rbf fill-2" style="width:4.8%"></div></div><div class="rbc">27</div></div>
+          <div class="rating-bar-row"><div class="rbl">1★</div><div class="rbw"><div class="rbf fill-1" style="width:12%"></div></div><div class="rbc">67</div></div>
+        </div>
+        <div>
+          <div class="sub-h">Top product-review complaint themes</div>
+          <div class="progress-row"><div class="pl">Size smaller than listed</div><div class="pw"><div class="pf" style="width:80%;background:#dc3545"></div></div><div class="pp" style="color:#dc3545">~40%</div></div>
+          <div class="progress-row"><div class="pl">Chain fragile / breaks</div><div class="pw"><div class="pf" style="width:60%;background:#e85d04"></div></div><div class="pp" style="color:#e85d04">~30%</div></div>
+          <div class="progress-row"><div class="pl">Not matching photos</div><div class="pw"><div class="pf" style="width:40%;background:#fd7e14"></div></div><div class="pp" style="color:#fd7e14">~20%</div></div>
+          <div class="progress-row"><div class="pl">Metal discoloration</div><div class="pw"><div class="pf" style="width:20%;background:#74c69d"></div></div><div class="pp" style="color:#495057">~10%</div></div>
+          <p class="note">Percentages estimated from heading keyword analysis of the necklace family and other negative SKUs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ticket Correlation -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title" id="tickets">Support Tickets vs. Negative Reviews</h2>
+      <div class="section-sub">~195K tickets · 12 months · matched via hashed email</div>
+    </div>
+    <div class="section-body">
+
+      <div class="insight-box" style="margin-bottom:20px;">
+        <h4>Prevention Signal</h4>
+        <p><strong>20 of 97 negative reviewers (21%) had at least one support ticket before their invite was sent.</strong>
+        Of these, 9 left 1★, 5 left 2★ and 6 left 3★. In most cases the ticket pre-dated the invite by 2–30 days —
+        a long enough window to suppress the invite automatically.</p>
+      </div>
+
+      <div class="three-col" style="margin-bottom:20px;">
+        <div style="background:#f8d7da;border-radius:10px;padding:16px;text-align:center;">
+          <div style="font-size:28px;font-weight:800;color:#dc3545;">20</div>
+          <div style="font-size:11px;color:#721c24;font-weight:600;text-transform:uppercase;margin-top:4px;">Neg reviewers with prior ticket</div>
+        </div>
+        <div style="background:#fff3cd;border-radius:10px;padding:16px;text-align:center;">
+          <div style="font-size:28px;font-weight:800;color:#856404;">21%</div>
+          <div style="font-size:11px;color:#856404;font-weight:600;text-transform:uppercase;margin-top:4px;">Of all negative reviews</div>
+        </div>
+        <div style="background:#d4edda;border-radius:10px;padding:16px;text-align:center;">
+          <div style="font-size:28px;font-weight:800;color:#155724;">5</div>
+          <div style="font-size:11px;color:#155724;font-weight:600;text-transform:uppercase;margin-top:4px;">Ticket between order &amp; invite<br>(directly preventable)</div>
+        </div>
+      </div>
+
+      <div class="sub-h">How far before the invite did the ticket arrive?</div>
+      <table>
+        <thead><tr><th>Ticket arrived</th><th>Count</th><th>Interpretation</th></tr></thead>
+        <tbody>
+          <tr><td>0–1 day before invite</td><td>1</td><td>Very tight — borderline detectable</td></tr>
+          <tr class="highlight-row"><td>2–3 days before invite</td><td>2</td><td>Clear suppression window</td></tr>
+          <tr class="highlight-row"><td>4–7 days before invite</td><td>5</td><td>Clear suppression window</td></tr>
+          <tr class="highlight-row"><td>8–14 days before invite</td><td>5</td><td>Clear suppression window</td></tr>
+          <tr><td>15–30 days before invite</td><td>7</td><td>Ticket may have been resolved — check status</td></tr>
+          <tr><td>30+ days before invite</td><td>0</td><td>Old ticket, likely unrelated</td></tr>
+        </tbody>
+      </table>
+
+      <div class="info-box" style="margin-top:16px;">
+        <strong>Note on ticket volume:</strong> the ticket table holds ~195K conversations from ~19,400 unique customers over 12 months — including automated replies, order confirmations and shipping queries.
+        The matching is deliberately conservative: a ticket from the same hashed email that arrived before the invite. Restricting to tickets with quality signals (subjects containing “problem”, “resiz”, “wrong”, “broke”, “return”, “refund”, “defect”) would sharpen the signal further.
+      </div>
+    </div>
+  </div>
+
+  <!-- Optimal Timing -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title" id="timing">Optimal Invite Timing — Order to Invite Window</h2>
+      <div class="section-sub">Based on 272 TP reviews with matched order dates</div>
+    </div>
+    <div class="section-body">
+
+      <div class="warn-box">
+        <strong>Current behaviour:</strong> invites go out at a median of 13–14 days after order for both positive and negative reviewers — timing is nearly identical.
+        The difference is the customer's experience at that moment: negative reviewers take ~2.5 days longer to write their review (17d vs 14.5d), suggesting the product arrived
+        but had issues that needed time to surface.
+      </div>
+
+      <div class="sub-h" style="margin-bottom:14px;">Negative review rate by order → invite window</div>
+
+      <div class="window-grid" style="margin-bottom:20px;">
+        <div class="window-cell cell-hot"><div class="window-label">0–3 days</div><div class="window-rate" style="color:#dc3545;">25.0%</div><div class="window-n">8 reviews</div></div>
+        <div class="window-cell cell-warm"><div class="window-label">4–7 days</div><div class="window-rate" style="color:#fd7e14;">18.0%</div><div class="window-n">61 reviews</div></div>
+        <div class="window-cell cell-warm"><div class="window-label">8–10 days</div><div class="window-rate" style="color:#fd7e14;">19.5%</div><div class="window-n">41 reviews</div></div>
+        <div class="window-cell cell-warm"><div class="window-label">11–14 days</div><div class="window-rate" style="color:#fd7e14;">18.8%</div><div class="window-n">128 reviews ← now</div></div>
+        <div class="window-cell cell-warm"><div class="window-label">15–21 days</div><div class="window-rate" style="color:#e85d04;">26.1%</div><div class="window-n">23 reviews</div></div>
+        <div class="window-cell cell-ok"><div class="window-label">22–30 days</div><div class="window-rate" style="color:#28a745;">11.1%</div><div class="window-n">9 reviews</div></div>
+        <div class="window-cell" style="background:#e9ecef;"><div class="window-label">31–60 days</div><div class="window-rate" style="color:#6c757d;">50%</div><div class="window-n">2 reviews (too low)</div></div>
+      </div>
+      <div class="warn-box"><strong>Sample-size caveat:</strong> the 22–30-day bucket holds only 9 reviews because the account has hardly ever invited that late. The direction is supported by the monotonic trend and by the 24-hour finding below, but it is a hypothesis to validate over 90 days, not a proven effect — which is why the rollout is monitored against a rollback trigger.</div>
+
+      <div class="two-col">
+        <div>
+          <div class="sub-h">Timing stats: positive vs negative reviewers</div>
+          <table>
+            <thead><tr><th>Segment</th><th>N</th><th>Avg order→review</th><th>Avg order→invite</th><th>P50 invite</th></tr></thead>
+            <tbody>
+              <tr><td><span class="badge badge-green">Positive (≥4★)</span></td><td>219</td><td>14.5d</td><td>11.3d</td><td>13d</td></tr>
+              <tr><td><span class="badge badge-red">Negative (≤3★)</span></td><td>53</td><td>17.0d</td><td>11.4d</td><td>14d</td></tr>
+            </tbody>
+          </table>
+          <p class="note">Invite timing is nearly identical — the issue is the customer's experience at that moment. <em>Waiting longer</em> gives problems time to surface and be resolved before the invite goes out.</p>
+        </div>
+        <div>
+          <div class="sub-h">Time from invite to review (negative reviewers)</div>
+          <table>
+            <thead><tr><th>Window</th><th>Reviews</th><th>Insight</th></tr></thead>
+            <tbody>
+              <tr class="highlight-row"><td><strong>0–1 day</strong></td><td><strong>33</strong></td><td>Already decided to complain</td></tr>
+              <tr><td>2–3 days</td><td>11</td><td>Reviewed quickly after invite</td></tr>
+              <tr><td>4–7 days</td><td>6</td><td>Prompted but delayed</td></tr>
+              <tr><td>8–14 days</td><td>2</td><td>Slow to respond</td></tr>
+              <tr><td>15–30 days</td><td>1</td><td>Reminder-driven</td></tr>
+            </tbody>
+          </table>
+          <p class="note"><strong>62% of invite-triggered negatives reviewed within 24h.</strong> These customers needed no prompting — the invite just gave them a platform. Resolving their issue earlier would prevent these.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prevention Strategy -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title" id="prevention">Prevention: How Many Negatives Could Be Avoided?</h2>
+      <div class="section-sub">Combined estimate across all signals</div>
+    </div>
+    <div class="section-body">
+
+      <div class="funnel" style="border:1px solid #f0f0f0;border-radius:10px;overflow:hidden;margin-bottom:20px;">
+        <div class="funnel-step"><div><div class="funnel-label">Baseline: all negative TP reviews (12m)</div></div><div><span class="funnel-val">97</span></div></div>
+        <div class="funnel-step"><div><div class="funnel-label">Lever A: suppress invite when a ticket exists → catches 21%</div></div><div><span class="funnel-val" style="color:#28a745;">−20</span> <span class="funnel-pct">(21% prevented)</span></div></div>
+        <div class="funnel-step"><div><div class="funnel-label">Lever B: shift to 22–30d send window → negative rate 19% → 11% for invite-driven</div></div><div><span class="funnel-val" style="color:#28a745;">−21</span> <span class="funnel-pct">(est. 22% of all negatives)</span></div></div>
+        <div class="funnel-step"><div><div class="funnel-label">Overlap (customers helped by both)</div></div><div><span class="funnel-val" style="color:#fd7e14;">+~5</span> <span class="funnel-pct">(double-counted)</span></div></div>
+        <div class="funnel-step" style="background:#d4edda;"><div><div class="funnel-label" style="color:#155724;font-weight:700;">Combined estimated reduction (conservative, non-overlapping)</div></div><div><span class="funnel-val" style="color:#155724;">~36 fewer negatives</span> <span class="funnel-pct">(−37%)</span></div></div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <div class="sub-h">Lever A: ticket-gated invites</div>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Detection</div><div class="tl-text">Does this customer have a recent ticket in the helpdesk (matched on hashed email / customer key)?</div></div>
+            <div class="tl-item"><div class="tl-dot amber"></div><div class="tl-label">Hold rule</div><div class="tl-text">Exclude the order from the invite segment while a recent ticket exists; it re-enters automatically once the ticket ages out of the lookback.</div></div>
+            <div class="tl-item"><div class="tl-dot green"></div><div class="tl-label">Impact</div><div class="tl-text">Would have caught 20 of 97 (21%) negative reviews. False-positive suppression: 10 of 214 (4.7%) positive reviewers also had tickets — minimal bleed.</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="sub-h">Lever B: invite at 22–30 days</div>
+          <div class="timeline">
+            <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Current state</div><div class="tl-text">Invite at ~11–14 days (p50). Negative-review rate in this window: 18.8%.</div></div>
+            <div class="tl-item"><div class="tl-dot amber"></div><div class="tl-label">Proposed</div><div class="tl-text">Send 22–30 days post-order. Observed negative rate in this window: 11.1% — a 42% reduction.</div></div>
+            <div class="tl-item"><div class="tl-dot green"></div><div class="tl-label">Benefit</div><div class="tl-text">Durability issues (stones, chains) surface within 7–14 days. By day 22–30 they are either resolved or accepted.</div></div>
+            <div class="tl-item"><div class="tl-dot red"></div><div class="tl-label">Tradeoff</div><div class="tl-text">Conversion may dip as post-purchase excitement wanes. Monitored weekly with a rollback trigger (see rollout).</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <div class="sub-h">Lever C: product-level handling</div>
+        <div class="info-box">
+          For the necklace family and other high-risk SKUs the invite is not the root problem — the product experience is.
+          Excluding those buyers from the main invite flow, and sending a <strong>proactive care email at day 7</strong> (care guide, sizing guidance, how to request an adjustment),
+          shifts sentiment before any review request arrives and pre-empts the refund friction behind ~10% of negatives.
+        </div>
+      </div>
+
+      <p class="note"><strong>Rating impact:</strong> removing ~36 negatives (avg ~1.8★) from the 12-month mix moves the average from 4.29★ to roughly <strong>4.45★</strong> using Levers A + B alone. Trustpilot's TrustScore also weights recency, so improvements show in the headline score faster than the raw mean suggests.</p>
+    </div>
+  </div>
+
+  <!-- Recommended strategy -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title" id="strategy">Recommended Strategy — Ranked Levers</h2>
+      <div class="section-sub">Ordered by expected impact</div>
+    </div>
+    <div class="section-body">
+      <table>
+        <thead><tr><th>#</th><th>Lever</th><th>Mechanism</th><th>Expected effect</th><th>Risk / tradeoff</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>Move invite to 22–30 days</strong></td><td>Invite after unresolved issues have surfaced and been handled; eligibility window and event window widened so orders do not age out</td><td><span class="badge badge-green">Neg. rate 18.8% → ~11%</span></td><td>Small conversion dip; thin evidence (n=9) → validate for 90 days</td></tr>
+          <tr><td>2</td><td><strong>Ticket-gated invite segment</strong></td><td>Dynamic segment excludes customers with a recent support ticket; refreshes several times per day</td><td><span class="badge badge-green">−21% of negatives</span></td><td>Needs correct ticket-status logic (see “lessons” below); later refine to quality-signal subjects only</td></tr>
+          <tr><td>3</td><td><strong>Negative-review recovery campaign</strong></td><td>Response campaign for ≤3★ reviewers: apologise, resolve, invite to update the review after resolution</td><td><span class="badge badge-blue">Each 1★→5★ flip ≈ 5 new 5★ reviews</span></td><td>Only works if support can actually resolve; <strong>Phase 2</strong>, after support-routing capacity is confirmed</td></tr>
+          <tr><td>4</td><td><strong>Always-on split-tests</strong></td><td>50/50 on email template and subject line, per step (invite and reminder); judged on rating quality as well as conversion</td><td><span class="badge badge-blue">Compounding conversion gains</span></td><td>Needs ~1,000 sends per variant before deciding (~3 weeks at this volume)</td></tr>
+          <tr><td>5</td><td><strong>High-risk SKU handling</strong></td><td>Exclude (or delay to 30d+) buyers of the worst SKUs; pair with day-7 care email from the ESP</td><td><span class="badge badge-amber">Removes the highest-risk cohort</span></td><td>Slightly fewer invites; care email sits outside the invite tool</td></tr>
+        </tbody>
+      </table>
+      <p class="note">Rollout is a phased before/after change against the 12-month baseline rather than a hard A/B split on the delay: a true delay test would need two campaigns over a split audience, and cross-campaign cooldowns make that unclean. The window analysis above provides the supporting evidence.</p>
+    </div>
+  </div>
+
+  <!-- Configuration -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title" id="setup">How It Is Configured in Stacktome</h2>
+      <div class="section-sub">Campaign + segment, as built for this account</div>
+    </div>
+    <div class="section-body">
+      <div class="sub-h">New campaign alongside the existing one</div>
+      <p class="note" style="margin-top:0;margin-bottom:10px;">The existing production campaign is left untouched. The new campaign is created separately, starts <code>inactive</code> in <code>testMode</code>, and is switched on only after the segment count and plan have been signed off. The old campaign can then be wound down — it is never edited in place.</p>
+      <table>
+        <thead><tr><th>Setting</th><th>Existing campaign</th><th>New campaign</th></tr></thead>
+        <tbody>
+          <tr><td>Audience</td><td>All orders (event-based)</td><td>Dynamic segment “invite-eligible-no-ticket”</td></tr>
+          <tr><td>Invite timing</td><td>14 days after dispatch (20-day cutoff)</td><td>Segment-driven: 22–31 days after dispatch</td></tr>
+          <tr><td>Event window</td><td>30 days</td><td>45 days (covers delay + cutoff)</td></tr>
+          <tr><td>Reminder</td><td>+7 days</td><td>+7 days (unchanged)</td></tr>
+          <tr><td>Templates / subjects</td><td>Single version (weights 100/0 — split-test dormant)</td><td>50/50 template and subject split on both steps</td></tr>
+          <tr><td>Send window</td><td colspan="2">08:00–16:00 recipient-market time zone, 7 days a week, daily cap, 90-day cooldown, review target: Trustpilot</td></tr>
+        </tbody>
+      </table>
+
+      <div class="sub-h" style="margin-top:20px;">Segment logic (rules, anonymised)</div>
+<pre class="code">days since dispatch  &gt;= 22
+AND days since dispatch  &lt;= 31
+AND NOT customer has any helpdesk ticket in the trailing 90 days   -- any status
+AND NOT purchased SKU IN ( NECK-001, RING-491, PEND-515, ... )     -- high-risk list
+refresh: every 6 hours</pre>
+
+      <div class="sub-h" style="margin-top:20px;">Lesson from validation — verify suppression rules against live data</div>
+      <div class="warn-box">
+        The first version of the ticket exclusion matched ticket statuses <code>open</code> and <code>new</code>. The helpdesk integration only ever emits <code>closed</code>, <code>active</code>, <code>pending</code> and <code>spam</code>, so the exclusion silently matched nothing.
+        It was caught when a negative reviewer who had two tickets still received an invite. Switching to an “any ticket, any status” building block, then verifying the customer disappeared from the live segment, shrank the eligible audience by <strong>17%</strong> (1,414 → 1,169 customers).
+        We now check every exclusion rule against real rows before activation, and each report re-confirms it with a before/after segment count.
+      </div>
+    </div>
+  </div>
+
+  <!-- Rollout -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title" id="rollout">Rollout Plan &amp; 90-Day Targets</h2>
+      <div class="section-sub">Phased, reversible, measured weekly</div>
+    </div>
+    <div class="section-body">
+      <div class="phase"><strong>Weeks 1–2 · Baseline &amp; build.</strong> Snapshot the current campaign config; create the new campaign (inactive, test mode) and the ticket-gated segment; compare segment size with the old audience; dry-run every change.</div>
+      <div class="phase"><strong>Weeks 2–4 · Launch.</strong> Activate the new campaign with the 22–31-day window and 50/50 template and subject tests; retire the legacy flow after its reminder tail finishes.</div>
+      <div class="phase p3"><strong>Week 6+ · Product handling.</strong> Add the high-risk SKU exclusion; hand the day-7 care email to the ESP flow.</div>
+      <div class="phase p2"><strong>Phase 2 · Recovery.</strong> Build the ≤3★ response/recovery campaign once support can handle the resulting volume.</div>
+      <div class="phase p3"><strong>Weekly · Review.</strong> Reviews per 1,000 invites, negative rate, per-variant results. <strong>Day 90:</strong> decision review against the targets below.</div>
+
+      <div class="metric-row" style="margin-top:16px;">
+        <div class="metric-cell"><div class="metric-val">≤ 12%</div><div class="metric-label">Invite-driven negative rate (from 18.8%)</div></div>
+        <div class="metric-cell"><div class="metric-val">≥ 1.6%</div><div class="metric-label">Conversion (from 1.9%, small dip accepted)</div></div>
+        <div class="metric-cell"><div class="metric-val">≥ 4.40★</div><div class="metric-label">TP average, trending to 4.5★</div></div>
+        <div class="metric-cell"><div class="metric-val">&lt; 1.5%</div><div class="metric-label">Rollback trigger: 3 consecutive weeks</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Early results -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title" id="early-results">Early Results After Launch</h2>
+      <div class="section-sub">First 13 days of steady-state sending · what ongoing reporting looks like</div>
+    </div>
+    <div class="section-body">
+      <div class="metric-row">
+        <div class="metric-cell"><div class="metric-val">653</div><div class="metric-label">Invites sent (+390 reminders)</div></div>
+        <div class="metric-cell"><div class="metric-val">14</div><div class="metric-label">Attributed reviews</div></div>
+        <div class="metric-cell"><div class="metric-val" style="color:#28a745">4.79★</div><div class="metric-label">Avg rating (baseline 4.29★)</div></div>
+        <div class="metric-cell"><div class="metric-val">2.1%</div><div class="metric-label">Review rate</div></div>
+        <div class="metric-cell"><div class="metric-val">1</div><div class="metric-label">Negative review (≤3★)</div></div>
+      </div>
+      <div class="warn-box"><strong>Read with care:</strong> 14 reviews is a very small sample. The rating is directionally consistent with the delayed-window and ticket-suppression levers, but the corrected ticket-gating rule only went live at the very end of this window, so its effect is not in these numbers yet. The 90-day review is the decision point.</div>
+
+      <div class="sub-h" style="margin-top:18px;">Template split-test: plain “review-platform” style vs. brand-styled email</div>
+      <div class="compare">
+        <div class="cmp-card">
+          <div class="lbl">Invite open rate</div>
+          <div class="big">54.5% <span style="font-size:14px;color:#6c757d;">plain</span> → 38.2% <span style="font-size:14px;color:#6c757d;">branded</span></div>
+          <div class="note">−16.3 pp · 321 vs 315 sends · click rate 4.0% vs 1.7%</div>
+        </div>
+        <div class="cmp-card">
+          <div class="lbl">Invite review conversion</div>
+          <div class="big">2.80% <span style="font-size:14px;color:#6c757d;">plain</span> → 1.27% <span style="font-size:14px;color:#6c757d;">branded</span></div>
+          <div class="note">9 vs 4 reviews — small samples; open-rate gap is the more reliable signal</div>
+        </div>
+      </div>
+      <p class="note" style="margin-top:12px;"><strong>Insight:</strong> the branded variant lost on every engagement metric, on both invite and reminder steps, by a similar margin. A gap this consistent can point to deliverability (sender reputation, embedded logo images, from-address) rather than creative preference — so the recommendation was to hold the split one more week, check the sending headers for the branded template, and only then drop its weight. Split-tests are judged on engagement <em>and</em> rating quality, not conversion alone.</p>
+    </div>
+  </div>
+
+  <!-- Action Items -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title" id="actions">Action Items</h2>
+    </div>
+    <div class="section-body">
+      <ul class="action-list">
+        <li><div class="action-num red">1</div><div><strong>Implement ticket-gated invite suppression.</strong>
+          Exclude customers with a recent support ticket from the invite segment; re-admit them automatically once the ticket ages out. Based on 12-month data this would have prevented <strong>21% of negative reviews</strong> (20/97) with ~4.7% bleed of happy customers. Strongest for tickets that arrived 2–14 days before the invite.</div></li>
+        <li><div class="action-num red">2</div><div><strong>Move the invite to a 22–30-day window.</strong>
+          The 22–30-day bucket shows an 11.1% negative rate vs 18.8% at 11–14 days (−42%). Roll out as a phased change, monitor both negative rate <em>and</em> review volume, and keep a rollback trigger (conversion &lt; 1.5% for 3 weeks).</div></li>
+        <li><div class="action-num red">3</div><div><strong>Escalate the personalized-necklace product family for quality review.</strong>
+          23 negative product reviews in 12 months at a 22.3% negative rate (avg 2.0★). Primary complaints: chain fragility, size smaller than shown, mismatch with photos. Update the listing (size reference photo, accurate chain gauge) and review chain sourcing. This SKU likely drives the “size” theme — the largest Trustpilot complaint category (13%).</div></li>
+        <li><div class="action-num amber">4</div><div><strong>Add a proactive care touchpoint at day 7 for high-risk SKUs.</strong>
+          Care guide, sizing/adjustment process and metal-care tips turn a potential complaint into a brand moment and surface issues early enough to resolve before the day-22+ invite.</div></li>
+        <li><div class="action-num amber">5</div><div><strong>Refine the ticket filter to support-intent subjects.</strong>
+          The ticket data includes many automated replies. Once the basic gate is validated, restrict suppression to subjects with quality signals (“resiz”, “wrong”, “broke”, “return”, “refund”, “defect”, “problem”, “damage”, “tarnish”, “missing”) to reduce false suppression.</div></li>
+        <li><div class="action-num amber">6</div><div><strong>Fix the customer-service response gap.</strong>
+          11 negative TP reviews (11%) cite no response from customer service. Tickets currently active should be triaged within a 24-hour SLA, quality complaints first. Resolving the issue before the invite is the fastest path to prevention — and the prerequisite for the Phase 2 recovery campaign.</div></li>
+        <li><div class="action-num green">7</div><div><strong>Capture the order ID on tickets at ingestion.</strong>
+          ~81% of ticket subjects contain a parseable order ID, but only ~3% of tickets have the field populated. Extracting it at import enables order-level ticket→review matching (more precise than email matching alone).</div></li>
+        <li><div class="action-num green">8</div><div><strong>Phase 2: launch a negative-review recovery campaign.</strong>
+          Reply to ≤3★ reviewers within 24h, resolve, and invite them to update the review. Recovered reviews move the average faster than new positives.</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Method -->
+  <div class="section">
+    <div class="section-header">
+      <h2 class="section-title" id="method">Data &amp; Method</h2>
+      <div class="section-sub">What this analysis is built from</div>
+    </div>
+    <div class="section-body">
+      <table>
+        <thead><tr><th>Source</th><th>Used for</th></tr></thead>
+        <tbody>
+          <tr><td>Stacktome invite log (invites, reminders, templates, opens, clicks)</td><td>Volume, conversion, timing, split-test results</td></tr>
+          <tr><td>Trustpilot reviews (via Stacktome connector)</td><td>Ratings, complaint themes, invite→review attribution by order ID</td></tr>
+          <tr><td>Product-review platform export</td><td>Problem-SKU analysis</td></tr>
+          <tr><td>Helpdesk tickets (matched on hashed email)</td><td>Pre-invite ticket signal, suppression logic</td></tr>
+          <tr><td>Order / dispatch events from the shop</td><td>Order→invite→review timing windows, eligibility segments</td></tr>
+        </tbody>
+      </table>
+      <p class="note">Negative = 3★ or lower. Invite-triggered = review attributed to an invite or reminder sent by Stacktome; organic = no invite match. Complaint themes are assigned by an AI categoriser that tags only specific, attributable mentions. Sample sizes are shown on every cut — treat small buckets as hypotheses to validate, not conclusions. All customer-level identifiers (names, emails, order and ticket IDs) are removed from this sample; absolute counts are rescaled while rates and relationships are preserved.</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
