@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>47 Skin — Review Invitation Setup and Skipped Customers</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f9fa; color: #212529; }
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 40px 48px 36px; }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; gap: 12px; flex-wrap: wrap; }
+  .brand { font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; opacity: 0.6; }
+  .period-badge { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500; }
+  .header h1 { font-size: 32px; font-weight: 700; margin-bottom: 6px; }
+  .header-sub { font-size: 14px; opacity: 0.65; }
+  .container { max-width: 1020px; margin: 0 auto; padding: 32px 24px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 28px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 18px 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-top: 3px solid #0f3460; }
+  .kpi.green  { border-top-color: #28a745; }
+  .kpi.amber  { border-top-color: #fd7e14; }
+  .kpi.red    { border-top-color: #dc3545; }
+  .kpi.blue   { border-top-color: #0d6efd; }
+  .kpi.purple { border-top-color: #6f42c1; }
+  .kpi.teal   { border-top-color: #20c997; }
+  .kpi-val   { font-size: 24px; font-weight: 700; color: #1a1a2e; line-height: 1; margin-bottom: 4px; }
+  .kpi-label { font-size: 10px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: #6c757d; }
+  .kpi-note  { font-size: 11px; color: #adb5bd; margin-top: 4px; }
+
+  .section { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 24px; overflow: hidden; }
+  .section-header { padding: 18px 24px 16px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .section-title { font-size: 15px; font-weight: 700; color: #1a1a2e; }
+  .section-sub { font-size: 12px; color: #6c757d; }
+  .section-body { padding: 20px 24px; }
+  h4.sub { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 12px; }
+  .note { font-size: 12px; color: #6c757d; margin-top: 8px; line-height: 1.5; }
+
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 9px 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: #6c757d; border-bottom: 2px solid #f0f0f0; background: #fafafa; }
+  td { padding: 10px 12px; border-bottom: 1px solid #f5f5f5; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafeff; }
+  .highlight-row td { background: #fff8e1; }
+
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-green  { background: #d4edda; color: #155724; }
+  .badge-amber  { background: #fff3cd; color: #856404; }
+  .badge-red    { background: #f8d7da; color: #721c24; }
+  .badge-blue   { background: #d0e8ff; color: #004085; }
+  .badge-gray   { background: #e9ecef; color: #495057; }
+  .badge-purple { background: #e9d8fd; color: #44337a; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .two-col > *, .three-col > * { min-width: 0; }
+
+  .rating-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; }
+  .rbl { width: 22px; text-align: right; font-size: 12px; font-weight: 700; color: #6c757d; }
+  .rbw { flex: 1; height: 8px; background: #f0f0f0; border-radius: 4px; overflow: hidden; }
+  .rbf { height: 8px; border-radius: 4px; }
+  .rbc { width: 32px; text-align: right; font-size: 12px; color: #6c757d; }
+  .fill-5 { background: #28a745; }
+  .fill-4 { background: #74c69d; }
+  .fill-3 { background: #fd7e14; }
+  .fill-2 { background: #e85d04; }
+  .fill-1 { background: #dc3545; }
+
+  .warn-box { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; font-size: 13px; color: #856404; line-height: 1.55; }
+  .info-box { background: #d0e8ff; border: 1px solid #90cdf4; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; font-size: 13px; color: #004085; line-height: 1.55; }
+  .ok-box   { background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; font-size: 13px; color: #155724; line-height: 1.55; }
+  .insight-box { background: #1a1a2e; color: #fff; border-radius: 10px; padding: 16px 20px; margin-bottom: 18px; }
+  .insight-box h4 { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.6; margin-bottom: 6px; }
+  .insight-box p { font-size: 14px; line-height: 1.6; }
+
+  .progress-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
+  .progress-row:last-child { border-bottom: none; }
+  .pl { width: 210px; font-size: 12px; color: #495057; flex-shrink: 0; }
+  .pw { flex: 1; height: 10px; background: #f0f0f0; border-radius: 5px; overflow: hidden; }
+  .pf { height: 10px; border-radius: 5px; }
+  .pp { width: 76px; text-align: right; font-size: 12px; font-weight: 700; }
+
+  .metric-row { display: flex; gap: 0; border: 1px solid #f0f0f0; border-radius: 10px; overflow: hidden; margin-bottom: 14px; flex-wrap: wrap; }
+  .metric-cell { flex: 1; min-width: 110px; padding: 16px; text-align: center; border-right: 1px solid #f0f0f0; }
+  .metric-cell:last-child { border-right: none; }
+  .metric-val { font-size: 22px; font-weight: 800; color: #1a1a2e; }
+  .metric-label { font-size: 10px; color: #6c757d; font-weight: 600; text-transform: uppercase; margin-top: 3px; }
+
+  .window-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .window-cell { text-align: center; border-radius: 8px; padding: 12px 6px; }
+  .window-label { font-size: 10px; font-weight: 700; color: #6c757d; margin-bottom: 4px; }
+  .window-rate { font-size: 20px; font-weight: 800; }
+  .window-n { font-size: 10px; color: #6c757d; margin-top: 2px; }
+  .cell-hot { background: #f8d7da; }
+  .cell-warm { background: #fff3cd; }
+  .cell-ok { background: #d4edda; }
+
+  .action-list { list-style: none; }
+  .action-list li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f5f5f5; font-size: 13px; line-height: 1.6; }
+  .action-list li:last-child { border-bottom: none; }
+  .action-num { width: 26px; height: 26px; background: #0f3460; color: #fff; border-radius: 50%; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .action-num.red { background: #dc3545; }
+  .action-num.amber { background: #fd7e14; }
+  .action-num.green { background: #28a745; }
+
+  .toc { margin: 0 0 24px; padding: 14px 20px; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-left: 3px solid #0f3460; font-size: 13px; line-height: 2; }
+  .toc strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: #888; }
+  .toc a { color: #444; text-decoration: none; margin-right: 18px; white-space: nowrap; }
+  .toc a:hover { color: #0f3460; text-decoration: underline; }
+  .chart-title { font-size: 12px; font-weight: 700; color: #495057; margin-bottom: 6px; }
+  svg .bar:hover path { opacity: .8; }
+  .footer { text-align: center; font-size: 12px; color: #adb5bd; padding: 8px 0 32px; }
+
+  @media (max-width: 860px) {
+    .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .window-grid { grid-template-columns: repeat(3, 1fr); }
+    .header { padding: 28px 16px; }
+    .container { padding: 20px 16px; }
+    .pl { width: 140px; }
+  }
+  @media (max-width: 520px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } .header h1 { font-size: 24px; } }
+</style>
+<style>
+  .camp { border: 1px solid #e9ecef; border-radius: 10px; margin-bottom: 16px; overflow: hidden; }
+  .camp-head { background: #f8f9fa; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid #e9ecef; }
+  .camp-name { font-size: 14px; font-weight: 700; color: #1a1a2e; }
+  .camp-meta { font-size: 12px; color: #6c757d; }
+  .camp-body { display: grid; grid-template-columns: 1.7fr 1fr 1fr; gap: 24px; padding: 14px 16px; }
+  .camp-body > div { min-width: 0; }
+  .col-title { font-size: 11px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: #6c757d; margin: 0 0 6px; }
+  .col-title.gap { margin-top: 12px; }
+  ul.rules { list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 1.5; }
+  ul.rules li { padding: 2px 0 2px 20px; position: relative; }
+  ul.rules li::before { position: absolute; left: 0; font-weight: 700; }
+  ul.rules.inc li::before { content: "\2713"; color: #28a745; }
+  ul.rules.exc li::before { content: "\2715"; color: #dc3545; }
+  ul.rules.hold li::before { content: "\23F3"; }
+  ul.rules.plain li::before { content: "\2022"; color: #adb5bd; }
+  .kv { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; padding: 3px 0; border-bottom: 1px solid #f5f5f5; }
+  .kv:last-child { border-bottom: none; }
+  .kv span:first-child { color: #6c757d; }
+  .kv span:last-child { font-weight: 600; text-align: right; }
+  .vol-big { font-size: 22px; font-weight: 700; color: #1a1a2e; line-height: 1.1; }
+  @media (max-width: 800px) { .camp-body { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="brand">Stacktome · 47 Skin · Invitation Setup</div>
+    <div class="period-badge">Live settings as of Nov 6, 2026</div>
+  </div>
+  <h1>Who Is Targeted, and Who Is Skipped</h1>
+  <div class="header-sub">47 Skin (UK) + 47 Skin USA · review invitation campaigns · reference for the product review campaign</div>
+</div>
+
+<div class="container">
+
+  <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi blue"><div class="kpi-val">5,110</div><div class="kpi-label">Invites, last 30 days</div><div class="kpi-note">Oct 7 – Nov 5</div></div>
+    <div class="kpi teal"><div class="kpi-val">5,051</div><div class="kpi-label">Reminders, last 30 days</div><div class="kpi-note">Oct 7 – Nov 5</div></div>
+    <div class="kpi green"><div class="kpi-val">5,600</div><div class="kpi-label">Customers emailed</div><div class="kpi-note">unique, UK + US</div></div>
+    <div class="kpi amber"><div class="kpi-val">~245</div><div class="kpi-label">Emails a day</div><div class="kpi-note">all campaigns, last 7 days</div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div><div class="section-title">1. Segment targeting and campaign setup</div><div class="section-sub">Each campaign emails the members of one segment, 10:00–19:00 local time, every day</div></div></div>
+    <div class="section-body">
+      
+      <div class="camp">
+        <div class="camp-head"><div><div class="camp-name">recent-purchases (811)</div><div class="camp-meta">UK · segment recent-purchases (1299)</div></div><div><span class="badge badge-green">active</span> <span class="camp-meta">&nbsp;443 members</span></div></div>
+        <div class="camp-body">
+          <div>
+            <div class="col-title">Invited when</div><ul class="rules inc"><li>Order dispatched 5–14 days ago</li><li>Delivered in Great Britain</li><li>2–5 lifetime orders</li><li>First order was 60+ days ago</li></ul>
+            <div class="col-title gap">Skipped when</div><ul class="rules exc"><li>Any support ticket in the last 90 days</li><li>Opt-out record</li><li>Opt-in record under 60 days old (previous Trustpilot invitation)</li><li>No email address on file</li></ul>
+            
+          </div>
+          <div><div class="col-title">Setup</div><div class="kv"><span>Invite</span><span>1 h after qualifying</span></div><div class="kv"><span>Reminder</span><span>after 7 days</span></div><div class="kv"><span>Daily cap</span><span>150 emails</span></div><div class="kv"><span>Cooldown</span><span>90 days, counts all campaigns</span></div><div class="kv"><span>Timing clock</span><span>dispatch date</span></div></div>
+          <div><div class="col-title">Invite volume</div><div class="vol-big">87</div><div class="camp-meta" style="margin-bottom:8px">emails a day, last 7 days (cap 150)</div>
+      <div class="kv"><span>Invites, last 30 days</span><span>1,597</span></div>
+      <div class="kv"><span>Reminders, last 30 days</span><span>1,574</span></div>
+      <div class="kv"><span>Customers emailed</span><span>1,787</span></div></div>
+        </div>
+      </div>
+      <div class="camp">
+        <div class="camp-head"><div><div class="camp-name">loyal-purchases (812)</div><div class="camp-meta">UK · segment loyal-purchases (1301)</div></div><div><span class="badge badge-green">active</span> <span class="camp-meta">&nbsp;415 members</span></div></div>
+        <div class="camp-body">
+          <div>
+            <div class="col-title">Invited when</div><ul class="rules inc"><li>Order dispatched 5–14 days ago</li><li>Delivered in Great Britain</li><li>6 or more lifetime orders</li></ul>
+            <div class="col-title gap">Skipped when</div><ul class="rules exc"><li>Any support ticket in the last 90 days</li><li>Opt-out record</li><li>Opt-in record under 60 days old (previous Trustpilot invitation)</li><li>No email address on file</li></ul>
+            
+          </div>
+          <div><div class="col-title">Setup</div><div class="kv"><span>Invite</span><span>1 h after qualifying</span></div><div class="kv"><span>Reminder</span><span>after 7 days</span></div><div class="kv"><span>Daily cap</span><span>150 emails</span></div><div class="kv"><span>Cooldown</span><span>90 days, counts all campaigns</span></div><div class="kv"><span>Timing clock</span><span>dispatch date</span></div></div>
+          <div><div class="col-title">Invite volume</div><div class="vol-big">61</div><div class="camp-meta" style="margin-bottom:8px">emails a day, last 7 days (cap 150)</div>
+      <div class="kv"><span>Invites, last 30 days</span><span>976</span></div>
+      <div class="kv"><span>Reminders, last 30 days</span><span>980</span></div>
+      <div class="kv"><span>Customers emailed</span><span>1,172</span></div></div>
+        </div>
+      </div>
+      <div class="camp">
+        <div class="camp-head"><div><div class="camp-name">positive-closed-tickets (813)</div><div class="camp-meta">UK · segment positive-closed-tickets (1302)</div></div><div><span class="badge badge-green">active</span> <span class="camp-meta">&nbsp;549 members</span></div></div>
+        <div class="camp-body">
+          <div>
+            <div class="col-title">Invited when</div><ul class="rules inc"><li>Support ticket is closed and no other ticket is open</li><li>Delivered in Great Britain (or country unknown)</li><li>Email address on file</li></ul>
+            <div class="col-title gap">Skipped when</div><ul class="rules exc"><li>Another ticket is still open, or the ticket was reopened or is an automatic reply</li><li>Refund, money-back or negative-reaction tag (skipped for about 14 days)</li><li>PR-gifting or data-removal ticket</li><li>Ticket tagged "TP-Exclude" by support</li><li>Latest customer message is negative</li><li>First purchase was 30–60 days ago</li><li>No email address on file</li></ul>
+            <div class="col-title gap">Held, then invited</div><ul class="rules hold"><li>Return/exchange, ai_close, ai_snooze, ai_handover or ai_executed_action tag: invited 3 days after the close</li><li>Ticket younger than 24 hours: invited once it is a day old</li></ul><div class="col-title gap">Override</div><ul class="rules plain"><li>Latest customer message positive: invited regardless of the age, hold and first-purchase rules (email, country and the skips above for PR-gifting, data removal and TP-Exclude still apply)</li></ul>
+          </div>
+          <div><div class="col-title">Setup</div><div class="kv"><span>Invite</span><span>straight away</span></div><div class="kv"><span>Reminder</span><span>after 3 days</span></div><div class="kv"><span>Daily cap</span><span>500 emails</span></div><div class="kv"><span>Cooldown</span><span>30 days, own campaign only</span></div><div class="kv"><span>Timing clock</span><span>ticket creation date</span></div></div>
+          <div><div class="col-title">Invite volume</div><div class="vol-big">82</div><div class="camp-meta" style="margin-bottom:8px">emails a day, last 7 days (cap 500)</div>
+      <div class="kv"><span>Invites, last 30 days</span><span>2,273</span></div>
+      <div class="kv"><span>Reminders, last 30 days</span><span>2,257</span></div>
+      <div class="kv"><span>Customers emailed</span><span>2,422</span></div></div>
+        </div>
+      </div>
+      <div class="camp">
+        <div class="camp-head"><div><div class="camp-name">positive-closed-tickets (817)</div><div class="camp-meta">US · segment positive-closed-tickets (1305)</div></div><div><span class="badge badge-green">active</span> <span class="camp-meta">&nbsp;77 members</span></div></div>
+        <div class="camp-body">
+          <div>
+            <div class="col-title">Invited when</div><ul class="rules inc"><li>Same rules as 813</li><li>Delivered in the US</li></ul>
+            <div class="col-title gap">Skipped when</div><ul class="rules exc"><li>Same skips as 813</li></ul>
+            
+          </div>
+          <div><div class="col-title">Setup</div><div class="kv"><span>Invite</span><span>1 h after qualifying</span></div><div class="kv"><span>Reminder</span><span>after 3 days</span></div><div class="kv"><span>Daily cap</span><span>100 emails</span></div><div class="kv"><span>Cooldown</span><span>90 days, own campaign only</span></div><div class="kv"><span>Timing clock</span><span>ticket creation date</span></div></div>
+          <div><div class="col-title">Invite volume</div><div class="vol-big">15</div><div class="camp-meta" style="margin-bottom:8px">emails a day, last 7 days (cap 100)</div>
+      <div class="kv"><span>Invites, last 30 days</span><span>264</span></div>
+      <div class="kv"><span>Reminders, last 30 days</span><span>240</span></div>
+      <div class="kv"><span>Customers emailed</span><span>264</span></div></div>
+        </div>
+      </div>
+      <div class="camp">
+        <div class="camp-head"><div><div class="camp-name">product-invite (814)</div><div class="camp-meta">UK · segment product-invite (1303)</div></div><div><span class="badge badge-gray">inactive</span> <span class="camp-meta">&nbsp;28 members</span></div></div>
+        <div class="camp-body">
+          <div>
+            <div class="col-title">Invited when</div><ul class="rules inc"><li>Order dispatched 35–60 days ago</li><li>Delivered in Great Britain</li><li>No product review left yet</li></ul>
+            <div class="col-title gap">Skipped when</div><ul class="rules exc"><li>Any opt-in or opt-out record (no 60-day release yet)</li></ul>
+            
+          </div>
+          <div><div class="col-title">Setup</div><div class="kv"><span>Invite</span><span>1 h after qualifying</span></div><div class="kv"><span>Reminder</span><span>after 7 days</span></div><div class="kv"><span>Daily cap</span><span>100 emails</span></div><div class="kv"><span>Cooldown</span><span>60 days, counts all campaigns</span></div><div class="kv"><span>Timing clock</span><span>dispatch date</span></div></div>
+          <div><div class="col-title">Invite volume</div><div class="vol-big">0</div><div class="camp-meta">not sending (campaign inactive)</div></div>
+        </div>
+      </div>
+      <p class="note">All campaigns skip customers who have opted out on their profile, and email a customer for one order at a time. Volume is invites plus reminders sent per day, averaged over Oct 30 – Nov 5.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header"><div><div class="section-title">2. Customers currently skipped</div><div class="section-sub">The two groups that account for most customers who never receive an invitation</div></div></div>
+    <div class="section-body">
+      <div class="two-col">
+        <div class="camp" style="margin-bottom:0">
+          <div class="camp-head"><div class="camp-name">First-time buyers</div></div>
+          <div style="padding:14px 16px">
+            <div class="vol-big">6,392</div><div class="camp-meta" style="margin-bottom:8px">orders dispatched Oct 6–30 never invited (97% of first orders), UK + US</div>
+            <ul class="rules plain"><li>No campaign covers a customer's first order</li><li>Purchase campaigns need 2+ lifetime orders</li><li>The product segment (1303) has no first-time rule, but the campaign is not running</li></ul>
+          </div>
+        </div>
+        <div class="camp" style="margin-bottom:0">
+          <div class="camp-head"><div class="camp-name">Has a preference record (previously invited by Trustpilot)</div></div>
+          <div style="padding:14px 16px">
+            <div class="vol-big">2,645</div><div class="camp-meta" style="margin-bottom:8px">repeat orders held, Oct 6–30 (plus 483 with an opt-out)</div>
+            <ul class="rules plain"><li>An opt-in record is read as the date of the last Trustpilot invitation</li><li>Purchase segments (1299, 1301) hold the customer for 60 days, then release them (since Nov 5)</li><li>Product segment (1303) still skips them permanently: 9,793 of 11,943 candidates, plus 1,741 opt-outs</li><li>Records run Jul 6 – Oct 5, so all are past 60 days by about Dec 4</li></ul>
+          </div>
+        </div>
+      </div>
+      <p class="note">Product segment (1303), tested as temporary segments and not applied: 28 members today, 142 with the 60-day hold, 10,024 if only opt-outs were skipped. Order counts are UK + US orders dispatched Oct 6–30 whose customer was never invited; product figures are UK customers with an order dispatched 35–60 days ago and no product review.</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
