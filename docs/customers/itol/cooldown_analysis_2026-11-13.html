@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ITOL Recruit: cooldown suppression analysis (internal)</title>
+<style>
+  body{font:15px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#1f2328;background:#fff;max-width:1020px;margin:0 auto;padding:28px 20px 60px}
+  h1{font-size:24px;margin:0 0 4px} h2{font-size:18px;margin:34px 0 8px;padding-top:14px;border-top:1px solid #d8dee4} h3{font-size:15px;margin:20px 0 6px}
+  .meta{color:#59636e;font-size:13px;margin-bottom:16px}
+  .tag{display:inline-block;font-size:11px;font-weight:600;padding:1px 7px;border-radius:10px;vertical-align:middle}
+  .int{background:#ffebe9;color:#a40e26}.est{background:#fff8c5;color:#7d4e00}.obs{background:#dafbe1;color:#116329}
+  .box{background:#f6f8fa;border:1px solid #d8dee4;border-radius:6px;padding:12px 16px;margin:12px 0}
+  .rec{background:#ddf4ff;border-color:#9cd7ff}
+  .warn{background:#fff8c5;border-color:#e3c95c}
+  .scroll{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;margin:8px 0 4px}
+  th,td{border:1px solid #d8dee4;padding:5px 8px;text-align:right;white-space:nowrap}
+  th{background:#f6f8fa;font-weight:600} td:first-child,th:first-child{text-align:left;white-space:normal}
+  tr.tot td{font-weight:600;background:#f6f8fa} tr.hl td{background:#fffbe6}
+  .note{color:#59636e;font-size:12.5px}
+  pre{background:#f6f8fa;border:1px solid #d8dee4;border-radius:6px;padding:10px 12px;font-size:12.5px;overflow-x:auto;line-height:1.45}
+  ul{margin:6px 0 6px 20px;padding:0} li{margin:3px 0}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:14px 0}
+  .kpi{border:1px solid #d8dee4;border-radius:6px;padding:10px 12px}.kpi b{display:block;font-size:22px}.kpi span{font-size:12.5px;color:#59636e}
+</style>
+</head>
+<body>
+
+<h1>ITOL Recruit: review-invitation cooldown analysis</h1>
+<div class="meta">
+  <span class="tag int">INTERNAL: for Evaldas, not for the customer</span>
+  &nbsp;Window: requests received Oct 14 – Nov 12, 2026 (30 days) · Account <code>itol_recruit</code> · Prepared Nov 13, 2026 · Read-only analysis, no settings changed
+</div>
+
+<div class="box rec">
+<b>Recommendation: change the cooldown to 7 days on Support (647) and General Recruitment Support (701) only. Leave every other campaign at 30 days.</b>
+<ul>
+  <li><b>Estimated impact of the recommended change:</b> <b>+10 invitations to 10 students</b> in the 30-day window with a 7-day cooldown (104 → 114, +9.6%). A 4-day cooldown would give <b>+13 invitations to 12 students</b> (+12.5%). The difference between the two is 3 invitations a month.</li>
+  <li><b>Why 7 rather than 4:</b> the 3 additional invitations at 4 days are the ones that land soonest after the previous emails. With 4 days a student can get invite, reminder, invite, reminder inside 10 days, and one student in the window (Selena's first example) would have received 3 Support invitations in just over 3 weeks. With 7 days nobody gets more than 2, and consecutive invitations are at least 10 days apart when a reminder was sent.</li>
+  <li><b>Why only these two campaigns:</b> this is where the cooldown blocks genuinely new interactions. 70% of all cooldown suppressions are in Welcome Call/Setup (646), where a second form arrives within 1–3 days; those are correctly suppressed and would stay suppressed at 4 or 7 days anyway. Figures for applying the change to all campaigns are in Section 4 for comparison only.</li>
+  <li><b>Expected review effect is small:</b> roughly one extra review a month at the account's recent 6–8% review rate.</li>
+  <li><b>Confirm one thing with engineering first:</b> students who reviewed in the last 30 days are currently not invited. Two of Selena's three examples are in that position. If that exclusion is separate from the cooldown, the change will not release their requests; if it shortens with the cooldown, the impact rises to about +12 (7 days) or +15 (4 days) and recent reviewers will be invited again.</li>
+</ul>
+</div>
+
+<div class="box">
+<b>Selena's three students (Section 6).</b> All three are Support (647) students whose November requests fell inside the 30-day cooldown that started with their mid-October invitation. None of their 11 November requests was sent.
+<ul>
+  <li><b>giftyprincess100@gmail.com:</b> blocked by cooldown only. A 7-day cooldown would have sent 1 of her 5 November requests; 4 days would have sent 2.</li>
+  <li><b>victoreze31@yahoo.com</b> and <b>gioesfandeyari@gmail.com:</b> blocked by cooldown, and both also left a 5★ review after the October invitation, so the recent-review exclusion applies too. Whether a shorter cooldown alone releases them cannot be verified from the data.</li>
+</ul>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><b>636</b><span>review-request events, form-triggered campaigns (429 students)</span></div>
+  <div class="kpi"><b>458</b><span>invitations sent (72%)</span></div>
+  <div class="kpi"><b>170</b><span>requests suppressed by cooldown <span class="tag est">estimate</span></span></div>
+  <div class="kpi"><b>133</b><span>unique students affected</span></div>
+  <div class="kpi"><b>34 / 23</b><span>of those in support campaigns: requests / students</span></div>
+</div>
+
+<h2>How suppression was determined</h2>
+<ul>
+  <li><b>Suppression is not logged.</b> The event store only holds sent emails (<code>/events/invites/email</code>); there is no skipped/suppressed event, and the campaign report API returns send, open and click statistics only. Every suppression figure here is therefore an <span class="tag est">estimate</span>: a request event with no invitation, attributed to a cause by replaying the eligibility rules against the send history.</li>
+  <li><b>Request event</b> = a row in the purchase feed. Form-triggered campaigns (633, 646–651, 698–701, 710) receive one event per staff form submission, routed by campaign id. Hubspot (Main) 624 receives deal events. Invitations go out a median of 56 minutes after the event.</li>
+  <li><b>The replay reproduces reality.</b> Run with the current 30-day setting, the model predicts exactly the invitations that were actually sent (0 added, 0 missed out of 636 events), and all 178 unsent form requests are explained. No request was left as "unknown".</li>
+</ul>
+
+<h3>Rules confirmed from the data <span class="tag obs">observed</span></h3>
+<div class="scroll"><table>
+<tr><th>Rule</th><th style="text-align:left">Evidence</th></tr>
+<tr><td>Same-campaign cooldown of 30 days is enforced strictly</td><td style="text-align:left;white-space:normal">0 of 458 sent invitations had an earlier email from the same campaign within 30 days.</td></tr>
+<tr><td>The clock restarts at the reminder, so the real gap is about 33 days</td><td style="text-align:left;white-space:normal">Since Sep 20 the shortest gap between two invitations in one campaign is 33.7 days; the shortest gap after a reminder is 30.7 days. Three requests in the window were blocked 30–32 days after the invitation because the reminder was 27–29 days old.</td></tr>
+<tr><td>Cooldown is per campaign, not across campaigns, for all form campaigns</td><td style="text-align:left;white-space:normal"><code>disableCooldownCrossCampaign = true</code> on all 12 form campaigns. Confirmed: 232 form invitations in the window were sent within 30 days of an invitation from a different campaign, 171 of them within one day.</td></tr>
+<tr><td>Hubspot (Main) 624 is the exception: cross-campaign cooldown is on</td><td style="text-align:left;white-space:normal">No 624 invitation was sent within 30 days of any other email. Its segment also excludes anyone with a form request.</td></tr>
+<tr><td>Existing-review exclusion of about 30 days</td><td style="text-align:left;white-space:normal">Since Sep 20, all 12 requests from students who reviewed in the previous 30 days were not sent; none of 821 sent invitations went to a student with a review in the previous 30 days (closest: 30.1 days). This is not in any segment definition, so it is platform behaviour. It cannot be separated from the Google-response email (607), which goes to the same students.</td></tr>
+<tr><td>These rules have applied consistently only since about Sep 21</td><td style="text-align:left;white-space:normal">Before mid-August, invitations from the same campaign went out as little as 1.7 days apart, and until mid-September invitations still reached students who had reviewed in the previous 30 days. From the week of Sep 21 there are no exceptions. The data does not show which setting changed or when; the campaign change history would need to be checked. This is likely why the customer sees students who used to be invited after each interaction and now are not.</td></tr>
+<tr><td>Reminders</td><td style="text-align:left;white-space:normal">One reminder per invitation at 72 hours, not sent when the student has already reviewed. No reminder in the window belongs to a suppressed request.</td></tr>
+</table></div>
+
+<h2>1–2. Suppressed invitations by campaign and students affected</h2>
+<div class="scroll"><table>
+<tr><th rowspan="2">Campaign</th><th rowspan="2">Request events</th><th rowspan="2">Students</th><th rowspan="2">Invitations sent</th><th rowspan="2">Reminders sent</th><th colspan="2">Suppressed by cooldown <span class="tag est">est.</span></th><th rowspan="2">Blocked by recent review only</th></tr>
+<tr><th>Requests</th><th>Students</th></tr>
+<tr class="hl"><td>647 Support</td><td>135</td><td>109</td><td>102</td><td>87</td><td>33</td><td>22</td><td>0</td></tr>
+<tr class="hl"><td>701 General Recruitment Support</td><td>4</td><td>4</td><td>2</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>646 Welcome Call/Setup</td><td>376</td><td>264</td><td>256</td><td>248</td><td>119</td><td>107</td><td>1</td></tr>
+<tr><td>648 Exam Pass v1</td><td>40</td><td>38</td><td>36</td><td>34</td><td>3</td><td>3</td><td>1</td></tr>
+<tr><td>649 Exam Pass v2</td><td>43</td><td>31</td><td>30</td><td>24</td><td>12</td><td>3</td><td>1</td></tr>
+<tr><td>650 Assignment Completion (HR/CIPD)</td><td>17</td><td>14</td><td>12</td><td>13</td><td>1</td><td>1</td><td>4</td></tr>
+<tr><td>651 Completion/Closure</td><td>14</td><td>13</td><td>13</td><td>8</td><td>1</td><td>1</td><td>0</td></tr>
+<tr><td>700 Job Placement</td><td>7</td><td>7</td><td>7</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+<tr class="tot"><td>All form-triggered campaigns</td><td>636</td><td>429</td><td>458</td><td>416</td><td>170</td><td>133</td><td>8</td></tr>
+<tr class="tot"><td>Support campaigns (647 + 701)</td><td>139</td><td>113</td><td>104</td><td>88</td><td>34</td><td>23</td><td>1</td></tr>
+</table></div>
+<p class="note">Campaigns 633, 698, 699 and 710 had no request events in the window. Reminders are counted by send date, so they include reminders for invitations sent Oct 11–13. Students are unique email addresses; both total rows are de-duplicated across campaigns. 8 of the 170 cooldown-suppressed requests (7 in Support, 1 in Exam Pass v1) also had a review in the previous 30 days and would have been blocked anyway.</p>
+
+<h3>Time since the last email from the same campaign, for the 170 suppressed requests</h3>
+<div class="scroll"><table>
+<tr><th>Campaign</th><th>Under 1 day</th><th>1 to &lt;4 days</th><th>4 to &lt;7 days</th><th>7 to &lt;14 days</th><th>14 to &lt;30 days</th><th>Total</th></tr>
+<tr class="hl"><td>647 Support</td><td>8</td><td>3</td><td>2</td><td>3</td><td>17</td><td>33</td></tr>
+<tr class="hl"><td>701 General Recruitment Support</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+<tr><td>646 Welcome Call/Setup</td><td>94</td><td>22</td><td>1</td><td>1</td><td>1</td><td>119</td></tr>
+<tr><td>648–651 (exam, assignment, completion)</td><td>11</td><td>3</td><td>3</td><td>0</td><td>0</td><td>17</td></tr>
+<tr class="tot"><td>Total</td><td>113</td><td>28</td><td>6</td><td>5</td><td>18</td><td>170</td></tr>
+</table></div>
+<ul>
+  <li><b>Two different problems share the same number.</b> 141 of 170 suppressions (83%) happen within 4 days of the previous email. In 646 this is a second form for the same student: 113 of 119 are a Welcome Call form a day or so after a Set-up or CMI/CIPD form. 40 of the "under 1 day" cases arrived within three hours of the previous email, mostly repeat submissions of the same form (one Exam Pass v2 student accounts for 10).</li>
+  <li><b>The Support campaign is where the cooldown blocks genuinely new interactions.</b> 20 of its 33 suppressed requests came 7 to 30 days after the last email.</li>
+  <li>118 of the 133 affected students had one suppressed request, 10 had two, and 5 had four or more.</li>
+</ul>
+
+<h3>Hubspot (Main) 624: not a cooldown issue</h3>
+<p>303 deal events, 213 invitations, 202 reminders. All 90 unsent events belong to students who also had a form request around the same time, which removes them from the 624 segment; 85 of the 90 received a form-campaign invitation within two days instead. Changing the cooldown would not release these.</p>
+
+<h2>3. Interval between a student's first and second request</h2>
+<p><b>A. Affected students:</b> time from the request that received an invitation to the first later request that was suppressed, same campaign.</p>
+<div class="scroll"><table>
+<tr><th>Scope</th><th>Students</th><th>Average</th><th>Median</th><th>Under 1 hour</th><th>1 h to &lt;1 d</th><th>1 to &lt;4 d</th><th>4 to &lt;7 d</th><th>7 to &lt;14 d</th><th>14 to &lt;30 d</th><th>30 d+</th></tr>
+<tr class="hl"><td>Support campaigns (647 + 701)</td><td>22</td><td>11.8 d</td><td>11.4 d</td><td>3</td><td>1</td><td>3</td><td>2</td><td>3</td><td>9</td><td>1</td></tr>
+<tr><td>646 Welcome Call/Setup</td><td>106</td><td>1.7 d</td><td>1.0 d</td><td>4</td><td>58</td><td>40</td><td>2</td><td>1</td><td>0</td><td>1</td></tr>
+<tr class="tot"><td>All form-triggered campaigns</td><td>136</td><td>3.5 d</td><td>1.0 d</td><td>8</td><td>60</td><td>44</td><td>7</td><td>6</td><td>9</td><td>2</td></tr>
+</table></div>
+<p class="note">Counted per student and campaign, so a student affected in two campaigns appears twice in the last row. One support student is missing because the earlier request predates the data loaded (July 1). The "30 d+" cases are requests made 30–32 days after the earlier request but still inside 30 days of the reminder.</p>
+
+<p><b>B. All students whose second request in a campaign fell in the window</b>, whether or not it was sent.</p>
+<div class="scroll"><table>
+<tr><th>Scope</th><th>Students</th><th>Average</th><th>Median</th><th>Under 1 hour</th><th>1 h to &lt;1 d</th><th>1 to &lt;4 d</th><th>4 to &lt;7 d</th><th>7 to &lt;14 d</th><th>14 to &lt;30 d</th><th>30 d+</th></tr>
+<tr class="hl"><td>Support campaigns (647 + 701)</td><td>27</td><td>36.5 d</td><td>27.8 d</td><td>3</td><td>0</td><td>2</td><td>1</td><td>1</td><td>7</td><td>13</td></tr>
+<tr><td>646 Welcome Call/Setup</td><td>116</td><td>10.1 d</td><td>1.0 d</td><td>4</td><td>57</td><td>40</td><td>2</td><td>1</td><td>0</td><td>12</td></tr>
+<tr class="tot"><td>All form-triggered campaigns</td><td>157</td><td>16.0 d</td><td>1.1 d</td><td>9</td><td>58</td><td>43</td><td>6</td><td>4</td><td>7</td><td>30</td></tr>
+</table></div>
+<p>In the support campaigns, repeat contact is spread over weeks: half of second requests arrive after about four weeks, and only 6 of 27 arrive within a week. In Welcome Call/Setup it is the opposite: 87% of second requests arrive within four days.</p>
+
+<h2>4. Additional invitations with a 4-day or 7-day cooldown <span class="tag est">estimate</span></h2>
+<p>Replay of the window requests with only the cooldown length changed. Base case assumptions: the reminder still goes out at 72 hours and restarts the clock, the 30-day existing-review exclusion stays as it is, cooldown stays per campaign, and same-submission duplicates stay blocked.</p>
+
+<h3>4a. Recommended change: Support (647) and General Recruitment Support (701) only</h3>
+<div class="scroll"><table>
+<tr><th>Campaign</th><th>Sent today (30 d)</th><th>Extra with 7 d</th><th>Extra with 4 d</th></tr>
+<tr class="hl"><td>647 Support</td><td>102</td><td>+9</td><td>+12</td></tr>
+<tr class="hl"><td>701 General Recruitment Support</td><td>2</td><td>+1</td><td>+1</td></tr>
+<tr class="tot"><td>Impact of the recommended change</td><td>104</td><td>+10 (+9.6%)</td><td>+13 (+12.5%)</td></tr>
+<tr><td>Students receiving an extra invitation</td><td></td><td>10</td><td>12</td></tr>
+<tr><td>Cooldown suppressions remaining in these two campaigns (of 34)</td><td></td><td>24</td><td>21</td></tr>
+</table></div>
+<p>The extra invitations are requests made a median of 18 days (7-day case, minimum 14.0) or 17 days (4-day case, minimum 8.0) after the student's previous Support invitation. Of the suppressions that remain, 7 are the requests from students with a review in the last 30 days and the rest fall within the new cooldown of a previous or newly released email.</p>
+<div class="scroll"><table>
+<tr><th>Sensitivity, 647 + 701 only</th><th>Extra with 7 d</th><th>Extra with 4 d</th></tr>
+<tr><td>Base case</td><td>10</td><td>13</td></tr>
+<tr><td>Request stays eligible for a day and is sent once the cooldown expires</td><td>10</td><td>13</td></tr>
+<tr><td>Existing-review exclusion shortens together with the cooldown</td><td>12</td><td>15</td></tr>
+<tr><td>Reminder does not restart the clock</td><td>12</td><td>14</td></tr>
+</table></div>
+<p class="note">The review-exclusion row is a real unknown: the exclusion happens to match the 30-day cooldown value. Engineering should confirm whether it is tied to <code>campaignCooldown</code> before any change, because if it is, students who reviewed 7 or more days ago would be invited again.</p>
+
+<h3>4b. For comparison only: the same change applied to every form-triggered campaign (not recommended)</h3>
+<div class="scroll"><table>
+<tr><th>Campaign</th><th>Sent today (30 d)</th><th>Extra with 7 d</th><th>Extra with 4 d</th></tr>
+<tr><td>647 + 701 (the recommended scope, as above)</td><td>104</td><td>+10</td><td>+13</td></tr>
+<tr><td>646 Welcome Call/Setup</td><td>256</td><td>+2</td><td>+3</td></tr>
+<tr><td>648 Exam Pass v1</td><td>36</td><td>0</td><td>+1</td></tr>
+<tr><td>649 Exam Pass v2</td><td>30</td><td>0</td><td>+1</td></tr>
+<tr><td>650, 651, 700</td><td>32</td><td>0</td><td>0</td></tr>
+<tr class="tot"><td>All form-triggered campaigns</td><td>458</td><td>+12 (+2.6%)</td><td>+18 (+3.9%)</td></tr>
+<tr><td>Students receiving an extra invitation</td><td></td><td>12</td><td>17</td></tr>
+<tr><td>Cooldown suppressions remaining (of 170)</td><td></td><td>158</td><td>152</td></tr>
+</table></div>
+<p class="note">All-campaign sensitivity: 14 / 20 if requests stay eligible for a day, 14 / 21 if the review exclusion shortens too, 16 / 23 if the reminder does not restart the clock (7 days / 4 days).</p>
+<p>Extending the change beyond the two support campaigns adds only 2 (7 days) or 5 (4 days) invitations, because suppressions elsewhere occur within four days of the previous email and stay suppressed.</p>
+
+<h2>5. Would this create excessive repeat invitations?</h2>
+<p>Figures for the recommended scope (647 + 701 only), within the 30-day window.</p>
+<div class="scroll"><table>
+<tr><th>Recommended change, 647 + 701 only</th><th>Today (30 d)</th><th>7 d</th><th>4 d</th></tr>
+<tr><td>Students with 2 invitations from the same support campaign</td><td>0</td><td>4</td><td>4</td></tr>
+<tr><td>Students with 3 invitations from the same support campaign</td><td>0</td><td>0</td><td>1</td></tr>
+<tr><td>Minimum gap between two invitations, same campaign, reminder sent</td><td>33 days</td><td>10 days</td><td>7 days</td></tr>
+<tr><td>Shortest gap among the extra invitations in this window</td><td></td><td>14.0 days</td><td>8.0 days</td></tr>
+<tr><td>Students receiving 6 or more emails across all campaigns (invitations + reminders)</td><td>14</td><td>14</td><td>15</td></tr>
+<tr><td>Highest email count for one student, all campaigns</td><td>6</td><td>8</td><td>8</td></tr>
+</table></div>
+<p class="note">For comparison, applying the change to all form campaigns: 5 students with 2 same-campaign invitations at 7 days; 7 with 2 and 1 with 3 at 4 days; 15 and 17 students with 6 or more emails.</p>
+<ul>
+  <li><b>7 days: no.</b> At most two invitations per campaign in 30 days, never closer than 10 days when a reminder was sent, and 4 students affected.</li>
+  <li><b>4 days: borderline.</b> The volume is still small, but the pattern is poor for frequent contacts: invitation, reminder on day 3, new invitation from day 7, reminder on day 10. A student who contacts support weekly would be asked for a review every week. Selena's first example (Section 6) would have received three Support invitations and three reminders between Oct 21 and Nov 15.</li>
+  <li><b>Email load is already driven by cross-campaign sends, not by the cooldown.</b> Because cooldown is per campaign, 170 students already received 4 or more emails in the window (typically Hubspot invite + reminder and Welcome Call invite + reminder in the same week). Shortening the cooldown on two campaigns adds little to this.</li>
+  <li><b>Students who already reviewed</b> are protected only by the 30-day existing-review exclusion. 8 of the 23 affected support students have reviewed at some point. Of the extra invitations, 1 (7-day) or 2 (4-day) would go to a student with an older review. If the exclusion shortens with the cooldown, students could be invited again 7 days after reviewing.</li>
+</ul>
+
+<h2>6. Selena's three student examples</h2>
+<p>All three are Support (647) students, all requests coming from the Coding/AI Tutor form. Histories below are from the request feed, the sent-email log and the Trustpilot review feed, from July 1 onward. "Cooldown ends" is 30 days after the last Support email (invitation or reminder). What a shorter cooldown would have done is an <span class="tag est">estimate</span> from the replay.</p>
+
+<h3>giftyprincess100@gmail.com: blocked by cooldown only</h3>
+<pre>2026-05-14 19:49   REVIEW 5★ (Trustpilot)
+2026-07-03 10:16  REQUEST   647 Support
+2026-07-03 11:19   invite SENT            (no reminder recorded)
+2026-10-21 14:40  REQUEST   647 Support
+2026-10-21 15:15   invite SENT
+2026-10-24 15:25   reminder SENT          cooldown ends Nov 23 15:25
+2026-11-04 13:07  REQUEST   647 Support   not sent: 11 days after the reminder
+2026-11-09 09:57  REQUEST   647 Support   not sent: 16 days
+2026-11-11 07:55  REQUEST   647 Support   not sent: 18 days
+2026-11-11 12:33  REQUEST   647 Support   not sent: 18 days
+2026-11-12 11:12  REQUEST   647 Support   not sent: 19 days</pre>
+<ul>
+  <li><b>Why not sent:</b> all five November requests fall inside the 30-day Support cooldown that restarted with the Oct 24 reminder. She has not reviewed since May, so no review exclusion applies. No other campaign has emailed her.</li>
+  <li><b>With 7 days:</b> Nov 4 would have been sent, with a reminder on Nov 7. The other four stay blocked (2 to 5 days after that reminder).</li>
+  <li><b>With 4 days:</b> Nov 4 and Nov 12 would both have been sent, giving three invitations and three reminders between Oct 21 and Nov 15.</li>
+</ul>
+
+<h3>victoreze31@yahoo.com: cooldown and a recent review</h3>
+<pre>2026-05-13 00:08   REVIEW 5★
+2026-06-17 17:27   REVIEW 5★
+2026-07-09 13:02  REQUEST   647 Support
+2026-07-09 14:24   invite SENT
+2026-07-09 22:38   REVIEW 4★
+2026-07-10 09:23   Google-review request SENT (607)
+2026-08-07 11:13  REQUEST   647 Support
+2026-08-07 12:22   invite SENT            29 days after the previous invite
+2026-08-07 16:27   REVIEW 5★
+2026-08-07 17:48   Google-review request SENT (607)
+2026-10-16 11:39  REQUEST   647 Support
+2026-10-16 12:17   invite SENT            cooldown ends Nov 15 12:17
+2026-10-16 16:29   REVIEW 5★              no reminder, as he reviewed the same day
+2026-10-16 17:47   Google-review request SENT (607)
+2026-11-09 12:34  REQUEST   647 Support   not sent: 24 days after the invite and the review
+2026-11-12 14:03  REQUEST   647 Support   not sent: 27 days</pre>
+<ul>
+  <li><b>Why not sent:</b> both November requests fall inside the 30-day Support cooldown from the Oct 16 invitation. They are also within 30 days of his Oct 16 review, so the recent-review exclusion applies as well. Both blocks expire on Nov 15.</li>
+  <li><b>With 7 or 4 days:</b> the cooldown itself would no longer block either request. Whether Nov 9 would then have been sent depends on the review exclusion, which <b>cannot be verified</b> from the data. If it stays at 30 days, neither is sent. If it shortens with the cooldown, Nov 9 is sent and Nov 12 stays blocked (3 days later).</li>
+  <li>He has reviewed after every invitation (three times since July). A new request from Nov 15 should be invited under the current settings.</li>
+</ul>
+
+<h3>gioesfandeyari@gmail.com: cooldown and a recent review</h3>
+<pre>2026-06-26 12:28   REVIEW 5★
+2026-07-10 10:13  REQUEST   647 Support
+2026-07-10 11:28   invite SENT
+2026-07-31 15:22   invite SENT            request not found in the request feed (see below)
+2026-08-03 15:42   reminder SENT
+2026-08-05 15:36   REVIEW 4★
+2026-08-05 17:47   Google-review request SENT (607)
+2026-08-21 08:54  REQUEST   647 Support
+2026-08-21 10:20   invite SENT
+2026-08-24 to 09-14   8 reminders SENT, one every 3 days (last: Sep 14 12:40)
+2026-09-11 13:03  REQUEST   647 Support   not sent
+2026-10-06 13:26  REQUEST   647 Support   not sent: 22 days after the Sep 14 reminder
+2026-10-15 15:39  REQUEST   647 Support
+2026-10-15 16:16   invite SENT            31 days after the Sep 14 reminder
+2026-10-18 16:23   reminder SENT          cooldown ends Nov 17 16:23
+2026-10-19 13:40   REVIEW 5★
+2026-10-19 14:16   Google-review request SENT (607)
+2026-11-09 14:25  REQUEST   647 Support   not sent: 22 days after the reminder, 21 after the review
+2026-11-11 14:18  REQUEST   647 Support   not sent: 24 days
+2026-11-12 11:11  REQUEST   647 Support   not sent: 25 days
+2026-11-12 15:01  REQUEST   647 Support   not sent: 25 days</pre>
+<ul>
+  <li><b>Why not sent:</b> all four November requests fall inside the 30-day Support cooldown that restarted with the Oct 18 reminder (ends Nov 17). They are also within 30 days of the Oct 19 review (until Nov 18).</li>
+  <li><b>With 7 or 4 days:</b> same uncertainty as the previous student. If the review exclusion stays at 30 days, none is sent. If it shortens with the cooldown, Nov 9 is sent and the other three stay blocked (within 2 to 3 days of it).</li>
+  <li><b>Earlier history shows the reminder effect clearly:</b> the Oct 6 request was 46 days after the Aug 21 invitation, but was blocked because the last of that invitation's repeated reminders went out on Sep 14. The Aug 21 invitation produced 8 reminders, part of the known repeated-reminder period that ended mid-September.</li>
+</ul>
+
+<h3>What could not be verified</h3>
+<ul>
+  <li>The reason for each non-send is inferred: there is no suppression log. The cooldown explanation fits every one of the 11 November requests; for Victor and Gio the review exclusion fits equally, and the two cannot be told apart.</li>
+  <li>History before July 1 was not loaded, apart from reviews. Any requests or invitations before that date are not shown.</li>
+  <li>Gio's Jul 31 invitation has no matching row in the request feed. The invitation itself is recorded with a request time of Jul 31 14:15; the request record is missing.</li>
+  <li>The July–August invitations for Victor and Gio were 21–29 days apart, which the current 30-day rule would not allow. The cooldown evidently behaved differently then (see the rules table); the settings history was not available to confirm.</li>
+  <li>Whether these emails were delivered or opened was not checked; "sent" means recorded in the send log.</li>
+</ul>
+<p class="note">To check any other student: <code>python3 lookup.py student@example.com</code> in the session scratchpad <code>/tmp/claude-1000/-home-andre-code-projects-stacktome-support/a3e6b996-55a1-48b0-8f2a-e14ef9db0be2/scratchpad/</code> (temporary; uses the Nov 13 data export). Source queries are in Zeppelin notebook <code>2N9MT9FUT</code>.</p>
+
+<h2>Limits of this analysis</h2>
+<ul>
+  <li>All suppression and scenario figures are estimates from event and send history, as suppression is not logged. They are consistent with the data (the 30-day replay matches actual sends exactly) but the platform's exact evaluation order is inferred.</li>
+  <li>"Support-related" was read as the staff-form-triggered campaigns, with Support (647) and General Recruitment Support (701) shown separately. If the customer means only 647, use its own row: 33 suppressed requests, 22 students, +9 (7 days) or +12 (4 days).</li>
+  <li>Volumes are small. A 30-day window gives 10–13 extra invitations for the recommended change; treat the per-campaign splits outside 647 as indicative.</li>
+  <li>Requests and sends were loaded from July 1. The cooldown and review rules were validated on data from Sep 20 onward, when they behave consistently.</li>
+  <li>Students are matched by email address. Invite rows were de-duplicated, as this account's invite files contain exact duplicate rows.</li>
+  <li>Review impact was not modelled beyond the rough rate applied in the recommendation.</li>
+</ul>
+
+<h2>Other things noticed (internal)</h2>
+<ul>
+  <li><b>CV Redraft (710) can never send.</b> Its segment (1137) filters on campaign id <code>697</code>, while the form sends <code>710</code>. All 6 requests since July went unsent; there were none in the window.</li>
+  <li><b>Hubspot (Main) 624 depends on a race.</b> 63 of its 213 invitations went to students whose form request arrived up to 40 minutes earlier, before the segment refreshed. These students usually receive the form-campaign invitation as well.</li>
+  <li><b>Duplicate form submissions.</b> Several forms arrive as multiple identical events in the same minute (up to 11 for one student). They are harmless today because the cooldown absorbs them, and remain blocked in both scenarios.</li>
+  <li><b>If the cooldown is changed</b>, it is a per-campaign setting, so it can be limited to 647 and 701. The A/B template test that started Nov 6 is running on the same campaigns; a cooldown change would slightly alter the audience mix (more repeat contacts) part-way through the test.</li>
+</ul>
+
+</body>
+</html>
