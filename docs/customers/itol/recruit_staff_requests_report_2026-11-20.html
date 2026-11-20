@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ITOL Recruit — Staff Review Invitation Requests</title><style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6fa; color: #2d3436; font-size: 14px; }
+  .wrapper { max-width: 960px; margin: 40px auto; padding: 0 24px 60px; }
+  h1 { font-size: 26px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+  .subtitle { color: #636e72; font-size: 13px; margin-bottom: 36px; }
+  h2 { font-size: 17px; font-weight: 600; color: #1a1a2e; margin: 36px 0 14px; border-left: 4px solid #6c5ce7; padding-left: 12px; }
+  h3 { font-size: 14px; font-weight: 600; color: #1a1a2e; margin: 18px 0 10px; }
+  p { line-height: 1.6; color: #4a4a4a; margin-bottom: 10px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 8px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: #888; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+  .kpi .sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #fff; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; padding: 11px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .best { color: #00b894; font-weight: 600; }
+  .worst { color: #d63031; font-weight: 600; }
+  .neutral { color: #636e72; }
+  .stars { color: #fdcb6e; }
+  .delta-up { color: #00b894; font-size: 11px; }
+  .delta-flat { color: #888; font-size: 11px; }
+  .delta-down { color: #d63031; font-size: 11px; }
+
+  .total-row td { background: #f0f0f0 !important; font-weight: 600; }
+
+  .campaign-block { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 16px; overflow: hidden; }
+  .camp-header { background: #1a1a2e; color: #fff; padding: 10px 16px; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 10px; }
+  .camp-header .badge { background: #6c5ce7; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 400; }
+  .camp-header .badge-gold { background: #fdcb6e; color: #5d4037; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .camp-header .badge-blue { background: #0984e3; color: #fff; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .camp-header .badge-red { background: #d63031; color: #fff; border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 700; }
+  .review-card { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; }
+  .review-card:last-child { border-bottom: none; }
+  .review-card.urgent { background: #fff6f6; border-left: 4px solid #d63031; }
+  .review-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+  .rating-badge { font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 8px; }
+  .r1 { background: #ffeaea; color: #d63031; }
+  .r2 { background: #fff3e0; color: #e17055; }
+  .r3 { background: #fffde0; color: #b8860b; }
+  .r4 { background: #eaf4fb; color: #2980b9; }
+  .r5 { background: #e8f8f5; color: #00b894; }
+  .review-heading { font-weight: 600; color: #1a1a2e; margin-bottom: 5px; font-size: 13px; }
+  .review-text { font-style: italic; color: #555; line-height: 1.6; font-size: 13px; }
+  .review-meta-line { font-size: 11px; color: #888; margin-bottom: 6px; }
+  .tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #555; }
+  .tag-warn { display: inline-block; background: #fff3e0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #e17055; font-weight: 600; }
+  .tag-urgent { display: inline-block; background: #ffeaea; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #d63031; font-weight: 700; }
+  .tag-ok { display: inline-block; background: #e8f8f5; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: #00b894; }
+  .name-tag { display: inline-block; background: #6c5ce7; color: #fff; border-radius: 4px; padding: 2px 8px; font-size: 11px; }
+
+  .all-clear { background: #e8f8f5; border: 1.5px solid #00b894; border-radius: 10px; padding: 20px 22px; color: #00b894; font-weight: 600; font-size: 14px; }
+  .success-banner { background: #e8f8f5; border: 2px solid #00b894; border-radius: 10px; padding: 18px 22px; margin-bottom: 16px; }
+  .success-banner .sb-title { color: #00b894; font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+  .warning { background: #fff9e6; border: 1.5px solid #fdcb6e; border-radius: 10px; padding: 16px 20px; color: #5d4037; font-size: 13px; line-height: 1.6; margin-bottom: 12px; }
+  .alert { background: #fff6f6; border: 2px solid #d63031; border-radius: 10px; padding: 16px 20px; color: #7a1f1f; font-size: 13px; line-height: 1.6; margin-bottom: 12px; }
+  .info-box { background: #f0f4ff; border: 1.5px solid #a0b4e8; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 13px; color: #2c3e6e; line-height: 1.6; }
+  .note { font-size: 12px; color: #888; margin-top: 4px; }
+
+  .staff-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .staff-chip { background: #f0edff; color: #6c5ce7; border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 600; }
+  .staff-chip-role { font-weight: 400; color: #888; font-size: 11px; margin-left: 4px; }
+  .organic-chip { background: #f0f0f0; color: #636e72; border-radius: 20px; padding: 4px 14px; font-size: 12px; }
+
+  .footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; }
+
+  .kpi-grid.three{grid-template-columns:repeat(3,1fr);}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;}
+  .zero{color:#b2bec3;}
+  @media (max-width:640px){.kpi-grid.three{grid-template-columns:1fr;} .wrapper{margin:20px auto;}}
+</style></head><body><div class="wrapper">
+<h1>ITOL Recruit — Staff Review Invitation Requests</h1>
+<div class="subtitle">Requests submitted by staff  •  October 1 – November 20, 2026  •  Generated 2026-11-20</div>
+<div class="kpi-grid three">
+<div class="kpi"><div class="label">October Requests</div><div class="value">668</div><div class="sub">Oct 1–31</div></div>
+<div class="kpi"><div class="label">November Requests</div><div class="value">375</div><div class="sub">Nov 1–20</div></div>
+<div class="kpi"><div class="label">Total Requests</div><div class="value">1,043</div><div class="sub">Oct 1 – Nov 20</div></div></div>
+<h2>Requests by Desk</h2>
+<table><thead><tr><th>Desk Number</th><th>Desk Name</th><th>Staff Name</th><th class="num">October</th><th class="num">November</th><th class="num">Total</th></tr></thead><tbody>
+<tr><td>1</td><td>Exam Administrator</td><td>Barbara</td><td class="num">16</td><td class="num">11</td><td class="num"><strong>27</strong></td></tr>
+<tr><td>2</td><td>CIPD/CMI</td><td>Courtney</td><td class="num zero">0</td><td class="num zero">0</td><td class="num"><strong>0</strong></td></tr>
+<tr><td>3</td><td>PM Tutor</td><td>Debbie</td><td class="num">9</td><td class="num">6</td><td class="num"><strong>15</strong></td></tr>
+<tr><td>4</td><td>Coding/AI Tutor</td><td>Emmanuel</td><td class="num">32</td><td class="num">42</td><td class="num"><strong>74</strong></td></tr>
+<tr><td>5</td><td>IT Tutor</td><td>Jerry</td><td class="num">2</td><td class="num">3</td><td class="num"><strong>5</strong></td></tr>
+<tr><td>6</td><td>Coding Tutor</td><td>Jordan</td><td class="num zero">0</td><td class="num">1</td><td class="num"><strong>1</strong></td></tr>
+<tr><td>7</td><td>IT Tutor</td><td>Kosi</td><td class="num">4</td><td class="num">2</td><td class="num"><strong>6</strong></td></tr>
+<tr><td>8</td><td>Welcome Calls</td><td>Lisa</td><td class="num">261</td><td class="num">132</td><td class="num"><strong>393</strong></td></tr>
+<tr><td>9</td><td>Set-ups</td><td>Maggie</td><td class="num">227</td><td class="num">105</td><td class="num"><strong>332</strong></td></tr>
+<tr><td>10</td><td>Data Tutor</td><td>Neville</td><td class="num zero">0</td><td class="num zero">0</td><td class="num"><strong>0</strong></td></tr>
+<tr><td>11</td><td>CMI/CIPD</td><td>Oni</td><td class="num">32</td><td class="num">29</td><td class="num"><strong>61</strong></td></tr>
+<tr><td>12</td><td>CIPD/CMI</td><td>Pearl</td><td class="num">8</td><td class="num">4</td><td class="num"><strong>12</strong></td></tr>
+<tr><td>13</td><td>Data Tutor</td><td>Roma</td><td class="num">10</td><td class="num zero">0</td><td class="num"><strong>10</strong></td></tr>
+<tr><td>14</td><td>PM Tutor</td><td>Ryan</td><td class="num">6</td><td class="num">3</td><td class="num"><strong>9</strong></td></tr>
+<tr><td>15</td><td>PM Tutor</td><td>Steven</td><td class="num">31</td><td class="num">13</td><td class="num"><strong>44</strong></td></tr>
+<tr><td>16</td><td>Exam Administrator</td><td>Yvonne</td><td class="num">13</td><td class="num">2</td><td class="num"><strong>15</strong></td></tr>
+<tr><td>17</td><td>BA Tutor</td><td>Zimasa</td><td class="num">9</td><td class="num">11</td><td class="num"><strong>20</strong></td></tr>
+<tr><td>18</td><td>Recruitment</td><td>Amanda Mbangi</td><td class="num">1</td><td class="num">1</td><td class="num"><strong>2</strong></td></tr>
+<tr><td>19</td><td>Recruitment</td><td>Darren Van der Velde</td><td class="num">1</td><td class="num">1</td><td class="num"><strong>2</strong></td></tr>
+<tr><td>20</td><td>Recruitment</td><td>Matthew Naughton</td><td class="num zero">0</td><td class="num zero">0</td><td class="num"><strong>0</strong></td></tr>
+<tr><td>21</td><td>Recruitment</td><td>Samkele Xulu</td><td class="num">2</td><td class="num">1</td><td class="num"><strong>3</strong></td></tr>
+<tr><td>22</td><td>Recruitment</td><td>Sonja Dicks</td><td class="num">1</td><td class="num">8</td><td class="num"><strong>9</strong></td></tr>
+<tr><td>23</td><td>Recruitment</td><td>Zoey Van Eden</td><td class="num zero">0</td><td class="num zero">0</td><td class="num"><strong>0</strong></td></tr>
+<tr><td>24</td><td>GitHub Mentor</td><td>Darren van der Velde</td><td class="num zero">0</td><td class="num zero">0</td><td class="num"><strong>0</strong></td></tr>
+<tr><td>25</td><td>Recruitment Manager</td><td>Katy Smith</td><td class="num">3</td><td class="num zero">0</td><td class="num"><strong>3</strong></td></tr>
+<tr class="total-row"><td colspan="3">Total</td><td class="num">668</td><td class="num">375</td><td class="num">1,043</td></tr>
+</tbody></table>
+<p class="note">Several desk names are shared by more than one desk (for example PM Tutor, IT Tutor and Recruitment), so please use the desk number to identify a desk.</p>
+<h2>Methodology</h2>
+<div class="info-box">Each row counts the review invitation requests that staff submitted through ITOL’s request form for that desk. <strong>Every request is counted, including those the system held or suppressed</strong> (for example because the student had recently been invited), so these figures show what staff asked for, not the number of invitations delivered. A request repeated by the same staff desk for the same student within the same minute is counted once. Requests that come through HubSpot are not submitted by a desk and are not included. November covers November 1–20; the most recent request recorded was on November 19. All 25 desks are listed, including those with no requests in the period.</div>
+<div class="footer">ITOL Recruit — Staff review invitation requests — Oct 1 – Nov 20, 2026 — Generated 2026-11-20</div>
+</div></body></html>
